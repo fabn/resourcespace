@@ -557,7 +557,7 @@ CREATE TABLE `user` (
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES (2,'admin','admin','Admin User','admin@nowhere.null',3,'2007-11-15 20:30:10',0,'Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/522.11 (KHTML, like Gecko) Version/3.0.2','127.0.0.1',76,1,NULL,'');
+INSERT INTO `user` VALUES (1,'admin','admin','Admin User','admin@nowhere.null',3,'2007-11-15 20:30:10',0,'Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/522.11 (KHTML, like Gecko) Version/3.0.2','127.0.0.1',76,1,NULL,'');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -603,7 +603,7 @@ CREATE TABLE `usergroup` (
 
 /*!40000 ALTER TABLE `usergroup` DISABLE KEYS */;
 LOCK TABLES `usergroup` WRITE;
-INSERT INTO `usergroup` VALUES (1,'Administrators','s,c,e,t,h,r,u,i,e-2,e-1,e0,e1,v,o,m,d,q,n','',0,''),(2,'General Users','s,e-1,e-2,g,d,q,n','',0,''),(3,'Super Admin','s,c,e,a,t,h,u,r,i,e-2,e-1,e0,e1,e2,o,m,g,v,d,q,n','',0,''),(4,'Archivists','s,c,e,t,h,r,u,i,e1,e2,v,q,n','',0,''),(5,'Restricted User',NULL,'',NULL,NULL);
+INSERT INTO `usergroup` VALUES (1,'Administrators','s,c,e,t,h,r,u,i,e-2,e-1,e0,e1,v,o,m,d,q,n,f*,j*','',0,''),(2,'General Users','s,e-1,e-2,g,d,q,n,f*,j*','',0,''),(3,'Super Admin','s,c,e,a,t,h,u,r,i,e-2,e-1,e0,e1,e2,o,m,g,v,d,q,n,f*,j*','',0,''),(4,'Archivists','s,c,e,t,h,r,u,i,e1,e2,v,q,n,f*,j*','',0,''),(5,'Restricted User',NULL,'',NULL,NULL);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `usergroup` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
