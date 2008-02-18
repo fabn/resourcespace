@@ -15,9 +15,13 @@ if (!top.collections) {document.location='index.php?url=' + escape(document.loca
 </script>
 <? } ?>
 
+<? hook("headblock"); ?>
+
 </head>
 
 <body>
+<? hook("bodystart"); ?>
+
 <?
 # Commented as it was causing IE to 'jump'
 # <body onLoad="if (document.getElementById('searchbox')) {document.getElementById('searchbox').focus();}">

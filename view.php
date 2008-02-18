@@ -144,10 +144,10 @@ else
 <h2><?=$lang["resourcetools"]?></h2>
 
 <? 
-# Look for a plugin to handle the right hand panel. If not, display the standard photo download / file download boxes.
-if (file_exists("plugins/viewers/type" . $resource["resource_type"] . ".php"))
+# Look for a viewer to handle the right hand panel. If not, display the standard photo download / file download boxes.
+if (file_exists("viewers/type" . $resource["resource_type"] . ".php"))
 	{
-	include "plugins/viewers/type" . $resource["resource_type"] . ".php";
+	include "viewers/type" . $resource["resource_type"] . ".php";
 	}
 else
 	{ ?>

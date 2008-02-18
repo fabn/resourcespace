@@ -54,7 +54,7 @@ $queryhist="";
 
 
 
-# -----------LANGUAGES-------------------------------
+# -----------LANGUAGES AND PLUGINS-------------------------------
 # Include the appropriate language file
 $pagename=str_replace(".php","",pagename());
 if (isset($defaultlanguage)) {$language=$defaultlanguage;} else {$language="en";}
@@ -66,6 +66,31 @@ if ($language!="en")
 	{
 	include dirname(__FILE__)."/../languages/" . $language . ".php";
 	}
+
+# Include language files for for each of the plugins too (if provided)
+for ($n=0;$n<count($plugins);$n++)
+	{
+	$langpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/languages/";
+	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
+	
+	if ($language!="en")
+		{
+		if (file_exists($langpath . $language . ".php")) {include $langpath . $language . ".php";}
+		}
+		
+	# Also include plugin configuration.
+	$configpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/config/config.php";
+	if (file_exists($configpath)) {include $configpath;}
+	
+	# Also include plugin hook file for this page.
+	$hookpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/hooks/" . $pagename . ".php";
+	if (file_exists($hookpath)) {include $hookpath;}
+	
+	# Support an 'all' hook
+	$hookpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/hooks/all.php";
+	if (file_exists($hookpath)) {include $hookpath;}
+	}
+
 
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
@@ -93,6 +118,22 @@ if (!is_array($site_text[$key])) {$site_text[$key]=strtoupper($value);}}
 
 # Blank the header insert
 $headerinsert="";
+
+# Initialise hook for plugins
+hook("initialise");
+
+function hook($name,$pagename="")
+	{
+	# Plugin architecture. Look for a hook with this name and execute.
+	if ($pagename=="") {global $pagename;} # If page name not provided, use global page name.
+	$function="Hook" . ucfirst($pagename) . ucfirst($name);
+	if (function_exists($function)) {eval ($function . "();");}
+
+	# "All" hooks
+	$function="HookAll" . ucfirst($name);
+	if (function_exists($function)) {eval ($function . "();");}
+	}
+
 
 function sql_query($sql,$cache=false,$fetchrows=-1)
     {
