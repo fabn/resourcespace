@@ -1,0 +1,54 @@
+
+
+Example permissions string:
+r,s,a,t,
+    
+Note that case is important.
+    
+Code Permission      
+==== ==========
+
+Search
+------
+s	Can search for resources
+v	Can view restricted (admin only) resources, also download 'confidential' resources
+g	Can download the higher resolution resources (anything above 'screen').
+q	Can make resource requests.
+
+Fields
+------
+f*	Can see all fields
+f?	Can see field with reference ? e.g. f1,f2,f3 (applies to editing, advanced search, and viewing resources).
+
+Resource creation
+-----------------
+c	Can create resources / upload files (Team Centre users; resources go directly into usable state)
+d	Can create resources / upload files (Normal users; resources go into 'pre-check' state.)
+
+e?	Can edit resources in specific archive state, e.g. e0, e1, e2
+		e0: Not archived (visible in a normal search)
+		e1: Waiting to be archived (hidden from searches)
+		e2: Archived (visible in archive searches only)
+	Normally the resource management team will have e0 and e1, and the archive team will have e1 and e2.
+i	Can manage archive resources
+n	Can tag resources using 'Speed Tagging' (must be enabled in config).
+
+Themes / Collections
+--------------------
+h	Can publish themes, and edit all collections
+j*	Can see all theme categories
+j?	Can see theme in category ? (e.g. jCars,jAnimals)
+
+Administration
+--------------
+a	Can access administration tree
+t	Can see the team centre home
+r	Can manage research requests
+o	Can manage content
+m	Can bulk-mail users
+u	Can manage users
+
+Restrictive group permissions (allows isolated groups to be created)
+-----
+U	(upper case) Can manage users in children groups to the user's group only
+E	(upper case) Can email resources to users in the user's own group, children groups and parent group only.

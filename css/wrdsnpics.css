@@ -1,0 +1,227 @@
+/*Create Base font for relative sizing*/
+body {width:100%;margin:0;padding:0;font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;text-align: center;}
+td, textarea {font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;}
+
+
+/*Basic tag setup for creating standards across platforms and browsers*/
+p, h1, h2, h3, h4, h5 {padding:0; margin:0; vertical-align:top;}
+p {padding:0 0 1.75em; margin:0; font-size:1em; line-height:1.25em;}
+p.tight {padding:0 0 0.75em;}
+h1 {padding:0.1em 0 0.5em;margin:0;font: normal 1.5em Arial, Helvetica, sans-serif;}
+h2 {padding:0.1em 0;margin:0;font: normal 1.5em Arial, Helvetica, sans-serif;}
+h3 {font-size:1.25em; padding:0.5em 0 0.5em 0; margin:0;font-weight:normal;}
+h4 {font-size:1em; padding:0.5em 0 0.5em; margin:0;font-weight:normal;}
+h5 {font-size:0.75em; padding:0.5em 0 0.5em 0; margin:0;font-weight:normal;}
+img {border:0}
+em {font-style: italic;}
+strong {font-weight: bold;}
+ol, ul {margin:0 0 0 2.5em;padding:0 0 1em;}
+ul ul, ul ol, ol ul, ol ol {margin:0 0 0 2.5em;padding:1em 0 0em;}
+li {padding:0em 0 1em;margin:0;}
+blockquote {padding:0 0 2em; margin:0em 2.5em;}
+blockquote blockquote {padding:1em 0 2em; margin:0em 2.5em;}
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:active {text-decoration:underline;}
+
+/*General tags*/
+.clearer {clear:both;}
+.clearerleft {clear:left;}
+.Hidden {visibility: hidden;height: 0;width: 0;overflow: hidden;}
+
+
+/*General layout*/
+#Header {margin:20px 25px;padding:0;text-align:left;}
+#HeaderNav1 {text-align:right;}
+#HeaderNav2 {text-align:right;margin-top: 15px;margin-bottom: 4px;}
+
+#Footer {margin:20px 25px;padding:0;text-align:left;}
+#FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
+#FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
+
+#CentralSpaceContainer {margin:0px 25px 20px;padding:0 174px 0 0;text-align:left;}
+#CentralSpaceContainerRestrict {margin:0px 15px 20px 25px;padding:0;text-align:left;}
+#CentralSpaceLogin {margin: 2em auto 4em;padding:0;width: 500px;text-align:left;}
+#CentralSpace {text-align:left;}
+
+.TopInpageNav {margin-bottom: 10px;margin-right: 15px;clear: left;text-align: right;padding-bottom: 5px;}
+.BottomInpageNav {clear: left;text-align: right;padding-top: 5px;margin: 5px 15px 0px 0px;}
+.BottomInpageKey {margin-right: 15px;clear: left;text-align: left;}
+.InpageNavLeftBlock {float:left;text-align:left;margin-right: 20px;margin-bottom: 10px;}
+.InpageNavRightBlock {float:right;text-align:left;margin-right: 15px;margin-bottom: 10px;}
+
+.TopInpageNav a:link, .TopInpageNav a:visited, .BottomInpageNav a:link, .BottomInpageNav a:visited , #CentralSpaceLogin a:link, #CentralSpaceLogin a:visited {text-decoration:none;}
+.TopInpageNav a:hover, .TopInpageNav a:active, .BottomInpageNav a:hover, .BottomInpageNav a:active, #CentralSpaceLogin a:hover, #CentralSpaceLogin a:active {text-decoration:underline;}
+.Selected {font-weight: bold;}
+
+
+.HorizontalNav ul {padding:0.2em 0;margin:0;list-style:none;}
+.HorizontalNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0px;}
+.HorizontalNav a:link, .HorizontalNav a:visited {text-decoration:none;}
+.HorizontalNav a:hover, .HorizontalNav a:active {text-decoration:underline;}
+
+/*Collection layout*/
+#CollectionMenu{width: 163px;position: absolute;left: 25px;top: 6px;text-align:left;}
+
+#CollectionSpace{position: absolute;left: 199px;top: 6px;font-size: 0.95em;text-align:left;}
+.CollectBack h2 {font-size: 1.3em;}
+#CollectionMenu ul {padding:0.2em 0;margin:0;list-style:none;}
+#CollectionMenu li {padding:0;margin:0px 0px 1px;}
+.CollectBack a:link, .CollectBack a:visited {text-decoration:none;}
+.CollectBack a:hover, .CollectBack a:active {text-decoration:underline;}
+
+.CollectBack form {padding:0; margin:0;}
+.CollectBack .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
+.CollectBack .SearchItem {margin: 0 0 10;padding: 0;}
+.CollectBack .MinSearchItem {margin: 0;padding: 0;}
+
+.CollectionPanelShell{padding:0;float: left;margin: 0px 15px 5px 0px;width: 77px;height: 110px;}
+.CollectionPanelInfo{}
+.CollectionResourceAlign {width:77px;height:85px;text-align: center;vertical-align: middle;}
+
+#CollectionMinTitle{float: left;margin: 6px 10px 0px 25px;}
+#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 6px;}
+#CollectionMinDrop{float: left;margin: 6px 0px 0px;padding:0.2em 0em}
+#CollectionMinDrop form{margin:0;padding:0}
+#CollectionMinitems{float: left;margin: 6px 10px 0px;padding:0.2em 0em}
+#CollectionMinRightNav{float: right;margin: 6px 25px 0px 0px;}
+
+#CollectionMinDrop .SearchWidth {width: 110px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
+#CollectionMinRightNav ul {padding:0.2em 0;margin:0;list-style:none;}
+#CollectionMinRightNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0px;}
+
+
+/*Right Search Box layout*/
+#SearchBox {padding:0;float: right;width: 174px;margin: 0px 25px 0px 0px;display:inline;text-align:left;}
+#SearchBoxPanel {width: 172px;}
+#ResearchBoxPanel {width: 172px;margin-top: 15px;}
+
+/*Resource Panel layout*/
+.ResourcePanelShell {padding:0;float: left;margin: 0px 15px 10px 0px;width: 164px;}
+.ResourcePanel {padding:0;margin:0;width: 162px;}
+.ResourcePanelPreview {height: 156px;width: 156px;margin: 3px;}
+.ResourcePanelInfo {margin-right: 5px;margin-left: 5px;margin-bottom: 2px;}	
+.ResourcePanelCountry {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
+.ResourcePanelIcon {margin-right: 3px;margin-left: 5px;float: right;}
+.ResourcePanelIcon img {margin-left: 2px;border-style: none;}
+.ResourceAlign {width:162px;height:167px;text-align: center;vertical-align: middle;}
+.ResourcePanelShell a:link, .ResourcePanelShell a:visited {text-decoration:none;}
+.ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
+
+.IconCollect	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
+.IconEmail	{width:16px;height:12px;padding: 0;display: block;margin-left: 4px;float: right;}
+.IconPreview	{width:16px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;margin-right: 5px;}
+
+.IconStar	{width:11px;height:12px;padding: 0;display: block;float: right;}
+
+.KeyStar {margin: 0px 5px 10px;display: inline;padding-left: 14px;}
+.KeyEmail {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
+.KeyPreview {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
+.KeyCollect {margin: 0px 5px 10px;display: inline;padding-left: 25px;}
+
+/*Resource Panel layout*/
+.Listview {	margin: 25px 15px 25px 0px;}
+.Listview table{ width:100%;}
+.Listview td {padding: 3px 4px 4px 2px;}
+.ListTools {text-align: right;}
+.ListTitle {font-weight: bold;}
+.ListTools a:link, .ListTools a:visited, .ListTitle a:link, .ListTitle a:visited {text-decoration:none;}
+.ListTools a:hover, .ListTools a:active, .ListTitle a:hover, .ListTitle a:active {text-decoration:underline;}
+.Listview .IconStar	{width:11px;height:12px;padding: 0;display: block;float:left;}
+
+/*Search Panel layout*/
+.SearchSpace {padding: 6px;width: 160px;}
+.SearchSpace p {padding:0 0 0.5em; margin:0; font-size:1em; line-height:1.1em;}
+.SearchSpace form {padding:0; margin:0;}
+.SearchSpace .SearchWidth {width: 156px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
+.SearchSpace .tick {}
+.SearchSpace .SearchItem {margin: 10px 0 0;padding: 0;font-weight: bold;}
+.SearchSpace a:link, .SearchSpace a:visited {text-decoration:none;}
+.SearchSpace a:hover, .SearchSpace a:active {text-decoration:underline;}
+
+/*Forms*/
+#CentralSpaceLogin form {margin:0;padding:0;}
+.Question{padding: 0.5em 0em 1em;}
+.QuestionSubmit{	padding: 0.75em 0em 1em;margin-top: 1em;}
+.Question label, .QuestionSubmit label{	width: 150px;float: left;margin-top: 0.4em;}
+.Question .Lineup {margin: 3px 0px;}
+.Question .stdwidth{width: 300px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .shrtwidth{width: 145px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .vshrtwidth{width: 93px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .Inline {float: left;margin: 3px 10px 0px 0px;}
+.Question .tickset {float: left;}
+
+.Question .Fixed {    width: 300px;float: left;margin-top: 0.4em;font-weight: bold;} 
+.FormError{font-weight: bold;font-size: 1.1em;margin: 0px 0px 10px 150px;padding: 10px 0px 0px;}
+.FormIncorrect {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
+
+/*Record Panel layout*/
+.RecordBox {margin: 0px 15px 15px 0px;}
+.RecordPanel {padding: 6px 6px 16px;}
+.RecordPanel .RecordHeader {}
+.RecordPanel h1 {}
+.RecordPanel .backtoresults {float: right;margin: 0.4em 0 0 0.25em;} 
+
+.RecordPanel .RecordResouce {position:relative;clear: left;} 
+.RecordPanel .Picture {float: left;margin: 0px 10px 10px 0px;}
+.RecordPanel .PictureDoc {float: left;margin: 50px 130px;}
+
+.RecordPanel .Detail {float: left;}
+
+.RecordPanel form { margin:0; padding:0;}
+.RecordPanel .Title {padding:0.1em 0 0.5em;margin:0 0 10px;font: normal 1.5em Arial, Helvetica, sans-serif;clear: left;}
+
+.NoFind {font-size: 1.1em;margin: 50px 0px 25px;text-align: center;padding: 15px 3px 16px;}
+
+.RecordPanel .Col {float: left;width: 352px;margin-bottom: 10px;}
+.RecordPanel .ColNarrow {float: left;width: 171px;margin-bottom: 10px;}
+.RecordPanel .buffer {margin-right: 10px;}
+.RecordPanel .itemNarrow {float: left;width: 170px;margin-bottom: 10px;margin-right: 5px;} 
+.RecordPanel .SearchSimilar {float: left;width: 120px;margin: 0px 10px 2px 0px;padding: 0px;}
+.RecordPanel .item {float: left;margin-bottom: 10px;width: 100%;}
+.RecordPanel .item h3, .RecordPanel .itemNarrow h3 {font-size: 1em;margin: 0px;padding: 0px;}
+.RecordPanel .item p, .RecordPanel .itemNarrow p {margin: 0px;padding: 0px;}
+.RecordPanel .RecordDownload {float: left;width: 352px;margin: 0px 0px 10px;}
+.RecordPanel .RecordDownload table {width: 340px;margin: 0px;padding: 0px;}
+.RecordPanel .RecordDownload td {padding: 5px;margin: 0;}
+.RecordPanel .RecordDownload .DownloadDBlend td {margin: 0;vertical-align: middle;}
+.RecordPanel .RecordDownloadSpace {padding: 6px;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {text-align: center;font-weight: bold;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend h2 {margin:0;padding:0;font-size: 1em;	text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend p {margin:0;padding:0;	text-align: left;}
+.RecordStory{padding: 6px;}
+.RecordStory h1{font-size:1.25em; padding:0.5em 0 0.5em 0; margin:0;font-weight:bold;}
+
+/* Basic page */
+.BasicsBox {margin: 0px 15px 15px 0px;}
+.BasicsBox h1 {padding: 0px 0px 0.5em;}
+.BasicsBox h2 {font-size: 1em;margin-bottom: 4px;}
+.BasicsBox .HorizontalNav ul {padding:0.2em 0;margin:0 0 1.5em;list-style:none;}
+.BasicsBox .HorizontalNav li {display:inline;padding:0em 1em 0em 0em;margin:0em 0.5em 0em 0em;}
+.BasicsBox .VerticalNav ul {padding:0.2em 0;margin:0 0 1.5em;list-style:none;}
+.BasicsBox .VerticalNav li {padding:0 0.35em 0 0em;margin:0px 0.5em 1em 0px;}
+
+/* Themes */
+.ThemeBox {float: left;width: 250px;margin: 0px 15px 15px 0px;padding: 0px;}
+.ThemeBox ul {padding:0.2em 0;margin:0 0 0.5em;list-style:none;}
+.ThemeBox li {padding:0 0.35em 0 0em;margin:0px 0.5em 0.25em 0.25em;}
+
+/*Home styling */
+.HomePanel {margin:0px 15px 15px 0px;width: 163px;float: left;} 
+.HomePanelIN {padding: 6px;min-height: 90px;}
+.HomePanel h2 {font-size: 1.75em;padding-left: 14px;display:block;margin: 5px 0px;}
+.HomePicturePanel {    margin:0px 15px 10px 0px;float: left;width: 519px;}
+.HomePicturePanelIN {height: 350px;}
+
+.TabBar {padding:10px 0 0 0;}
+.Tab a {margin:0 5px 0 0;padding:2px 5px 0 5px;}
+.Tab a:hover {text-decoration: none;}
+.Tab {display:inline;}
+.StyledTabbedPanel {padding:10px 5px 5px 5px;clear:left;}
+.TabSelected a {padding-bottom: 1px;}
+
+.infotable {border-top: 1px solid #999999;}
+.infotable td,.infotable th {border-bottom: 1px solid #999999;}
+
+.RecordStory .highlight {background-color:black;padding:2px;}
