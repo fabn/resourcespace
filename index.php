@@ -40,6 +40,12 @@ if (getval("url","")!="")
 ?>
 <html>
 <head>
+<!--
+ResourceSpace version <?=$productversion?>
+
+http://www.montala.net/resourcespace.php
+Copyright Oxfam GB 2006-2008
+-->
 <title><?=htmlspecialchars($applicationname)?></title>
 
 <frameset rows="*<? if ($bottomurl!="") { ?>,3,128<? } ?>" id="topframe" framespacing="0" frameborder="no" border="0">

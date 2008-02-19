@@ -30,6 +30,9 @@ e?	Can edit resources in specific archive state, e.g. e0, e1, e2
 		e1: Waiting to be archived (hidden from searches)
 		e2: Archived (visible in archive searches only)
 	Normally the resource management team will have e0 and e1, and the archive team will have e1 and e2.
+	Further permissions govern access to user contributed resources.
+		e-2: User contributed, awaiting user submission
+		e-1: User contributed, awaiting team review
 i	Can manage archive resources
 n	Can tag resources using 'Speed Tagging' (must be enabled in config).
 

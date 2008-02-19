@@ -12,8 +12,7 @@ $email_from="resourcespace@montala.net"; # Where e-mails appear to come from
 $email_notify="resourcespace@montala.net"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 
-$productname="ResourceSpace"; # Product name. Do not change.
-$productversion="1.3";
+include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
 
 # Available languages
