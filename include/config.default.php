@@ -103,7 +103,7 @@ $research_request=true;
 $country_search=false;
 
 # Use the themes page as the home page?
-$use_theme_as_home=true;
+$use_theme_as_home=false;
 
 # Display a 'Recent' link in the top navigation (goes to View New Material)
 $recent_link=true;
@@ -150,4 +150,6 @@ $speedtaggingfield=1;
 # A list of types which get the extra video icon in the search results
 $videotypes=array(3,4);
 
+# List of active plugins
+$plugins=array();
 ?>
