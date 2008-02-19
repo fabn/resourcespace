@@ -3,6 +3,7 @@
 # Functions to perform searches (read only)
 #  - For resource indexing / keyword creation, see resource_functions.php
 
+if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1)
 	{
 	# Takes a search string $search, as provided by the user, and returns a results set
@@ -295,6 +296,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	$least=sql_value("select keyword value from keyword where $sql order by hit_count asc limit 1","");
 	return trim_spaces(str_replace(" " . $least . " "," "," " . join(" ",$keywords) . " "));
 	}
+}
+
 
 function resolve_soundex($keyword)
 	{

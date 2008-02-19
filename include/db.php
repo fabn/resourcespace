@@ -134,7 +134,6 @@ function hook($name,$pagename="")
 	if (function_exists($function)) {eval ($function . "();");}
 	}
 
-
 function sql_query($sql,$cache=false,$fetchrows=-1)
     {
     # sql_query(sql) - execute a query and return the results as an array.
@@ -193,7 +192,7 @@ function sql_query($sql,$cache=false,$fetchrows=-1)
         return $row;
         }
     }
-
+	
 function sql_value($query,$default)
     {
     # return a single value from a database query, or the default if no rows
