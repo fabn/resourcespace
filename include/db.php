@@ -126,19 +126,24 @@ function hook($name,$pagename="")
 	{
 	# Plugin architecture. Look for a hook with this name and execute.
 	if ($pagename=="") {global $pagename;} # If page name not provided, use global page name.
-		
-	# "All" hooks
-	$function="HookAll" . ucfirst($name);
-	if (function_exists($function)) {eval ($function . "();");}
-
-	# Specific hook	
-	$function="Hook" . ucfirst($pagename) . ucfirst($name);
-	if (function_exists($function))
+	global $plugins;
+	
+	$found=false;
+	for ($n=0;$n<count($plugins);$n++)
 		{
-		eval ($function . "();");
-		return true;
+		# "All" hooks
+		$function="Hook" . ucfirst($plugins[$n]) . "All" . ucfirst($name);
+		if (function_exists($function)) {eval ($function . "();");}
+	
+		# Specific hook	
+		$function="Hook" . ucfirst($plugins[$n]) . ucfirst($pagename) . ucfirst($name);
+		if (function_exists($function))
+			{
+			eval ($function . "();");
+			$found=true; # Set found flag.
+			}
 		}
-	return false;
+	return $found;
 	}
 
 function sql_query($sql,$cache=false,$fetchrows=-1)
