@@ -41,6 +41,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			{
 			case 0: # -------- Text boxes
 			case 1:
+			case 5:
 			$name="field_" . $fields[$n]["ref"];
 			$value=getvalescaped($name,"");
 			if ($value!="")
@@ -260,6 +261,7 @@ for ($n=0;$n<count($fields);$n++)
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Text boxes
 		case 1:
+		case 5:
 		?><input class="stdwidth" type=text name="field_<?=$fields[$n]["ref"]?>" value="<?=htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?
 		break;
 	

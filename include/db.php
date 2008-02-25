@@ -126,12 +126,19 @@ function hook($name,$pagename="")
 	{
 	# Plugin architecture. Look for a hook with this name and execute.
 	if ($pagename=="") {global $pagename;} # If page name not provided, use global page name.
-	$function="Hook" . ucfirst($pagename) . ucfirst($name);
-	if (function_exists($function)) {eval ($function . "();");}
-
+		
 	# "All" hooks
 	$function="HookAll" . ucfirst($name);
 	if (function_exists($function)) {eval ($function . "();");}
+
+	# Specific hook	
+	$function="Hook" . ucfirst($pagename) . ucfirst($name);
+	if (function_exists($function))
+		{
+		eval ($function . "();");
+		return true;
+		}
+	return false;
 	}
 
 function sql_query($sql,$cache=false,$fetchrows=-1)

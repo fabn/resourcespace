@@ -318,7 +318,8 @@ for ($n=0;$n<count($fields);$n++)
 		{
 		$access=2;$editable=true;
 		if ($groups[$n]["access"]!="") {$access=$groups[$n]["access"];}
-		if (strpos($groups[$n]["permissions"],"v")!==false) {$access=0;$editable=false;}
+		$perms=explode(",",$groups[$n]["permissions"]);
+		if (in_array("v",$perms)) {$access=0;$editable=false;}
 		?>
 		<tr>
 		<td valign=middle nowrap><?=htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
