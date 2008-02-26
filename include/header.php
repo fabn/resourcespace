@@ -12,6 +12,21 @@ http://www.montala.net/resourcespace.php
 <link href="css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
 <!--[if lte IE 6]> <link href="css/wrdsnpicsIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="css/wrdsnpicsIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+
+<?
+# Include CSS files for for each of the plugins too (if provided)
+for ($n=0;$n<count($plugins);$n++)
+	{
+	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/style.css";
+	if (file_exists($csspath))
+		{
+		?>
+		<link href="plugins/<?=$plugins[$n]?>/css/style.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+		<?
+		}
+	}
+?>
+
 <?=$headerinsert?>
 
 <? if (($pagename!="terms") && ($pagename!="change_language") && ($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && (getval("k","")=="")) { ?>
