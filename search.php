@@ -179,7 +179,9 @@ if (true) #search condition
 			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive;
 			if ($display=="thumbs") {
 			?>
-			
+			 
+<? if (!hook("renderresultthumb")) { ?>
+
 	<!--Resource Panel-->
 	<div class="ResourcePanelShell">
 		<div class="ResourcePanel">
@@ -200,6 +202,9 @@ if (true) #search condition
 		</div>
 	<div class="PanelShadow"></div>
 	</div>
+
+<? } ?>
+			 
 			<?
 			} else { # List view
 			?>
