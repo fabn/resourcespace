@@ -27,7 +27,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 <div id="SearchBox">
 <div id="SearchBoxPanel">
 
-<?=hook("searchbartoptoolbar")?>
+<? hook("searchbartoptoolbar"); ?>
 
 <div class="SearchSpace">
   <h2><?=$lang["simplesearch"]?></h2>
@@ -161,7 +161,7 @@ function ResetTicks() {<?=$function?>}
 	<div class="PanelShadow"></div>
 	<? } ?>
 
-<?=hook("searchbarbottomtoolbar")?>
+<? hook("searchbarbottomtoolbar"); ?>
 	
 </div>
 
