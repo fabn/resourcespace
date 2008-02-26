@@ -237,6 +237,7 @@ if (count($result)>0)
 		{
 		$ref=$result[$n]["ref"];
 		?>
+<? if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
@@ -245,7 +246,7 @@ if (count($result)>0)
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
 		<? if ($k=="") { ?><div class="CollectionPanelInfo"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a></div><? } ?>			
 		</div>
-		
+<? } ?>		
 		<?		
 		}
 	}
