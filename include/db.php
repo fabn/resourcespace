@@ -139,8 +139,8 @@ function hook($name,$pagename="")
 		$function="Hook" . ucfirst($plugins[$n]) . ucfirst($pagename) . ucfirst($name);
 		if (function_exists($function))
 			{
-			eval ($function . "();");
-			$found=true; # Set found flag.
+			# Function must return 'true' if successful (so existing functionality is replaced)
+			$found=eval ("return " . $function . "();");
 			}
 		}
 	return $found;
