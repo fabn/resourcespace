@@ -34,6 +34,7 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1)
 	
 	if ($extension=="") {$extension="jpg";}
 	$folder="filestore/";
+	if (!file_exists($folder)) {mkdir($folder,0777);}
 	for ($n=0;$n<strlen($ref);$n++)
 		{
 		$folder.=substr($ref,$n,1);
