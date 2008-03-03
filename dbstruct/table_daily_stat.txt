@@ -1,0 +1,6 @@
+year,int(11),YES,MUL,,
+month,int(11),YES,,,
+day,int(11),YES,,,
+activity_type,varchar(50),YES,,,
+object_ref,int(11),YES,,,
+count,int(11),YES,,0,

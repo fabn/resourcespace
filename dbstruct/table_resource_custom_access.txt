@@ -1,0 +1,3 @@
+resource,int(11),YES,MUL,,
+usergroup,int(11),YES,,,
+access,int(11),YES,,,

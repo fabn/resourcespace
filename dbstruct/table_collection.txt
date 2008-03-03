@@ -1,0 +1,8 @@
+ref,int(11),NO,PRI,,auto_increment
+name,varchar(100),YES,,,
+user,int(11),YES,,,
+created,datetime,YES,,,
+public,int(11),NO,MUL,0,
+theme,varchar(100),YES,MUL,,
+allow_changes,int(11),YES,,0,
+cant_delete,int(11),NO,,0,

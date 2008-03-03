@@ -1,0 +1,3 @@
+collection,0,PRIMARY,1,ref,A,239,,,,BTREE,
+collection,1,theme,1,theme,A,29,,,YES,BTREE,
+collection,1,public,1,public,A,1,,,,BTREE,

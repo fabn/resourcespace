@@ -1,0 +1,6 @@
+collection,int(11),YES,,,
+search,text,YES,,,
+restypes,text,YES,,,
+archive,int(11),YES,,,
+ref,int(11),NO,PRI,,auto_increment
+created,timestamp,YES,,CURRENT_TIMESTAMP,

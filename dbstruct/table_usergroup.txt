@@ -1,0 +1,6 @@
+ref,int(11),NO,PRI,,auto_increment
+name,varchar(50),YES,,,
+permissions,text,YES,,,
+fixed_theme,varchar(50),YES,,,
+parent,int(11),YES,,,
+search_filter,text,YES,,,

@@ -146,7 +146,7 @@ function hook($name,$pagename="")
 	return $found;
 	}
 
-function sql_query($sql,$cache=false,$fetchrows=-1)
+function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     {
     # sql_query(sql) - execute a query and return the results as an array.
 	# Database functions are wrapped in this way so supporting a database server other than MySQL is 
@@ -170,6 +170,21 @@ function sql_query($sql,$cache=false,$fetchrows=-1)
         	}
         else
         	{
+        	# Check that all database tables and columns exist using the files in the 'dbstruct' folder.
+        	if ($dbstruct) # should we do this?
+        		{
+        		CheckDBStruct("dbstruct");
+        		global $plugins;
+        		for ($n=0;$n<count($plugins);$n++)
+        			{
+        			CheckDBStruct("plugins/" . $plugins[$n] . "/dbstruct");
+        			}
+        		
+        		# Try again (no dbstruct this time to prevent an endless loop)
+        		return sql_query($sql,$cache,$fetchrows,false);
+        		exit();
+        		}
+        	
 	        echo "<span class=error>$error<br><br>$sql</span>";
 	        }
         exit;
@@ -205,6 +220,7 @@ function sql_query($sql,$cache=false,$fetchrows=-1)
         }
     }
 	
+	
 function sql_value($query,$default)
     {
     # return a single value from a database query, or the default if no rows
@@ -231,6 +247,71 @@ function sql_insert_id()
 	# Return last inserted ID (abstraction)
 	return mysql_insert_id();
 	}
+
+function CheckDBStruct($path)
+	{
+	# Check the database structure against the text files stored in $path.
+	# Add tables / columns / data / indices as necessary.
+	
+	global $mysql_db;
+	
+	# Check for path
+	if (!file_exists($path)) {return false;}
+	
+	# Tables first.
+	# Load existing tables list
+	$ts=sql_query("show tables");
+	$tables=array();
+	for ($n=0;$n<count($ts);$n++)
+		{
+		$tables[]=$ts[$n]["Tables_in_" . $mysql_db];
+		}
+	$dh=opendir($path);
+	while (($file = readdir($dh)) !== false)
+		{
+		if (substr($file,0,6)=="table_")
+			{
+			$table=str_replace(".txt","",substr($file,6));
+			
+			# Check table exists
+			if (!in_array($table,$tables))
+				{
+				# Create Table
+				$sql="";
+				$f=fopen($path . "/" . $file,"r");
+				while (($col = fgetcsv($f)) !== false)
+					{
+					if ($sql.="") {$sql.=", ";}
+					$sql.=$col[0] . " " . $col[1];
+					if ($col[4]!="") {$sql.=" default " . $col[4];}
+					if ($col[3]=="PRI") {$sql.=" primary key";}
+					if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
+					}
+				
+				sql_query("create table $table ($sql)",false,-1,false);
+				
+				# Add initial data
+				
+				# WORK IN PROGRESS
+				}
+			else
+				{
+				# Table already exists, but check all columns exist
+
+				# WORK IN PROGRESS
+				
+				}
+				
+			# Check all indices exist
+			
+			# WORK IN PROGRESS
+			}
+		}
+	
+	}
+
+
+
 	
 function getval($val,$default)
     {

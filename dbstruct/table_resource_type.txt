@@ -1,0 +1,2 @@
+ref,int(11),NO,PRI,,auto_increment
+name,varchar(50),YES,,,
