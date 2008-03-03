@@ -7,9 +7,9 @@ $mysql_db="resourcespace";			# MySQL database name
 
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
-$baseurl="http://dev.montala.net/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
-$email_from="resourcespace@montala.net"; # Where e-mails appear to come from
-$email_notify="resourcespace@montala.net"; # Where resource/research/user requests are sent
+$baseurl="http://my.site.net/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
+$email_from="resourcespace@my.site.net"; # Where e-mails appear to come from
+$email_notify="resourcespace@my.site.net"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 
 include "version.php";
@@ -51,6 +51,7 @@ $homeimages=3; # How many images are on the homepage slideshow?
 # Note: Unix systems only.
 # $disksize=150;
 
+# Set your time zone below (default GMT)
 if (function_exists("date_default_timezone_set")) {date_default_timezone_set("GMT");}
 
 # IPTC header - Character encoding auto-detection
@@ -67,18 +68,15 @@ $exif_comment=18;
 $exif_model=52;
 $exif_date=12;
 
-
-
 # Which field do we drop the original filename in to?
 $filename_field=51;
 
-
 # If using imagemagick, uncomment and set next 2 lines
-$imagemagick_path="/Users/dan/ImageMagick-6.3.5";
-$ghostscript_path="/sw/bin";
+# $imagemagick_path="/sw/bin";
+# $ghostscript_path="/sw/bin";
 
 # If using ffmpeg, uncomment and set next 2 lines.
-$ffmpeg_path="/Applications/Media\ Players\ \:\ Converters/ffmpegX.app/Contents/Resources";
+# $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
 
 # Allow users to request accounts?
 $allow_account_request=true;
@@ -99,7 +97,7 @@ $archive_search=false;
 # Display the Research Request functionality?
 $research_request=true;
 
-# Country search in the right nav?
+# Country search in the right nav? (requires a field with the short name 'country')
 $country_search=false;
 
 # Use the themes page as the home page?
@@ -127,12 +125,12 @@ $theme_images=true;
 $default_perpage=48;
 
 # for sync
-$syncdir="/danbank/wwwroot/photobrowser/map";
-$nogo="[Misc][Heartbeats][Doll's House Ideas][For Baby Book][Congrats emails][Others][others][Other][other][not shared][source files]";
+$syncdir="/path/to/static/files";
+$nogo="[folder1]";
 $type=1;
 
 # Group based upload folders? (separate local upload folders for each group)
-$groupuploadfolders=true;
+$groupuploadfolders=false;
 
 # Enable order by rating? (require rating field updating to rating column)
 $orderbyrating=false;
@@ -144,12 +142,12 @@ $usefancyupload=true;
 $zipcommand="zip -j";
 
 # Enable speed tagging feature? (development)
-$speedtagging=true;
+$speedtagging=false;
 $speedtaggingfield=1;
 
 # A list of types which get the extra video icon in the search results
-$videotypes=array(3,4);
+$videotypes=array(3);
 
-# List of active plugins
+# List of active plugins.
 $plugins=array();
 ?>

@@ -40,6 +40,7 @@ error_reporting(E_ALL);
 set_error_handler("errorhandler");
 
 # *** CONNECT TO DATABASE ***
+if (!file_exists("include/config.php")) {exit("You must copy 'config.default.php' to 'config.php' in the include directory, and edit the file to alter the settings as appropriate.");}
 include "config.php";
 
 
