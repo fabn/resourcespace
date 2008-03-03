@@ -16,8 +16,7 @@ if (array_key_exists("username",$_POST))
         {
    	    # Account expiry
         $expires=sql_value("select account_expires value from user where username='$username' and password='$password'","");
-        if (strlen($expires)==0) {$expires="2010-01-01";}
-        if (strtotime($expires)<=time())
+        if (strtotime($expires)<=time() && $expires!="" && $expires!="0000-00-00 00:00:00")
        		{
        		$valid=0;$error=$lang["accountexpired"];
        		}

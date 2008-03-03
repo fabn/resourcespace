@@ -291,23 +291,87 @@ function CheckDBStruct($path)
 				sql_query("create table $table ($sql)",false,-1,false);
 				
 				# Add initial data
-				
-				# WORK IN PROGRESS
+				$data=str_replace("table_","data_",$file);
+				if (file_exists($path . "/" . $data))
+					{
+					$f=fopen($path . "/" . $data,"r");
+					while (($row = fgetcsv($f)) !== false)
+						{
+						# Escape values
+						for ($n=0;$n<count($row);$n++)
+							{
+							$row[$n]=escape_check($row[$n]);
+							}
+						sql_query("insert into $table values ('" . join ("','",$row) . "')",false,-1,false);
+						}
+					}
 				}
 			else
 				{
-				# Table already exists, but check all columns exist
-
-				# WORK IN PROGRESS
+				# Table already exists, so check all columns exist
 				
+				# Load existing table definition
+				$existing=sql_query("describe $table",false,-1,false);
+								
+				$f=fopen($path . "/" . $file,"r");
+				while (($col = fgetcsv($f)) !== false)
+					{
+					# Look for this column in the existing columns.
+					$found=false;
+					for ($n=0;$n<count($existing);$n++)
+						{
+						if ($existing[$n]["Field"]==$col[0]) {$found=true;}
+						}
+					if (!$found)
+						{
+						# Add this column.
+						$sql="alter table $table add column ";
+						$sql.=$col[0] . " " . $col[1];
+						if ($col[4]!="") {$sql.=" default " . $col[4];}
+						if ($col[3]=="PRI") {$sql.=" primary key";}
+						if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
+						sql_query($sql,false,-1,false);
+						}
+					}
 				}
 				
 			# Check all indices exist
-			
-			# WORK IN PROGRESS
+			# Load existing indexes
+			$existing=sql_query("show index from $table",false,-1,false);
+					
+			$file=str_replace("table_","index_",$file);
+			if (file_exists($path . "/" . $file))
+				{
+				$done=array(); # List of indices already processed.
+				$f=fopen($path . "/" . $file,"r");
+				while (($col = fgetcsv($f)) !== false)
+					{
+					# Look for this index in the existing indices.
+					$found=false;
+					for ($n=0;$n<count($existing);$n++)
+						{
+						if ($existing[$n]["Key_name"]==$col[2]) {$found=true;}
+						}
+					if (!$found && !in_array($col[2],$done))
+						{
+						# Add this index.
+						
+						# Fetch list of columns for this index
+						$cols=array();
+						$f2=fopen($path . "/" . $file,"r");
+						while (($col2 = fgetcsv($f2)) !== false)
+							{
+							if ($col2[2]==$col[2]) {$cols[]=$col2[4];}
+							}
+						
+						$sql="create index " . $col[2] . " on $table (" . join(",",$cols) . ")";
+						sql_query($sql,false,-1,false);
+						$done[]=$col[2];
+						}
+					}
+				}
 			}
 		}
-	
 	}
 
 
