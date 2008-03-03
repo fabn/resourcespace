@@ -4,6 +4,7 @@ include "include/authenticate.php";if (!checkperm("t")) {exit ("Permission denie
 include "include/general.php";
 
 # Some disk size allocation
+if (!file_exists("filestore")) {mkdir("filestore",0777);}
 $avail=disk_total_space(myrealpath("filestore"));
 $free=disk_free_space(myrealpath("filestore"));
 $used=$avail-$free;
