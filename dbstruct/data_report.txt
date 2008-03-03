@@ -1,0 +1,208 @@
+1,"Keywords used in resource edits","select k.keyword 'Keyword',sum(count) 'Entered Count' from keyword k,daily_stat d where k.ref=d.object_ref and d.activity_type='Keyword added to resource'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by k.ref order by 'Entered Count' desc limit 100;
+"
+2,"Keywords used in searches","select k.keyword 'Keyword',sum(count) Searches from keyword k,daily_stat d where k.ref=d.object_ref and d.activity_type='Keyword usage'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by k.ref order by Searches desc
+"
+3,"Resource downloads","select r.ref 'Resource ID',r.title 'Title',sum(count) Downloads from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource download'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by r.ref order by Downloads desc;
+"
+4,"Resource views","select r.ref 'Resource ID',r.title 'Title',sum(count) Views from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource view'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by r.ref order by Views desc;
+"
+5,"Resources sent via e-mail","select r.ref 'Resource ID',r.title 'Title',sum(count) Sent from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='E-mailed resource'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by r.ref order by Sent desc;
+"
+6,"Resources added to collection","select r.ref 'Resource ID',r.title 'Title',sum(count) Added from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Add resource to collection'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by r.ref order by Added desc;
+"
+7,"Resources created","select ref 'Resource ID',title 'Title',creation_date 'Creation Date' from resource where creation_date>=date('[from-y]-[from-m]-[from-d]') and creation_date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)"
+8,"Resources with zero downloads","select ref 'Resource ID',title 'Title' from resource where ref not in 
+
+(
+#Previous query to fetch resource downloads
+select r.ref from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource download'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+
+group by r.ref
+)"
+9,"Resources with zero views","select ref 'Resource ID',title 'Title' from resource where ref not in 
+
+(
+#Previous query to fetch resource views
+select r.ref from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource view'
+
+# --- date ranges
+# Make sure date is greater than FROM date
+and 
+(
+d.year>[from-y]
+or 
+(d.year=[from-y] and d.month>[from-m])
+or
+(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
+)
+# Make sure date is less than TO date
+and
+(
+d.year<[to-y]
+or 
+(d.year=[to-y] and d.month<[to-m])
+or
+(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
+)
+
+group by r.ref
+)"

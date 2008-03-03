@@ -100,7 +100,7 @@ if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text
 
 # Pre-load all text for this page.
 $site_text=array();
-$results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and specific_to_group is null");
+$results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and (specific_to_group is null or specific_to_group=0)");
 for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];}
 
 # Temporary code to uppercase english text to make temporary spanish replacement, for testing language implementation (please ignore!)

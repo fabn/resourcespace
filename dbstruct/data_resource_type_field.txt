@@ -1,0 +1,22 @@
+1,keywords,Keywords,1,,50,1,0,,1,1,2#025,,
+8,title,Title,0,,5,1,0,title,0,1,2#005,,
+9,extract,"Story Extract",1,,7,0,2,,1,0,,"<div class=""RecordStory"">
+  <h1>[title]</h1>
+  <p>[value]</p>
+<!--  <p><a href=""story_print.php?ref=<?=$ref?>"" target=""_new"">Print Story Text</a></p>-->
+</div>",
+10,credit,Credit,0,,300,1,0,,1,1,2#080,,
+11,,Rating,3,"0,1,2,3,4,5",150,0,0,rating,0,1,,,
+12,,Date,4,,160,1,0,creation_date,1,1,2#055,,
+18,caption,Caption,5,,55,1,0,,1,0,2#120,"<div class=""item""><h3>[title]</h3><p>[value]</p></div>
+<div class=""clearerleft""> </div>",
+25,,Notes,1,,1500,0,0,,1,0,2#103,"<div class=""RecordStory"">
+  <h1>[title]</h1>
+  <p>[value]</p>
+<!--  <p><a href=""story_print.php?ref=<?=$ref?>"" target=""_new"">Print Story Text</a></p>-->
+</div>",
+29,person,"Named Person(s)",0,,60,1,0,,1,1,,,
+52,camera,"Camera Make / Model",0,,1600,0,1,,1,0,,,
+51,original_filename,"Original Filename",0,,6,1,0,file_path,0,1,,,
+53,vidcontents,"Video Contents List",1,,9999,1,3,,1,1,,,
+54,source,Source,3,",Digital Camera, Scanned Negative, Scanned Photo",1601,0,1,,1,1,,,
