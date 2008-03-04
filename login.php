@@ -9,9 +9,14 @@ if (array_key_exists("username",$_POST))
     {
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
-    $valid=sql_query("select count(*) c from user where username='$username' and password='$password'");$valid=$valid[0]["c"];
- 
-     
+    
+    if (strlen($password)==32) {exit("Invalid password.");} # Prevent MD5s being entered directly.
+    
+    $password_hash=md5("RS" . $username . $password);
+    $session_hash=md5($password_hash . $username . $password . time());
+    
+    $valid=sql_query("select count(*) c from user where username='$username' and (password='$password' or password='$password_hash')");$valid=$valid[0]["c"];
+      
     if ($valid>=1)
         {
    	    # Account expiry
@@ -24,9 +29,13 @@ if (array_key_exists("username",$_POST))
        		{
 		 	$expires=0;
         	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
-	        setcookie("user",$username . "|" . $password,$expires);
+
+			# Update the user record. Set the password hash again in case a plain text password was provided.
+			sql_query("update user set password='$password_hash',session='$session_hash' where username='$username' and (password='$password' or password='$password_hash')");
+
+	        setcookie("user",$username . "|" . $session_hash,$expires);
 	        
-	        $accepted=sql_value("select accepted_terms value from user where username='$username' and password='$password'",0);
+	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
 	        if (($accepted==0) && ($terms_login)) {redirect ("terms.php?url=" . urlencode("change_password.php"));} else {redirect($url);}
 	        }
         }
@@ -41,7 +50,7 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     #fetch username and update logged in status
     $s=explode("|",$_COOKIE["user"]);
     $username=mysql_escape_string($s[0]);
-    sql_query("update user set logged_in=0 where username='$username'");
+    sql_query("update user set logged_in=0,session='' where username='$username'");
         
     #blank cookie
     setcookie("user","");

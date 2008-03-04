@@ -425,7 +425,17 @@ function save_user($ref)
 		
 		$expires="'" . getvalescaped("account_expires","") . "'";
 		if ($expires=="''") {$expires="null";}
-		sql_query("update user set username='" . getvalescaped("username","") . "',password='" . $password . "',fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,comments='" . getvalescaped("comments","") . "' where ref='$ref'");
+		
+		$passsql="";
+		global $lang;
+		if ($password!=$lang["hidden"])	
+			{
+			# Save password.
+			if (getval("suggest","")=="") {$password=md5("RS" . getvalescaped("username","") . $password);}
+			$passsql=",password='" . $password . "'";
+			}
+		
+		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,comments='" . getvalescaped("comments","") . "' where ref='$ref'");
 		}
 	if (getval("emailme","")!="")
 		{
@@ -438,11 +448,14 @@ function save_user($ref)
 function email_reminder($email)
 	{
 	if ($email=="") {return false;}
-	$details=sql_query("select username,password from user where email like '$email'");
+	$details=sql_query("select username from user where email like '$email'");
 	if (count($details)==0) {return false;}
 	$details=$details[0];
 	global $applicationname,$email_from,$baseurl;
-	$message="Your login details for the $applicationname system are as follows:\n\nUsername: " . $details["username"] . "\nPassword: " . $details["password"] . "\n\nVisit the below URL to access ths system.\n$baseurl";
+	$password=make_password(8,5);
+	$password_hash=md5("RS" . $details["username"] . $password);
+	sql_query("update user set password='$password_hash' where username='" . escape_check($details["username"]) . "'");
+	$message="Your login details for the $applicationname system are as follows:\n\nUsername: " . $details["username"] . "\nPassword: " . $password . "\n\nVisit the below URL to access ths system.\n$baseurl";
 	send_mail($email,$applicationname . ": Password Reminder",$message);
 	return true;
 	}
@@ -622,8 +635,8 @@ function change_password($password)
 	# Sets a new password for the current user.
 	global $userref,$username;
 	if (strlen($password)<6) {return false;}
-	sql_query("update user set password='$password' where ref='$userref' limit 1");
-    setcookie("user",$username . "|" . $password);
+	$password_hash=md5("RS" . $username . $password);
+	sql_query("update user set password='$password_hash' where ref='$userref' limit 1");
 	return true;
 	}
 	

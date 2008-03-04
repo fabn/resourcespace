@@ -16,7 +16,7 @@ if (getval("save","")!="")
 include "include/header.php";
 ?>
 
-    <h1><?=$lang["passwordreminder"]?></h1>
+    <h1><?=$lang["requestnewpassword"]?></h1>
     <p><?=text("introtext")?></p>
 	
 	  

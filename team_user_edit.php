@@ -35,7 +35,7 @@ include "include/header.php";
 
 <div class="Question"><label><?=$lang["username"]?></label><input name="username" type="text" class="stdwidth" value="<?=$user["username"]?>"><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?=$lang["password"]?></label><input name="password" type="text" class="stdwidth" value="<?=$user["password"]?>">&nbsp;<input type=submit name="suggest" value="<?=$lang["suggest"]?>" /><div class="clearerleft"> </div></div>
+<div class="Question"><label><?=$lang["password"]?></label><input name="password" type="text" class="stdwidth" value="<?=(strlen($user["password"])==32)?"(hidden)":$user["password"]?>">&nbsp;<input type=submit name="suggest" value="<?=$lang["suggest"]?>" /><div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?=$lang["fullname"]?></label><input name="fullname" type="text" class="stdwidth" value="<?=$user["fullname"]?>"><div class="clearerleft"> </div></div>
 
@@ -65,7 +65,9 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?=$lang["comments"]?></label><textarea name="comments" class="stdwidth" rows=5 cols=50><?=htmlspecialchars($user["comments"])?></textarea><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?=$lang["ticktoemail"]?></label><input name="emailme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+<? 
+# Only allow sending of password when this is not an MD5 string (i.e. only when first created).
+if (strlen($user["password"])!=32) { ?><div class="Question"><label><?=$lang["ticktoemail"]?></label><input name="emailme" type="checkbox" value="yes"><div class="clearerleft"> </div></div><? } ?>
 
 <div class="Question"><label><?=$lang["ticktodelete"]?></label><input name="deleteme" type="checkbox"  value="yes"><div class="clearerleft"> </div></div>
 

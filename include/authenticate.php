@@ -13,8 +13,8 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET))
 	    $s=explode("|",$_GET["user"]);
 		}
     $username=mysql_escape_string($s[0]);
-    $password=mysql_escape_string($s[1]);
-    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter from user u,usergroup g where u.usergroup=g.ref and u.username='$username' and u.password='$password' and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
+    $session_hash=mysql_escape_string($s[1]);
+    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter from user u,usergroup g where u.usergroup=g.ref and u.username='$username' and u.session='$session_hash' and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
     if (count($userdata)>0)
         {
         $valid=true;

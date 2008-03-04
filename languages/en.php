@@ -473,4 +473,7 @@ $lang["extrakeywords"]="Extra Keywords";
 $lang["leaderboard"]="Leaderboard";
 $lang["confirmeditall"]="Are you sure you wish to save? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection.";
 $lang["collectiondeleteconfirm"]="Are you sure you wish to delete this collection?";
+$lang["hidden"]="(hidden)";
+$lang["requestnewpassword"]="Request New Password";
+
 ?>
