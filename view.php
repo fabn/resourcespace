@@ -94,6 +94,7 @@ include "include/header.php";
 <div class="RecordPanel"> 
 
 <div class="RecordHeader">
+<? if (!hook("renderinnerresourceheader")) { ?>
 <? if ($k=="") { ?>
 <div class="backtoresults">
 <a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
@@ -104,9 +105,14 @@ include "include/header.php";
 </div>
 <? } ?>
 <h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle">ARCHIVE RESOURCE:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars($resource["title"]),$search)?></h1>
+<? } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
+<? hook("renderbeforeresourceview"); ?>
+
 <div class="RecordResouce">
+<? if (!hook("renderinnerresourceview")) { ?>
+<? if (!hook("renderinnerresourcepreview")) { ?>
 <?
 $flvfile=get_resource_path($ref,"",false,"flv");
 if (file_exists("plugins/players/type" . $resource["resource_type"] . ".php"))
@@ -138,9 +144,11 @@ else
 	<?
 	}
 ?>
+<? } /* End of renderinnerresourcepreview hook */ ?>
 
 <div class="RecordDownload">
 <div class="RecordDownloadSpace">
+<? if (!hook("renderinnerresourcedownloadspace")) { ?>
 <h2><?=$lang["resourcetools"]?></h2>
 
 <? 
@@ -258,9 +266,12 @@ if ($nodownloads || $counter==0)
 <? if (checkperm("e" . $resource["archive"])) { ?><a href="edit.php?ref=<?=$ref?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a><? } ?>
 &nbsp;&nbsp;<a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a>
 <? } ?>
+<? } /* End of renderinnerresourcedownloadspace hook */ ?>
 </div>
+<? } /* End of renderinnerresourceview hook */ ?>
 </div>
 
+<? hook("renderbeforeresourcedetails"); ?>
 
 <div class="Title"><?=$lang["resourcedetails"]?></div>
 

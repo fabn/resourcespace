@@ -6,6 +6,7 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalesc
 
 include "include/general.php";
 include "include/research_functions.php";
+include "include/resource_functions.php";
 include "include/search_functions.php";
 
 # Hide/show thumbs
@@ -101,7 +102,9 @@ if ($research!="")
 		}
 	}
 	
-if (file_exists("plugins/collection_process.php")) {include "plugins/collection_process.php";}
+hook("processusercommand");
+
+//if (file_exists("plugins/collection_process.php")) {include "plugins/collection_process.php";}
 ?>
 
 <script language="Javascript">
