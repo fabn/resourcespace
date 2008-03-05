@@ -280,7 +280,7 @@ function CheckDBStruct($path)
 				# Create Table
 				$sql="";
 				$f=fopen($path . "/" . $file,"r");
-				while (($col = fgetcsv($f)) !== false)
+				while (($col = fgetcsv($f,5000)) !== false)
 					{
 					if ($sql.="") {$sql.=", ";}
 					$sql.=$col[0] . " " . $col[1];
@@ -296,7 +296,7 @@ function CheckDBStruct($path)
 				if (file_exists($path . "/" . $data))
 					{
 					$f=fopen($path . "/" . $data,"r");
-					while (($row = fgetcsv($f)) !== false)
+					while (($row = fgetcsv($f,5000)) !== false)
 						{
 						# Escape values
 						for ($n=0;$n<count($row);$n++)
@@ -315,7 +315,7 @@ function CheckDBStruct($path)
 				$existing=sql_query("describe $table",false,-1,false);
 								
 				$f=fopen($path . "/" . $file,"r");
-				while (($col = fgetcsv($f)) !== false)
+				while (($col = fgetcsv($f,5000)) !== false)
 					{
 					# Look for this column in the existing columns.
 					$found=false;
@@ -345,7 +345,7 @@ function CheckDBStruct($path)
 				{
 				$done=array(); # List of indices already processed.
 				$f=fopen($path . "/" . $file,"r");
-				while (($col = fgetcsv($f)) !== false)
+				while (($col = fgetcsv($f,5000)) !== false)
 					{
 					# Look for this index in the existing indices.
 					$found=false;
@@ -360,7 +360,7 @@ function CheckDBStruct($path)
 						# Fetch list of columns for this index
 						$cols=array();
 						$f2=fopen($path . "/" . $file,"r");
-						while (($col2 = fgetcsv($f2)) !== false)
+						while (($col2 = fgetcsv($f2,5000)) !== false)
 							{
 							if ($col2[2]==$col[2]) {$cols[]=$col2[4];}
 							}

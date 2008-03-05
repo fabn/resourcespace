@@ -211,11 +211,11 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 					imagecopyresampled($target,$source,0,0,0,0,$tw,$th,$sw,$sh);
 					if ($extension=="png")
 						{
-						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension),90);
+						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
 						}
 					elseif ($extension=="gif")
 						{
-						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension),90);
+						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
 						}
 					else
 						{
@@ -249,11 +249,11 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 					imagecopyresampled($target,$source,floor(($tw-$iw)/2),floor(($th-$ih)/2),0,0,$iw,$ih,$sw,$sh);
 					if ($extension=="png")
 						{
-						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension),90);
+						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
 						}
 					elseif ($extension=="gif")
 						{
-						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension),90);
+						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
 						}
 					else
 						{
@@ -441,11 +441,11 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	# Save source image and fetch new dimensions
 	if ($extension=="png")
 		{
-		imagepng($source,$file,95);
+		imagepng($source,$file);
 		}
 	elseif ($extension=="gif")
 		{
-		imagegif($source,$file,95);
+		imagegif($source,$file);
 		}
 	else
 		{
