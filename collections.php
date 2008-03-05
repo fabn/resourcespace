@@ -29,14 +29,17 @@ setcookie("thumbs",$thumbs);
 $collection=getvalescaped("collection","");
 if ($collection!="")
 	{
+	hook("prechangecollection");
 	#change current collection
 	if ($k=="") {set_user_collection($userref,$collection);}
 	$usercollection=$collection;
+	hook("postchangecollection");
 	}
 
 $add=getvalescaped("add","");
 if ($add!="")
 	{
+	hook("preaddtocollection");
 	#add to current collection
 	if (add_resource_to_collection($add,$usercollection)==false)
 		{ ?><script language="Javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
@@ -47,19 +50,23 @@ if ($add!="")
 	# update resource/keyword kit count
 	$search=getvalescaped("search","");
 	if ((strpos($search,"!")===false) && ($search!="")) {update_resource_keyword_hitcount($add,$search);}
+	hook("postaddtocollection");
 	}
 
 $remove=getvalescaped("remove","");
 if ($remove!="")
 	{
+	hook("preremovefromcollection");
 	#remove from current collection
 	if (remove_resource_from_collection($remove,$usercollection)==false)
 		{ ?><script language="Javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
+	hook("postremovefromcollection");
 	}
 	
 $addsearch=getvalescaped("addsearch","");
 if ($addsearch!="")
 	{
+	hook("preaddsearch");
 	if (getval("mode","")=="")
 		{
 		#add saved search
@@ -76,18 +83,22 @@ if ($addsearch!="")
 		# Log this
 		daily_stat("Add saved search items to collection",0);
 		}
+	hook("postaddsearch");
 	}
 
 $removesearch=getvalescaped("removesearch","");
 if ($removesearch!="")
 	{
+	hook("preremovesearch");
 	#remove saved search
 	remove_saved_search($usercollection,$removesearch);
+	hook("postremovesearch");
 	}
 	
 $research=getvalescaped("research","");
 if ($research!="")
 	{
+	hook("preresearch");
 	$col=get_research_request_collection($research);
 	if ($col==false)
 		{
@@ -100,6 +111,7 @@ if ($research!="")
 		{
 		set_user_collection($userref,$col);
 		}
+	hook("postresearch");
 	}
 	
 hook("processusercommand");
