@@ -9,7 +9,7 @@ $error="";
 
 if (getval("save","")!="")
 	{
-	if (getvalescaped("password","")!=$userpassword)
+	if (md5("RS" . $username . getvalescaped("password",""))!=$userpassword)
 		{
 		$error=$lang["wrongpassword"];
 		}
