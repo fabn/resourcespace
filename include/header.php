@@ -91,10 +91,14 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 		
 		<li><a target="main" href="help.php"><?=$lang["helpandadvice"]?></a></li>
 		<? if (checkperm("t")) { ?><li><a target="main" href="team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
+
+<? hook("toptoolbaradder"); ?>
+
 		</ul>
 		<? } else { ?>
 		&nbsp;
 		<? } ?>
+		
 </div>
 
 <? }  else { # Empty Header?>

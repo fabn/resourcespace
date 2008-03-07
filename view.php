@@ -146,6 +146,8 @@ else
 ?>
 <? } /* End of renderinnerresourcepreview hook */ ?>
 
+<? hook("renderbeforerecorddownload"); ?>
+
 <div class="RecordDownload">
 <div class="RecordDownloadSpace">
 <? if (!hook("renderinnerresourcedownloadspace")) { ?>
