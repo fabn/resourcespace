@@ -1,7 +1,8 @@
 <?
+include "../include/db.php";
 include "include/header.php";
 ?>
-<body class="properties">
+<body xclass="properties">
 
 </body>
 </html>

@@ -67,7 +67,7 @@ if ($size!="")
 	set_time_limit(0);
 	echo file_get_contents("/tmp/" . $file);
 	
-	unlink($file);
+	unlink("/tmp/" . $file);
 	exit();
 	}
 include "include/header.php";

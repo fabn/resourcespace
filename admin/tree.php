@@ -3,7 +3,7 @@ include "../include/db.php";
 include "../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 include "include/header.php";
 ?>
-<body bgcolor=white>
+<body style="background-image: none;background-color: white;color: black;">
 
 <script language="JavaScript">
 var TreeParents=new Array();TreeParents[0]=-1;

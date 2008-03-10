@@ -154,7 +154,7 @@ if (array_key_exists("delete",$_POST))
 
 include "include/header.php";
 ?>
-<body class="properties" style="margin:15px;padding:0px;">
+<body style="margin:15px;padding:0px;background-position:0px -80px;">
 <div class="proptitle"><?=(($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" <!--#" . $ref . "-->") . (($t[2]==$name)?"":" :: " . $name)?></div>
 <div class="propbox">
 <?

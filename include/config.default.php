@@ -148,6 +148,11 @@ $speedtaggingfield=1;
 # A list of types which get the extra video icon in the search results
 $videotypes=array(3);
 
+# Uncomment and set the next line to lock to one specific colour scheme (e.g. greyblu/whitegry).
+# $userfixedtheme="whitegry";
+
 # List of active plugins.
 $plugins=array();
+
+
 ?>

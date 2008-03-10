@@ -26,7 +26,8 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET))
         $useremail=$userdata[0]["email"];
         $userpassword=$userdata[0]["password"];
         $userfullname=$userdata[0]["fullname"];
-        $userfixedtheme=$userdata[0]["fixed_theme"];
+        if (!isset($userfixedtheme)) {$userfixedtheme=$userdata[0]["fixed_theme"];} # only set if not set in config.php
+        
         $usercollection=$userdata[0]["current_collection"];
         $usersearchfilter=$userdata[0]["search_filter"];
         
