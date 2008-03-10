@@ -21,12 +21,13 @@ function SetCookie(cookieName,cookieValue,nDays) {
 function SwapCSS(css)
 	{
 	document.getElementById('colourcss').href='css/Col-' + css + '.css';
+	top.collections.document.getElementById('colourcss').href='css/Col-' + css + '.css';
 	SetCookie("colourcss",css,1000);	
 	}
 </script>
 
 <? if (getval("k","")=="") { ?>
-<div id="FooterNavLeft" class=""><? if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?=$lang["interface"]?>:&nbsp;&nbsp;<a href="#" onClick="SwapCSS('greyblu');return false;"><img src="gfx/interface/BlueChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('whitegry');return false;"><img src="gfx/interface/WhiteChip.gif" alt="" width="11" height="11" /></a>
+<div id="FooterNavLeft" class=""><? if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?=$lang["interface"]?>:&nbsp;&nbsp;<a href="#" onClick="SwapCSS('greyblu');return false;"><img src="gfx/interface/BlueChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('whitegry');return false;"><img src="gfx/interface/WhiteChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('black');return false;"><img src="gfx/interface/BlackChip.gif" alt="" width="11" height="11" /></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? } ?>
 <?=$lang["language"]?>: <a href="change_language.php"><?=$languages[$language]?></a>
 </div>

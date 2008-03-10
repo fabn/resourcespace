@@ -1,0 +1,88 @@
+body {color:#CCC;background: #000 url(../gfx/black/interface/back.gif) repeat-x fixed;}
+h2 {color: #FFFFFF;}
+h1 {color: #FFFFFF;}
+.CollectDivide {color:#CCC;background: #000000 url(../gfx/black/interface/CollectDivide.gif) repeat-x;}
+.CollectBack {color:#BBB;background: #333 url(../gfx/black/interface/CollectBack.gif) repeat-x fixed;}
+
+a:link {color:#CCC;}
+a:visited {color:#CCC;}
+a:hover {color:#FFF;}
+a:active {color:#CCC;}
+
+#Header {border-bottom: 1px solid #777;background: url(../gfx/black/titles/title.gif) no-repeat;}
+#Footer {border-top: 1px solid #AAA;}
+
+.TopInpageNav {border-bottom: 1px solid #777;}
+
+
+.OxColourPale, .ListviewTitleStyle {color:#CCC;}
+
+
+.Listview td {border-bottom: 1px solid #777;}
+.FormError {color: #C2E066;}
+.FormIncorrect {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
+
+.NoFind {border: 1px solid #AAA;background: #333;} {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
+.NoFind .highlight {color:#FFFFFF;}
+.NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#FFFFFF;text-decoration:underline;}
+
+.HorizontalWhiteNav a:link, .HorizontalWhiteNav a:visited, .HorizontalWhiteNav a:active, .HorizontalWhiteNav a:hover, .BasicsBox .VerticalNav a:link, .BasicsBox .VerticalNav a:visited, .BasicsBox .VerticalNav a:active, .BasicsBox .VerticalNav a:hover, .ListTitle a:link, .ListTitle a:visited, .ListTitle a:hover, .ListTitle a:active, .HomePanel a:link, .HomePanel a:visited, .HomePanel a:active, .HomePanel a:hover {color:#FFFFFF;}
+.HorizontalWhiteNav li, .HorizontalNav li {border-left:1px solid #B5C3D4;}
+
+#CollectionMinRightNav li {border-left:1px solid #B6BBC1;}
+
+.CollectBack a:link, .CollectBack a:visited, .CollectBack a:active {color:#B6BBC1;}
+.CollectBack a:hover  {color:#FFFFFF;}
+
+#CollectionMenu {border-right: 1px solid #79899C;}
+
+#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
+
+#SearchBoxPanel {background: #777 url(../gfx/black/interface/SearchBox.gif) repeat-x;}
+#ResearchBoxPanel, .HomePanelIN {background: #5A7599 url(../gfx/black/interface/researchpanel.jpg) repeat-x;}
+.ResourcePanel {background: #595959 url(../gfx/black/interface/resourcepanel.gif) repeat-x;}
+.IconVideo {background: url(../gfx/black/interface/IcVideo.gif) no-repeat 140px 5px;}
+
+.ImageBorder, .RecordPanel .Picture {border: 1px solid #FFFFFF;}
+.VideoBorder {border: 1px solid #000000;}	
+.CollectImageBorder {border: 1px solid #79899C;}	
+
+.PanelShadow {background: url(../gfx/black/interface/panelshadow.gif) repeat-x;height: 5px;}
+.IconCollect, .KeyCollect	{background: url(../gfx/black/interface/IcCol.gif) no-repeat;}
+.IconEmail, .KeyEmail	{background: url(../gfx/black/interface/IcEml.gif) no-repeat;}
+.IconPreview, .KeyPreview	{background: url(../gfx/black/interface/IcPre.gif) no-repeat;}
+.IconStar, .KeyStar	{	background: url(../gfx/black/interface/IcStar.gif) no-repeat;}
+
+.NavUnderline {border-bottom: 1px solid #5A7599;}
+
+.SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Question, .RecordPanel .Title {color: #FFFFFF;} 
+
+.Question{border-top: 1px solid #AAA;}
+
+.RecordPanel {background: #595959 url(../gfx/black/interface/recordpanel.gif) repeat-x;border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
+.RecordPanel .Title {	border-bottom: 1px solid #AAA;}
+.RecordPanel .RecordDownload {border-top: 1px solid #FFFFFF;border-right: 1px solid #AAAAAA;border-bottom: 1px solid #AAAAAA;	border-left: 1px solid #AAAAAA;background: #708DB4 url(../gfx/black/interface/Download.gif) repeat-x;}
+.RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #888;	color: #FFF;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #4F6D57 url(../gfx/black/interface/DownloadButton.gif);}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #888888;text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #111 url(../gfx/black/interface/DownloadCell.gif) repeat-x;}
+
+.ArchiveResourceTitle {color: #C2E066;}
+.RecordStory{color: #000000;background: #FFFFFF url(../gfx/black/interface/StoryShadow.gif) repeat-x;}
+.RecordStory h1{color: #000000;}
+.RecordStory a:hover{color: #000000;}
+
+.BasicsBox .HorizontalNav li {border-right:1px solid #B5C3D4;border-top-style: none;border-bottom-style: none;border-left-style: none;}
+.BasicsBox .VerticalNav li, .ThemeBox li {list-style: url(../gfx/black/interface/bullet.gif) none inside;}
+.ThemeBox {border-bottom: 1px solid #5A7599;}
+
+.HomePanel h2 {background: url(../gfx/black/interface/HomeArrow.gif) no-repeat 1px 5px;}
+
+.BasicsBox ul, .BasicsBox ol {color:#FFFFFF;}
+
+.highlight {color: #FFFF88;}
+
+.Tab a {border: 1px solid #B5C3D4;border-bottom-style: none;color: #95a3b4;background-color:#52719B;}
+.StyledTabbedPanel {border: 1px solid #B5C3D4;border-top: 1px solid white;background-image: url(../gfx/black/interface/Download.gif);}
+.TabSelected a {color: white;background-color:#6985A9;border-top-color: white;}
+

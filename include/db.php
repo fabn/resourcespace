@@ -302,8 +302,10 @@ function CheckDBStruct($path)
 						for ($n=0;$n<count($row);$n++)
 							{
 							$row[$n]=escape_check($row[$n]);
+							$row[$n]="'" . $row[$n] . "'";
+							if ($row[$n]=="''") {$row[$n]="null";}
 							}
-						sql_query("insert into $table values ('" . join ("','",$row) . "')",false,-1,false);
+						sql_query("insert into $table values (" . join (",",$row) . ")",false,-1,false);
 						}
 					}
 				}
