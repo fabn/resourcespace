@@ -96,6 +96,12 @@ include "include/header.php";
 
 		window.addEvent('load', function()
 		{
+			window.setTimeout('AddFancy()',1000);
+		});
+		
+		function AddFancy()
+		{
+		
 			/**
 			 * We take the first input with this class we can find ...
 			 */
@@ -132,21 +138,16 @@ include "include/header.php";
 				}
 			}).setHTML('&gt;&nbsp;Clear Completed'));
 
+			// Display block now everything is ready.
+			$('uploadbox').style.display='block';
 
-			/**
-			 * Second, this one uses the already injected swf embed to upload files.
 
-			var uplooad2 = new FancyUpload($('userfile'), {
-				swf: 'fancyupload/Swiff.Uploader.swf',
-				queueList: 'photoupload-queue'
-			});
-		 */
-		});
+		}
 
 		//]]>
 	</script>
 
-<div class="BasicsBox"> 
+<div class="BasicsBox" id="uploadbox" style="display:none;"> 
 <h2>&nbsp;</h2>
 <h1><?=$lang["fileupload"]?></h1>
 <p><?=text("introtext")?></p>

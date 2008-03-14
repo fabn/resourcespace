@@ -3,6 +3,13 @@ include "include/db.php";
 include "include/authenticate.php";
 include "include/general.php";
 
+
+# Include scriptaculous for fading slideshow.
+$headerinsert="
+<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
+<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
+";
+
 include "include/header.php";
 ?>
 <script language="Javascript">
@@ -28,14 +35,16 @@ function nextPhoto()
 
 	  if (flip==0)
 	  	{
-	    image1.style.visibility='hidden';
-	    window.setTimeout("image1.src='gfx/homeanim/gfx/" + next_photo + ".jpg';",100);
+	    // image1.style.visibility='hidden';
+	    Effect.Fade(image1);
+	    window.setTimeout("image1.src='gfx/homeanim/gfx/" + next_photo + ".jpg';",1000);
      	flip=1;
      	}
 	  else
 	  	{
-	    image1.style.visibility='visible';
-	    image2.style.background="url('gfx/homeanim/gfx/" + next_photo + ".jpg')";
+	    // image1.style.visibility='visible';
+	    Effect.Appear(image1);
+	    setTimeout("image2.style.background='url(gfx/homeanim/gfx/" + next_photo + ".jpg)';",1000);
 	    flip=0;
 		}	  	
      
@@ -47,7 +56,7 @@ function nextPhoto()
 window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('gfx/homeanim/gfx/2.jpg');"><img src='gfx/homeanim/gfx/1.jpg' alt='' id='image1' width=517 height=350 style="visibility:hidden;"></div>
+<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('gfx/homeanim/gfx/2.jpg');"><img src='gfx/homeanim/gfx/1.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
 
