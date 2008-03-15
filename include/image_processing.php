@@ -276,7 +276,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 		}
 	else
 		{
-		# Use imagemagick?
+		# Use imagemagick? (also includes ffmpeg for video handling functions)
 		global $imagemagick_path,$ghostscript_path;
 		if (isset($imagemagick_path))
 			{

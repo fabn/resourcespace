@@ -58,11 +58,27 @@ if (!isset($allow_password_change)) {$allow_password_change=true;}
 
 if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 <div id="HeaderNav1" class="HorizontalNav ">
-		<ul>
-		<li><? if ($allow_password_change) { ?><a href="change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
-		<li><a href="login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
-		<li><a href="contact.php"><?=$lang["contactus"]?></a></li>
-		</ul>
+
+<? if (isset($anonymous_login) && ($username==$anonymous_login))
+	{
+	?>
+	<ul>
+	<li><a href="login.php" target="_top"><?=$lang["login"]?></a></li>
+	<li><a href="contact.php"><?=$lang["contactus"]?></a></li>
+	</ul>
+	<?
+	}
+else
+	{
+	?>
+	<ul>
+	<li><? if ($allow_password_change) { ?><a href="change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
+	<li><a href="login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
+	<li><a href="contact.php"><?=$lang["contactus"]?></a></li>
+	</ul>
+	<?
+	}
+?>
 </div>
 
 

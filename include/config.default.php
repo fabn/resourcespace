@@ -154,5 +154,9 @@ $videotypes=array(3);
 # List of active plugins.
 $plugins=array();
 
+# Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
+# to the account with the username specified.
+# $anonymous_login="guest";
+
 
 ?>
