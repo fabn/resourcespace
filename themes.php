@@ -36,7 +36,7 @@ for ($n=0;$n<count($headers);$n++)
 	for ($m=0;$m<count($themes);$m++)
 		{
 		?>
-	    <li><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a>
+	    <li><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a> <? hook("collectioninfo"); ?>
 	    <? if ($manage) { ?>
 	    &nbsp;&nbsp;
 	    <span class="OxColourPale">
