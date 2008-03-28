@@ -14,6 +14,8 @@ var InfoBoxLeft=0;
 function InfoBoxMM(event)
     {
    	var i=$('InfoBox');
+   	if (!i) {return false;} // no object? ignore for now
+   	
    	var ii=$('InfoBoxInner');
     var x=event.clientX;
     var y=event.clientY;
