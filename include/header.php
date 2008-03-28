@@ -39,7 +39,7 @@ if (!top.collections) {document.location='index.php?url=' + escape(document.loca
 
 </head>
 
-<body>
+<body <? if (isset($bodyattribs)) { ?><?=$bodyattribs?><? } ?>>
 <? hook("bodystart"); ?>
 
 <?

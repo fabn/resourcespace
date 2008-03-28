@@ -374,7 +374,7 @@ function get_field_options($ref)
 	
 function get_data_by_field($resource,$field)
 	{
-	# Return the resource data for field $field in resource $resoutce
+	# Return the resource data for field $field in resource $resource
 	return sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 	}
 	

@@ -52,6 +52,13 @@ if (!array_key_exists("search",$_GET))
 	$archive=getvalescaped("saved_archive",0);setcookie("saved_archive",$archive);
 	}
 
+# Include scriptaculous for infobox panels.
+$headerinsert="
+<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
+<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
+<script src=\"js/infobox.js\" type=\"text/javascript\"></script>
+";
+$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
 
 include "include/header.php";
 
@@ -187,19 +194,19 @@ if (true) #search condition
 
 	<!--Resource Panel-->
 	<div class="ResourcePanelShell">
-		<div class="ResourcePanel">
+		<div class="ResourcePanel" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
 			<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-			<a href="<?=$url?>" title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
+			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
 			</td>
 			</tr></table>
 			
-			<div class="ResourcePanelInfo"><a href="<?=$url?>" title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
+			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
 			<div class="ResourcePanelCountry"><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?>&nbsp;</div>
 				
 
-			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
-			<span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" title="<?=$lang["addtocurrentcollection"]?>"><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
-			<span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" title="<?=$lang["emailresource"]?>"><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
+			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" <? if (!$infobox) { ?>title="<?=$lang["fullscreenpreview"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
 			<div class="clearer"></div>
 		</div>
@@ -212,7 +219,7 @@ if (true) #search condition
 			} else if ($display=="list") { # List view  # CAMILLO
 			?>
 			<!--List Item-->
-			<tr>
+			<tr onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
 			<td nowrap><div class="ListTitle"><a href="<?=$url?>"><?=highlightkeywords(tidy_trim($result[$n]["title"],45) . ((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):""),$search) ?></a></div></td>
 			<td><? if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><? } else { ?>&nbsp;<? } ?></td>
 			<td><?=$result[$n]["ref"]?></td>
@@ -315,5 +322,10 @@ if (true) #search condition
 	<?
 	}
 
+# Add the infobox.
+?>
+<div id="InfoBox"><div id="InfoBoxInner"> </div></div>
+
+<?
 include "include/footer.php";
 ?>

@@ -39,11 +39,17 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 error_reporting(E_ALL);
 set_error_handler("errorhandler");
 
-# *** CONNECT TO DATABASE ***
+# Set some defaults
+$infobox=true;
+
+# *** LOAD CONFIG ***
+# Load the default config first, if it exists, so any new settings are present even if missing from config.php
+if (file_exists(dirname(__FILE__)."/config.default.php")) {include "config.default.php";}
+# Load the real config
 if (!file_exists(dirname(__FILE__)."/config.php")) {exit("You must copy 'config.default.php' to 'config.php' in the include directory, and edit the file to alter the settings as appropriate.");}
 include "config.php";
 
-
+# *** CONNECT TO DATABASE ***
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
 set_magic_quotes_runtime(0);

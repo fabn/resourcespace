@@ -229,6 +229,7 @@ if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($re
 	}
 elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_full_download==false))
 	{
+	# Files without multiple download sizes (i.e. no thumbnail, or ImageMagick generated).
 	$counter++;
 	$path=get_resource_path($ref,"",false,$resource["file_extension"]);
 	if (file_exists($path))
@@ -249,7 +250,7 @@ else
 	
 if ($nodownloads || $counter==0)
 	{
-	# No file. Poss - request?
+	# No file. Link to request form.
 	?>
 	<tr class="DownloadDBlend">
 	<td><h2><?=($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>

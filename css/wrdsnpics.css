@@ -225,3 +225,10 @@ a:active {text-decoration:underline;}
 .infotable td,.infotable th {border-bottom: 1px solid #999999;}
 
 .RecordStory .highlight {background-color:black;padding:2px;}
+
+#InfoBox {display:none;position:absolute;top:0px;left:0px;width:362px;height:303px;background-repeat:no-repeat;
+behavior: url(iepngfix.htc);
+}
+#InfoBoxInner {color:black;margin:15px 32px 15px 20px;height:210px;overflow:hidden;}
+#InfoBoxInner h2 {color:black;font-size:1.2em;font-weight:bold;}
+#InfoBoxInner p {color:black;}

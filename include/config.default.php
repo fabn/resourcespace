@@ -138,6 +138,9 @@ $orderbyrating=false;
 # Use FancyUpload for batch uploads? (Flash / Javascript based uploader)
 $usefancyupload=true;
 
+# Enable AJAX popup info box on search results.
+$infobox=true;
+
 # Zip command to use to create zip archive (comment this line out to disable download collection as zip function)
 $zipcommand="zip -j";
 
@@ -158,5 +161,7 @@ $plugins=array();
 # to the account with the username specified.
 # $anonymous_login="guest";
 
-
+# Enable AJAX popup info box on search results.
+$infobox=true;
+$infobox_fields=array(18,10,29,53);
 ?>
