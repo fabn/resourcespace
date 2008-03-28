@@ -76,7 +76,7 @@ if (true) #search condition
 		?>
 		<div class="TopInpageNav TopInpageNav">
 		<div class="InpageNavLeftBlock"><?=$lang["youfound"]?>:<br /><span class="Selected"><?=number_format(count($result))?><?=(count($result)==$max_results)?"+":""?></span> <?=$lang["youfoundresources"]?></div>
-		<div class="InpageNavLeftBlock"><?=$lang["display"]?>:<br /><? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["thumbnails"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["thumbnails"]?></a><? } ?>&nbsp;|&nbsp;<? if ($display=="list") { ?><span class="Selected"><?=$lang["list"]?></span><? } else { ?><a href="<?=$url?>&display=list"><?=$lang["list"]?></a><? } ?></div>
+		<div class="InpageNavLeftBlock"><?=$lang["display"]?>:<br /><? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["thumbnails"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["thumbnails"]?></a><? } ?>&nbsp;|&nbsp;<? if ($display=="list") { ?><span class="Selected"><?=$lang["list"]?></span><? } else { ?><a href="<?=$url?>&display=list"><?=$lang["list"]?></a><? } ?> <? hook("adddisplaymode"); ?> </div>
 		<?
 		
 		# order by
@@ -165,12 +165,15 @@ if (true) #search condition
 		$resdata=get_resource_field_data_batch($showrefs);
 		*/
 		# Pre-fetch resource types for the list view
+		
+/* CAMILLO
 		if ($display=="list")
 			{
+*/			 
 			$rtypes=array();
 			$types=get_resource_types();
 			for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
-			}
+/* CAMILLO			} */
 		
 		# loop and display the results
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
@@ -206,7 +209,7 @@ if (true) #search condition
 <? } ?>
 			 
 			<?
-			} else { # List view
+			} else if ($display=="list") { # List view  # CAMILLO
 			?>
 			<!--List Item-->
 			<tr>
@@ -219,6 +222,9 @@ if (true) #search condition
 			</tr>
 			<?
 			}
+		
+		hook("customdisplaymode");
+		
 			}
 			
 		if ($display=="list")
