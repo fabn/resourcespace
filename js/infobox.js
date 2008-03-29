@@ -71,7 +71,7 @@ function InfoBoxAppear()
     	new Ajax.Updater('InfoBoxInner','infobox_loader.php?ref=' + InfoBoxRef,{ method: 'get' });
 
 	   	i.style.display='block';
-        new Effect.Opacity('InfoBox', {duration:0.3, from:1, to:0.7});
+        new Effect.Opacity('InfoBox', {duration:0.3, from:1, to:0.8});
 	   	
 	    i.style.top=InfoBoxTop + "px";
     	i.style.left=InfoBoxLeft + "px";
