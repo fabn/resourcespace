@@ -231,4 +231,4 @@ behavior: url(iepngfix.htc);
 }
 #InfoBoxInner {color:black;margin:15px 32px 15px 20px;height:210px;overflow:hidden;}
 #InfoBoxInner h2 {color:black;font-size:1.2em;font-weight:bold;}
-#InfoBoxInner p {color:black;}
+#InfoBoxInner p {color:black;padding:0;margin:0 0 5px 0;}
