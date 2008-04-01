@@ -8,10 +8,10 @@ http://www.montala.net/resourcespace.php
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?=htmlspecialchars($applicationname)?></title>
-<link href="css/wrdsnpics.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
-<link href="css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
-<!--[if lte IE 6]> <link href="css/wrdsnpicsIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<!--[if lte IE 5.6]> <link href="css/wrdsnpicsIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<link href="<?=$baseurl?>/css/wrdsnpics.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+<link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
+<!--[if lte IE 6]> <link href="<?=$baseurl?>/css/wrdsnpicsIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<!--[if lte IE 5.6]> <link href="<?=$baseurl?>/css/wrdsnpicsIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 
 <?
 # Include CSS files for for each of the plugins too (if provided)
@@ -21,7 +21,7 @@ for ($n=0;$n<count($plugins);$n++)
 	if (file_exists($csspath))
 		{
 		?>
-		<link href="plugins/<?=$plugins[$n]?>/css/style.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+		<link href="<?=$baseurl?>/plugins/<?=$plugins[$n]?>/css/style.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
 		<?
 		}
 	}
@@ -63,8 +63,8 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 	{
 	?>
 	<ul>
-	<li><a href="login.php" target="_top"><?=$lang["login"]?></a></li>
-	<li><a href="contact.php"><?=$lang["contactus"]?></a></li>
+	<li><a href="<?=$baseurl?>/login.php" target="_top"><?=$lang["login"]?></a></li>
+	<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
 	</ul>
 	<?
 	}
@@ -72,9 +72,9 @@ else
 	{
 	?>
 	<ul>
-	<li><? if ($allow_password_change) { ?><a href="change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
-	<li><a href="login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
-	<li><a href="contact.php"><?=$lang["contactus"]?></a></li>
+	<li><? if ($allow_password_change) { ?><a href="<?=$baseurl?>/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
+	<li><a href="<?=$baseurl?>/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
+	<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
 	</ul>
 	<?
 	}
@@ -85,7 +85,7 @@ else
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">
 		<? if (checkperm("s")) { ?>
 		<ul>
-		<? if (!$use_theme_as_home) { ?><li><a href="home.php" target="main"><?=$lang["home"]?></a></li><? }  ?>
+		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php" target="main"><?=$lang["home"]?></a></li><? }  ?>
 		
 		<? if 	(
 			(checkperm("s"))
@@ -96,17 +96,17 @@ else
 				((strlen(@$search)>0) && (strpos($search,"!")===false))
 			)
 		)
-		{?><li><a target="main" href="search.php"><?=$lang["searchresults"]?></a></li><? } ?>
-		<li><a target="main" href="themes.php"><?=$lang["themes"]?></a></li>
-		<? if ($recent_link) { ?><li><a target="main" href="search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
-		<? if ($mycollections_link) { ?><li><a target="main" href="collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
-		<? if (checkperm("d")) { ?><li><a target="main" href="contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
-		<? if (($research_request) && (checkperm("q"))) { ?><li><a target="main" href="research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
+		{?><li><a target="main" href="<?=$baseurl?>/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
+		<li><a target="main" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li>
+		<? if ($recent_link) { ?><li><a target="main" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
+		<? if ($mycollections_link) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
+		<? if (checkperm("d")) { ?><li><a target="main" href="<?=$baseurl?>/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
+		<? if (($research_request) && (checkperm("q"))) { ?><li><a target="main" href="<?=$baseurl?>/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
 		
-		<? if ($speedtagging && checkperm("n")) { ?><li><a target="main" href="tag.php"><?=$lang["tagging"]?></a></li><? } ?>
+		<? if ($speedtagging && checkperm("n")) { ?><li><a target="main" href="<?=$baseurl?>/tag.php"><?=$lang["tagging"]?></a></li><? } ?>
 		
-		<li><a target="main" href="help.php"><?=$lang["helpandadvice"]?></a></li>
-		<? if (checkperm("t")) { ?><li><a target="main" href="team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
+		<li><a target="main" href="<?=$baseurl?>/help.php"><?=$lang["helpandadvice"]?></a></li>
+		<? if (checkperm("t")) { ?><li><a target="main" href="<?=$baseurl?>/team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
 
 <? hook("toptoolbaradder"); ?>
 

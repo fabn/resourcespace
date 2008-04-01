@@ -119,6 +119,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 
 	<? if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
 
+	<? hook("addcustomtool"); ?>
 	
 	</td>
 	</tr><?
