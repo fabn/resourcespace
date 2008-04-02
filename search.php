@@ -238,12 +238,18 @@ if (true) #search condition
 	<!--Resource Panel-->
 	<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanel" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
+		
+<? if (!hook("renderimagethumb")) { ?>			
 			<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
 			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
 			</td>
 			</tr></table>
+<? } ?>	
 			
+<? if (!hook("rendertitlethumb")) { ?>			
 			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
+<? } ?>			
+			
 			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?><? } ?>&nbsp;</div>
 				
 
