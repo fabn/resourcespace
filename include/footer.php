@@ -59,6 +59,9 @@ function SwapCSS(css)
 
 <!--c<?=$querycount?>, t<?=$querytime?>-->
 <br />
+
+<? hook("footerbottom"); ?>
+
 </body>
 </html>
 	

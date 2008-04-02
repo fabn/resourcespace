@@ -123,6 +123,9 @@ else
 <? } ?>
 </div>
 <? } ?>
+
+<? hook("headerbottom"); ?>
+
 <div class="clearer"></div>
 <? if (checkperm("s") && ($pagename!="search_advanced") && ($pagename!="preview") && ($pagename!="admin_header") && ($loginterms==false)) { ?>
 <? include "searchbar.php"; ?>
