@@ -685,7 +685,11 @@ function bulk_mail($userlist,$subject,$text)
 	$emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
 	for ($n=0;$n<count($emails);$n++)
 		{
-		send_mail($emails[$n],$subject,str_replace("\\r\\n","\n",$text));
+		//send_mail($emails[$n],$subject,str_replace("\\r\\n","\n",$text));
+		
+		//+ Camillo
+		send_mail($emails[$n],$subject,stripslashes(str_replace("\\r\\n","\n",$text)));
+		//- Camillo
 		}
 		
 	# Return an empty string (all OK).

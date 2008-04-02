@@ -168,5 +168,9 @@ $infobox_fields=array(18,10,29,53);
 # Enable search within results
 $search_within_results=false;
 
+//+ CAMILLO
+# Disable all help text.
+$config_disablehelp = true;
+//- CAMILLO
 
 ?>

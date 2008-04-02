@@ -456,6 +456,10 @@ function pagename()
     
 function text($name)
 	{
+	//+ CAMILLO
+	global $config_disablehelp;
+	//- CAMILLO
+
 	# Returns site text with name $name, or failing that returns dummy text.
 	global $site_text,$pagename,$language,$languages,$usergroup;
 	if (array_key_exists($language . "-" . $name,$site_text)) {return $site_text[$language . "-" .$name];} 
@@ -465,6 +469,10 @@ function text($name)
 		{
 		if (array_key_exists($key . "-" . $name,$site_text)) {return $site_text[$key . "-" . $name];} 		
 		}
+
+	//+ CAMILLO
+	if ($config_disablehelp) return "";
+	//- CAMILLO
 	
 	return "To add help text for this section, copy a help entry to page '$pagename', name '$name'.";
 	}
