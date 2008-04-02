@@ -320,7 +320,7 @@ function suggest_refinement($refs,$search)
 	$in=join(",",$refs);
 	$suggest=array();
 	# find common keywords
-	$refine=sql_query("select k.keyword,count(*) c from resource_keyword r,keyword k where r.keyword=k.ref and r.resource in ($in) group by k.keyword order by c desc limit 5");
+	$refine=sql_query("select k.keyword,count(*) c from resource_keyword r join keyword k on r.keyword=k.ref and r.resource in ($in) and length(k.keyword)>=3 and length(k.keyword)<=15 and k.keyword not like '%0%' and k.keyword not like '%1%' and k.keyword not like '%2%' and k.keyword not like '%3%' and k.keyword not like '%4%' and k.keyword not like '%5%' and k.keyword not like '%6%' and k.keyword not like '%7%' and k.keyword not like '%8%' and k.keyword not like '%9%' group by k.keyword order by c desc limit 5");
 	for ($n=0;$n<count($refine);$n++)
 		{
 		if (strpos($search,$refine[$n]["keyword"])===false)

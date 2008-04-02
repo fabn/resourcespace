@@ -190,7 +190,7 @@ if (true) #search condition
 			{
 			for ($n=0;$n<count($result);$n++)
 				{
-				$refs[]=$result[$n]["ref"]; # add this to a list of results, for query refining later
+				if ($result[$n]["ref"]) {$refs[]=$result[$n]["ref"];} # add this to a list of results, for query refining later
 				}
 			$suggest=suggest_refinement($refs,$search);
 			if (count($suggest)>0)
