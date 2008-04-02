@@ -164,7 +164,23 @@ if (true) #search condition
 		pager();
 		$draw_pager=true;
 		?></div>
+		
 		<?		
+		# Search within results
+		if ($search_within_results)
+			{
+			?>
+			<!--Panel for related themes / collections -->
+			<div class="RecordBox">
+			<div class="RecordPanel">  
+			test
+			</div>
+			<div class="PanelShadow"></div>
+			</div>
+			<?
+			}
+		
+		
 		
 		if ($display=="list")
 			{
