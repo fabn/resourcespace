@@ -115,6 +115,14 @@ a:active {text-decoration:underline;}
 
 .IconStar	{width:11px;height:12px;padding: 0;display: block;float: right;}
 
+.IconRemove		{width:14px;height:12px;padding: 0;display: block;float: right;}
+.IconReorder	{width:16px;height:12px;padding: 0;display: block;float: right;}
+.IconComment	{width:13px;height:12px;padding: 0;display: block;float: right;}
+
+
+.KeyReorder {margin: 0px 5px 10px;display: inline;padding-left: 18px;}
+.KeyComment {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
+
 .KeyStar {margin: 0px 5px 10px;display: inline;padding-left: 14px;}
 .KeyEmail {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
 .KeyPreview {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
@@ -232,3 +240,9 @@ behavior: url(iepngfix.htc);
 #InfoBoxInner {color:black;margin:15px 32px 15px 20px;height:210px;overflow:hidden;}
 #InfoBoxInner h2 {color:black;font-size:1.2em;font-weight:bold;}
 #InfoBoxInner p {color:black;padding:0;margin:0 0 5px 0;}
+
+/* Use different icons for the collections bar */
+.CollectionPanelInfo .IconReorder	{	background: url(../gfx/interface/IcReorder.gif) no-repeat;}
+.CollectionPanelInfo .IconComment	{	background: url(../gfx/interface/IcComment.gif) no-repeat;}
+.CollectionPanelInfo .IconCommentAnim	{	background: url(../gfx/interface/IcComment_anim.gif) no-repeat;}
+.CollectionPanelInfo .IconRemove	{	background: url(../gfx/interface/IcRemove.gif) no-repeat;}

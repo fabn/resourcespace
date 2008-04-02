@@ -303,7 +303,26 @@ function get_theme_image($theme)
 	if ($image==0) {return false;} else {return get_resource_path($image,"col",false);}
 	}
 
+function swap_collection_order($resource1,$resource2,$collection)
+	{
+	# Swaps the position of two resources within a collection.
+	$pos1=sql_value("select date_added value from collection_resource where collection='$collection' and resource='$resource1'",0);
+	$pos2=sql_value("select date_added value from collection_resource where collection='$collection' and resource='$resource2'",0);
 
+	sql_query("update collection_resource set date_added='$pos2' where resource='$resource1' and collection='$collection'");
+	sql_query("update collection_resource set date_added='$pos1' where resource='$resource2' and collection='$collection'");
 
+	}
+
+function get_collection_resource_comment($resource,$collection)
+	{
+	return sql_value("select comment value from collection_resource where collection='$collection' and resource='$resource'","");
+	}
+	
+function save_collection_resource_comment($resource,$collection,$comment)
+	{
+	sql_query("update collection_resource set comment='$comment' where resource='$resource' and collection='$collection'");
+	return true;
+	}
 
 ?>

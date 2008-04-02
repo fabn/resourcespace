@@ -1,3 +1,5 @@
 collection,int(11),YES,MUL,,
 resource,int(11),YES,,,
 date_added,timestamp,YES,,CURRENT_TIMESTAMP,
+comment,text,YES,,,
+rating,int(11),YES,,,

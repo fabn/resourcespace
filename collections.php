@@ -22,9 +22,6 @@ setcookie("thumbs",$thumbs);
 <link href="css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
 <!--[if lte IE 6]> <link href="css/wrdsnpicsIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="css/wrdsnpicsIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-</head>
-
-<body class="CollectBack" id="collectbody">
 <?
 $collection=getvalescaped("collection","");
 if ($collection!="")
@@ -35,6 +32,47 @@ if ($collection!="")
 	$usercollection=$collection;
 	hook("postchangecollection");
 	}
+
+# Load collection info.
+$cinfo=get_collection($usercollection);
+
+# Check to see if the user can edit this resource.
+$collectiondata=get_collection($collection);
+if (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h")))
+	{
+	$allow_reorder=true;
+	}
+
+# Include function for reordering
+if ($allow_reorder)
+	{
+	?>
+	<script src="js/prototype.js" type="text/javascript"></script>
+	<script src="js/scriptaculous.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	function ReorderResources(id1,id2)
+		{
+		document.location='collections.php?reorder=' + id1 + '-' + id2;
+		}
+	</script>
+	<?
+	
+	# Also check for the parameter and reorder as necessary.
+	$reorder=getvalescaped("reorder","");
+	if ($reorder!="")
+		{
+		$r=explode("-",$reorder);
+		swap_collection_order(substr($r[0],13),$r[1],$usercollection);
+		}
+	}
+
+
+?>
+</head>
+
+<body class="CollectBack" id="collectbody">
+<?
+
 
 $add=getvalescaped("add","");
 if ($add!="")
@@ -115,8 +153,6 @@ if ($research!="")
 	}
 	
 hook("processusercommand");
-
-//if (file_exists("plugins/collection_process.php")) {include "plugins/collection_process.php";}
 ?>
 
 <script language="Javascript">
@@ -254,19 +290,35 @@ if (count($result)>0)
 		?>
 <? if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
-		<div class="CollectionPanelShell">
+		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"])?>" class="CollectImageBorder"/><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
-		<? if ($k=="") { ?><div class="CollectionPanelInfo"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a></div><? } ?>			
+		<? if ($k=="") { ?><div class="CollectionPanelInfo">
+		<!--<a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a>-->
+		<? if ($allow_reorder) { ?>
+		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
+		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
+		<span class="IconRemove"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
+
+		<? } ?>
+		</div><? } ?>			
 		</div>
+		<? if ($allow_reorder) { 
+		# Javascript drag/drop enabling.
+		?>
+		<script type="text/javascript">
+		new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', xrevert: true});
+		Droppables.add('ResourceShell<?=$ref?>',{accept: 'CollectionPanelShell', onDrop: function(element) {ReorderResources(element.id,<?=$ref?>);}, hoverclass: 'ReorderHover'});
+		</script>
+		<? } ?>
 <? } ?>		
 		<?		
 		}
 	}
 
-	# Plugin for additional collection listings	
+	# Plugin for additional collection listings	(deprecated)
 	if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
 	?>
 	</div>

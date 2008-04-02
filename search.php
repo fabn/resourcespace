@@ -3,6 +3,7 @@ include "include/db.php";
 include "include/authenticate.php";
 include "include/general.php";
 include "include/search_functions.php";
+include "include/collections_functions.php";
 
 $search=getvalescaped("search","");
 
@@ -25,6 +26,20 @@ $display=getvalescaped("display","thumbs");setcookie("display",$display);
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
+
+# Enable/disable the reordering feature. Just for collections for now.
+$allow_reorder=false;
+if (substr($search,0,11)=="!collection")
+	{
+	# Check to see if this user can edit (and therefore reorder) this resource
+	$collection=substr($search,11);
+	$collectiondata=get_collection($collection);
+	if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+		{
+		$allow_reorder=true;
+		}
+	}
+
 
 # fetch resource types from query string and generate a resource types cookie
 if (getval("resetrestypes","")=="")
@@ -51,14 +66,44 @@ if (!array_key_exists("search",$_GET))
 	$order_by=getvalescaped("saved_order_by","relevance");setcookie("saved_order_by",$order_by);
 	$archive=getvalescaped("saved_archive",0);setcookie("saved_archive",$archive);
 	}
+	
+# If requested, refresh the collection frame (for redirects from saves)
+if (getval("refreshcollectionframe","")!="")
+	{
+	refresh_collection_frame();
+	}
 
 # Include scriptaculous for infobox panels.
-$headerinsert="
+$headerinsert.="
 <script src=\"js/prototype.js\" type=\"text/javascript\"></script>
 <script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
 <script src=\"js/infobox.js\" type=\"text/javascript\"></script>
 ";
 $bodyattribs="OnMouseMove='InfoBoxMM(event);'";
+
+# Include function for reordering
+if ($allow_reorder)
+	{
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&offset=" . $offset;
+	?>
+	<script type="text/javascript">
+	function ReorderResources(id1,id2)
+		{
+		document.location='<?=$url?>&reorder=' + id1 + '-' + id2;
+		}
+	</script>
+	<?
+	
+	# Also check for the parameter and reorder as necessary.
+	$reorder=getvalescaped("reorder","");
+	if ($reorder!="")
+		{
+		$r=explode("-",$reorder);
+		swap_collection_order(substr($r[0],13),$r[1],substr($search,11));
+		refresh_collection_frame();
+		}
+	}
+
 
 include "include/header.php";
 
@@ -173,14 +218,12 @@ if (true) #search condition
 		*/
 		# Pre-fetch resource types for the list view
 		
-/* CAMILLO
 		if ($display=="list")
 			{
-*/			 
 			$rtypes=array();
 			$types=get_resource_types();
 			for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
-/* CAMILLO			} */
+			} 
 		
 		# loop and display the results
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
@@ -193,7 +236,7 @@ if (true) #search condition
 <? if (!hook("renderresultthumb")) { ?>
 
 	<!--Resource Panel-->
-	<div class="ResourcePanelShell">
+	<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanel" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
 			<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
 			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
@@ -201,29 +244,40 @@ if (true) #search condition
 			</tr></table>
 			
 			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
-			<div class="ResourcePanelCountry"><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?>&nbsp;</div>
+			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?><? } ?>&nbsp;</div>
 				
 
 			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" <? if (!$infobox) { ?>title="<?=$lang["fullscreenpreview"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
+			<? if ($allow_reorder) { ?>
+			<span class="IconComment"><a href="collection_comment.php?ref=<?=$ref?>&collection=<?=substr($search,11)?>" <? if (!$infobox) { ?>title="<?=$lang["addorviewcomments"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
+			<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
+			<? } ?>
 			<div class="clearer"></div>
 		</div>
 	<div class="PanelShadow"></div>
 	</div>
-
+	<? if ($allow_reorder) { 
+	# Javascript drag/drop enabling.
+	?>
+	<script type="text/javascript">
+	new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', xrevert: true});
+	Droppables.add('ResourceShell<?=$ref?>',{accept: 'ResourcePanelShell', onDrop: function(element) {ReorderResources(element.id,<?=$ref?>);}, hoverclass: 'ReorderHover'});
+	</script>
+	<? } ?>
 <? } ?>
 			 
 			<?
-			} else if ($display=="list") { # List view  # CAMILLO
+			} else if ($display=="list") { # List view
 			?>
 			<!--List Item-->
 			<tr onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
 			<td nowrap><div class="ListTitle"><a href="<?=$url?>"><?=highlightkeywords(tidy_trim($result[$n]["title"],45) . ((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):""),$search) ?></a></div></td>
 			<td><? if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><? } else { ?>&nbsp;<? } ?></td>
 			<td><?=$result[$n]["ref"]?></td>
-			<td><?=$rtypes[$result[$n]["resource_type"]]?></td>
+			<td><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?></td>
 			<td><?=nicedate($result[$n]["creation_date"],false,true)?></td>
 			<td ><div class="ListTools"><a href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
 			</tr>
@@ -246,6 +300,12 @@ if (true) #search condition
 		<div class="BottomInpageKey"> 
 			<?=$lang["key"]?>:
 		  <div class="KeyStar"><?=$lang["verybestresources"]?></div>
+		  
+		  	<? if ($allow_reorder) { ?>
+			<div class="KeyReorder"><?=$lang["reorderresources"]?></div>
+			<div class="KeyComment"><?=$lang["addorviewcomments"]?></div>
+			<? } ?>
+			
 			<div class="KeyEmail"><?=$lang["emailresource"]?></div>
 			<div class="KeyCollect"><?=$lang["addtocurrentcollection"]?></div>
 			<div class="KeyPreview"><?=$lang["fullscreenpreview"]?></div>

@@ -51,6 +51,10 @@ a:active {color:#737373;}
 .IconEmail, .KeyEmail	{background: url(../gfx/whitegry/interface/IcEml.gif) no-repeat;}
 .IconPreview, .KeyPreview	{background: url(../gfx/whitegry/interface/IcPre.gif) no-repeat;}
 .IconStar, .KeyStar	{	background: url(../gfx/whitegry/interface/IcStar.gif) no-repeat;}
+.IconReorder, .KeyReorder	{	background: url(../gfx/whitegry/interface/IcReorder.gif) no-repeat;}
+.IconComment, .KeyComment	{	background: url(../gfx/whitegry/interface/IcComment.gif) no-repeat;}
+
+
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 .SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Question, .RecordPanel .Title {color: #3C3C3C}
 .Question{border-top: 1px solid #BBBBBB;}

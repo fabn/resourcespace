@@ -476,4 +476,10 @@ $lang["collectiondeleteconfirm"]="Are you sure you wish to delete this collectio
 $lang["hidden"]="(hidden)";
 $lang["requestnewpassword"]="Request New Password";
 
+# New for 1.4
+$lang["reorderresources"]="Reorder resources within collection (hold and drag)";
+$lang["addorviewcomments"]="Add or view comments";
+$lang["collectioncomments"]="Collection Comments";
+$lang["collectioncommentsinfo"]="Add a comment to this collection for this resource. This will only apply to this collection.";
+$lang["comment"]="Comment";
 ?>

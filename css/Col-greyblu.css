@@ -52,6 +52,9 @@ a:active {color:#B5C3D4;}
 .IconEmail, .KeyEmail	{background: url(../gfx/greyblu/interface/IcEml.gif) no-repeat;}
 .IconPreview, .KeyPreview	{background: url(../gfx/greyblu/interface/IcPre.gif) no-repeat;}
 .IconStar, .KeyStar	{	background: url(../gfx/greyblu/interface/IcStar.gif) no-repeat;}
+.IconReorder, .KeyReorder	{	background: url(../gfx/greyblu/interface/IcReorder.gif) no-repeat;}
+.IconComment, .KeyComment	{	background: url(../gfx/greyblu/interface/IcComment.gif) no-repeat;}
+
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 

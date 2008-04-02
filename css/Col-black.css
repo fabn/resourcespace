@@ -52,12 +52,14 @@ a:active {color:#CCC;}
 .IconEmail, .KeyEmail	{background: url(../gfx/black/interface/IcEml.gif) no-repeat;}
 .IconPreview, .KeyPreview	{background: url(../gfx/black/interface/IcPre.gif) no-repeat;}
 .IconStar, .KeyStar	{	background: url(../gfx/black/interface/IcStar.gif) no-repeat;}
+.IconReorder, .KeyReorder	{	background: url(../gfx/black/interface/IcReorder.gif) no-repeat;}
+.IconComment, .KeyComment	{	background: url(../gfx/black/interface/IcComment.gif) no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 
 .SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Question, .RecordPanel .Title {color: #FFFFFF;} 
 
-.Question{border-top: 1px solid #AAA;}
+.Question{border-top: 1px solid #AAAc;}
 
 .RecordPanel {background: #595959 url(../gfx/black/interface/recordpanel.gif) repeat-x;border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
 .RecordPanel .Title {	border-bottom: 1px solid #AAA;}

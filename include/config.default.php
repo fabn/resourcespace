@@ -141,8 +141,8 @@ $usefancyupload=true;
 # Enable AJAX popup info box on search results.
 $infobox=true;
 
-# Zip command to use to create zip archive (comment this line out to disable download collection as zip function)
-$zipcommand="zip -j";
+# Zip command to use to create zip archive (uncomment to enable download of collections as a zip file)
+# $zipcommand="zip -j";
 
 # Enable speed tagging feature? (development)
 $speedtagging=false;
@@ -164,4 +164,9 @@ $plugins=array();
 # Enable AJAX popup info box on search results.
 $infobox=true;
 $infobox_fields=array(18,10,29,53);
+
+# Enable search within results
+$search_within_results=false;
+
+
 ?>
