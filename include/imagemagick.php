@@ -64,6 +64,14 @@ where ref='$ref'");
                 } 
         } 
 
+#Support for Sort By Color feature : extracting color data for files processed by ImageMagick:
+$image = get_resource_path($ref,"thm",false);
+if (file_exists($image))
+	{
+	$target = imagecreatefromjpeg($image);
+	extract_mean_colour($target,$ref);
+	imagedestroy($target); 
+	}
 
 
 ?>

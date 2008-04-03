@@ -108,8 +108,10 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	
 	&nbsp;<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
 
+	<? if (isset($zipcommand)) { ?>
 	&nbsp;<a href="collection_download.php?collection=<?=$collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?=$lang["action-download"]?></a>
+	<? } ?>
 
 	&nbsp;<a href="collection_email.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a>
 	

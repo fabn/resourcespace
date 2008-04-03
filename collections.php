@@ -309,7 +309,7 @@ if (count($result)>0)
 		# Javascript drag/drop enabling.
 		?>
 		<script type="text/javascript">
-		new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', xrevert: true});
+		new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', revert: true});
 		Droppables.add('ResourceShell<?=$ref?>',{accept: 'CollectionPanelShell', onDrop: function(element) {ReorderResources(element.id,<?=$ref?>);}, hoverclass: 'ReorderHover'});
 		</script>
 		<? } ?>
