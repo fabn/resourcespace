@@ -234,13 +234,16 @@ if (true) #search condition
 		*/
 		# Pre-fetch resource types for the list view
 		
+/*		
 		if ($display=="list")
 			{
+*/			 
 			$rtypes=array();
 			$types=get_resource_types();
 			for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
+/*			
 			} 
-		
+*/		
 		# loop and display the results
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
 			{

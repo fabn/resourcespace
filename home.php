@@ -11,6 +11,8 @@ $headerinsert="
 ";
 
 include "include/header.php";
+
+if (!hook("replacehome")) { 
 ?>
 <script language="Javascript">
 
@@ -95,6 +97,8 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
     <p><?=text("restrictedtext")?></p>
 </div>
 <? }
+
+} // End of ReplaceHome hook
 
 include "include/footer.php";
 ?>
