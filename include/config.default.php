@@ -168,7 +168,7 @@ $infobox_fields=array(18,10,29,53);
 # Enable search within results
 $search_within_results=false;
 
-# Set to true to disable all help text.
-$config_disablehelp = false;
+# Set to true to disable all missing help text warning.
+$config_disable_nohelp_warning = false;
 
 ?>

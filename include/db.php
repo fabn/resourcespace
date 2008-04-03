@@ -456,9 +456,7 @@ function pagename()
     
 function text($name)
 	{
-	global $config_disablehelp;
-	# If set, then don't display help.
-	if ($config_disablehelp) return "";
+	global $config_disable_nohelp_warning;
 
 	# Returns site text with name $name, or failing that returns dummy text.
 	global $site_text,$pagename,$language,$languages,$usergroup;
@@ -469,6 +467,8 @@ function text($name)
 		{
 		if (array_key_exists($key . "-" . $name,$site_text)) {return $site_text[$key . "-" . $name];} 		
 		}
+	
+	if ($config_disable_nohelp_warning) return "";
 	
 	return "To add help text for this section, copy a help entry to page '$pagename', name '$name'.";
 	}
