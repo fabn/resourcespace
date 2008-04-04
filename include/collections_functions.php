@@ -316,12 +316,13 @@ function swap_collection_order($resource1,$resource2,$collection)
 
 function get_collection_resource_comment($resource,$collection)
 	{
-	return sql_value("select comment value from collection_resource where collection='$collection' and resource='$resource'","");
+	$data=sql_query("select * from collection_resource where collection='$collection' and resource='$resource'","");
+	return $data[0];
 	}
 	
-function save_collection_resource_comment($resource,$collection,$comment)
+function save_collection_resource_comment($resource,$collection,$comment,$rating)
 	{
-	sql_query("update collection_resource set comment='$comment' where resource='$resource' and collection='$collection'");
+	sql_query("update collection_resource set comment='$comment',rating='$rating' where resource='$resource' and collection='$collection'");
 	return true;
 	}
 

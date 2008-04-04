@@ -11,7 +11,9 @@ $collection=getvalescaped("collection","");
 
 # Fetch collection data
 $cinfo=get_collection($collection);if ($cinfo===false) {exit("Collection not found.");}
-$comment=get_collection_resource_comment($ref,$collection);
+$commentdata=get_collection_resource_comment($ref,$collection);
+$comment=$commentdata["comment"];
+$rating=$commentdata["rating"];
 
 # Check access
 if (($userref!=$cinfo["user"]) && ($cinfo["allow_changes"]!=1) && (!checkperm("h"))) {exit("Access denied.");}
@@ -20,7 +22,8 @@ if (getval("save","")!="")
 	{
 	# Save comment
 	$comment=trim(getvalescaped("comment",""));
-	save_collection_resource_comment($ref,$collection,$comment);
+	$rating=trim(getvalescaped("rating",""));
+	save_collection_resource_comment($ref,$collection,$comment,$rating);
 	redirect ("search.php?refreshcollectionframe=true&search=!collection" . $collection);
 	}
 
@@ -39,6 +42,15 @@ include "include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<div class="Question">
+<label for="name"><?=$lang["rating"]?></label><select class="stdwidth" name="rating">
+<option value="" <? if ($rating=="") { ?>selected<? } ?>></option>
+<? for ($n=1;$n<=5;$n++) { ?>
+<option value="<?=$n?>" <? if ($rating==$n) { ?>selected<? } ?>><?=str_pad("",$n,"*")?></option>
+<? } ?>
+</select>
+<div class="clearerleft"> </div>
+</div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			

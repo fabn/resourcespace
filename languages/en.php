@@ -482,4 +482,5 @@ $lang["addorviewcomments"]="Add or view comments";
 $lang["collectioncomments"]="Collection Comments";
 $lang["collectioncommentsinfo"]="Add a comment to this collection for this resource. This will only apply to this collection.";
 $lang["comment"]="Comment";
+
 ?>
