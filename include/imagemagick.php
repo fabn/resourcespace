@@ -23,6 +23,15 @@ if (isset($ffmpeg_path))
         if (file_exists($tmpfile . ".jpg")) {$file=$tmpfile . ".jpg";} 
         } 
         
+#if InDesign file, extract preview image from meta. 
+#Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+if ($extension=="indd"){
+$indd_thumb = extract_indd_thumb ($file);
+if ($indd_thumb!="no") {
+$tmpfile=myrealpath(get_resource_path($ref,"tmp",true,$extension));
+base64_to_jpeg( $indd_thumb, $tmpfile.".jpg" );
+if (file_exists($tmpfile.".jpg")){$file = $tmpfile.".jpg";}}}
+        
         
 # Support text files simply by rendering them on a JPEG.
 if ($extension=="txt")

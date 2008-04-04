@@ -535,4 +535,30 @@ function AltImageRotate($src_img, $angle) {
     return $rotate;
 }
 
+function base64_to_jpeg( $imageData, $outputfile ) {
+
+ $jpeg = fopen( $outputfile, "wb" ) or die ("can't open");
+ fwrite( $jpeg, base64_decode( $imageData ) );
+ fclose( $jpeg );
+}
+
+function extract_indd_thumb ($filename) {
+   
+    ob_start();
+    readfile($filename);
+    $source = ob_get_contents();
+    ob_end_clean();
+
+    $xmpdata_start = strrpos($source,"<xap:Thumbnails");
+    $xmpdata_end = strrpos($source,"</xap:Thumbnails>");
+    $xmplength = $xmpdata_end-$xmpdata_start;
+    $xmpdata = substr($source,$xmpdata_start,$xmplength+12);
+    $regexp     = "/<xapGImg:image>.+<\/xapGImg:image>/";
+    preg_match ($regexp, $xmpdata, $r);
+    if (isset($r['0'])){
+    	$indd_thumb = strip_tags($r['0']);
+    	$indd_thumb = str_replace("#xA;","",$indd_thumb);
+    	return $indd_thumb;} else {return "no";}
+     }
+
 ?>
