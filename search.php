@@ -17,6 +17,8 @@ if ($month!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . 
 $day=getvalescaped("day","");
 if ($day!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "day:" . $day;}
 
+hook("searchstringprocessing");
+
 
 if (strpos($search,"!")===false) {setcookie("search",$search);} # store the search in a cookie if not a special search
 $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
@@ -166,21 +168,7 @@ if (true) #search condition
 		?></div>
 		
 		<?		
-		# Search within results
-		if ($search_within_results)
-			{
-			?>
-			<!--Panel for related themes / collections -->
-			<div class="RecordBox">
-			<div class="RecordPanel">  
-			test
-			</div>
-			<div class="PanelShadow"></div>
-			</div>
-			<?
-			}
-		
-		
+		hook("beforesearchresults");
 		
 		if ($display=="list")
 			{
@@ -276,7 +264,7 @@ if (true) #search condition
 			<span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
-			<? if ($allow_reorder) { ?>
+			<? if ($collection_reorder_caption && $allow_reorder) { ?>
 			<span class="IconComment"><a href="collection_comment.php?ref=<?=$ref?>&collection=<?=substr($search,11)?>" <? if (!$infobox) { ?>title="<?=$lang["addorviewcomments"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 			<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 			<? } ?>
@@ -284,7 +272,7 @@ if (true) #search condition
 		</div>
 	<div class="PanelShadow"></div>
 	</div>
-	<? if ($allow_reorder) { 
+	<? if ($collection_reorder_caption && $allow_reorder) { 
 	# Javascript drag/drop enabling.
 	?>
 	<script type="text/javascript">

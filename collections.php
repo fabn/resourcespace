@@ -296,16 +296,16 @@ if (count($result)>0)
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
 		<? if ($k=="") { ?><div class="CollectionPanelInfo">
-		<!--<a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a>-->
-		<? if ($allow_reorder) { ?>
+		<? if ($collection_reorder_caption && $allow_reorder) { ?>
 		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<span class="IconRemove"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
-
+		<? } else { ?>
+		<a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a>
 		<? } ?>
 		</div><? } ?>			
 		</div>
-		<? if ($allow_reorder) { 
+		<? if ($collection_reorder_caption && $allow_reorder) { 
 		# Javascript drag/drop enabling.
 		?>
 		<script type="text/javascript">
