@@ -26,6 +26,12 @@ include "include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 	
+	<div class="Question">
+	<label for="email"><?=$lang["userrequestcomment"]?></label>
+	<textarea name="userrequestcomment" id="userrequestcomment" class="stdwidth"></textarea>
+	<div class="clearerleft"> </div>
+	</div>	
+	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
 	<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["requestuserlogin"]?>&nbsp;&nbsp;" />

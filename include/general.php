@@ -525,7 +525,7 @@ function email_user_request()
 	{
 	# E-mails the submitted user request form to the team.
 	global $applicationname,$email_from,$baseurl,$email_notify;
-	$message="The User Login Request form has been completed with the following details:\n\nName: " . getval("name","") . "\nE-mail: " . getval("email","") . "\n\nIf this is a valid request, please visit the system at the URL below and create an account for this user.\n$baseurl";
+	$message="The User Login Request form has been completed with the following details:\n\nName: " . getval("name","") . "\nE-mail: " . getval("email","") . "\nComment: " . getval("userrequestcomment","") . "\n\nIf this is a valid request, please visit the system at the URL below and create an account for this user.\n$baseurl";
 	send_mail($email_notify,$applicationname . ": Login Request - " . getval("name",""),$message);
 	}
 
