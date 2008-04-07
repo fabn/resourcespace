@@ -168,4 +168,7 @@ $config_disable_nohelp_warning = false;
 # Reordering, captioning and ranking of collections
 $collection_reorder_caption=false;
 
+# Footer text applied to all e-mails (blank by default)
+$emailfooter="";
+
 ?>

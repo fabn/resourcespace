@@ -752,6 +752,11 @@ function i18n_get_indexable($text)
 function send_mail($email,$subject,$message,$from="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
+	
+	# Include footer
+	global $email_footer;
+	$message.="\r\n\r\n\r\n" . $email_footer;
+	
 	$message=quoted_printable_encode($message);
 	$subject=quoted_printable_encode_subject($subject);
 	global $email_from;
