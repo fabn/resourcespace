@@ -491,4 +491,8 @@ $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (recommended)"
 $lang["addresourcebatchftp"]="Add Resource Batch - FTP";
 $lang["replaceresourcebatch"]="Replace Resource Batch";
 
+$lang["editmode"]="Edit Mode";
+$lang["replacealltext"]="Replace All Text";
+$lang["findandreplace"]="Find And Replace";
+
 ?>

@@ -54,7 +54,7 @@ if ($find=="") {$atoz.="<span class='Selected'>";}
 $atoz.="<a href=\"team_user.php?order_by=u.username&find=\">" . $lang["viewall"] . "</a>";
 if ($find=="") {$atoz.="</span>";}
 $atoz.="&nbsp;&nbsp;";
-for ($n=ord("A");$n<ord("Z");$n++)
+for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
 	$atoz.="<a href=\"team_user.php?order_by=u.username&find=" . chr($n) . "\">" . chr($n) . "</a> ";

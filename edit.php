@@ -197,10 +197,26 @@ for ($n=0;$n<count($fields);$n++)
 	if (getval("resetform","")!="") {$value="";}
 	?>
 	<? if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
-	?><div><input name="editthis_<?=$name?>" id="editthis_<?=$n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?=$n?>');if (this.checked) {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><? } ?>
+	?><div><input name="editthis_<?=$name?>" id="editthis_<?=$n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?=$n?>');var m=document.getElementById('modeselect_<?=$n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><? } ?>
+
+	<?
+	if ($multiple)
+		{
+		# When editing multiple, give option to select Replace All Text or Find and Replace
+		?>
+		<div class="Question" id="modeselect_<?=$n?>" style="display:none;">
+		<label><?=$lang["editmode"]?></label>
+		<select name="modeselect_<?=$n?>" class="stdwidth">
+		<option value="RT"><?=$lang["replacealltext"]?></option>
+		<option value="FR"><?=$lang["findandreplace"]?></option>
+		</select>
+		</div>
+		<?
+		}
+	?>
 
 	<div class="Question" id="question_<?=$n?>" <?if ($multiple) {?>style="display:none;"<? } ?>>
-	<label for="<?=$name?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["keywords_index"]==1) { ?><sup>*</sup><? } ?></label>
+	<label for="<?=$name?>"><?if (!$multiple) {?><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["keywords_index"]==1) { ?><sup>*</sup><? } ?><? } ?></label>
 	<?
 
 	switch ($fields[$n]["type"]) {

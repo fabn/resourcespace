@@ -1,4 +1,8 @@
 <?php
+#
+# PDF Contact Sheet Functionality
+# Contributed by Tom Gleason
+#
 
 include('fpdf/fpdf.php');
 include('include/general.php');
@@ -49,42 +53,49 @@ $j=0;
 foreach ($collectionresources as $resource)
 {
     $i++;
-
-		$resourcethumb= get_resource_path($resource,"scr",false);
+		
 		
 		$resourcedata=get_resource_data($resource);
-     	$keywords.=$resourcedata['ref'].", ";	
-		
-		# Two ways to size image to cell, either by height or by width.
-		$thumbsize=getimagesize($resourcethumb);
-			if ($thumbsize[0]>$thumbsize[1]){
-			
-			    $pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
-				$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $resource),2,0);
-			
-			}
-      		
-      		else{
-      			
-      			$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
-				$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $resource),0,0);
-				
-			}
-	
-			if ($i == $columns){
-			
-				$pdf->ln(); $i=0;$j++;
- 					
- 					if ($j > $rowsperpage){
- 					
- 					$j=0; $pdf->AddPage();
- 					
- 					}			
- 					
-			}
 
-		}
+		# Try to find a suitable image to use.
+		$resourcethumb=get_resource_path($resource,"scr",false,$resourcedata["preview_extension"]);
+		if (!file_exists($resourcethumb)) {$resourcethumb=		$resourcethumb=get_resource_path($resource,"",false,$resourcedata["preview_extension"]);}
+
+		if (file_exists($resourcethumb) && ($resourcedata["preview_extension"]=="jpg" || $resourcedata["preview_extension"]=="jpeg"))
+		{
+			
+			$keywords.=$resourcedata['ref'].", ";	
+			
+			# Two ways to size image to cell, either by height or by width.
+			$thumbsize=getimagesize($resourcethumb);
+				if ($thumbsize[0]>$thumbsize[1]){
+				
+					$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
+					$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $resource),2,0);
+				
+				}
+				
+				else{
+					
+					$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
+					$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $resource),0,0);
+					
+				}
 		
+				if ($i == $columns){
+				
+					$pdf->ln(); $i=0;$j++;
+						
+						if ($j > $rowsperpage){
+						
+						$j=0; $pdf->AddPage();
+						
+						}			
+						
+				}
+
+			}
+		}		
 #Add Resource Numbers to PDF Metadata - I don't know what the use of it is but why not.	
 $pdf->SetKeywords($keywords);
 
