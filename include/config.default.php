@@ -171,4 +171,8 @@ $collection_reorder_caption=false;
 # Footer text applied to all e-mails (blank by default)
 $emailfooter="";
 
+# Contact Sheet feature, and whether contact sheet becomes resource.
+$contact_sheet=true;
+$contact_sheet_resource=false;
+
 ?>

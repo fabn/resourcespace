@@ -112,6 +112,10 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	&nbsp;<a href="collection_download.php?collection=<?=$collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?=$lang["action-download"]?></a>
 	<? } ?>
+	
+	<? if ($contact_sheet==true) { ?>
+    &nbsp;<a href="contactsheet.php?c=<?=$collections[$n]["ref"]?>" target="_parent">&gt;&nbsp;<?=strtolower($lang["contactsheet"])?></a>
+	<? } ?>
 
 	&nbsp;<a href="collection_email.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a>
 	

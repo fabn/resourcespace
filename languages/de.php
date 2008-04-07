@@ -146,6 +146,7 @@ $lang["viewall"]="Alle anzeigen";
 $lang["editall"]="Alle bearbeiten";
 $lang["hidethumbnails"]="Vorschaubilder ausblenden";
 $lang["showthumbnails"]="Vorschaubilder einblenden";
+$lang["contactsheet"]="Kontaktabzug";
 $lang["mycollection"]="Meine Kollektion";
 $lang["editresearchrequests"]="Suchanfragen bearbeiten";
 $lang["savedsearch"]="Gespeicherte Suche";

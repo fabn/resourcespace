@@ -146,6 +146,7 @@ $lang["viewall"]="View all";
 $lang["editall"]="Edit all";
 $lang["hidethumbnails"]="Hide thumbs";
 $lang["showthumbnails"]="Show thumbs";
+$lang["contactsheet"]="Contact sheet";
 $lang["mycollection"]="My Collection";
 $lang["editresearchrequests"]="Edit research requests";
 $lang["savedsearch"]="Saved Search";
