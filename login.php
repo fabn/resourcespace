@@ -30,6 +30,9 @@ if (array_key_exists("username",$_POST))
 		 	$expires=0;
         	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
 
+			# Store language cookie
+			setcookie("language",getval("language",""),time()+(3600*24*1000));
+
 			# Update the user record. Set the password hash again in case a plain text password was provided.
 			sql_query("update user set password='$password_hash',session='$session_hash' where username='$username' and (password='$password' or password='$password_hash')");
 
@@ -76,6 +79,16 @@ include "include/header.php";
 		<div class="Question">
 			<label for="pass"><?=$lang["password"]?> </label>
 			<input type="password" name="password" id="name" class="stdwidth" />
+			<div class="clearerleft"> </div>
+		</div>
+	
+		<div class="Question">
+			<label for="pass"><?=$lang["language"]?> </label>
+			<select class="stdwidth" name="language">
+			<? reset ($languages); foreach ($languages as $key=>$value) { ?>
+			<option value="<?=$key?>" <? if ($language==$key) { ?>selected<? } ?>><?=$value?></option>
+			<? } ?>
+			</select>
 			<div class="clearerleft"> </div>
 		</div>
 	

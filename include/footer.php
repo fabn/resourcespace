@@ -48,13 +48,7 @@ function SwapCSS(css)
 <div class="clearer"></div>
 </div>
 <? } ?>
-<? if ($pagename=="login") { 
-# Smaller footer just for the login screen to include language selection.
-?>
-<div id="Footer">
-<div id="FooterNavLeft"><?=$lang["language"]?>: <a href="<?=$baseurl?>/change_language.php"><?=$languages[$language]?></a></div>
-</div>
-<? } ?>
+
 
 
 <!--c<?=$querycount?>, t<?=$querytime?>-->
