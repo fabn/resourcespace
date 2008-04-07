@@ -253,6 +253,7 @@ for ($n=0;$n<count($fields);$n++)
 		
 		
 		case 4: # -------- Date selector
+		case 6: # Also includes expiry date
         $dy=date("Y");$dm=date("m");$dd=date("d");
         if ($value!="")
         	{

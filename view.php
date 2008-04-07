@@ -148,7 +148,7 @@ else
 
 <? hook("renderbeforerecorddownload"); ?>
 
-<div class="RecordDownload">
+<div class="RecordDownload" id="RecordDownload">
 <div class="RecordDownloadSpace">
 <? if (!hook("renderinnerresourcedownloadspace")) { ?>
 <h2><?=$lang["resourcetools"]?></h2>
@@ -348,10 +348,17 @@ for ($n=0;$n<count($fields);$n++)
 	{
 	$value=$fields[$n]["value"];
 	
+	# Handle expiry fields
+	if ($fields[$n]["type"]==6 && $value!="" && $value<=date("Y-m-d"))
+		{
+		$extra.="<div class=\"RecordStory\"> <h1>" . $lang["warningexpired"] . "</h1><p>" . $lang["warningexpiredtext"] . "</p><p id=\"WarningOK\"><a href=\"#\" onClick=\"document.getElementById('RecordDownload').style.display='block';document.getElementById('WarningOK').style.display='none';\">" . $lang["warningexpiredok"] . "</a></p></div><style>#RecordDownload {display:none;}</style>";
+		}
+	
+	
 	if (($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
 		{
 		$title=htmlspecialchars(str_replace("Keywords - ","",i18n_get_translated($fields[$n]["title"])));
-		if ($fields[$n]["type"]==4) {$value=NiceDate($value,false,true);}
+		if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
 		$value=highlightkeywords(nl2br(htmlspecialchars(TidyList(i18n_get_translated($value)))),$search);
 		
 		# draw new tab panel?

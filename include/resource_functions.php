@@ -55,7 +55,7 @@ function save_resource_data($ref,$multi)
 					}
 				}
 			}
-		elseif ($fields[$n]["type"]==4)
+		elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
 			{
 			# date type, construct the value from the date dropdowns
 			$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
