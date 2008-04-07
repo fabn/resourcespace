@@ -213,7 +213,7 @@ $lang["verybestresources"]="The very best resources";
 $lang["emailresource"]="E-mail resource";
 $lang["addtocurrentcollection"]="Add to current collection";
 $lang["storyextract"]="Story Extract";
-$lang["addresource"]="Add Resource";
+$lang["addresource"]="Add Single Resource";
 $lang["addresourcebatch"]="Add Resource Batch";
 $lang["fileupload"]="File Upload";
 $lang["clickbrowsetolocate"]="Click browse to locate a file";
@@ -486,5 +486,7 @@ $lang["warningexpired"]="Resource Expired";
 $lang["warningexpiredtext"]="Warning! This resource has exceeded the expiry date. You must click the link below to enable the download functionality.";
 $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
+$lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (recommended)";
+$lang["addresourcebatchftp"]="Add Resource Batch - FTP";
 
 ?>

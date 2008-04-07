@@ -135,9 +135,6 @@ $groupuploadfolders=false;
 # Enable order by rating? (require rating field updating to rating column)
 $orderbyrating=false;
 
-# Use FancyUpload for batch uploads? (Flash / Javascript based uploader)
-$usefancyupload=true;
-
 # Enable AJAX popup info box on search results.
 $infobox=true;
 

@@ -54,7 +54,7 @@ if (getval("save","")!="")
 			}
 		else
 			{
-			if ($usefancyupload)
+			if (getval("fancy","")!="")
 				{
 				$resource_type=getvalescaped("resource_type","");
 				update_resource_type($ref,$resource_type);
@@ -143,7 +143,7 @@ if ($multiple) { ?>
 <h1><?=$lang["specifydefaultcontent"]?></h1>
 <p><?=text("batch")?></p>
 
-<? if ($usefancyupload) { # We need to ask for the resource type here for FancyUploads
+<? if (getval("fancy","")!="") { # We need to ask for the resource type here for FancyUploads
 ?>
 <div class="Question">
 <label for="resourcetype"><?=$lang["resourcetype"]?></label>
@@ -255,7 +255,9 @@ for ($n=0;$n<count($fields);$n++)
 		case 4: # -------- Date selector
 		case 6: # Also includes expiry date
         $dy=date("Y");$dm=date("m");$dd=date("d");
-        if ($value!="")
+
+		if ($fields[$n]["type"]==6) {$dy="";$dm="";$dd="";}
+		if ($value!="")
         	{
             #fetch the date parts from the value
             $sd=split(" ",$value);
