@@ -378,12 +378,13 @@ function get_data_by_field($resource,$field)
 	return sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 	}
 	
-function get_users($group=0,$find="",$order_by="u.username",$usepermissions=false)
+function get_users($group=0,$find="",$order_by="u.username",$usepermissions=false,$fetchrows=-1)
 	{
 	# Returns a user list. Group or search tearm is optional.
 	$sql="";
 	if ($group>0) {$sql="where usergroup='$group'";}
-	if ($find!="") {$sql="where (username like '%$find%' or fullname like '%$find%' or email like '%$find%')";}
+	if (strlen($find)>1) {$sql="where (username like '%$find%' or fullname like '%$find%' or email like '%$find%')";}
+	if (strlen($find)==1) {$sql="where username like '$find%'";}
 	if ($usepermissions && checkperm("U"))
 		{
 		# Only return users in children groups to the user's group
@@ -391,7 +392,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		$sql.="g.parent='" . $usergroup . "'";
 		}
-	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by");
+	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
 
 function get_usergroups()

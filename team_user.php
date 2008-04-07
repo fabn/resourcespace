@@ -35,19 +35,37 @@ include "include/header.php";
 <? if (isset($error)) { ?><div class="FormError">!! <?=$error?> !!</div><? } ?>
 
 <? 
-$users=get_users(0,$find,$order_by,true);
-
 # pager
 $per_page=15;
+
+# Fetch rows
+$users=get_users(0,$find,$order_by,true,$offset+$per_page);
+
 $results=count($users);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
 
 $url="team_user.php?order_by=" . $order_by . "&find=" . urlencode($find);
 $jumpcount=1;
+
+# Create an a-z index
+$atoz="<div class=\"InpageNavLeftBlock\">";
+if ($find=="") {$atoz.="<span class='Selected'>";}
+$atoz.="<a href=\"team_user.php?order_by=u.username&find=\">" . $lang["viewall"] . "</a>";
+if ($find=="") {$atoz.="</span>";}
+$atoz.="&nbsp;&nbsp;";
+for ($n=ord("A");$n<ord("Z");$n++)
+	{
+	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
+	$atoz.="<a href=\"team_user.php?order_by=u.username&find=" . chr($n) . "\">" . chr($n) . "</a> ";
+	if ($find==chr($n)) {$atoz.="</span>";}
+	$atoz.=" ";
+	}
+$atoz.="</div>";
+
 ?>
 
-<div class="TopInpageNav"><? pager();	?></div>
+<div class="TopInpageNav"><?=$atoz?><? pager(false); ?></div>
 
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">

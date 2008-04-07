@@ -152,7 +152,7 @@ $videotypes=array(3);
 # $userfixedtheme="whitegry";
 
 # List of active plugins.
-$plugins=array();
+$plugins=array("");
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
 # to the account with the username specified.
