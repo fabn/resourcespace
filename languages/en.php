@@ -461,7 +461,7 @@ $lang["deleteallsure"]="Are you sure you wish to DELETE these resources? This wi
 $lang["batchdonotaddcollection"]="(do not add to a collection)";
 $lang["collectionsthemes"]="Related themes and public collections";
 $lang["recent"]="Recent";
-$lang["batchcopyfrom"]="Copy data from resource ID";
+$lang["batchcopyfrom"]="Copy data from resource with ID";
 $lang["copy"]="Copy";
 $lang["zipall"]="Zip all";
 $lang["downloadzip"]="Download collection as a zip file";
@@ -488,5 +488,6 @@ $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
 $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (recommended)";
 $lang["addresourcebatchftp"]="Add Resource Batch - FTP";
+$lang["replaceresourcebatch"]="Replace Resource Batch";
 
 ?>

@@ -19,6 +19,9 @@ include "include/header.php";
 	<li><a target="main" href="create.php"><?=$lang["addresource"]?></a></li>
     <li><a href="edit.php?ref=-<?=$userref?>&fancy=true"><?=$lang["addresourcebatchbrowser"]?></a></li>
     <li><a href="edit.php?ref=-<?=$userref?>"><?=$lang["addresourcebatchftp"]?></a></li>
+
+    <li><a href="upload_fancy.php?replace=true"><?=$lang["replaceresourcebatch"]?></a></li>    
+    
     <li><a href="team_copy.php"><?=$lang["copyresource"]?></a></li>
     <li><a href="search.php?search=<?=urlencode("!userpending")?>"><?=$lang["viewuserpending"]?></a></li>
     <? } ?>

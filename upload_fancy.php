@@ -11,15 +11,35 @@ $maxsize="200000000";
 #handle posts
 if (array_key_exists("Filedata",$_FILES))
     {
-    # New resource
-	$ref=copy_resource(0-$userref); # Copy from user template
+    if (getval("replace","")=="")
+    	{
+		# New resource
+		$ref=copy_resource(0-$userref); # Copy from user template
+		
+		# Log this			
+		daily_stat("Resource upload",$ref);
+		resource_log($ref,"u",0);
 	
-   	# Log this			
-	daily_stat("Resource upload",$ref);
-	resource_log($ref,"u",0);
-
-	$status=upload_file($ref);
-	exit();
+		$status=upload_file($ref);
+		exit();
+		}
+	else
+		{
+    	# Overwrite an existing resource using the number from the filename.
+		
+		# Extract the number from the filename
+	    $filename=strtolower(str_replace(" ","_",$_FILES['Filedata']['name']));
+		$s=explode(".",$filename);
+		if (count($s)==2) # does the filename follow the format xxxxx.xxx?
+			{
+			$ref=trim($s[0]);
+			if (is_numeric($ref)) # is the first part of the filename numeric?
+				{
+				$status=upload_file($ref); # Upload to the specified ref.
+				}
+			}
+		exit();
+		}
     }
     
 $headerinsert="
@@ -149,10 +169,10 @@ include "include/header.php";
 
 <div class="BasicsBox" id="uploadbox" style="display:none;"> 
 <h2>&nbsp;</h2>
-<h1><?=$lang["fileupload"]?></h1>
+<h1><?=(getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?=text("introtext")?></p>
 
-<form id="mainform" method="post" class="form" enctype="multipart/form-data" action="<?=$baseurl?>/upload_fancy.php?user=<?=urlencode($_COOKIE["user"])?>">
+<form id="mainform" method="post" class="form" enctype="multipart/form-data" action="<?=$baseurl?>/upload_fancy.php?replace=<?=getval("replace","")?>&user=<?=urlencode($_COOKIE["user"])?>">
 <input type="hidden" name="MAX_FILE_SIZE" value="<?=$maxsize?>">
 
 <br/>
