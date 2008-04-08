@@ -158,7 +158,8 @@ function save_resource_data_multi($collection)
 			else
 				{
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
-				}	
+				}
+			$origval=$val;
 			# Loop through all the resources and save.
 			for ($m=0;$m<count($list);$m++)
 				{
@@ -182,7 +183,7 @@ function save_resource_data_multi($collection)
 				# Append text mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
 					{
-					$val=$existing . " " . $val;
+					$val=$existing . " " . $origval;
 					}
 					
 				#echo "<li>existing=$existing, new=$val";
