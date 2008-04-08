@@ -167,7 +167,19 @@ function save_resource_data_multi($collection)
 
 				# Work out existing field value.
 				$existing=sql_value("select value from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'","");
-				#echo "<li>existing=$existing, new=$val";
+				
+				# Find and replace mode? Perform the find and replace.
+				if (getval("modeselect_" . $fields[$n]["ref"],"")=="FR")
+					{
+					$val=str_ireplace
+						(
+						getvalescaped("find_" . $fields[$n]["ref"],""),
+						getvalescaped("replace_" . $fields[$n]["ref"],""),
+						$existing
+						);
+					}
+				
+				echo "<li>existing=$existing, new=$val";
 				if ($existing!=$val)
 					{
 					# This value is different from the value we have on record.

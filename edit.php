@@ -70,7 +70,7 @@ if (getval("save","")!="")
 		{
 		# Save multiple resources
 		save_resource_data_multi($collection);
-		redirect("search.php?search=!collection" . $collection);
+		redirect("search.php?refreshcollectionframe=true&search=!collection" . $collection);
 		}
 	}
 
@@ -204,18 +204,24 @@ for ($n=0;$n<count($fields);$n++)
 		{
 		# When editing multiple, give option to select Replace All Text or Find and Replace
 		?>
-		<div class="Question" id="modeselect_<?=$n?>" style="display:none;">
+		<div class="Question" id="modeselect_<?=$n?>" style="display:none;padding-bottom:0;margin-bottom:0;">
 		<label><?=$lang["editmode"]?></label>
-		<select name="modeselect_<?=$n?>" class="stdwidth">
+		<select name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
 		<option value="RT"><?=$lang["replacealltext"]?></option>
 		<option value="FR"><?=$lang["findandreplace"]?></option>
 		</select>
+		</div>
+		
+		<div class="Question" id="findreplace_<?=$n?>" style="display:none;border-top:none;">
+		<label>&nbsp;</label>
+		<?=$lang["find"]?> <input type="text" name="find_<?=$fields[$n]["ref"]?>" class="shrtwidth">
+		<?=$lang["andreplacewith"]?> <input type="text" name="replace_<?=$fields[$n]["ref"]?>" class="shrtwidth">
 		</div>
 		<?
 		}
 	?>
 
-	<div class="Question" id="question_<?=$n?>" <?if ($multiple) {?>style="display:none;"<? } ?>>
+	<div class="Question" id="question_<?=$n?>" <?if ($multiple) {?>style="display:none;border-top:none;"<? } ?>>
 	<label for="<?=$name?>"><?if (!$multiple) {?><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["keywords_index"]==1) { ?><sup>*</sup><? } ?><? } ?></label>
 	<?
 

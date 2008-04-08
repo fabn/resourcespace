@@ -494,5 +494,6 @@ $lang["replaceresourcebatch"]="Replace Resource Batch";
 $lang["editmode"]="Edit Mode";
 $lang["replacealltext"]="Replace All Text";
 $lang["findandreplace"]="Find And Replace";
-
+$lang["find"]="Find";
+$lang["andreplacewith"]="...and replace with...";
 ?>
