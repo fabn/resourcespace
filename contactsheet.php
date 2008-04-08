@@ -43,7 +43,7 @@ $pdf->AddPage();
 #Title on sheet
 $pdf->SetFont('helvetica','',10);
 $title = $applicationname." - ". $collectiondata['name']." - ".$date;
-$pdf->Text(1,.6,$title,0,0,"L");$pdf->ln();
+$pdf->Text(1,.6,utf8_decode($title),0,0,"L");$pdf->ln();
 
 $pdf->SetFontSize(8);
 
@@ -57,9 +57,8 @@ foreach ($collectionresources as $resource)
 		
 		$resourcedata=get_resource_data($resource);
 
-		# Try to find a suitable image to use.
-		$resourcethumb=get_resource_path($resource,"scr",false,$resourcedata["preview_extension"]);
-		if (!file_exists($resourcethumb)) {$resourcethumb=		$resourcethumb=get_resource_path($resource,"pre",false,$resourcedata["preview_extension"]);}
+		# Find image
+		$resourcethumb=get_resource_path($resource,"pre",false,$resourcedata["preview_extension"]);
 
 		if (file_exists($resourcethumb) && ($resourcedata["preview_extension"]=="jpg" || $resourcedata["preview_extension"]=="jpeg"))
 		{
