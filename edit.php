@@ -4,10 +4,42 @@ include "include/authenticate.php";
 include "include/general.php";
 include "include/resource_functions.php";
 include "include/collections_functions.php";
+include "include/search_functions.php";
 include "include/image_processing.php";
 
 # Editing resource or collection of resources (multiple)?
 $ref=getvalescaped("ref","");
+
+# Fetch search details (for next/back browsing and forwarding of search params)
+$search=getvalescaped("search","");
+$order_by=getvalescaped("order_by","relevance");
+$offset=getvalescaped("offset",0);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+$archive=getvalescaped("archive",0);
+
+# next / previous resource browsing
+$go=getval("go","");
+if ($go!="")
+	{
+	# Re-run the search and locate the next and previous records.
+	$result=do_search($search,$restypes,$order_by,$archive,72+$offset+1);
+	if (is_array($result))
+		{
+		# Locate this resource
+		$pos=-1;
+		for ($n=0;$n<count($result);$n++)
+			{
+			if ($result[$n]["ref"]==$ref) {$pos=$n;}
+			}
+		if ($pos!=-1)
+			{
+			if (($go=="previous") && ($pos>0)) {$ref=$result[$pos-1]["ref"];}
+			if (($go=="next") && ($pos<($n-1))) {$ref=$result[$pos+1]["ref"];if (($pos+1)>=($offset+72)) {$offset=$pos+1;}} # move to next page if we've advanced far enough
+			}
+		}
+	}
+
 $collection=getvalescaped("collection","");
 if ($collection!="") 
 	{
@@ -50,7 +82,7 @@ if (getval("save","")!="")
 			{
 			# Log this			
 			daily_stat("Resource edit",$ref);
-			redirect("view.php?ref=" . $ref);
+			redirect("view.php?ref=" . $ref . "&search=" . urlencode($search) . "&offset=" . $offset . "&order_by=" . $order_by . "&archive=" . $archive);
 			}
 		else
 			{
@@ -111,7 +143,20 @@ if ($multiple) { ?>
 <? } elseif ($ref>0) { ?>
 <h1><?=$lang["editresource"]?></h1>
 
-<div class="Question">
+<? if (!$multiple) { 
+# Resource next / back browsing.
+?>
+<div class="TopInpageNav">
+<a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
+|
+<a href="edit.php<? if (strpos($search,"!")!==false) {?>?search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?><? } ?>"><?=$lang["viewallresults"]?></a>
+|
+<a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
+</div>
+<? } ?>
+
+
+<div class="Question" style="border-top:none;">
 <label><?=$lang["resourceid"]?></label>
 <div class="Fixed"><?=$ref?></div>
 <div class="clearerleft"> </div>
