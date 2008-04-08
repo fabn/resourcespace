@@ -55,7 +55,7 @@ function get_resource_data($ref)
 		{
 		if ($ref>0)
 			{
-			exit ("Resource not found");
+			return false;
 			}
 		else
 			{

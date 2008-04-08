@@ -294,7 +294,7 @@ if (true) #search condition
 			<td nowrap><div class="ListTitle"><a href="<?=$url?>"><?=highlightkeywords(tidy_trim($result[$n]["title"],45) . ((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):""),$search) ?></a></div></td>
 			<td><? if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><? } else { ?>&nbsp;<? } ?></td>
 			<td><?=$result[$n]["ref"]?></td>
-			<td><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?></td>
+			<td><? if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><? } ?></td>
 			<td><?=nicedate($result[$n]["creation_date"],false,true)?></td>
 			<td ><div class="ListTools"><a href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
 			</tr>
