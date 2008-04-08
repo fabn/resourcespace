@@ -175,7 +175,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			$id=$ps[$n]["id"];
 			
 			# only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
-			if (($sw>$tw) || ($sh>$th))
+			# or when producing a small thumbnail (to make sure we have that as a minimum
+			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col") || ($id=="pre"))
 				{
 				if ($ps[$n]["padtosize"]==0)
 					{
@@ -209,18 +210,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 						}
 						
 					imagecopyresampled($target,$source,0,0,0,0,$tw,$th,$sw,$sh);
-					if ($extension=="png")
-						{
-						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
-						}
-					elseif ($extension=="gif")
-						{
-						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
-						}
-					else
-						{
-						imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
-						}
+					imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
+
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
 					imagedestroy($target);
 					}
@@ -247,18 +238,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 						$source = imagecreatefromjpeg($file);
 						}
 					imagecopyresampled($target,$source,floor(($tw-$iw)/2),floor(($th-$ih)/2),0,0,$iw,$ih,$sw,$sh);
-					if ($extension=="png")
-						{
-						imagepng($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
-						}
-					elseif ($extension=="gif")
-						{
-						imagegif($target,get_resource_path($ref,$ps[$n]["id"],false,$extension));
-						}
-					else
-						{
-						imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
-						}
+					imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
+
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
 					imagedestroy($target);
 					}
@@ -271,7 +252,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 				}
 			}
 		# flag database so a thumbnail appears on the site
-		sql_query("update resource set has_image=1 where ref='$ref'");
+		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
 		if (($extension=="jpg") || ($extension=="jpeg")) {extract_exif_comment($ref);}
 		}
 	else
