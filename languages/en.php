@@ -497,4 +497,5 @@ $lang["appendtext"]="Append Text";
 $lang["find"]="Find";
 $lang["andreplacewith"]="...and replace with...";
 $lang["relateallresources"]="Relate all resources in this collection";
+$lang["country"]="Country";
 ?>

@@ -100,6 +100,9 @@ $research_request=true;
 # Country search in the right nav? (requires a field with the short name 'country')
 $country_search=false;
 
+# Country sort in the search results? (requires that the 'country' field maps to the 'country' database column on resource)
+$country_sort=false;
+
 # Use the themes page as the home page?
 $use_theme_as_home=false;
 
