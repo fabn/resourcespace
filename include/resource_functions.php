@@ -185,7 +185,7 @@ function save_resource_data_multi($collection)
 					$val=$existing . " " . $val;
 					}
 					
-				echo "<li>existing=$existing, new=$val";
+				#echo "<li>existing=$existing, new=$val";
 				if ($existing!=$val)
 					{
 					# This value is different from the value we have on record.
