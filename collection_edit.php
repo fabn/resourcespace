@@ -90,6 +90,11 @@ if (checkperm("h")) { # Only users with the 'h' permission can publish public co
 </div>
 
 <div class="Question">
+<label for="allow_changes"><?=$lang["relateallresources"]?></label><input type=checkbox id="relateall" name="relateall">
+<div class="clearerleft"> </div>
+</div>
+
+<div class="Question">
 <label for="removeall"><?=$lang["removeallresourcesfromcollection"]?></label><input type=checkbox id="removeall" name="removeall">
 <div class="clearerleft"> </div>
 </div>

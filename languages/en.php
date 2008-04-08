@@ -490,10 +490,10 @@ $lang["userrequestcomment"]="Comment";
 $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (recommended)";
 $lang["addresourcebatchftp"]="Add Resource Batch - FTP";
 $lang["replaceresourcebatch"]="Replace Resource Batch";
-
 $lang["editmode"]="Edit Mode";
 $lang["replacealltext"]="Replace All Text";
 $lang["findandreplace"]="Find And Replace";
 $lang["find"]="Find";
 $lang["andreplacewith"]="...and replace with...";
+$lang["relateallresources"]="Relate all resources in this collection";
 ?>

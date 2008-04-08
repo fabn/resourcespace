@@ -151,6 +151,23 @@ function save_collection($ref)
 			}
 		}
 		
+	# Relate all resources?
+	if (getval("relateall","")!="")
+		{
+		$rlist=get_collection_resources($ref);
+		for ($n=0;$n<count($rlist);$n++)
+			{
+			for ($m=0;$m<count($rlist);$m++)
+				{
+				if ($rlist[$n]!=$rlist[$m]) # Don't relate a resource to itself
+					{
+					sql_query("insert into resource_related (resource,related) values ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
+					}
+				}
+			}
+		}
+	
+	
 	# Remove all resources?
 	if (getval("removeall","")!="")
 		{
