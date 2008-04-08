@@ -234,6 +234,8 @@ for ($n=0;$n<count($fields);$n++)
 	$name="field_" . $fields[$n]["ref"];
 	$value=$fields[$n]["value"];
 	
+	if ($multiple) {$value="";} # Blank the value for multi-edits.
+	
 	if (($fields[$n]["resource_type"]!=$lastrt)&& ($lastrt!=-1))
 		{
 		?><br><h1><?=get_resource_type_name($fields[$n]["resource_type"])?> <?=$lang["properties"]?></h1><?
@@ -254,6 +256,7 @@ for ($n=0;$n<count($fields);$n++)
 		<select name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
 		<option value="RT"><?=$lang["replacealltext"]?></option>
 		<option value="FR"><?=$lang["findandreplace"]?></option>
+		<option value="AP"><?=$lang["appendtext"]?></option>
 		</select>
 		</div>
 		

@@ -179,6 +179,12 @@ function save_resource_data_multi($collection)
 						);
 					}
 				
+				# Append text mode?
+				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
+					{
+					$val=$existing . " " . $val;
+					}
+					
 				echo "<li>existing=$existing, new=$val";
 				if ($existing!=$val)
 					{
