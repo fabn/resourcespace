@@ -359,7 +359,11 @@ for ($n=0;$n<count($fields);$n++)
 		{
 		$title=htmlspecialchars(str_replace("Keywords - ","",i18n_get_translated($fields[$n]["title"])));
 		if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
-		$value=highlightkeywords(nl2br(htmlspecialchars(TidyList(i18n_get_translated($value)))),$search);
+
+		# Value formatting
+		$value=i18n_get_translated($value);
+		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==30)) {$value=TidyList($value);}
+		$value=highlightkeywords(nl2br(htmlspecialchars($value)),$search);
 		
 		# draw new tab panel?
 		if (($tabname!=$fields[$n]["tab_name"]) && ($fieldcount>0))
