@@ -59,7 +59,7 @@ foreach ($collectionresources as $resource)
 
 		# Try to find a suitable image to use.
 		$resourcethumb=get_resource_path($resource,"scr",false,$resourcedata["preview_extension"]);
-		if (!file_exists($resourcethumb)) {$resourcethumb=		$resourcethumb=get_resource_path($resource,"",false,$resourcedata["preview_extension"]);}
+		if (!file_exists($resourcethumb)) {$resourcethumb=		$resourcethumb=get_resource_path($resource,"pre",false,$resourcedata["preview_extension"]);}
 
 		if (file_exists($resourcethumb) && ($resourcedata["preview_extension"]=="jpg" || $resourcedata["preview_extension"]=="jpeg"))
 		{
