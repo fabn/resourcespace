@@ -38,7 +38,8 @@ $cinfo=get_collection($usercollection);
 
 # Check to see if the user can edit this resource.
 $collectiondata=get_collection($collection);
-if (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h")))
+$allow_reorder=false;
+if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h"))))
 	{
 	$allow_reorder=true;
 	}
