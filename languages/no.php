@@ -284,7 +284,7 @@ $lang["printallforyear"]="Skriv ut all statistikk for året";
 # Log in / user account
 $lang["nopassword"]="Mangler du passord?";
 $lang["forgottenpassword"]="Har du glemt passordet?";
-$lang["keepmeloggedin"]="Hold meg pålogget på denne datamaskinen (VIKTIG: Må ikke brukes på offentlig tilgjengelige datamaskiner";
+$lang["keepmeloggedin"]="Hold meg pålogget på denne datamaskinen (må ikke brukes på offentlig tilgjengelige pc'er)";
 $lang["username"]="Brukernavn";
 $lang["password"]="Passord";
 $lang["login"]="Logg in";
