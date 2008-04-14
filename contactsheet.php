@@ -14,7 +14,7 @@ include('include/image_processing.php');
 $collection=getval("c","");
 
 #configuring the sheet:
-$columns=5;
+$columns=4;
 $pagewidth=$pagesize[0]="8.5";
 $pageheight=$pagesize[1]="11";
 $date= date("m-d-Y h:i a");
@@ -60,6 +60,9 @@ foreach ($collectionresources as $resource)
 			{
 			# Find image
 			$resourcethumb=get_resource_path($resource,"pre",false,$resourcedata["preview_extension"]);
+			
+			if (!file_exists(myrealpath($resourcethumb)))
+				$resourcethumb=get_resource_path($resource,"thm",false,$resourcedata["preview_extension"]);
 	
 			if (file_exists($resourcethumb) && ($resourcedata["preview_extension"]=="jpg" || $resourcedata["preview_extension"]=="jpeg"))
 			{
@@ -77,7 +80,7 @@ foreach ($collectionresources as $resource)
 					
 					else{
 						
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
+						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);	
 						$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $resource),0,0);
 						
 					}

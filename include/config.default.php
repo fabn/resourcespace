@@ -24,7 +24,7 @@ $languages["fr"]="Français";
 $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
-
+$languages["it"]="Italiano";
 
 # FTP settings for batch upload
 # Only necessary if you plan to use the FTP upload feature.

@@ -293,7 +293,24 @@ if (count($result)>0)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"])?>" class="CollectImageBorder"/><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
+		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
+		
+		$colimgpath = get_resource_path($ref,"col",false,$result[$n]["preview_extension"]);
+		if (file_exists(myrealpath($colimgpath)))
+		{
+?>
+<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"/>
+<?
+		}			
+		else
+		{
+			$colimgpath = get_resource_path($ref,"thm",false,$result[$n]["preview_extension"]);
+?>
+<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder" width="90" height="75" />
+<?		
+		}
+		
+		} else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
 		<? if ($k=="") { ?><div class="CollectionPanelInfo">

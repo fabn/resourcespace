@@ -81,7 +81,9 @@ $headerinsert.="
 <script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
 <script src=\"js/infobox.js\" type=\"text/javascript\"></script>
 ";
-$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
+
+if ($infobox)
+	$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
 
 # Include function for reordering
 if ($allow_reorder)

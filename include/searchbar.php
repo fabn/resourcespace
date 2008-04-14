@@ -33,7 +33,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
   <h2><?=$lang["simplesearch"]?></h2>
 	<p><?=text("searchpanel")?></p>
 	
-	<form id="form1" method="get" action="search.php">
+	<form id="form1" method="get" action="<?=$baseurl?>/search.php">
 
         <input id="ssearchbox" name="search" type="text" class="SearchWidth" value="<?=htmlspecialchars(stripslashes(@$quicksearch))?>">
 
