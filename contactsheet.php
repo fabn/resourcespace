@@ -18,11 +18,14 @@ $columns=4;
 $pagewidth=$pagesize[0]="8.5";
 $pageheight=$pagesize[1]="11";
 $date= date("m-d-Y h:i a");
+$titlefontsize=10;
+$refnumberfontsize=8;
 
 #calculating sizes of cells, images, and number of rows:
 $cellsize=($pagewidth-1.7)/$columns;
 $imagesize=$cellsize-0.3;
 $rowsperpage=($pageheight-1-$cellsize)/$cellsize;
+$page=1;
 
 #Get data
 $collectiondata= get_collection($collection);
@@ -41,11 +44,12 @@ $pdf->SetAutoPageBreak(true,0);
 $pdf->AddPage();
 
 #Title on sheet
-$pdf->SetFont('helvetica','',10);
+$pdf->SetFont('helvetica','',$titlefontsize);
 $title = $applicationname." - ". $collectiondata['name']." - ".$date;
-$pdf->Text(1,.6,utf8_decode($title),0,0,"L");$pdf->ln();
+$pagenumber = " - p.". $page;
+$pdf->Text(1,.6,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
 
-$pdf->SetFontSize(8);
+$pdf->SetFontSize($refnumberfontsize);
 
 #Begin loop through resources, collecting Keywords too.
 $i=0;
@@ -90,8 +94,19 @@ foreach ($collectionresources as $resource)
 						$pdf->ln(); $i=0;$j++;
 							
 							if ($j > $rowsperpage){
-							
+						    $page = $page+1;
 							$j=0; $pdf->AddPage();
+							
+							#When moving to a new page, get current coordinates, place a new page header.
+							$pagestartx=$pdf->GetX();
+							$pagestarty=$pdf->GetY();
+							$pdf->SetFont('helvetica','',$titlefontsize);
+							$pagenumber = " - p.". $page;
+							$pdf->Text(1,.6,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+							#then restore the saved coordinates and fontsize to continue as usual.
+							$pdf->SetFontSize($refnumberfontsize);
+							$pdf->Setx($pagestartx);
+							$pdf->SetY($pagestarty);
 							
 							}			
 					}
