@@ -15,8 +15,8 @@ include "include/header.php";
 	<div class="VerticalNav">
 	<ul>
 	
-	<? if ($usefancyupload) { ?>
-	<li><a href="edit.php?ref=-<?=$userref?>"><?=$lang["contributenewresource"]?></a></li>
+	<? if ($usercontribute_fancyupload) { ?>
+	<li><a href="edit.php?ref=-<?=$userref?>&fancy=true"><?=$lang["contributenewresource"]?></a></li>
 	<? }  else { ?>
 	<li><a href="create.php?archive=-2"><?=$lang["contributenewresource"]?></a></li>
 	<? } ?>

@@ -180,4 +180,8 @@ $emailfooter="";
 $contact_sheet=true;
 $contact_sheet_resource=false;
 
+# Use FancyUpload (in browser batch upload) for user contributions as opposed to standard single uploads
+$usercontribute_fancyupload=true;
+
+
 ?>

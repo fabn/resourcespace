@@ -473,4 +473,29 @@ $lang["existingkeywords"]="Existierende Suchbegriffe:";
 $lang["extrakeywords"]="zus&auml;tzliche Suchbegriffe";
 $lang["leaderboard"]="Rangliste";
 $lang["confirmeditall"]="Sind Sie sicher, da&#223; Sie speichern m&ouml;chten? Dies wird alle existierenden Werte der ausgew&auml;hlten Felder f&uuml;r alle Ressourcen in Ihrer gegenw&auml;rtigen Kollektion &uuml;berschreiben.";
+$lang["collectiondeleteconfirm"]="Sind Sie sicher, daß Sie diese Kollektion l&ouml;schen möchten?";
+$lang["hidden"]="(versteckt)";
+$lang["requestnewpassword"]="Neues Passwort anfordern";
+
+# New for 1.4
+$lang["reorderresources"]="Reorder resources within collection (hold and drag)";
+$lang["addorviewcomments"]="Kommentare hinzuf&uuml;gen oder ansehen";
+$lang["collectioncomments"]="Kommentare zu den Kollektionen";
+$lang["collectioncommentsinfo"]="Add a comment to this collection for this resource. This will only apply to this collection.";
+$lang["comment"]="Kommentar";
+$lang["warningexpired"]="Ressource abgelaufen";
+$lang["warningexpiredtext"]="Warnung! Diese Ressource hat das Ablaufdatum überschritten. Klicken Sie den untenstehenden Link um die Download-Funktion wieder zu aktivieren..";
+$lang["warningexpiredok"]="&gt; Ressourcen-Download aktivieren";
+$lang["userrequestcomment"]="Kommentar";
+$lang["addresourcebatchbrowser"]="Ressourcen-Stapelverarbeitung hinzuf&uuml;gen - Im Browser (empfohlen)";
+$lang["addresourcebatchftp"]="Ressourcen-Stapelverarbeitung hinzuf&uuml;gen - FTP";
+$lang["replaceresourcebatch"]="Ressourcen-Stapelverarbeitung ersetzen";
+$lang["editmode"]="Bearbeitungsmodus";
+$lang["replacealltext"]="Alle Texte ersetzen";
+$lang["findandreplace"]="Suchen und ersetzen";
+$lang["appendtext"]="Text hinzuf&uuml;gen";
+$lang["find"]="Finden";
+$lang["andreplacewith"]="...und ersetzen mit...";
+$lang["relateallresources"]="Alle Kollektionen dieser Ressource zuordnen.";
+$lang["country"]="Land";
 ?>
