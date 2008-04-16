@@ -259,10 +259,10 @@ function CheckDBStruct($path)
 	{
 	# Check the database structure against the text files stored in $path.
 	# Add tables / columns / data / indices as necessary.
-	
 	global $mysql_db;
 	
 	# Check for path
+	$path=dirname(__FILE__) . "/../" . $path; # Make sure this works when called from non-root files..
 	if (!file_exists($path)) {return false;}
 	
 	# Tables first.
@@ -322,24 +322,28 @@ function CheckDBStruct($path)
 				# Load existing table definition
 				$existing=sql_query("describe $table",false,-1,false);
 								
-				$f=fopen($path . "/" . $file,"r");
-				while (($col = fgetcsv($f,5000)) !== false)
+				$file=$path . "/" . $file;
+				if (file_exists($file))
 					{
-					# Look for this column in the existing columns.
-					$found=false;
-					for ($n=0;$n<count($existing);$n++)
+					$f=fopen($file,"r");
+					while (($col = fgetcsv($f,5000)) !== false)
 						{
-						if ($existing[$n]["Field"]==$col[0]) {$found=true;}
-						}
-					if (!$found)
-						{
-						# Add this column.
-						$sql="alter table $table add column ";
-						$sql.=$col[0] . " " . $col[1];
-						if ($col[4]!="") {$sql.=" default " . $col[4];}
-						if ($col[3]=="PRI") {$sql.=" primary key";}
-						if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
-						sql_query($sql,false,-1,false);
+						# Look for this column in the existing columns.
+						$found=false;
+						for ($n=0;$n<count($existing);$n++)
+							{
+							if ($existing[$n]["Field"]==$col[0]) {$found=true;}
+							}
+						if (!$found)
+							{
+							# Add this column.
+							$sql="alter table $table add column ";
+							$sql.=$col[0] . " " . $col[1];
+							if ($col[4]!="") {$sql.=" default " . $col[4];}
+							if ($col[3]=="PRI") {$sql.=" primary key";}
+							if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
+							sql_query($sql,false,-1,false);
+							}
 						}
 					}
 				}

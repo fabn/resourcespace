@@ -97,7 +97,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$colcustperm=$custperm;
 		if (getval("k","")!="") {$colcustperm="";$filter="ref>0";} # Special case if a key has been provided.
 		#echo "<!--select r.*,r.hit_count score from resource r join collection_resource c on r.ref=c.resource $colcustperm where c.collection='" . str_replace("!collection","",$search) . "' and $filter group by r.ref order by $order_by;-->";
-		return sql_query("select r.*,r.hit_count score,length(c.comment) commentset from resource r join collection_resource c on r.ref=c.resource $colcustperm where c.collection='" . str_replace("!collection","",$search) . "' and $filter group by r.ref order by $order_by;",false,$fetchrows);
+		return sql_query("select r.*,c.*,r.hit_count score,length(c.comment) commentset from resource r join collection_resource c on r.ref=c.resource $colcustperm where c.collection='" . str_replace("!collection","",$search) . "' and $filter group by r.ref order by $order_by;",false,$fetchrows);
 		}
 	
 	# View Related

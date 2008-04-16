@@ -60,7 +60,13 @@ for ($n=0;$n<count($ps);$n++)
         if (file_exists($target)) {unlink($target);} 
         $command=$imagemagick_path . "/bin/convert";
         if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}
-        $command.= " \"$file\"[0] -colorspace RGB -resize " . $tw . "x" . $th . " \"$target\""; 
+        
+        $prefix="";
+        
+        # CR2 files need a cr2: prefix
+        if ($extension=="cr2") {$prefix="cr2:";}
+        
+        $command.= " " . $prefix . "\"$file\"[0] -colorspace RGB -resize " . $tw . "x" . $th . " \"$target\""; 
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
         if (file_exists($target) && ($id=="thm")) 
