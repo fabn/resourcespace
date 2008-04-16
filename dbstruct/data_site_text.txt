@@ -14,7 +14,11 @@ collection_manage,findpublic,"Public collections are groups of resources made wi
 team_home,introtext,"Welcome to the team centre. Use the links below to administer resources, respond to resource requests, manage themes and alter system settings.",12,en,,
 help,introtext,"Get the most out of ResourceSpace. These guides will help you use the system and the resources more effectively. </p>
 
+
+
 <p>Use ""Themes"" to browse resources by theme or use the simple search box to search for specific resources.</p>
+
+
 
 <p><a href=""http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf"">Download Neale's user guide (PDF file)</a>",13,en,,
 "terms and conditions","terms and conditions","Your terms and conditions go here.",27,en,,
@@ -22,11 +26,13 @@ contribute,introtext,"You can contribute your own resources. When you initially 
 done,user_password,"An e-mail containing your username and password has been sent.",50,en,,
 user_password,introtext,"Enter your e-mail address and your username and password will be sent to you.",51,en,,
 edit,batch,"Please specify the default content and keywords for the resources you are about to upload. This is typically content that is common among all the resources such as country, project code, credit etc.</p>
+
 <p><b>Please note:</b> Batch uploading is a bandwidth and CPU intensive process and it is advisable to run only one upload at any given time.",52,en,,
 team_copy,introtext,"Enter the ID of the resource you would like to copy. Only the resource data will be copied - any uploaded file will not be copied.",53,en,,
 delete,introtext,"Please enter your password to confirm that you would like to delete this resource.",54,en,,
 team_report,introtext,"Please choose a report and a date range. The report can be opened in Microsoft Excel or similar spreadsheet application.",55,en,,
 terms,introtext,"Before you proceed you must accept the terms and conditions.
+
 ",56,en,,
 download_progress,introtext,"Your download will start shortly. When your download completes, use the links below to continue.",57,en,,
 view,storyextract,"Story extract:",58,en,,
@@ -53,13 +59,21 @@ team_resource,introtext,"Add individual resources or batch upload resources. To 
 team_user,introtext,"Use this section to add, remove and modify users.",39,en,,
 team_research,introtext,"Organise and manage ‘Research Requests’. <br><br>Choose ‘edit research’ to review the request details and assign the research to a team member. It is possible to base a research request on a previous collection by entering the collection ID in the ‘edit’ screen. <br><br>Once the research request is assigned, choose ‘edit collection’ to add the research request to ‘My collection’ panel. Using the standard tools, it is then possible to add resources to the research. <br><br>Once the research is complete, choose ‘edit research’,  change the status to complete and an email is automatically  sent to the user who requested the research. The email contains a link to the research and it is also automatically added to their ‘My Collection’ panel.",41,en,,
 collection_edit,introtext,"Organise and manage your work by grouping resources together. Create ‘Collections’ to suit your way of working.
+
 <br>
+
 All the collections in your list appear in the ‘My Collections’ panel at the bottom of the screen
+
 <br><br>
+
 <strong>Private Access</strong> allows only you and and selected users to see the collection. Ideal for grouping resources under projects that you are working on independently and share resources amongst a project team.
+
 <br><br>
+
 <strong>Public Access</strong> allows all users of the system to search and see the collection. Useful if you wish to share collections of resources that you think others would benefit from using.
+
 <br><br>
+
 You can choose whether you allow other users (public or users you have added to your private collection) to add and remove resources or simply view them for reference.",42,en,,
 team_stats,introtext,"Charts are generated on demand based on live data. Tick the box to print all charts for your selected year.",43,en,,
 resource_request,introtext,"The resource you requested is not available online. The resource information is automatically included in the email but you can add additional comments if you wish.",44,en,,
@@ -91,33 +105,24 @@ done,research_request,"Un miembro del equipo del SERGI se asignará a tu petici�
 all,searchpanel,"Busca por descripciones, palabras clave y códigos de contenido.",84,es,69,
 about,about,"Imágenes y Palabras pretende ser un lugar...",85,es,70,
 collection_edit,introtext,"Organiza tu trabajo agrupando recursos. Crea tantas colecciones como necesites.
+
 <br>
+
 Todas la colecciones aparecerán en tu panel ""Mis colecciones"" en la parte inferior de la pantalla.
+
 <br><br>
+
 <strong>Acceso privado</strong> sólo permite a ti y a los usuarios que selecciones a visualizar la colección. <br><br>
+
 <strong>Accesos público</strong> permite a todos los usuarios de la aplicación a visualizar la colección.
+
 <br><br>
+
 También puedes elegir qué usuarios podrán modificar la colección o simplemente podrán visualizarla.",86,es,71,
-"terms and conditions","terms and conditions","Excepto en el caso de que existan condiciones especiales para el uso del material, Intermón Oxfam y Oxfam Internacional están autorizados por los autores a utilizar las fotografías, vídeos y testimonios de esta aplicación para cualquier uso vinculado a la misión y los objetivos de Intermón Oxfam y Oxfam Internacional.
-
-Términos y condiciones de uso
-
-Cada vez que te descargues una fotografía, vídeo o testimonio de esta aplicación debes cumplir con los siguientes términos y condiciones:
-
-1. Todas las fotografías, vídeos y testimonios deben ir acompañados de una referencia como mínimo al trabajo de Intermón Oxfam u Oxfam Internacional. 
-
-2. El equipo de Intermón Oxfam NO está autorizado a vender ninguna de las fotografías, vídeos o testimonios de esta aplicación (sin previa autorización del SERGI). 
-
-3. Todas las fotografías deben ir acompañadas de su respectivo copyright. Ejemplo: (c) Sara Bahuer/Intermón Oxfam.
-
-4. Todos los  vídeos y testimonios deben ir firmados por el autor e Intermón Oxfam.
-
-Cuando el autor del material haya impuesto restricciones adicionales al uso del mismo, se indicará en la descripción que lo acompaña.
-
-Si estás de acuerdo con estos términos y condiciones de uso, por favor, haz click en el boton de Aceptar y continúa con la descarga del material. 
-",87,es,72,
 collection_email,introtext,"Completa el formulario adjunto para enviar por mail esta colección. Recibirás un link con todo el material y podrás elegir lo que más se adapte a tus necesidades.",88,es,76,
 collection_manage,findpublic,"Las colecciones públicas son grupos de material disponible para los usuarios del sistema. Para encontrarlas debes introducir un identificador. Éste puede ser el nombre completo o parcial de la colección que te interese o bien el ID de usuario de la misma. Añádelo a tu lista de colecciones para acceder al material.
+
+
 
 ",89,es,77,
 home,restrictedtitle,"<h1>Bienvenido al Panel de Control</h1>",90,es,78,
@@ -139,6 +144,7 @@ done,user_request,"Tu solicitud para obtener una cuenta de usuario ha sido envia
 download_click,introtext,"Para bajar el archivo adjunto pincha en el enlace de abajo y elige ""Guardar como"". Te preguntarán dónde quieres guardar el archivo. Para abrir el archivo en tu navegador sólo tienes que pinchar el enlace.",106,es,94,
 download_progress,introtext,"La descarga comenzará en pocos segundos",107,es,95,
 edit,batch,"Por favor, especifica el datos comunes a todas las imágenes que vas a cargar en lote.<br><br>
+
 <b>Atención:</b> El proceso de carga de imágenes por lote requiere muchos recursos de CPU. Por este motivo es aconsejable no hacer cargas simultáneas.",108,es,96,
 edit,multiple,"Selecciona los campos que desees editar de la lista de abajo. Los que selecciones se sobreescribirán sobre el material que estés editando. Cualquier campo no selecciónado será ignorado.",109,es,97,
 home,help,,110,es,98,
@@ -148,8 +154,10 @@ research_request,introtext,"Podemos ayudarte a encontrar el material que mejor s
 resource_email,introtext,"Comparte este material rápidamente vía mail. Se enviará automáticamente un enlace. Además puedes incluir texto informativo como parte del correo electrónico.",114,es,102,
 resource_request,introtext,"El material que has solicitado no esta disponible en Internet. La información que has requerido se incluirá automáticamente en el correo electrónico, si quieres puedes añadir cualquier comentario adicional.",115,es,103,
 search_advanced,introtext,"Búsqueda por Campos. Cualquier sección que dejes en blanco o no selecciones, incluirá todos esos términos en la búsqueda. Por ejemplo, si dejas todas las opciones de un país vacías, la búsqueda te dará resultados de todos esos países. Si seleccionas sólo África entonces los resultados sólo contendrán material de África.
+
 ",116,es,104,
 team_archive,introtext,"Para editar materiales de archivo individualmente, simplemente busca por el material y pincha en ""Herramienta de Material"" en la misma pantalla. Todos los materiales listos para ser archivados serán listados en Material Pendiente de Lista. Desde esta lista es posible añadir información posteriormente y transferir el material grabado al archivo
+
 ",117,es,105,
 view,storyextract,"Estracto de historia:",118,es,106,
 user_request,introtext,"Por favor completa el formulario adjunto para solicitar una cuenta de usuario.",119,es,107,
@@ -159,25 +167,8 @@ team_batch_upload,introtext,"Puedes subir varios archivos al mismo tiempo colgá
 team_resource,introtext,"Añade material individual o sube varios materiales simultáneamente. Para editar materiales individuales sólo tienes que buscar el material, y pinchar en editar en ""Herramienta de Material"" de la pantalla de material.",123,es,111,
 team_stats,introtext,"Los gráficos son generados a bajo demanda. Marca la casilla para imprimir todos los gráficos del años seleccionado.",124,es,112,
 terms,introtext,"Antes de iniciar el proceso de descarga debes aceptar los siguientes términos y condiciones de uso.
+
 ",125,es,113,
-terms,terms,"Excepto en el caso de que existan condiciones especiales para el uso del material, Intermón Oxfam y Oxfam Internacional están autorizados por los autores a utilizar las fotografías, vídeos y testimonios de esta aplicación para cualquier uso vinculado a la misión y los objetivos de Intermón Oxfam y Oxfam Internacional.
-
-Términos y condiciones de uso
-
-Cada vez que te descargues una fotografía, vídeo o testimonio de esta aplicación debes cumplir con los siguientes términos y condiciones:
-
-1. Todas las fotografías, vídeos y testimonios deben ir acompañados de una referencia como mínimo al trabajo de Intermón Oxfam u Oxfam Internacional. 
-
-2. El equipo de Intermón Oxfam NO está autorizado a vender ninguna de las fotografías, vídeos o testimonios de esta aplicación (sin previa autorización del SERGI). 
-
-3. Todas las fotografías deben ir acompañadas de su respectivo copyright. Ejemplo: (c) Sara Bahuer/Intermón Oxfam.
-
-4. Todos los  vídeos y testimonios deben ir firmados por el autor e Intermón Oxfam.
-
-Cuando el autor del material haya impuesto restricciones adicionales al uso del mismo, se indicará en la descripción que lo acompaña.
-
-Si estás de acuerdo con estos términos y condiciones de uso, por favor, haz click en el boton de Aceptar y continúa con la descarga del material. 
-",126,es,114,
 themes,findpublic,"Encuentra una colección pública introduciendo un término de búsqueda",127,es,115,
 upload,introtext,"Sube un archivo empleando el formulario adjunto",128,es,116,
 themes,manage,"Organiza y edita los temas disponibles en la red. Los temas aparecen organizados en colecciones. Para crear una nueva entrada e incluirla en un tema, debes pinchar en ""Construye una colección"" y elegir ""Mis Colecciones"" del menú principal. Recuerda incluir el nombre de un tema durante la configuración y crear una nueva colección. Puedes usar un nombre ya existente para agrupar la nueva colección en un apartado ya establecido (es importante asegurarse de que el nombre es exactamente el mismo) o elegir un nuevo título para crear una nueva categoría de temas. Nunca permitas a los usuarios que añadan o cambien materiales de las colecciones ya establecidas. Para editar el contenido de una entrada existente bajo un tema, elige “Editar una Colección”. Los iconos de esta colección aparecerán en el botón de la pantalla “Mis Colecciones”. Emplea las herramientas estándar para editar, mover o añadir material. Para cambiar el  nombre de un tema o mover una colección y que ésta aparezca ubicada en un tema diferente. Elige: “Editar Propiedades” y edita la categoría del tema o el nombre de la colección. Selecciona un nombre existente para el tema y así agruparlo en de las categorías existentes (asegúrate de que lo escribes exactamente igual), o elige un nuevo título para crear un nuevo tipo de tema. Para borrar una selección del tema. Elige: “Editar Propiedades” y borra las palabras de la caja de categorías del tema.",129,es,117,
@@ -187,7 +178,5 @@ change_language,introtext,"Por favor, selecciona el idioma en el que deseas trab
 team_content,introtext,,133,es,120,
 team_report,introtext,"Por favor, elige un informe y un rango de fecha. El informe podrá abrirse en un documento de Excel o un documento de características similares.",134,es,121,
 change_password,introtext,"Por favor introduzca una nueva contraseña.",135,es,125,
-home,welcometitle,"Welcome to ResourceSpace, Exxon Staff",144,en,,7
-home,welcometitle,"Welcome to ResourceSpace, Exxon Admin",143,en,,6
 upload_fancy,introtext,"Upload your files below. You can select multiple files when browsing by holding down the 'shift' key.",145,en,,
 tag,introtext,"Help to improve search results by tagging resources. Say what you see, separated by spaces or commas... for example: dog, house, ball, birthday cake. Enter the full name of anyone visible in the photo and the location the photo was taken if known.",146,en,,

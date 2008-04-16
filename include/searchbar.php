@@ -140,8 +140,8 @@ function ResetTicks() {<?=$function?>}
 
   </form>
 	
-  <p><br /><a href="search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
-  <p><a href="search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></li>
+  <p><br /><a href="<?=$baseurl?>/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
+  <p><a href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></li>
 	</div>
 
 	</div>
@@ -154,7 +154,7 @@ function ResetTicks() {<?=$function?>}
   <div class="SearchSpace">
   <h2><?=$lang["researchrequest"]?></h2>
 	<p><?=text("researchrequest")?></p>
-	<div class="HorizontalWhiteNav"><a href="research_request.php">&gt; <?=$lang["researchrequestservice"]?></a></div>
+	<div class="HorizontalWhiteNav"><a href="<?=$baseurl?>/research_request.php">&gt; <?=$lang["researchrequestservice"]?></a></div>
 	</div><br />
 	
 	</div>

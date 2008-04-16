@@ -20,7 +20,14 @@ if (getval("c","")!="")
 		{
 		# External access user... set top URL to first resource
 		$r=get_collection_resources($c);
-		$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
+		if (count($r)>0)
+			{
+			$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
+			}
+		else
+			{
+			$topurl="home.php";
+			}
 		}
 	}
 

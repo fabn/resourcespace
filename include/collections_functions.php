@@ -86,9 +86,9 @@ function delete_collection($ref)
 	
 function refresh_collection_frame()
 	{
-	global $headerinsert;
+	global $headerinsert,$baseurl;
 	$headerinsert.="<script language=\"Javascript\">
-	top.collections.location.href=\"collections.php?nc=" . time() . "\";
+	top.collections.location.href=\"" . $baseurl . "/collections.php?nc=" . time() . "\";
 	</script>";
 	}
 	

@@ -196,6 +196,7 @@ if ($k!="")
 } else {
 ?>
 <div id="CollectionMenu">
+<? if (!hook("thumbsmenu")) { ?>
   <h2><?=$lang["mycollections"]?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem"><?=$lang["currentcollection"]?>:
@@ -256,7 +257,9 @@ if ($k!="")
     <a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?=$lang["hidethumbnails"]?></a>
 	</li>
   </ul>
+<? } ?>
 </div>
+
 <? } ?>
 
 <!--Resource panels-->
@@ -347,6 +350,7 @@ else
 # ------------------------- Minimised view
 ?>
 <!--Title-->	
+<? if (!hook("nothumbs")) { ?>
 <div id="CollectionMinTitle"><h2><?=$lang["mycollections"]?></h2></div>
 
 <!--Menu-->	
@@ -406,7 +410,7 @@ else
 		</div>				
   </form>
 </div>
-	
+<? } ?>
 <!--Collection Count-->	
 <div id="CollectionMinitems"><strong><?=count($result)?></strong>&nbsp;<?=$lang["items"]?></div>		
 <? } ?>

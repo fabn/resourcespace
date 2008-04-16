@@ -88,3 +88,6 @@ a:active {color:#CCC;}
 .StyledTabbedPanel {border: 1px solid #B5C3D4;border-top: 1px solid white;background-image: url(../gfx/black/interface/Download.gif);}
 .TabSelected a {color: white;background-color:#6985A9;border-top-color: white;}
 
+.InfoTable {border-collapse:collapse;}
+.InfoTable tr {background-image: url(../gfx/black/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}
+.InfoTable td {border:1px solid #AAA;border-top:1px solid #FFF;padding:10px;}
