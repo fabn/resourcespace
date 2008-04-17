@@ -167,9 +167,6 @@ $plugins=array("");
 $infobox=true;
 $infobox_fields=array(18,10,29,53);
 
-# Set to true to disable all missing help text warning.
-$config_disable_nohelp_warning = false;
-
 # Reordering, captioning and ranking of collections
 $collection_reorder_caption=false;
 

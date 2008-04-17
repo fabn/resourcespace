@@ -480,9 +480,7 @@ function text($name)
 		if (array_key_exists($key . "-" . $name,$site_text)) {return $site_text[$key . "-" . $name];} 		
 		}
 	
-	if ($config_disable_nohelp_warning) return "";
-	
-	return "To add help text for this section, copy a help entry to page '$pagename', name '$name'.";
+	return "";
 	}
     
 function get_section_list($page)
