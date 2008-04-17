@@ -160,8 +160,6 @@ window.onload =  function()
 				// File Upload Settings
 
 				file_size_limit : "2000000",
-				file_types : "*.*",
-				file_types_description : "All Files",
 				file_upload_limit : "0",
 
 				// Event Handler Settings - these functions as defined in Handlers.js
