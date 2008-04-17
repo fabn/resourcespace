@@ -437,9 +437,17 @@ function nicedate($date,$time=false,$wordy=false)
 
 function redirect($url)
 	{
-	# redirect to a relative URL
 	global $baseurl;
-	header ("Location: " . $baseurl . "/" . $url);
+	if (substr($url,0,1)=="/")
+		{
+		# redirect to an absolute URL
+		header ("Location: " . $url);
+		}
+	else
+		{
+		# redirect to a relative URL
+		header ("Location: " . $baseurl . "/" . $url);
+		}
 	exit();
 	}
 	

@@ -61,10 +61,7 @@ else
   
 if (!$valid)
     {
-
     $path=$_SERVER["REQUEST_URI"];
-    $path=explode("/",$path);
-    $path=$path[count($path)-1];
 	?>
 	<script>
 	top.location.href="<?=$baseurl?>/login.php?url=<?=urlencode($path)?>";

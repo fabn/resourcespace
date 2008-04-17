@@ -31,7 +31,7 @@ for ($n=0;$n<count($plugins);$n++)
 
 <? if (($pagename!="terms") && ($pagename!="change_language") && ($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && (getval("k","")=="")) { ?>
 <script language="Javascript">
-if (!top.collections) {document.location='index.php?url=' + escape(document.location);} // Missing frameset? redirect to frameset.
+if (!top.collections) {document.location='<?=$baseurl?>/index.php?url=' + escape(document.location);} // Missing frameset? redirect to frameset.
 </script>
 <? } ?>
 
