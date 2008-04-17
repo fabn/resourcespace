@@ -65,7 +65,10 @@ function uploadSuccess(fileObj, server_data) {
 	try {
 		// upload.php returns the thumbnail id in the server_data, use that to retrieve the thumbnail for display
 		
-		AddImage(server_data);
+		if (server_data!='')
+			{
+			AddImage(server_data);
+			}
 
 		var progress = new FileProgress(fileObj,  this.customSettings.upload_target);
 

@@ -21,7 +21,12 @@ if (array_key_exists("Filedata",$_FILES))
 		resource_log($ref,"u",0);
 	
 		$status=upload_file($ref);
-		echo get_resource_path($ref,"col",false);
+		
+		$thumb=get_resource_path($ref,"col",false);
+		if (file_exists($thumb))
+			{
+			echo $thumb;
+			}
 		exit();
 		}
 	else
@@ -129,7 +134,7 @@ a.progressCancel:hover
 	height: 14px;
 	width: 14px;
 	
-	background-image: url(../images/cancelbutton.gif);
+	background-image: url(swfupload/cancelbutton.gif);
 	background-repeat: no-repeat;
 	background-position: -14px 0px;
 	float: right;
@@ -153,9 +158,10 @@ window.onload =  function()
 		
 
 				// File Upload Settings
-				file_size_limit : "2048",	// 2MB
-				file_types : "*.jpg",
-				file_types_description : "JPG Images",
+
+				file_size_limit : "2000000",
+				file_types : "*.*",
+				file_types_description : "All Files",
 				file_upload_limit : "0",
 
 				// Event Handler Settings - these functions as defined in Handlers.js
