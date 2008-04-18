@@ -174,6 +174,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 			
+			# Find the target path and delete anything that's already there.
+			$path=get_resource_path($ref,$ps[$n]["id"],false);
+			if (file_exists($path)) {unlink($path);}
+			
 			# only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 			# or when producing a small thumbnail (to make sure we have that as a minimum
 			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col") || ($id=="pre"))
@@ -210,7 +214,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 						}
 						
 					imagecopyresampled($target,$source,0,0,0,0,$tw,$th,$sw,$sh);
-					imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
+					imagejpeg($target,$path,90);
 
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
 					imagedestroy($target);
@@ -238,7 +242,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 						$source = imagecreatefromjpeg($file);
 						}
 					imagecopyresampled($target,$source,floor(($tw-$iw)/2),floor(($th-$ih)/2),0,0,$iw,$ih,$sw,$sh);
-					imagejpeg($target,get_resource_path($ref,$ps[$n]["id"],false),90);
+					imagejpeg($target,$path,90);
 
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
 					imagedestroy($target);

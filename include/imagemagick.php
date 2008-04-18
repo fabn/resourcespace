@@ -1,38 +1,41 @@
 <? 
 
- 
-
 $file=myrealpath(get_resource_path($ref,"",false,$extension)); 
+
+
 # Set up ImageMagick 
 putenv("MAGICK_HOME=" . $imagemagick_path); 
 putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
 $imagemagick_path . "/bin"); # Path 
 sql_query("update resource set has_image=0 where ref='$ref'"); 
-# FFMPEG goes here. 
-# If $ffmpeg_path is set... 
-# Run ffmpeg against $file, if created OK then set $file to the resulting jpeg and proceed with ImageMagick below. 
-global $ffmpeg_path; 
-if (isset($ffmpeg_path)) 
-        { 
-        $tmpfile=myrealpath(get_resource_path($ref,"tmp",true,$extension)); 
-		if (file_exists($tmpfile . ".jpg")) {unlink($tmpfile . ".jpg");} 	
-         $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $tmpfile . ".jpg\""; 
-        $output=shell_exec($command); 
-        #exit($command . "<br>" . $output); 
-        if (file_exists($tmpfile . ".jpg")) {$file=$tmpfile . ".jpg";} 
-        } 
-        
-#if InDesign file, extract preview image from meta. 
-#Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
-if ($extension=="indd"){
-$indd_thumb = extract_indd_thumb ($file);
-if ($indd_thumb!="no") {
-$tmpfile=myrealpath(get_resource_path($ref,"tmp",true,$extension));
-base64_to_jpeg( $indd_thumb, $tmpfile.".jpg" );
-if (file_exists($tmpfile.".jpg")){$file = $tmpfile.".jpg";}}}
-        
-        
+
+
+# Set up target file
+$target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
+if (file_exists($target)) {unlink($target);}
+
+
+/* ----------------------------------------
+	Try InDesign
+   ----------------------------------------
+*/
+# Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+if ($extension=="indd")
+	{
+	$indd_thumb = extract_indd_thumb ($file);
+	if ($indd_thumb!="no")
+		{
+		base64_to_jpeg( $indd_thumb, $target);
+		if (file_exists($target)){$newfile = $target;}
+		}
+	}    
+
+
+/* ----------------------------------------
+	Try text file to JPG conversion
+   ----------------------------------------
+*/
 # Support text files simply by rendering them on a JPEG.
 if ($extension=="txt")
 	{
@@ -44,49 +47,53 @@ if ($extension=="txt")
 	imagefilledrectangle($im,0,0,$width,$height,$col);
 	$col=imagecolorallocate($im,0,0,0);
 	imagettftext($im,9,0,10,25,$col,$font,$text);
-    $tmpfile=myrealpath(get_resource_path($ref,"tmp2",true,$extension)); 
-    imagejpeg($im,$tmpfile . ".jpg");
-	$file=$tmpfile . ".jpg";
+    imagejpeg($im,$target);
+	$newfile=$target;
 	}
-        
-$ps=sql_query("select * from preview_size where internal=1 or allow_preview=1"); 
-for ($n=0;$n<count($ps);$n++) 
+
+
+/* ----------------------------------------
+	Try FFMPEG for video files
+   ----------------------------------------
+*/
+global $ffmpeg_path; 
+if (isset($ffmpeg_path) && !isset($newfile)) 
         { 
-        # fetch target width and height 
-        $tw=$ps[$n]["width"];$th=$ps[$n]["height"]; 
-        $id=$ps[$n]["id"]; 
-        $target=myrealpath(get_resource_path($ref,$ps[$n] 
-["id"],false,"jpg")); 
-        if (file_exists($target)) {unlink($target);} 
-        $command=$imagemagick_path . "/bin/convert";
-        if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}
-        
-        $prefix="";
-        
-        # CR2 files need a cr2: prefix
-        if ($extension=="cr2") {$prefix="cr2:";}
-        
-        $command.= " " . $prefix . "\"$file\"[0] -colorspace RGB -resize " . $tw . "x" . $th . " \"$target\""; 
+         $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
-        if (file_exists($target) && ($id=="thm")) 
-                { 
-                list($sw,$sh) = @getimagesize($target); 
-                # Set has image, and set the preview extension to JPG rather than PDF 
-                sql_query("update resource set 
-has_image=1,preview_extension='jpg',thumb_width='$sw',thumb_height='$sh' 
-where ref='$ref'"); 
-                } 
+        if (file_exists($target)) {$newfile=$target;} 
         } 
 
-#Support for Sort By Color feature : extracting color data for files processed by ImageMagick:
-$image = get_resource_path($ref,"thm",false);
-if (file_exists($image))
+
+/* ----------------------------------------
+	Try ImageMagick
+   ----------------------------------------
+*/
+if (!isset($newfile))
 	{
-	$target = imagecreatefromjpeg($image);
-	extract_mean_colour($target,$ref);
-	imagedestroy($target); 
+	# Locate imagemagick.
+    $command=$imagemagick_path . "/bin/convert";
+    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
+
+    $prefix="";
+        
+    # CR2 files need a cr2: prefix
+    if ($extension=="cr2") {$prefix="cr2:";}
+        
+    $command.= " " . $prefix . "\"$file\"[0] -colorspace RGB -resize 800x800 \"$target\""; 
+    $output=shell_exec($command); 
+    if (file_exists($target))
+    	{
+    	$newfile=$target;
+    	}
 	}
-
-
+	
+	
+# If a file has been created, generate previews just as if a JPG was uploaded.
+if (isset($newfile))
+	{
+	create_previews($ref,false,"jpg");
+	}
 ?>
