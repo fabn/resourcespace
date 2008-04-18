@@ -6,7 +6,7 @@ function upload_file($ref)
 	{
 	# Process file upload for resource $ref
 	
-	# Work out which file has been posted (switch is necessary for FancyUpload)
+	# Work out which file has been posted (switch is necessary for SWFUpload)
 	if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];} else {$processfile=$_FILES['Filedata'];}
 	
     $filename=strtolower(str_replace(" ","_",$processfile['name']));

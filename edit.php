@@ -86,11 +86,11 @@ if (getval("save","")!="")
 			}
 		else
 			{
-			if (getval("fancy","")!="")
+			if (getval("swf","")!="")
 				{
 				$resource_type=getvalescaped("resource_type","");
 				update_resource_type($ref,$resource_type);
-				redirect("upload_fancy.php");
+				redirect("upload_swf.php");
 				}
 			else
 				{
@@ -188,7 +188,7 @@ if ($multiple) { ?>
 <h1><?=$lang["specifydefaultcontent"]?></h1>
 <p><?=text("batch")?></p>
 
-<? if (getval("fancy","")!="") { # We need to ask for the resource type here for FancyUploads
+<? if (getval("swf","")!="") { # We need to ask for the resource type here for SWFUploads
 ?>
 <div class="Question">
 <label for="resourcetype"><?=$lang["resourcetype"]?></label>

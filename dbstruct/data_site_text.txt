@@ -178,5 +178,5 @@ change_language,introtext,"Por favor, selecciona el idioma en el que deseas trab
 team_content,introtext,,133,es,120,
 team_report,introtext,"Por favor, elige un informe y un rango de fecha. El informe podrá abrirse en un documento de Excel o un documento de características similares.",134,es,121,
 change_password,introtext,"Por favor introduzca una nueva contraseña.",135,es,125,
-upload_fancy,introtext,"Upload your files below. You can select multiple files when browsing by holding down the 'shift' key.",145,en,,
+upload_swf,introtext,"Click the button below to upload files. You can select multiple files when browsing by holding down the 'shift' key.",145,en,,
 tag,introtext,"Help to improve search results by tagging resources. Say what you see, separated by spaces or commas... for example: dog, house, ball, birthday cake. Enter the full name of anyone visible in the photo and the location the photo was taken if known.",146,en,,

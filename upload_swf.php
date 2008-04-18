@@ -44,6 +44,11 @@ if (array_key_exists("Filedata",$_FILES))
 				$status=upload_file($ref); # Upload to the specified ref.
 				}
 			}
+		$thumb=get_resource_path($ref,"col",false);
+		if (file_exists($thumb))
+			{
+			echo $thumb;
+			}
 		exit();
 		}
     }
