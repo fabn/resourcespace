@@ -82,7 +82,7 @@ if (!isset($newfile))
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
         
-    $command.= " " . $prefix . "\"$file\"[0] -colorspace RGB -resize 800x800 \"$target\""; 
+    $command.= " " . $prefix . "\"$file\"[0] +profile icc -colorspace RGB -resize 800x800 \"$target\""; 
     $output=shell_exec($command); 
     if (file_exists($target))
     	{
