@@ -167,7 +167,7 @@ function save_resource_data_multi($collection)
 				$resource_sql="";
 
 				# Work out existing field value.
-				$existing=sql_value("select value from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'","");
+				$existing=escape_check(sql_value("select value from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'",""));
 				
 				# Find and replace mode? Perform the find and replace.
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="FR")
