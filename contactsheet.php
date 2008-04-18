@@ -7,8 +7,9 @@
 include('fpdf/fpdf.php');
 include('include/general.php');
 include('include/db.php');
-include('include/collections_functions.php');
+include('include/search_functions.php');
 include('include/resource_functions.php');
+include('include/collections_functions.php');
 include('include/image_processing.php');
 
 $collection=getval("c","");
@@ -24,13 +25,13 @@ $refnumberfontsize=8;
 #calculating sizes of cells, images, and number of rows:
 $cellsize=($pagewidth-1.7)/$columns;
 $imagesize=$cellsize-0.3;
-$rowsperpage=($pageheight-1-$cellsize)/$cellsize;
+$rowsperpage=($pageheight-1.2-$cellsize)/$cellsize;
 $page=1;
 
 #Get data
 $collectiondata= get_collection($collection);
-$collectionresources= get_collection_resources($collection);
-$test=array_reverse($collectionresources);
+$result=do_search("!collection" . $collection);
+
 $user= get_user($collectiondata['user']);
 
 #Start PDF, set metadata, etc.
@@ -39,7 +40,7 @@ $pdf->SetTitle($collectiondata['name']." ".$date);
 $pdf->SetAuthor($user['fullname']." ".$user['email']);
 $pdf->SetSubject($applicationname." Contact Sheet");
 $keywords="";
-$pdf->SetMargins(1,1,.7);
+$pdf->SetMargins(1,1.2,.7);
 $pdf->SetAutoPageBreak(true,0);
 $pdf->AddPage();
 
@@ -47,48 +48,49 @@ $pdf->AddPage();
 $pdf->SetFont('helvetica','',$titlefontsize);
 $title = $applicationname." - ". $collectiondata['name']." - ".$date;
 $pagenumber = " - p.". $page;
-$pdf->Text(1,.6,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
 
 $pdf->SetFontSize($refnumberfontsize);
 
 #Begin loop through resources, collecting Keywords too.
 $i=0;
 $j=0;
-foreach ($collectionresources as $resource)
-{
-    $i++;
-		
-		
-		$resourcedata=get_resource_data($resource);
-		if ($resourcedata!==false)
+
+
+for ($n=0;$n<count($result);$n++)			
+		{
+		$ref=$result[$n]["ref"];
+		$preview_extension=$result[$n]["preview_extension"];
+    	$i++;
+
+		if ($ref!==false)
 			{
 			# Find image
-			$resourcethumb=get_resource_path($resource,"pre",false,$resourcedata["preview_extension"]);
+			$imgpath = get_resource_path($ref,"pre",false,$preview_extension);
 			
-			if (!file_exists(myrealpath($resourcethumb)))
-				$resourcethumb=get_resource_path($resource,"thm",false,$resourcedata["preview_extension"]);
+			if (!file_exists(myrealpath($imgpath)))
+				$imgpath=get_resource_path($ref,"thm",false,$preview_extension);
 	
-			if (file_exists($resourcethumb) && ($resourcedata["preview_extension"]=="jpg" || $resourcedata["preview_extension"]=="jpeg"))
+			if (file_exists($imgpath) && ($preview_extension=="jpg" || $preview_extension=="jpeg"))
 			{
 				
-				$keywords.=$resourcedata['ref'].", ";	
-				
+				$keywords.=$ref.", ";	
 				# Two ways to size image to cell, either by height or by width.
-				$thumbsize=getimagesize($resourcethumb);
+				$thumbsize=getimagesize($imgpath);
 					if ($thumbsize[0]>$thumbsize[1]){
 					
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);		
-						$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $resource),2,0);
+						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);		
+						$pdf->Cell($cellsize,$cellsize,$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),2,0);
 					
 					}
 					
 					else{
 						
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$resourcedata['ref']);	
-						$pdf->Cell($cellsize,$cellsize,$pdf->Image($resourcethumb,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $resource),0,0);
+						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);	
+						$pdf->Cell($cellsize,$cellsize,$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $ref),0,0);
 						
 					}
-			
+			$n=$n++;
 					if ($i == $columns){
 					
 						$pdf->ln(); $i=0;$j++;
@@ -102,7 +104,7 @@ foreach ($collectionresources as $resource)
 							$pagestarty=$pdf->GetY();
 							$pdf->SetFont('helvetica','',$titlefontsize);
 							$pagenumber = " - p.". $page;
-							$pdf->Text(1,.6,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+							$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
 							#then restore the saved coordinates and fontsize to continue as usual.
 							$pdf->SetFontSize($refnumberfontsize);
 							$pdf->Setx($pagestartx);
@@ -118,15 +120,16 @@ $pdf->SetKeywords($keywords);
 
 #check configs, decide whether PDF outputs to browser or to a new resource.
 if ($contact_sheet_resource==true){
-	
 	$newresource=create_resource(1,0);
 
 	update_field($newresource,8,$collectiondata['name']." ".$date);
 	update_field($newresource,$filename_field,$newresource.".pdf");
 
 		#Relate resources in collection to new resource
-		foreach ($test as $relation){
-			sql_query("insert into resource_related(resource,related) values ($newresource,$relation)");
+for ($n=0;$n<count($result);$n++)			
+		{
+		$ref=$result[$n]["ref"];
+			sql_query("insert into resource_related(resource,related) values ($newresource,$ref)");
 		}
 
 	#update file extension
