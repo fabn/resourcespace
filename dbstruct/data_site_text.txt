@@ -25,9 +25,7 @@ help,introtext,"Get the most out of ResourceSpace. These guides will help you us
 contribute,introtext,"You can contribute your own resources. When you initially create a resource it is in the ""Pending Submission"" status. When you have uploaded your file and edited the fields, set the status field to ""Pending Review"". It will then be reviewed by the resources team.",62,en,,
 done,user_password,"An e-mail containing your username and password has been sent.",50,en,,
 user_password,introtext,"Enter your e-mail address and your username and password will be sent to you.",51,en,,
-edit,batch,"Please specify the default content and keywords for the resources you are about to upload. This is typically content that is common among all the resources such as country, project code, credit etc.</p>
-
-<p><b>Please note:</b> Batch uploading is a bandwidth and CPU intensive process and it is advisable to run only one upload at any given time.",52,en,,
+edit,batch,"Please specify the default content and keywords for the resources you are about to upload.",52,en,,
 team_copy,introtext,"Enter the ID of the resource you would like to copy. Only the resource data will be copied - any uploaded file will not be copied.",53,en,,
 delete,introtext,"Please enter your password to confirm that you would like to delete this resource.",54,en,,
 team_report,introtext,"Please choose a report and a date range. The report can be opened in Microsoft Excel or similar spreadsheet application.",55,en,,
