@@ -5,6 +5,8 @@
 #
 
 include('fpdf/fpdf.php');
+include('include/config.default.php');
+include('include/config.php');
 include('include/general.php');
 include('include/db.php');
 include('include/search_functions.php');
@@ -15,18 +17,31 @@ include('include/image_processing.php');
 $collection=getval("c","");
 
 #configuring the sheet:
-$columns=4;
 $pagewidth=$pagesize[0]="8.5";
 $pageheight=$pagesize[1]="11";
 $date= date("m-d-Y h:i a");
 $titlefontsize=10;
 $refnumberfontsize=8;
 
-#calculating sizes of cells, images, and number of rows:
-$cellsize=($pagewidth-1.7)/$columns;
-$imagesize=$cellsize-0.3;
-$rowsperpage=($pageheight-1.2-$cellsize)/$cellsize;
-$page=1;
+if (!$config_sheetlistview)
+{
+	$columns=5;
+	#calculating sizes of cells, images, and number of rows:
+	$cellsize[0]=$cellsize[1]=($pagewidth-1.7)/$columns;
+	$imagesize=$cellsize[0]-0.3;
+	$rowsperpage=($pageheight-1.2-$cellsize[1])/$cellsize[1];
+	$page=1;
+}
+else
+{
+	$columns=1; 
+	#calculating sizes of cells, images, and number of rows:
+	$imagesize=1.0;
+	$cellsize[0]=$pagewidth-1.7;
+	$cellsize[1]=1.0;
+	$rowsperpage=($pageheight-1.2-$cellsize[1])/$cellsize[1];
+	$page=1;
+}
 
 #Get data
 $collectiondata= get_collection($collection);
@@ -79,15 +94,35 @@ for ($n=0;$n<count($result);$n++)
 				$thumbsize=getimagesize($imgpath);
 					if ($thumbsize[0]>$thumbsize[1]){
 					
+					if (!$config_sheetlistview)
+					{
 						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);		
-						$pdf->Cell($cellsize,$cellsize,$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),2,0);
+					}
+					else
+					{
+						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);	
+						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
+							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
+					}
+						
+						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),2,0);
 					
 					}
 					
 					else{
 						
+					if (!$config_sheetlistview)
+					{
 						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);	
-						$pdf->Cell($cellsize,$cellsize,$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $ref),0,0);
+					}
+					else
+					{
+						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);			
+						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
+							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
+					}
+
+						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $ref),0,0);
 						
 					}
 			$n=$n++;

@@ -177,6 +177,10 @@ $emailfooter="";
 $contact_sheet=true;
 $contact_sheet_resource=false;
 
+# Use list view in contact sheet
+$config_sheetlistview = false;
+$config_sheetlist_fields = array(8);
+
 # Use SWFUpload (in browser batch upload) for user contributions as opposed to standard single uploads
 $usercontribute_swfupload=true;
 

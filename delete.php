@@ -15,7 +15,12 @@ if (getval("save","")!="")
 		}
 	else
 		{
+		hook("custompredeleteresource");
+
 		delete_resource($ref);
+		
+		hook("custompostdeleteresource");
+		
 		redirect("done.php?text=deleted");
 		}
 	}
