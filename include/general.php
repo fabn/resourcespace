@@ -396,10 +396,18 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
 
-function get_usergroups()
+function get_usergroups($usepermissions=false)
 	{
-	# Returns a list of user groups. Put anything starting with 'General Staff Users' at the top (e.g. General Staff) - Oxfam request
-	return sql_query("select * from usergroup order by (name like 'General Staff Users%') desc,name");
+	# Returns a list of user groups. Put anything starting with 'General Staff Users' at the top (e.g. General Staff)
+	$sql="";
+	if ($usepermissions && checkperm("U"))
+		{
+		# Only return users in children groups to the user's group
+		global $usergroup;
+		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
+		$sql.="parent='" . $usergroup . "'";
+		}
+	return sql_query("select * from usergroup $sql order by (name like 'General Staff Users%') desc,name");
 	}
 	
 function get_user($ref)

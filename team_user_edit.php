@@ -41,7 +41,7 @@ include "include/header.php";
 
 <div class="Question"><label><?=$lang["group"]?></label>
 <select class="stdwidth" name="usergroup">
-<? $groups=get_usergroups();
+<? $groups=get_usergroups(true);
 for ($n=0;$n<count($groups);$n++)
 	{
 	if (($groups[$n]["ref"]==3) && ($usergroup!=3))
