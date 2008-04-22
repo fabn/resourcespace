@@ -17,14 +17,16 @@ $applicationname="ResourceSpace"; # The name of your implementation / installati
 
 # Available languages
 $defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
-$languages["en"]="English";
+$languages["en"]="British English";
+$languages["us"]="American English";
 $languages["de"]="Deutsch";
 $languages["es"]="Español";
 $languages["fr"]="Français";
+$languages["it"]="Italiano";
 $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
-$languages["it"]="Italiano";
+
 
 # FTP settings for batch upload
 # Only necessary if you plan to use the FTP upload feature.
