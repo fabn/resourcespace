@@ -450,7 +450,7 @@ function copy_resource($from,$resource_type=-1)
 	if (sql_value("select count(*) value from resource where ref='$from'",0)==0) {return false;}
 	
 	# First copy the resources row
-	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access from resource where ref='$from';");
+	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access,created_by) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access,created_by from resource where ref='$from';");
 	$to=sql_insert_id();
 	
 	# Set the access level for user contributed resources.
