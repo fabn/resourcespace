@@ -5,8 +5,6 @@
 #
 
 include('fpdf/fpdf.php');
-include('include/config.default.php');
-include('include/config.php');
 include('include/general.php');
 include('include/db.php');
 include('include/search_functions.php');
