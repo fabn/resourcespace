@@ -169,14 +169,14 @@ else
 </tr>
 <?
 $nodownloads=false;$counter=0;
-if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($resource["file_extension"]=="jpeg") || ($resource["file_extension"]=="gif") || ($resource["file_extension"]=="png")))
+if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($resource["file_extension"]=="jpeg")))
 	{
 	# Work out if the user is allowed to download these images
 	$download=true;
 	if (checkperm("v")) {$download=true;}
 	if (($k!="") && (check_access_key($ref,$k))) {$download=true;} # External users to whom the resource has been e-mailed
 
-	$sizes=get_image_sizes($ref,false,$resource["preview_extension"]);
+	$sizes=get_image_sizes($ref,false,$resource["file_extension"]);
 	for ($n=0;$n<count($sizes);$n++)
 		{
 		# DPI calculations
