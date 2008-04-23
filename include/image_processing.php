@@ -529,10 +529,7 @@ function base64_to_jpeg( $imageData, $outputfile ) {
 
 function extract_indd_thumb ($filename) {
    
-    ob_start();
-    readfile($filename);
-    $source = ob_get_contents();
-    ob_end_clean();
+    $source = file_get_contents($filename);
 
     $xmpdata_start = strrpos($source,"<xap:Thumbnails");
     $xmpdata_end = strrpos($source,"</xap:Thumbnails>");
@@ -545,5 +542,14 @@ function extract_indd_thumb ($filename) {
     	$indd_thumb = str_replace("#xA;","",$indd_thumb);
     	return $indd_thumb;} else {return "no";}
      }
+     
+# to extract filenames of images placed in an InDesign file
+function extract_indd_links ($filename){
 
+	$data=file_get_contents($filename);
+	preg_match_all ('/\b[a-z0-9_-]+\.(jpg|jpeg|gif|png|pdf|psb|eps|psd|ai|bmp|tif|tiff)\b/i', $data, $array);
+    $links= array_unique($array[0]);
+    return $links;
+ }
+ 
 ?>

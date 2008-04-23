@@ -528,4 +528,15 @@ function update_resource_type($ref,$type)
 	sql_query("update resource set resource_type='$type' where ref='$ref'");
 	}
 	
+function get_refs_by_filename($filename)
+	{
+	# Returns an array of all refs that have a particular filename in the original_filename field
+	return sql_query("select resource from resource_data where resource_type_field=51 AND value='$filename'");
+	}
+	
+function relate_to_array($ref,$array)	
+	{
+	# Relates a resource to each in a simple array of ref numbers
+		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$array) . ")");
+	}		
 ?>

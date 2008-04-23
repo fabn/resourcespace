@@ -186,5 +186,9 @@ $config_sheetlist_fields = array(8);
 # Use SWFUpload (in browser batch upload) for user contributions as opposed to standard single uploads
 $usercontribute_swfupload=true;
 
+# When extracting previews for InDesign files:
+# extract the names of placed images, and relate any files with that filename that can be found in RS. 
+# config is in imagemagick.php because I keep getting "Undefined variable: indd_links"
+# $relate_indd_links = false;
 
 ?>
