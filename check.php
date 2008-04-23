@@ -83,7 +83,7 @@ if (isset($imagemagick_path))
 		}
 	else
 		{
-		$result="FAIL: '$imagemagic_path/convert' not found";
+		$result="FAIL: '$imagemagick_path/convert' not found";
 		}
 	}
 else
