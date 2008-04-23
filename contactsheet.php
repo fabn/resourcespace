@@ -158,12 +158,8 @@ if ($contact_sheet_resource==true){
 	update_field($newresource,8,$collectiondata['name']." ".$date);
 	update_field($newresource,$filename_field,$newresource.".pdf");
 
-		#Relate resources in collection to new resource
-for ($n=0;$n<count($result);$n++)			
-		{
-		$ref=$result[$n]["ref"];
-			sql_query("insert into resource_related(resource,related) values ($newresource,$ref)");
-		}
+#Relate all resources in collection to the new contact sheet resource
+relate_to_collection($newresource,$collection);	
 
 	#update file extension
 	sql_query("update resource set file_extension='pdf' where ref='$newresource'");

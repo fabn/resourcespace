@@ -343,4 +343,10 @@ function save_collection_resource_comment($resource,$collection,$comment,$rating
 	return true;
 	}
 
+function relate_to_collection($ref,$collection)	
+	{
+	# Relates every resource in $collection to $ref
+		$colresources = get_collection_resources($collection);
+		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$colresources) . ")");
+	}	
 ?>
