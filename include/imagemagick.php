@@ -35,25 +35,28 @@ if ($extension=="indd")
 		
 		#get array of filenames
 		$inddlinks = extract_indd_links($file);
-		
+
 		
 		$array = array();
 		$n=0;
 		#for each filename in the array, get an array of refs with that filename
 		foreach ($inddlinks as $filename){
   		$linkrefs = get_refs_by_filename($filename);
-  		
-  			#every result ref for each filename is added to the relations array
-  			foreach ($linkrefs as $linkref)
+
+  		if (sizeof($linkrefs)!=0){
+
+		foreach ($linkrefs as $linkref)
   			{
 				 $n++;
   				 if (isset($linkref['resource'])){$array[$n] = $linkref['resource'];}
+
   			}
     	}
-
-sql_query("delete from resource_related where resource='$ref'");  
-relate_to_array($ref,$array);
-    	
+    	}
+	sql_query("delete from resource_related where resource='$ref'");  
+	if (count($array)!=0){
+	relate_to_array($ref,$array);
+    }
 	}    
 }
 
