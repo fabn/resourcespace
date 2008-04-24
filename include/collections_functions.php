@@ -347,6 +347,7 @@ function relate_to_collection($ref,$collection)
 	{
 	# Relates every resource in $collection to $ref
 		$colresources = get_collection_resources($collection);
+		sql_query("delete from resource_related where resource='$ref'");  
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$colresources) . ")");
 	}	
 ?>

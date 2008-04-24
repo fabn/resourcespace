@@ -30,7 +30,7 @@ if ($extension=="indd")
 		if (file_exists($target)){$newfile = $target;}
 		}
 		
-	$relate_indd_links=false;
+	global $relate_indd_links;
 	if ($relate_indd_links==true) {		
 		
 		#get array of filenames
@@ -53,7 +53,7 @@ if ($extension=="indd")
   			}
     	}
     	}
-	sql_query("delete from resource_related where resource='$ref'");  
+	
 	if (count($array)!=0){
 	relate_to_array($ref,$array);
     }

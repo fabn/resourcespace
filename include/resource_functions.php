@@ -537,6 +537,7 @@ function get_refs_by_filename($filename)
 function relate_to_array($ref,$array)	
 	{
 	# Relates a resource to each in a simple array of ref numbers
+		sql_query("delete from resource_related where resource='$ref'");  
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$array) . ")");
 	}		
 ?>
