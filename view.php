@@ -451,6 +451,7 @@ if (count($result)>0)
 	}
 
 
+if ($show_related_themes==true){
 # -------- Public Collections / Themes
 $result=get_themes_by_resource($ref);
 if (count($result)>0) 
@@ -478,7 +479,7 @@ if (count($result)>0)
 	</div>
 	<div class="PanelShadow"></div>
 	</div><?
-	}
+	}} 
 ?>
 
 

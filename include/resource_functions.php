@@ -531,7 +531,7 @@ function update_resource_type($ref,$type)
 function get_refs_by_filename($filename)
 	{
 	# Returns an array of all refs that have a particular filename in the original_filename field
-	return sql_query("select resource from resource_data where resource_type_field=51 AND value='$filename'");
+	return sql_query("select resource from resource_data where resource_type_field=51 AND value LIKE '%$filename'");
 	}
 	
 function relate_to_array($ref,$array)	
