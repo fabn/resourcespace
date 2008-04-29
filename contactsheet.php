@@ -13,27 +13,36 @@ include('include/collections_functions.php');
 include('include/image_processing.php');
 
 $collection=getval("c","");
+$size=getval("size","");
+$column=getval("columns","");
+$orientation=getval("orientation","");
+$sheetstyle=getval("sheetstyle","");
+if ($size == "letter") {$width=8.5;$height=11;}
+if ($size == "legal") {$width=8.5;$height=14;}
+if ($size == "tabloid") {$width=11;$height=17;}
 
 #configuring the sheet:
-$pagewidth=$pagesize[0]="8.5";
-$pageheight=$pagesize[1]="11";
+$pagewidth=$pagesize[0]=$width;
+$pageheight=$pagesize[1]=$height;
 $date= date("m-d-Y h:i a");
 $titlefontsize=10;
 $refnumberfontsize=8;
+if ($orientation=="landscape"){$pagewidth=$pagesize[0]=$height; $pageheight=$pagesize[1]=$width;}
 
-if (!$config_sheetlistview)
+if ($sheetstyle=="thumbnails")
 {
-	$columns=5;
+$columns=$column;
+
 	#calculating sizes of cells, images, and number of rows:
 	$cellsize[0]=$cellsize[1]=($pagewidth-1.7)/$columns;
 	$imagesize=$cellsize[0]-0.3;
 	$rowsperpage=($pageheight-1.2-$cellsize[1])/$cellsize[1];
 	$page=1;
 }
-else
-{
-	$columns=1; 
+else if ($sheetstyle=="list")
+{ 
 	#calculating sizes of cells, images, and number of rows:
+	$columns=1;
 	$imagesize=1.0;
 	$cellsize[0]=$pagewidth-1.7;
 	$cellsize[1]=1.0;
@@ -92,11 +101,11 @@ for ($n=0;$n<count($result);$n++)
 				$thumbsize=getimagesize($imgpath);
 					if ($thumbsize[0]>$thumbsize[1]){
 					
-					if (!$config_sheetlistview)
+					if ($sheetstyle=="thumbnails")
 					{
 						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);		
 					}
-					else
+					else if ($sheetstyle=="list")
 					{
 						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);	
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
@@ -109,11 +118,11 @@ for ($n=0;$n<count($result);$n++)
 					
 					else{
 						
-					if (!$config_sheetlistview)
+					if ($sheetstyle=="thumbnails")
 					{
 						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);	
 					}
-					else
+					else if ($sheetstyle=="list")
 					{
 						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);			
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
