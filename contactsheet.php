@@ -179,7 +179,7 @@ relate_to_collection($newresource,$collection);
 	
 	#Create thumbnails and redirect browser to the new contact sheet resource
 	create_previews($newresource,true,"pdf");
-	header('Location: index.php?r='.$newresource);
+	header('Location: view.php?ref='.$newresource);
 	}
 
 else
