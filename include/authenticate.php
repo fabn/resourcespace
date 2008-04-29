@@ -61,6 +61,9 @@ else
   
 if (!$valid)
     {
+	$_SERVER['REQUEST_URI'] = ( isset($_SERVER['REQUEST_URI']) ?
+	$_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . (( isset($_SERVER
+	['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '')));
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script>
