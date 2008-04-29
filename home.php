@@ -13,7 +13,22 @@ $headerinsert="
 include "include/header.php";
 
 if (!hook("replacehome")) { 
+
+# handle a new path for homeanim graphics. Also, count the files in the folder.
+if (!isset($homeanim_folder)){$homeanim_folder="gfx/homeanim/gfx/";}
+
+$dir = $homeanim_folder; 
+$filecount = 0; 
+$d = dir($dir); 
+while ($f = $d->read()) { 
+ if(preg_match("/[0-9]+\.(jpg)/",$f)) { 
+ if(!is_dir($f)) $filecount++; 
+ } 
+} 
+$homeimages=$filecount;
+
 ?>
+
 <script language="Javascript">
 
 var num_photos=<?=$homeimages?>;  // <---- number of photos (/images/slideshow?.jpg)
@@ -39,14 +54,14 @@ function nextPhoto()
 	  	{
 	    // image1.style.visibility='hidden';
 	    Effect.Fade(image1);
-	    window.setTimeout("image1.src='gfx/homeanim/gfx/" + next_photo + ".jpg';",1000);
+	    window.setTimeout("image1.src='<?=$homeanim_folder?>" + next_photo + ".jpg';",1000);
      	flip=1;
      	}
 	  else
 	  	{
 	    // image1.style.visibility='visible';
 	    Effect.Appear(image1);
-	    setTimeout("image2.style.background='url(gfx/homeanim/gfx/" + next_photo + ".jpg)';",1000);
+	    setTimeout("image2.style.background='url(<?=$homeanim_folder?>" + next_photo + ".jpg)';",1000);
 	    flip=0;
 		}	  	
      
@@ -58,7 +73,7 @@ function nextPhoto()
 window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('gfx/homeanim/gfx/2.jpg');"><img src='gfx/homeanim/gfx/1.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
+<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('<?=$homeanim_folder?>2.jpg');"><img src='<?=$homeanim_folder?>1.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
 
