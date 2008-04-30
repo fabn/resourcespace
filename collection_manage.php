@@ -114,7 +114,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<? } ?>
 	
 	<? if ($contact_sheet==true) { ?>
-    &nbsp;<a href="contactsheet_settings.php?c=<?=$collections[$n]["ref"]?>" target="_parent">&gt;&nbsp;<?=strtolower($lang["contactsheet"])?></a>
+    &nbsp;<a href="contactsheet_settings.php?c=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=strtolower($lang["contactsheet"])?></a>
 	<? } ?>
 
 	&nbsp;<a href="collection_email.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a>
