@@ -206,7 +206,9 @@ if ($k!="")
 	<br />
 	<?=$lang["created"] . " " . nicedate($tempcol["created"])?><br />
   	<?=count($result) . " " . $lang["youfoundresources"]?><br />
-	<a href="collection_download.php?collection=<?=$usercollection?>&k=<?=$k?>" target="collections">&gt;&nbsp;<?=$lang["action-download"]?></a>
+  	<? if (isset($zipcommand)) { ?>
+	<a href="collection_download.php?collection=<?=$usercollection?>&k=<?=$k?>" target="main">&gt;&nbsp;<?=$lang["action-download"]?></a>
+	<? } ?>
 </div>
 <?
 } else {
