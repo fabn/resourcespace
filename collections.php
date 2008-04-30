@@ -28,8 +28,24 @@ if ($collection!="")
 	{
 	hook("prechangecollection");
 	#change current collection
-	if ($k=="") {set_user_collection($userref,$collection);}
-	$usercollection=$collection;
+	
+	if ($k=="" && $collection==-1)
+		{
+		# Create new collection
+		$name=get_mycollection_name($userref);
+		$new=create_collection ($userref,$name);
+		set_user_collection($userref,$new);
+		
+		# Log this
+		daily_stat("New collection",$userref);
+		}
+	else
+		{
+		# Switch the existing collection
+		if ($k=="") {set_user_collection($userref,$collection);}
+		$usercollection=$collection;
+		}
+
 	hook("postchangecollection");
 	}
 
@@ -219,6 +235,7 @@ if ($k!="")
 			<?
 			}
 		?>
+		<option value="-1">(<?=$lang["createnewcollection"]?>)</option>
 		</select>
 		</div>				
   </form>
@@ -405,6 +422,7 @@ else
 			<?
 			}
 		?>
+		<option value="-1">(<?=$lang["createnewcollection"]?>)</option>
 		</select>
 		
 		</div>				

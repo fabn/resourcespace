@@ -350,4 +350,22 @@ function relate_to_collection($ref,$collection)
 		sql_query("delete from resource_related where resource='$ref' and related in ('" . join("','",$colresources) . "')");  
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$colresources) . ")");
 	}	
+	
+function get_mycollection_name($userref)
+	{
+	# Fetches the next name for a new My Collection for the given user (My Collection 1, 2 etc.)
+	global $lang;
+	for ($n=2;$n<500;$n++)
+		{
+		$name=$lang["mycollection"] . " " . $n;
+		$ref=sql_value("select ref value from collection where user='$userref' and name='$name'",0);
+		if ($ref==0)
+			{
+			# No match!
+			return $name;
+			}
+		}
+	# Tried nearly 500 names(!) so just return a standard name 
+	return $lang["mycollection"];
+	}
 ?>
