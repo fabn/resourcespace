@@ -18,21 +18,21 @@ $headerinsert.="
 include "include/header.php";
 ?>
 <div class="BasicsBox">
-<h1>Contact Sheet Configuration</h1>
+<h1><?=$lang["contactsheetconfiguration"]?></h1>
 
-<p>Select sheet size and number of columns for your contact sheet</p>
+<p><?=$lang["contactsheetintrotext"]?></p>
 
 <form method=post id="contactsheetform" action="contactsheet.php">
 <input type=hidden name="c" value="<?=$collection?>">
 
 <div class="Question">
-<label>Collection Title</label><div class="Fixed"><?=$collectiondata['name']?></div>
+<label><?=$lang["collectionname"]?></label><div class="Fixed"><?=$collectiondata['name']?></div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label>Style</label>
-<select class="clearerleft" name="sheetstyle" id="sheetstyle" onChange="
+<label><?=$lang["display"]?></label>
+<select class="stdwidth" name="sheetstyle" id="sheetstyle" onChange="
 	if ($('sheetstyle').value=='list')
 		{
 		Effect.DropOut('ThumbnailOptions',{duration:0.5});
@@ -41,26 +41,28 @@ include "include/header.php";
 		{
 		Effect.Appear('ThumbnailOptions',{duration:0.5});
 		}"">
-<option value="thumbnails">Thumbnails</option>
-<option value="list">List</option>
+<option value="thumbnails"><?=$lang["thumbnails"]?></option>
+<option value="list"><?=$lang["list"]?></option>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label>Size</label>
-<select class="clearerleft" name="size" id="size"">
-<option value="letter">Letter - 8.5"x11"</option>
-<option value="legal">Legal - 8.5"x14"</option>
-<option value="tabloid">Tabloid - 11"x17"</option>
+<label><?=$lang["size"]?></label>
+<select class="stdwidth" name="size" id="size"">
+<option value="a4">A4 - 297mm x 420mm</option>
+<option value="a3">A3 - 210mm x 297mm</option>
+<option value="letter">US Letter - 8.5" x 11"</option>
+<option value="legal">US Legal - 8.5" x 14"</option>
+<option value="tabloid">US Tabloid - 11" x 17"</option>
 
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div id="ThumbnailOptions" class="Question">
-<label>Columns</label>
-<select class="clearerleft" name="columns" id="ThumbnailOptions"">
+<label><?=$lang["columns"]?></label>
+<select class="stdwidth" name="columns" id="ThumbnailOptions"">
 <option value=2>2</option>
 <option value=3>3</option>
 <option value=4 selected>4</option>
@@ -71,17 +73,17 @@ include "include/header.php";
 </div>
 
 <div class="Question">
-<label>Orientation</label>
-<select class="clearerleft" name="orientation" id="orientation"">
-<option value="portrait">portrait</option>
-<option value="landscape">landscape</option>
+<label><?=$lang["orientation"]?></label>
+<select class="stdwidth" name="orientation" id="orientation">
+<option value="portrait"><?=$lang["portrait"]?></option>
+<option value="landscape"><?=$lang["landscape"]?></option>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;Create&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" />
 </div>
 
 </form>

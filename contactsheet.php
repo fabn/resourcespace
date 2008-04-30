@@ -17,6 +17,10 @@ $size=getval("size","");
 $column=getval("columns","");
 $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","");
+
+if ($size == "a4") {$width=210/25.4;$height=297/25.4;} // convert to inches
+if ($size == "a3") {$width=297/25.4;$height=420/25.4;}
+
 if ($size == "letter") {$width=8.5;$height=11;}
 if ($size == "legal") {$width=8.5;$height=14;}
 if ($size == "tabloid") {$width=11;$height=17;}

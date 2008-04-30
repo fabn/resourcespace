@@ -111,19 +111,6 @@ $site_text=array();
 $results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and (specific_to_group is null or specific_to_group=0)");
 for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];}
 
-# Temporary code to uppercase english text to make temporary spanish replacement, for testing language implementation (please ignore!)
-/*
-if ($language=="es")
-{
-include dirname(__FILE__)."/../languages/en.php";
-foreach ($lang as $key=>$value) {
-if (!is_array($lang[$key])) {$lang[$key]=strtoupper($value);}}
-foreach ($site_text as $key=>$value) {
-if (!is_array($site_text[$key])) {$site_text[$key]=strtoupper($value);}}
-}
-*/
-
-
 # Blank the header insert
 $headerinsert="";
 

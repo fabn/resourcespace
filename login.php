@@ -13,7 +13,7 @@ if (array_key_exists("username",$_POST))
     if (strlen($password)==32) {exit("Invalid password.");} # Prevent MD5s being entered directly.
     
     $password_hash=md5("RS" . $username . $password);
-    $session_hash=md5($password_hash . $username . $password . time());
+    $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
     
     $valid=sql_query("select count(*) c from user where username='$username' and (password='$password' or password='$password_hash')");$valid=$valid[0]["c"];
       
