@@ -244,7 +244,7 @@ for ($n=0;$n<count($fields);$n++)
 	if (getval("resetform","")!="") {$value="";}
 	?>
 	<? if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
-	?><div><input name="editthis_<?=$name?>" id="editthis_<?=$n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?=$n?>');var m=document.getElementById('modeselect_<?=$n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><? } ?>
+	?><div><input name="editthis_<?=$name?>" id="editthis_<?=$n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?=$n?>');var m=document.getElementById('modeselect_<?=$n?>');var f=document.getElementById('findreplace_<?=$n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?=$n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?=$n?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><? } ?>
 
 	<?
 	if ($multiple)
@@ -253,7 +253,7 @@ for ($n=0;$n<count($fields);$n++)
 		?>
 		<div class="Question" id="modeselect_<?=$n?>" style="display:none;padding-bottom:0;margin-bottom:0;">
 		<label><?=$lang["editmode"]?></label>
-		<select name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
+		<select id="modeselectinput_<?=$n?>" name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
 		<option value="RT"><?=$lang["replacealltext"]?></option>
 		<option value="FR"><?=$lang["findandreplace"]?></option>
 		<option value="AP"><?=$lang["appendtext"]?></option>
