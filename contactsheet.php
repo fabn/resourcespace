@@ -3,10 +3,10 @@
 # PDF Contact Sheet Functionality
 # Contributed by Tom Gleason
 #
-
 include('fpdf/fpdf.php');
 include('include/general.php');
 include('include/db.php');
+include('include/authenticate.php');
 include('include/search_functions.php');
 include('include/resource_functions.php');
 include('include/collections_functions.php');

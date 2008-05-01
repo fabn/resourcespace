@@ -44,14 +44,14 @@ include "include/header.php";
 	<div class="Question">
 	<label><?=$lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?=$lang["fullname"]?>">
-	<input name="fullname" class="stdwidth">
+	<input name="fullname" class="stdwidth" value="<?=$userfullname?>">
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
 	<label><?=$lang["emailaddress"]?></label>
 	<input type="hidden" name="email_label" value="<?=$lang["emailaddress"]?>">
-	<input name="email" class="stdwidth">
+	<input name="email" class="stdwidth" value="<?=$useremail?>">
 	<div class="clearerleft"> </div>
 	</div>
 	
