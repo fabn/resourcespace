@@ -243,7 +243,7 @@ if (true) #search condition
 			{
 			$ref=$result[$n]["ref"];
 			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive;
-			if ($display=="thumbs") {
+			if ($display!="list") {
 			?>
 			 
 <? if (!hook("renderresultthumb")) { ?>

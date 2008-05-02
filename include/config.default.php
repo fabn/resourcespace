@@ -27,6 +27,9 @@ $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
 
+# Disable language selection options
+$disable_languages=false;
+
 # FTP settings for batch upload
 # Only necessary if you plan to use the FTP upload feature.
 $ftp_server="my.ftp.server";

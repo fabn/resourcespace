@@ -81,7 +81,7 @@ include "include/header.php";
 			<input type="password" name="password" id="name" class="stdwidth" />
 			<div class="clearerleft"> </div>
 		</div>
-	
+<? if ($disable_languages==false) { ?>	
 		<div class="Question">
 			<label for="pass"><?=$lang["language"]?> </label>
 			<select class="stdwidth" name="language">
@@ -90,7 +90,8 @@ include "include/header.php";
 			<? } ?>
 			</select>
 			<div class="clearerleft"> </div>
-		</div>
+		</div> 
+<? } ?>
 	
 		<div class="Question">
 			<label for="remember"><?=$lang["keepmeloggedin"]?></label>

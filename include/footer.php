@@ -29,7 +29,9 @@ function SwapCSS(css)
 <? if (getval("k","")=="") { ?>
 <div id="FooterNavLeft" class=""><? if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?=$lang["interface"]?>:&nbsp;&nbsp;<a href="#" onClick="SwapCSS('greyblu');return false;"><img src="<?=$baseurl?>/gfx/interface/BlueChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('whitegry');return false;"><img src="<?=$baseurl?>/gfx/interface/WhiteChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('black');return false;"><img src="<?=$baseurl?>/gfx/interface/BlackChip.gif" alt="" width="11" height="11" /></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? } ?>
+<? if ($disable_languages==false){?>
 <?=$lang["language"]?>: <a href="<?=$baseurl?>/change_language.php"><?=$languages[$language]?></a>
+<? } ?>
 </div>
 
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
