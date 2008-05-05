@@ -30,6 +30,9 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 <? hook("searchbartoptoolbar"); ?>
 
 <div class="SearchSpace">
+
+<? if (!hook("searchbarreplace")) { ?>
+
   <h2><?=$lang["simplesearch"]?></h2>
 	<p><?=text("searchpanel")?></p>
 	
@@ -143,7 +146,8 @@ function ResetTicks() {<?=$function?>}
   <p><br /><a href="<?=$baseurl?>/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
   <p><a href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></li>
 	</div>
-
+	
+	<? } ?> <!-- END of Searchbarreplace hook -->
 	</div>
 	
 	<div class="PanelShadow"></div>
@@ -164,5 +168,4 @@ function ResetTicks() {<?=$function?>}
 <? hook("searchbarbottomtoolbar"); ?>
 	
 </div>
-
 

@@ -774,10 +774,15 @@ function send_mail($email,$subject,$message,$from="")
 	
 	# Include footer
 	global $email_footer;
+	global $disable_quoted_printable_enc;
+	
 	$message.="\r\n\r\n\r\n" . $email_footer;
 	
+	if ($disable_quoted_printable_enc==false){
 	$message=quoted_printable_encode($message);
 	$subject=quoted_printable_encode_subject($subject);
+	}
+	
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	mail ($email,$subject,$message,"From: " . $from . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=\"UTF-8\"\r\nContent-Transfer-Encoding: quoted-printable");

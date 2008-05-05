@@ -197,4 +197,7 @@ $relate_indd_links = false;
 # Show related themes and public collections panel on Resource View page.
 $show_related_themes=true;
 
+# Try switching this to true if e-mail links aren't working.
+$disable_quoted_printable_enc=true;
+
 ?>

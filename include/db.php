@@ -128,7 +128,11 @@ function hook($name,$pagename="")
 		{
 		# "All" hooks
 		$function="Hook" . ucfirst($plugins[$n]) . "All" . ucfirst($name);
-		if (function_exists($function)) {eval ($function . "();");}
+		if (function_exists($function)) 
+			{
+			# Function must return 'true' if successful (so existing functionality is replaced)
+			$found=eval ("return " . $function . "();");
+			}
 	
 		# Specific hook	
 		$function="Hook" . ucfirst($plugins[$n]) . ucfirst($pagename) . ucfirst($name);
