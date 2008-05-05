@@ -89,20 +89,22 @@ if (checkperm("h")) { # Only users with the 'h' permission can publish public co
 <div class="clearerleft"> </div>
 </div>
 
+<? if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <div class="Question">
 <label for="allow_changes"><?=$lang["relateallresources"]?></label><input type=checkbox id="relateall" name="relateall">
 <div class="clearerleft"> </div>
-</div>
+</div><? } ?>
 
 <div class="Question">
 <label for="removeall"><?=$lang["removeallresourcesfromcollection"]?></label><input type=checkbox id="removeall" name="removeall">
 <div class="clearerleft"> </div>
 </div>
 
+<? if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <div class="Question">
 <label for="deleteall"><?=$lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?=$lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>
-</div>
+</div><? } ?>
 
 <? if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <!-- Archive Status -->

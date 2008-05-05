@@ -245,9 +245,9 @@ if ($k!="")
   <ul>
   	<? if ((!(sql_value("select count(*) value from research_request where collection='$usercollection'",0)>0)) || (!checkperm("r"))) { ?>
     		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?=$lang["managemycollections"]?></a></li>
-    <li><a href="collection_email.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["email"]?></a>
+    <? if (checkperm("v") || checkperm("g")) { ?><li><a href="collection_email.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["email"]?>&nbsp;&nbsp;</a><? } ?>
     
-    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?>&nbsp;&nbsp;<a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$lang["edit"]?></a><? } ?>
+    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$lang["edit"]?></a><? } ?>
     
     </li><? } ?>
     <? } else {
