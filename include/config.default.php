@@ -198,6 +198,6 @@ $relate_indd_links = false;
 $show_related_themes=true;
 
 # Try switching this to true if e-mail links aren't working.
-$disable_quoted_printable_enc=true;
+$disable_quoted_printable_enc=false;
 
 ?>
