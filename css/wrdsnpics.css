@@ -110,10 +110,8 @@ a:active {text-decoration:underline;}
 .ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
 
 
-.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 90px;height:95px;}
-
+.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 90px;height:110px;}
 .ResourcePanelSmall {padding:0;margin:0;width: 90px;}
-
 .ResourceAlignSmall {width:90px;height:90px;text-align: center;vertical-align: middle;}
 
 
