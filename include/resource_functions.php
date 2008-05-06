@@ -172,7 +172,7 @@ function save_resource_data_multi($collection)
 				# Find and replace mode? Perform the find and replace.
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="FR")
 					{
-					$val=str_ireplace
+					$val=str_replace
 						(
 						getvalescaped("find_" . $fields[$n]["ref"],""),
 						getvalescaped("replace_" . $fields[$n]["ref"],""),
