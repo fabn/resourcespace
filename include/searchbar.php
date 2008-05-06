@@ -53,7 +53,10 @@ $types=get_resource_types();for ($n=0;$n<count($types);$n++)
 <script language="Javascript">
 function ResetTicks() {<?=$function?>}
 </script>
-		        <div class="SearchItem"><input name="Clear" type="button" value="&nbsp;&nbsp;<?=$lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';document.getElementById('basiccountry').value='';document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';document.getElementById('basicday').value='';ResetTicks();"/><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
+		        <div class="SearchItem"><input name="Clear" type="button" value="&nbsp;&nbsp;<?=$lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';
+		        <? if ($country_search==true) {?>document.getElementById('basiccountry').value='';
+		        <? } ?>
+		        document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';document.getElementById('basicday').value='';ResetTicks();"/><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
 				<br />
 
 				<? if ($country_search) { ?>
