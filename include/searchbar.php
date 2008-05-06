@@ -142,10 +142,7 @@ function ResetTicks() {<?=$function?>}
 				  <? if ($smallthumbs==true){?><label><input name="display" type="radio" value="smallthumbs" <? if (getval("display","smallthumbs")=="smallthumbs") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["smallthumbs"]?></label><?}?>
 				  </div>
 				  <div class="tick"><label><input type="radio" name="display" value="list" <? if (getval("display","")=="list") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["list"]?></label></div>
-
-				<div class="SearchItem">
-
-				<input name="Clear" type="button" value="&nbsp;&nbsp;<?=$lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';document.getElementById('basiccountry').value='';document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';document.getElementById('basicday').value='';ResetTicks();"/><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
+			
   </form>
 	
   <p><br /><a href="<?=$baseurl?>/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
