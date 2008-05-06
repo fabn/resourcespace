@@ -132,7 +132,11 @@ if (true) #search condition
 		?>
 		<div class="TopInpageNav TopInpageNav">
 		<div class="InpageNavLeftBlock"><?=$lang["youfound"]?>:<br /><span class="Selected"><?=number_format(count($result))?><?=(count($result)==$max_results)?"+":""?></span> <?=$lang["youfoundresources"]?></div>
-		<div class="InpageNavLeftBlock"><?=$lang["display"]?>:<br /><? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["thumbnails"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["thumbnails"]?></a><? } ?>&nbsp;|&nbsp;<? if ($display=="list") { ?><span class="Selected"><?=$lang["list"]?></span><? } else { ?><a href="<?=$url?>&display=list"><?=$lang["list"]?></a><? } ?> <? hook("adddisplaymode"); ?> </div>
+		<div class="InpageNavLeftBlock"><?=$lang["display"]?>:<br />
+		<? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["thumbnails"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["thumbnails"]?></a><? } ?>&nbsp;|&nbsp; 
+			<? if ($smallthumbs==true) { ?>		
+		<? if ($display=="smallthumbs") { ?><span class="Selected"><?=$lang["smallthumbs"]?></span><? } else { ?><a href="<?=$url?>&display=smallthumbs"><?=$lang["smallthumbs"]?></a><? } ?>&nbsp; |&nbsp;<? } ?>
+		<? if ($display=="list") { ?><span class="Selected"><?=$lang["list"]?></span><? } else { ?><a href="<?=$url?>&display=list"><?=$lang["list"]?></a><? } ?> <? hook("adddisplaymode"); ?> </div>
 		<?
 		
 		# order by
@@ -242,30 +246,33 @@ if (true) #search condition
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
 			{
 			$ref=$result[$n]["ref"];
-			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive;
-			if ($display!="list") {
-			?>
+			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive; ?>
+			
+				<?	
+				if ($display=="thumbs") { #Thumbnails view
+				?>
 			 
 <? if (!hook("renderresultthumb")) { ?>
 
 	<!--Resource Panel-->
-	<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
+		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanel" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
 		
 <? if (!hook("renderimagethumb")) { ?>			
-			<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
+		
+		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
+		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
 			</td>
 			</tr></table>
-<? } ?>	
+<? } ?> <!-- END HOOK Renderimagethumb-->	
 			
 <? if (!hook("rendertitlethumb")) { ?>			
-			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
-<? } ?>			
-			
-			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?><? } ?>&nbsp;</div>
-				
 
+			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?></a>&nbsp;</div>
+
+<? } ?> <!-- END HOOK Rendertitlethumb -->			
+			
+			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),14),$search)?><? } ?>&nbsp;</div>				
 			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" <? if (!$infobox) { ?>title="<?=$lang["fullscreenpreview"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span>
@@ -285,8 +292,21 @@ if (true) #search condition
 	new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', revert: true});
 	Droppables.add('ResourceShell<?=$ref?>',{accept: 'ResourcePanelShell', onDrop: function(element) {ReorderResources(element.id,<?=$ref?>);}, hoverclass: 'ReorderHover'});
 	</script>
-	<? } ?>
+	<? } ?> 
 <? } ?>
+
+			<? 
+			} elseif ($display == "smallthumbs") { #Small Thumbs view
+			?>
+
+<div class="ResourcePanelShellSmall" id="ResourceShell<?=$ref?>">
+		<div class="ResourcePanelSmall" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">	
+			<table border="0" class="ResourceAlignSmall"><tr><td>
+			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]/2?>" height="<?=$result[$n]["thumb_height"]/2?>" src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"><? } ?></a>
+			</td>
+			</tr></table>
+<div class="clearer"></div></div>	
+<div class="PanelShadow"></div></div>
 			 
 			<?
 			} else if ($display=="list") { # List view

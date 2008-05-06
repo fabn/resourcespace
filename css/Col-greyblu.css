@@ -36,11 +36,12 @@ a:active {color:#B5C3D4;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
 
-#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #94A7C0;border-bottom: 1px solid #94A7C0;border-left: 1px solid #94A7C0;}
+#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #94A7C0;border-bottom: 1px solid #94A7C0;border-left: 1px solid #94A7C0;}
 
 #SearchBoxPanel {background: #5A7599 url(../gfx/greyblu/interface/SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: #5A7599 url(../gfx/greyblu/interface/researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
+.ResourcePanelSmall {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
 .IconVideo {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 140px 5px;}
 
 .ImageBorder, .RecordPanel .Picture {border: 1px solid #FFFFFF;}
@@ -92,3 +93,4 @@ a:active {color:#B5C3D4;}
 .InfoTable {border-collapse:collapse;}
 .InfoTable tr {background-image: url(../gfx/greyblu/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}
 .InfoTable td {border:1px solid #94A7C0;border-top:1px solid #fff;padding:10px;}
+

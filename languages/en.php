@@ -33,6 +33,7 @@ $lang["anyday"]="Any day";
 $lang["anycountry"]="Any country";
 $lang["resultsdisplay"]="Results Display";
 $lang["thumbnails"]="Thumbnails";
+$lang["smallthumbs"]="Small";
 $lang["list"]="List";
 $lang["perpage"]="per page";
 

@@ -36,11 +36,12 @@ a:active {color:#737373;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
 
-#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
+#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
 
 #SearchBoxPanel {background: #DBDBDB url(../gfx/whitegry/interface/SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: #DCDCDC url(../gfx/whitegry/interface/researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #FFFFFF;}
+.ResourcePanelSmall {background: #FFFFFF url(../gfx/whitegry/interface/resourcepanel.gif) repeat-x;}
 .IconVideo {background: url(../gfx/whitegry/interface/IcVideo.gif) no-repeat 140px 5px;}
 
 .ImageBorder, .RecordPanel .Picture, .VideoBorder {border: 1px solid #000000;}	

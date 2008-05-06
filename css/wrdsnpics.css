@@ -109,6 +109,10 @@ a:active {text-decoration:underline;}
 .ResourcePanelShell a:link, .ResourcePanelShell a:visited {text-decoration:none;}
 .ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
 
+.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 90px;height:95px;}
+.ResourcePanelSmall {padding:0;margin:0;width: 90px;}
+.ResourceAlignSmall {width:90px;height:95px;text-align: center;vertical-align: middle;}
+
 .IconCollect	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
 .IconEmail	{width:16px;height:12px;padding: 0;display: block;margin-left: 4px;float: right;}
 .IconPreview	{width:16px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;margin-right: 5px;}
@@ -246,3 +250,5 @@ behavior: url(iepngfix.htc);
 .CollectionPanelInfo .IconComment	{	background: url(../gfx/interface/IcComment.gif) no-repeat;}
 .CollectionPanelInfo .IconCommentAnim	{	background: url(../gfx/interface/IcComment_anim.gif) no-repeat;}
 .CollectionPanelInfo .IconRemove	{	background: url(../gfx/interface/IcRemove.gif) no-repeat;}
+
+
