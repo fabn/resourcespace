@@ -29,36 +29,7 @@ if ($extension=="indd")
 		base64_to_jpeg( $indd_thumb, $target);
 		if (file_exists($target)){$newfile = $target;}
 		}
-		
-	global $relate_indd_links;
-	if ($relate_indd_links==true) {		
-		
-		#get array of filenames
-		$inddlinks = extract_indd_links($file);
-
-		
-		$array = array();
-		$n=0;
-		#for each filename in the array, get an array of refs with that filename
-		foreach ($inddlinks as $filename){
-  		$linkrefs = get_refs_by_filename($filename);
-
-  		if (sizeof($linkrefs)!=0){
-
-		foreach ($linkrefs as $linkref)
-  			{
-				 $n++;
-  				 if (isset($linkref['resource'])){$array[$n] = $linkref['resource'];}
-
-  			}
-    	}
-    	}
-	
-	if (count($array)!=0){
-	relate_to_array($ref,$array);
-    }
-	}    
-}
+	}
 
 
 /* ----------------------------------------

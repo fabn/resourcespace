@@ -542,15 +542,6 @@ function extract_indd_thumb ($filename) {
     	$indd_thumb = str_replace("#xA;","",$indd_thumb);
     	return $indd_thumb;} else {return "no";}
      }
-     
-# to extract filenames of images placed in an InDesign file
-function extract_indd_links ($filename){
-
-	$data=file_get_contents($filename);
-	preg_match_all ('/\b[a-z0-9_-]+\.(jpg|jpeg|gif|png|pdf|psb|eps|psd|ai|bmp|tif|tiff)\b/i', $data, $array);
-    $links= array_unique($array[0]);
-    return $links;
- }
  
  #extract uuids from an image's XMP. 
  #Instance ID can be used to identify modifications. 
