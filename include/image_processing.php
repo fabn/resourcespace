@@ -552,4 +552,30 @@ function extract_indd_links ($filename){
     return $links;
  }
  
+ #extract uuids from an image's XMP. 
+ #Instance ID can be used to identify modifications. 
+ #DerivedFrom IDs can be used to generate a 'stack' or resource history
+ function extract_xmp_uuids ($filename) {
+
+    $data = file_get_contents($filename);
+    $xmpdata_start = strpos($data,"<x:xmpmeta");
+    $xmpdata_end = strpos($data,"</x:xmpmeta>");
+    $xmplength = $xmpdata_end-$xmpdata_start;
+    $xmpdata = substr($data,$xmpdata_start,$xmplength+12);
+    
+    $regexps = array(
+"DocumentID" => "/<xapMM:DocumentID>.+<\/xapMM:DocumentID>/",
+"InstanceID" => "/<xapMM:InstanceID>.+<\/xapMM:InstanceID>/",
+"DerivedFromID" => "/<stRef:documentID>.+<\/stRef:documentID>/",
+"DerivedFromInstanceID" => "/<stRef:instanceID>.+<\/stRef:instanceID>/");
+
+    	foreach ($regexps as $key => $k) {
+		preg_match ($k, $xmpdata,$r);
+    	$uuid = strip_tags($r[0]);
+    	$uuid = str_replace("uuid:","",$uuid);
+      $uuids[$key] = $uuid;
+    }
+return ($uuids);
+}
+ 
 ?>
