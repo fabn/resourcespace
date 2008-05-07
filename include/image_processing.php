@@ -577,5 +577,32 @@ function extract_indd_links ($filename){
     }
 return ($uuids);
 }
+
+# returns an array of link information from the active xmp block of an INDD
+function extract_uuid_links ($filename) {
+
+    $data = file_get_contents($filename);
+    $xmpdata_start = strrpos($data,"<xapMM:Manifest");
+    $xmpdata_end = strrpos($data,"</xapMM:Manifest>");
+    $xmplength = $xmpdata_end-$xmpdata_start;
+    $xmpdata = substr($data,$xmpdata_start,$xmplength+12);
+    
+    $regexps = array(
+"URI" => "/<stRef:lastURL>.+<\/stRef:lastURL>/",
+"DocumentID" => "/<stRef:documentID>.+<\/stRef:documentID>/",
+"InstanceID" => "/<stRef:instanceID>.+<\/stRef:instanceID>/");
+
+    	foreach ($regexps as $key => $k) {
+		preg_match_all ($k, $xmpdata,$r);
+		$n=0;		
+			foreach($r[0] as $array=>$value){
+			$link_data = strip_tags($value);
+    		$link_data = str_replace("uuid:","",$link_data);
+      	$link_ids[$key][$n] = $link_data;
+      	$n++;
+	 		}
+    	} 
+return ($link_ids);
+}
  
 ?>
