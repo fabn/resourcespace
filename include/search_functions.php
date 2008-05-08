@@ -69,15 +69,18 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			{
 			$s=explode("=",$sf[$n]);
 			if (count($s)!=2) {exit ("Search filter is not correctly configured for this user group.");}
-			# Find field
-			$f=sql_value("select ref value from resource_type_field where name='" . escape_check($s[0]) . "'",0);
-			if ($f==0) {exit ("Field with short name '" . $s[0] . "' not found in user group search filter.");}
+
+			# Find field(s) - multiple fields can be returned to support several fields with the same name.
+			$f=sql_array("select ref value from resource_type_field where name='" . escape_check($s[0]) . "'");
+			if (count($f)==0) {exit ("Field(s) with short name '" . $s[0] . "' not found in user group search filter.");}
 			
-			# Find keyword
-			$k=sql_value("select ref value from keyword where keyword='" . strtolower(escape_check($s[1])) . "'",0);
-			if ($k==0) {exit ("Keyword '" . $s[1] . "' not found in user group search filter.");}
+			# Find keyword(s)
+			$ks=explode("|",strtolower(escape_check($s[1])));
+			$k=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
+			if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
 					
-			$custperm.=" join resource_keyword rk on r.ref=rk.resource and rk.resource_type_field='$f' and rk.keyword='$k' ";		
+			$custperm.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$k) . "') ";	
+			echo $custperm;
 			}
 		}
 		
