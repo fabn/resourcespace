@@ -54,6 +54,21 @@ else
 	}
 ?><tr><td>GD version</td><td><?=$version?></td><td><b><?=$result?></b></td></tr><?
 
+# Check EXIF installed
+$phpinfo=shell_exec("php -m");
+$exif = strpos($phpinfo,"exif");
+if($exif)
+	{
+	$result="OK";
+	}
+else
+	{
+	$version="Not installed.";
+	$result="FAIL";
+	}
+?><tr><td colspan="2">EXIF Extension</td><td><b><?=$result?></b></td></tr><?
+
+
 # Check ini values for memory_limit, post_max_size, upload_max_filesize
 $memory_limit=ini_get("memory_limit");
 if (ResolveKB($memory_limit)<(200*1024)) {$result="WARNING: should be 200M or greater";} else {$result="OK";}
