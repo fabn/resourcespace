@@ -55,8 +55,19 @@ include "include/header.php";
 
     <? if (checkperm("m")) { ?><li><a href="team_mail.php"><?=$lang["sendbulkmail"]?></a></li><? } ?>
 
-	<? if (checkperm("a")) { ?><li><a target="main" href="admin/"><?=$lang["systemsetup"]?></a></li><? } ?>
-
+	<? if (checkperm("a")) { ?>
+	<li><a target="main" href="admin/"><?=$lang["systemsetup"]?></a></li>
+<?	
+if ($config_pluginmanager_enabled)
+{
+?>
+	<li><a target="main" href="team_pluginmanager.php">Manage Software Plugins</a></li>
+<?	
+}
+?>
+	<?hook("customteamfunctionadmin")?>
+	<? } ?>
+	
 	</ul>
 	</div>
 	

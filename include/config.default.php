@@ -198,4 +198,8 @@ $disable_quoted_printable_enc=false;
 
 # Enable small thumbnails option - experimental
 $smallthumbs=true;
+
+# Enable Plugin Manager (must exists a 777 'dynamic' folder in root)
+$config_pluginmanager_enabled = true;
+
 ?>

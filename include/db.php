@@ -60,8 +60,6 @@ $querycount=0;
 $querytime=0;
 $queryhist="";
 
-
-
 # -----------LANGUAGES AND PLUGINS-------------------------------
 # Include the appropriate language file
 $pagename=str_replace(".php","",pagename());
@@ -74,6 +72,12 @@ if ($language!="en")
 	{
 	include dirname(__FILE__)."/../languages/" . $language . ".php";
 	}
+
+if ($config_pluginmanager_enabled)
+{
+ 	unset($plugins);
+	include dirname(__FILE__)."/.././dynamic/plugins.php";
+}
 
 # Include language files for for each of the plugins too (if provided)
 for ($n=0;$n<count($plugins);$n++)

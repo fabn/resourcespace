@@ -74,7 +74,7 @@ else
 	<ul>
 	<li><? if ($allow_password_change) { ?><a href="<?=$baseurl?>/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
 	<li><a href="<?=$baseurl?>/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
-	<?=hook("addtologintoolbarmiddle");?>
+	<?hook("addtologintoolbarmiddle");?>
 	<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
 	</ul>
 	<?
