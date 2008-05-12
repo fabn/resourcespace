@@ -50,8 +50,8 @@ include "include/header.php";
 <div class="Question">
 <label><?=$lang["size"]?></label>
 <select class="stdwidth" name="size" id="size"">
-<option value="a4">A4 - 297mm x 420mm</option>
-<option value="a3">A3 - 210mm x 297mm</option>
+<option value="a4">A4 - 210mm x 297mm</option>
+<option value="a3">A3 - 297mm x 420mm</option>
 <option value="letter">US Letter - 8.5" x 11"</option>
 <option value="legal">US Legal - 8.5" x 14"</option>
 <option value="tabloid">US Tabloid - 11" x 17"</option>
