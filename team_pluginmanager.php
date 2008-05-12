@@ -1,8 +1,8 @@
 <?
-include(dirname(__FILE__)."./include/db.php");
-include(dirname(__FILE__)."./include/authenticate.php");
-include(dirname(__FILE__)."./include/general.php");
-include(dirname(__FILE__)."./include/header.php");
+include(dirname(__FILE__)."/./include/db.php");
+include(dirname(__FILE__)."/./include/authenticate.php");
+include(dirname(__FILE__)."/./include/general.php");
+include(dirname(__FILE__)."/./include/header.php");
 
 $plugindir = MyNormalizePath(dirname(__FILE__)."/./plugins");
 //$plugindir = str_replace("\\","/",$plugindir);

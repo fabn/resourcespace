@@ -200,6 +200,6 @@ $disable_quoted_printable_enc=false;
 $smallthumbs=true;
 
 # Enable Plugin Manager (must exists a 777 'dynamic' folder in root)
-$config_pluginmanager_enabled = true;
+$config_pluginmanager_enabled = false;
 
 ?>
