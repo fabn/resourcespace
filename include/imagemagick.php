@@ -15,6 +15,7 @@ sql_query("update resource set has_image=0 where ref='$ref'");
 $target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
 if (file_exists($target)) {unlink($target);}
 
+hook("metadata");
 
 /* ----------------------------------------
 	Try InDesign
@@ -29,6 +30,7 @@ if ($extension=="indd")
 		base64_to_jpeg( $indd_thumb, $target);
 		if (file_exists($target)){$newfile = $target;}
 		}
+	hook("indesign");	
 	}
 
 

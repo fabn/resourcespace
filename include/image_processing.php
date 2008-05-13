@@ -2,6 +2,7 @@
 # Image processing functions
 # Functions to allow upload and resizing of images
 
+if (!function_exists("upload_file")){
 function upload_file($ref)
 	{
 	# Process file upload for resource $ref
@@ -44,7 +45,7 @@ function upload_file($ref)
 	create_previews($ref,false,$extension);
 
     return $status;
-    }
+    }}
 	
 function extract_exif_comment($ref)
 	{
@@ -543,57 +544,5 @@ function extract_indd_thumb ($filename) {
     	return $indd_thumb;} else {return "no";}
      }
  
- #extract uuids from an image's XMP. 
- #Instance ID can be used to identify modifications. 
- #DerivedFrom IDs can be used to generate a 'stack' or resource history
- function extract_xmp_uuids ($filename) {
-
-    $data = file_get_contents($filename);
-    $xmpdata_start = strpos($data,"<x:xmpmeta");
-    $xmpdata_end = strpos($data,"</x:xmpmeta>");
-    $xmplength = $xmpdata_end-$xmpdata_start;
-    $xmpdata = substr($data,$xmpdata_start,$xmplength+12);
-    
-    $regexps = array(
-"DocumentID" => "/<xapMM:DocumentID>.+<\/xapMM:DocumentID>/",
-"InstanceID" => "/<xapMM:InstanceID>.+<\/xapMM:InstanceID>/",
-"DerivedFromID" => "/<stRef:documentID>.+<\/stRef:documentID>/",
-"DerivedFromInstanceID" => "/<stRef:instanceID>.+<\/stRef:instanceID>/");
-
-    	foreach ($regexps as $key => $k) {
-		preg_match ($k, $xmpdata,$r);
-    	$uuid = strip_tags($r[0]);
-    	$uuid = str_replace("uuid:","",$uuid);
-      $uuids[$key] = $uuid;
-    }
-return ($uuids);
-}
-
-# returns an array of link information from the active xmp block of an INDD
-function extract_uuid_links ($filename) {
-
-    $data = file_get_contents($filename);
-    $xmpdata_start = strrpos($data,"<xapMM:Manifest");
-    $xmpdata_end = strrpos($data,"</xapMM:Manifest>");
-    $xmplength = $xmpdata_end-$xmpdata_start;
-    $xmpdata = substr($data,$xmpdata_start,$xmplength+12);
-    
-    $regexps = array(
-"URI" => "/<stRef:lastURL>.+<\/stRef:lastURL>/",
-"DocumentID" => "/<stRef:documentID>.+<\/stRef:documentID>/",
-"InstanceID" => "/<stRef:instanceID>.+<\/stRef:instanceID>/");
-
-    	foreach ($regexps as $key => $k) {
-		preg_match_all ($k, $xmpdata,$r);
-		$n=0;		
-			foreach($r[0] as $array=>$value){
-			$link_data = strip_tags($value);
-    		$link_data = str_replace("uuid:","",$link_data);
-      	$link_ids[$key][$n] = $link_data;
-      	$n++;
-	 		}
-    	} 
-return ($link_ids);
-}
  
 ?>
