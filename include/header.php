@@ -84,7 +84,7 @@ else
 
 
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">
-		<? if (checkperm("s")) { ?>
+		
 		<ul>
 		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php" target="main"><?=$lang["home"]?></a></li><? }  ?>
 		
@@ -99,12 +99,12 @@ else
 		)
 		{?><li><a target="main" href="<?=$baseurl?>/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
 		<li><a target="main" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li>
-		<? if ($recent_link) { ?><li><a target="main" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
-		<? if ($mycollections_link) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
+		<? if (checkperm("s") && $recent_link) { ?><li><a target="main" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
+		<? if (checkperm("s") && $mycollections_link) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
 		<? if (checkperm("d")) { ?><li><a target="main" href="<?=$baseurl?>/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
-		<? if (($research_request) && (checkperm("q"))) { ?><li><a target="main" href="<?=$baseurl?>/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
+		<? if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="main" href="<?=$baseurl?>/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
 		
-		<? if ($speedtagging && checkperm("n")) { ?><li><a target="main" href="<?=$baseurl?>/tag.php"><?=$lang["tagging"]?></a></li><? } ?>
+		<? if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="main" href="<?=$baseurl?>/tag.php"><?=$lang["tagging"]?></a></li><? } ?>
 		
 		<li><a target="main" href="<?=$baseurl?>/help.php"><?=$lang["helpandadvice"]?></a></li>
 		<? if (checkperm("t")) { ?><li><a target="main" href="<?=$baseurl?>/team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
@@ -112,9 +112,7 @@ else
 <? hook("toptoolbaradder"); ?>
 
 		</ul>
-		<? } else { ?>
-		&nbsp;
-		<? } ?>
+
 		
 </div>
 
