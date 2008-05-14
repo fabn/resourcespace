@@ -133,7 +133,7 @@ if (true) #search condition
 		<div class="TopInpageNav TopInpageNav">
 		<div class="InpageNavLeftBlock"><?=$lang["youfound"]?>:<br /><span class="Selected"><?=number_format(count($result))?><?=(count($result)==$max_results)?"+":""?></span> <?=$lang["youfoundresources"]?></div>
 		<div class="InpageNavLeftBlock"><?=$lang["display"]?>:<br />
-		<? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["thumbnails"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["thumbnails"]?></a><? } ?>&nbsp;|&nbsp; 
+		<? if ($display=="thumbs") { ?><span class="Selected"><?=$lang["largethumbs"]?></span><? } else { ?><a href="<?=$url?>&display=thumbs"><?=$lang["largethumbs"]?></a><? } ?>&nbsp;|&nbsp; 
 			<? if ($smallthumbs==true) { ?>		
 		<? if ($display=="smallthumbs") { ?><span class="Selected"><?=$lang["smallthumbs"]?></span><? } else { ?><a href="<?=$url?>&display=smallthumbs"><?=$lang["smallthumbs"]?></a><? } ?>&nbsp; |&nbsp;<? } ?>
 		<? if ($display=="list") { ?><span class="Selected"><?=$lang["list"]?></span><? } else { ?><a href="<?=$url?>&display=list"><?=$lang["list"]?></a><? } ?> <? hook("adddisplaymode"); ?> </div>

@@ -32,7 +32,7 @@ $lang["anymonth"]="beliebiger Monat";
 $lang["anyday"]="beliebiger Tag";
 $lang["anycountry"]="beliebiges Land";
 $lang["resultsdisplay"]="Resultate anzeigen";
-$lang["thumbnails"]="gross";
+$lang["largethumbs"]="gross";
 $lang["smallthumbs"]="klein";
 $lang["list"]="Liste";
 $lang["perpage"]="pro Seite";
@@ -503,7 +503,8 @@ $lang["country"]="Land";
 # New for 1.5
 $lang["columns"]="Spalten";
 $lang["contactsheetconfiguration"]="Konfiguration Kontaktblatt";
-$lang["contactsheetthumbnails"]="Vorschaubilder";
+$lang["thumbnails"]="Vorschaubilder";
+
 $lang["contactsheetintrotext"]="Bitte w&auml;hlen Sie die Blattgr&ouml;&#223;e und die Spaltenanzahl f&uuml;r Ihr Kontaktblatt.";
 $lang["size"]="Gr&ouml;&#223;e";
 $lang["orientation"]="Ausrichtung";

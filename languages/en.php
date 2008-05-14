@@ -32,7 +32,7 @@ $lang["anymonth"]="Any month";
 $lang["anyday"]="Any day";
 $lang["anycountry"]="Any country";
 $lang["resultsdisplay"]="Results Display";
-$lang["thumbnails"]="Large";
+$lang["largethumbs"]="Large";
 $lang["smallthumbs"]="Small";
 $lang["list"]="List";
 $lang["perpage"]="per page";
@@ -503,7 +503,7 @@ $lang["country"]="Country";
 # New for 1.5
 $lang["columns"]="Columns";
 $lang["contactsheetconfiguration"]="Contact Sheet Configuration";
-$lang["contactsheetthumbnails"]="Thumbnails";
+$lang["thumbnails"]="Thumbnails";
 $lang["contactsheetintrotext"]="Please select the sheet size and the number of columns for your contact sheet.";
 $lang["size"]="Size";
 $lang["orientation"]="Orientation";

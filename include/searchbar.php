@@ -141,7 +141,7 @@ function ResetTicks() {<?=$function?>}
 				</select>
 				</div>
 	
-				  <div class="tick"><label><input name="display" type="radio" value="thumbs" <? if (getval("display","thumbs")=="thumbs") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["thumbnails"]?></label>
+				  <div class="tick"><label><input name="display" type="radio" value="thumbs" <? if (getval("display","thumbs")=="thumbs") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["largethumbs"]?></label>
 				  <? if ($smallthumbs==true){?><label><input name="display" type="radio" value="smallthumbs" <? if (getval("display","smallthumbs")=="smallthumbs") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["smallthumbs"]?></label><?}?>
 				  </div>
 				  <div class="tick"><label><input type="radio" name="display" value="list" <? if (getval("display","")=="list") { ?>checked="checked"<? } ?> />&nbsp;<?=$lang["list"]?></label></div>
