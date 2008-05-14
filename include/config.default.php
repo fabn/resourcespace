@@ -193,7 +193,7 @@ $usercontribute_swfupload=true;
 # Show related themes and public collections panel on Resource View page.
 $show_related_themes=true;
 
-# Try switching this to true if e-mail links aren't working.
+# Multi-lingual support for e-mails. Try switching this to true if e-mail links aren't working and ASCII characters alone are required (e.g. in the US).
 $disable_quoted_printable_enc=false;
 
 # Enable small thumbnails option

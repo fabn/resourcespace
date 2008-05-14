@@ -507,6 +507,6 @@ $lang["contactsheetintrotext"]="Please select the sheet size and the number of c
 $lang["size"]="Size";
 $lang["orientation"]="Orientation";
 $lang["requiredfield"]="This is a required field";
-
+$lang["requiredfields"]="Some required fields were not completed. Please review the form and try again.";
 
 ?>

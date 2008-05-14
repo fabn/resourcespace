@@ -101,6 +101,14 @@ if (getval("save","")!="")
 					}
 				}
 			}
+		else
+			{
+			?>
+			<script type="text/javascript">
+			alert('<?=$lang["requiredfields"]?>');
+			</script>
+			<?
+			}
 		}
 	else
 		{
