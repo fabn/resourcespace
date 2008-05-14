@@ -196,8 +196,9 @@ if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($re
 
 		if (!checkperm("v") && !checkperm("g") && $downloadthissize && $k=="") 
 			{
-			# Can only download the screen preview size
-			if (!$sizes[$n]["allow_preview"]==1) {$downloadthissize=false;}
+			# Restricted access if used does not have 'g' permission
+			# Only allow downloads of sizes where 'allow restricted download' is set to 1.
+			if (!$sizes[$n]["allow_restricted"]==1) {$downloadthissize=false;}
 			}
 			
 		if ($downloadthissize)
