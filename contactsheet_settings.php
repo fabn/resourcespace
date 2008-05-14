@@ -41,7 +41,7 @@ include "include/header.php";
 		{
 		Effect.Appear('ThumbnailOptions',{duration:0.5});
 		}"">
-<option value="thumbnails"><?=$lang["thumbnails"]?></option>
+<option value="thumbnails"><?=$lang["contactsheetthumbnails"]?></option>
 <option value="list"><?=$lang["list"]?></option>
 </select>
 <div class="clearerleft"> </div>

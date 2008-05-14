@@ -503,6 +503,7 @@ $lang["country"]="Country";
 # New for 1.5
 $lang["columns"]="Columns";
 $lang["contactsheetconfiguration"]="Contact Sheet Configuration";
+$lang["contactsheetthumbnails"]="Thumbnails";
 $lang["contactsheetintrotext"]="Please select the sheet size and the number of columns for your contact sheet.";
 $lang["size"]="Size";
 $lang["orientation"]="Orientation";
