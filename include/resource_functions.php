@@ -36,6 +36,7 @@ function save_resource_data($ref,$multi)
 	# Also re-index all keywords from indexable fields.
 		
 	# Loop through the field data and save (if necessary)
+	$errors=array();
 	$resource_sql="";
 	$fields=get_resource_field_data($ref,$multi);
 	for ($n=0;$n<count($fields);$n++)
@@ -104,6 +105,13 @@ function save_resource_data($ref,$multi)
 			# update resources table if necessary
 			if ($resource_sql!="") sql_query("update resource set $resource_sql where ref='$ref'");
 			}
+		
+		# Check required fields have been entered.
+		if ($fields[$n]["required"]==1 && ($val=="" || $val==","))
+			{
+			global $lang;
+			$errors[$fields[$n]["ref"]]=$lang["requiredfield"];
+			}
 		}
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref'"); # remove existing related items
@@ -117,6 +125,8 @@ function save_resource_data($ref,$multi)
 	
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
+	
+	if (count($errors)==0) {return true;} else {return $errors;}
 	}
 	
 

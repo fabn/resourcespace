@@ -76,6 +76,7 @@ if (!isset($newfile))
 	{
 	# Locate imagemagick.
     $command=$imagemagick_path . "/bin/convert";
+    if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
     if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 

@@ -17,6 +17,7 @@ $offset=getvalescaped("offset",0);
 $restypes=getvalescaped("restypes","");
 if (strpos($search,"!")!==false) {$restypes="";}
 $archive=getvalescaped("archive",0);
+$errors=array(); # The results of the save operation (e.g. required field messages)
 
 # next / previous resource browsing
 $go=getval("go","");
@@ -76,25 +77,28 @@ if (getval("save","")!="")
 	# save data
 	if (!$multiple)
 		{
-		save_resource_data($ref,$multiple);
+		$errors=save_resource_data($ref,$multiple);
 	
-		if ($ref>0)
+		if ($errors===true)
 			{
-			# Log this			
-			daily_stat("Resource edit",$ref);
-			redirect("view.php?ref=" . $ref . "&search=" . urlencode($search) . "&offset=" . $offset . "&order_by=" . $order_by . "&archive=" . $archive);
-			}
-		else
-			{
-			if (getval("swf","")!="")
+			if ($ref>0)
 				{
-				$resource_type=getvalescaped("resource_type","");
-				update_resource_type($ref,$resource_type);
-				redirect("upload_swf.php");
+				# Log this			
+				daily_stat("Resource edit",$ref);
+				redirect("view.php?ref=" . $ref . "&search=" . urlencode($search) . "&offset=" . $offset . "&order_by=" . $order_by . "&archive=" . $archive);
 				}
 			else
 				{
-				redirect("team_batch.php");
+				if (getval("swf","")!="")
+					{
+					$resource_type=getvalescaped("resource_type","");
+					update_resource_type($ref,$resource_type);
+					redirect("upload_swf.php");
+					}
+				else
+					{
+					redirect("team_batch.php");
+					}
 				}
 			}
 		}
@@ -270,7 +274,7 @@ for ($n=0;$n<count($fields);$n++)
 	?>
 
 	<div class="Question" id="question_<?=$n?>" <?if ($multiple) {?>style="display:none;border-top:none;"<? } ?>>
-	<label for="<?=$name?>"><?if (!$multiple) {?><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["keywords_index"]==1) { ?><sup>*</sup><? } ?><? } ?></label>
+	<label for="<?=$name?>"><?if (!$multiple) {?><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["required"]==1) { ?><sup>*</sup><? } ?><? } ?></label>
 	<?
 
 	switch ($fields[$n]["type"]) {
@@ -352,6 +356,17 @@ for ($n=0;$n<count($fields);$n++)
 		break;
 		}
 		?>
+		
+		<?
+		# Display any error messages from previous save
+		if (array_key_exists($fields[$n]["ref"],$errors))
+			{
+			?>
+			<div class="FormError">!! <?=$errors[$fields[$n]["ref"]]?> !!</div>
+			<?
+			}
+		?>
+		
 		<div class="clearerleft"> </div>
 		</div>
 		<?
@@ -424,7 +439,7 @@ for ($n=0;$n<count($fields);$n++)
 	<input <? if ($multiple) { ?>onclick="return confirm('<?=$lang["confirmeditall"]?>');"<? } ?> name="save" type="submit" value="&nbsp;&nbsp;<?=($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" />
 	</div>
 </form>
-<p><sup>*</sup> <?=$lang["indexedsearchable"]?></p>
+<p><sup>*</sup> <?=$lang["requiredfield"]?></p>
 </div>
 
 <!--<p><a href="view.php?ref=<?=$ref?>">Back to view</a></p>-->

@@ -85,7 +85,7 @@ function get_resource_field_data($ref,$multi=false)
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
 	$return=array();
-	$fields=sql_query("select *,f.ref fref from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where (f.resource_type=0 or f.resource_type=999 " . (($multi)?"":" or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.order_by,f.ref");
+	$fields=sql_query("select *,f.required frequired,f.ref fref from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where (f.resource_type=0 or f.resource_type=999 " . (($multi)?"":" or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.order_by,f.ref");
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) {$return[]=$fields[$n];}

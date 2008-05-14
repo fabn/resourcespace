@@ -506,7 +506,7 @@ $lang["contactsheetconfiguration"]="Contact Sheet Configuration";
 $lang["contactsheetintrotext"]="Please select the sheet size and the number of columns for your contact sheet.";
 $lang["size"]="Size";
 $lang["orientation"]="Orientation";
-
+$lang["requiredfield"]="This is a required field";
 
 
 ?>

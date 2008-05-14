@@ -478,7 +478,7 @@ $lang["hidden"]="(versteckt)";
 $lang["requestnewpassword"]="Neues Passwort anfordern";
 
 # New for 1.4
-$lang["reorderresources"]="Reorder resources within collection (hold and drag)";
+$lang["reorderresources"]="Ressourcen innerhalb der Kollektion neu anordnen (halten und ziehen)";
 $lang["addorviewcomments"]="Kommentare hinzuf&uuml;gen oder ansehen";
 $lang["collectioncomments"]="Kommentare zu den Kollektionen";
 $lang["collectioncommentsinfo"]="Add a comment to this collection for this resource. This will only apply to this collection.";
@@ -498,4 +498,14 @@ $lang["find"]="Finden";
 $lang["andreplacewith"]="...und ersetzen mit...";
 $lang["relateallresources"]="Alle Kollektionen dieser Ressource zuordnen.";
 $lang["country"]="Land";
+
+# New for 1.5
+$lang["columns"]="Spalten";
+$lang["contactsheetconfiguration"]="Konfiguration Kontaktblatt";
+$lang["contactsheetintrotext"]="Bitte w&auml;hlen Sie die Blattgr&ouml;&#223;e und die Spaltenanzahl für Ihr Kontaktblatt.";
+$lang["size"]="Gr&ouml;&#223;e";
+$lang["orientation"]="Ausrichtung";
+
+
+
 ?>
