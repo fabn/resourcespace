@@ -504,12 +504,10 @@ $lang["country"]="Land";
 $lang["columns"]="Spalten";
 $lang["contactsheetconfiguration"]="Konfiguration Kontaktblatt";
 $lang["thumbnails"]="Vorschaubilder";
-
 $lang["contactsheetintrotext"]="Bitte w&auml;hlen Sie die Blattgr&ouml;&#223;e und die Spaltenanzahl f&uuml;r Ihr Kontaktblatt.";
 $lang["size"]="Gr&ouml;&#223;e";
 $lang["orientation"]="Ausrichtung";
-$lang["requiredfield"]="Dies ist ein Pflichtfeld";
+$lang["requiredfield"]="Das ist ein Pflichtfeld";
 $lang["requiredfields"]="Einige Felder wurden nicht komplett ausgef&uuml;llt. Bitte &uuml;berpr&uuml;fen Sie das Formular und versuchen Sie es erneut.";
-
 
 ?>
