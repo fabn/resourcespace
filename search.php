@@ -31,7 +31,7 @@ $jumpcount=0;
 
 # Enable/disable the reordering feature. Just for collections for now.
 $allow_reorder=false;
-if (substr($search,0,11)=="!collection")
+if (substr($search,0,11)=="!collection" && $collection_reorder_caption)
 	{
 	# Check to see if this user can edit (and therefore reorder) this resource
 	$collection=substr($search,11);
@@ -285,7 +285,7 @@ if (true) #search condition
 		</div>
 	<div class="PanelShadow"></div>
 	</div>
-	<? if ($collection_reorder_caption && $allow_reorder) { 
+	<? if ($allow_reorder) { 
 	# Javascript drag/drop enabling.
 	?>
 	<script type="text/javascript">
@@ -339,8 +339,11 @@ if (true) #search condition
 		<!--Key to Panel-->
 		<div class="BottomInpageKey"> 
 			<?=$lang["key"]?>:
-		  <div class="KeyStar"><?=$lang["verybestresources"]?></div>
-		  
+		  	
+		  	<? if ($orderbyrating) { ?>
+		  	<div class="KeyStar"><?=$lang["verybestresources"]?></div>
+		  	<? } ?>
+		  	
 		  	<? if ($allow_reorder) { ?>
 			<div class="KeyReorder"><?=$lang["reorderresources"]?></div>
 			<div class="KeyComment"><?=$lang["addorviewcomments"]?></div>
