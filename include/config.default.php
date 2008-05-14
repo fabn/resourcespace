@@ -196,8 +196,8 @@ $show_related_themes=true;
 # Try switching this to true if e-mail links aren't working.
 $disable_quoted_printable_enc=false;
 
-# Enable small thumbnails option - experimental
-$smallthumbs=false;
+# Enable small thumbnails option
+$smallthumbs=true;
 
 /*
 # Enable Plugin Manager (must exists a 777 'dynamic' folder in root)
