@@ -58,12 +58,14 @@ include "include/header.php";
 	<? if (checkperm("a")) { ?>
 	<li><a target="main" href="admin/"><?=$lang["systemsetup"]?></a></li>
 <?	
+/*
 if ($config_pluginmanager_enabled)
 {
 ?>
 	<li><a target="main" href="team_pluginmanager.php">Manage Software Plugins</a></li>
 <?	
 }
+*/
 ?>
 	<?hook("customteamfunctionadmin")?>
 	<? } ?>
