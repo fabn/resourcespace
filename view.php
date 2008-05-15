@@ -140,7 +140,7 @@ elseif ($resource["has_image"]==1)
 else
 	{
 	?>
-	<img src="gfx/type<?=$resource["resource_type"]?>.gif" alt="" class="Picture" />
+	<img src="gfx/type<?=$resource["resource_type"]?>.gif" alt="" class="Picture" style="border:none;" />
 	<?
 	}
 ?>
