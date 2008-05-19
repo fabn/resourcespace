@@ -55,7 +55,7 @@ Copyright Oxfam GB 2006-2008
 -->
 <title><?=htmlspecialchars($applicationname)?></title>
 
-<frameset rows="*<? if ($bottomurl!="") { ?>,3,128<? } ?>" id="topframe" framespacing="0" frameborder="no" border="0">
+<frameset rows="*<? if ($bottomurl!="") { ?>,3,138<? } ?>" id="topframe" framespacing="0" frameborder="no" border="0">
 <frame name="main" id="main" src="<?=$topurl?>" frameborder=no>
 
 <? if ($bottomurl!="") { ?>

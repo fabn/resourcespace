@@ -181,7 +181,7 @@ function ToggleThumbs()
 	document.getElementById("CollectionSpace").style.visibility="hidden";
 	top.document.getElementById("topframe").rows="*,3,33";
 	<? } else { ?>
-	top.document.getElementById("topframe").rows="*,3,128";
+	top.document.getElementById("topframe").rows="*,3,138";
 	<? } ?>
 	}
 <? if ($thumbs=="hide") { ?>
