@@ -92,6 +92,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		return sql_query("select *,hit_count score from (select r.* from resource r $custperm where $filter order by ref desc limit " . str_replace("!last","",$search) . ") r2 order by $order_by",false,$fetchrows);
 		}
 	
+	# Duplicate Resources (based on file_checksum)
+	if (substr($search,0,11)=="!duplicates") 
+		{
+		return sql_query("select *,hit_count score from (select r.*,count(r.ref) dupecount from resource r $custperm where $filter group by file_checksum) r2 where r2.dupecount>1 order by r2.dupecount desc",false,$fetchrows);
+		}
+	
 	# View Collection
 	if (substr($search,0,11)=="!collection")
 		{

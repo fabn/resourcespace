@@ -24,6 +24,8 @@ include "include/header.php";
     
     <li><a href="team_copy.php"><?=$lang["copyresource"]?></a></li>
     <li><a href="search.php?search=<?=urlencode("!userpending")?>"><?=$lang["viewuserpending"]?></a></li>
+
+    <li><a href="search.php?search=<?=urlencode("!duplicates")?>"><?=$lang["viewduplicates"]?></a></li>
     <? } ?>
 
 	</ul>

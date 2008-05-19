@@ -509,5 +509,6 @@ $lang["size"]="Size";
 $lang["orientation"]="Orientation";
 $lang["requiredfield"]="This is a required field";
 $lang["requiredfields"]="Some required fields were not completed. Please review the form and try again.";
+$lang["viewduplicates"]="View Duplicate Resources";
 
 ?>

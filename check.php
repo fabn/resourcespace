@@ -121,7 +121,7 @@ else
 	$version="Not installed.";
 	$result="FAIL";
 	}
-?><tr><td colspan="2">exif_read_data function</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">EXIF extension installed</td><td><b><?=$result?></b></td></tr><?
 
 ?>
 </table>

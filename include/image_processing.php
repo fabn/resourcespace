@@ -44,6 +44,9 @@ function upload_file($ref)
 	# Create previews
 	create_previews($ref,false,$extension);
 
+	# Create file checksum
+	generate_file_checksum($ref,$extension);
+
     return $status;
     }}
 	
@@ -544,5 +547,21 @@ function extract_indd_thumb ($filename) {
     	return $indd_thumb;} else {return "no";}
      }
  
+ 
+function generate_file_checksum($resource,$extension)
+	{
+	# Generates a unique checksum for the given file, based on the first 50K and the file size.
+	$path=get_resource_path($resource,"",false,$extension);
+	if (file_exists($path))
+		{
+		# Fetch the string used to generate the unique ID
+		$use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
+		
+		# Generate the ID and store.
+		$checksum=md5($use);
+		sql_query("update resource set file_checksum='" . escape_check($checksum) . "' where ref='$resource'");
+		}
+	}
+
  
 ?>
