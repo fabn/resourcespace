@@ -44,9 +44,6 @@ function upload_file($ref)
 	# Create previews
 	create_previews($ref,false,$extension);
 
-	# Create file checksum
-	generate_file_checksum($ref,$extension);
-
     return $status;
     }}
 	
@@ -160,6 +157,9 @@ function iptc_return_utf8($text)
 	
 function create_previews($ref,$thumbonly=false,$extension="jpg")
 	{
+	# Always create file checksum (all types)
+	generate_file_checksum($ref,$extension);
+	
 	if (($extension=="jpg") || ($extension=="jpeg") || ($extension=="png") || ($extension=="gif"))
 	# Create image previews for built-in supported file types only (JPEG, PNG, GIF)
 		{
