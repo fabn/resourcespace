@@ -509,5 +509,6 @@ $lang["size"]="Gr&ouml;&#223;e";
 $lang["orientation"]="Ausrichtung";
 $lang["requiredfield"]="Das ist ein Pflichtfeld";
 $lang["requiredfields"]="Einige Felder wurden nicht komplett ausgef&uuml;llt. Bitte &uuml;berpr&uuml;fen Sie das Formular und versuchen Sie es erneut.";
+$lang["viewduplicates"]="Kopierte Ressourcen anzeigen";
 
 ?>
