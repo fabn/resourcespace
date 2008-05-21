@@ -85,7 +85,7 @@ $filename_field=51;
 # $ghostscript_path="/sw/bin";
 # If using imagemagick, should colour profiles be preserved?
 $imagemagick_preserve_profiles=false;
-
+$imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
 # If using ffmpeg, uncomment and set next 2 lines.
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";

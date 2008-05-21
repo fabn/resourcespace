@@ -192,7 +192,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 				$tw=floor($sw*$ratio);
 				$th=floor($sh*$ratio);
 
-				global $imagemagick_path,$imagemagick_preserve_profiles;
+				global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
 				if (isset($imagemagick_path))
 					{
 					# ----------------------------------------
@@ -209,7 +209,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 					$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 					if ($imagemagick_preserve_profiles) {$profile="";}
     
-				    $command.= " \"$file\"[0] $profile -resize " . $tw . "x" . $th . " \"$path\""; 
+				    $command.= " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
 				    $output=shell_exec($command); 
 					}
 				else			

@@ -1,5 +1,5 @@
 <? 
-global $imagemagick_path,$imagemagick_preserve_profiles;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
 
 $file=myrealpath(get_resource_path($ref,"",false,$extension)); 
 
@@ -89,7 +89,7 @@ if (!isset($newfile))
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
         
-    $command.= " " . $prefix . "\"$file\"[0] $profile -resize 800x800 \"$target\""; 
+    $command.= " " . $prefix . "\"$file\"[0] $profile -quality $imagemagick_quality -resize 800x800 \"$target\""; 
     $output=shell_exec($command); 
     if (file_exists($target))
     	{
