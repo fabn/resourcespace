@@ -83,6 +83,9 @@ $filename_field=51;
 # If using imagemagick, uncomment and set next 2 lines
 # $imagemagick_path="/sw/bin";
 # $ghostscript_path="/sw/bin";
+# If using imagemagick, should colour profiles be preserved?
+$imagemagick_preserve_profiles=false;
+
 
 # If using ffmpeg, uncomment and set next 2 lines.
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";

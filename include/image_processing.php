@@ -186,18 +186,37 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			# or when producing a small thumbnail (to make sure we have that as a minimum
 			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col") || ($id=="pre"))
 				{
-				if ($ps[$n]["padtosize"]==0)
+				# Calculate width and height.
+				if ($sw>$sh) {$ratio = ($tw / $sw);} # Landscape
+				else {$ratio = ($th / $sh);} # Portrait
+				$tw=floor($sw*$ratio);
+				$th=floor($sh*$ratio);
+
+				global $imagemagick_path,$imagemagick_preserve_profiles;
+				if (isset($imagemagick_path))
 					{
-					# Do not pad the image to the target size with whitespace
-					
-					# Next two lines are the old version which works differently.
-					#if ($sw>=$sh) {$th=floor(($tw/$sw)*$sh);}
-					#if ($sw<$sh) {$tw=floor(($th/$sh)*$sw);}
-					
-					if ($sw>$sh) {$ratio = ($tw / $sw);} # Landscape
-					else {$ratio = ($th / $sh);} # Portrait
-					$tw=floor($sw*$ratio);
-					$th=floor($sh*$ratio);
+					# ----------------------------------------
+					# Use ImageMagick to perform the resize
+					# ----------------------------------------
+	
+					# Locate imagemagick.
+				    $command=$imagemagick_path . "/bin/convert";
+				    if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
+				    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+				    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
+        
+					# Preserve colour profiles?    
+					$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+					if ($imagemagick_preserve_profiles) {$profile="";}
+    
+				    $command.= " \"$file\"[0] $profile -resize " . $tw . "x" . $th . " \"$path\""; 
+				    $output=shell_exec($command); 
+					}
+				else			
+					{
+					# ----------------------------------------
+					# Use the GD library to perform the resize
+					# ----------------------------------------
 					
 					$target = imagecreatetruecolor($tw,$th);
 					
@@ -218,34 +237,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 						}
 						
 					imagecopyresampled($target,$source,0,0,0,0,$tw,$th,$sw,$sh);
-					imagejpeg($target,$path,90);
-
-					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
-					imagedestroy($target);
-					}
-				else
-					{
-					# Pad the image to the target size with whitespace
-					$iw=$tw;$ih=$th;
-					if ($sw>=$sh) {$ih=floor(($tw/$sw)*$sh);}
-					if ($sw<$sh) {$iw=floor(($th/$sh)*$sw);}
-				
-				
-					$target = imagecreatetruecolor($tw,$th);
-					
-					if ($extension=="png")
-						{
-						$source = imagecreatefrompng($file);
-						}
-					elseif ($extension=="gif")
-						{
-						$source = imagecreatefromgif($file);
-						}
-					else
-						{
-						$source = imagecreatefromjpeg($file);
-						}
-					imagecopyresampled($target,$source,floor(($tw-$iw)/2),floor(($th-$ih)/2),0,0,$iw,$ih,$sw,$sh);
 					imagejpeg($target,$path,90);
 
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}

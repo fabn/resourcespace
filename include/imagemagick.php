@@ -1,7 +1,7 @@
 <? 
+global $imagemagick_path,$imagemagick_preserve_profiles;
 
 $file=myrealpath(get_resource_path($ref,"",false,$extension)); 
-
 
 # Set up ImageMagick 
 putenv("MAGICK_HOME=" . $imagemagick_path); 
@@ -81,11 +81,15 @@ if (!isset($newfile))
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 
     $prefix="";
-        
+
+	# Preserve colour profiles?    
+	$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+    if ($imagemagick_preserve_profiles) {$profile="";}
+    
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
         
-    $command.= " " . $prefix . "\"$file\"[0] +profile icc -colorspace RGB -resize 800x800 \"$target\""; 
+    $command.= " " . $prefix . "\"$file\"[0] $profile -resize 800x800 \"$target\""; 
     $output=shell_exec($command); 
     if (file_exists($target))
     	{
