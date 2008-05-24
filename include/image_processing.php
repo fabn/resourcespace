@@ -211,6 +211,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
     
 				    $command.= " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
 				    $output=shell_exec($command); 
+					if ($id=="thm") {sql_query("update resource set thumb_width='$tw',thumb_height='$th' where ref='$ref'");}
 					}
 				else			
 					{
