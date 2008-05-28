@@ -264,6 +264,7 @@ if ($nodownloads || $counter==0)
 </table>
 <? } ?>
 <br />
+<? hook ("resourceactions") ?>
 <? if ($k=="") { ?>
 <a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a>&nbsp;&nbsp;&nbsp;
 <? if (checkperm("g") || checkperm("v")) { ?><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a>&nbsp;&nbsp;<? } ?>

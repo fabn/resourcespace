@@ -4,6 +4,8 @@ include "../include/authenticate.php";if (!checkperm("a")) {exit ("Permission de
 
 $tree=file("data/tree.txt");
 
+hook("treealter"); # Hook to allow the default tree to be altered with a plugin.
+
 #fetch ID string
 $id=$_GET["id"];
 $name=$_GET["name"];
