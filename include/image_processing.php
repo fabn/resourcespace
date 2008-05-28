@@ -146,7 +146,7 @@ function iptc_return_utf8($text)
 	$try=array("UTF-8","ISO-8859-1","Macintosh","Windows-1252");
 	for ($n=0;$n<count($try);$n++)
 		{
-		if ($try[$n]=="UTF-8") {$trans=$text;} else {$trans=iconv($try[$n], "UTF-8", $text);}
+		if ($try[$n]=="UTF-8") {$trans=$text;} else {$trans=@iconv($try[$n], "UTF-8", $text);}
 		for ($m=0;$m<strlen($iptc_expectedchars);$m++)
 			{
 			if (strpos($trans,substr($iptc_expectedchars,$m,1))!==false) {return $trans;}
@@ -211,7 +211,12 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
     
 				    $command.= " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
 				    $output=shell_exec($command); 
-					if ($id=="thm") {sql_query("update resource set thumb_width='$tw',thumb_height='$th' where ref='$ref'");}
+					if ($id=="thm")
+						{
+						# For the thumbnail image, call extract_mean_colour() to save the colour/size information
+						$target=@imagecreatefromjpeg($path);
+						extract_mean_colour($target,$ref);
+						}
 					}
 				else			
 					{
