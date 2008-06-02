@@ -83,7 +83,7 @@ $filename_field=51;
 # If using imagemagick, uncomment and set next 2 lines
 # $imagemagick_path="/sw/bin";
 # $ghostscript_path="/sw/bin";
-# If using imagemagick, should colour profiles be preserved?
+# If using imagemagick, should colour profiles be preserved? (for larger sizes only - above 'scr')
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
