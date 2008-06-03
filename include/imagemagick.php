@@ -89,6 +89,14 @@ if (!isset($newfile))
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
         
+    #Using Ghostscript directly to process PDF,EPS,and PS files may be more reliable--makes for better quality and configuration. 
+    if (($extension=="pdf")||($extension=="eps")||($extension=="ps")) 
+    {
+      $gscommand= $ghostscript_path. "/gs -sDEVICE=jpeg -sOutputFile=\"$target\" -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop \"$file\"";
+      $output=shell_exec($gscommand); 
+     $file=$target;
+    }    
+        
     $command.= " " . $prefix . "\"$file\"[0] $profile -quality $imagemagick_quality -resize 800x800 \"$target\""; 
     $output=shell_exec($command); 
     if (file_exists($target))
