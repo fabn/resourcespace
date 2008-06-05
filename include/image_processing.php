@@ -207,7 +207,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
         
 					# Preserve colour profiles? (omit for smaller sizes)   
 					$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
-					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && id!="scr") {$profile="";}
+					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
     
 				    $command.= " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
 				    $output=shell_exec($command); 
