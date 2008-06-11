@@ -89,13 +89,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		if ($orig_order=="relevance") {$order_by="ref desc";}
 
-		return sql_query("select *,hit_count score from (select r.* from resource r $custperm where $filter order by ref desc limit " . str_replace("!last","",$search) . ") r2 order by $order_by",false,$fetchrows);
+		return sql_query("select *,r2.hit_count score from (select r.* from resource r $custperm where $filter order by ref desc limit " . str_replace("!last","",$search) . ") r2 order by $order_by",false,$fetchrows);
 		}
 	
 	# Duplicate Resources (based on file_checksum)
 	if (substr($search,0,11)=="!duplicates") 
 		{
-		return sql_query("select *,hit_count score from resource r $custperm where $filter and file_checksum in (select file_checksum from (select file_checksum,count(*) dupecount from resource group by file_checksum) r2 where r2.dupecount>1) order by file_checksum",false,$fetchrows);
+		return sql_query("select *,r.hit_count score from resource r $custperm where $filter and file_checksum in (select file_checksum from (select file_checksum,count(*) dupecount from resource group by file_checksum) r2 where r2.dupecount>1) order by file_checksum",false,$fetchrows);
 		}
 	
 	# View Collection
@@ -115,40 +115,40 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (substr($search,0,4)=="!rgb")
 		{
 		$rgb=explode(":",$search);$rgb=explode(",",$rgb[1]);
-		return sql_query("select r.* from resource r $custperm where has_image=1 and $filter group by r.ref order by (abs(image_red-" . $rgb[0] . ")+abs(image_green-" . $rgb[1] . ")+abs(image_blue-" . $rgb[2] . ")) asc limit 500;",false,$fetchrows);
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where has_image=1 and $filter group by r.ref order by (abs(image_red-" . $rgb[0] . ")+abs(image_green-" . $rgb[1] . ")+abs(image_blue-" . $rgb[2] . ")) asc limit 500;",false,$fetchrows);
 		}
 		
 	# Similar to a colour by key
 	if (substr($search,0,10)=="!colourkey")
 		{
-		return sql_query("select r.* from resource r $custperm where has_image=1 and left(colour_key,4)='" . substr(str_replace("!colourkey","",$search),0,4) . "' and $filter group by r.ref",false,$fetchrows);
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where has_image=1 and left(colour_key,4)='" . substr(str_replace("!colourkey","",$search),0,4) . "' and $filter group by r.ref",false,$fetchrows);
 		}
 	
 	# Searching for a number - return just the matching resource
 	if (is_numeric($search)) 
 		{
-		return sql_query("select r.*,hit_count score from resource r $custperm where ref='$search' and $filter group by r.ref");
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where ref='$search' and $filter group by r.ref");
 		}
 	
 	# Searching for pending archive
 	if ($search=="!archivepending")
 		{
-		return sql_query("select r.*,hit_count score from resource r $custperm where archive=1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where archive=1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
 	if ($search=="!userpending")
 		{
-		return sql_query("select r.*,hit_count score from resource r $custperm where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 		
 	# View Contributions
 	if (substr($search,0,14)=="!contributions") 
 		{
-		return sql_query("select r.*,hit_count score from resource r $custperm where created_by='" . str_replace("!contributions","",$search) . "' and $filter group by r.ref order by $order_by",false,$fetchrows);
+		return sql_query("select r.*,r.hit_count score from resource r $custperm where created_by='" . str_replace("!contributions","",$search) . "' and $filter group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
 	# Search for resources with images
-	if ($search=="!images") return sql_query("select r.*,hit_count score from resource r $custperm where has_image=1 group by r.ref order by $order_by",false,$fetchrows);
+	if ($search=="!images") return sql_query("select r.*,r.hit_count score from resource r $custperm where has_image=1 group by r.ref order by $order_by",false,$fetchrows);
 	
 	$suggested=$keywords; # a suggested search
 	$fullmatch=true;
