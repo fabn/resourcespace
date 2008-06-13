@@ -1,5 +1,5 @@
 <? 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages;
 
 $file=myrealpath(get_resource_path($ref,"",false,$extension)); 
 
@@ -88,21 +88,51 @@ if (!isset($newfile))
     
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
-        
-    #Using Ghostscript directly to process PDF,EPS,and PS files may be more reliable--makes for better quality and configuration. 
-    if (($extension=="pdf")||($extension=="eps")||($extension=="ps")) 
-    {
-      $gscommand= $ghostscript_path. "/gs -sDEVICE=jpeg -sOutputFile=\"$target\" -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop \"$file\"";
-      $output=shell_exec($gscommand); 
-     $file=$target;
-    }    
-        
-    $command.= " " . $prefix . "\"$file\"[0] $profile -quality $imagemagick_quality -resize 800x800 \"$target\""; 
-    $output=shell_exec($command); 
-    if (file_exists($target))
+    
+   if (($extension=="pdf") || ($extension=="eps") || ($extension=="ps")) 
     	{
-    	$newfile=$target;
-    	}
+   	    # For EPS/PS/PDF files, use GS directly and allow multiple pages.
+
+		# Locate ghostscript command
+		$gscommand= $ghostscript_path. "/gs";
+	    if (!file_exists($command)) {$gscommand= $ghostscript_path. "/gs.exe";}
+
+		# Create multiple pages.
+		for ($n=1;$n<=$pdf_pages;$n++)
+			{
+			# Set up target file
+			$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
+			$target=myrealpath(get_resource_path($ref,$size,false,"jpg",-1,$n)); 
+			if (file_exists($target)) {unlink($target);}
+			
+			$gscommand2 = $gscommand . " -sDEVICE=jpeg -sOutputFile=\"$target\" -r300 -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
+ 
+			$output=shell_exec($gscommand2); 
+	
+			# Set that this is the file to be used.
+			if (file_exists($target) && $n==1)
+				{
+				$newfile=$target;
+				}
+			
+			# For files other than page 1, resize directly to the screen size (no other sizes needed)
+			if (file_exists($target) && $n>1)
+				{
+				$command2=$command . " " . $prefix . "\"$target\"[0] -quality $imagemagick_quality -resize 800x800 \"$target\""; 
+				$output=shell_exec($command2); 
+				}
+			}
+		}
+    else
+    	{
+    	# Not a PDF file, so single extraction only.
+		$command.= " " . $prefix . "\"$file\"[0] $profile -quality $imagemagick_quality -resize 800x800 \"$target\""; 
+		$output=shell_exec($command); 
+		if (file_exists($target))
+			{
+			$newfile=$target;
+			}
+		}
 	}
 	
 	

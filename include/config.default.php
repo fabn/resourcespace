@@ -87,6 +87,10 @@ $filename_field=51;
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
+# If using imagemagick for PDF, EPS and PS files, up to how many pages should be extracted for the previews?
+# If this is set to more than one the user will be able to page through the PDF file.
+$pdf_pages=30;
+
 # If using ffmpeg, uncomment and set next 2 lines.
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
 

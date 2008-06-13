@@ -18,10 +18,10 @@ setcookie("thumbs",$thumbs);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?=$applicationname?></title>
-<link href="css/wrdsnpics.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+<link href="css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
 <link href="css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
-<!--[if lte IE 6]> <link href="css/wrdsnpicsIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<!--[if lte IE 5.6]> <link href="css/wrdsnpicsIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<!--[if lte IE 6]> <link href="css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<!--[if lte IE 5.6]> <link href="css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <?
 $collection=getvalescaped("collection","");
 if ($collection!="")

@@ -9,11 +9,12 @@ include "include/resource_functions.php";
 $ref=getvalescaped("ref","");
 $size=getvalescaped("size","");
 $ext=getvalescaped("ext","");
+$page=getvalescaped("page",1);
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,$size,false,$ext);
-if (!file_exists($path)) {$path=get_resource_path($ref,"",false,$ext);}
+$path=get_resource_path($ref,$size,false,$ext,-1,$page);
+if (!file_exists($path)) {$path=get_resource_path($ref,"",false,$ext,-1,$page);}
 
 if (!file_exists($path))
 	{

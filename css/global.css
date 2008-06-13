@@ -253,4 +253,6 @@ behavior: url(iepngfix.htc);
 .CollectionPanelInfo .IconCommentAnim	{	background: url(../gfx/interface/IcComment_anim.gif) no-repeat;}
 .CollectionPanelInfo .IconRemove	{	background: url(../gfx/interface/IcRemove.gif) no-repeat;}
 
+.PDFnav {font-size: 4em; padding:6px;font-weight:bold;}
+.PDFnav:hover {text-decoration: none;}
 
