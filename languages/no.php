@@ -31,8 +31,9 @@ $lang["anyyear"]="Uansett år";
 $lang["anymonth"]="Uansett måned";
 $lang["anyday"]="Uansett dag";
 $lang["anycountry"]="Uansett land";
-$lang["resultsdisplay"]="Vis resultat";
-$lang["thumbnails"]="Miniatyrbilder";
+$lang["resultsdisplay"]="Resultatvisning";
+$lang["largethumbs"]="Store";
+$lang["smallthumbs"]="Små";
 $lang["list"]="Liste";
 $lang["perpage"]="pr. side";
 
@@ -146,6 +147,7 @@ $lang["viewall"]="Vis alle";
 $lang["editall"]="Rediger alle";
 $lang["hidethumbnails"]="Skjul miniatyrbilder";
 $lang["showthumbnails"]="Vis miniatyrbilder";
+$lang["contactsheet"]="Kontaktkopi";
 $lang["mycollection"]="Mine lysbord";
 $lang["editresearchrequests"]="Rediger bildeforespørsler";
 $lang["savedsearch"]="Lagret søk";
@@ -473,6 +475,8 @@ $lang["extrakeywords"]="Ekstra nøkkelord";
 $lang["leaderboard"]="Tabell";
 $lang["confirmeditall"]="Er du sikker på at du vil lagre? Dette vil overskrive eksisterende verdier i de valgte feltene for alle filer i ditt nåværende lysbord.";
 $lang["collectiondeleteconfirm"]="Er du sikker på at du vil slette lysbordet?";
+$lang["hidden"]="(skjult)";
+$lang["requestnewpassword"]="Be om nytt passord";
 
 # New for 1.4
 $lang["reorderresources"]="Omorganiser filene i lysbordet (klikk og dra)";
