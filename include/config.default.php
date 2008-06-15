@@ -210,4 +210,7 @@ $smallthumbs=true;
 # Enable Plugin Manager (must exists a 777 'dynamic' folder in root)
 $config_pluginmanager_enabled = false;
 */
+
+#Install Exiftool and set this path to experiment with metadata-writing
+#$exiftool_path="/usr/local/bin";
 ?>

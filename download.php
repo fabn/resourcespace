@@ -24,6 +24,31 @@ if (!file_exists($path))
 	$ext="gif";
 	}
 
+
+# writing RS metadata to files: exiftool
+if (isset($exiftool_path))
+	{
+	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		{
+$resource=get_resource_data($ref);
+$command=$exiftool_path."/exiftool ".
+"-Title=\"".$resource['title'].
+"\" -ObjectName=\"". $resource['title'].
+"\" -Country=\"".$resource['country'] .
+"\" -Category=\"".$resource['country'] .
+"\" -Caption=\"".get_data_by_field($ref,18) . 
+"\" -ImageDescription=\"".get_data_by_field($ref,18) . 
+"\" -Description=\"".get_data_by_field($ref,18) . 
+"\" -Keywords=\"".get_data_by_field($ref,1) . 
+"\" -Subject=\"".get_data_by_field($ref,1) . 
+"\" $path";
+
+shell_exec($command) or die($command);
+$exifwritten=true;
+		}
+}
+
+
 $filesize=filesize($path);
 header("Content-Length: " . $filesize);
 
@@ -68,6 +93,16 @@ else
 set_time_limit(0);
 
 echo file_get_contents($path);
+
+#Replacing Original File:
+#If for some reason the downloaded files are corrupted by writing to them, the original file should still exist.
+#in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
+#and once the modified file has been downloaded, the original file is restored:
+if ($exifwritten==true){
+	unlink ($path);
+	rename($path."_original", $path);
+	}
+
 exit();
 
 ?>
