@@ -99,8 +99,9 @@ echo file_get_contents($path);
 #in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
 #and once the modified file has been downloaded, the original file is restored:
 if ($exifwritten==true){
+if (file_exists($path."_original")){	
 	unlink ($path);
-	rename($path."_original", $path);
+	rename($path."_original", $path);}
 	}
 
 exit();
