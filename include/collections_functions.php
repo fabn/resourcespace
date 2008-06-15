@@ -204,7 +204,41 @@ function get_theme_headers()
 
 function get_themes($header)
 	{
+	# Return a list of themes under a given header (theme category).
 	return sql_query("select * from collection where theme='" . escape_check($header) . "' and public=1 order by name");
+	}
+
+function get_smart_theme_headers()
+	{
+	# Returns a list of smart theme headers, which are basically fields with a 'smart theme name' set.
+	return sql_query("select ref,name,smart_theme_name from resource_type_field where length(smart_theme_name)>0 order by smart_theme_name");
+	}
+
+function get_smart_themes($field)
+	{
+	# Returns a list of smart themes (which are really field options).
+	# The results are filtered so that only field options that are in use are returned.
+	
+	# Return raw options list
+	$options=explode(",",sql_value("select options value from resource_type_field where ref='$field'",""));
+	
+	# Tidy list so it matches the storage format used for keywords.
+	# The translated version is fetched as each option will be indexed in the local language version of each option.
+	$options_base=array();
+	for ($n=0;$n<count($options);$n++) {$options_base[$n]=escape_check(trim(strtolower(i18n_get_translated($options[$n]))));}
+	
+	# Return a list of keywords that are in use for this field
+	$inuse=sql_array("select distinct k.keyword value from keyword k join resource_keyword rk on k.ref=rk.keyword where 
+	resource_type_field='$field'");
+	
+	# For each option, if it is in use, add it to the return list.
+	$return=array();
+	for ($n=0;$n<count($options);$n++)
+		{
+		#echo "<li>Looking for " . $options_base[$n] . " in " . join (",",$inuse);
+		if (in_array($options_base[$n],$inuse)) {$return[]=trim(i18n_get_translated($options[$n]));}
+		}
+	return $return;
 	}
 
 function email_collection($collection,$collectionname,$fromusername,$userlist,$message)
