@@ -228,8 +228,8 @@ function save_resource_data_multi($collection)
 					
 					if ($fields[$n]["keywords_index"]==1)
 						{
-						remove_keyword_mappings($ref,$oldval,$fields[$n]["ref"]);
-						add_keyword_mappings($ref,$newval,$fields[$n]["ref"]);
+						remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"]);
+						add_keyword_mappings($ref,i18n_get_indexable($newval),$fields[$n]["ref"]);
 						}
 					}
 				}
