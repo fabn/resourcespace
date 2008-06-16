@@ -107,7 +107,7 @@ if (!isset($newfile))
 			$target=myrealpath(get_resource_path($ref,$size,false,"jpg",-1,$n)); 
 			if (file_exists($target)) {unlink($target);}
 			
-			$gscommand2 = $gscommand . " -sDEVICE=jpeg -sOutputFile=\"$target\" -r300 -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
+			$gscommand2 = $gscommand . " -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
  
 			$output=shell_exec($gscommand2); 
 	
