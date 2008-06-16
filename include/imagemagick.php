@@ -92,6 +92,8 @@ if (!isset($newfile))
    if (($extension=="pdf") || ($extension=="eps") || ($extension=="ps")) 
     	{
    	    # For EPS/PS/PDF files, use GS directly and allow multiple pages.
+		# EPS files are always single pages:
+		if ($extension=="eps") {$pdf_pages=1;}
 
 		# Locate ghostscript command
 		$gscommand= $ghostscript_path. "/gs";
