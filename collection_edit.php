@@ -111,7 +111,7 @@ if (checkperm("h")) { # Only users with the 'h' permission can publish public co
 <div class="Question">
 <label for="archive"><?=$lang["resetarchivestatus"]?></label>
 <select class="stdwidth" name="archive" id="archive">
-<option value="">No change</option>
+<option value=""><?=$lang["select"]?></option>
 <? for ($n=-2;$n<=2;$n++) { ?>
 <? if (checkperm("e" . $n)) { ?><option value="<?=$n?>"><?=$lang["status" . $n]?></option><? } ?>
 <? } ?>
