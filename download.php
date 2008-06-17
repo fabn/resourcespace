@@ -24,27 +24,29 @@ if (!file_exists($path))
 	$ext="gif";
 	}
 
-
 # writing RS metadata to files: exiftool
+# takes any field that has a write_to entry, explodes it by commas, and tries to write the field
+# to each of the Exiftool fields named in write_to
+# For example, in the "write_to" box for the Caption field, you could put: Description,Caption-Abstract
+# Exiftool will write your RS caption to any EXIF,IPTC,XMP fields that have one of those two names.
+
 if (isset($exiftool_path))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 		{
-$resource=get_resource_data($ref);
-$command=$exiftool_path."/exiftool ".
-"-Title=\"".$resource['title'].
-"\" -ObjectName=\"". $resource['title'].
-"\" -Country=\"".$resource['country'] .
-"\" -Category=\"".$resource['country'] .
-"\" -Caption=\"".get_data_by_field($ref,18) . 
-"\" -ImageDescription=\"".get_data_by_field($ref,18) . 
-"\" -Description=\"".get_data_by_field($ref,18) . 
-"\" -Keywords=\"".get_data_by_field($ref,1) . 
-"\" -Subject=\"".get_data_by_field($ref,1) . 
-"\" $path";
+		
+			$command=$exiftool_path."/exiftool ";
+			$write_to=get_write_to_headers();
 
-shell_exec($command) or die($command);
-$exifwritten=true;
+			for($i=0;$i< count($write_to);$i++)
+				{
+				$field=explode(",",$write_to[$i]['write_to']);
+				foreach ($field as $field){
+				$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
+				}
+			$command.=" $path";
+
+	$output=shell_exec($command) or die("problem writing metadata:". $output);
 		}
 }
 
@@ -98,11 +100,10 @@ echo file_get_contents($path);
 #If for some reason the downloaded files are corrupted by writing to them, the original file should still exist.
 #in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
 #and once the modified file has been downloaded, the original file is restored:
-if ($exifwritten==true){
+
 if (file_exists($path."_original")){	
 	unlink ($path);
 	rename($path."_original", $path);}
-	}
 
 exit();
 

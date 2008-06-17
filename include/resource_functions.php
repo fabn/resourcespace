@@ -544,4 +544,11 @@ function relate_to_array($ref,$array)
 		sql_query("delete from resource_related where resource='$ref'");  
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$array) . ")");
 	}		
+
+function get_write_to_headers()
+	{
+	# Returns a list of write_to headers, which are basically fields with a 'write_to' set.
+	return sql_query("select ref,write_to from resource_type_field where length(write_to)>0 order by write_to");
+	}
+
 ?>
