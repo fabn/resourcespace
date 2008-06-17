@@ -176,7 +176,7 @@ if ($multiple) { ?>
 
 <div class="Question">
 <label><? if ($resource["resource_type"]==1) {?><?=$lang["image"]?><?} elseif ($resource["resource_type"]==3) { ?><?=$lang["previewimage"]?><?} else {?><?=$lang["file"]?><?}?></label>
-<? if ($resource["has_image"]==1) { ?><img align="top" src="<?=get_resource_path($ref,"thm",false,$resource["preview_extension"])?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/>
+<? if ($resource["has_image"]==1) { ?><img align="top" src="<?=get_resource_path($ref,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/>
 <? } elseif ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,"",false,$resource["file_extension"]))) . ")" ?></strong><? } ?>
 
 <a href="upload.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadafile"]?></a>

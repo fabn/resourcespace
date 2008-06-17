@@ -206,11 +206,13 @@ $disable_quoted_printable_enc=false;
 # Enable small thumbnails option
 $smallthumbs=true;
 
-/*
-# Enable Plugin Manager (must exists a 777 'dynamic' folder in root)
-$config_pluginmanager_enabled = false;
-*/
+# Install Exiftool and set this path to experiment with metadata-writing
+$exiftool_path="/usr/local/bin";
 
-#Install Exiftool and set this path to experiment with metadata-writing
-#$exiftool_path="/usr/local/bin";
+# Watermarking - generate watermark images for 'internal' (thumb/preview) images.
+# Groups with the 'w' permission will see these watermarks.
+# Uncomment and set to the location of a watermark graphic.
+# NOTE: only available when ImageMagick is installed.
+# $watermark="gfx/watermark.png";
+
 ?>

@@ -209,14 +209,28 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 					$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
     
-				    $command.= " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
-				    $output=shell_exec($command); 
+				    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
+				    $output=shell_exec($command2); 
+
 					if ($id=="thm")
 						{
 						# For the thumbnail image, call extract_mean_colour() to save the colour/size information
 						$target=@imagecreatefromjpeg($path);
 						extract_mean_colour($target,$ref);
 						}
+
+	   				# Add a watermarked image too?
+    				global $watermark;
+    				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
+    					{
+						$path=myrealpath(get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true));
+						if (file_exists($path)) {unlink($path);}
+	    				$watermarkreal=myrealpath($watermark);
+
+					    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" \"$path\""; 
+					    $output=shell_exec($command2); 
+						}
+
 					}
 				else			
 					{

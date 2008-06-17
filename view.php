@@ -126,15 +126,16 @@ elseif (file_exists($flvfile) && (strpos(strtolower($flvfile),".flv")!==false))
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"]);
-	$previewpath=get_resource_path($ref,"scr",false,$resource["preview_extension"]);
+	$imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	$previewpath=get_resource_path($ref,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	echo $previewpath;
 	if (!file_exists($previewpath)) {$previewpath=get_resource_path($ref,"",false,$resource["preview_extension"]);}
 	
 	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>"><? }
 	if (file_exists($imagepath))
 		{ ?><img src="<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" /><? } 
 	else # use the thumbnail instead, the uploaded file wasn't big enough to create a preview.
-		{ ?><img src="<?=get_resource_path($ref,"thm",false)?>" alt="" class="Picture" /><? }
+		{ ?><img src="<?=get_resource_path($ref,"thm",false,-1,1,checkperm("w"))?>" alt="" class="Picture" /><? }
 	if (file_exists($previewpath)) { ?></a><? }
 	}
 else
@@ -436,7 +437,7 @@ if (count($result)>0)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 			<table border="0" class="CollectionResourceAlign"><tr><td>
-			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($rref,"col",false,$result[$n]["preview_extension"])?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
+			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($rref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
 			</tr></table>
 			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$rref?>"><?=tidy_trim($result[$n]["title"],25)?></a>&nbsp;</div>
 		</div>

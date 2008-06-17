@@ -1,7 +1,7 @@
 <?
 # General functions, useful across the whole solution
 
-function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$page=1)
+function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false)
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
@@ -58,6 +58,9 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$p
 	# Add the page to the filename for everything except page 1.
 	if ($page==1) {$p="";} else {$p="_" . $page;}
 		
+	# Add the watermarked url too
+	if ($watermarked) {$p.="_wm";}
+	
 	return $folder . $ref . $size . $p . "." . $extension;
 	}
 	

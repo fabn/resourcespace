@@ -13,7 +13,7 @@ $page=getvalescaped("page",1);
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,$size,false,$ext,-1,$page);
+$path=get_resource_path($ref,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w")));
 if (!file_exists($path)) {$path=get_resource_path($ref,"",false,$ext,-1,$page);}
 
 if (!file_exists($path))

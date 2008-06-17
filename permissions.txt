@@ -14,6 +14,7 @@ s	Can search for resources
 v	Can view restricted (admin only) resources, also download 'confidential' resources
 g	Can download the higher resolution resources (anything above 'screen').
 q	Can make resource requests.
+w	Show watermarked previews/thumbnails ($watermark must be set in config.php prior to resource upload in order for watermarks to be created.)
 
 Fields
 ------

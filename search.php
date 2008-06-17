@@ -261,7 +261,7 @@ if (true) #search condition
 <? if (!hook("renderimagethumb")) { ?>			
 		
 		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
+		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
 			</td>
 			</tr></table>
 <? } ?> <!-- END HOOK Renderimagethumb-->	
@@ -302,7 +302,7 @@ if (true) #search condition
 <div class="ResourcePanelShellSmall" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanelSmall" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">	
 			<table border="0" class="ResourceAlignSmall"><tr><td>
-			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"])?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"><? } ?></a>
+			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"><? } ?></a>
 			</td>
 			</tr></table>
 			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" <? if (!$infobox) { ?>title="<?=$lang["fullscreenpreview"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span></div>
