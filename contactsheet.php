@@ -175,14 +175,14 @@ $pdf->SetKeywords($keywords);
 
 #Make AJAX preview?:
 	if ($preview==true){
-	if (file_exists("contactsheet.pdf")){unlink("contactsheet.pdf");}
-	$pdf->Output("contactsheet.pdf","F"); 
+	if (file_exists("temp/contactsheet.pdf")){unlink("temp/contactsheet.pdf");}
+	$pdf->Output("temp/contactsheet.pdf","F"); 
 	# Set up ImageMagick 
 	putenv("MAGICK_HOME=" . $imagemagick_path); 
 	putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 	putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
 	$imagemagick_path . "/bin"); # Path 
-	$command=$imagemagick_path."/convert -resize 200x200 -quality 90 -colorspace RGB \"contactsheet.pdf\"[0] \"contactsheet.jpg\"";
+	$command=$imagemagick_path."/convert -resize 200x200 -quality 90 -colorspace RGB \"temp/contactsheet.pdf\"[0] \"temp/contactsheet.jpg\"";
 	shell_exec($command);
 	exit();
 	}

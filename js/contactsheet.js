@@ -4,4 +4,4 @@ var ajax = new Ajax.Updater({success: ''},url,{method: 'get', parameters:data, o
 }
 
 function refreshIt() {
-   document.previewimage.src = 'contactsheet.jpg?'+ Math.random();}
+   document.previewimage.src = 'temp/contactsheet.jpg?'+ Math.random();}
