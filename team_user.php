@@ -90,7 +90,10 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<td><?=$users[$n]["email"]?></td>
 	<td><?=nicedate($users[$n]["last_active"],true)?></td>
 	<td><?=resolve_user_agent($users[$n]["last_browser"],true)?></td>
-	<td><? if (($usergroup==3) || ($users[$n]["usergroup"]!=3)) { ?><div class="ListTools"><a href="team_user_edit.php?ref=<?=$users[$n]["ref"]?>&backurl=<?=urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;edit </a></div><? } ?></td>
+	<td><? if (($usergroup==3) || ($users[$n]["usergroup"]!=3)) { ?><div class="ListTools">
+	<a href="team_user_log.php?ref=<?=$users[$n]["ref"]?>&backurl=<?=urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?=$lang["log"]?></a>
+	&nbsp;
+	<a href="team_user_edit.php?ref=<?=$users[$n]["ref"]?>&backurl=<?=urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?=$lang["edit"]?></a></div><? } ?></td>
 	</tr>
 	<?
 	}

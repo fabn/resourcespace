@@ -944,4 +944,9 @@ function get_all_image_sizes($internal=false)
 	# Returns all image sizes available.
 	return sql_query("select * from preview_size " . (($internal)?"":"where internal!=1") . " order by width asc");
 	}
+	
+function get_user_log($user)
+	{
+	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title from resource_log l join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+	}
 ?>
