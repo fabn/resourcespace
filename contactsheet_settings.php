@@ -9,10 +9,11 @@ $collectiondata= get_collection($collection);
 
 
 # Include scriptaculous for display options
+# Also include a couple functions for the Ajax contactsheet update
 $headerinsert.="
 <script src=\"js/prototype.js\" type=\"text/javascript\"></script>
 <script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
-<script src=\"js/infobox.js\" type=\"text/javascript\"></script>
+<script src=\"js/contactsheet.js\" type=\"text/javascript\"></script>
 ";
 
 include "include/header.php";
@@ -22,7 +23,14 @@ include "include/header.php";
 
 <p><?=$lang["contactsheetintrotext"]?></p>
 
-<form method=post id="contactsheetform" action="contactsheet.php">
+<!-- this is the container for some Ajax fun. The image will go here...-->
+<img id="previewimage" name="previewimage"/>
+
+<!-- each time the form is modified, the variables are sent to contactsheet.php with preview=true
+ contactsheet.php makes just the first page of the pdf (with col size images) 
+ and then thumbnails it for the ajax request. This creates a very small but helpful 
+ preview image that can be judged before initiating a download of sometimes several MB.-->
+<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <? if ($contact_sheet_previews==true){?> onChange="var formdata = $(this).serialize() + '&preview=true'; previewContactSheet(formdata);"<?}?> >
 <input type=hidden name="c" value="<?=$collection?>">
 
 <div class="Question">
@@ -49,7 +57,7 @@ include "include/header.php";
 
 <div class="Question">
 <label><?=$lang["size"]?></label>
-<select class="stdwidth" name="size" id="size"">
+<select class="stdwidth" name="size" id="size">
 <option value="a4">A4 - 210mm x 297mm</option>
 <option value="a3">A3 - 297mm x 420mm</option>
 <option value="letter">US Letter - 8.5" x 11"</option>

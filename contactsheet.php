@@ -3,6 +3,10 @@
 # PDF Contact Sheet Functionality
 # Contributed by Tom Gleason
 #
+
+# This is a really nice line... It takes the serialized array from the form and 
+# automakes the variables 
+foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
 include('fpdf/fpdf.php');
 include('include/general.php');
 include('include/db.php');
@@ -12,12 +16,16 @@ include('include/resource_functions.php');
 include('include/collections_functions.php');
 include('include/image_processing.php');
 
+# Still making variables manually when not using Prototype: 
 $collection=getval("c","");
 $size=getval("size","");
 $column=getval("columns","");
 $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","");
 
+$imgsize="pre";
+if(!isset($preview)){$preview=false;}
+if ($preview==true){$imgsize="col";}
 if ($size == "a4") {$width=210/25.4;$height=297/25.4;} // convert to inches
 if ($size == "a3") {$width=297/25.4;$height=420/25.4;}
 
@@ -75,7 +83,6 @@ $pdf->SetFont('helvetica','',$titlefontsize);
 $title = $applicationname." - ". $collectiondata['name']." - ".$date;
 $pagenumber = " - p.". $page;
 $pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
-
 $pdf->SetFontSize($refnumberfontsize);
 
 #Begin loop through resources, collecting Keywords too.
@@ -92,11 +99,11 @@ for ($n=0;$n<count($result);$n++)
 		if ($ref!==false)
 			{
 			# Find image
-			$imgpath = get_resource_path($ref,"pre",false,$preview_extension);
+			$imgpath = get_resource_path($ref,$imgsize,false,$preview_extension);
 			
 			if (!file_exists(myrealpath($imgpath)))
 				$imgpath=get_resource_path($ref,"thm",false,$preview_extension);
-	
+
 			if (file_exists($imgpath) && ($preview_extension=="jpg" || $preview_extension=="jpeg"))
 			{
 				
@@ -116,7 +123,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
 					}
 						
-						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),2,0);
+						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),0,0);
 					
 					}
 					
@@ -143,7 +150,9 @@ for ($n=0;$n<count($result);$n++)
 							
 							if ($j > $rowsperpage){
 						    $page = $page+1;
-							$j=0; $pdf->AddPage();
+							$j=0; 
+							if (($preview==true) && ($page>1)){break;} else{							
+							$pdf->AddPage();}
 							
 							#When moving to a new page, get current coordinates, place a new page header.
 							$pagestartx=$pdf->GetX();
@@ -164,6 +173,20 @@ for ($n=0;$n<count($result);$n++)
 #Add Resource Numbers to PDF Metadata - I don't know what the use of it is but why not.	
 $pdf->SetKeywords($keywords);
 
+#Make AJAX preview?:
+	if ($preview==true){
+	if (file_exists("contactsheet.pdf")){unlink("contactsheet.pdf");}
+	$pdf->Output("contactsheet.pdf","F"); 
+	# Set up ImageMagick 
+	putenv("MAGICK_HOME=" . $imagemagick_path); 
+	putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
+	putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
+	$imagemagick_path . "/bin"); # Path 
+	$command=$imagemagick_path."/convert -resize 200x200 -quality 90 -colorspace RGB \"contactsheet.pdf\"[0] \"contactsheet.jpg\"";
+	shell_exec($command);
+	exit();
+	}
+	
 #check configs, decide whether PDF outputs to browser or to a new resource.
 if ($contact_sheet_resource==true){
 	$newresource=create_resource(1,0);

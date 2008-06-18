@@ -190,6 +190,8 @@ $emailfooter="";
 # Contact Sheet feature, and whether contact sheet becomes resource.
 $contact_sheet=true;
 $contact_sheet_resource=false;
+# Ajax previews in contact sheet configuration. Requires ImageMagick/Ghostscript.
+$contact_sheet_previews=false;
 
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);
