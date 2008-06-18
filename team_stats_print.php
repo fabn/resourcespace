@@ -4,6 +4,9 @@ include "include/authenticate.php";if (!checkperm("t")) {exit ("Permission denie
 include "include/general.php";
 
 $year=getvalescaped("year",date("Y"));
+$groupselect=getvalescaped("groupselect","");
+$groups=getvalescaped("groups","");
+
 $title=$applicationname . " - " . $lang["statisticsfor"] . " " . $year;
 ?>
 <html><head>
@@ -18,7 +21,7 @@ for ($n=0;$n<count($types);$n++)
 	?>
 	<hr>
 	<!--<h2><?=$types[$n]?></h2>-->
-	<p><img xstyle="border:1px solid black;" src="graph.php?activity_type=<?=urlencode($types[$n])?>&year=<?=$year?>" width=600 height=250></p>
+	<p><img xstyle="border:1px solid black;" src="graph.php?activity_type=<?=urlencode($types[$n])?>&year=<?=$year?>&groupselect=<?=$groupselect?>&groups=<?=$groups?>" width=600 height=250></p>
 	<?
 	}
 ?>

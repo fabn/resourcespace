@@ -422,9 +422,9 @@ function get_usergroups($usepermissions=false)
 		# Only return users in children groups to the user's group
 		global $usergroup;
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
-		$sql.="parent='" . $usergroup . "'";
+		$sql.="(ref='$usergroup' or parent='$usergroup')";
 		}
-	return sql_query("select * from usergroup $sql order by (name like 'General Staff Users%') desc,name");
+	return sql_query("select * from usergroup $sql order by (name like 'General%') desc,name");
 	}
 	
 function get_user($ref)

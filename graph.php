@@ -15,7 +15,12 @@ if (function_exists("imageantialias")) {imageantialias($graph,true);}
 $activity_type=getvalescaped("activity_type","Search");
 $year=getvalescaped("year",2006);
 
-$results=sql_query("select year,month,day,sum(count) c from daily_stat where activity_type='$activity_type' and year='$year' group by year,month,day;");
+# Group handling
+$groupselect=getvalescaped("groupselect","");
+$groups=getvalescaped("groups","");$groups=explode("_",$groups);
+if ($groupselect=="select") {$groupsql="and usergroup in (" . join(",",$groups) . ")";} else {$groupsql="";}
+
+$results=sql_query("select year,month,day,sum(count) c from daily_stat where activity_type='$activity_type' and year='$year' $groupsql group by year,month,day;");
 
 $days=array();
 $max=-1;
