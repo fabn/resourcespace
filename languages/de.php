@@ -284,7 +284,7 @@ $lang["statisticsfor"]="Statistik f&uuml;r"; # e.g. Statistics for 2007
 $lang["printallforyear"]="Alle Statistiken dieses Jahres ausdrucken";
 
 # Log in / user account
-$lang["nopassword"]="Klicken Sie hier, wenn Sie &uuml;ber kein Passwort verf&uuml;gen";
+$lang["nopassword"]="Klicken Sie hier, wenn Sie &uuml;ber keinen Zugang verf&uuml;gen";
 $lang["forgottenpassword"]="Klicken Sie hier, wenn Sie Ihr Passwort vergessen haben";
 $lang["keepmeloggedin"]="Auf diesem Computer angemeldet bleiben";
 $lang["username"]="Benutzername";
