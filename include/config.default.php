@@ -123,6 +123,7 @@ $country_sort=false;
 $use_theme_as_home=false;
 
 # Display a 'Recent' link in the top navigation (goes to View New Material)
+# Removes the 'view new material' link from the simple search bar.
 $recent_link=true;
 
 # Display a 'My Collections' link in the top navigation
@@ -217,5 +218,15 @@ $exiftool_path="/usr/local/bin";
 # Uncomment and set to the location of a watermark graphic.
 # NOTE: only available when ImageMagick is installed.
 # $watermark="gfx/watermark.png";
+
+# Simple search even more simple
+# Set to 'true' to make the simple search bar more basic, with just the single search box.
+$basic_simple_search=false;
+
+# Options to show/hide the box-links on the home page
+$home_themeheaders=false;
+$home_themes=true;
+$home_mycollections=true;
+$home_helpadvice=true;
 
 ?>

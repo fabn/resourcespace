@@ -2,7 +2,7 @@
 include "include/db.php";
 include "include/authenticate.php";
 include "include/general.php";
-
+include "include/collections_functions.php";
 
 # Include scriptaculous for fading slideshow.
 $headerinsert="
@@ -78,27 +78,55 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </div>
 
 <? if (checkperm("s")) { ?>
-<div class="HomePanel"><div class="HomePanelIN">
-  <h2><a href="themes.php"><?=$lang["themes"]?></a></h2>
+
+<? if ($home_themeheaders) { ?>
+	<div class="HomePanel"><div class="HomePanelIN">
+	<h2><a href="themes.php"><?=$lang["themes"]?></a></h2>
+	<?=text("themes")?>
+	<?
+	$headers=get_theme_headers();
+	for ($n=0;$n<count($headers);$n++)
+		{
+		?>
+		<p>&gt;&nbsp;<a href="themes.php?header=<?=urlencode($headers[$n])?>"><?=i18n_get_translated($headers[$n])?></a></p>
+		<?
+		}
+	?>
+	</div>
+	<div class="PanelShadow"></div>
+	</div>
+<? } ?>
+
+
+<? if ($home_themes) { ?>
+	<div class="HomePanel"><div class="HomePanelIN">
+	<h2><a href="themes.php"><?=$lang["themes"]?></a></h2>
 	<?=text("themes")?>
 	</div>
 	<div class="PanelShadow"></div>
 	</div>
+<? } ?>
 	
+<? if ($home_mycollections) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-  <h2><a href="collection_manage.php"><?=$lang["mycollections"]?></a></h2>
-  	<?=text("mycollections")?>
+	<h2><a href="collection_manage.php"><?=$lang["mycollections"]?></a></h2>
+	<?=text("mycollections")?>
 	</div>
-		<div class="PanelShadow">
-		</div>
+	<div class="PanelShadow">
 	</div>
-	
+	</div>
+<? } ?>
+
+
+<? if ($home_helpadvice) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-  <h2><a href="help.php"><?=$lang["helpandadvice"]?></a></h2>
-  	<?=text("help")?>
+	<h2><a href="help.php"><?=$lang["helpandadvice"]?></a></h2>
+	<?=text("help")?>
 	</div>
-		<div class="PanelShadow"></div>
+	<div class="PanelShadow"></div>
 	</div>
+<? } ?>
+
 	
 	<div class="clearerleft"></div>
 

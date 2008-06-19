@@ -5,6 +5,7 @@ include "include/general.php";
 include "include/collections_functions.php";
 
 $manage=getval("manage",false);if ($manage!==false) {$manage=true;}
+$header=getvalescaped("header","");
 
 include "include/header.php";
 ?>
@@ -19,43 +20,45 @@ include "include/header.php";
 $headers=get_theme_headers();
 for ($n=0;$n<count($headers);$n++)
 	{
-	?>
-	<? if ($manage) { ?><div class="VerticalNav"><? } else  { ?><div class="ThemeBox"><? } ?>
-	<h1 class="NavUnderline" style="margin-bottom:10px;padding-bottom:2px;margin-top:15px;">
-	<?
-	$image=get_theme_image($headers[$n]);
-	if (($image) && ($theme_images))
-		{
-		?><img class="CollectImageBorder" src="<?=$image?>"><br /><?
-		}
-	?>
-	<?=$headers[$n]?></h1>
-	<ul>
-	<?
-	$themes=get_themes($headers[$n]);
-	for ($m=0;$m<count($themes);$m++)
-		{
+	if ($header=="" || $header==$headers[$n]) {
 		?>
-	    <li><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a> <? hook("collectioninfo"); ?>
-	    <? if ($manage) { ?>
-	    &nbsp;&nbsp;
-	    <span class="OxColourPale">
-	    <a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections"><span class="OxColourPale">&gt; <?=$lang["editcollection"]?></span></a>&nbsp;
-   	    <a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>"><span class="OxColourPale">&gt; <?=$lang["editproperties"]?></span></a>
-	    </span>
-	    <? } ?>
-	    </li>
-	    <?
-	    }
-	?>
-	</ul>
-	</div>
-	<?
+		<? if ($manage) { ?><div class="VerticalNav"><? } else  { ?><div class="ThemeBox"><? } ?>
+		<h1 class="NavUnderline" style="margin-bottom:10px;padding-bottom:2px;margin-top:15px;">
+		<?
+		$image=get_theme_image($headers[$n]);
+		if (($image) && ($theme_images))
+			{
+			?><img class="CollectImageBorder" src="<?=$image?>"><br /><?
+			}
+		?>
+		<?=$headers[$n]?></h1>
+		<ul>
+		<?
+		$themes=get_themes($headers[$n]);
+		for ($m=0;$m<count($themes);$m++)
+			{
+			?>
+			<li><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a> <? hook("collectioninfo"); ?>
+			<? if ($manage) { ?>
+			&nbsp;&nbsp;
+			<span class="OxColourPale">
+			<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections"><span class="OxColourPale">&gt; <?=$lang["editcollection"]?></span></a>&nbsp;
+			<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>"><span class="OxColourPale">&gt; <?=$lang["editproperties"]?></span></a>
+			</span>
+			<? } ?>
+			</li>
+			<?
+			}
+		?>
+		</ul>
+		</div>
+		<?
+		}
 	}
 ?>
 
 <?
-if (!$manage)
+if (!$manage && $header=="")
 	{
 	$headers=get_smart_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
