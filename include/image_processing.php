@@ -79,7 +79,9 @@ if (isset($exiftool_path))
 				
 			#-f and -m force empty output ("-") and avoid error messages	
 			$command.=")' -f -m $image";
-			$metadata=shell_exec($command) or die ("failed exiftool command $command");
+			$metadata=shell_exec($command);
+			
+			if(isset($metadata)){
 			#the printed output is evaluated into a php array
 			eval('$'.'metadata_array=array'.$metadata.';');
 	
@@ -98,7 +100,7 @@ if (isset($exiftool_path))
 				#files that have come from RS will have the same value for each anyway.
 				if (($metadata_array[$j]!="-") && ($metadata_array[$j]!="")){update_field($ref,$read_from[$i]['ref'],$metadata_array[$j]);}
 				$j++;}
-				
+				}
 			}
 		}
 	}
