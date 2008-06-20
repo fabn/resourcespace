@@ -89,7 +89,7 @@ $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=be
 
 # If using imagemagick for PDF, EPS and PS files, up to how many pages should be extracted for the previews?
 # If this is set to more than one the user will be able to page through the PDF file.
-$pdf_pages=30;
+# $pdf_pages=30;
 
 # If using ffmpeg, uncomment and set next 2 lines.
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
@@ -211,7 +211,7 @@ $disable_quoted_printable_enc=false;
 $smallthumbs=true;
 
 # Install Exiftool and set this path to experiment with metadata-writing
-$exiftool_path="/usr/local/bin";
+# $exiftool_path="/usr/local/bin";
 
 # Watermarking - generate watermark images for 'internal' (thumb/preview) images.
 # Groups with the 'w' permission will see these watermarks.

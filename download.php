@@ -36,11 +36,11 @@ if (isset($exiftool_path))
 		{
 		
 			$command=$exiftool_path."/exiftool ";
-			$write_to=get_write_to_headers();
+			$write_to=get_exiftool_fields();
 
 			for($i=0;$i< count($write_to);$i++)
 				{
-				$field=explode(",",$write_to[$i]['write_to']);
+				$field=explode(",",$write_to[$i]['exiftool_field']);
 				foreach ($field as $field){
 				$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
 				}

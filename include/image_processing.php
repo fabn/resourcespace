@@ -1,4 +1,5 @@
 <?
+
 # Image processing functions
 # Functions to allow upload and resizing of images
 
@@ -47,14 +48,62 @@ function upload_file($ref)
     return $status;
     }}
 	
-function extract_exif_comment($ref)
+function extract_exif_comment($ref,$extension)
 	{
 	# Extract the EXIF comment from either the ImageDescription field or the UserComment
 	# Also parse IPTC headers and insert
 	
 	# EXIF headers
-	$image=get_resource_path($ref,"",false);
+
+	$image=get_resource_path($ref,"",false,$extension);
 	if (!file_exists($image)) {return false;}
+
+global $exiftool_path;
+if (isset($exiftool_path))
+	{
+	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		{
+		   #option -p formats the results. 
+			$command=$exiftool_path."/exiftool -p ' (";
+			
+			$read_from=get_exiftool_fields();
+			for($i=0;$i< count($read_from);$i++)
+				{
+				#creating the exiftool command which will print the metadata array
+				#this is making an entry in the array to read the data from each metadata field
+				#and format the output as strings within parentheses
+				$field=explode(",",$read_from[$i]['exiftool_field']);
+				foreach ($field as $field){
+				$command.="\"$".$field."\", " ;}
+				}
+				
+			#-f and -m force empty output ("-") and avoid error messages	
+			$command.=")' -f -m $image";
+			$metadata=shell_exec($command) or die ("failed exiftool command $command");
+			#the printed output is evaluated into a php array
+			eval('$'.'metadata_array=array'.$metadata.';');
+	
+			#this is a rather complex double loop to account for the one-to-many relationship
+			
+			#j increases as all the read_from values are exhausted, so it allows 
+			#us to use all the values in the metadata array
+			$j=0;	
+			for($i=0;$i< count($read_from);$i++)
+				{
+				$field=explode(",",$read_from[$i]['exiftool_field']);			
+				foreach ($field as $field){		
+				#notice if two different values get mapped to the same field, the last one will be the winner
+				#but if a previous field has a value and a subsequent field is empty, 
+				#the one with the value should get entered into the database.
+				#files that have come from RS will have the same value for each anyway.
+				if (($metadata_array[$j]!="-") && ($metadata_array[$j]!="")){update_field($ref,$read_from[$i]['ref'],$metadata_array[$j]);}
+				$j++;}
+				
+			}
+		}
+	}
+else
+{
 	$data=@exif_read_data($image);
 
 	if ($data!==false)
@@ -133,6 +182,7 @@ function extract_exif_comment($ref)
 			}
 		}
 	}
+	}
 
 function iptc_return_utf8($text)
 	{
@@ -159,15 +209,14 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 	{
 	# Always create file checksum (all types)
 	generate_file_checksum($ref,$extension);
-	
 	if (($extension=="jpg") || ($extension=="jpeg") || ($extension=="png") || ($extension=="gif"))
+ 
 	# Create image previews for built-in supported file types only (JPEG, PNG, GIF)
 		{
 		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
 		# Only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 		# Set thumbonly=true to (re)generate thumbnails only.
 		$file=get_resource_path($ref,"",false,$extension);	
-	
 		# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
 		if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
 		
@@ -272,7 +321,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			}
 		# flag database so a thumbnail appears on the site
 		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
-		if (($extension=="jpg") || ($extension=="jpeg")) {extract_exif_comment($ref);}
+		extract_exif_comment($ref,$extension);	
 		}
 	else
 		{
@@ -573,6 +622,7 @@ function generate_file_checksum($resource,$extension)
 		sql_query("update resource set file_checksum='" . escape_check($checksum) . "' where ref='$resource'");
 		}
 	}
+
 
  
 ?>

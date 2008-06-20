@@ -150,10 +150,11 @@ if (!isset($newfile))
 		}
 	}
 	
-	
+
 # If a file has been created, generate previews just as if a JPG was uploaded.
 if (isset($newfile))
 	{
-	create_previews($ref,false,"jpg");
+	create_previews($ref,false,"jpg");	
 	}
+extract_exif_comment($ref,$extension);	
 ?>
