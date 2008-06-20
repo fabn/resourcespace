@@ -35,7 +35,7 @@ include "include/header.php";
 
 <div class="Question"><label><?=$lang["username"]?></label><input name="username" type="text" class="stdwidth" value="<?=$user["username"]?>"><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?=$lang["password"]?></label><input name="password" type="text" class="stdwidth" value="<?=(strlen($user["password"])==32)?"(hidden)":$user["password"]?>">&nbsp;<input type=submit name="suggest" value="<?=$lang["suggest"]?>" /><div class="clearerleft"> </div></div>
+<div class="Question"><label><?=$lang["password"]?></label><input name="password" type="text" class="stdwidth" value="<?=(strlen($user["password"])==32)?$lang["hidden"]:$user["password"]?>">&nbsp;<input type=submit name="suggest" value="<?=$lang["suggest"]?>" /><div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?=$lang["fullname"]?></label><input name="fullname" type="text" class="stdwidth" value="<?=$user["fullname"]?>"><div class="clearerleft"> </div></div>
 

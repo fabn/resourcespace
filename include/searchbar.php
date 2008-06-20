@@ -37,7 +37,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 	  <h2><?=$lang["login"]?></h2>
 
   
-  <form id="form1" method="post" action="login.php">
+  <form id="form1" method="post" action="login.php" target="_top">
   <div class="SearchItem"><?=$lang["username"]?><br/><input type="text" name="username" id="name" class="SearchWidth" /></div>
   
   <div class="SearchItem"><?=$lang["password"]?><br/><input type="password" name="password" id="name" class="SearchWidth" /></div>
