@@ -78,7 +78,9 @@ if (isset($exiftool_path))
 				}
 				
 			#-f and -m force empty output ("-") and avoid error messages	
-			$command.=")' -f -m $image";
+			#-ScanforXMP allows tags to be extracted for unrecognized filetypes (INDD)
+			#-fast avoids ScanforXMP if the filetype is a known one
+			$command.=")' -f -m -ScanforXMP -fast $image";
 			$metadata=shell_exec($command);
 			
 			if(isset($metadata)){

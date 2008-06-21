@@ -123,12 +123,28 @@ else
 	}
 ?><tr><td colspan="2">EXIF extension installed</td><td><b><?=$result?></b></td></tr><?
 
+
+# Check Exiftool path
+if (isset($exiftool_path))
+	{
+	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		{
+		$result="OK";
+		}
+	else
+		{
+		$result="FAIL: '$exiftool_path/exiftool' not found";
+		}
+	}
+else
+	{
+	$result="(not installed)";
+	}
+?><tr><td colspan="2">Exiftool</td><td><b><?=$result?></b></td></tr><?
+
+
 ?>
 </table>
-
-
-
-
 	
 </div>
 

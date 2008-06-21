@@ -24,12 +24,22 @@ hook("metadata");
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
 if ($extension=="indd")
 	{
+#This is how to use exiftool to extract InDesign thumbnails:
+	global $exiftool_path;
+	if (isset($exiftool_path))
+	{
+	shell_exec($exiftool_path.'/exiftool -ScanforXMP -f -ThumbnailsImage -b '.$file.' > '.$target);
+	}
+#Or the old way:	
+ 	else {
 	$indd_thumb = extract_indd_thumb ($file);
 	if ($indd_thumb!="no")
 		{
 		base64_to_jpeg( $indd_thumb, $target);
 		if (file_exists($target)){$newfile = $target;}
 		}
+		}
+		
 	hook("indesign");	
 	}
 
