@@ -551,4 +551,34 @@ function get_exiftool_fields()
 	return sql_query("select ref,exiftool_field from resource_type_field where length(exiftool_field)>0 order by exiftool_field");
 	}
 
+function write_metadata($path,$ref)
+	{
+	global $exiftool_path;
+	if (isset($exiftool_path))
+		{
+		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+			{
+		
+				$command=$exiftool_path."/exiftool ";
+				$write_to=get_exiftool_fields();
+				for($i=0;$i< count($write_to);$i++)
+					{
+					$field=explode(",",$write_to[$i]['exiftool_field']);
+					foreach ($field as $field){
+					$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
+					}
+				$command.=" $path";
+ 
+			$output=shell_exec($command) or die("problem writing metadata:". $output);
+			}
+		}
+	}
+
+function restore_original($path)
+{
+if (file_exists($path."_original")){	
+	unlink ($path);
+	rename($path."_original", $path);}	
+}
+	
 ?>

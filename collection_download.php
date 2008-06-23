@@ -13,7 +13,6 @@ $size=getvalescaped("size","");
 if ($size!="")
 	{
 	$path="";
-	
 	# Build a list of files to download
 	$result=do_search("!collection" . $collection);
 	for ($n=0;$n<count($result);$n++)
@@ -47,6 +46,9 @@ if ($size!="")
 			if (file_exists($p))
 				{
 				$path.=" \"" . $p . "\"";
+				write_metadata($p,$ref);
+				#build an array of paths so we can clean up any exiftool-modified files.
+				$restore_array[$n]=$p;
 				daily_stat("Resource download",$ref);
 				resource_log($ref,'d',0);
 				}
@@ -68,6 +70,7 @@ if ($size!="")
 	echo file_get_contents("/tmp/" . $file);
 	
 	unlink("/tmp/" . $file);
+	foreach($restore_array as $file_to_restore){restore_original($file_to_restore);}
 	exit();
 	}
 include "include/header.php";

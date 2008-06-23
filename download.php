@@ -30,26 +30,7 @@ if (!file_exists($path))
 # For example, in the "write_to" box for the Caption field, you could put: Description,Caption-Abstract
 # Exiftool will write your RS caption to any EXIF,IPTC,XMP fields that have one of those two names.
 
-if (isset($exiftool_path))
-	{
-	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
-		{
-		
-			$command=$exiftool_path."/exiftool ";
-			$write_to=get_exiftool_fields();
-
-			for($i=0;$i< count($write_to);$i++)
-				{
-				$field=explode(",",$write_to[$i]['exiftool_field']);
-				foreach ($field as $field){
-				$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
-				}
-			$command.=" $path";
-
-	$output=shell_exec($command) or die("problem writing metadata:". $output);
-		}
-}
-
+write_metadata($path,$ref);
 
 $filesize=filesize($path);
 header("Content-Length: " . $filesize);
@@ -101,9 +82,7 @@ echo file_get_contents($path);
 #in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
 #and once the modified file has been downloaded, the original file is restored:
 
-if (file_exists($path."_original")){	
-	unlink ($path);
-	rename($path."_original", $path);}
+restore_original($path);
 
 exit();
 
