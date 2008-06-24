@@ -10,7 +10,7 @@ http://www.montala.net/resourcespace.php
 <title><?=htmlspecialchars($applicationname)?></title>
 <link href="<?=$baseurl?>/css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
 <link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
-<!--[if lte IE 6]> <link href="<?=$baseurl?>/css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<!--[if lte IE 7]> <link href="<?=$baseurl?>/css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="<?=$baseurl?>/css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 
 <?
