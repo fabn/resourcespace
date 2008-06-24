@@ -14,7 +14,7 @@ include "include/header.php";
   <h2>&nbsp;</h2>
   <h1><?=$lang["themes"]?></h1>
   <p><?=text("introtext")?></p>
-  
+  <style>.ListviewTitleBoxed {background-color:#fff;}</style>
 <?
 $headers=get_theme_headers();
 for ($n=0;$n<count($headers);$n++)
@@ -38,7 +38,7 @@ for ($n=0;$n<count($headers);$n++)
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-		<tr class="ListviewTitleStyle">
+		<tr class="ListviewBoxedTitleStyle">
 		<td><?=$lang["name"]?></td>
 		<td width="5%"><?=$lang["items"]?></td>
 		<td><div class="ListTools"><?=$lang["tools"]?></div></td>
@@ -106,7 +106,7 @@ if ($header=="")
 		
 			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
 			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-			<tr class="ListviewTitleStyle">
+			<tr class="ListviewBoxedTitleStyle">
 			<td><?=$lang["name"]?></td>
 			<td><div class="ListTools"><?=$lang["tools"]?></div></td>
 			</tr>

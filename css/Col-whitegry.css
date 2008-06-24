@@ -16,7 +16,8 @@ a:active {color:#737373;}
 
 .Listview tr {background: #FFFFFF url(../gfx/whitegry/interface/listblend.gif) repeat-x;}
 .OxColourPale, .ListviewTitleStyle {color:#A1A1A1;}
-.Listview .ListviewTitleStyle td {background: #F3F3F3 url(none);}
+
+.Listview .ListviewTitleStyle td {background: #F3F3F3 none;}
 
 .Listview td {border-bottom: 1px solid #BBBBBB;color: #737373;}
 
@@ -91,3 +92,5 @@ a:active {color:#737373;}
 .InfoTable {border-collapse:collapse;}
 .InfoTable tr {background-image: url(../gfx/whitegry/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}
 .InfoTable td {border:1px solid #BBBBBB;border-top:1px solid #BBBBBB;padding:10px;}
+
+.ListviewBoxedTitleStyle td {background-color:#fff;}
