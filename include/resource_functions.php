@@ -558,7 +558,10 @@ function write_metadata($path,$ref)
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
-		
+		      if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+				$filename = pathinfo($path);				$filename = $filename['basename'];	
+				$tmpfile="filestore/tmp/".$filename;				
+				copy($path,$tmpfile);
 				$command=$exiftool_path."/exiftool ";
 				$write_to=get_exiftool_fields();
 				for($i=0;$i< count($write_to);$i++)
@@ -567,18 +570,17 @@ function write_metadata($path,$ref)
 					foreach ($field as $field){
 					$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
 					}
-				$command.=" $path";
+			$command.=" $tmpfile";
  
 			$output=shell_exec($command) or die("problem writing metadata:". $output);
+			return $tmpfile;
 			}
 		}
 	}
 
-function restore_original($path)
+function delete_exif_tmpfile($tmpfile)
 {
-if (file_exists($path."_original")){	
-	unlink ($path);
-	rename($path."_original", $path);}	
+	if(file_exists($tmpfile)){unlink ($tmpfile);}
+	if(file_exists($tmpfile."_original")){unlink ($tmpfile."_original");}
 }
-	
 ?>

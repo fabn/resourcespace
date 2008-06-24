@@ -45,17 +45,27 @@ if ($size!="")
 				}
 			if (file_exists($p))
 				{
-				$path.=" \"" . $p . "\"";
-				write_metadata($p,$ref);
-				#build an array of paths so we can clean up any exiftool-modified files.
-				$restore_array[$n]=$p;
+				# when writing metadata, we take an extra security measure by copying the files to filestore/tmp
+				# this is slower but safer, as we stay completely away from the original file when doing modifications
+				# that may have negative effects, especially in multi-user situations
+				$tmpfile=write_metadata($p,$ref);
+				if(file_exists($tmpfile)){$p=$tmpfile;}		
+				
+				# if the tmpfile is made, from here on we are working with that. And we delete them at the end. 
+				# be aware that during a zip download, there are FOUR! copies of the file while it is happening.
+				# (The original file, the copied original, the modified file, and the zipped file)
+				# probably not a good idea to try to zip your whole archive at once. Keep an eye on your
+				# storage space and make sure the tmp directories (in filestore and your root /tmp) are getting cleared out.
+				$path.=" \"" . $p . "\"";	
+				# build an array of paths so we can clean up any exiftool-modified files.
+				# I'm doing constant checks to make sure we're only referring to files in the tmp dir.
+				if(file_exists($tmpfile)){$deletion_array[$n]=$tmpfile;}
 				daily_stat("Resource download",$ref);
 				resource_log($ref,'d',0);
 				}
 			}
 		}
 	if ($path=="") {exit("Nothing to download.");}	
-	
 	
 	# Create and send the zipfile
 	$file="collection_" . $collection . "_" . $size . ".zip";
@@ -70,7 +80,7 @@ if ($size!="")
 	echo file_get_contents("/tmp/" . $file);
 	
 	unlink("/tmp/" . $file);
-	foreach($restore_array as $file_to_restore){restore_original($file_to_restore);}
+	foreach($deletion_array as $tmpfile){delete_exif_tmpfile($tmpfile);}
 	exit();
 	}
 include "include/header.php";

@@ -30,7 +30,8 @@ if (!file_exists($path))
 # For example, in the "write_to" box for the Caption field, you could put: Description,Caption-Abstract
 # Exiftool will write your RS caption to any EXIF,IPTC,XMP fields that have one of those two names.
 
-write_metadata($path,$ref);
+$tmpfile=write_metadata($path,$ref);
+if (file_exists($tmpfile)){$path=$tmpfile;}
 
 $filesize=filesize($path);
 header("Content-Length: " . $filesize);
@@ -82,8 +83,7 @@ echo file_get_contents($path);
 #in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
 #and once the modified file has been downloaded, the original file is restored:
 
-restore_original($path);
-
+if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
 exit();
 
 ?>
