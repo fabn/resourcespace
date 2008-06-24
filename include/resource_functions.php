@@ -562,7 +562,9 @@ function write_metadata($path,$ref)
 				$filename = pathinfo($path);				$filename = $filename['basename'];	
 				$tmpfile="filestore/tmp/".$filename;				
 				copy($path,$tmpfile);
-				$command=$exiftool_path."/exiftool ";
+				
+				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
+				$command=$exiftool_path."/exiftool -overwrite_original ";
 				$write_to=get_exiftool_fields();
 				for($i=0;$i< count($write_to);$i++)
 					{
@@ -581,6 +583,6 @@ function write_metadata($path,$ref)
 function delete_exif_tmpfile($tmpfile)
 {
 	if(file_exists($tmpfile)){unlink ($tmpfile);}
-	if(file_exists($tmpfile."_original")){unlink ($tmpfile."_original");}
 }
+
 ?>

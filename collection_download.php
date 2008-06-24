@@ -51,9 +51,9 @@ if ($size!="")
 				$tmpfile=write_metadata($p,$ref);
 				if(file_exists($tmpfile)){$p=$tmpfile;}		
 				
-				# if the tmpfile is made, from here on we are working with that. And we delete them at the end. 
-				# be aware that during a zip download, there are FOUR! copies of the file while it is happening.
-				# (The original file, the copied original, the modified file, and the zipped file)
+				# if the tmpfile is made, from here on we are working with that. And we delete it at the end. 
+				# be aware that during a zip download, there are at least three copies of the file while it is happening.
+				# (The original file, the modified tmp dir file, and the zipped file)
 				# probably not a good idea to try to zip your whole archive at once. Keep an eye on your
 				# storage space and make sure the tmp directories (in filestore and your root /tmp) are getting cleared out.
 				$path.=" \"" . $p . "\"";	
