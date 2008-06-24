@@ -72,14 +72,22 @@ if (getval("regen","")!="")
 	create_previews($ref,false,$resource["file_extension"]);
 	}
 	
-if (getval("save","")!="")
+if (getval("submitted","")!="")
 	{
 	# save data
 	if (!$multiple)
 		{
-		$errors=save_resource_data($ref,$multiple);
+
+		# Batch upload - change resource type
+		if (getval("swf","")!="")
+			{
+			$resource_type=getvalescaped("resource_type","");
+			update_resource_type($ref,$resource_type);
+			}		
+
+		$save_errors=save_resource_data($ref,$multiple);
 	
-		if ($errors===true)
+		if ($save_errors===true)
 			{
 			if ($ref>0)
 				{
@@ -91,17 +99,17 @@ if (getval("save","")!="")
 				{
 				if (getval("swf","")!="")
 					{
-					$resource_type=getvalescaped("resource_type","");
-					update_resource_type($ref,$resource_type);
-					redirect("upload_swf.php");
+					# Save button pressed? Move to next step.
+					if (getval("save","")!="") {redirect("upload_swf.php");}
 					}
 				else
 					{
-					redirect("team_batch.php");
+					# Save button pressed? Move to next step.
+					if (getval("save","")!="") {redirect("team_batch.php");}
 					}
 				}
 			}
-		else
+		elseif (getval("save","")!="")
 			{
 			?>
 			<script type="text/javascript">
@@ -146,7 +154,7 @@ include "include/header.php";
 <div class="BasicsBox"> 
 
 <form method="post" id="mainform">
-
+<input type="hidden" name="submitted" value="true">
 <? 
 if ($multiple) { ?>
 <h1><?=$lang["editmultipleresources"]?></h1>
@@ -204,12 +212,12 @@ if ($multiple) { ?>
 ?>
 <div class="Question">
 <label for="resourcetype"><?=$lang["resourcetype"]?></label>
-<select name="resource_type" id="resourcetype" class="shrtwidth">
+<select name="resource_type" id="resourcetype" class="shrtwidth" onChange="document.getElementById('mainform').submit();">
 <?
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option value="<?=$types[$n]["ref"]?>"><?=$types[$n]["name"]?></option><?
+	?><option value="<?=$types[$n]["ref"]?>" <? if (getval("resource_type","")==$types[$n]["ref"]) {?>selected<? } ?>><?=$types[$n]["name"]?></option><?
 	}
 ?></select>
 <div class="clearerleft"> </div>
