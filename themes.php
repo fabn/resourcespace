@@ -4,7 +4,6 @@ include "include/authenticate.php";
 include "include/general.php";
 include "include/collections_functions.php";
 
-$manage=getval("manage",false);if ($manage!==false) {$manage=true;}
 $header=getvalescaped("header","");
 
 include "include/header.php";
@@ -13,44 +12,76 @@ include "include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$manage?$lang["managethemes"]:$lang["themes"]?></h1>
-  <p><?=$manage?text("manage"):text("introtext")?></p>
+  <h1><?=$lang["themes"]?></h1>
+  <p><?=text("introtext")?></p>
   
 <?
 $headers=get_theme_headers();
 for ($n=0;$n<count($headers);$n++)
 	{
-	if ($header=="" || $header==$headers[$n]) {
+	if ($header=="" || $header==$headers[$n])
+		{
 		?>
-		<? if ($manage) { ?><div class="VerticalNav"><? } else  { ?><div class="ThemeBox"><? } ?>
-		<h1 class="NavUnderline" style="margin-bottom:10px;padding-bottom:2px;margin-top:15px;">
+		<div class="RecordBox">
+		<div class="RecordPanel">  
+
+		<div class="RecordHeader">
 		<?
 		$image=get_theme_image($headers[$n]);
 		if (($image) && ($theme_images))
 			{
-			?><img class="CollectImageBorder" src="<?=$image?>"><br /><?
+			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?=$image?>" /></div><?
 			}
 		?>
-		<?=$headers[$n]?></h1>
-		<ul>
+		<h1 style="margin-top:12px;float:left;"><?=$headers[$n]?></h1>
+		</div>
+		
+		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
+		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+		<tr class="ListviewTitleStyle">
+		<td><?=$lang["name"]?></td>
+		<td width="5%"><?=$lang["items"]?></td>
+		<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+		</tr>
+		
 		<?
 		$themes=get_themes($headers[$n]);
 		for ($m=0;$m<count($themes);$m++)
 			{
 			?>
-			<li><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a> <? hook("collectioninfo"); ?>
-			<? if ($manage) { ?>
-			&nbsp;&nbsp;
-			<span class="OxColourPale">
-			<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections"><span class="OxColourPale">&gt; <?=$lang["editcollection"]?></span></a>&nbsp;
-			<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>"><span class="OxColourPale">&gt; <?=$lang["editproperties"]?></span></a>
-			</span>
+			<tr>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a></div></td>
+			<td width="5%"><?=$themes[$m]["c"]?></td>
+			
+			<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+			
+			&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
+		
+			<? if (isset($zipcommand)) { ?>
+			&nbsp;<a href="collection_download.php?collection=<?=$themes[$m]["ref"]?>"
+			>&gt;&nbsp;<?=$lang["action-download"]?></a>
 			<? } ?>
-			</li>
+			
+			<? if ($contact_sheet==true) { ?>
+			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=strtolower($lang["contactsheet"])?></a>
+			<? } ?>
+		
+			<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_email.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a><?}?>
+		
+			<? if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
+		
+			<? hook("addcustomtool"); ?>
+			
+			</td>
+			</tr>
 			<?
 			}
 		?>
-		</ul>
+		</table>
+		</div>
+		
+		</div>
+		<div class="PanelShadow"> </div>
 		</div>
 		<?
 		}
@@ -58,7 +89,7 @@ for ($n=0;$n<count($headers);$n++)
 ?>
 
 <?
-if (!$manage && $header=="")
+if ($header=="")
 	{
 	$headers=get_smart_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
@@ -66,22 +97,38 @@ if (!$manage && $header=="")
 		if (checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
 			{
 			?>
-			<div class="ThemeBox">
-			<h1 class="NavUnderline" style="margin-bottom:10px;padding-bottom:2px;margin-top:15px;">
-			<?=i18n_get_translated($headers[$n]["smart_theme_name"])?></h1>
-			<ul>
+			<div class="RecordBox">
+			<div class="RecordPanel">  
+
+			<div class="RecordHeader">
+			<h1 style="margin-top:5px;"><?=i18n_get_translated($headers[$n]["smart_theme_name"])?></h1>
+			</div>
+		
+			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
+			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+			<tr class="ListviewTitleStyle">
+			<td><?=$lang["name"]?></td>
+			<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+			</tr>
+			
 			<?
 			$themes=get_smart_themes($headers[$n]["ref"]);
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m];
 				?>
-				<li><a href="search.php?search=<?=urlencode($s)?>"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a>
-				</li>
+				<tr>
+				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
+				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
+				</tr>
 				<?
 				}
 			?>
-			</ul>
+			</table>
+			</div>
+			
+			</div>
+			<div class="PanelShadow"> </div>
 			</div>
 			<?
 			}
@@ -92,7 +139,6 @@ if (!$manage && $header=="")
 
 </div>
 
-<? if (!$manage) { ?>
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>
@@ -100,7 +146,6 @@ if (!$manage && $header=="")
     <p class="tight"><?=text("findpublic")?></p>
     <p><a href="collection_public.php"><?=$lang["findapubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
-<? } ?>
 
 <?
 include "include/footer.php";

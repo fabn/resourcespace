@@ -205,7 +205,7 @@ function get_theme_headers()
 function get_themes($header)
 	{
 	# Return a list of themes under a given header (theme category).
-	return sql_query("select * from collection where theme='" . escape_check($header) . "' and public=1 order by name");
+	return sql_query("select *,count(c.ref) c from collection c join collection_resource cr on c.ref=cr.collection where c.theme='" . escape_check($header) . "' and c.public=1 group by c.ref order by c.name;");
 	}
 
 function get_smart_theme_headers()

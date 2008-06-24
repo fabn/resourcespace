@@ -41,8 +41,6 @@ include "include/header.php";
 
 	<? if (checkperm("i")) { ?><li><a href="team_archive.php"><?=$lang["managearchiveresources"]?></a></li><? } ?>
 	
-	<li><a href="themes.php?manage=true"><?=$lang["managethemes"]?></a></li>
-
     <? if (checkperm("r")) { ?><li><a href="team_research.php"><?=$lang["manageresearchrequests"]?></a></li><? } ?>
 
     <? if (checkperm("u")) { ?><li><a href="team_user.php"><?=$lang["manageusers"]?></a></li><? } ?>
