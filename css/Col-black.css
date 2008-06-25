@@ -44,9 +44,9 @@ a:active {color:#CCC;}
 .ResourcePanelSmall {background: #595959 url(../gfx/black/interface/resourcepanel.gif) repeat-x;}
 .IconVideo {background: url(../gfx/black/interface/IcVideo.gif) no-repeat 140px 5px;}
 
-.ImageBorder, .RecordPanel .Picture {border: 1px solid #FFFFFF;}
+.ImageBorder, .RecordPanel .Picture {border: 1px solid #AAA;}
 .VideoBorder {border: 1px solid #000000;}	
-.CollectImageBorder {border: 1px solid #79899C;}	
+.CollectImageBorder {border: 1px solid #AAA;}	
 
 .PanelShadow {background: url(../gfx/black/interface/panelshadow.gif) repeat-x;height: 5px;}
 .IconCollect, .KeyCollect	{background: url(../gfx/black/interface/IcCol.gif) no-repeat;}
@@ -85,8 +85,8 @@ a:active {color:#CCC;}
 
 .highlight {color: #FFFF88;}
 
-.Tab a {border: 1px solid #B5C3D4;border-bottom-style: none;color: #95a3b4;background-color:#52719B;}
-.StyledTabbedPanel {border: 1px solid #B5C3D4;border-top: 1px solid white;background-image: url(../gfx/black/interface/Download.gif);}
+.Tab a {border: 1px solid #B5C3D4;border-bottom-style: none;color: #AAA;background-color:#777;}
+.StyledTabbedPanel {border: 1px solid #CCC;border-top: 1px solid white;background-image: url(../gfx/black/interface/Download.gif);}
 .TabSelected a {color: white;background-color:#6985A9;border-top-color: white;}
 
 .InfoTable {border-collapse:collapse;}
