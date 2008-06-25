@@ -199,7 +199,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				for ($m=0;$m<count($ckeywords);$m++)
 					{
 					$keyref=resolve_keyword($ckeywords[$m]);
-					if ($m!=0) {$sql.=" or ";}
+					if ($m!=0) {$t.=" or ";}
 					$t.="k" . $c. ".keyword='$keyref'";
 					
 					# Log this
@@ -286,8 +286,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if ($score=="") {$score="r.hit_count";} # In case score hasn't been set (i.e. empty search)
 	global $max_results;
 	if (($t2!="") && ($sql!="")) {$sql=" and " . $sql;}
+	
+	# Compile final SQL
 	$sql="select r.*,$score score from resource r" . $t . " where $t2 $sql group by r.ref order by $order_by limit $max_results";
-	$result=sql_query($sql,false,$fetchrows);#echo $sql;
+
+	# Execute query
+	$result=sql_query($sql,false,$fetchrows);
 	if (count($result)>0) {return $result;}
 	
 	# (temp) - no suggestion for field-specific searching for now - TO DO: modify function below to support this
