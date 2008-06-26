@@ -175,7 +175,7 @@ function split_keywords($search,$index=false)
 	if ((substr($ns,0,1)==",") ||  ($index==false && strpos($ns,":")!==false)) # special 'constructed' query type, split using comma so
 	# we support keywords with spaces.
 		{
-		$ns=str_replace(array("/","_",".",";","-","(",")","'","\"","\\")," ",$ns);
+		$ns=str_replace(array("/","_",".","; ","-","(",")","'","\"","\\")," ",$ns);
 		$ns=trim_spaces($ns);
 		$return=explode(",",strtolower($ns));
 		# If we are indexing, append any values that contain spaces.
@@ -208,7 +208,7 @@ function split_keywords($search,$index=false)
 	else
 		{
 		# split using spaces and similar chars
-		$ns=str_replace(array(",","_",":","/",".",";","-","(",")","'","\"","\\")," ",$ns);
+		$ns=str_replace(array(";",",","_",":","/",".","; ","-","(",")","'","\"","\\")," ",$ns);
 		$ns=trim_spaces($ns);
 		return trim_array(explode(" ",strtolower($ns)));
 		}
@@ -948,5 +948,36 @@ function get_all_image_sizes($internal=false)
 function get_user_log($user)
 	{
 	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title from resource_log l join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+	}
+	
+function get_breadcrumbs()
+	{
+	# Returns a HTML breadcrumb trail for display at the top of the screen.
+
+	# Fetch the variables we need to construct the trail.
+	$search=getvalescaped("search","");
+	$bc_from=getvalescaped("bc_from","");
+	$search=getvalescaped("search","");
+	global $pagename,$lang;
+	$bc="";
+	
+	switch($pagename)
+		{
+		# ------- Themes page
+		case "themes":
+		$bc="<a href=\"themes.php\">" . $lang["themes"] . "</a>";
+		break;
+		
+		# ------- Search results
+		case "search":
+		# From themes page?
+		if ($bc_from=="themes")
+			{$bc="<a href=\"themes.php\">" . $lang["themes"] . "</a>&nbsp;-&gt;&nbsp;";}
+
+		$bc.="<a href=\"search.php?search=" . urlencode($search) . "&bc_from=themes\">" . $lang["searchresults"] . "</a>";
+		break;
+		}
+		
+	return "You are here: " . $bc;
 	}
 ?>
