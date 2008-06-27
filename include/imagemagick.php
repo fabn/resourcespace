@@ -72,6 +72,10 @@ global $ffmpeg_path;
 if (isset($ffmpeg_path) && !isset($newfile)) 
         { 
          $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
+         
+         if ($extension=="mxf")
+         	$command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 0 \"" . $target . "\""; 
+         
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
         if (file_exists($target)) {$newfile=$target;} 
