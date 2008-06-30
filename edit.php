@@ -87,7 +87,7 @@ if (getval("submitted","")!="")
 
 		$save_errors=save_resource_data($ref,$multiple);
 	
-		if ($save_errors===true)
+		if (($save_errors===true)&&(getval("tweak","")==""))
 			{
 			if ($ref>0)
 				{
