@@ -46,19 +46,16 @@ if ($size!="")
 			if (file_exists($p))
 				{
 				# when writing metadata, we take an extra security measure by copying the files to filestore/tmp
-				# this is slower but safer, as we stay completely away from the original file when doing modifications
-				# that may have negative effects, especially in multi-user situations
+
 				$tmpfile=write_metadata($p,$ref);
 				if(file_exists($tmpfile)){$p=$tmpfile;}		
 				
-				# if the tmpfile is made, from here on we are working with that. And we delete it at the end. 
-				# be aware that during a zip download, there are at least three copies of the file while it is happening.
-				# (The original file, the modified tmp dir file, and the zipped file)
-				# probably not a good idea to try to zip your whole archive at once. Keep an eye on your
-				# storage space and make sure the tmp directories (in filestore and your root /tmp) are getting cleared out.
+				# if the tmpfile is made, from here on we are working with that. 
+				
 				$path.=" \"" . $p . "\"";	
+				
 				# build an array of paths so we can clean up any exiftool-modified files.
-				# I'm doing constant checks to make sure we're only referring to files in the tmp dir.
+				
 				if(file_exists($tmpfile)){$deletion_array[$n]=$tmpfile;}
 				daily_stat("Resource download",$ref);
 				resource_log($ref,'d',0);

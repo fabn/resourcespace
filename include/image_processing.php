@@ -63,15 +63,12 @@ if (isset($exiftool_path))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 		{
-		   #option -p formats the results. 
+			#creating the exiftool command which will output the metadata array
 			$command=$exiftool_path."/exiftool -p ' (";
 			
 			$read_from=get_exiftool_fields();
 			for($i=0;$i< count($read_from);$i++)
 				{
-				#creating the exiftool command which will print the metadata array
-				#this is making an entry in the array to read the data from each metadata field
-				#and format the output as strings within parentheses
 				$field=explode(",",$read_from[$i]['exiftool_field']);
 				foreach ($field as $field){
 				$command.="\"$".$field."\", " ;}

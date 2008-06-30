@@ -25,10 +25,6 @@ if (!file_exists($path))
 	}
 
 # writing RS metadata to files: exiftool
-# takes any field that has a write_to entry, explodes it by commas, and tries to write the field
-# to each of the Exiftool fields named in write_to
-# For example, in the "write_to" box for the Caption field, you could put: Description,Caption-Abstract
-# Exiftool will write your RS caption to any EXIF,IPTC,XMP fields that have one of those two names.
 
 $tmpfile=write_metadata($path,$ref);
 if (file_exists($tmpfile)){$path=$tmpfile;}
@@ -78,10 +74,7 @@ set_time_limit(0);
 
 echo file_get_contents($path);
 
-#Replacing Original File:
-#If for some reason the downloaded files are corrupted by writing to them, the original file should still exist.
-#in other words, files are only modified when they leave. The original file has a "_original" appended to it by exiftool,
-#and once the modified file has been downloaded, the original file is restored:
+#Deleting Exiftool temp File:
 
 if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
 exit();
