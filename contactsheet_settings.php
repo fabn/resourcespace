@@ -16,7 +16,7 @@ $headerinsert.="
 <script src=\"js/contactsheet.js\" type=\"text/javascript\"></script>
 ";
 
-
+$bodyattribs="onload=\"previewContactSheet();\"";
 include "include/header.php";
 ?>
 <div class="BasicsBox">
@@ -31,7 +31,7 @@ include "include/header.php";
  contactsheet.php makes just the first page of the pdf (with col size images) 
  and then thumbnails it for the ajax request. This creates a very small but helpful 
  preview image that can be judged before initiating a download of sometimes several MB.-->
-<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <? if ($contact_sheet_previews==true){?> onChange="var formdata = $(this).serialize() + '&preview=true'; previewContactSheet(formdata);"<?}?> >
+<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <? if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?}?> >
 <input type=hidden name="c" value="<?=$collection?>">
 
 <div class="Question">

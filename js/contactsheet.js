@@ -1,7 +1,8 @@
-function previewContactSheet(data) {
+function previewContactSheet() {
 var url = 'contactsheet.php';
-var ajax = new Ajax.Updater({success: ''},url,{method: 'get', parameters:data, onSuccess: function(response) {refreshIt();}});
+var formdata = $('contactsheetform').serialize() + '&preview=true'; 
+var ajax = new Ajax.Request(url,{method: 'get', parameters:formdata, onSuccess: function(response) {refreshIt();}});
 }
 
 function refreshIt() {
-   document.previewimage.src = 'temp/contactsheet.jpg?'+ Math.random();}
+   document.previewimage.src = 'filestore/tmp/contactsheet.jpg?'+ Math.random();}

@@ -175,8 +175,10 @@ $pdf->SetKeywords($keywords);
 
 #Make AJAX preview?:
 	if ($preview==true){
-	if (file_exists("temp/contactsheet.pdf")){unlink("temp/contactsheet.pdf");}
-	$pdf->Output("temp/contactsheet.pdf","F"); 
+	if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+	if (file_exists("filestore/tmp/contactsheet.jpg")){unlink("filestore/tmp/contactsheet.jpg");}
+	if (file_exists("filestore/tmp/contactsheet.pdf")){unlink("filestore/tmp/contactsheet.pdf");}
+	$pdf->Output("filestore/tmp/contactsheet.pdf","F"); 
 	# Set up ImageMagick 
 	putenv("MAGICK_HOME=" . $imagemagick_path); 
 	putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
@@ -185,7 +187,7 @@ $pdf->SetKeywords($keywords);
 	if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
     if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
-	$command.= " -resize 200x200 -quality 90 -colorspace RGB \"temp/contactsheet.pdf\"[0] \"temp/contactsheet.jpg\"";
+	$command.= " -resize 200x200 -quality 90 -colorspace RGB \"filestore/tmp/contactsheet.pdf\"[0] \"filestore/tmp/contactsheet.jpg\"";
 	shell_exec($command);
 	exit();
 	}
