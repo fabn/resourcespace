@@ -16,7 +16,6 @@ $headerinsert.="
 <script src=\"js/contactsheet.js\" type=\"text/javascript\"></script>
 ";
 
-$bodyattribs="onload=\"var formdata = $('contactsheetform').serialize();previewContactSheet(formdata);\"";
 
 include "include/header.php";
 ?>
