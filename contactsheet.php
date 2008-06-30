@@ -187,7 +187,7 @@ $pdf->SetKeywords($keywords);
 	if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
     if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
-	$command.= " -resize 200x200 -quality 90 -colorspace RGB \"filestore/tmp/contactsheet.pdf\"[0] \"filestore/tmp/contactsheet.jpg\"";
+	$command.= " -resize 250x250 -quality 90 -colorspace RGB \"filestore/tmp/contactsheet.pdf\"[0] \"filestore/tmp/contactsheet.jpg\"";
 	shell_exec($command);
 	exit();
 	}
