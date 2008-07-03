@@ -57,7 +57,7 @@ else if ($sheetstyle=="list")
 	$columns=1;
 	$imagesize=1.0;
 	$cellsize[0]=$pagewidth-1.7;
-	$cellsize[1]=1.0;
+	$cellsize[1]=1.2;
 	$rowsperpage=($pageheight-1.2-$cellsize[1])/$cellsize[1];
 	$page=1;
 }
