@@ -50,10 +50,10 @@ for ($n=0;$n<count($headers);$n++)
 			{
 			?>
 			<tr>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a></div></td>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"><?=htmlspecialchars($themes[$m]["name"])?></a></div></td>
 			<td width="5%"><?=$themes[$m]["c"]?></td>
 			
-			<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+			<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>&bc_from=themes">&gt;&nbsp;<?=$lang["action-view"]?></a>
 			
 			&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
 		
@@ -118,8 +118,8 @@ if ($header=="")
 				$s=$headers[$n]["name"] . ":" . $themes[$m];
 				?>
 				<tr>
-				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
-				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
+				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>&bc_from=themes"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
+				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>&bc_from=themes">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
 				</tr>
 				<?
 				}

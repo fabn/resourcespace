@@ -226,4 +226,8 @@ $home_themes=true;
 $home_mycollections=true;
 $home_helpadvice=true;
 
+# Display a breadcrumbs trail (list of pages previously visited to aid navigation)
+$breadcrumbs=false;
+
+
 ?>

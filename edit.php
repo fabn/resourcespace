@@ -132,10 +132,10 @@ if (getval("tweak","")!="")
 	switch($tweak)
 		{
 		case "rotateclock":
-		tweak_preview_images($ref,90,0,$resource["preview_extension"]);
+		tweak_preview_images($ref,270,0,$resource["preview_extension"]);
 		break;
 		case "rotateanti":
-		tweak_preview_images($ref,270,0,$resource["preview_extension"]);
+		tweak_preview_images($ref,90,0,$resource["preview_extension"]);
 		break;
 		case "gammaplus":
 		tweak_preview_images($ref,0,1.3,$resource["preview_extension"]);

@@ -138,3 +138,8 @@ else {$div="CentralSpace";}
 <!--Main Part of the page-->
 <? if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="user_request")) { ?><div id="CentralSpaceContainer"><? } ?>
 <div id="<?=$div?>">
+
+<? if ($breadcrumbs) { ?>
+<div class="Breadcrumbs"><?=get_breadcrumbs()?></div>
+<? } ?>
+
