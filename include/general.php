@@ -462,7 +462,7 @@ function save_user($ref)
 			$passsql=",password='" . $password . "'";
 			}
 		
-		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,comments='" . getvalescaped("comments","") . "' where ref='$ref'");
+		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "' where ref='$ref'");
 		}
 	if (getval("emailme","")!="")
 		{

@@ -26,7 +26,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 	$hashsql="and u.session='$session_hash'";
 	if (isset($anonymous_login) && ($username==$anonymous_login)) {$hashsql="";} # Automatic anonymous login, do not require session hash.
 	
-    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
+    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter,g.ip_restrict ip_restrict_group,u.ip_restrict ip_restrict_user from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
     if (count($userdata)>0)
         {
         $valid=true;
@@ -39,6 +39,9 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $userpassword=$userdata[0]["password"];
         $userfullname=$userdata[0]["fullname"];
         if (!isset($userfixedtheme)) {$userfixedtheme=$userdata[0]["fixed_theme"];} # only set if not set in config.php
+        
+        $ip_restrict_group=trim($userdata[0]["ip_restrict_group"]);
+        $ip_restrict_user=trim($userdata[0]["ip_restrict_user"]);
         
         $usercollection=$userdata[0]["current_collection"];
         $usersearchfilter=$userdata[0]["search_filter"];
@@ -73,6 +76,33 @@ if (!$valid)
 	<?
     exit();
     }
+
+# Handle IP address restrictions
+$ip_restrict=$ip_restrict_group;
+if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
+if ($ip_restrict!="")
+	{
+	# Match against the IP restriction.
+	$ip=$_SERVER["REMOTE_ADDR"];
+	$wildcard=strpos($ip_restrict,"*");
+	$allow=true;
+	if ($wildcard!==false)
+		{
+		# Wildcard
+		if (substr($ip,0,$wildcard)!=substr($ip_restrict,0,$wildcard)) {$allow=false;}
+		}
+	else
+		{
+		# No wildcard, straight match
+		if ($ip!=$ip_restrict) {$allow=false;}
+		}
+		
+	if (!$allow)
+		{
+		header("HTTP/1.0 403 Access Denied");
+		exit("Access denied.");
+		}
+	}
 
 #update activity table
 global $pagename;

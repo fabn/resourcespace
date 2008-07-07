@@ -1,5 +1,6 @@
 <?
 include "include/db.php";
+include "include/general.php";
 
 $url=getval("url","index.php");
 

@@ -61,7 +61,9 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?=$lang["emailaddress"]?></label><input name="email" type="text" class="stdwidth" value="<?=$user["email"]?>"><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?=$lang["accountexpiresoptional"]?><br/>Format: YYYY-MM-DD</label><input name="account_expires" type="text" class="stdwidth" value="<?=$user["account_expires"]?>"><div class="clearerleft"> </div></div>
+<div class="Question"><label><?=$lang["accountexpiresoptional"]?><br/><?=$lang["format"]?>: YYYY-MM-DD</label><input name="account_expires" type="text" class="stdwidth" value="<?=$user["account_expires"]?>"><div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?=$lang["ipaddressrestriction"]?><br/><?=$lang["wildcardpermittedeg"]?> 194.128.*</label><input name="ip_restrict" type="text" class="stdwidth" value="<?=$user["ip_restrict"]?>"><div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?=$lang["comments"]?></label><textarea name="comments" class="stdwidth" rows=5 cols=50><?=htmlspecialchars($user["comments"])?></textarea><div class="clearerleft"> </div></div>
 
