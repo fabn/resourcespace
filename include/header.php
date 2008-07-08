@@ -98,7 +98,7 @@ else
 			)
 		)
 		{?><li><a target="main" href="<?=$baseurl?>/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
-		<? if (checkperm("s")) { ?><li><a target="main" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li><? } ?>
+		<? if (checkperm("s") && $enable_themes) { ?><li><a target="main" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li><? } ?>
 		<? if (checkperm("s") && $recent_link) { ?><li><a target="main" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
 		<? if (checkperm("s") && $mycollections_link) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
 		<? if (checkperm("d")) { ?><li><a target="main" href="<?=$baseurl?>/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>

@@ -79,7 +79,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 
 <? if (checkperm("s")) { ?>
 
-<? if ($home_themeheaders) { ?>
+<? if ($home_themeheaders && $enable_themes) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
 	<h2><a href="themes.php"><?=$lang["themes"]?></a></h2>
 	<?=text("themes")?>
@@ -98,7 +98,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 <? } ?>
 
 
-<? if ($home_themes) { ?>
+<? if ($home_themes && $enable_themes) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
 	<h2><a href="themes.php"><?=$lang["themes"]?></a></h2>
 	<?=text("themes")?>

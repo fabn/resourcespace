@@ -41,7 +41,21 @@ if ($noattach=="")
 
 if ($noattach=="") 
 	{
-	header("Content-Disposition: attachment; filename=" . $ref . $size . "." . $ext);
+	$filename=$ref . $size . "." . $ext;
+	
+	if ($original_filenames_when_downloading)
+		{
+		# Use the original filename.
+		$origfile=get_resource_data($ref);$origfile=$origfile["file_path"];
+		if ($origfile!="")
+			{
+			# Use the original filename if one has been set.
+			# Strip any path information (e.g. if the staticsync.php is used).
+			$fs=explode("/",$origfile);$filename=$fs[count($fs)-1];
+			}
+		}
+		
+	header("Content-Disposition: attachment; filename=" . $filename);
 	header("Content-Type: application/octet-stream");
 	}
 else

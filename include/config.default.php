@@ -119,6 +119,9 @@ $country_search=false;
 # Country sort in the search results? (requires that the 'country' field maps to the 'country' database column on resource)
 $country_sort=false;
 
+# Enable themes (promoted collections intended for showcasing selected resources)
+$enable_themes=true;
+
 # Use the themes page as the home page?
 $use_theme_as_home=false;
 
@@ -229,5 +232,7 @@ $home_helpadvice=true;
 # Display a breadcrumbs trail (list of pages previously visited to aid navigation)
 $breadcrumbs=false;
 
+# Use original filename when downloading a file?
+$original_filenames_when_downloading=false;
 
 ?>

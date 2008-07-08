@@ -13,6 +13,8 @@ $size=getvalescaped("size","");
 if ($size!="")
 	{
 	$path="";
+	$deletion_array=array();
+	
 	# Build a list of files to download
 	$result=do_search("!collection" . $collection);
 	for ($n=0;$n<count($result);$n++)
@@ -48,15 +50,41 @@ if ($size!="")
 				# when writing metadata, we take an extra security measure by copying the files to filestore/tmp
 
 				$tmpfile=write_metadata($p,$ref);
-				if(file_exists($tmpfile)){$p=$tmpfile;}		
+				if($tmpfile!="" && file_exists($tmpfile)){$p=$tmpfile;}		
 				
 				# if the tmpfile is made, from here on we are working with that. 
+				
+				
+				# If using original filenames when downloading, copy the file to new location so the name is included.
+				if ($original_filenames_when_downloading)	
+					{
+					if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
+					$filename=get_resource_data($ref);$filename=$filename["file_path"];
+					
+					if ($filename!="")
+						{
+						# Only perform the copy if an original filename is set.
+						
+						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
+						
+						# Copy to a new location
+						$newpath="filestore/tmp/" . $filename;
+						copy($p,$newpath);
+						
+						# Add the temporary file to the post-zip deletion list.
+						$deletion_array[]=$newpath;
+						
+						# Set p so now we are working with this new file
+						$p=$newpath;
+						}
+					}
 				
 				$path.=" \"" . $p . "\"";	
 				
 				# build an array of paths so we can clean up any exiftool-modified files.
 				
-				if(file_exists($tmpfile)){$deletion_array[$n]=$tmpfile;}
+				if($tmpfile!="" && file_exists($tmpfile)){$deletion_array[]=$tmpfile;}
 				daily_stat("Resource download",$ref);
 				resource_log($ref,'d',0);
 				}

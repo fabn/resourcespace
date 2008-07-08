@@ -511,7 +511,7 @@ $lang["requiredfield"]="This is a required field";
 $lang["requiredfields"]="Some required fields were not completed. Please review the form and try again.";
 $lang["viewduplicates"]="View Duplicate Resources";
 $lang["userlog"]="User Log";
-$lang["ipaddressrestriction"]="IP address restriction";
+$lang["ipaddressrestriction"]="IP address restriction (optional)";
 $lang["format"]="Format";
 $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
 ?>

@@ -63,7 +63,7 @@ include "include/header.php";
 </div>
 
 <? } else { 
-if (checkperm("h")) { # Only users with the 'h' permission can publish public collections as themes.
+if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can publish public collections as themes.
 ?>
 <div class="Question">
 <label for="theme"><?=$lang["themecategory"]?></label>
