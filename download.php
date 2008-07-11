@@ -86,7 +86,10 @@ else
 	}
 set_time_limit(0);
 
-echo file_get_contents($path);
+#echo file_get_contents($path);
+# The above required that the downloaded file was read into PHP's memory space first.
+# Perhaps this is not the case for readfile().
+readfile($path);
 
 #Deleting Exiftool temp File:
 
