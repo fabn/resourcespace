@@ -22,7 +22,7 @@ a:active {color:#B5C3D4;}
 .FormError {color: #C2E066;}
 .FormIncorrect {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
 
-.NoFind {border: 1px solid #94A7C0;background: #203B5D;} {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
+.NoFind {border: 1px solid #94A7C0;background: #203B5D;}
 .NoFind .highlight {color:#FFFFFF;}
 .NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#FFFFFF;text-decoration:underline;}
 

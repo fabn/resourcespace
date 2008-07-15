@@ -64,7 +64,7 @@ a:active {color:#737373;}
 .RecordPanel {background: #F0F0F0 url(../gfx/whitegry/interface/recordpanel.gif) repeat-x;	border: 1px solid #BBBBBB;}
 .RecordPanel .RecordDownloadSpace h2 {color: #FFFFFF;}
 .RecordDownloadSpace .HorizontalWhiteNav a:active, .RecordPanel .RecordDownloadSpace .HorizontalWhiteNav a:hover {color:#FFFFFF;} 
-.NoFind {border: 1px solid #BBBBBB;background: #FFFFFF;} {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
+.NoFind {border: 1px solid #BBBBBB;background: #FFFFFF;}
 .NoFind .highlight {color:#000000;font-weight: bold;}
 .NoFind a:link, .NoFind a:visited, .NoFind a:hover, .NoFind a:active {color:#000000;text-decoration:underline;}
 .RecordPanel .Title,  {	border-bottom: 1px solid #BBBBBB;}
