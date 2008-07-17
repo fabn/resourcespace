@@ -60,12 +60,13 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 	$allow_reorder=true;
 	}
 
-# Include function for reordering
-if ($allow_reorder)
+# Include function for reordering / infobox
+if ($allow_reorder || $infobox)
 	{
 	?>
 	<script src="js/prototype.js" type="text/javascript"></script>
 	<script src="js/scriptaculous.js" type="text/javascript"></script>
+	<script src="js/infobox_collection.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	function ReorderResources(id1,id2)
 		{
@@ -84,10 +85,11 @@ if ($allow_reorder)
 	}
 
 
+
 ?>
 </head>
 
-<body class="CollectBack" id="collectbody">
+<body class="CollectBack" id="collectbody"<? if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<? } ?>>
 <?
 
 
@@ -313,7 +315,7 @@ if (count($result)>0)
 		?>
 <? if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
-		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>">
+		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>" <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
 		
@@ -363,6 +365,11 @@ if (count($result)>0)
 	?>
 	</div>
 	<?
+
+# Add the infobox.
+?>
+<div id="InfoBoxCollection"><div id="InfoBoxCollectionInner"> </div></div>
+<?
 }
 else
 {

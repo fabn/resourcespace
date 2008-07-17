@@ -256,7 +256,7 @@ if (true) #search condition
 
 	<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
-		<div class="ResourcePanel" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
+		<div class="ResourcePanel" <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>>
 		
 <? if (!hook("renderimagethumb")) { ?>			
 		
