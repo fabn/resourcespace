@@ -219,7 +219,7 @@ if ($k!="")
 <? if (!hook("thumbsmenu")) { ?>
   <h2><?=$lang["mycollections"]?></h2>
   <form method="get" id="colselect">
-		<div class="SearchItem"><?=$lang["currentcollection"]?>:
+		<div class="SearchItem" style="padding:0;margin:0;"><?=$lang["currentcollection"]?>:
 		<select name="collection" onchange="document.getElementById('colselect').submit();" class="SearchWidth">
 		<?
 		$list=get_user_collections($userref);
