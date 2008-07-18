@@ -178,7 +178,7 @@ else
 					$value=substr($value,0,4) . "-" . substr($value,4,2) . "-" . substr($value,6,2);
 					}
 				
-				update_field($ref,$fields[$n]["ref"],$value);
+				if (trim($value)!="") {update_field($ref,$fields[$n]["ref"],$value);}
 				}			
 			}
 		}
