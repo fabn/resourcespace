@@ -172,6 +172,8 @@ $videotypes=array(3);
 # $userfixedtheme="whitegry";
 
 # List of active plugins.
+# Note that multiple plugins must be specified within array() as follows:
+# $plugins=array("loader","rss","messaging","googledisplay"); 
 $plugins=array("");
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
@@ -180,6 +182,7 @@ $plugins=array("");
 
 # Enable AJAX popup info box on search results.
 $infobox=true;
+# A list of fields to display in the info box (using the field reference number)
 $infobox_fields=array(18,10,29,53);
 
 # Reordering, captioning and ranking of collections
@@ -189,11 +192,12 @@ $collection_reorder_caption=false;
 $emailfooter="";
 
 # Contact Sheet feature, and whether contact sheet becomes resource.
+# Requires ImageMagick/Ghostscript.
 $contact_sheet=true;
-$contact_sheet_resource=false;
-# Ajax previews in contact sheet configuration. Requires ImageMagick/Ghostscript.
-# also must have a "temp" folder in root directory that has write permissions like "filestore".
-$contact_sheet_previews=false;
+# Produce a separate resource file when creating contact sheets?
+$contact_sheet_resource=false; 
+# Ajax previews in contact sheet configuration. 
+$contact_sheet_previews=true;
 
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);
