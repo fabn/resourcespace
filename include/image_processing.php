@@ -256,7 +256,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 				    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
         
 					# Preserve colour profiles? (omit for smaller sizes)   
-					$profile="+profile icc +profile xmp +profile exif -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+					$profile="+profile icc +profile xmp +profile exif +profile iptc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
     
 				    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
