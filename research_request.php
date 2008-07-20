@@ -32,7 +32,7 @@ include "include/header.php";
 <label><?=$lang["requestasuser"]?></label>
 <select name="as_user" class="stdwidth">
 <?
-$users=get_users();
+$users=get_users(0,"","u.username",true);
 for ($n=0;$n<count($users);$n++)
 	{
 	?><option value="<?=$users[$n]["ref"]?>"><?=$users[$n]["username"] . " - " . $users[$n]["fullname"] . " ("  . $users[$n]["email"] . ")"?></option>
