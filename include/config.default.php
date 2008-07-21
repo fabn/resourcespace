@@ -93,8 +93,11 @@ $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=be
 
 # If using ffmpeg, uncomment and set next 2 lines.
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
-$ffmpeg_preview=true; # create a preview video for ffmpeg files?
-$ffmpeg_preview_seconds=10; # how many seconds to preview
+
+# Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
+$ffmpeg_preview=true; 
+$ffmpeg_preview_seconds=20; # how many seconds to preview
+
 
 # Allow users to request accounts?
 $allow_account_request=true;
