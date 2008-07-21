@@ -78,7 +78,19 @@ if (isset($ffmpeg_path) && !isset($newfile))
          
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
-        if (file_exists($target)) {$newfile=$target;} 
+        if (file_exists($target)) 
+            {
+            $newfile=$target;
+            
+            global $ffmpeg_preview,$ffmpeg_preview_seconds;
+            if ($ffmpeg_preview)
+                {
+                # Create a preview video (FLV)
+                $targetfile=myrealpath(get_resource_path($ref,"",false,"flv")); 
+                $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
+                $output=shell_exec($command); 
+                }
+            } 
         } 
 
 
@@ -90,9 +102,9 @@ if (!isset($newfile))
 	{
 	# Locate imagemagick.
     $command=$imagemagick_path . "/bin/convert";
-    if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
     if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
+    if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
 
     $prefix="";
 
@@ -111,8 +123,9 @@ if (!isset($newfile))
 
 		# Locate ghostscript command
 		$gscommand= $ghostscript_path. "/gs";
-	    if (!file_exists($command)) {$gscommand= $ghostscript_path. "/gs.exe";}
-
+	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
+        if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
+        
 		# Create multiple pages.
 		for ($n=1;$n<=$pdf_pages;$n++)
 			{
@@ -121,9 +134,8 @@ if (!isset($newfile))
 			$target=myrealpath(get_resource_path($ref,$size,false,"jpg",-1,$n)); 
 			if (file_exists($target)) {unlink($target);}
 			
-			$gscommand2 = $gscommand . " -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
- 
-			$output=shell_exec($gscommand2); 
+			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
+ 			$output=shell_exec($gscommand2); 
 	
 			# Set that this is the file to be used.
 			if (file_exists($target) && $n==1)

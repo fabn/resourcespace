@@ -232,7 +232,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			$path=get_resource_path($ref,$ps[$n]["id"],false);
 			if (file_exists($path)) {unlink($path);}
 			
-			# only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
+            # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 			# or when producing a small thumbnail (to make sure we have that as a minimum
 			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col") || ($id=="pre"))
 				{
@@ -251,16 +251,16 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 	
 					# Locate imagemagick.
 				    $command=$imagemagick_path . "/bin/convert";
-				    if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
 				    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-				    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
+				    if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+                    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
         
 					# Preserve colour profiles? (omit for smaller sizes)   
 					$profile="+profile icc +profile xmp +profile exif +profile iptc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
     
 				    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
-				    $output=shell_exec($command2); 
+                    $output=shell_exec($command2); 
 
 					if ($id=="thm")
 						{
