@@ -76,22 +76,22 @@ if ($success===false) {$result="FAIL: filestore not writable";} else {$result="O
 function CheckImagemagick()
 {
  	global $imagemagick_path;
-	if (file_exists(stripslashes($imagemagick_path) . "/convert")) return true;
-	if (file_exists(stripslashes($imagemagick_path) . "/convert.exe")) return true;	
+	if (file_exists($imagemagick_path . "/convert")) return true;
+	if (file_exists($imagemagick_path . "/convert.exe")) return true;	
 	return false;
 }
 function CheckFfmpeg()
 {
  	global $ffmpeg_path;
-	if (file_exists(stripslashes($ffmpeg_path) . "/ffmpeg")) return true;
-	if (file_exists(stripslashes($ffmpeg_path) . "/ffmpeg.exe")) return true;	
+	if (file_exists($ffmpeg_path . "/ffmpeg")) return true;
+	if (file_exists($ffmpeg_path . "/ffmpeg.exe")) return true;	
 	return false;
 }
 function CheckGhostscript()
 {
  	global $ghostscript_path;
-	if (file_exists(stripslashes($ghostscript_path) . "/gs")) return true;
-	if (file_exists(stripslashes($ghostscript_path) . "/gs.exe")) return true;	
+	if (file_exists($ghostscript_path . "/gs")) return true;
+	if (file_exists($ghostscript_path . "/gs.exe")) return true;	
 	return false;
 }
 
