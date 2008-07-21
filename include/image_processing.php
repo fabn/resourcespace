@@ -250,8 +250,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			$path=get_resource_path($ref,$ps[$n]["id"],false);
 			if (file_exists($path)) {unlink($path);}
 			# Also try the watermarked version.
-			$path=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
-			if (file_exists($path)) {unlink($path);}
+			$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+			if (file_exists($wpath)) {unlink($wpath);}
 
             # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 			# or when producing a small thumbnail (to make sure we have that as a minimum
