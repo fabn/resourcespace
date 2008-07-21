@@ -25,10 +25,12 @@ if (!file_exists($path))
 	}
 
 # writing RS metadata to files: exiftool
-
-$tmpfile=write_metadata($path,$ref);
-if (file_exists($tmpfile)){$path=$tmpfile;}
-
+if ($noattach=="") # Only for downloads (not previews)
+	{
+	$tmpfile=write_metadata($path,$ref);
+	if (file_exists($tmpfile)){$path=$tmpfile;}
+	}
+	
 $filesize=filesize($path);
 header("Content-Length: " . $filesize);
 
@@ -92,8 +94,11 @@ set_time_limit(0);
 readfile($path);
 
 #Deleting Exiftool temp File:
+if ($noattach=="") # Only for downloads (not previews)
+	{
+	if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
+	}
 
-if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
 exit();
 
 ?>
