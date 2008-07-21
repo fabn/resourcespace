@@ -42,6 +42,24 @@ function upload_file($ref)
 		update_field($ref,$filename_field,$filename);
 		}
     
+    # Clear any existing FLV file or multi-page previews.
+	global $pdf_pages;
+	for ($n=2;$n<=$pdf_pages;$n++)
+		{
+		# Remove preview page.
+		$path=get_resource_path($ref,"scr",false,"jpg",-1,$n,false);
+		if (file_exists($path)) {unlink($path);}
+		# Also try the watermarked version.
+		$path=get_resource_path($ref,"scr",false,"jpg",-1,$n,true);
+		if (file_exists($path)) {unlink($path);}
+		}
+	# Remove any FLV video preview (except if the actual resource is an FLV file).
+	if ($extension!="flv")
+		{
+		$path=get_resource_path($ref,"",false,"flv");
+		if (file_exists($path)) {unlink($path);}
+		}
+    
 	# Create previews
 	create_previews($ref,false,$extension);
 
@@ -221,24 +239,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 		# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
 		if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
 		
-		# Clear any existing FLV file or multi-page previews.
-		global $pdf_pages;
-		for ($n=2;$n<=$pdf_pages;$n++)
-			{
-			# Remove preview page.
-			$path=get_resource_path($ref,"scr",false,"jpg",-1,$n,false);
-			if (file_exists($path)) {unlink($path);}
-			# Also try the watermarked version.
-			$path=get_resource_path($ref,"scr",false,"jpg",-1,$n,true);
-			if (file_exists($path)) {unlink($path);}
-			}
-		# Remove any FLV video preview (except if the actual resource is an FLV file).
-		if ($extension!="flv")
-			{
-			$path=get_resource_path($ref,"",false,"flv");
-			if (file_exists($path)) {unlink($path);}
-			}
-			
 		$ps=sql_query("select * from preview_size" . (($thumbonly)?" where id='thm' or id='col'":""));
 		for ($n=0;$n<count($ps);$n++)
 			{
