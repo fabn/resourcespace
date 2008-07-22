@@ -48,7 +48,7 @@ if ($extension=="indd")
    ----------------------------------------
 */
 
-if (($extension=="odt") || ($extension=="odb") || ($extension=="ods")  || ($extension=="odp")) 
+if (($extension=="odt") || ($extension=="ods")  || ($extension=="odp")) 
 	{
 shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
     $command=$imagemagick_path . "/bin/convert";
