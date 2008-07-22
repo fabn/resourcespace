@@ -255,7 +255,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 
             # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 			# or when producing a small thumbnail (to make sure we have that as a minimum
-			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col") || ($id=="pre"))
+			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col"))
 				{
 				# Calculate width and height.
 				if ($sw>$sh) {$ratio = ($tw / $sw);} # Landscape

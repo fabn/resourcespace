@@ -127,6 +127,8 @@ elseif (file_exists($flvfile) && (strpos(strtolower($flvfile),".flv")!==false))
 elseif ($resource["has_image"]==1)
 	{
 	$imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	if (!file_exists($imagepath))
+	{$imagepath=get_resource_path($ref,"col",false,$resource["preview_extension"],-1,1,checkperm("w"));}
 	$previewpath=get_resource_path($ref,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
 	if (!file_exists($previewpath)) {$previewpath=get_resource_path($ref,"",false,$resource["preview_extension"]);}
 	
