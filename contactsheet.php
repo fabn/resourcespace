@@ -73,7 +73,6 @@ $pdf=new FPDF("P","in",$pagesize);
 $pdf->SetTitle($collectiondata['name']." ".$date);
 $pdf->SetAuthor($user['fullname']." ".$user['email']);
 $pdf->SetSubject($applicationname." Contact Sheet");
-$keywords="";
 $pdf->SetMargins(1,1.2,.7);
 $pdf->SetAutoPageBreak(true,0);
 $pdf->AddPage();
@@ -107,7 +106,6 @@ for ($n=0;$n<count($result);$n++)
 			if (file_exists($imgpath) && ($preview_extension=="jpg" || $preview_extension=="jpeg"))
 			{
 				
-				$keywords.=$ref.", ";	
 				# Two ways to size image to cell, either by height or by width.
 				$thumbsize=getimagesize($imgpath);
 					if ($thumbsize[0]>$thumbsize[1]){
@@ -170,8 +168,6 @@ for ($n=0;$n<count($result);$n++)
 				}
 			}
 		}	
-#Add Resource Numbers to PDF Metadata - I don't know what the use of it is but why not.	
-$pdf->SetKeywords($keywords);
 
 #Make AJAX preview?:
 	if ($preview==true){
