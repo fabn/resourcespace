@@ -302,7 +302,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 		# draw new tab?
 		if (($tabname!=$fields[$n]["tab_name"]) && ($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
 			{
-			?><div id="tabswitch<?=$tabcount?>" class="Tab<? if ($tabcount==0) { ?> TabSelected<? } ?>"><a href="#" onclick="SelectTab(<?=$tabcount?>);return false;"><?=$fields[$n]["tab_name"]?></a></div><?
+			?><div id="tabswitch<?=$tabcount?>" class="Tab<? if ($tabcount==0) { ?> TabSelected<? } ?>"><a href="#" onclick="SelectTab(<?=$tabcount?>);return false;"><?=i18n_get_translated($fields[$n]["tab_name"])?></a></div><?
 			$tabcount++;
 			$tabname=$fields[$n]["tab_name"];
 			}
