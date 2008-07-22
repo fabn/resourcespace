@@ -47,8 +47,8 @@ if ($extension=="indd")
 	Try OpenDocument Format
    ----------------------------------------
 */
+if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth"))
 
-if (($extension=="odt") || ($extension=="ods")  || ($extension=="odp")) 
 	{
 shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
     $command=$imagemagick_path . "/bin/convert";
@@ -57,6 +57,18 @@ shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
 $command=$command . " \"$target\"[0]  \"$target\""; 
 				$output=shell_exec($command); 
+	}
+
+
+
+/* ----------------------------------------
+	Try Microsoft OfficeOpenXML Format
+   ----------------------------------------
+*/
+if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx"))
+
+	{
+shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");
 	}
 
 
@@ -95,17 +107,28 @@ if (isset($ffmpeg_path) && !isset($newfile))
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
         if (file_exists($target)) 
+
             {
+
             $newfile=$target;
+
             
+
             global $ffmpeg_preview,$ffmpeg_preview_seconds;
+
             if ($ffmpeg_preview)
+
                 {
+
                 # Create a preview video (FLV)
+
                 $targetfile=myrealpath(get_resource_path($ref,"",false,"flv")); 
+
                 $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
+
                 $output=shell_exec($command); 
                 }
+
             } 
         } 
 
@@ -141,6 +164,7 @@ if (!isset($newfile))
 		$gscommand= $ghostscript_path. "/gs";
 	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
         if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
+
         
 		# Create multiple pages.
 		for ($n=1;$n<=$pdf_pages;$n++)
