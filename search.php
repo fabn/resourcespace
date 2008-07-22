@@ -256,12 +256,16 @@ if (true) #search condition
 
 	<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
-		<div class="ResourcePanel" <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>>
+		<div class="ResourcePanel">
 		
 <? if (!hook("renderimagethumb")) { ?>			
 		
 		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif"><? } ?></a>
+		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
+		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+		/><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>.gif" 
+		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+		/><? } ?></a>
 			</td>
 			</tr></table>
 <? } ?> <!-- END HOOK Renderimagethumb-->	
@@ -300,9 +304,13 @@ if (true) #search condition
 			?>
 
 <div class="ResourcePanelShellSmall" id="ResourceShell<?=$ref?>">
-		<div class="ResourcePanelSmall" onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">	
+		<div class="ResourcePanelSmall">	
 			<table border="0" class="ResourceAlignSmall"><tr><td>
-			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" /><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"><? } ?></a>
+			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
+			<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+			/><? } else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"
+			<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+			/><? } ?></a>
 			</td>
 			</tr></table>
 			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" <? if (!$infobox) { ?>title="<?=$lang["fullscreenpreview"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span></div>
@@ -313,7 +321,7 @@ if (true) #search condition
 			} else if ($display=="list") { # List view
 			?>
 			<!--List Item-->
-			<tr onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);">
+			<tr <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>>
 			<td nowrap><div class="ListTitle"><a href="<?=$url?>"><?=highlightkeywords(tidy_trim($result[$n]["title"],45) . ((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):""),$search) ?></a></div></td>
 			<td><? if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><? } else { ?>&nbsp;<? } ?></td>
 			<td><?=$result[$n]["ref"]?></td>

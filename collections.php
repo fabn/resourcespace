@@ -120,8 +120,8 @@ if ($remove!="")
 	hook("postremovefromcollection");
 	}
 	
-$addsearch=getvalescaped("addsearch","");
-if ($addsearch!="")
+$addsearch=getvalescaped("addsearch",-1);
+if ($addsearch!=-1)
 	{
 	hook("preaddsearch");
 	if (getval("mode","")=="")
@@ -315,7 +315,7 @@ if (count($result)>0)
 		?>
 <? if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
-		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>" <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>>
+		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
 		
@@ -323,18 +323,24 @@ if (count($result)>0)
 		if (file_exists(myrealpath($colimgpath)))
 		{
 ?>
-<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"/>
+<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"
+<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+/>
 <?
 		}			
 		else
 		{
 			$colimgpath = get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"));
 ?>
-<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder" width="90" height="75" />
+<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder" width="90" height="75"
+<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+/>
 <?		
 		}
 		
-		} else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
+		} else { ?><img border=0 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"
+		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+		/><? } ?></a></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
 		<? if ($k=="") { ?><div class="CollectionPanelInfo">
