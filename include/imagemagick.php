@@ -55,7 +55,7 @@ shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
     if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
     if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
     if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
-$command=$command . " -background none  \"$target\"[0]  \"$target\""; 
+$command=$command . " \"$target\"[0]  \"$target\""; 
 				$output=shell_exec($command); 
 	}
 
