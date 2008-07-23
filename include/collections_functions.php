@@ -356,13 +356,30 @@ function get_theme_image($theme)
 
 function swap_collection_order($resource1,$resource2,$collection)
 	{
-	# Swaps the position of two resources within a collection.
-	$pos1=sql_value("select date_added value from collection_resource where collection='$collection' and resource='$resource1'",0);
-	$pos2=sql_value("select date_added value from collection_resource where collection='$collection' and resource='$resource2'",0);
+	# Inserts $resource1 into the position currently occupied by $resource2 and moves $resouce2
+	# and subsequent resources down a position.
 
-	sql_query("update collection_resource set date_added='$pos2' where resource='$resource1' and collection='$collection'");
-	sql_query("update collection_resource set date_added='$pos1' where resource='$resource2' and collection='$collection'");
-
+	$existingorder=sql_array("select resource value from collection_resource where collection='$collection' order by date_added desc");
+	#echo "inserting $resource1 into position occupied by $resource2<br>" . join(",",$existingorder);
+	$neworder=array();
+	for ($n=0;$n<count($existingorder);$n++)
+		{
+		if ($existingorder[$n]==$resource2)
+			{
+			$neworder[]=$resource1;
+			}
+		if ($existingorder[$n]!=$resource1)
+			{
+			$neworder[]=$existingorder[$n];
+			}
+		}
+	#echo " to " . join(",",$neworder);
+	for ($n=0;$n<count($neworder);$n++)
+		{
+		$newdate=date("Y-m-d H:i:s",(time()-$n));
+		#echo "<br>" . $newdate;
+		sql_query("update collection_resource set date_added='$newdate' where collection='$collection' and resource='" . $neworder[$n] . "'");
+		}	
 	}
 
 function get_collection_resource_comment($resource,$collection)
