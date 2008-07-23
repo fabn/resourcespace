@@ -15,6 +15,14 @@ sql_query("update resource set has_image=0 where ref='$ref'");
 $target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
 if (file_exists($target)) {unlink($target);}
 
+
+# Locate imagemagick.
+ $command=$imagemagick_path . "/bin/convert";
+ if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+ if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+ if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
+
+
 hook("metadata");
 
 /* ----------------------------------------
@@ -43,6 +51,7 @@ if ($extension=="indd")
 	hook("indesign");	
 	}
 
+
 /* ----------------------------------------
 	Try OpenDocument Format
    ----------------------------------------
@@ -51,10 +60,6 @@ if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($exten
 
 	{
 shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
-    $command=$imagemagick_path . "/bin/convert";
-    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-    if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
 $command=$command . " \"$target\"[0]  \"$target\""; 
 				$output=shell_exec($command); 
 	}
@@ -72,6 +77,23 @@ if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($ex
 	{
 shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $target;
 	}
+
+
+/* ----------------------------------------
+	Try Adobe Mars for fun- the specification is not complete and it is not likely anyone uses the files 
+	for production purposes yet...but interestingly the pages will be SVG files.
+   ----------------------------------------
+*/
+if ($extension=="mars")
+
+	{
+shell_exec("unzip -p $file \"page/0/pg.svg\" > $target");
+$command=$command . " \"$target\"[0]  \"$target\""; 
+				$output=shell_exec($command); 
+				$newfile = $target;
+	}
+
+
 
 
 /* ----------------------------------------
@@ -141,11 +163,6 @@ if (isset($ffmpeg_path) && !isset($newfile))
 */
 if (!isset($newfile))
 	{
-	# Locate imagemagick.
-    $command=$imagemagick_path . "/bin/convert";
-    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-    if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
 
     $prefix="";
 
