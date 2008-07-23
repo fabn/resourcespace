@@ -510,4 +510,9 @@ $lang["orientation"]="Høyde/bredde";
 $lang["requiredfield"]="Må fylles ut";
 $lang["requiredfields"]="Noen obligatoriske felt ble ikke fylt ut. Vennligst se gjennom skjemaet og prøv igjen.";
 $lang["viewduplicates"]="Se dupliserte filer";
+
+
+
+# New for 1.6
+$lang["newflag"]="NYTT!";
 ?>

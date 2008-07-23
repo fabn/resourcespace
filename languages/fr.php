@@ -459,4 +459,6 @@ $lang["saveuser-mailsubject"]="$applicationname: Informations de connexion";
 $lang["reminder-mailbody"]="Vos informations de connexion pour $applicationname sont les suivants:<br /><br />Nom d'utilisateur:%1<br />Mot de passe:%2<br /><br />Utilisez le lien ci-dessous pour acc&eacute;der au syst&egrave;me.<br /><a href='$baseurl'>$baseurl</a>";
 $lang["reminder-mailsubject"]="$applicationname: Rappel du mot de passe";
 
+# New for 1.6
+$lang["newflag"]="NOUVEAU!";
 ?>

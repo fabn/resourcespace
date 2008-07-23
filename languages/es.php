@@ -433,4 +433,8 @@ $lang["access3"]="Costumbre";
 
 $lang["statusandrelationships"]="Estado y relaciones";
 
+
+# New for 1.6
+$lang["newflag"]="NUEVO!";
+
 ?>

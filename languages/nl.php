@@ -499,4 +499,8 @@ $lang["andreplacewith"]="...ven vervang voor...";
 $lang["relateallresources"]="Relateer alle materialen aan elkaar in deze collectie";
 $lang["country"]="Land";
 
+
+
+# New for 1.6
+$lang["newflag"]="NIEUW!";
 ?>

@@ -244,4 +244,7 @@ $breadcrumbs=false;
 # Use original filename when downloading a file?
 $original_filenames_when_downloading=false;
 
+# Display a 'new' flag next to new themes (added < 1 month ago)
+$flag_new_themes=true;
+
 ?>

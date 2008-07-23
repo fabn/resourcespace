@@ -499,4 +499,8 @@ $lang["find"]="Cerca";
 $lang["andreplacewith"]="...e sostituisci con...";
 $lang["relateallresources"]="Lega tutte le risorse di questa collezione";
 $lang["country"]="Paese";
+
+
+# New for 1.6
+$lang["newflag"]="NUOVO!";
 ?>

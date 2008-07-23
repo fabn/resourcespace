@@ -290,7 +290,7 @@ $lang["keepmeloggedin"]="Keep me logged in at this workstation";
 $lang["username"]="Username";
 $lang["password"]="Password";
 $lang["login"]="Log in";
-$lang["loginincorrect"]="Sorry, your login in details were incorrect. Please try again.";
+$lang["loginincorrect"]="Sorry, your login in details were incorrect.<br /><br />If you have forgotten your password,<br />use the link above to request a new one.";
 $lang["accountexpired"]="Your account has expired. Please contact the resources team.";
 $lang["useralreadyexists"]="An account with that e-mail or username already exists, changes not saved";
 $lang["ticktoemail"]="Tick to e-mail this user their username and password";
@@ -514,4 +514,7 @@ $lang["userlog"]="User Log";
 $lang["ipaddressrestriction"]="IP address restriction (optional)";
 $lang["format"]="Format";
 $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
+
+# New for 1.6
+$lang["newflag"]="NEW!";
 ?>

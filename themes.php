@@ -50,7 +50,9 @@ for ($n=0;$n<count($headers);$n++)
 			{
 			?>
 			<tr>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"><?=htmlspecialchars($themes[$m]["name"])?></a></div></td>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"><?=htmlspecialchars($themes[$m]["name"])?></a>
+			<? if ($flag_new_themes && (time()-strtotime($themes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?=$lang["newflag"]?></div><? } ?>
+			</div></td>
 			<td width="5%"><?=$themes[$m]["c"]?></td>
 			
 			<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>&bc_from=themes">&gt;&nbsp;<?=$lang["action-view"]?></a>

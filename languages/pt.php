@@ -455,4 +455,8 @@ $lang["statusandrelationships"]="Status e Relacionamentos";
 $lang["months"]=array("Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
 
 
+
+# New for 1.6
+$lang["newflag"]="NOVO!";
+
 ?>

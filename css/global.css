@@ -265,3 +265,5 @@ behavior: url(iepngfix.htc);
 .PDFnav {font-size: 4em; padding:6px;font-weight:bold;}
 .PDFnav:hover {text-decoration: none;}
 
+.NewFlag {display:inline;font-size:9px;margin-left:5px;padding:1px 3px 1px 3px;}
+

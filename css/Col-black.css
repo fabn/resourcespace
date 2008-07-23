@@ -92,3 +92,5 @@ a:active {color:#CCC;}
 .InfoTable {border-collapse:collapse;}
 .InfoTable tr {background-image: url(../gfx/black/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}
 .InfoTable td {border:1px solid #AAA;border-top:1px solid #FFF;padding:10px;}
+
+.NewFlag {background-color:#fff;color:#505050;}

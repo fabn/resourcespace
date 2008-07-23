@@ -7,19 +7,23 @@ include "include/collections_functions.php";
 
 $search=getvalescaped("search","");
 
-# Append extra search parameters
-$country=getvalescaped("country","");
-if ($country!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "country:" . $country;}
-$year=getvalescaped("year","");
-if ($year!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "year:" . $year;}
-$month=getvalescaped("month","");
-if ($month!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "month:" . $month;}
-$day=getvalescaped("day","");
-if ($day!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "day:" . $day;}
-
+# Append extra search parameters from the quick search.
+if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typicall expect numeric searches to return the resource with that ID and ignore country/date filters.
+	{
+	$country=getvalescaped("country","");
+	if ($country!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "country:" . $country;}
+	$year=getvalescaped("year","");
+	if ($year!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "year:" . $year;}
+	$month=getvalescaped("month","");
+	if ($month!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "month:" . $month;}
+	$day=getvalescaped("day","");
+	if ($day!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "day:" . $day;}
+	}
+	
 hook("searchstringprocessing");
 
 
+# Fetch and set the values
 if (strpos($search,"!")===false) {setcookie("search",$search);} # store the search in a cookie if not a special search
 $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}

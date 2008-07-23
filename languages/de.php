@@ -514,4 +514,8 @@ $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschr&auml;nkung (optional)";
 $lang["format"]="Format";
 $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
+
+
+# New for 1.6
+$lang["newflag"]="NEUE!";
 ?>
