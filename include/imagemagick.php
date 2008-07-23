@@ -63,12 +63,14 @@ $command=$command . " \"$target\"[0]  \"$target\"";
 
 /* ----------------------------------------
 	Try Microsoft OfficeOpenXML Format
+	Also try Micrsoft XPS... the sample document I've seen uses the same path for the preview, 
+	so it will likely work in most cases, but I think the specs allow it to go anywhere.
    ----------------------------------------
 */
-if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx"))
+if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($extension=="xps"))
 
 	{
-shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");
+shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $target;
 	}
 
 
