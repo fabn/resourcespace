@@ -132,36 +132,25 @@ if ($extension=="txt")
 global $ffmpeg_path; 
 if (isset($ffmpeg_path) && !isset($newfile)) 
         { 
-         $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
+        $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
          
-         if ($extension=="mxf")
-         	$command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 0 \"" . $target . "\""; 
+        if ($extension=="mxf")
+       	$command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 0 \"" . $target . "\""; 
          
         $output=shell_exec($command); 
         #exit($command . "<br>" . $output); 
         if (file_exists($target)) 
-
             {
-
             $newfile=$target;
-
-            
-
             global $ffmpeg_preview,$ffmpeg_preview_seconds;
 
             if ($ffmpeg_preview)
-
                 {
-
                 # Create a preview video (FLV)
-
                 $targetfile=myrealpath(get_resource_path($ref,"",false,"flv")); 
-
                 $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
-
                 $output=shell_exec($command); 
                 }
-
             } 
         } 
 
