@@ -247,4 +247,6 @@ $original_filenames_when_downloading=false;
 # Display a 'new' flag next to new themes (added < 1 month ago)
 $flag_new_themes=true;
 
+# Create file checksums? (experimental)
+$file_checksums=false;
 ?>

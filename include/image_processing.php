@@ -648,16 +648,20 @@ function extract_indd_thumb ($filename) {
  
 function generate_file_checksum($resource,$extension)
 	{
-	# Generates a unique checksum for the given file, based on the first 50K and the file size.
-	$path=get_resource_path($resource,"",false,$extension);
-	if (file_exists($path))
+	global $file_checksums;
+	if ($file_checksums)
 		{
-		# Fetch the string used to generate the unique ID
-		$use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
-		
-		# Generate the ID and store.
-		$checksum=md5($use);
-		sql_query("update resource set file_checksum='" . escape_check($checksum) . "' where ref='$resource'");
+		# Generates a unique checksum for the given file, based on the first 50K and the file size.
+		$path=get_resource_path($resource,"",false,$extension);
+		if (file_exists($path))
+			{
+			# Fetch the string used to generate the unique ID
+			$use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
+			
+			# Generate the ID and store.
+			$checksum=md5($use);
+			sql_query("update resource set file_checksum='" . escape_check($checksum) . "' where ref='$resource'");
+			}
 		}
 	}
 
