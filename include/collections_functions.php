@@ -2,13 +2,19 @@
 # Collections functions
 # Functions to manipulate collections
 
-function get_user_collections($user)
+
+function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetchrows=-1)
 	{
 	# Returns a list of user collections.
-	# Additionally, if the user hasn't got any collections, then create a default 'My Collection'.
-	#$list=sql_query("select c.*,u.username,count(r.resource) count from user u,collection c left outer join collection_resource r on c.ref=r.collection where u.ref=c.user and c.user='$user' group by c.ref union select c.*,u.username,count(r.resource) count from user_collection uc left join collection c on uc.collection=c.ref left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref where uc.user='$user' group by c.ref order by created;");
-	$list=sql_query("select * from (select c.*,u.username,count(r.resource) count from user u,collection c left outer join collection_resource r on c.ref=r.collection where u.ref=c.user and c.user='$user' and (length(c.theme)=0 or c.theme is null) group by c.ref union select c.*,u.username,count(r.resource) count from user_collection uc,collection c left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref where uc.collection=c.ref and uc.user='$user' and c.user<>'$user' and (length(c.theme)=0 or c.theme is null) group by c.ref) clist order by name='My Collection' desc,name");
-	return $list;
+
+	$sql="";
+	if (strlen($find)>1) {$sql="and name like '%$find%'";}
+	if (strlen($find)==1) {$sql="and name like '$find%'";}
+
+		if ($sql=="") {$sql=" ";} else {$sql.="  ";}
+   
+	return sql_query ("select * from (select c.*,u.username,count(r.resource) count from user u,collection c left outer join 		collection_resource r on c.ref=r.collection where u.ref=c.user and c.user='$user' and (length(c.theme)=0 or c.theme is null) $sql group by c.ref union select c.*,u.username,count(r.resource) count from user_collection uc,collection c left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref where uc.collection=c.ref and uc.user='$user' and c.user<>'$user' and (length(c.theme)=0 or c.theme is null) group by c.ref) clist order by $order_by $sort");
+	
 	}
 
 function get_collection($ref)
