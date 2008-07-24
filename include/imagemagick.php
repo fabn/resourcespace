@@ -171,12 +171,13 @@ if (!isset($newfile))
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
     
-   if (($extension=="pdf") || ($extension=="eps") || ($extension=="ai")) 
+   if (($extension=="pdf") || ($extension=="eps") || ($extension=="ai") || ($extension=="ps")) 
     	{
    	    # For EPS/PS/PDF files, use GS directly and allow multiple pages.
 		# EPS files are always single pages:
 		if ($extension=="eps") {$pdf_pages=1;}
 		if ($extension=="ai") {$pdf_pages=1;}
+		if ($extension=="ps") {$pdf_pages=1;}
 		# Locate ghostscript command
 		$gscommand= $ghostscript_path. "/gs";
 	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
