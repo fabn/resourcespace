@@ -128,7 +128,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?><tr>
 	<td><div class="ListTitle">
-   <a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>"><?=$collections[$n]["name"]?></a></div></td>
+	<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=$collections[$n]["name"]?></a></div></td>
 
 	<td><?=$collections[$n]["username"]?></td>
 	<td><?=$collections[$n]["ref"]?></td>
