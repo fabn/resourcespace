@@ -243,12 +243,12 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		else
 			{
 			# We're generating based on a new preview (scr) image.
-			$file=get_resource_path($ref,"scr",false,"jpg");	
+			$file=get_resource_path($ref,"tmp",false,"jpg");	
 			}
 
 		$sizes="";
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
-		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre'";}
+		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
 		# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
 		if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
@@ -671,7 +671,7 @@ function upload_preview($ref)
 
 	if (($extension!="jpg") && ($extension!="jpg")) {exit("Error: JPG file expected.");}
 	
-    $filepath=get_resource_path($ref,"scr",true,"jpg");
+    $filepath=get_resource_path($ref,"tmp",true,"jpg");
     $result=move_uploaded_file($processfile['tmp_name'], $filepath);
    	if ($result!=false) {chmod($filepath,0777);}
     
