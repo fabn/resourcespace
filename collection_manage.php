@@ -116,16 +116,14 @@ $atoz.="</div>";
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
-	$items=sql_query("select resource from collection_resource where collection = '".$collections[$n]['ref']."'");
-	$items=count($items);
 	?><tr>
 	<td><div class="ListTitle">
    <a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=$collections[$n]["name"]?></a></div></td>
 
-	<td><?=$collections[$n]["user"]?></td>
+	<td><?=$collections[$n]["username"]?></td>
 	<td><?=$collections[$n]["ref"]?></td>
 	<td><?=nicedate($collections[$n]["created"],true)?></td>
-	<td><?=$items?></td>
+	<td><?=$collections[$n]["count"]?></td>
 	<td><?=($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	
 	<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
