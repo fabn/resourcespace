@@ -1,8 +1,18 @@
 <? 
 global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages;
 
-$file=myrealpath(get_resource_path($ref,"",false,$extension)); 
-
+if (!$previewonly)
+	{
+	$file=myrealpath(get_resource_path($ref,"",false,$extension)); 
+	$target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
+	}
+else
+	{
+	# Use preview source/destination
+	$file=myrealpath(get_resource_path($ref,"tmp",false,$extension)); 
+	$target=myrealpath(get_resource_path($ref,"tmp",false,"jpg")); 
+	}
+	
 # Set up ImageMagick 
 putenv("MAGICK_HOME=" . $imagemagick_path); 
 putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
@@ -12,7 +22,6 @@ sql_query("update resource set has_image=0 where ref='$ref'");
 
 
 # Set up target file
-$target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
 if (file_exists($target)) {unlink($target);}
 
 
@@ -239,7 +248,7 @@ if (!isset($newfile))
 # If a file has been created, generate previews just as if a JPG was uploaded.
 if (isset($newfile))
 	{
-	create_previews($ref,false,"jpg");	
+	create_previews($ref,false,"jpg",$previewonly);	
 	}
-extract_exif_comment($ref,$extension);	
+if (!$previewonly) {extract_exif_comment($ref,$extension);}
 ?>

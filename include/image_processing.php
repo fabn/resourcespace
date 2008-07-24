@@ -243,7 +243,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		else
 			{
 			# We're generating based on a new preview (scr) image.
-			$file=get_resource_path($ref,"tmp",false,"jpg");	
+			$file=get_resource_path($ref,"tmp",false,$extension);	
 			}
 
 		$sizes="";
@@ -669,14 +669,16 @@ function upload_preview($ref)
     # Work out extension
     $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
 
-	if (($extension!="jpg") && ($extension!="jpg")) {exit("Error: JPG file expected.");}
-	
-    $filepath=get_resource_path($ref,"tmp",true,"jpg");
+	# Move uploaded file into position.	
+    $filepath=get_resource_path($ref,"tmp",true,$extension);
     $result=move_uploaded_file($processfile['tmp_name'], $filepath);
    	if ($result!=false) {chmod($filepath,0777);}
     
 	# Create previews
-	create_previews($ref,false,"jpg",true);
+	create_previews($ref,false,$extension,true);
+
+	# Delete temporary file.
+	unlink($filepath);
 
     return true;
     }}
