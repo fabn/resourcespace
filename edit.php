@@ -149,6 +149,12 @@ if (getval("tweak","")!="")
 		}
 	}
 
+# If requested, refresh the collection frame (for redirects from saves)
+if (getval("refreshcollectionframe","")!="")
+	{
+	refresh_collection_frame();
+	}
+
 include "include/header.php";
 ?>
 <div class="BasicsBox"> 
@@ -184,11 +190,19 @@ if ($multiple) { ?>
 
 <div class="Question">
 <label><? if ($resource["resource_type"]==1) {?><?=$lang["image"]?><?} elseif ($resource["resource_type"]==3) { ?><?=$lang["previewimage"]?><?} else {?><?=$lang["file"]?><?}?></label>
-<? if ($resource["has_image"]==1) { ?><img align="top" src="<?=get_resource_path($ref,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/>
-<? } elseif ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,"",false,$resource["file_extension"]))) . ")" ?></strong><? } ?>
+<div class="Fixed">
+<? if ($resource["has_image"]==1) { ?><img align="top" src="<?=get_resource_path($ref,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/><br />
+<? } 
+if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><? } ?>
 
 <a href="upload.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadafile"]?></a>
+<br />
+<a href="upload_preview.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadpreview"]?></a>
+
 </div>
+<div class="clearerleft"> </div>
+</div>
+
 <? if ($resource["has_image"]==1) { ?>
 <div class="Question">
 <label><?=$lang["imagecorrection"]?><br/><?=$lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">

@@ -517,4 +517,5 @@ $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
 # New for 1.6
 $lang["newflag"]="NEW!";
 $lang["link"]="Link";
+$lang["uploadpreview"]="Upload a preview image only";
 ?>

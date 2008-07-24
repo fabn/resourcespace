@@ -70,6 +70,12 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 
+# If requested, refresh the collection frame (for redirects from saves)
+if (getval("refreshcollectionframe","")!="")
+	{
+	refresh_collection_frame();
+	}
+
 # Update the hitcounts for the search keywords (if search specified)
 # (important we fetch directly from $_GET and not from a cookie
 $usearch=@$_GET["search"];

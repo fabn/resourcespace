@@ -224,10 +224,10 @@ function iptc_return_utf8($text)
 	return $text;
 	}
 	
-function create_previews($ref,$thumbonly=false,$extension="jpg")
+function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
 	{
 	# Always create file checksum (all types)
-	generate_file_checksum($ref,$extension);
+	if (!$previewonly) {generate_file_checksum($ref,$extension);}
 	if (($extension=="jpg") || ($extension=="jpeg") || ($extension=="png") || ($extension=="gif"))
  
 	# Create image previews for built-in supported file types only (JPEG, PNG, GIF)
@@ -235,11 +235,25 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
 		# Only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 		# Set thumbonly=true to (re)generate thumbnails only.
-		$file=get_resource_path($ref,"",false,$extension);	
+
+		if (!$previewonly)
+			{
+			$file=get_resource_path($ref,"",false,$extension);	
+			}
+		else
+			{
+			# We're generating based on a new preview (scr) image.
+			$file=get_resource_path($ref,"scr",false,"jpg");	
+			}
+
+		$sizes="";
+		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
+		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre'";}
+
 		# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
 		if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
 		
-		$ps=sql_query("select * from preview_size" . (($thumbonly)?" where id='thm' or id='col'":""));
+		$ps=sql_query("select * from preview_size $sizes");
 		for ($n=0;$n<count($ps);$n++)
 			{
 			# fetch target width and height
@@ -343,7 +357,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg")
 			}
 		# flag database so a thumbnail appears on the site
 		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
-		extract_exif_comment($ref,$extension);	
+		if (!$previewonly) {extract_exif_comment($ref,$extension);}
 		}
 	else
 		{
@@ -645,6 +659,26 @@ function generate_file_checksum($resource,$extension)
 		}
 	}
 
+if (!function_exists("upload_preview")){
+function upload_preview($ref)
+	{
+	# Upload a preview image only.
+	$processfile=$_FILES['userfile'];
+    $filename=strtolower(str_replace(" ","_",$processfile['name']));
+    
+    # Work out extension
+    $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
 
+	if (($extension!="jpg") && ($extension!="jpg")) {exit("Error: JPG file expected.");}
+	
+    $filepath=get_resource_path($ref,"scr",true,"jpg");
+    $result=move_uploaded_file($processfile['tmp_name'], $filepath);
+   	if ($result!=false) {chmod($filepath,0777);}
+    
+	# Create previews
+	create_previews($ref,false,"jpg",true);
+
+    return true;
+    }}
  
 ?>

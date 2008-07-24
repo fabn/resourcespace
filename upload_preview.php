@@ -14,11 +14,7 @@ $maxsize="200000000"; #200MB
 #handle posts
 if (array_key_exists("userfile",$_FILES))
     {
-   	# Log this			
-	daily_stat("Resource upload",$ref);
-	resource_log($ref,"u",0);
-
-	$status=upload_file($ref);
+	$status=upload_preview($ref);
 	redirect("edit.php?refreshcollectionframe=true&ref=" . $ref);
     }
     
@@ -27,7 +23,7 @@ include "include/header.php";
 
 <div class="BasicsBox"> 
 <h2>&nbsp;</h2>
-<h1><?=$lang["fileupload"]?></h1>
+<h1><?=$lang["uploadpreview"]?></h1>
 <p><?=text("introtext")?></p>
 
 <form method="post" class="form" enctype="multipart/form-data">
