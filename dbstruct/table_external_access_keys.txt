@@ -1,2 +1,3 @@
 resource,int(11),YES,MUL,,
 access_key,char(10),YES,,,
+user,int(11),YES,,,

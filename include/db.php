@@ -535,8 +535,11 @@ function daily_stat($activity_type,$object_ref)
 	# per day.
 	$date=getdate();$year=$date["year"];$month=$date["mon"];$day=$date["mday"];
 	
+
     # Set object ref to zero if not set.
+
     if ($object_ref=="") {$object_ref=0;}
+
     
 	# Find usergroup
 	global $usergroup;
@@ -559,8 +562,23 @@ function daily_stat($activity_type,$object_ref)
 function check_access_key($resource,$key)
 	{
 	# Verify a supplied external access key
-	$c=sql_value("select count(*) value from external_access_keys where resource='$resource' and access_key='$key'",0);
-	if ($c==0) {return false;} else {return true;}
+	$user=sql_value("select distinct user value from external_access_keys where resource='$resource' and access_key='$key'",0);
+	if ($user==0)
+		{
+		return false;
+		}
+	else
+		{
+		# "Emulate" the user that e-mailed the resource by setting the same group and permissions
+		global $usergroup,$userpermissions;
+		$userinfo=sql_query("select u.usergroup,g.permissions from user u join usergroup g on u.usergroup=g.ref where u.ref='$user'");
+		if (count($userinfo)>0)
+			{
+			$usergroup=$userinfo[0]["usergroup"];
+			$userpermissions=split(",",$userinfo[0]["permissions"]);
+			}
+		return true;
+		}
 	}
   
 function check_access_key_collection($collection,$key)

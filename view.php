@@ -58,18 +58,10 @@ if (checkperm("v"))
 	{
 	$access=0; # Permission to access all resources
 	}
-else
+elseif ($access==3)
 	{
-	if ($k!="")
-		{
-		#if ($access==3) {$access=2;} # Can't support custom group permissions for non-users
-		if ($access==3) {$access=0;}
-		}
-	elseif ($access==3)
-		{
-		# Load custom access level
-		$access=get_custom_access($ref,$usergroup);
-		}
+	# Load custom access level
+	$access=get_custom_access($ref,$usergroup);
 	}
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
@@ -268,8 +260,9 @@ if ($nodownloads || $counter==0)
 <br />
 <? hook ("resourceactions") ?>
 <? if ($k=="") { ?>
-<a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a>&nbsp;&nbsp;&nbsp;
+<a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a>&nbsp;&nbsp;
 <? if (checkperm("g") || checkperm("v")) { ?><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a>&nbsp;&nbsp;<? } ?>
+<a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a>&nbsp;&nbsp;
 <? if (checkperm("e" . $resource["archive"])) { ?><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a><? } ?>
 &nbsp;&nbsp;<a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a>
 <? } ?>
@@ -419,7 +412,7 @@ for ($n=0;$n<count($fields);$n++)
 
 <?
 # -------- Related Resources (must be able to search for this to work)
-if (checkperm("s")) {
+if (checkperm("s") && ($k=="")) {
 $result=do_search("!related" . $ref);
 if (count($result)>0) 
 	{
@@ -455,7 +448,7 @@ if (count($result)>0)
 	}
 
 
-if ($show_related_themes==true){
+if ($show_related_themes==true ){
 # -------- Public Collections / Themes
 $result=get_themes_by_resource($ref);
 if (count($result)>0) 

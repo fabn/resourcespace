@@ -252,7 +252,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
 	# Send them an e-mail linking to this collection
-	global $baseurl,$email_from,$applicationname,$lang;
+	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
 	$ulist=trim_array(explode(",",$userlist));
@@ -297,7 +297,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 			for ($m=0;$m<count($r);$m++)
 				{
 				# Add the key to each resource in the collection
-				sql_query("insert into external_access_keys(resource,access_key) values ('" . $r[$m] . "','$k');");
+				sql_query("insert into external_access_keys(resource,access_key,user) values ('" . $r[$m] . "','$k','$userref');");
 				}
 			$key="&k=". $k;
 			}

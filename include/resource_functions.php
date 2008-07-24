@@ -348,7 +348,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
 	# Send them an e-mail linking to this collection
-	global $baseurl,$email_from,$applicationname,$lang;
+	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
 	$ulist=trim_array(explode(",",$userlist));
@@ -368,7 +368,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			}
 		else
 			{
-			# Add e-mail address from user accunt
+			# Add e-mail address from user account
 			$emails[$n]=$email;
 			$key_required[$n]=false;
 			}
@@ -384,7 +384,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		if ($key_required[$n])
 			{
 			$k=substr(md5(time()),0,10);
-			sql_query("insert into external_access_keys(resource,access_key) values ('$resource','$k');");
+			sql_query("insert into external_access_keys(resource,access_key,user) values ('$resource','$k','$userref');");
 			$key="&k=". $k;
 			}
 
@@ -559,7 +559,8 @@ function write_metadata($path,$ref)
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
 		      if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
-				$filename = pathinfo($path);				$filename = $filename['basename'];	
+				$filename = pathinfo($path);
+				$filename = $filename['basename'];	
 				$tmpfile="filestore/tmp/".$filename;				
 				copy($path,$tmpfile);
 				

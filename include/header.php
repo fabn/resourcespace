@@ -126,7 +126,7 @@ else
 <? hook("headerbottom"); ?>
 
 <div class="clearer"></div>
-<? if (checkperm("s") && ($pagename!="search_advanced") && ($pagename!="preview") && ($pagename!="admin_header") && ($loginterms==false)) { ?>
+<? if (checkperm("s") && ($pagename!="search_advanced") && ($pagename!="preview") && ($pagename!="admin_header") && ($loginterms==false) && (!isset($k) || ($k==""))) { ?>
 <? include "searchbar.php"; ?>
 <? } ?>
 

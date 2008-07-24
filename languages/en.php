@@ -188,7 +188,7 @@ $lang["clearform"]="Clear Form";
 $lang["similarresources"]="similar resources"; # e.g. 17 similar resources
 $lang["similarresource"]="similar resource"; # e.g. 1 similar resource
 $lang["nosimilarresources"]="No similar resources";
-$lang["emailresource"]="E-mail Resource";
+$lang["emailresource"]="E-mail";
 $lang["resourcetitle"]="Resource Title";
 $lang["requestresource"]="Request Resource";
 $lang["viewmatchingresources"]="View matching resources";
@@ -212,7 +212,6 @@ $lang["jump"]="Jump";
 $lang["titleandcountry"]="Title / Country";
 $lang["torefineyourresults"]="To refine your results, try";
 $lang["verybestresources"]="The very best resources";
-$lang["emailresource"]="E-mail resource";
 $lang["addtocurrentcollection"]="Add to current collection";
 $lang["storyextract"]="Story Extract";
 $lang["addresource"]="Add Single Resource";
@@ -517,4 +516,5 @@ $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
 
 # New for 1.6
 $lang["newflag"]="NEW!";
+$lang["link"]="Link";
 ?>
