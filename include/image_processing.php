@@ -35,6 +35,10 @@ function upload_file($ref)
     # Store extension in the database
     sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
 
+	# get file metadata 
+    global $exiftool_path;
+    extract_exif_comment($ref,$extension);
+
 	# Store original filename in field, if set
 	global $filename_field;
 	if (isset($filename_field))
@@ -97,7 +101,6 @@ if (isset($exiftool_path))
 			#-fast avoids ScanforXMP if the filetype is a known one
 			$command.=")' -f -m -ScanforXMP -fast $image";
 			$metadata=shell_exec($command);
-			
 			if(isset($metadata)){
 			#the printed output is evaluated into a php array
 			eval('$'.'metadata_array=array'.$metadata.';');
@@ -357,7 +360,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 			}
 		# flag database so a thumbnail appears on the site
 		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
-		if (!$previewonly) {extract_exif_comment($ref,$extension);}
 		}
 	else
 		{
