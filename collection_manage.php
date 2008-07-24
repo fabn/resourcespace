@@ -7,8 +7,8 @@ include "include/collections_functions.php";
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
 $order_by=getvalescaped("order_by","name");
-$sort=getval("sort","DESC");
-$revsort = ($sort=="DESC") ? "ASC" : "DESC";
+$sort=getval("sort","ASC");
+$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
 $name=getvalescaped("name","");
