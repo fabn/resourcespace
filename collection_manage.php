@@ -128,7 +128,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?><tr>
 	<td><div class="ListTitle">
-   <a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=$collections[$n]["name"]?></a></div></td>
+   <a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>"><?=$collections[$n]["name"]?></a></div></td>
 
 	<td><?=$collections[$n]["username"]?></td>
 	<td><?=$collections[$n]["ref"]?></td>
@@ -137,7 +137,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?=($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	
 	<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
-	
+	&nbsp;<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
 	<? if (isset($zipcommand)) { ?>
 	&nbsp;<a href="collection_download.php?collection=<?=$collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?=$lang["action-download"]?></a>
