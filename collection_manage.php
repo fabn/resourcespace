@@ -66,7 +66,17 @@ include "include/header.php";
     <h2>&nbsp;</h2>
     <h1><?=$lang["managemycollections"]?></h1>
     <p class="tight"><?=text("introtext")?></p><br>
-
+<div class="BasicsBox">
+    <form method="post">
+		<div class="Question">
+			<div class="tickset">
+			 <div class="Inline"><input type=text name="find" id="find" value="<?=$find?>" maxlength="100" class="shrtwidth" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["search"]?>&nbsp;&nbsp;" /></div>
+			</div>
+			<div class="clearerleft"> </div>
+		</div>
+	</form>
+</div>
 <?
 
 $collections=get_user_collections($userref,$find,$order_by,$sort);
