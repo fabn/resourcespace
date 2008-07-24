@@ -106,6 +106,11 @@ function ProcessFolder($folder)
 				# Add title
 				update_field($r,8,str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath)));
 				
+				
+				# get file metadata 
+   				global $exiftool_path;
+    			extract_exif_comment($r,$extension);
+				
 				# Ensure folder is created, then create previews.
 				$temp=get_resource_path($r,"pre",true,$extension);	
 				create_previews($r,false,$extension);

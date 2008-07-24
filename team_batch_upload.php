@@ -62,7 +62,8 @@ for ($n=0;$n<count($uploadfiles);$n++)
     # Find and store extension in the database
     $extension=explode(".",$uploadfiles[$n]);$extension=trim(strtolower($extension[count($extension)-1]));
     sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
-   
+
+
 	$localpath=get_resource_path($ref,"",true,$extension);
 	
 	$result=false;
@@ -87,6 +88,10 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		flush();
     	create_previews($ref,false,$extension);
     	
+		# get file metadata 
+   		 global $exiftool_path;
+   		 extract_exif_comment($ref,$extension);
+
  	
 		# Store original filename in field, if set
 		if (isset($filename_field))
