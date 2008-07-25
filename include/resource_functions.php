@@ -351,6 +351,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
+	$userlist=resolve_userlist_groups($userlist);
 	$ulist=trim_array(explode(",",$userlist));
 	$emails=array();
 	$key_required=array();

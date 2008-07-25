@@ -413,7 +413,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
 
-function get_usergroups($usepermissions=false)
+function get_usergroups($usepermissions=false,$find="")
 	{
 	# Returns a list of user groups. Put anything starting with 'General Staff Users' at the top (e.g. General Staff)
 	$sql="";
@@ -423,6 +423,11 @@ function get_usergroups($usepermissions=false)
 		global $usergroup;
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		$sql.="(ref='$usergroup' or parent='$usergroup')";
+		}
+	if (strlen($find)>0)
+		{
+		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
+		$sql.="name like '%$find%'";
 		}
 	return sql_query("select * from usergroup $sql order by (name like 'General%') desc,name");
 	}
@@ -704,6 +709,7 @@ function bulk_mail($userlist,$subject,$text)
 	
 	# Attempt to resolve all users in the string $userlist to user references.
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
+	$userlist=resolve_userlist_groups($userlist);
 	$ulist=trim_array(explode(",",$userlist));
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 	if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
@@ -979,5 +985,33 @@ function get_breadcrumbs()
 		}
 		
 	return "You are here: " . $bc;
+	}
+	
+function resolve_userlist_groups($userlist)
+	{
+	# Given a comma separated user list (from the user select include file) turn all Group: entries into fully resolved list of usernames.
+	global $lang;
+	
+	$ulist=explode(",",$userlist);
+	$newlist="";
+	for ($n=0;$n<count($ulist);$n++)
+		{
+		$u=trim($ulist[$n]);
+		if (strpos($u,$lang["group"] . ": ")===0)
+			{
+			# Group entry, resolve
+			$u=trim(substr($u,strlen($lang["group"] . ": ")));
+			$users=sql_array("select u.username value from user u join usergroup g on u.usergroup=g.ref where g.name='$u'");
+			if ($newlist!="") {$newlist.=",";}
+			$newlist.=join(",",$users);
+			}
+		else
+			{
+			# Username, just add as-is
+			if ($newlist!="") {$newlist.=",";}
+			$newlist.=$u;
+			}
+		}
+	return $newlist;
 	}
 ?>

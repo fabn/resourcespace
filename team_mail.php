@@ -5,9 +5,15 @@ include "include/general.php";
 
 if (getval("send","")!="")
 	{
-	$result=bulk_mail(getvalescaped("userselect",""),getvalescaped("subject",""),getvalescaped("text",""));
+	$result=bulk_mail(getvalescaped("users",""),getvalescaped("subject",""),getvalescaped("text",""));
 	if ($result=="") {$error=$lang["emailsent"];} else {$error="!! " . $result . " !!";}
 	}
+
+# Include scriptaculous for auto-updating user search
+$headerinsert.="
+<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
+<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
+";
 
 include "include/header.php";
 ?>

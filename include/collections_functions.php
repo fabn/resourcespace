@@ -151,6 +151,7 @@ function save_collection($ref)
 		if (($users)!="")
 			{
 			# Build a new list and insert
+			$users=resolve_userlist_groups($users);
 			$ulist=array_unique(trim_array(explode(",",$users)));
 			$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 			sql_query("insert into user_collection(collection,user) values ($ref," . join("),(" . $ref . ",",$urefs) . ")");
@@ -255,6 +256,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
+	$userlist=resolve_userlist_groups($userlist);
 	$ulist=trim_array(explode(",",$userlist));
 	$emails=array();
 	$key_required=array();
@@ -425,4 +427,6 @@ function get_mycollection_name($userref)
 	# Tried nearly 500 names(!) so just return a standard name 
 	return $lang["mycollection"];
 	}
+	
+
 ?>

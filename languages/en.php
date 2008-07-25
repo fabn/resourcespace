@@ -130,7 +130,7 @@ $lang["multieditnotallowed"]="Mult-edit not allowed - all the resources are not 
 $lang["emailcollection"]="E-mail Collection";
 $lang["collectionname"]="Collection Name";
 $lang["collectionid"]="Collection ID";
-$lang["emailtousers"]="E-mail to users...";
+$lang["emailtousers"]="E-mail to users<br />(use e-mail addresses for non-users)";
 $lang["emailcollection"]="E-mail Collection";
 $lang["removecollectionareyousure"]="Are you sure you wish to remove this collection from your list?";
 $lang["managemycollections"]="Manage 'My Collections'";
@@ -518,4 +518,5 @@ $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
 $lang["newflag"]="NEW!";
 $lang["link"]="Link";
 $lang["uploadpreview"]="Upload a preview image only";
+$lang["starttypingusername"]="(start typing username / full name / group name)";
 ?>
