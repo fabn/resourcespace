@@ -87,7 +87,7 @@ else
 		
 		<ul>
 		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php" target="main"><?=$lang["home"]?></a></li><? }  ?>
-		
+		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/search_advanced.php" target="main"><?=$lang["search"]?></a></li><? }  ?>
 		<? if 	(
 			(checkperm("s"))
 		&&

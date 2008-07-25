@@ -249,4 +249,8 @@ $flag_new_themes=true;
 
 # Create file checksums? (experimental)
 $file_checksums=false;
+
+# Display the advanced search as a 'search' link in the top navigation
+$advanced_search_nav=false;
+
 ?>

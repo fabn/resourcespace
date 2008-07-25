@@ -347,7 +347,7 @@ function get_advanced_search_fields($archive=false)
 	{
 	# Returns a list of fields suitable for advanced searching.	
 	$return=array();
-	$fields=sql_query("select * from resource_type_field where keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
+	$fields=sql_query("select * from resource_type_field where advanced_search=1 and keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (checkperm("f*") || checkperm("f" . $fields[$n]["ref"])) {$return[]=$fields[$n];}
