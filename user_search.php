@@ -11,7 +11,7 @@ $find=getvalescaped("autocomplete_parameter","");
 <ul>
 <?
 $users=get_users(0,$find);
-for ($n=0;$n<count($users);$n++)
+for ($n=0;$n<count($users) && $n<=20;$n++)
 	{
 	$show=true;
 	if (checkperm("E") && ($users[$n]["groupref"]!=$usergroup) && ($users[$n]["groupparent"]!=$usergroup) && ($users[$n]["groupref"]!=$usergroupparent)) {$show=false;}
@@ -24,7 +24,7 @@ for ($n=0;$n<count($users);$n++)
 ?>
 <?
 $groups=get_usergroups(true,$find);
-for ($n=0;$n<count($groups);$n++)
+for ($n=0;$n<count($groups) && $n<=20;$n++)
 	{
 	$show=true;
 	if (checkperm("E") && ($groups[$n]["ref"]!=$usergroup) && ($groups[$n]["parent"]!=$usergroup) && ($groups[$n]["ref"]!=$usergroupparent)) {$show=false;}
