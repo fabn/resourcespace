@@ -238,9 +238,6 @@ $home_themes=true;
 $home_mycollections=true;
 $home_helpadvice=true;
 
-# Display a breadcrumbs trail (list of pages previously visited to aid navigation)
-$breadcrumbs=false;
-
 # Use original filename when downloading a file?
 $original_filenames_when_downloading=false;
 
@@ -252,5 +249,16 @@ $file_checksums=false;
 
 # Display the advanced search as a 'search' link in the top navigation
 $advanced_search_nav=false;
+
+
+
+#
+# ----------------- Development Items ---------------------
+#
+# The items below are under development. Functionality is incomplete. You are advised to leave these switched off.
+
+# Display a breadcrumbs trail (list of pages previously visited to aid navigation)
+$breadcrumbs=false;
+
 
 ?>

@@ -84,7 +84,11 @@ else
 
 
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">
-		
+
+<? if ($breadcrumbs) { ?>
+<div class="Breadcrumbs"><?=get_breadcrumbs()?></div>
+<? } ?>
+
 		<ul>
 		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php" target="main"><?=$lang["home"]?></a></li><? }  ?>
 		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/search_advanced.php" target="main"><?=$lang["search"]?></a></li><? }  ?>
@@ -139,7 +143,5 @@ else {$div="CentralSpace";}
 <? if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="user_request")) { ?><div id="CentralSpaceContainer"><? } ?>
 <div id="<?=$div?>">
 
-<? if ($breadcrumbs) { ?>
-<div class="Breadcrumbs"><?=get_breadcrumbs()?></div>
-<? } ?>
+
 
