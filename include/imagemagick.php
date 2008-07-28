@@ -96,8 +96,9 @@ if ($extension=="blend")
 
 	{
 shell_exec("blender -b $file -F JPEG -o $target -f 1");
+if (file_exists($target."0001.jpg")){
 copy($target."0001.jpg","$target");
-				$newfile = $target;
+$newfile = $target;}
 	}
 
 
