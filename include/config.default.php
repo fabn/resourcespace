@@ -179,7 +179,7 @@ $videotypes=array(3);
 # List of active plugins.
 # Note that multiple plugins must be specified within array() as follows:
 # $plugins=array("loader","rss","messaging","googledisplay"); 
-$plugins=array("");
+$plugins=array();
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
 # to the account with the username specified.
@@ -250,7 +250,8 @@ $file_checksums=false;
 # Display the advanced search as a 'search' link in the top navigation
 $advanced_search_nav=false;
 
-
+# Default group when adding new users;
+$default_group=2;
 
 #
 # ----------------- Development Items ---------------------

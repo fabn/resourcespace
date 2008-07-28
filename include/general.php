@@ -429,7 +429,8 @@ function get_usergroups($usepermissions=false,$find="")
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		$sql.="name like '%$find%'";
 		}
-	return sql_query("select * from usergroup $sql order by (name like 'General%') desc,name");
+	global $default_group;
+	return sql_query("select * from usergroup $sql order by (ref='$default_group') desc,name");
 	}
 	
 function get_user($ref)
