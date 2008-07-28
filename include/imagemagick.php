@@ -60,7 +60,6 @@ if ($extension=="indd")
 	hook("indesign");	
 	}
 
-
 /* ----------------------------------------
 	Try OpenDocument Format
    ----------------------------------------
@@ -89,20 +88,17 @@ shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $t
 
 
 /* ----------------------------------------
-	Try Adobe Mars for fun- the specification is not complete and it is not likely anyone uses the files 
-	for production purposes yet...but interestingly the pages will be SVG files.
+	Try Blender 3D. This runs Blender on the command line to render the first frame of the file.
    ----------------------------------------
 */
-if ($extension=="mars")
+
+if ($extension=="blend")
 
 	{
-shell_exec("unzip -p $file \"page/0/pg.svg\" > $target");
-$command=$command . " \"$target\"[0]  \"$target\""; 
-				$output=shell_exec($command); 
+shell_exec("blender -b $file -F JPEG -o $target -f 1");
+copy($target."0001.jpg","$target");
 				$newfile = $target;
 	}
-
-
 
 
 /* ----------------------------------------
