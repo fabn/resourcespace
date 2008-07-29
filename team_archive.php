@@ -14,7 +14,8 @@ include "include/header.php";
   
 	<div class="VerticalNav">
 	<ul>
-	
+	<li><a target="main" href="create.php?archive=2"><?=$lang["newarchiveresource"]?></a></li>
+
 	<li><a href="search_advanced.php?archive=2"><?=$lang["searcharchivedresources"]?></a></li>
 
 	<li><a href="search.php?search=<?=urlencode("!archivepending")?>"><?=$lang["viewresourcespendingarchive"]?></a></li>
