@@ -93,18 +93,20 @@ if ($size!="")
 	if ($path=="") {exit("Nothing to download.");}	
 	
 	# Create and send the zipfile
+	if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+	
 	$file="collection_" . $collection . "_" . $size . ".zip";
-	exec("$zipcommand /tmp/" . $file . $path);
-	$filesize=filesize("/tmp/" . $file);
+	exec("$zipcommand filestore/tmp/" . $file . $path);
+	$filesize=filesize("filestore/tmp/" . $file);
 	
 	header("Content-Disposition: attachment; filename=" . $file);
 	header("Content-Type: application/zip");
 	header("Content-Length: " . $filesize);
 	
 	set_time_limit(0);
-	echo file_get_contents("/tmp/" . $file);
+	echo file_get_contents("filestore/tmp/" . $file);
 	
-	unlink("/tmp/" . $file);
+	unlink("filestore/tmp/" . $file);
 	foreach($deletion_array as $tmpfile){delete_exif_tmpfile($tmpfile);}
 	exit();
 	}

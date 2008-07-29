@@ -525,5 +525,5 @@ $lang["feedbacknocomments"]="You have not left any comments for the resources in
 $lang["collectionfeedback"]="Collection Feedback";
 $lang["collectionfeedbackemail"]="You have received the following feedback:";
 $lang["feedbacksent"]="Your feedback has been sent.";
-$lang["newarchiveresource"]="New archive resource";
+$lang["newarchiveresource"]="New Archived Resource";
 ?>
