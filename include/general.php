@@ -159,18 +159,6 @@ function split_keywords($search,$index=false)
 	$search=str_replace("\\r"," ",$search);
 	$search=str_replace("\\n"," ",$search);
 
-	/*
-	# We used to 'clean' strings but this did not work for multiple languages.
-	# This became pointless anyway when splitting using multiple chars later on
-	# so this block has been commented.
-	$validchars=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789nueaeiou:,;-/";
-	$ns="";
-	for ($n=0;$n<strlen($search);$n++)
-		{
-		$c=substr($search,$n,1);
-		if (strpos($validchars,$c)!==false) {$ns.=$c;}
-		}
-	*/
 	$ns=trim_spaces($search);
 	if ((substr($ns,0,1)==",") ||  ($index==false && strpos($ns,":")!==false)) # special 'constructed' query type, split using comma so
 	# we support keywords with spaces.
@@ -719,11 +707,7 @@ function bulk_mail($userlist,$subject,$text)
 	$emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
 	for ($n=0;$n<count($emails);$n++)
 		{
-		//send_mail($emails[$n],$subject,str_replace("\\r\\n","\n",$text));
-		
-		//+ Camillo
 		send_mail($emails[$n],$subject,stripslashes(str_replace("\\r\\n","\n",$text)));
-		//- Camillo
 		}
 		
 	# Return an empty string (all OK).

@@ -470,7 +470,7 @@ function send_collection_feedback($collection,$comment)
 		{
 		$body.=$lang["user"] . ": " . $userfullname . "\n";
 		}
-	$body.=$lang["message"] . ": " . trim($comment);
+	$body.=$lang["message"] . ": " . stripslashes(str_replace("\\r\\n","\n",trim($comment)));
 
 	$f=get_collection_comments($collection);
 	for ($n=0;$n<count($f);$n++)
