@@ -160,7 +160,7 @@ a:active {text-decoration:underline;}
 .QuestionSubmit{	padding: 0.75em 0em 1em;margin-top: 1em;}
 .Question label, .QuestionSubmit label{	width: 150px;float: left;margin-top: 0.4em;}
 .Question .Lineup {margin: 3px 0px;}
-.Question .stdwidth{width: 300px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .stdwidth{width: 360px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .shrtwidth{width: 145px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .vshrtwidth{width: 93px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .Inline {float: left;margin: 3px 10px 0px 0px;}

@@ -55,7 +55,7 @@ for ($n=0;$n<count($headers);$n++)
 			</div></td>
 			<td width="5%"><?=$themes[$m]["c"]?></td>
 			
-			<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+			<td nowrap><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
 			
 			&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
 		

@@ -100,7 +100,7 @@ if (getval("submitted","")!="")
 				if (getval("swf","")!="")
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("upload_swf.php");}
+					if (getval("save","")!="") {redirect("upload_swf.php?collection_add=" . getval("collection_add",""));}
 					}
 				else
 					{
@@ -226,7 +226,7 @@ if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_e
 ?>
 <div class="Question">
 <label for="resourcetype"><?=$lang["resourcetype"]?></label>
-<select name="resource_type" id="resourcetype" class="shrtwidth" onChange="document.getElementById('mainform').submit();">
+<select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
 <?
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
@@ -236,6 +236,42 @@ for ($n=0;$n<count($types);$n++)
 ?></select>
 <div class="clearerleft"> </div>
 </div>
+
+<?
+# Batch uploads (SWF) - also ask which collection to add the resource to.
+?>
+<div class="Question">
+<label for="collection_add"><?=$lang["addtocollection"]?></label>
+<select name="collection_add" id="collection_add" class="stdwidth">
+<option value=""><?=$lang["batchdonotaddcollection"]?></option>
+<?
+$list=get_user_collections($userref);
+$currentfound=false;
+for ($n=0;$n<count($list);$n++)
+	{
+	if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
+	?>
+	<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
+	<?
+	}
+if (!$currentfound)
+	{
+	# The user's current collection has not been found in their list of collections (perhaps they have selected a theme to edit). Display this as a separate item.
+	$cc=get_collection($usercollection);
+	if ($cc!==false)
+		{
+		?>
+		<option value="<?=$usercollection?>"><?=htmlspecialchars($cc["name"])?></option>
+		<?
+		}
+	}
+?>
+</select>
+<div class="clearerleft"> </div>
+</div>
+
+
+
 <? } ?>
 
 <? } ?>
@@ -317,7 +353,7 @@ for ($n=0;$n<count($fields);$n++)
 		break;
 		
 		case 5: # -------- Larger text area entry
-		?><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="<?=$name?>" id="<?=$name?>"><?=htmlspecialchars($value)?></textarea><?
+		?><textarea class="stdwidth" rows=20 cols=80 name="<?=$name?>" id="<?=$name?>"><?=htmlspecialchars($value)?></textarea><?
 		break;
 		
 		case 2: # -------- Check box list

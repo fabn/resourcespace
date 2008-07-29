@@ -4,8 +4,10 @@ include "include/authenticate.php";
 include "include/general.php";
 include "include/image_processing.php";
 include "include/resource_functions.php";
+include "include/collections_functions.php";
 $status="";
 
+$collection_add=getvalescaped("collection_add","");
 
 #handle posts
 if (array_key_exists("Filedata",$_FILES))
@@ -16,6 +18,12 @@ if (array_key_exists("Filedata",$_FILES))
 		# New resource
 		$ref=copy_resource(0-$userref); # Copy from user template
 		
+		# Add to collection?
+		if ($collection_add!="")
+			{
+			add_resource_to_collection($ref,$collection_add);
+			}
+			
 		# Log this			
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
@@ -158,7 +166,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?=$baseurl?>/upload_swf.php?replace=<?=getval("replace","")?>&user=<?=urlencode($_COOKIE["user"])?>",
+		upload_url : "<?=$baseurl?>/upload_swf.php?replace=<?=getval("replace","")?>&collection_add=<?=$collection_add?>&user=<?=urlencode($_COOKIE["user"])?>",
 		flash_url : "<?=$baseurl?>/swfupload/swfupload_f9.swf",
 		
 
