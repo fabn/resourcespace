@@ -253,6 +253,11 @@ $advanced_search_nav=false;
 # Default group when adding new users;
 $default_group=2;
 
+# Enable 'custom' access level?
+# Allows fine-grained control over access to resources.
+# You may wish to disable this if you are using metadata based access control (search filter on the user group)
+$custom_access=true;
+
 #
 # ----------------- Development Items ---------------------
 #
@@ -260,6 +265,7 @@ $default_group=2;
 
 # Display a breadcrumbs trail (list of pages previously visited to aid navigation)
 $breadcrumbs=false;
+
 
 
 ?>

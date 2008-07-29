@@ -424,12 +424,12 @@ for ($n=0;$n<count($fields);$n++)
 	<label for="archive"><?=$lang["access"]?></label>
 	<select class="stdwidth" name="access" id="access" onChange="var c=document.getElementById('custom_access');if (this.value==3) {c.style.display='block';} else {c.style.display='none';}">
 	
-	<? for ($n=0;$n<=3;$n++) { ?>
+	<? for ($n=0;$n<=($custom_access?3:2);$n++) { ?>
 	<option value="<?=$n?>" <? if ($resource["access"]==$n) { ?>selected<? } ?>><?=$lang["access" . $n]?></option>
 	<? } ?>
 	</select>
 	<div class="clearerleft"> </div>
-	<table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<? if ($resource["access"]!=3) { ?>display:none;<? } ?>">
+	<table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<? if (!$custom_access || $resource["access"]!=3) { ?>display:none;<? } ?>">
 	<?
 	$groups=get_resource_custom_access($ref);
 	for ($n=0;$n<count($groups);$n++)

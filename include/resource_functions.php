@@ -533,6 +533,9 @@ function save_resource_custom_access($resource)
 	
 function get_custom_access($resource,$usergroup)
 	{
+	global $custom_access;
+	if ($custom_access==false) {return 0;} # Custom access disabled? Always return 'open' access for resources marked as custom.
+
 	return sql_value("select access value from resource_custom_access where resource='$resource' and usergroup='$usergroup'",2);
 	}
 	
