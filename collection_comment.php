@@ -1,6 +1,7 @@
 <?
 include "include/db.php";
-include "include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission denied.");}
+# External access support (authenticate only if no key provided, or if invalid access key provided)
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "include/authenticate.php";}
 include "include/general.php";
 include "include/collections_functions.php";
 include "include/resource_functions.php";
@@ -16,7 +17,7 @@ $comment=$commentdata["comment"];
 $rating=$commentdata["rating"];
 
 # Check access
-if (($userref!=$cinfo["user"]) && ($cinfo["allow_changes"]!=1) && (!checkperm("h"))) {exit("Access denied.");}
+if (!$cinfo["request_feedback"] && ($userref!=$cinfo["user"]) && ($cinfo["allow_changes"]!=1) && (!checkperm("h"))) {exit("Access denied.");}
 
 if (getval("save","")!="")
 	{
@@ -24,7 +25,15 @@ if (getval("save","")!="")
 	$comment=trim(getvalescaped("comment",""));
 	$rating=trim(getvalescaped("rating",""));
 	save_collection_resource_comment($ref,$collection,$comment,$rating);
-	redirect ("search.php?refreshcollectionframe=true&search=!collection" . $collection);
+	if ($k=="")
+		{
+		redirect ("search.php?refreshcollectionframe=true&search=!collection" . $collection);
+		}
+	else
+		{
+		# Stay on this page for external access users (no access to search)
+		refresh_collection_frame();
+		}
 	}
 
 
@@ -35,6 +44,7 @@ include "include/header.php";
 <p><?=$lang["collectioncommentsinfo"]?></p>
 <form method="post">
 <input type="hidden" name="ref" value="<?=$ref?>">
+<input type="hidden" name="k" value="<?=$k?>">
 <input type="hidden" name="collection" value="<?=$collection?>">
 
 <div class="Question">

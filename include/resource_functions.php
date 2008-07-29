@@ -509,7 +509,14 @@ function get_resource_type_name($type)
 function get_resource_custom_access($resource)
 	{
 	# Return a list of usergroups with the custom access level for resource $resource (if set)
-	return sql_query("select g.ref,g.name,g.permissions,c.access from usergroup g left outer join resource_custom_access c on g.ref=c.usergroup and c.resource='$resource' order by (g.permissions like '%v%') desc,g.name");
+	$sql="";
+	if (checkperm("E"))
+		{
+		# Restrict to this group and children groups only.
+		global $usergroup,$usergroupparent;
+		$sql="where g.parent='$usergroup' or g.ref='$usergroup' or g.ref='$usergroupparent'";
+		}
+	return sql_query("select g.ref,g.name,g.permissions,c.access from usergroup g left outer join resource_custom_access c on g.ref=c.usergroup and c.resource='$resource' $sql order by (g.permissions like '%v%') desc,g.name");
 	}
 	
 function save_resource_custom_access($resource)

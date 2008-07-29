@@ -92,7 +92,6 @@ if ($allow_reorder || $infobox)
 <body class="CollectBack" id="collectbody"<? if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<? } ?>>
 <?
 
-
 $add=getvalescaped("add","");
 if ($add!="")
 	{
@@ -195,6 +194,7 @@ top.document.getElementById("topframe").rows="*,3,33";
 $searches=get_saved_searches($usercollection);
 $result=do_search("!collection" . $usercollection);
 $cinfo=get_collection($usercollection);
+$feedback=$cinfo["request_feedback"];
 
 if ($thumbs=="show") { 
 # ---------------------------- Maximised view
@@ -211,6 +211,7 @@ if ($k!="")
   	<? if (isset($zipcommand)) { ?>
 	<a href="collection_download.php?collection=<?=$usercollection?>&k=<?=$k?>" target="main">&gt;&nbsp;<?=$lang["action-download"]?></a>
 	<? } ?>
+    <? if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a><? } ?>
 </div>
 <?
 } else {
@@ -250,6 +251,8 @@ if ($k!="")
     <? if (checkperm("v") || checkperm("g")) { ?><li><a href="collection_email.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["email"]?>&nbsp;&nbsp;</a><? } ?>
     
     <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$lang["edit"]?></a><? } ?>
+
+    <? if ($feedback) {?><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a><? } ?>
     
     </li><? } ?>
     <? } else {
@@ -343,9 +346,20 @@ if (count($result)>0)
 		/><? } ?></a></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
+	
+		<? if ($k!="" && $feedback) { # Allow feedback for external access key users
+		?>
+		<div class="CollectionPanelInfo">
+		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>&k=<?=$k?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
+		</div>
+		<? } ?>
+	
 		<? if ($k=="") { ?><div class="CollectionPanelInfo">
+		<? if (($feedback) || ($collection_reorder_caption && $allow_reorder)) { ?>
+		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
+		<? } ?>
+		
 		<? if ($collection_reorder_caption && $allow_reorder) { ?>
-		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<span class="IconRemove"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
 		<? } else { ?>

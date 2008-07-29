@@ -30,6 +30,21 @@ function get_collection($ref)
 			# If private, also return a list of users with access to this collection
 			$return["users"]=join(", ",sql_array("select u.username value from user u,user_collection c where u.ref=c.user and c.collection='$ref' order by u.username"));
 			}
+			
+		global $userref,$k;
+		$request_feedback=0;
+		if ($return["user"]!=$userref)
+			{
+			# If this is not the user's own collection, fetch the user_collection row so that the 'request_feedback' property can be returned.
+			$request_feedback=sql_value("select request_feedback value from user_collection where collection='$ref' and user='$userref'",0);
+			}
+		if ($k!="")
+			{
+			# If this is an external user (i.e. access key based) then fetch the 'request_feedback' value from the access keys table
+			$request_feedback=sql_value("select request_feedback value from external_access_keys where access_key='$k'",0);
+			}
+		
+		$return["request_feedback"]=$request_feedback;
 		return $return;}
 	}
 
@@ -95,7 +110,7 @@ function refresh_collection_frame()
 	{
 	global $headerinsert,$baseurl;
 	$headerinsert.="<script language=\"Javascript\">
-	top.collections.location.href=\"" . $baseurl . "/collections.php?nc=" . time() . "\";
+	top.collections.location.href=\"" . $baseurl . "/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
 	</script>";
 	}
 	
@@ -249,7 +264,7 @@ function get_smart_themes($field)
 	return $return;
 	}
 
-function email_collection($collection,$collectionname,$fromusername,$userlist,$message)
+function email_collection($collection,$collectionname,$fromusername,$userlist,$message,$feedback)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -261,6 +276,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	$ulist=trim_array(explode(",",$userlist));
 	$emails=array();
 	$key_required=array();
+	if ($feedback) {$feedback=1;} else {$feedback=0;}
 	
 	for ($n=0;$n<count($ulist);$n++)
 		{
@@ -275,7 +291,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 			}
 		else
 			{
-			# Add e-mail address from user accunt
+			# Add e-mail address from user account
 			$emails[$n]=$email;
 			$key_required[$n]=false;
 			}
@@ -283,8 +299,15 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 
 	# Add the collection to the user's My Collections page
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
-	if (count($urefs)>0) {sql_query("insert into user_collection(collection,user) values ($collection," . join("),(" . $collection . ",",$urefs) . ")");}
+	if (count($urefs)>0)
+		{
+		# Delete any existing collection entries
+		sql_query("delete from user_collection where collection='$collection' and user in ('" . join("','",$urefs) . "')");
 		
+		# Insert new user_collection row
+		sql_query("insert into user_collection(collection,user,request_feedback) values ($collection," . join(",'$feedback'),(" . $collection . ",",$urefs) . ",'$feedback')");
+		}
+	
 	# Send an e-mail to each resolved user
 
 	$subject="$applicationname: $collectionname";
@@ -300,7 +323,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 			for ($m=0;$m<count($r);$m++)
 				{
 				# Add the key to each resource in the collection
-				sql_query("insert into external_access_keys(resource,access_key,user) values ('" . $r[$m] . "','$k','$userref');");
+				sql_query("insert into external_access_keys(resource,access_key,user,request_feedback) values ('" . $r[$m] . "','$k','$userref','$feedback');");
 				}
 			$key="&k=". $k;
 			}
@@ -429,5 +452,46 @@ function get_mycollection_name($userref)
 	return $lang["mycollection"];
 	}
 	
+function get_collection_comments($collection)
+	{
+	return sql_query("select * from collection_resource where collection='$collection' and length(comment)>0 order by date_added");
+	}
+
+function send_collection_feedback($collection,$comment)
+	{
+	# Sends the feedback to the owner of the collection.
+	global $applicationname,$lang,$userfullname,$userref,$k;
+	
+	$cinfo=get_collection($collection);if ($cinfo===false) {exit("Collection not found");}
+	$user=get_user($cinfo["user"]);
+	$body=$lang["collectionfeedbackemail"] . "\n\n";
+	
+	if (isset($userfullname))
+		{
+		$body.=$lang["user"] . ": " . $userfullname . "\n";
+		}
+	$body.=$lang["message"] . ": " . trim($comment);
+
+	$f=get_collection_comments($collection);
+	for ($n=0;$n<count($f);$n++)
+		{
+		$body.="\n\n" . $lang["resourceid"] . ": " . $f[$n]["resource"];
+		$body.="\n" . $lang["comment"] . ": " . trim($f[$n]["comment"]);
+		$body.="\n" . $lang["rating"] . ": " . substr("**********",0,$f[$n]["rating"]);
+		}
+	
+	send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
+	
+	# Cancel the feedback request for this resource.
+	if (isset($userref))
+		{
+		sql_query("update user_collection set request_feedback=0 where collection='$collection' and user='$userref'");
+		}
+	else
+		{
+		sql_query("update external_access_keys set request_feedback=0 where access_key='$k'");
+		}
+	}
+
 
 ?>

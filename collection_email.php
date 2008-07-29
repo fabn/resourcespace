@@ -15,7 +15,8 @@ if (getval("save","")!="")
 	# Build a new list and insert
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
-	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message);
+	$feedback=getvalescaped("request_feedback","");	if ($feedback=="") {$feedback=false;} else {$feedback=true;}
+	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback);
 	if ($errors=="")
 		{
 		# Log this			
@@ -61,6 +62,14 @@ include "include/header.php";
 <div class="clearerleft"> </div>
 <? if ($errors!="") { ?><div class="FormError">!! <?=$errors?> !!</div><? } ?>
 </div>
+
+<? if ($collection["user"]==$userref) { # Collection owner can request feedback.
+?>
+<div class="Question">
+<label for="request_feedback"><?=$lang["requestfeedback"]?></label><input type=checkbox id="request_feedback" name="request_feedback" value="yes">
+<div class="clearerleft"> </div>
+</div>
+<? } ?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
