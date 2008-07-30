@@ -8,7 +8,7 @@
 <td><input type=button value="+" style="width:48px;" onClick="addUser();" /></td></tr>
 <tr><td colspan="2" align="left"><textarea rows=6 class="stdwidth" style="width:300px;" name="users" id="users"><? if (isset($userstring)) {echo $userstring;} ?></textarea></td></tr>
 </table>
-<div class="clearer"> </div>
+
 
 <div id="autocomplete_choices" class="autocomplete"></div>
 <script type="text/javascript">
