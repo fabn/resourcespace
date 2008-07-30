@@ -17,5 +17,5 @@ if ($theme=="greyblu") {$colour="446693";}
 ?>
 <object type="application/x-shockwave-flash" data="flashplayer/player_flv.swf" width="480" height="270" class="Picture">
      <param name="movie" value="flashplayer/player_flv.swf" />
-     <param name="FlashVars" value="flv=<?=$flashpath?>&amp;width=480&amp;height=270&amp;startimage=<?=$thumb?>&amp;margin=0&amp;buffer=10&amp;autoload=1&amp;showstop=1&amp;playercolor=<?=$colour?>" />
+     <param name="FlashVars" value="flv=<?=$flashpath?>&amp;width=480&amp;height=270&amp;margin=0&amp;buffer=10&amp;autoload=1&amp;showstop=1&amp;playercolor=<?=$colour?>" />
 </object>
