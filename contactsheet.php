@@ -213,7 +213,7 @@ relate_to_collection($newresource,$collection);
 else
 
 	#to browser
-	{$pdf->Output($collectiondata['name'].".pdf","I");}
+	{$pdf->Output($collectiondata['name'].".pdf","D");}
 
 
 ?>
