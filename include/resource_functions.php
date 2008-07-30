@@ -582,11 +582,11 @@ function write_metadata($path,$ref)
 					{
 					$field=explode(",",$write_to[$i]['exiftool_field']);
 					foreach ($field as $field){
-					$command.="-".$field."=\"".get_data_by_field($ref,$write_to[$i]['ref']) . "\" " ;}
+					$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;}
 					}
 			$command.=" $tmpfile";
  
-			$output=shell_exec($command) or die("problem writing metadata:". $output);
+			$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
 			return $tmpfile;
 			}
 		}
