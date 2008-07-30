@@ -211,7 +211,7 @@ if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($re
 			<p><?=$dpi_w?> cm x <?=$dpi_h?> cm @ 300dpi</p></td>
 			<td><?=$sizes[$n]["filesize"]?></td>
 			<!--<td><?=$sizes[$n]["filedown"]?></td>-->
-			<td class="DownloadButton HorizontalWhiteNav">
+			<td class="DownloadButton">
 			<a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>"><?=$lang["download"]?></a>
 			</td></tr>
 			<?
@@ -220,7 +220,7 @@ if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($re
 			{ 
 		 	# Add an extra line for previewing
 		 	?> 
-			<tr class="DownloadDBlend"><td><h2><?=$lang["preview"]?></h2><p><?=$lang["fullscreenpreview"]?></p></td><td><?=$sizes[$n]["filesize"]?></td><td class="DownloadButton HorizontalWhiteNav">
+			<tr class="DownloadDBlend"><td><h2><?=$lang["preview"]?></h2><p><?=$lang["fullscreenpreview"]?></p></td><td><?=$sizes[$n]["filesize"]?></td><td class="DownloadButton">
 			<a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["file_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>"><?=$lang["preview"]?></a>
 			</td>
 			</tr>
@@ -239,7 +239,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		<tr class="DownloadDBlend">
 		<td><h2><?=strtoupper($resource["file_extension"])?> <?=$lang["file"]?></h2></td>
 		<td><?=formatfilesize(filesize($path))?></td>
-		<td class="DownloadButton HorizontalWhiteNav"><a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>">Download</a></td>
+		<td class="DownloadButton"><a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>">Download</a></td>
 		</tr>
 		<?
 		}
@@ -256,7 +256,7 @@ if ($nodownloads || $counter==0)
 	<tr class="DownloadDBlend">
 	<td><h2><?=($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
 	<td>N/A</td>
-	<td class="DownloadButton HorizontalWhiteNav"><a href="resource_request.php?ref=<?=$ref?>"><?=$lang["request"]?></a></td>
+	<td class="DownloadButton"><a href="resource_request.php?ref=<?=$ref?>"><?=$lang["request"]?></a></td>
 	</tr>
 	<?
 	}

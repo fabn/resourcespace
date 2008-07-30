@@ -68,6 +68,7 @@ a:active {color:#CCC;}
 .RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #888;	color: #FFF;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #4F6D57 url(../gfx/black/interface/DownloadButton.gif);}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #888888;text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #FFFFFF;text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #111 url(../gfx/black/interface/DownloadCell.gif) repeat-x;}
 
 .ArchiveResourceTitle {color: #C2E066;}

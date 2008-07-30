@@ -70,8 +70,9 @@ a:active {color:#737373;}
 .RecordPanel .Title,  {	border-bottom: 1px solid #BBBBBB;}
 .RecordPanel .RecordDownload {background: #DCDCDC url(../gfx/whitegry/interface/Download.gif) repeat-x;	border: 1px solid #BBBBBB;}
 .RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #E2E2E2;color: #FFFFFF;}
-.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #8ab132 url(../gfx/whitegry/interface/DownloadButton.gif);}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #8ab132 url(../gfx/whitegry/interface/CollectBack.gif);background-position: 0 -8px;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #CCCCCC;text-align: left;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #FFFFFF;text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #979797 url(../gfx/whitegry/interface/DownloadCell.gif) repeat-x;	border-color: #6D6D6D;}
 .ArchiveResourceTitle {color: #C2E066;}
 .RecordStory{color: #000000;background: #FFFFFF url(../gfx/whitegry/interface/StoryShadow.gif) repeat-x;border-top: none;border-right: 1px solid #BBBBBB;border-bottom: 1px solid #BBBBBB;border-left: 1px solid #BBBBBB;}
