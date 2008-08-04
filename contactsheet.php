@@ -98,7 +98,7 @@ for ($n=0;$n<count($result);$n++)
 		if ($ref!==false)
 			{
 			# Find image
-			$imgpath = get_resource_path($ref,"thm",false,$preview_extension);
+			$imgpath = get_resource_path($ref,$imgsize,false,$preview_extension);
 			
 			if (!file_exists(myrealpath($imgpath))){
 			$resource=get_resource_data($ref);
