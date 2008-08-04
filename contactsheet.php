@@ -98,12 +98,13 @@ for ($n=0;$n<count($result);$n++)
 		if ($ref!==false)
 			{
 			# Find image
-			$imgpath = get_resource_path($ref,$imgsize,false,$preview_extension);
+			$imgpath = get_resource_path($ref,"thm",false,$preview_extension);
 			
-			if (!file_exists(myrealpath($imgpath)))
-				$imgpath=get_resource_path($ref,"thm",false,$preview_extension);
-
-			if (file_exists($imgpath) && ($preview_extension=="jpg" || $preview_extension=="jpeg"))
+			if (!file_exists(myrealpath($imgpath))){
+			$resource=get_resource_data($ref);
+				$imgpath="gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
+				
+			if (file_exists($imgpath))
 			{
 				
 				# Two ways to size image to cell, either by height or by width.
@@ -121,7 +122,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
 					}
 						
-						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,"jpg",$baseurl. "/?r=" . $ref),0,0);
+						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,$preview_extension,$baseurl. "/?r=" . $ref),0,0);
 					
 					}
 					
@@ -138,7 +139,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
 					}
 
-						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,"jpg",$baseurl. "/?r=" . $ref),0,0);
+						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,$preview_extension,$baseurl. "/?r=" . $ref),0,0);
 						
 					}
 			$n=$n++;
