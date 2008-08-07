@@ -85,43 +85,17 @@ if (isset($exiftool_path))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 		{
-			#creating the exiftool command which will output the metadata array
-			$command=$exiftool_path."/exiftool -p ' (";
 			
 			$read_from=get_exiftool_fields();
 			for($i=0;$i< count($read_from);$i++)
 				{
+				$command=$exiftool_path."/exiftool -p ";
 				$field=explode(",",$read_from[$i]['exiftool_field']);
 				foreach ($field as $field){
-				$command.="\"$".$field."\", " ;}
+				$command.="'$".$field."' -f -m -ScanforXMP -fast $image" ;}
+				$metadata=shell_exec($command);
+				if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],$metadata);}
 				}
-				
-			#-f and -m force empty output ("-") and avoid error messages	
-			#-ScanforXMP allows tags to be extracted for unrecognized filetypes (INDD)
-			#-fast avoids ScanforXMP if the filetype is a known one
-			$command.=")' -f -m -ScanforXMP -fast $image";
-			$metadata=shell_exec($command);
-			if(isset($metadata)){
-			#the printed output is evaluated into a php array
-			eval('$'.'metadata_array=array'.$metadata.';');
-	
-			#this is a rather complex double loop to account for the one-to-many relationship
-			
-			#j increases as all the read_from values are exhausted, so it allows 
-			#us to use all the values in the metadata array
-			$j=0;	
-			for($i=0;$i< count($read_from);$i++)
-				{
-				$field=explode(",",$read_from[$i]['exiftool_field']);			
-				foreach ($field as $field){		
-				#notice if two different values get mapped to the same field, the last one will be the winner
-				#but if a previous field has a value and a subsequent field is empty, 
-				#the one with the value should get entered into the database.
-				#files that have come from RS will have the same value for each anyway.
-				if (($metadata_array[$j]!="-") && ($metadata_array[$j]!="")){update_field($ref,$read_from[$i]['ref'],$metadata_array[$j]);}
-				$j++;}
-				}
-			}
 		}
 	}
 else
