@@ -170,7 +170,10 @@ function save_collection($ref)
 			$users=resolve_userlist_groups($users);
 			$ulist=array_unique(trim_array(explode(",",$users)));
 			$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
-			sql_query("insert into user_collection(collection,user) values ($ref," . join("),(" . $ref . ",",$urefs) . ")");
+			if (count($urefs)>0)
+				{
+				sql_query("insert into user_collection(collection,user) values ($ref," . join("),(" . $ref . ",",$urefs) . ")");
+				}
 			}
 		}
 		
