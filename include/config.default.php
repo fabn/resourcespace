@@ -221,6 +221,7 @@ $smallthumbs=true;
 
 # Install Exiftool and set this path to experiment with metadata-writing
 # $exiftool_path="/usr/local/bin";
+$exiftool_remove_existing=false; # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources.
 
 # Watermarking - generate watermark images for 'internal' (thumb/preview) images.
 # Groups with the 'w' permission will see these watermarks.

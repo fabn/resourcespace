@@ -82,6 +82,27 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 				$search.=$fields[$n]["name"] . ":" . $p;
 				}
 			break;
+
+			case 7: # -------- Category tree
+			$name="field_" . $fields[$n]["ref"];
+			$value=getvalescaped($name,"");
+			$selected=trim_array(explode(",",$value));
+			$p="";
+			for ($m=0;$m<count($selected);$m++)
+				{
+				if ($selected[$m]!="")
+					{
+					if ($p!="") {$p.=";";}
+					$p.=$selected[$m];
+					}
+				}
+			if ($p!="")
+				{
+				if ($search!="") {$search.=", ";}
+				$search.=$fields[$n]["name"] . ":" . $p;
+				}
+			break;
+
 			}
 		}
 		
@@ -114,6 +135,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		parent.document.getElementById("dosearch").value="<?=$lang["view"]?> <?=number_format($count)?> <?=$lang["matchingresources"]?>";
 		parent.document.getElementById("dosearch").disabled=false;
 		<? } ?>
+
 		</script>
 		</html>
 		<?
@@ -285,6 +307,11 @@ for ($n=0;$n<count($fields);$n++)
 			<?
 			}
 		?></tr></table><?
+		break;
+		
+		case 7: # ----- Category Tree
+		$options=$fields[$n]["options"];
+		include "include/category_tree.php";
 		break;
 		}
 	?>

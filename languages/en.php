@@ -526,4 +526,8 @@ $lang["collectionfeedback"]="Collection Feedback";
 $lang["collectionfeedbackemail"]="You have received the following feedback:";
 $lang["feedbacksent"]="Your feedback has been sent.";
 $lang["newarchiveresource"]="New Archived Resource";
+$lang["nocategoriesselected"]="No categories selected";
+$lang["showhidetree"]="Show/hide tree";
+$lang["clearall"]="Clear all";
+$lang["clearcategoriesareyousure"]="Are you sure you wish to clear all selected options?";
 ?>

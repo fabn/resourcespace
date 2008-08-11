@@ -564,7 +564,7 @@ function get_exiftool_fields()
 
 function write_metadata($path,$ref)
 	{
-	global $exiftool_path;
+	global $exiftool_path,$exiftool_remove_existing;
 	if (isset($exiftool_path))
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
@@ -577,12 +577,15 @@ function write_metadata($path,$ref)
 				
 				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
 				$command=$exiftool_path."/exiftool -overwrite_original ";
+				if (exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
 				$write_to=get_exiftool_fields();
 				for($i=0;$i< count($write_to);$i++)
 					{
 					$field=explode(",",$write_to[$i]['exiftool_field']);
-					foreach ($field as $field){
-					$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;}
+					foreach ($field as $field)
+						{
+						$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;
+						}
 					}
 			$command.=" $tmpfile";
  

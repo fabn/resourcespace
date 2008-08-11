@@ -365,7 +365,7 @@ for ($n=0;$n<count($fields);$n++)
 
 		# Value formatting
 		$value=i18n_get_translated($value);
-		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==30)) {$value=TidyList($value);}
+		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==3) || ($fields[$n]["type"]==7)) {$value=TidyList($value);}
 		$value=highlightkeywords(nl2br(htmlspecialchars($value)),$search);
 		
 		# draw new tab panel?

@@ -420,6 +420,12 @@ for ($n=0;$n<count($fields);$n++)
         <input type=text size=5 name="<?=$name?>-y" value="<?=$dy?>">
         <?
 		break;
+		
+		
+		case 7: # ----- Category Tree
+		$options=$fields[$n]["options"];
+		include "include/category_tree.php";
+		break;
 		}
 		?>
 		

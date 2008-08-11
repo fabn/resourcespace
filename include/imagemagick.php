@@ -141,7 +141,7 @@ if (isset($ffmpeg_path) && !isset($newfile))
             $newfile=$target;
             global $ffmpeg_preview,$ffmpeg_preview_seconds;
 
-            if ($ffmpeg_preview)
+            if ($ffmpeg_preview && $extension!="flv")
                 {
                 # Create a preview video (FLV)
                 $targetfile=myrealpath(get_resource_path($ref,"",false,"flv")); 
