@@ -1,4 +1,10 @@
 <? 
+#
+# This file contains the integration code with ImageMagick
+# It also contains integration code for those types that we need ImageMagick to be able to process
+# for example types that use GhostScript or FFmpeg.
+#
+
 global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages;
 
 if (!$previewonly)

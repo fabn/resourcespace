@@ -80,7 +80,7 @@ function save_resource_data($ref,$multi)
 			if (strlen($fields[$n]["resource_column"])>0)
 				{
 				if ($resource_sql!="") {$resource_sql.=",";}
-				$resource_sql.=$fields[$n]["resource_column"] . "='" . $val . "'";
+				$resource_sql.=$fields[$n]["resource_column"] . "='" . escape_check($val) . "'";
 				}
 			# Purge existing data and keyword mappings, decrease keyword hitcounts.
 			sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
@@ -208,13 +208,13 @@ function save_resource_data_multi($collection)
 					# the related columns on the resource table
 					if (strlen($fields[$n]["resource_column"])>0)
 						{
-						sql_query("update resource set " . $fields[$n]["resource_column"] . "='$val' where ref='$ref'");
+						sql_query("update resource set " . $fields[$n]["resource_column"] . "='" . escape_check($val) . "' where ref='$ref'");
 						}
 					# Purge existing data and keyword mappings, decrease keyword hitcounts.
 					sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 					
 					# Insert new data and keyword mappings, increase keyword hitcounts.
-					sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','$val')");
+					sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','" . escape_check($val) . "')");
 		
 					$oldval=$existing;
 					$newval=$val;
