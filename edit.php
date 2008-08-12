@@ -325,8 +325,12 @@ for ($n=0;$n<count($fields);$n++)
 		<label><?=$lang["editmode"]?></label>
 		<select id="modeselectinput_<?=$n?>" name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
 		<option value="RT"><?=$lang["replacealltext"]?></option>
+		<? if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5) { 
+		# Find and replace and append apply to text boxes only.
+		?>
 		<option value="FR"><?=$lang["findandreplace"]?></option>
 		<option value="AP"><?=$lang["appendtext"]?></option>
+		<? } ?>
 		</select>
 		</div>
 		

@@ -136,7 +136,7 @@ function save_resource_data_multi($collection)
 	# Loop through the field data and save (if necessary)
 	$list=get_collection_resources($collection);
 	$ref=$list[0];
-	$fields=get_resource_field_data($ref);
+	$fields=get_resource_field_data($ref,true);
 	
 	for ($n=0;$n<count($fields);$n++)
 		{
@@ -503,6 +503,8 @@ function get_resource_log($resource)
 	
 function get_resource_type_name($type)
 	{
+	global $lang;
+	if ($type==999) {return $lang["archive"];}
 	return i18n_get_translated(sql_value("select name value from resource_type where ref='$type'",""));
 	}
 	
