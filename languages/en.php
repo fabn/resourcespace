@@ -308,7 +308,7 @@ $lang["emailnotfound"]="The e-mail address specified could not be found";
 $lang["yourname"]="Your Name";
 $lang["youremailaddress"]="Your E-mail Address";
 $lang["sendreminder"]="Send Reminder";
-$lang["passwordreminder"]="Password Reminder";
+$lang["passwordreminder"]="New Password";
 $lang["requestuserlogin"]="Request User Login";
 
 # Research request
