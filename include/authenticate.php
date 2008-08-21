@@ -49,7 +49,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         if (strlen(trim($userdata[0]["last_active"]))>0)
         	{
 	        $last_active=time()-strtotime($userdata[0]["last_active"]);
-	        if ($last_active>(30*60)) # Last active more than 30 mins ago? This is a new session.
+	        if ($last_active>(30*60)) # Last active more than 30 mins ago? This is a new 'session' for the purposes of statistics.
 	        	{
 	        	#Log this
 				daily_stat("User session",$userref);
