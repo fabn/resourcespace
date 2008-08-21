@@ -579,7 +579,7 @@ function write_metadata($path,$ref)
 				
 				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
 				$command=$exiftool_path."/exiftool -overwrite_original ";
-				if (exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
+				if ($exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
 				$write_to=get_exiftool_fields();
 				for($i=0;$i< count($write_to);$i++)
 					{
