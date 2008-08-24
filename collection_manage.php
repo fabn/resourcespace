@@ -149,7 +149,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 
 	<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_email.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a><?}?>
 	
-	<? if ($username!=$collections[$n]["name"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-remove"]?></a><?}?>
+	<? if ($username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-remove"]?></a><?}?>
 
 	<? if ((($username==$collections[$n]["name"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-delete"]?></a><?} ?>
 
