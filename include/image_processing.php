@@ -94,7 +94,7 @@ if (isset($exiftool_path))
 				foreach ($field as $field){
 				$command.="'$".$field."' -f -m -ScanforXMP -fast $image" ;}
 				$metadata=shell_exec($command);
-				if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],$metadata);}
+				if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata));}
 				}
 		}
 	}

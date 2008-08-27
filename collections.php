@@ -11,6 +11,7 @@ include "include/search_functions.php";
 
 # Hide/show thumbs
 $thumbs=getval("thumbs",$thumbs_default);
+if ($k!="") {$thumbs="show";} # Always show thumbnails for external user access.
 setcookie("thumbs",$thumbs);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
