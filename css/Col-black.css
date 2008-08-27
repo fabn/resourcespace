@@ -62,7 +62,7 @@ a:active {color:#CCC;}
 
 .Question{border-top: 1px solid #555;}
 
-.RecordPanel {background: #595959 url(../gfx/black/interface/recordpanel.gif) repeat-x;border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
+.RecordPanel {background: #505050 url(../gfx/black/interface/recordpanel.gif) repeat-x;border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
 .RecordPanel .Title {	border-bottom: 1px solid #AAA;}
 .RecordPanel .RecordDownload {border-top: 1px solid #FFFFFF;border-right: 1px solid #AAAAAA;border-bottom: 1px solid #AAAAAA;	border-left: 1px solid #AAAAAA;background: #708DB4 url(../gfx/black/interface/Download.gif) repeat-x;}
 .RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #888;	color: #FFF;}
