@@ -65,10 +65,10 @@ for ($n=0;$n<count($headers);$n++)
 			<? } ?>
 			
 			<? if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=strtolower($lang["contactsheet"])?></a>
+			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
 			<? } ?>
 		
-			<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_email.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["action-email"]?></a><?}?>
+			<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_share.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
 		
 			<? if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
 		
