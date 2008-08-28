@@ -321,13 +321,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 		# Do we need to add an external access key for this user (e-mail specified rather than username)?
 		if ($key_required[$n])
 			{
-			$k=substr(md5(time()),0,10);
-			$r=get_collection_resources($collection);
-			for ($m=0;$m<count($r);$m++)
-				{
-				# Add the key to each resource in the collection
-				sql_query("insert into external_access_keys(resource,access_key,user,request_feedback) values ('" . $r[$m] . "','$k','$userref','$feedback');");
-				}
+			$k=generate_collection_access_key($collection,$feedback);
 			$key="&k=". $k;
 			}
 		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $baseurl . 	"/?c=" . $collection . $key;
@@ -338,6 +332,20 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	return "";
 	}
 
+function generate_collection_access_key($collection,$feedback=0)
+	{
+	# For each resource in the collection, create an access key so an external user can access each resource.
+	global $userref;
+	$k=substr(md5($collection . "," . time()),0,10);
+	$r=get_collection_resources($collection);
+	for ($m=0;$m<count($r);$m++)
+		{
+		# Add the key to each resource in the collection
+		sql_query("insert into external_access_keys(resource,access_key,user,request_feedback) values ('" . $r[$m] . "','$k','$userref','$feedback');");
+		}
+	return $k;
+	}
+	
 function get_saved_searches($collection)
 	{
 	return sql_query("select * from collection_savedsearch where collection='$collection' order by created");

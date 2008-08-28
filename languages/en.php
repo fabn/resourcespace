@@ -530,4 +530,11 @@ $lang["nocategoriesselected"]="No categories selected";
 $lang["showhidetree"]="Show/hide tree";
 $lang["clearall"]="Clear all";
 $lang["clearcategoriesareyousure"]="Are you sure you wish to clear all selected options?";
+$lang["share"]="Share";
+$lang["sharecollection"]="Share Collection";
+$lang["generateurl"]="Generate URL";
+$lang["generateurlinternal"]="The below URL will work for existing users only.";
+$lang["generateurlexternal"]="The below URL will work for everyone and does not require a login. <strong>Note that if further resources are added to the collection then for security reasons this URL will no longer work and a new URL must be generated.</strong>";
+
+
 ?>
