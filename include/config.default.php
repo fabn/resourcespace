@@ -7,9 +7,9 @@ $mysql_db="resourcespace";			# MySQL database name
 
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
-$baseurl="http://my.site.net/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
-$email_from="resourcespace@my.site.net"; # Where e-mails appear to come from
-$email_notify="resourcespace@my.site.net"; # Where resource/research/user requests are sent
+$baseurl="http://my.site/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
+$email_from="resourcespace@my.site"; # Where e-mails appear to come from
+$email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 
 include "version.php";
