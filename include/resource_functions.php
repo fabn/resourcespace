@@ -602,4 +602,40 @@ function delete_exif_tmpfile($tmpfile)
 	if(file_exists($tmpfile)){unlink ($tmpfile);}
 }
 
+function import_resource($path,$type,$title)
+	{
+	# Import the resource at the given path
+	# This is used by staticsync.php and Camillo's SOAP API
+	# Note that the file will be used at it's present location and will not be copied.
+
+	# Create resource
+	$r=create_resource($type);
+			
+	# Work out extension
+	$extension=explode(".",$path);$extension=trim(strtolower($extension[count($extension)-1]));
+
+	# Store extension/data in the database
+	sql_query("update resource set archive=0,file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
+			
+	# Store original filename in field, if set
+	global $filename_field;
+	if (isset($filename_field))
+		{
+		update_field($r,$filename_field,$path);
+		}
+	# Add title
+	update_field($r,8,$title);
+	
+	# get file metadata 
+	global $exiftool_path;
+	extract_exif_comment($r,$extension);
+	
+	# Ensure folder is created, then create previews.
+	$temp=get_resource_path($r,"pre",true,$extension);	
+	create_previews($r,false,$extension);
+
+	# Pass back the newly created resource ID.
+	return $r;
+	}
+
 ?>

@@ -70,7 +70,7 @@ function ProcessFolder($folder)
 					# Make a new collection for this folder.
 					$e=explode("/",$shortpath);
 					$theme=ucwords($e[0]);
-					$name=$e[count($e)-2];
+					$name=(count($e)==1?"":$e[count($e)-2]);
 					echo "\nCollection $name, theme=$theme";
 					$collection=sql_value("select ref value from collection where name='" . escape_check($name) . "' and theme='" . escape_check($theme) . "'",0);
 					if ($collection==0)
@@ -87,33 +87,14 @@ function ProcessFolder($folder)
 				elseif (($extension=="flv")) {$type=4;} 
 				else {$type=1;}
 				
-				# Add this file
-				$r=create_resource($type);
+				# Formulate a title
+				$title=str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath));
+				
+				# Import this file
+				$r=import_resource($shortpath,$type,$title);
 				
 				# Add to collection
 				sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
-				
-					
-				# Store extension/data in the database
-				sql_query("update resource set archive=0,file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
-			
-				# Store original filename in field, if set
-				global $filename_field;
-				if (isset($filename_field))
-					{
-					update_field($r,$filename_field,$shortpath);
-					}
-				# Add title
-				update_field($r,8,str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath)));
-				
-				
-				# get file metadata 
-   				global $exiftool_path;
-    			extract_exif_comment($r,$extension);
-				
-				# Ensure folder is created, then create previews.
-				$temp=get_resource_path($r,"pre",true,$extension);	
-				create_previews($r,false,$extension);
 				}
 			else
 				{
@@ -141,8 +122,6 @@ function ProcessFolder($folder)
 
 # Recurse through the folder structure.
 ProcessFolder($syncdir);
-
-#ProcessFolder("/danbank/wwwroot/photobrowser/map/hdvids");
 
 echo "...done. Looking for deleted files...";
 # For all resources with filepaths, check they still exist and archive if not.
