@@ -89,6 +89,7 @@ function ProcessFolder($folder)
 				
 				# Formulate a title
 				$title=str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath));
+				$title=ucfirst(str_replace("_"," ",$title));
 				
 				# Import this file
 				$r=import_resource($shortpath,$type,$title);
