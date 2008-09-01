@@ -123,12 +123,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		return sql_query("select r.*,r.hit_count score from resource r $custperm where has_image=1 and left(colour_key,4)='" . substr(str_replace("!colourkey","",$search),0,4) . "' and $filter group by r.ref",false,$fetchrows);
 		}
-	
+
+	global $config_search_for_number;
+	if ($config_search_for_number)
+	{	
 	# Searching for a number - return just the matching resource
 	if (is_numeric($search)) 
 		{
 		return sql_query("select r.*,r.hit_count score from resource r $custperm where ref='$search' and $filter group by r.ref");
 		}
+	}
 	
 	# Searching for pending archive
 	if ($search=="!archivepending")

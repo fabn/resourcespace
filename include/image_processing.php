@@ -341,7 +341,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		global $imagemagick_path,$ghostscript_path;
 		if (isset($imagemagick_path))
 			{
-			include "include/imagemagick.php";
+			//include "include/imagemagick.php";
+			include(dirname(__FILE__)."/imagemagick.php");
 			}
 		}
 	return true;

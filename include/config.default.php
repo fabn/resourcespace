@@ -95,7 +95,7 @@ $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=be
 # $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
-$ffmpeg_preview=true; 
+$ffmpeg_preview=false; 
 $ffmpeg_preview_seconds=20; # how many seconds to preview
 
 
@@ -258,6 +258,9 @@ $default_group=2;
 # Allows fine-grained control over access to resources.
 # You may wish to disable this if you are using metadata based access control (search filter on the user group)
 $custom_access=true;
+
+# If true: if search keyword is numeric then search for resource id
+$config_search_for_number=true;
 
 #
 # ----------------- Development Items ---------------------
