@@ -133,7 +133,7 @@ if ($extension=="txt")
    ----------------------------------------
 */
 global $ffmpeg_path; 
-if (isset($ffmpeg_path) && !isset($newfile)) 
+if (isset($ffmpeg_path) && !isset($newfile) && $extension!="tiff" && $extension!="tif") 
         { 
         $command=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
          

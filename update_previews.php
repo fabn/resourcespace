@@ -14,7 +14,7 @@ include "include/resource_functions.php";
 $max=sql_value("select max(ref) value from resource",0);
 $ref=getvalescaped("ref",1);
 
-$resourceinfo=sql_query("select ref,file_extension from resource where has_image=1 and ref='$ref'");
+$resourceinfo=sql_query("select ref,file_extension from resource where ref='$ref'");
 if (count($resourceinfo)>0)
 	{
 	create_previews($ref,false,$resourceinfo[0]["file_extension"]);
@@ -27,7 +27,7 @@ else
 	echo "Skipping $ref";
 	}
 
-if ($ref<$max)
+if ($ref<$max && getval("only","")=="")
 	{
 	?>
 	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/update_previews.php?ref=<?=$ref+1?>"/>
