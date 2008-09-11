@@ -241,7 +241,7 @@ function get_theme_headers($theme1="",$theme2="")
 	$themes=sql_query("select * from collection where public=1 and $selecting is not null and length($selecting)>0 $sql order by $selecting");
 	for ($n=0;$n<count($themes);$n++)
 		{
-		if ((!in_array($themes[$n][$selecting],$return)) && (checkperm("j*") || checkperm("j" . $themes[$n][$selecting]))) {$return[]=$themes[$n][$selecting];}
+		if ((!in_array($themes[$n][$selecting],$return)) && (checkperm("j*") || checkperm("j" . $themes[$n]["theme"]))) {$return[]=$themes[$n][$selecting];}
 		}
 	return $return;
 	}
