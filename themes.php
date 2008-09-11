@@ -31,7 +31,7 @@ if ($theme_category_levels>1)
 	<?
 	if ($theme=="")
 		{
-		?><option value=""><?=$lang["selectthemecategory"]?></option><?
+		?><option value=""><?=$lang["select"]?></option><?
 		}
 	
 	# Level 1 headers

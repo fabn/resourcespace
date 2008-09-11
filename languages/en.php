@@ -536,6 +536,5 @@ $lang["generateurl"]="Generate URL";
 $lang["generateurlinternal"]="The below URL will work for existing users only.";
 $lang["generateurlexternal"]="The below URL will work for everyone and does not require a login. <strong>Note that if further resources are added to the collection then for security reasons this URL will no longer work and a new URL must be generated.</strong>";
 $lang["archive"]="Archive";
-$lang["selectthemecategory"]="Select theme category...";
 
 ?>
