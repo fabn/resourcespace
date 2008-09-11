@@ -130,6 +130,13 @@ $enable_themes=true;
 # Use the themes page as the home page?
 $use_theme_as_home=false;
 
+# Show images along with theme category headers (image selected is the most popular within the theme category)
+$theme_images=true;
+
+# How many levels of theme category to show.
+# If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
+$theme_category_levels=1;
+
 # Display a 'Recent' link in the top navigation (goes to View New Material)
 # Removes the 'view new material' link from the simple search bar.
 $recent_link=true;
@@ -146,8 +153,7 @@ $terms_login=false;
 # In the collection frame, show or hide thumbnails by default? ("hide" is better if collections are not going to be heavily used).
 $thumbs_default="show";
 
-# Show images along with theme category headers (image selected is the most popular within the theme category)
-$theme_images=true;
+
 
 # How many results per page? (default)
 $default_perpage=48;

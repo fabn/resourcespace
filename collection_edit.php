@@ -68,10 +68,12 @@ include "include/header.php";
 
 <? } else { 
 if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can publish public collections as themes.
+
+# Theme category level 1
 ?>
 <div class="Question">
-<label for="theme"><?=$lang["themecategory"]?></label>
-<select class="stdwidth" name="theme" id="theme"><option value=""><?=$lang["select"]?></option>
+<label for="theme"><?=$lang["themecategory"] . (($theme_category_levels>1)?"1":"")?></label>
+<select class="stdwidth" name="theme" id="theme" <? if ($theme_category_levels>1) { ?>onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();"<? } ?>><option value=""><?=$lang["select"]?></option>
 <? $themes=get_theme_headers(); for ($n=0;$n<count($themes);$n++) { ?>
 <option <? if ($collection["theme"]==$themes[$n]) { ?>selected<? } ?>><?=$themes[$n]?></option>
 <? } ?>
@@ -82,6 +84,45 @@ if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can
 <div class="clearerleft"> </div>
 </div>
 <? 
+
+# Theme category level 2
+if ($theme_category_levels>=2)
+	{
+	?>
+	<div class="Question">
+	<label for="theme2"><?=$lang["themecategory"] . " 2" ?></label>
+	<select class="stdwidth" name="theme2" id="theme2" <? if ($theme_category_levels>2) { ?>onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();"<? } ?>><option value=""><?=$lang["select"]?></option>
+	<? $themes=get_theme_headers($collection["theme"]); for ($n=0;$n<count($themes);$n++) { ?>
+	<option <? if ($collection["theme2"]==$themes[$n]) { ?>selected<? } ?>><?=$themes[$n]?></option>
+	<? } ?>
+	</select>
+	<div class="clearerleft"> </div>
+	<label><?=$lang["newcategoryname"]?></label>
+	<input type=text class=stdwidth name="newtheme2" id="newtheme2" value="" maxlength="100"><br/>
+	<div class="clearerleft"> </div>
+	</div>
+	<?
+	}
+
+# Theme category level 3
+if ($theme_category_levels>=3)
+	{
+	?>
+	<div class="Question">
+	<label for="theme3"><?=$lang["themecategory"] . " 3"?></label>
+	<select class="stdwidth" name="theme3" id="theme3"><option value=""><?=$lang["select"]?></option>
+	<? $themes=get_theme_headers($collection["theme"],$collection["theme2"]); for ($n=0;$n<count($themes);$n++) { ?>
+	<option <? if ($collection["theme3"]==$themes[$n]) { ?>selected<? } ?>><?=$themes[$n]?></option>
+	<? } ?>
+	</select>
+	<div class="clearerleft"> </div>
+	<label><?=$lang["newcategoryname"]?></label>
+	<input type=text class=stdwidth name="newtheme3" id="newtheme3" value="" maxlength="100"><br/>
+	<div class="clearerleft"> </div>
+	</div>
+	<?
+	}
+
 } else {
 ?>
 <input type=hidden name="theme" value="<?=$collection["theme"]?>">
