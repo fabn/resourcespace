@@ -38,19 +38,19 @@ if ($theme_category_levels>1)
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		$value=htmlspecialchars($headers[$n]);
+		$value=($headers[$n]);
 		?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?>><?=$headers[$n]?></option><?
 		# Level 2 headers
 		$headers2=get_theme_headers($headers[$n]);
 		for ($m=0;$m<count($headers2);$m++)
 			{
-			$value=htmlspecialchars($headers[$n] . ";;" . $headers2[$m]);
+			$value=($headers[$n] . ";;" . $headers2[$m]);
 			?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?> >&nbsp;&nbsp;&nbsp;&#746;&nbsp;<?=$headers2[$m]?></option><?
 			# Level 3 headers
 			$headers3=get_theme_headers($headers[$n],$headers2[$m]);
 			for ($o=0;$o<count($headers3);$o++)
 				{
-				$value=htmlspecialchars($headers[$n] . ";;" . $headers2[$m] . ";;" . $headers3[$o]);
+				$value=($headers[$n] . ";;" . $headers2[$m] . ";;" . $headers3[$o]);
 				?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#746;&nbsp;<?=$headers3[$o]?></option><?
 				}
 			}
