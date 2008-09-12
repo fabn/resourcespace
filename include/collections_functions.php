@@ -139,13 +139,13 @@ function remove_collection($user,$collection)
 function save_collection($ref)
 	{
 	$theme=getvalescaped("theme","");
-	if (getval("newtheme","")!="") {$theme=getvalescaped("newtheme","");}
+	if (getval("newtheme","")!="") {$theme=trim(getvalescaped("newtheme",""));}
 
 	$theme2=getvalescaped("theme2","");
-	if (getval("newtheme2","")!="") {$theme2=getvalescaped("newtheme2","");}
+	if (getval("newtheme2","")!="") {$theme2=trim(getvalescaped("newtheme2",""));}
 
 	$theme3=getvalescaped("theme3","");
-	if (getval("newtheme3","")!="") {$theme3=getvalescaped("newtheme3","");}
+	if (getval("newtheme3","")!="") {$theme3=trim(getvalescaped("newtheme3",""));}
 	
 	$allow_changes=(getval("allow_changes","")!=""?1:0);
 	
