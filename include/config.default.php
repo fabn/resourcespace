@@ -180,6 +180,9 @@ $speedtaggingfield=1;
 # A list of types which get the extra video icon in the search results
 $videotypes=array(3);
 
+# Sets the default colour theme (defaults to blue)
+$defaulttheme="greyblu";
+
 # Uncomment and set the next line to lock to one specific colour scheme (e.g. greyblu/whitegry).
 # $userfixedtheme="whitegry";
 
