@@ -62,12 +62,16 @@ $imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"]);
 
 <div class="Question">
 <label for="keywords"><?=$lang["extrakeywords"]?></label>
-<textarea class="stdwidth" rows=6 cols=50 name="keywords" id="keywords"><?=htmlspecialchars($words)?></textarea>
+<input type="text" class="stdwidth" rows=6 cols=50 name="keywords" id="keywords" value="<?=htmlspecialchars($words)?>">
 </div>
+
+<script type="text/javascript">
+document.getElementById('keywords').focus();
+</script>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["next"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" default value="&nbsp;&nbsp;<?=$lang["next"]?>&nbsp;&nbsp;" />
 </div>
 
 <div class="clearerleft"> </div>
