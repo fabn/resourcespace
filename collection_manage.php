@@ -118,7 +118,7 @@ $atoz.="</div>";
 <td><a href="collection_manage.php?offset=0&order_by=user&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["owner"]?></a></td>
 <td><a href="collection_manage.php?offset=0&order_by=ref&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["id"]?></a></td>
 <td><a href="collection_manage.php?offset=0&order_by=created&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["created"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=count&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["items"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=count&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["itemstitle"]?></a></td>
 <td><a href="collection_manage.php?offset=0&order_by=public&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["access"]?></a></td>
 <td><div class="ListTools"><?=$lang["tools"]?></div></td>
 </tr>

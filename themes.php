@@ -174,7 +174,7 @@ function DisplayTheme($theme)
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
 		<td><?=$lang["name"]?></td>
-		<td width="5%"><?=$lang["items"]?></td>
+		<td width="5%"><?=$lang["itemstitle"]?></td>
 		<td><div class="ListTools"><?=$lang["tools"]?></div></td>
 		</tr>
 		
