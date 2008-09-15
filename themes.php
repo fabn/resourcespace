@@ -184,7 +184,7 @@ if ($header=="")
 
 function DisplayTheme($theme1,$theme2="",$theme3="")
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share;
 
 	# Work out theme name
 	if ($theme1!="") {$themename=$theme1;}
@@ -240,7 +240,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
 			<? } ?>
 		
-			<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_share.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
+			<? if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
 		
 			<? if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
 		

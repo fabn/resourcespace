@@ -267,8 +267,8 @@ if ($nodownloads || $counter==0)
 <? hook ("resourceactions") ?>
 <? if ($k=="") { ?>
 <a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a>&nbsp;&nbsp;
-<? if (checkperm("g") || checkperm("v")) { ?><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a>&nbsp;&nbsp;<? } ?>
-<a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a>&nbsp;&nbsp;
+<? if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a>&nbsp;&nbsp;<? } ?>
+<? if ($allow_share) { ?><a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a>&nbsp;&nbsp;<? } ?>
 <? if (checkperm("e" . $resource["archive"])) { ?><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a><? } ?>
 &nbsp;&nbsp;<a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a>
 <? } ?>

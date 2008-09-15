@@ -276,6 +276,8 @@ $config_search_for_number=true;
 # For the Opera browser this will always be enabled regardless of the below setting as Opera does not warn about failed downloads (so the download looks broken).
 $save_as=false;
 
+# Allow resources to be e-mailed / shared (internally and externally)
+$allow_share=true;
 
 #
 # ----------------- Development Items ---------------------

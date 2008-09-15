@@ -147,7 +147,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
     &nbsp;<a href="contactsheet_settings.php?c=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
 	<? } ?>
 
-	<? if (checkperm("v") || checkperm ("g")) { ?> &nbsp;<a href="collection_share.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
+	<? if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
 	
 	<? if ($username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-remove"]?></a><?}?>
 

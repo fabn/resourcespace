@@ -249,9 +249,9 @@ if ($k!="")
   <ul>
   	<? if ((!(sql_value("select count(*) value from research_request where collection='$usercollection'",0)>0)) || (!checkperm("r"))) { ?>
     		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?=$lang["managemycollections"]?></a></li>
-    <? if (checkperm("v") || checkperm("g")) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?>&nbsp;&nbsp;</a><? } ?>
+    <? if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?>&nbsp;&nbsp;</a><? } ?>
     
-    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$lang["edit"]?></a><? } ?>
+    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$allow_share?$lang["edit"]:$lang["editcollection"]?></a><? } ?>
 
     <? if ($feedback) {?><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a><? } ?>
     
