@@ -5,7 +5,14 @@ include "include/general.php";
 include "include/collections_functions.php";
 
 $header=getvalescaped("header","");
-$theme=getvalescaped("theme","");
+$theme1=getvalescaped("theme1","");
+$theme2=getvalescaped("theme2","");
+$theme3=getvalescaped("theme3","");
+
+# When changing higher levels, deselect the lower levels.
+$lastlevelchange=getvalescaped("lastlevelchange","");
+if ($lastlevelchange=="1") {$theme2="";$theme3="";}
+if ($lastlevelchange=="2") {$theme3="";}
 
 include "include/header.php";
 ?>
@@ -13,6 +20,7 @@ include "include/header.php";
 
 <div class="BasicsBox"> 
 <form method=post id="themeform">
+<input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
   <h1><?=$lang["themes"]?></h1>
   <p><?=text("introtext")?></p>
@@ -26,40 +34,81 @@ if ($theme_category_levels>1)
 	<div class="RecordPanel">  
 	
 	<div class="Question" style="border-top:none;">
-	<label for="theme"><?=$lang["themecategory"]?></label>
-	<select xclass="stdwidth" name="theme" id="theme" onchange="document.getElementById('themeform').submit();">
+	<label for="theme1"><?=$lang["themecategory"] . " 1" ?></label>
+	<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
 	<?
-	if ($theme=="")
+	if ($theme1=="")
 		{
 		?><option value=""><?=$lang["select"]?></option><?
 		}
 	
-	# Level 1 headers
+	# ----------------- Level 1 headers -------------------------
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		$value=($headers[$n]);
-		?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?>><?=$headers[$n]?></option><?
-		# Level 2 headers
-		$headers2=get_theme_headers($headers[$n]);
-		for ($m=0;$m<count($headers2);$m++)
-			{
-			$value=($headers[$n] . ";;" . $headers2[$m]);
-			?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?> >&nbsp;&nbsp;&nbsp;&#746;&nbsp;<?=$headers2[$m]?></option><?
-			# Level 3 headers
-			$headers3=get_theme_headers($headers[$n],$headers2[$m]);
-			for ($o=0;$o<count($headers3);$o++)
-				{
-				$value=($headers[$n] . ";;" . $headers2[$m] . ";;" . $headers3[$o]);
-				?><option value="<?=$value?>" <? if ($theme==$value)  { ?>selected<? } ?>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#746;&nbsp;<?=$headers3[$o]?></option><?
-				}
-			}
+		?><option value="<?=$headers[$n]?>" <? if ($theme1==$headers[$n])  { ?>selected<? } ?>><?=$headers[$n]?></option><?
 		}
 	?>
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
 	
+	<?
+	# ----------------- Level 2 headers -------------------------
+	if ($theme1!="" && $theme_category_levels>1)
+		{
+		$headers=get_theme_headers($theme1);
+		if (count($headers)>0)
+			{
+			?>
+			<div class="Question" style="border-top:none;">
+			<label for="theme2"><?=$lang["themecategory"] . " 2" ?></label>
+	
+			<select class="stdwidth" name="theme2" id="theme2" onchange="document.getElementById('lastlevelchange').value='2';document.getElementById('themeform').submit();">
+			<?
+			if ($theme2=="")
+				{
+				?><option value=""><?=$lang["select"]?></option><?
+				}
+			for ($n=0;$n<count($headers);$n++)
+				{
+				?><option value="<?=$headers[$n]?>" <? if ($theme2==$headers[$n])  { ?>selected<? } ?> ><?=$headers[$n]?></option><?
+				}
+			?>
+			</select>
+			<div class="clearerleft"> </div>
+			</div>
+			<?
+			}
+		}
+	
+	# ----------------- Level 3 headers -------------------------
+	if ($theme2!="" && $theme_category_levels>2)
+		{
+		$headers=get_theme_headers($theme1,$theme2);
+		if (count($headers)>0)
+			{
+			?>
+			<div class="Question" style="border-top:none;">
+			<label for="theme3"><?=$lang["themecategory"] . " 3" ?></label>
+			<select class="stdwidth" name="theme3" id="theme3" onchange="document.getElementById('lastlevelchange').value='3';document.getElementById('themeform').submit();">
+			<?
+			if ($theme3=="")
+				{
+				?><option value=""><?=$lang["select"]?></option><?
+				}
+			for ($n=0;$n<count($headers);$n++)
+				{
+				?><option value="<?=$headers[$n]?>" <? if ($theme3==$headers[$n])  { ?>selected<? } ?>><?=$headers[$n]?></option><?
+				}
+			?>
+			</select>
+			<div class="clearerleft"> </div>
+			</div>
+			<?
+			}
+		}
+	?>
 	</div>
 	</div>
 	<?
@@ -67,10 +116,10 @@ if ($theme_category_levels>1)
 
 # Display Themes
 
-if ($theme!="")
+if ($theme1!="")
 	{
 	# Display just the selected theme
-	DisplayTheme($theme);
+	DisplayTheme($theme1,$theme2,$theme3);
 	}
 elseif ($theme_category_levels==1)
 	{
@@ -133,26 +182,16 @@ if ($header=="")
 		}
 	}
 
-function DisplayTheme($theme)
+function DisplayTheme($theme1,$theme2="",$theme3="")
 	{
 	global $lang,$flag_new_themes,$contact_sheet,$theme_images;
-	
-	$theme2="";$theme3="";
-	if (strpos($theme,";;")!==false)
-		{
-		# Multiple levels of themes. Expand and set vars.
-		$ts=explode(";;",$theme);
-		$theme=$ts[0];
-		$theme2=$ts[1];
-		if (count($ts)==3) {$theme3=$ts[2];}
-		}
 
 	# Work out theme name
-	if ($theme!="") {$themename=$theme;}
+	if ($theme1!="") {$themename=$theme1;}
 	if ($theme2!="") {$themename=$theme2;}
 	if ($theme3!="") {$themename=$theme3;}
 
-	$themes=get_themes($theme,$theme2,$theme3);
+	$themes=get_themes($theme1,$theme2,$theme3);
 	if (count($themes)>0)
 		{
 		?>
@@ -161,7 +200,7 @@ function DisplayTheme($theme)
 		
 		<div class="RecordHeader">
 		<?
-		$image=get_theme_image($theme, $theme2, $theme3);
+		$image=get_theme_image($theme1, $theme2, $theme3);
 		if (($image) && ($theme_images))
 			{
 			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?=$image?>" /></div><?
