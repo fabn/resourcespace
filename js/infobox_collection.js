@@ -10,6 +10,7 @@ var InfoBoxVisible=false;
 var InfoBoxRef=0;
 var InfoBoxTop=0;
 var InfoBoxLeft=0;
+var InfoBoxTimer=false;
 
 function InfoBoxMM(event)
     {
@@ -25,13 +26,10 @@ function InfoBoxMM(event)
 	var dsocleft=document.all? iebody.scrollLeft : pageXOffset
 	var dsoctop=document.all? iebody.scrollTop : pageYOffset
     
- 	i.style.display='none';
-        
     InfoBoxTop=dsoctop + y - 25;
     if (InfoBoxTop<5) {InfoBoxTop=5;}
-    
-    InfoBoxLeft=dsocleft + x + 10;
-    
+    InfoBoxLeft=dsocleft + x + 10;    	
+
 	// Set up the box background / shadow
     // move the box higher up if the cursor is low enough to support this.
     if (x>400)
@@ -47,10 +45,24 @@ function InfoBoxMM(event)
    		ii.style.marginLeft="50px";
   		ii.style.marginRight="15px";
 		}
+		
+    if (InfoBoxRef!=0)
+    	{
+	    i.style.top=InfoBoxTop + "px";
+    	i.style.left=InfoBoxLeft + "px";
+    	}
+	else
+		{
+ 		i.style.display='none';
+    	InfoBoxVisible=false;
+		}
+
+
 
 	// set a timer for the infobox to appear
-    if ((InfoBoxRef!=0) && (InfoBoxWaiting==false))
+    if ((InfoBoxRef!=0) && (InfoBoxWaiting==false) && (InfoBoxVisible==false))
     	{
+    	if (InfoBoxTimer) {window.clearTimeout(InfoBoxTimer);}
 		window.setTimeout('InfoBoxAppear()',1200);
 	    InfoBoxWaiting=true;
 		}
@@ -78,6 +90,7 @@ function InfoBoxAppear()
 	    i.style.top=InfoBoxTop + "px";
     	i.style.left=InfoBoxLeft + "px";
     	
+    	InfoBoxVisible=true;
     	}
     InfoBoxWaiting=false;
 	}
