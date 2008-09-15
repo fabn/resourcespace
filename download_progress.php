@@ -25,8 +25,8 @@ window.setTimeout("document.location='download.php?ref=<?=$ref?>&size=<?=$size?>
 <div class="BasicsBox">
 
     
-	<? if (strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) { 
-	# Opera browser? Provide a download link instead. Opera blocks any attempt to send it a download (meta/js redirect)	?>
+	<? if ($save_as || strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) { 
+	# $save_as set or Opera browser? Provide a download link instead. Opera blocks any attempt to send it a download (meta/js redirect)	?>
     <h1><?=$lang["downloadresource"]?></h1>
     <p style="font-weight:bold;">&gt;&nbsp;<a href="<?=$url?>"><?=$lang["rightclicktodownload"]?></a></p>
 	<? } else { 

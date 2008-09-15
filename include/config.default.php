@@ -272,6 +272,11 @@ $custom_access=true;
 # If true: if search keyword is numeric then search for resource id
 $config_search_for_number=true;
 
+# Display the download as a 'save as' link instead of redirecting the browser to the download (which sometimes causes a security warning).
+# For the Opera browser this will always be enabled regardless of the below setting as Opera does not warn about failed downloads (so the download looks broken).
+$save_as=false;
+
+
 #
 # ----------------- Development Items ---------------------
 #
@@ -279,6 +284,7 @@ $config_search_for_number=true;
 
 # Display a breadcrumbs trail (list of pages previously visited to aid navigation)
 $breadcrumbs=false;
+
 
 
 
