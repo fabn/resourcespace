@@ -87,6 +87,11 @@ $filename_field=51;
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
+# What formats should be offered in preview sizes when viewing
+# Case-insensitive regular expression
+# See http://www.imagemagick.org/script/formats.php for supported formats
+$im_formats = '(tif[f]?|jp[e]?g|psd|eps|dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr|png|tga|bmp)';
+
 # If using imagemagick for PDF, EPS and PS files, up to how many pages should be extracted for the previews?
 # If this is set to more than one the user will be able to page through the PDF file.
  $pdf_pages=30;

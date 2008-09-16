@@ -347,7 +347,12 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 	  if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
 	  if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
 
-		$command .= " \"$file\"[0]";
+		$prefix = '';
+		# Camera RAW images need prefix
+		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
+
+
+		$command .= " \"$prefix$file\"[0]";
 
 		$sizes="";
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}

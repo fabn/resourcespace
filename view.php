@@ -169,7 +169,7 @@ else
 </tr>
 <?
 $nodownloads=false;$counter=0;
-if (($resource["has_image"]==1) && (preg_match('/^(tif[f]?|jp[e]?g|psd|eps)$/i', $resource["file_extension"])))
+if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resource["file_extension"])))
 	{
 	# Work out if the user is allowed to download these images
 	$download=true;

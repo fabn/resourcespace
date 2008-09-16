@@ -277,12 +277,16 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
 			if (isset($imagemagick_path))
 				{
+				$prefix = '';
+				# Camera RAW images need prefix
+				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
+
 				# Locate imagemagick.
 			  $command=$imagemagick_path . "/bin/identify";
 			  if (!file_exists($command)) {$command=$imagemagick_path . "/identify";}
 			  if (!file_exists($command)) {$command=$imagemagick_path . "\identify.exe";}
 			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
-				$command .= ' identify -format %wx%h "'. $path2 .'"';
+				$command .= ' identify -format %wx%h '. $prefix .'"'. $path2 .'"';
 				$output=shell_exec($command);
 				preg_match('/^([0-9]+)x([0-9]+)$/',$output,$smatches);
 				if ((list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
