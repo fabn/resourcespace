@@ -342,51 +342,70 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			}
 
 		# Locate imagemagick.
-	  $command=$imagemagick_path . "/bin/convert";
-	  if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-	  if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-	  if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
+		$command=$imagemagick_path . "/bin/convert";
+		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+		if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
 
 		$prefix = '';
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
-
 		$command .= " \"$prefix$file\"[0]";
 
+
+		# Locate imagemagick.
+		$identcommand=$imagemagick_path . "/bin/identify";
+		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "/identify";}
+		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
+		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
+		# Get image's dimensions.
+		$identcommand .= ' -format %wx%h "'. $prefix . $file .'[0]"';
+		$identoutput=shell_exec($identcommand);
+		preg_match('/^([0-9]+)x([0-9]+)$/',$identoutput,$smatches);
+				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
+		
 		$sizes="";
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
 		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
-		$ps=sql_query("select * from preview_size $sizes");
+		$ps=sql_query("select * from preview_size $sizes order by width asc, height asc");
+		$highestsize = false;
 		for ($n=0;$n<count($ps);$n++)
 			{
 			# fetch target width and height
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 
-			# Find the target path and delete anything that's already there.
-			$path=get_resource_path($ref,$ps[$n]["id"],false);
-			if (file_exists($path)) {unlink($path);}
-			# Also try the watermarked version.
-			$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
-			if (file_exists($wpath)) {unlink($wpath);}
-
-			# Preserve colour profiles? (omit for smaller sizes)   
-			$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
-			if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
-
-	    $command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -write \"$path\" +delete \\)"; 
-
-			# Add a watermarked image too?
-			global $watermark;
-			if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
+			if ((!$highestsize && ($extension != "jpg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
 				{
-				$path=myrealpath(get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true));
+				if (($sw<$tw) && ($sh<$th))
+					{
+					$highestsize = true;
+					}
+				# Find the target path and delete anything that's already there.
+				$path=get_resource_path($ref,$ps[$n]["id"],false);
 				if (file_exists($path)) {unlink($path);}
-   				$watermarkreal=myrealpath($watermark);
+				# Also try the watermarked version.
+				$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+				if (file_exists($wpath)) {unlink($wpath);}
+	
+				# Preserve colour profiles? (omit for smaller sizes)   
+				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+				if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
 
-			    $command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" -write \"$path\" +delete \\)"; 
+				$command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -write \"$path\" +delete \\)"; 
+
+				# Add a watermarked image too?
+				global $watermark;
+				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
+					{
+					$path=myrealpath(get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true));
+					if (file_exists($path)) {unlink($path);}
+   					$watermarkreal=myrealpath($watermark);
+
+					$command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" -write \"$path\" +delete \\)"; 
+					}
 				}
 			}
 		$command .= " null:";

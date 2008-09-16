@@ -271,7 +271,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
 		$returnline["id"]="";
-		if ((list($sw,$sh) = @getimagesize($path2))===false)
+		if (((list($sw,$sh) = @getimagesize($path2))===false) || (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)))
 			{
 			# 'Identify' dimensions with ImageMagick
 			global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
@@ -286,7 +286,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			  if (!file_exists($command)) {$command=$imagemagick_path . "/identify";}
 			  if (!file_exists($command)) {$command=$imagemagick_path . "\identify.exe";}
 			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
-				$command .= ' identify -format %wx%h '. $prefix .'"'. $path2 .'"';
+				$command .= ' -format %wx%h "'. $prefix . $path2 .'[0]"';
 				$output=shell_exec($command);
 				preg_match('/^([0-9]+)x([0-9]+)$/',$output,$smatches);
 				if ((list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
