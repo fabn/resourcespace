@@ -283,7 +283,7 @@ function get_smart_themes($field)
 	for ($n=0;$n<count($options);$n++)
 		{
 		#echo "<li>Looking for " . $options_base[$n] . " in " . join (",",$inuse);
-		if (in_array($options_base[$n],$inuse)) {$return[]=trim(i18n_get_translated($options[$n]));}
+		if (in_array(str_replace("-"," ",$options_base[$n]),$inuse)) {$return[]=trim(i18n_get_translated($options[$n]));}
 		}
 	return $return;
 	}
