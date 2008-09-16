@@ -42,7 +42,7 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$p
 		$scramblepath=substr(md5($ref . "_" . $scramble_key),0,15);
 		}
 	
-	if ($extension=="") {$extension="jpg";}
+	if (($extension=="") || ($size !="")) {$extension="jpg";}
 	$folder="filestore/";
 	#if (!file_exists(dirname(__FILE__) . $folder)) {mkdir(dirname(__FILE__) . $folder,0777);}
 	
@@ -259,36 +259,49 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	# Returns a table of available image sizes for resource $ref.
 	# The original image file assumes the name of the 'nearest size (up)' in the table
 
+	# add the original image
+	$return=array();
+	$lastname="";$lastpreview=0;$lastrestricted=0;
+	$path2=get_resource_path($ref,'',false,$extension);
+	if (file_exists($path2))
+	{
+		$returnline=array();
+		$returnline["name"]=$lastname;
+		$returnline["allow_preview"]=$lastpreview;
+		$returnline["allow_restricted"]=$lastrestricted;
+		$returnline["path"]=$path2;
+		$returnline["id"]="";
+		if ((list($sw,$sh) = @getimagesize($path2))===false)
+			{
+			# 'Identify' dimensions with ImageMagick
+			global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
+			if (isset($imagemagick_path))
+				{
+				# Locate imagemagick.
+			  $command=$imagemagick_path . "/bin/identify";
+			  if (!file_exists($command)) {$command=$imagemagick_path . "/identify";}
+			  if (!file_exists($command)) {$command=$imagemagick_path . "\identify.exe";}
+			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
+				$command .= ' identify -format %wx%h "'. $path2 .'"';
+				$output=shell_exec($command);
+				preg_match('/^([0-9]+)x([0-9]+)$/',$output,$smatches);
+				if ((list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
+				}
+			}
+		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
+		else {$returnline["filedown"]=ceil($filesize/50000) . " seconds @ broadband";$returnline["filesize"]=formatfilesize($filesize);}
+		$returnline["width"]=$sw;			
+		$returnline["height"]=$sh;
+		$returnline["extension"]=$extension;
+		$return[]=$returnline;
+	}
 	# loop through all image sizes
 	$sizes=sql_query("select * from preview_size order by width desc");
-	$return=array();
-	$outputfirst=false;$lastname="";$lastpreview=0;
 	for ($n=0;$n<count($sizes);$n++)
-		{
-		$path=get_resource_path($ref,$sizes[$n]["id"],false,$extension);
+	{
+		$path=get_resource_path($ref,$sizes[$n]["id"],false);
 		if (file_exists($path) || (!$onlyifexists))
 			{
-			if ($outputfirst==false)
-				{
-				# add the original image
-				$path2=get_resource_path($ref,'',false,$extension);
-				if (file_exists($path2))
-					{
-					$returnline=array();
-					$returnline["name"]=$lastname;
-					$returnline["allow_preview"]=$lastpreview;
-					$returnline["allow_restricted"]=$lastrestricted;
-					$returnline["path"]=$path2;
-					$returnline["id"]="";
-					if ((list($sw,$sh) = @getimagesize($path2))===false) {$sw=0;$sh=0;}
-					if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
-					else {$returnline["filedown"]=ceil($filesize/50000) . " seconds @ broadband";$returnline["filesize"]=formatfilesize($filesize);}
-					$returnline["width"]=$sw;			
-					$returnline["height"]=$sh;
-					$return[]=$returnline;
-					$outputfirst=true;
-					}
-				}
 			if (($sizes[$n]["internal"]==0) || ($internal))
 				{
 				$returnline=array();
@@ -303,6 +316,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$returnline["filesize"]=$filesize;			
 				$returnline["width"]=$sw;			
 				$returnline["height"]=$sh;
+				$returnline["extension"]='jpg';
 				$return[]=$returnline;
 				}
 			}

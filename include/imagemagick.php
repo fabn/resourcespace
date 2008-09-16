@@ -228,13 +228,8 @@ if (!isset($newfile))
     else
     	{
     	# Not a PDF file, so single extraction only.
-		$command.= " " . $prefix . "\"$file\"[0] $profile -quality $imagemagick_quality -resize 800x800 \"$target\""; 
-		$output=shell_exec($command); 
-		if (file_exists($target))
-			{
-			$newfile=$target;
+			create_previews_using_im($ref,false,$extension,$previewonly);
 			}
-		}
 	}
 	
 

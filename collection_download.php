@@ -9,8 +9,9 @@ include "include/resource_functions.php";
 
 $collection=getvalescaped("collection","");
 $size=getvalescaped("size","");
+$submitted=getvalescaped("submitted","");
 
-if ($size!="")
+if ($submitted != "")
 	{
 	$path="";
 	$deletion_array=array();
@@ -60,8 +61,13 @@ if ($size!="")
 					{
 					if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
 					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
-					$filename=get_resource_data($ref);$filename=$filename["file_path"];
-					
+					$filename=get_resource_data($ref);
+					# Prepend file name with resource ID to prevent collisions
+					$filename=$ref.'_'.$filename["file_path"];
+					# Replace (instead of appending) original extension with extension of the actual file that is sent
+					preg_match('/\.[^\.]+$/', $p, $pext);
+					$filename=preg_replace('/\.[^\.]+$/', $pext[0], $filename);
+
 					if ($filename!="")
 						{
 						# Only perform the copy if an original filename is set.
@@ -124,12 +130,13 @@ include "include/header.php";
 <div class="Inline"><select name="size" class="shrtwidth" id="downloadsize">
 <?
 $sizes=get_all_image_sizes();
+$sizes[]=array("id" => "", "name" => $lang["collection_download_original"]);
 for ($n=0;$n<count($sizes);$n++)
 	{
 	?><option value="<?=$sizes[$n]["id"]?>"><?=i18n_get_translated($sizes[$n]["name"])?></option><?
 	}
 ?></select></div>
-<div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["download"]?>&nbsp;&nbsp;" /></div>
+<div class="Inline"><input name="submitted" type="submit" value="&nbsp;&nbsp;<?=$lang["download"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>
 </div>

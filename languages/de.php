@@ -156,6 +156,7 @@ $lang["mustspecifyoneusername"]="Bitte geben Sie mindestens einen Benutzernamen 
 $lang["couldnotmatchallusernames"]="Es konnten nicht alle passenden Benutzer gefunden werden";
 $lang["emailcollectionmessage"]="hat Ihnen eine Kollektion an Ressourcen von  $applicationname gesendet, welche auf der Seite 'Meine Kollektionen' zu finden ist."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Klicken Sie auf den untenstehenden Link um die Kollektion anzuzeigen.";
+$lang["collection_download_original"]="Originaldatei";
  
 # Resource create / edit / view
 $lang["createnewresource"]="Neue Ressource erstellen";

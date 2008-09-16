@@ -169,7 +169,7 @@ else
 </tr>
 <?
 $nodownloads=false;$counter=0;
-if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($resource["file_extension"]=="jpeg")))
+if (($resource["has_image"]==1) && (preg_match('/^(tif[f]?|jp[e]?g|psd|eps)$/i', $resource["file_extension"])))
 	{
 	# Work out if the user is allowed to download these images
 	$download=true;
@@ -204,9 +204,10 @@ if (($resource["has_image"]==1) && (($resource["file_extension"]=="jpg") || ($re
 		if ($downloadthissize)
 			{
 			$counter++;
+			$headline = ($n == 0) ? strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 			?>
 			<tr class="DownloadDBlend" id="DownloadBox<?=$n?>">
-			<td><h2><?=i18n_get_translated($sizes[$n]["name"])?></h2>
+			<td><h2><?=$headline?></h2>
 			<p><?=$sizes[$n]["width"]?> x <?=$sizes[$n]["height"]?> <?=$lang["pixels"]?> <? if ($mp>=1) { ?> (<?=$mp?> MP)<? } ?></p>
 			<p><?=$dpi_w?> cm x <?=$dpi_h?> cm @ 300dpi</p></td>
 			<td><?=$sizes[$n]["filesize"]?></td>

@@ -203,105 +203,75 @@ function iptc_return_utf8($text)
 	
 function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
 	{
+	global $imagemagick_path,$ghostscript_path;
+
 	# Always create file checksum (all types)
 	if (!$previewonly) {generate_file_checksum($ref,$extension);}
 	if (($extension=="jpg") || ($extension=="jpeg") || ($extension=="png") || ($extension=="gif"))
- 
 	# Create image previews for built-in supported file types only (JPEG, PNG, GIF)
 		{
-		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
-		# Only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
-		# Set thumbonly=true to (re)generate thumbnails only.
-
-		if (!$previewonly)
+		if (isset($imagemagick_path))
 			{
-			$file=get_resource_path($ref,"",false,$extension);	
+			create_previews_using_im($ref,$thumbonly,$extension,$previewonly);
 			}
 		else
 			{
-			# We're generating based on a new preview (scr) image.
-			$file=get_resource_path($ref,"tmp",false,$extension);	
-			}
+			# ----------------------------------------
+			# Use the GD library to perform the resize
+			# ----------------------------------------
 
-		$sizes="";
-		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
-		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
-		# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
-		if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
-		
-		$ps=sql_query("select * from preview_size $sizes");
-		for ($n=0;$n<count($ps);$n++)
-			{
-			# fetch target width and height
-			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
-			$id=$ps[$n]["id"];
-			
-			# Find the target path and delete anything that's already there.
-			$path=get_resource_path($ref,$ps[$n]["id"],false);
-			if (file_exists($path)) {unlink($path);}
-			# Also try the watermarked version.
-			$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
-			if (file_exists($wpath)) {unlink($wpath);}
+			# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
+			# Only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
+			# Set thumbonly=true to (re)generate thumbnails only.
 
-            # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
-			# or when producing a small thumbnail (to make sure we have that as a minimum
-			if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col"))
+			if (!$previewonly)
 				{
-				# Calculate width and height.
-				if ($sw>$sh) {$ratio = ($tw / $sw);} # Landscape
-				else {$ratio = ($th / $sh);} # Portrait
-				$tw=floor($sw*$ratio);
-				$th=floor($sh*$ratio);
+				$file=get_resource_path($ref,"",false,$extension);	
+				}
+			else
+				{
+				# We're generating based on a new preview (scr) image.
+				$file=get_resource_path($ref,"tmp",false,$extension);	
+				}
 
-				global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
-				if (isset($imagemagick_path))
+			$sizes="";
+			if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
+			if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
+
+			# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
+			if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
+		
+			$ps=sql_query("select * from preview_size $sizes");
+			for ($n=0;$n<count($ps);$n++)
+				{
+				# fetch target width and height
+				$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
+				$id=$ps[$n]["id"];
+			
+				# Find the target path and delete anything that's already there.
+				$path=get_resource_path($ref,$ps[$n]["id"],false);
+				if (file_exists($path)) {unlink($path);}
+				# Also try the watermarked version.
+				$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+				if (file_exists($wpath)) {unlink($wpath);}
+
+	      # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
+				# or when producing a small thumbnail (to make sure we have that as a minimum)
+				if (($sw>$tw) || ($sh>$th) || ($id=="thm") || ($id=="col"))
 					{
-					# ----------------------------------------
-					# Use ImageMagick to perform the resize
-					# ----------------------------------------
-	
-					# Locate imagemagick.
-				    $command=$imagemagick_path . "/bin/convert";
-				    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-				    if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-                    if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
-        
-					# Preserve colour profiles? (omit for smaller sizes)   
-					$profile="+profile icc +profile xmp +profile exif +profile iptc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
-					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
-    
-				    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " \"$path\""; 
-                    $output=shell_exec($command2); 
+					# Calculate width and height.
+					if ($sw>$sh) {$ratio = ($tw / $sw);} # Landscape
+					else {$ratio = ($th / $sh);} # Portrait
+					$tw=floor($sw*$ratio);
+					$th=floor($sh*$ratio);
 
-					if ($id=="thm")
-						{
-						# For the thumbnail image, call extract_mean_colour() to save the colour/size information
-						$target=@imagecreatefromjpeg($path);
-						extract_mean_colour($target,$ref);
-						}
-
-	   				# Add a watermarked image too?
-    				global $watermark;
-    				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
-    					{
-						$path=myrealpath(get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true));
-						if (file_exists($path)) {unlink($path);}
-	    				$watermarkreal=myrealpath($watermark);
-
-					    $command2 = $command . " \"$file\"[0] $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . " -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" \"$path\""; 
-					    $output=shell_exec($command2); 
-						}
-
-					}
-				else			
-					{
 					# ----------------------------------------
 					# Use the GD library to perform the resize
 					# ----------------------------------------
-					
+				
 					$target = imagecreatetruecolor($tw,$th);
-					
+				
 					if ($extension=="png")
 						{
 						$source = @imagecreatefrompng($file);
@@ -317,35 +287,118 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 						$source = @imagecreatefromjpeg($file);
 						if ($source===false) {return false;}
 						}
-						
+					
 					imagecopyresampled($target,$source,0,0,0,0,$tw,$th,$sw,$sh);
 					imagejpeg($target,$path,90);
 
 					if ($ps[$n]["id"]=="thm") {extract_mean_colour($target,$ref);}
 					imagedestroy($target);
 					}
+				elseif (($id=="pre") || ($id=="thm") || ($id=="col"))	
+					{
+					# If the source is smaller than the pre/thm/col, we still need these sizes; just copy the file
+					copy($file,get_resource_path($ref,$id,false,$extension));
+					if ($id=="thm") {sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");}
+					}
 				}
-			elseif (($id=="pre") || ($id=="thm") || ($id=="col"))	
-				{
-				# If the source is smaller than the pre/thm/col, we still need these sizes; just copy the file
-				copy($file,get_resource_path($ref,$id,false,$extension));
-				if ($id=="thm") {sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");}
-				}
+			# flag database so a thumbnail appears on the site
+			sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
 			}
-		# flag database so a thumbnail appears on the site
-		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
 		}
 	else
 		{
 		# Use imagemagick? (also includes ffmpeg for video handling functions)
-		global $imagemagick_path,$ghostscript_path;
 		if (isset($imagemagick_path))
 			{
-			//include "include/imagemagick.php";
-			include(dirname(__FILE__)."/imagemagick.php");
+      //include "include/imagemagick.php";
+      include(dirname(__FILE__)."/imagemagick.php");
 			}
 		}
 	return true;
+	}
+
+function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
+	{
+	global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
+
+	if (isset($imagemagick_path))
+		{
+
+		# ----------------------------------------
+		# Use ImageMagick to perform the resize
+		# ----------------------------------------
+
+		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
+		# Set thumbonly=true to (re)generate thumbnails only.
+
+		if (!$previewonly)
+			{
+			$file=get_resource_path($ref,"",false,$extension);	
+			}
+		else
+			{
+			# We're generating based on a new preview (scr) image.
+			$file=get_resource_path($ref,"tmp",false,$extension);	
+			}
+
+		# Locate imagemagick.
+	  $command=$imagemagick_path . "/bin/convert";
+	  if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+	  if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+	  if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
+
+		$command .= " \"$file\"[0]";
+
+		$sizes="";
+		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
+		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
+
+		$ps=sql_query("select * from preview_size $sizes");
+		for ($n=0;$n<count($ps);$n++)
+			{
+			# fetch target width and height
+			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
+			$id=$ps[$n]["id"];
+
+			# Find the target path and delete anything that's already there.
+			$path=get_resource_path($ref,$ps[$n]["id"],false);
+			if (file_exists($path)) {unlink($path);}
+			# Also try the watermarked version.
+			$wpath=get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+			if (file_exists($wpath)) {unlink($wpath);}
+
+			# Preserve colour profiles? (omit for smaller sizes)   
+			$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+			if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
+
+	    $command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -write \"$path\" +delete \\)"; 
+
+			# Add a watermarked image too?
+			global $watermark;
+			if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
+				{
+				$path=myrealpath(get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true));
+				if (file_exists($path)) {unlink($path);}
+   				$watermarkreal=myrealpath($watermark);
+
+			    $command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" -write \"$path\" +delete \\)"; 
+				}
+			}
+		$command .= " null:";
+		$output=shell_exec($command); 
+
+		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
+		$target=@imagecreatefromjpeg(get_resource_path($ref,"thm",false));
+		extract_mean_colour($target,$ref);
+		# flag database so a thumbnail appears on the site
+		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
+
+		return true;
+		}
+	else
+		{
+		return false;
+		}
 	}
 
 function extract_mean_colour($image,$ref)
