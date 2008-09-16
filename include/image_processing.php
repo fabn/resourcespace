@@ -394,9 +394,12 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
 		$target=@imagecreatefromjpeg(get_resource_path($ref,"thm",false));
-		extract_mean_colour($target,$ref);
-		# flag database so a thumbnail appears on the site
-		sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
+		if ($target) 
+			{
+			extract_mean_colour($target,$ref);
+			# flag database so a thumbnail appears on the site
+			sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
+			}
 
 		return true;
 		}
