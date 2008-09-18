@@ -82,7 +82,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	for ($n=0;$n<count($headers);$n++)
 		{
 		?>
-		<p>&gt;&nbsp;<a href="themes.php?header=<?=urlencode($headers[$n])?>"><?=i18n_get_translated($headers[$n])?></a></p>
+		<p>&gt;&nbsp;<a href="themes.php?header=<?=urlencode($headers[$n])?>"><?=i18n_get_translated(str_replace("*","",$headers[$n]))?></a></p>
 		<?
 		}
 	?>

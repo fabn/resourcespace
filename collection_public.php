@@ -64,8 +64,10 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?=$collections[$n]["ref"]?></td>
 	<td><?=nicedate($collections[$n]["created"])?></td>
 	<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+
+	<? if (!checkperm("b")) { ?>
 	&nbsp;&nbsp;
-	<a href="#" onclick="document.getElementById('collectionadd').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?=$lang["addtomycollections"]?></a></div></td>
+	<a href="#" onclick="document.getElementById('collectionadd').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?=$lang["addtomycollections"]?></a><? } ?></div></td>
 	</tr>
 	<?
 	}

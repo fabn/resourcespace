@@ -31,7 +31,7 @@ for ($n=0;$n<count($plugins);$n++)
 
 <?=$headerinsert?>
 
-<? if (($pagename!="terms") && ($pagename!="change_language") && ($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && (getval("k","")=="")) { ?>
+<? if (($pagename!="terms") && ($pagename!="change_language") && ($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && (getval("k","")=="") && (!checkperm("b"))) { ?>
 <script language="Javascript">
 if (!top.collections) {document.location='<?=$baseurl?>/index.php?url=' + escape(document.location);} // Missing frameset? redirect to frameset.
 </script>
@@ -106,7 +106,7 @@ else
 		{?><li><a target="main" href="<?=$baseurl?>/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
 		<? if (checkperm("s") && $enable_themes) { ?><li><a target="main" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li><? } ?>
 		<? if (checkperm("s") && $recent_link) { ?><li><a target="main" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
-		<? if (checkperm("s") && $mycollections_link) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
+		<? if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="main" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
 		<? if (checkperm("d")) { ?><li><a target="main" href="<?=$baseurl?>/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
 		<? if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="main" href="<?=$baseurl?>/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
 		

@@ -44,6 +44,8 @@ if (getval("url","")!="")
 	# New URL for top section (when the frameset is lost)
 	$topurl=getval("url",$topurl);
 	}
+
+if (checkperm("b")) {redirect($topurl);}
 ?>
 <html>
 <head>

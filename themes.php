@@ -229,7 +229,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			
 			<td nowrap><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
 			
-			&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
+			<? if (!checkperm("b")) { ?>&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a><? } ?>
 		
 			<? if (isset($zipcommand)) { ?>
 			&nbsp;<a href="collection_download.php?collection=<?=$themes[$m]["ref"]?>"
