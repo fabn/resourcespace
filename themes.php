@@ -46,7 +46,7 @@ if ($theme_category_levels>1)
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=$headers[$n]?></option><?
+		?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=str_replace("*","",$headers[$n])?></option><?
 		}
 	?>
 	</select>
@@ -72,7 +72,7 @@ if ($theme_category_levels>1)
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<? } ?> ><?=$headers[$n]?></option><?
+				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<? } ?> ><?=str_replace("*","",$headers[$n])?></option><?
 				}
 			?>
 			</select>
@@ -99,7 +99,7 @@ if ($theme_category_levels>1)
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=$headers[$n]?></option><?
+				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=str_replace("*","",$headers[$n])?></option><?
 				}
 			?>
 			</select>
@@ -206,7 +206,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?=$image?>" /></div><?
 			}
 		?>
-		<h1 style="margin-top:12px;float:left;"><?=stripslashes($themename)?></h1>
+		<h1 style="margin-top:12px;float:left;"><?=stripslashes(str_replace("*","",$themename))?></h1>
 		</div>
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
