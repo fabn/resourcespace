@@ -1031,6 +1031,6 @@ function get_suggested_keywords($search)
 	{
 	# For the given partial word, suggest complete existing keywords.
 	global $autocomplete_search_items;
-	return sql_array("select keyword value from keyword where keyword like '" . escape_check($search) . "%' and hit_count>0 order by hit_count desc limit $autocomplete_search_items");
+	return sql_array("select keyword value from keyword where keyword like '" . escape_check($search) . "%' order by hit_count desc limit $autocomplete_search_items");
 	}
 ?>
