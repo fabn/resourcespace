@@ -203,7 +203,7 @@ if (!$basic_simple_search)
   </form>
 	
   <p><br /><a href="<?=$baseurl?>/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
-  <? if (!$recent_link) { ?><p><a href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></p><? } ?>
+  <? if ($view_new_material) { ?><p><a href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></p><? } ?>
 	</div>
 	
 	<? } ?> <!-- END of Searchbarreplace hook -->

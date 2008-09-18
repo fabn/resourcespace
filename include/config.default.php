@@ -143,9 +143,11 @@ $theme_images=true;
 # Maximum of 3 category levels (so with the themes themselves, a total of 4 categorisation levels for resources).
 $theme_category_levels=1;
 
-# Display a 'Recent' link in the top navigation (goes to View New Material)
-# Removes the 'view new material' link from the simple search bar.
+# Display a 'Recent' link in the top navigation
 $recent_link=true;
+
+# Display 'View New Material' link in the quick search bar (same as 'Recent')
+$view_new_material=false;
 
 # Display a 'My Collections' link in the top navigation
 $mycollections_link=false;
