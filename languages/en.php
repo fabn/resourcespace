@@ -156,8 +156,7 @@ $lang["mustspecifyoneusername"]="You must specify at least one username";
 $lang["couldnotmatchallusernames"]="Could not match all the usernames";
 $lang["emailcollectionmessage"]="has e-mailed you a collection of resources from $applicationname which has been added to your 'My Collections' page."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Click the link below to view the collection.";
-$lang["collection_download_original"]="Original file";
- 
+
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";
 $lang["resourcetype"]="Resource Type";
@@ -516,6 +515,7 @@ $lang["format"]="Format";
 $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
 
 # New for 1.6
+$lang["collection_download_original"]="Original file";
 $lang["newflag"]="NEW!";
 $lang["link"]="Link";
 $lang["uploadpreview"]="Upload a preview image only";

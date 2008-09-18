@@ -156,7 +156,6 @@ $lang["mustspecifyoneusername"]="Bitte geben Sie mindestens einen Benutzernamen 
 $lang["couldnotmatchallusernames"]="Es konnten nicht alle passenden Benutzer gefunden werden";
 $lang["emailcollectionmessage"]="hat Ihnen eine Kollektion an Ressourcen von  $applicationname gesendet, welche auf der Seite 'Meine Kollektionen' zu finden ist."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Klicken Sie auf den untenstehenden Link um die Kollektion anzuzeigen.";
-$lang["collection_download_original"]="Originaldatei";
  
 # Resource create / edit / view
 $lang["createnewresource"]="Neue Ressource erstellen";
@@ -519,4 +518,26 @@ $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
 
 # New for 1.6
 $lang["newflag"]="NEUE!";
+$lang["collection_download_original"]="Originaldatei";
+$lang["link"]="Link";
+$lang["uploadpreview"]="Nur ein Vorschaubild hochladen";
+$lang["starttypingusername"]="(Bitte Anfangsbuchstaben vom Benutzernamen / Namen / Gruppennamen eingeben)";
+$lang["requestfeedback"]="Rückmeldung anfordern<br />(Sie erhalten die Antwort per e-mail)";
+$lang["sendfeedback"]="Rückmeldung abschicken";
+$lang["feedbacknocomments"]="Sie haben keine Kommentare für die Ressourcen in der Kollektion abgegeben.<br />Clicken Sie die Sprechblase neben den Ressourcen an, um einen Kommentar hinzuzufügen.";
+$lang["collectionfeedback"]="Rückmeldung zur Kollektion";
+$lang["collectionfeedbackemail"]="Folgende Rückmeldung wurde abgegeben:";
+$lang["feedbacksent"]="Ihre Rückmeldung wurde abgeschickt.";
+$lang["newarchiveresource"]="Neue archivierte Ressource";
+$lang["nocategoriesselected"]="Keine Kategorie ausgewählt";
+$lang["showhidetree"]="Baum anzeigen/verstecken";
+$lang["clearall"]="Alles zurücksetzen";
+$lang["clearcategoriesareyousure"]="Sind Sie sicher, dass Sie alle ausgewählten Optionen zurücksetzen wollen?";
+$lang["share"]="Weitergeben";
+$lang["sharecollection"]="Kollektion weitergeben";
+$lang["generateurl"]="URL generieren";
+$lang["generateurlinternal"]="Die folgende URL funktioniert nur für eingeloggte Benutzer.";
+$lang["generateurlexternal"]="Die folgende URL funktioniert ohne Login. <strong>Bitte beachten Sie, wenn neue Ressourcen zur Kollektion hinzugefügt werden, funktioniert dieser URL aus Sicherheitsgründen nicht mehr und muss neu generiert werden.</strong>";
+$lang["archive"]="Archiv";
+
 ?>
