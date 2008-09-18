@@ -4,12 +4,6 @@ include "include/authenticate.php";
 include "include/general.php";
 include "include/collections_functions.php";
 
-# Include scriptaculous for fading slideshow.
-$headerinsert="
-<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
-<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
-";
-
 include "include/header.php";
 
 if (!hook("replacehome")) { 

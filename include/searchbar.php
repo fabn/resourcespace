@@ -70,17 +70,28 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 
         <input id="ssearchbox" name="search" type="text" class="SearchWidth" value="<?=htmlspecialchars(stripslashes(@$quicksearch))?>">
 
+<? if ($autocomplete_search) { 
+# Auto-complete search functionality
+?>
+<div id="autocomplete_search_choices" class="autocomplete"></div>
+<script type="text/javascript">
+new Ajax.Autocompleter("ssearchbox", "autocomplete_search_choices", "autocomplete_search.php");
+</script>
+
+<? } ?>
+
+
 <?
 if (!$basic_simple_search)
 	{
 	?>
-	<input type=hidden name="resetrestypes" value="yes">
+	<input type="hidden" name="resetrestypes" value="yes">
 	<?
 	$rt=explode(",",@$restypes);
 	$function="";
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
 		{
-		?><div class="tick"><input id="TickBox<?=$n?>" type=checkbox name="resource<?=$types[$n]["ref"]?>" value="yes" <? if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked<?}?>>&nbsp;<?=$types[$n]["name"]?></div><?	
+		?><div class="tick"><input id="TickBox<?=$n?>" type="checkbox" name="resource<?=$types[$n]["ref"]?>" value="yes" <? if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?}?> />&nbsp;<?=$types[$n]["name"]?></div><?	
 		$function.="document.getElementById('TickBox" . $n . "').checked=true;";
 		}
 	?>

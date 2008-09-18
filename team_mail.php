@@ -9,12 +9,6 @@ if (getval("send","")!="")
 	if ($result=="") {$error=$lang["emailsent"];} else {$error="!! " . $result . " !!";}
 	}
 
-# Include scriptaculous for auto-updating user search
-$headerinsert.="
-<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
-<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
-";
-
 include "include/header.php";
 ?>
 <div class="BasicsBox">

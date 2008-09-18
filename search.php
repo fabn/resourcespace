@@ -79,10 +79,8 @@ if (getval("refreshcollectionframe","")!="")
 	refresh_collection_frame();
 	}
 
-# Include scriptaculous for infobox panels.
+# Include javascript for infobox panels.
 $headerinsert.="
-<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
-<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
 <script src=\"js/infobox.js\" type=\"text/javascript\"></script>
 ";
 

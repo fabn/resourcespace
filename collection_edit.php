@@ -29,12 +29,6 @@ if (getval("name","")!="")
 
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
-
-# Include scriptaculous for auto-updating user search
-$headerinsert.="
-<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
-<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
-";
 	
 include "include/header.php";
 ?>

@@ -284,6 +284,9 @@ $save_as=false;
 # Allow resources to be e-mailed / shared (internally and externally)
 $allow_share=true;
 
+# Auto-completion of search (quick search only)
+$autocomplete_search=true;
+
 #
 # ----------------- Development Items ---------------------
 #

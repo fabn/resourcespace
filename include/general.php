@@ -1026,4 +1026,10 @@ function resolve_userlist_groups($userlist)
 		}
 	return $newlist;
 	}
+	
+function get_suggested_keywords($search)
+	{
+	# For the given partial word, suggest complete existing keywords.
+	return sql_array("select keyword value from keyword where keyword like '" . escape_check($search) . "%' and hit_count>0 order by hit_count desc");
+	}
 ?>

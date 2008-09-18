@@ -12,7 +12,7 @@
 
 <div id="autocomplete_choices" class="autocomplete"></div>
 <script type="text/javascript">
-new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "user_search.php",
+new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "autocomplete_user.php",
 	{
 	afterUpdateElement : addUser
 	}
@@ -35,28 +35,5 @@ function addUser()
 	document.getElementById("autocomplete").value="";
 	}
 </script>
-<style>
-div.autocomplete {
-  position:absolute;
-  width:250px;
-  background-color:white;
-  border:1px solid #888;
-  margin:0px;
-  padding:0px;
-}
-div.autocomplete ul {
-  list-style-type:none;
-  margin:0px;
-  padding:0px;
-}
-div.autocomplete ul li.selected { background-color: #ffb;}
-div.autocomplete ul li {
-  list-style-type:none;
-  display:block;
-  margin:0;
-  padding:2px;
-  cursor:pointer;
-  color: #000;
-}
-</style>
+
 

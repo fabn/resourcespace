@@ -8,11 +8,8 @@ $collection=getvalescaped("c","");
 $collectiondata= get_collection($collection);
 
 
-# Include scriptaculous for display options
-# Also include a couple functions for the Ajax contactsheet update
+# Include a couple functions for the Ajax contactsheet update
 $headerinsert.="
-<script src=\"js/prototype.js\" type=\"text/javascript\"></script>
-<script src=\"js/scriptaculous.js\" type=\"text/javascript\"></script>
 <script src=\"js/contactsheet.js\" type=\"text/javascript\"></script>
 ";
 
