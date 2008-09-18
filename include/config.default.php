@@ -286,6 +286,7 @@ $allow_share=true;
 
 # Auto-completion of search (quick search only)
 $autocomplete_search=true;
+$autocomplete_search_items=15;
 
 #
 # ----------------- Development Items ---------------------
