@@ -23,7 +23,7 @@ if (strlen($last)>=2) # Activate when last entered keyword >=3 chars long
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		?>
-		<li><?=$otherwords . " " . $keywords[$n]?></li>
+		<li><?=(($otherwords!="")?$otherwords . " ":"") . $keywords[$n]?></li>
 		<?
 		}
 	?>
