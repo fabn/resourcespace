@@ -306,8 +306,9 @@ $enable_related_resources=true;
 # If the user then selects this, a 100 day expiry time is set on the cookie.
 $allow_keep_logged_in=true;
 
-
-
+# Show the link to 'user contributed assets' on the My Contributions page
+# Allows non-admin users to see the assets they have contributed
+$show_user_contributed_resources=true;
 
 #
 # ----------------- Development Items ---------------------
