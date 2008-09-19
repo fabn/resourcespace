@@ -265,6 +265,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 </form>
 </div>
 
+<? if (!checkperm("b")) { ?>
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>
@@ -272,6 +273,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
     <p class="tight"><?=text("findpublic")?></p>
     <p><a href="collection_public.php"><?=$lang["findapubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
+<? } ?>
 
 <?
 include "include/footer.php";

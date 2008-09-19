@@ -414,7 +414,7 @@ if (true) #search condition
 				<? 
 				}
 			} ?>
-			<? if (strpos($search,"!")===false) { ?>
+			<? if (strpos($search,"!")===false && !checkperm("b")) { ?>
 			<div class="InpageNavLeftBlock"><a href="collections.php?addsearch=<?=urlencode($search)?>&restypes=<?=urlencode($restypes)?>&archive=<?=$archive?>" target="collections">&gt;&nbsp;<?=$lang["savethissearchtocollection"]?></a></div>
 			<div class="InpageNavLeftBlock"><a href="collections.php?addsearch=<?=urlencode($search)?>&restypes=<?=urlencode($restypes)?>&archive=<?=$archive?>&mode=resources" target="collections">&gt;&nbsp;<?=$lang["savesearchitemstocollection"]?></a></div>
 			<? } ?>
