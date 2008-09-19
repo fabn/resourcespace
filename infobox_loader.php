@@ -45,7 +45,8 @@ if ($access==2)
 for ($n=0;$n<count($infobox_fields);$n++)
 	{
 	$field=$infobox_fields[$n];
-	if (checkperm("f" . $field) || checkperm("f*"))
+	if ((checkperm("f" . $field) || checkperm("f*"))
+	&& !checkperm("f-" . $field))
 		{
 		$value=trim(get_data_by_field($ref,$field));
 		if ($value!="")

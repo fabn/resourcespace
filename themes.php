@@ -141,7 +141,8 @@ if ($header=="")
 	$headers=get_smart_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		if (checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
+		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
+		&& !checkperm("f-" . $headers[$n]["ref"]))
 			{
 			?>
 			<div class="RecordBox">

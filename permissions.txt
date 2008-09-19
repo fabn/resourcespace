@@ -20,6 +20,7 @@ Fields
 ------
 f*	Can see all fields
 f?	Can see field with reference ? e.g. f1,f2,f3 (applies to editing, advanced search, and viewing resources).
+f-? Can not see the field with reference ? e.g. f*,f-3 means see all fields except field 3.
 
 Resource creation
 -----------------

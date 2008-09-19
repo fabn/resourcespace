@@ -100,7 +100,9 @@ function get_resource_field_data($ref,$multi=false)
 
 	for ($n=0;$n<count($fields);$n++)
 		{
-		if ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && in_array($fields[$n]["resource_type"],$validtypes)) {$return[]=$fields[$n];}
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
+		!checkperm("f-" . $fields[$n]["fref"])
+		&& in_array($fields[$n]["resource_type"],$validtypes)) {$return[]=$fields[$n];}
 		}
 	return $return;
 	}
