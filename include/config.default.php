@@ -290,6 +290,10 @@ $allow_share=true;
 $autocomplete_search=true;
 $autocomplete_search_items=15;
 
+# Automatically order checkbox lists (alphabetically)
+$auto_order_checkbox=true;
+
+
 #
 # ----------------- Development Items ---------------------
 #

@@ -39,7 +39,7 @@ n	Can tag resources using 'Speed Tagging' (must be enabled in config).
 
 Themes / Collections
 --------------------
-b	Supress bottom collections frame and all associated collections functionality
+b	Supress bottom collections frame and all associated collections functionality (not advisable for administrator groups as collections make resource management much easier)
 h	Can publish themes, and edit all collections
 j*	Can see all theme categories
 j?	Can see theme in category ? (e.g. jCars,jAnimals)

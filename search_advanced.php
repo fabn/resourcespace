@@ -289,7 +289,8 @@ for ($n=0;$n<count($fields);$n++)
 	
 		case 2: # -------- Show a check list for both dropdowns and check lists
 		case 3:
-		$options=trim_array(explode(",",$fields[$n]["options"]));sort($options);
+		$options=trim_array(explode(",",$fields[$n]["options"]));
+		if ($auto_order_checkbox) {sort($options);}
 		$set=trim_array(explode(";",$value));
 		$wrap=0;
 		$l=average_length($options);
