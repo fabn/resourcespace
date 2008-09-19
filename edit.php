@@ -239,37 +239,41 @@ for ($n=0;$n<count($types);$n++)
 
 <?
 # Batch uploads (SWF) - also ask which collection to add the resource to.
-?>
-<div class="Question">
-<label for="collection_add"><?=$lang["addtocollection"]?></label>
-<select name="collection_add" id="collection_add" class="stdwidth">
-<option value=""><?=$lang["batchdonotaddcollection"]?></option>
-<?
-$list=get_user_collections($userref);
-$currentfound=false;
-for ($n=0;$n<count($list);$n++)
+if ($enable_add_collection_on_upload) 
 	{
-	if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
 	?>
-	<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
+	<div class="Question">
+	<label for="collection_add"><?=$lang["addtocollection"]?></label>
+	<select name="collection_add" id="collection_add" class="stdwidth">
+	<option value=""><?=$lang["batchdonotaddcollection"]?></option>
 	<?
-	}
-if (!$currentfound)
-	{
-	# The user's current collection has not been found in their list of collections (perhaps they have selected a theme to edit). Display this as a separate item.
-	$cc=get_collection($usercollection);
-	if ($cc!==false)
+	$list=get_user_collections($userref);
+	$currentfound=false;
+	for ($n=0;$n<count($list);$n++)
 		{
+		if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
 		?>
-		<option value="<?=$usercollection?>"><?=htmlspecialchars($cc["name"])?></option>
+		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
 		<?
 		}
-	}
+	if (!$currentfound)
+		{
+		# The user's current collection has not been found in their list of collections (perhaps they have selected a theme to edit). Display this as a separate item.
+		$cc=get_collection($usercollection);
+		if ($cc!==false)
+			{
+			?>
+			<option value="<?=$usercollection?>"><?=htmlspecialchars($cc["name"])?></option>
+			<?
+			}
+		}
+	?>
+	</select>
+	<div class="clearerleft"> </div>
+	</div>
+	<? 
+}
 ?>
-</select>
-<div class="clearerleft"> </div>
-</div>
-
 
 
 <? } ?>
@@ -280,7 +284,7 @@ if (!$currentfound)
 $lastrt=-1;
 
 # Batch uploads - "copy data from" feature
-if ($ref<0)
+if ($ref<0 && $enable_copy_data_from)
 	{ 
 	?>
 	<div class="Question">

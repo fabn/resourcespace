@@ -293,6 +293,11 @@ $autocomplete_search_items=15;
 # Automatically order checkbox lists (alphabetically)
 $auto_order_checkbox=true;
 
+# When batch uploading, show the 'add resources to collection' selection box
+$enable_add_collection_on_upload=true;
+
+# When batch uploading, enable the 'copy resource data from existing resource' feature
+$enable_copy_data_from=true;
 
 #
 # ----------------- Development Items ---------------------
