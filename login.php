@@ -100,11 +100,13 @@ include "include/header.php";
 		</div> 
 <? } ?>
 	
+		<? if ($allow_keep_logged_in) { ?>
 		<div class="Question">
 			<label for="remember"><?=$lang["keepmeloggedin"]?></label>
 			<input valign=bottom name="remember" id="remember" type="checkbox" value="yes" checked>
 			<div class="clearerleft"> </div>
 		</div>
+		<? } ?>
 		
 		<div class="QuestionSubmit">
 			<label for="buttons"> </label>			

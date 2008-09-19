@@ -302,6 +302,13 @@ $enable_copy_data_from=true;
 # Enable the 'related resources' field when editing resources.
 $enable_related_resources=true;
 
+# Enable the 'keep me logged in at this workstation' option at the login form
+# If the user then selects this, a 100 day expiry time is set on the cookie.
+$allow_keep_logged_in=true;
+
+
+
+
 #
 # ----------------- Development Items ---------------------
 #
