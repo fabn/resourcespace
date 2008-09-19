@@ -362,7 +362,7 @@ if (true) #search condition
 				<div class="KeyComment"><?=$lang["addorviewcomments"]?></div>
 				<? } ?>
 				
-				<div class="KeyEmail"><?=$lang["emailresource"]?></div>
+				<? if ($allow_share) { ?><div class="KeyEmail"><?=$lang["emailresource"]?></div><? } ?>
 				<? if (!checkperm("b")) { ?><div class="KeyCollect"><?=$lang["addtocurrentcollection"]?></div><? } ?>
 				<div class="KeyPreview"><?=$lang["fullscreenpreview"]?></div>
 			</div>

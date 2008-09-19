@@ -508,13 +508,15 @@ for ($n=0;$n<count($fields);$n++)
 	
 
 	<!-- Related Resources -->
+	<? if ($enable_related_resources) { ?>
 	<? if ($multiple) { ?><div><input name="editthis_related" id="editthis_related" value="yes" type="checkbox" onClick="var q=document.getElementById('question_related');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["relatedresources"]?></label></div><? } ?>
 	<div class="Question" id="question_related" <? if ($multiple) {?>style="display:none;"<?}?>>
 	<label for="related"><?=$lang["relatedresources"]?></label>
 	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"><?=((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
-
+	<? } ?>
+	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
 	<input name="resetform" type="submit" value="<?=$lang["clearform"]?>" />&nbsp;
