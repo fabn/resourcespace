@@ -351,7 +351,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
-		$command .= " \"$prefix$file\"[0]";
+		$command .= " \"$prefix$file\"[0] -flatten -quality $imagemagick_quality";
 
 
 		# Locate imagemagick.
@@ -394,7 +394,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 				if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
 
-				$command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -write \"$path\" +delete \\)"; 
+				$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" $path";
+				$output=shell_exec($runcommand);  
 
 				# Add a watermarked image too?
 				global $watermark;
@@ -404,12 +405,11 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					if (file_exists($path)) {unlink($path);}
    					$watermarkreal=myrealpath($watermark);
 
-					$command .= " \\( +clone -flatten $profile -quality $imagemagick_quality -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" -write \"$path\" +delete \\)"; 
+					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" $path"; 
+					$output=shell_exec($runcommand);  
 					}
 				}
 			}
-		$command .= " null:";
-		$output=shell_exec($command); 
 
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
 		$target=@imagecreatefromjpeg(get_resource_path($ref,"thm",false));
