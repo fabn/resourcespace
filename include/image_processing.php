@@ -351,7 +351,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
-		$command .= " \"$prefix$file\"[0] -flatten -quality $imagemagick_quality";
+		$command .= " \"$prefix$file\"[0] -quality $imagemagick_quality";
 
 
 		# Locate imagemagick.
@@ -362,9 +362,9 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Get image's dimensions.
 		$identcommand .= ' -format %wx%h "'. $prefix . $file .'[0]"';
 		$identoutput=shell_exec($identcommand);
-		preg_match('/^([0-9]+)x([0-9]+)$/',$identoutput,$smatches);
+		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
-		
+
 		$sizes="";
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
 		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}

@@ -290,7 +290,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
 				$command .= ' -format %wx%h "'. $prefix . $path2 .'[0]"';
 				$output=shell_exec($command);
-				preg_match('/^([0-9]+)x([0-9]+)$/',$output,$smatches);
+				preg_match('/^([0-9]+)x([0-9]+)$/ims',$output,$smatches);
 				if ((list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
 				}
 			}
