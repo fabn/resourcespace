@@ -37,8 +37,8 @@ function SwapCSS(css)
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
 		<ul>
 		<li><a href="<?=$baseurl?>/home.php"><?=$lang["home"]?></a></li>
-		<li><a href="<?=$baseurl?>/about.php"><?=$lang["aboutus"]?></a></li>
-		<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
+		<? if ($about_link) { ?><li><a href="<?=$baseurl?>/about.php"><?=$lang["aboutus"]?></a></li><? } ?>
+		<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 <!--	<li><a href="#">Terms&nbsp;&amp;&nbsp;Conditions</a></li>-->
 <!--	<li><a href="#">Team&nbsp;Centre</a></li>-->
 		</ul>

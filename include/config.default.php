@@ -310,6 +310,12 @@ $allow_keep_logged_in=true;
 # Allows non-admin users to see the assets they have contributed
 $show_user_contributed_resources=true;
 
+# Show the contact us link?
+$contact_link=true;
+
+# Show the about us link?
+$about_link=true;
+
 #
 # ----------------- Development Items ---------------------
 #

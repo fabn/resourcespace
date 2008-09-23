@@ -66,7 +66,7 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 	?>
 	<ul>
 	<li><a href="<?=$baseurl?>/login.php" target="_top"><?=$lang["login"]?></a></li>
-	<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
+	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
 	<?
 	}
@@ -77,7 +77,7 @@ else
 	<li><? if ($allow_password_change) { ?><a href="<?=$baseurl?>/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
 	<li><a href="<?=$baseurl?>/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
 	<?hook("addtologintoolbarmiddle");?>
-	<li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li>
+	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
 	<?
 	}
@@ -93,7 +93,7 @@ else
 
 		<ul>
 		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php"<? if (!checkperm("b")) { ?> target="main"<? } ?>><?=$lang["home"]?></a></li><? }  ?>
-		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/search_advanced.php" <? if (!checkperm("b")) { ?>target="main"<? } ?>><?=$lang["search"]?></a></li><? }  ?>
+		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/search_advanced.php" <? if (!checkperm("b")) { ?>target="main"<? } ?>><?=$lang["advancedsearch"]?></a></li><? }  ?>
 		<? if 	(
 			(checkperm("s"))
 		&&
