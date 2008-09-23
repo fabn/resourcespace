@@ -34,6 +34,7 @@ function SwapCSS(css)
 <? } ?>
 </div>
 
+<? if ($about_link || $contact_link) { ?>
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
 		<ul>
 		<li><a href="<?=$baseurl?>/home.php"><?=$lang["home"]?></a></li>
@@ -43,6 +44,8 @@ function SwapCSS(css)
 <!--	<li><a href="#">Team&nbsp;Centre</a></li>-->
 		</ul>
 </div>
+<? } ?>
+
 <? } ?>
 
 <div id="FooterNavRight" class="OxColourPale"><?=text("footer")?></div>
