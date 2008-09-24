@@ -415,8 +415,7 @@ for ($n=0;$n<count($fields);$n++)
 
 <div class="PanelShadow"></div>
 </div>
-
-
+<? hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
 <?
 # -------- Related Resources (must be able to search for this to work)
 if (checkperm("s") && ($k=="")) {
