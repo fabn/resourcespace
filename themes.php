@@ -136,6 +136,7 @@ elseif ($theme_category_levels==1)
 ?>
 
 <?
+# ------- Smart Themes -------------
 if ($header=="")
 	{
 	$headers=get_smart_theme_headers();
@@ -166,8 +167,8 @@ if ($header=="")
 				$s=$headers[$n]["name"] . ":" . $themes[$m];
 				?>
 				<tr>
-				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
-				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
+				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
+				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
 				</tr>
 				<?
 				}
