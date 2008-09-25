@@ -145,6 +145,9 @@ $theme_images=true;
 # Maximum of 3 category levels (so with the themes themselves, a total of 4 categorisation levels for resources).
 $theme_category_levels=1;
 
+# Show advanced search on the home page?
+$home_advancedsearch=false;
+
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
 
