@@ -87,8 +87,6 @@ if (!$basic_simple_search)
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
 	<?
-	if (@$restypes=="") {$restypes=$default_res_types;}
-	
 	$rt=explode(",",@$restypes);
 	$function="";
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
