@@ -351,8 +351,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
-		$command .= " \"$prefix$file\"[0] -quality $imagemagick_quality";
-
+		$command .= ' '. escapeshellarg($prefix.$file) .'[0] null: -flatten -quality ' . $imagemagick_quality;
 
 		# Locate imagemagick.
 		$identcommand=$imagemagick_path . "/bin/identify";
