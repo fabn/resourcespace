@@ -6,7 +6,6 @@ include "include/collections_functions.php";
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("c",""),$k) && !check_access_key(getvalescaped("r",""),$k))) {include "include/authenticate.php";}
 
 $topurl=$use_theme_as_home?"themes.php":"home.php";
-
 $bottomurl="collections.php?k=" . $k;
 
 if (getval("c","")!="")
@@ -57,11 +56,11 @@ Copyright Oxfam GB 2006-2008
 -->
 <title><?=htmlspecialchars($applicationname)?></title>
 
-<frameset rows="*<? if ($bottomurl!="") { ?>,3,138<? } ?>" id="topframe" framespacing="0" frameborder="no" border="0">
-<frame name="main" id="main" src="<?=$topurl?>" frameborder=no>
+<frameset rows="*<? if ($bottomurl!="") { ?><? if ($collection_resize!=true){?>,3<?}?>,138<? } ?>" id="topframe" framespacing="0" <? if ($collection_resize!=true){?>frameborder="no"<?}?>>
+<frame name="main" id="main" src="<?=$topurl?>" <? if ($collection_resize!=true){?>frameborder="no"<?}?>>
 
 <? if ($bottomurl!="") { ?>
-<frame src="frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" />
+<? if ($collection_resize!=true){?><frame src="frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" /><?}?>
 <frame name="collections" id="collections" src="<?=$bottomurl?>" frameborder=no>
 <? } ?>
 

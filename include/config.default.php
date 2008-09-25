@@ -323,6 +323,9 @@ $reset_date_upload_template=false;
 # Enable sorting resources by colour
 $colour_sort=true;
 
+# Make the frameset resizeable. Useful for viewing large collections, especially if re-ordering.
+$collection_resize=false;
+
 # Default resource types to use for searching (leave empty for all)
 $default_res_types="";
 
@@ -333,7 +336,6 @@ $default_res_types="";
 
 # Display a breadcrumbs trail (list of pages previously visited to aid navigation)
 $breadcrumbs=false;
-
 
 
 

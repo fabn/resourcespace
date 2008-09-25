@@ -181,13 +181,13 @@ function ToggleThumbs()
 	
 	<? if ($thumbs=="show") { ?>
 	document.getElementById("CollectionSpace").style.visibility="hidden";
-	top.document.getElementById("topframe").rows="*,3,33";
+	top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,33";
 	<? } else { ?>
-	top.document.getElementById("topframe").rows="*,3,138";
+	top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,138";
 	<? } ?>
 	}
 <? if ($thumbs=="hide") { ?>
-top.document.getElementById("topframe").rows="*,3,33";
+top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,33";
 <? } ?>
 </script>
 
