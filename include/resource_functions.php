@@ -35,6 +35,7 @@ function save_resource_data($ref,$multi)
 	# Save all submitted data for resource $ref.
 	# Also re-index all keywords from indexable fields.
 		
+	global $auto_order_checkbox;
 	# Loop through the field data and save (if necessary)
 	$errors=array();
 	$resource_sql="";
@@ -45,7 +46,8 @@ function save_resource_data($ref,$multi)
 			{
 			# construct the value from the ticked boxes
 			$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
-			$options=trim_array(explode(",",$fields[$n]["options"]));sort($options);
+			$options=trim_array(explode(",",$fields[$n]["options"]));
+			if ($auto_order_checkbox) {sort($options);}
 			for ($m=0;$m<count($options);$m++)
 				{
 				$name=$fields[$n]["ref"] . "_" . $m;
@@ -137,6 +139,7 @@ function save_resource_data_multi($collection)
 	$list=get_collection_resources($collection);
 	$ref=$list[0];
 	$fields=get_resource_field_data($ref,true);
+	global $auto_order_checkbox;
 	
 	for ($n=0;$n<count($fields);$n++)
 		{
@@ -146,7 +149,9 @@ function save_resource_data_multi($collection)
 				{
 				# construct the value from the ticked boxes
 				$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
-				$options=trim_array(explode(",",$fields[$n]["options"]));sort($options);
+				$options=trim_array(explode(",",$fields[$n]["options"]));
+				if ($auto_order_checkbox) {sort($options);}
+				
 				for ($m=0;$m<count($options);$m++)
 					{
 					$name=$fields[$n]["ref"] . "_" . $m;
