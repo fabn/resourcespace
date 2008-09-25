@@ -113,7 +113,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 
 <? if ($home_advancedsearch) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-	<h2><a href="help.php"><?=$lang["advancedsearch"]?></a></h2>
+	<h2><a href="search_advanced.php"><?=$lang["advancedsearch"]?></a></h2>
 	<?=text("advancedsearch")?>
 	</div>
 	<div class="PanelShadow"></div>
