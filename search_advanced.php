@@ -207,7 +207,7 @@ function UpdateResultCount()
 
 <!-- Search across all fields -->
 <div class="Question">
-<label for="allfields"><?=$lang["allfields"]?></label><input class="formfield" type=text name="allfields" id="allfields" value="<?=$allwords?>" onChange="UpdateResultCount();">
+<label for="allfields"><?=$lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?=$allwords?>" onChange="UpdateResultCount();">
 <div class="clearerleft"> </div>
 </div>
 
@@ -303,9 +303,12 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?}
 			$name=$fields[$n]["ref"] . "_" . $m;
-			?>
-			<td valign=middle><input type=checkbox id="<?=$name?>" name="<?=$name?>" value="yes" <? if (in_array(strtolower(i18n_get_translated($options[$m])),$set)) {?>checked<?}?> onClick="UpdateResultCount();"></td><td valign=middle><?=htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
-			<?
+			if ($options[$m]!="")
+				{
+				?>
+				<td valign=middle><input type=checkbox id="<?=$name?>" name="<?=$name?>" value="yes" <? if (in_array(strtolower(i18n_get_translated($options[$m])),$set)) {?>checked<?}?> onClick="UpdateResultCount();"></td><td valign=middle><?=htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+				<?
+				}
 			}
 		?></tr></table><?
 		break;
