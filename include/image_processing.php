@@ -98,7 +98,7 @@ if (isset($exiftool_path))
 				}
 		}
 	}
-else
+elseif (isset($exif_comment))
 {
 	$data=@exif_read_data($image);
 

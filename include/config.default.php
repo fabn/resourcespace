@@ -73,6 +73,8 @@ if (function_exists("date_default_timezone_set")) {date_default_timezone_set("GM
 $iptc_expectedchars="æøåÆØÅ";
 
 # Which field do we drop the EXIF data in to?
+# Comment out these lines to disable basic EXIF reading.
+# See exiftool for more advanced EXIF/IPTC/XMP extraction.
 $exif_comment=18;
 $exif_model=52;
 $exif_date=12;
