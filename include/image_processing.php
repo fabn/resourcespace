@@ -80,7 +80,7 @@ function extract_exif_comment($ref,$extension)
 	$image=get_resource_path($ref,"",false,$extension);
 	if (!file_exists($image)) {return false;}
 
-global $exiftool_path;
+global $exiftool_path,$exif_comment;
 if (isset($exiftool_path))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
