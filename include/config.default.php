@@ -316,6 +316,10 @@ $contact_link=true;
 # Show the about us link?
 $about_link=true;
 
+# When uploading resources (batch upload) and editing the template, should the date be reset to today's date?
+# If set to false, the previously entered date is used.
+$reset_date_upload_template=false;
+
 #
 # ----------------- Development Items ---------------------
 #

@@ -406,7 +406,7 @@ for ($n=0;$n<count($fields);$n++)
 		case 6: # Also includes expiry date
         $dy=date("Y");$dm=date("m");$dd=date("d");
 
-		if ($fields[$n]["type"]==6) {$dy="";$dm="";$dd="";}
+		if ($fields[$n]["type"]==6 || ($ref<0 && $reset_date_upload_template)) {$dy="";$dm="";$dd="";}
 		if ($value!="")
         	{
             #fetch the date parts from the value
