@@ -329,6 +329,13 @@ $collection_resize=false;
 # Default resource types to use for searching (leave empty for all)
 $default_res_types="";
 
+# Show the Resource ID on the resource view page.
+$show_resourceid=true;
+
+# Show the access on the resource view page.
+$show_access_field=true;
+
+
 #
 # ----------------- Development Items ---------------------
 #
