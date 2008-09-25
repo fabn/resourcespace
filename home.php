@@ -101,7 +101,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <? } ?>
 	
-<? if ($home_mycollections) { ?>
+<? if ($home_mycollections && !checkperm("b")) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
 	<h2><a href="collection_manage.php"><?=$lang["mycollections"]?></a></h2>
 	<?=text("mycollections")?>
