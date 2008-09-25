@@ -323,6 +323,9 @@ $reset_date_upload_template=false;
 # Enable sorting resources by colour
 $colour_sort=true;
 
+# Default resource types to use for searching (leave empty for all)
+$default_res_types="";
+
 #
 # ----------------- Development Items ---------------------
 #
