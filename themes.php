@@ -224,12 +224,12 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			{
 			?>
 			<tr>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"><?=htmlspecialchars($themes[$m]["name"])?></a>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"  label="<?=$lang["collectionviewhover"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a>
 			<? if ($flag_new_themes && (time()-strtotime($themes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?=$lang["newflag"]?></div><? } ?>
 			</div></td>
 			<td width="5%"><?=$themes[$m]["c"]?></td>
 			
-			<td nowrap><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+			<td nowrap><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>" label="<?=$lang["collectionviewhover"]?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
 			
 			<? if (!checkperm("b")) { ?>&nbsp;<a href="collections.php?collection=<?=$themes[$m]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a><? } ?>
 		
@@ -239,7 +239,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			<? } ?>
 			
 			<? if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
+			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>"  label="<?=$lang["collectioncontacthover"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
 			<? } ?>
 		
 			<? if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
