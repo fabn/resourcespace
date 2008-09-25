@@ -455,9 +455,16 @@ for ($n=0;$n<count($fields);$n++)
 	}
 	}
 ?>
-<br><h1><?=$lang["statusandrelationships"]?></h1>
+<? if ($ref>=0) { ?><br><h1><?=$lang["statusandrelationships"]?></h1><? } ?>
 
 	<!-- Archive Status -->
+	<? if ($ref<0) { 
+		# Do not show for user editable templates.
+		?>
+		<input type=hidden name="archive" value="<?=$resource["archive"]?>">
+		<?
+		}
+	else { ?>
 	<? if ($multiple) { ?><div><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["status"]?></label></div><? } ?>
 	<div class="Question" id="question_status" <? if ($multiple) {?>style="display:none;"<?}?>>
 	<label for="archive"><?=$lang["status"]?></label>
@@ -469,8 +476,16 @@ for ($n=0;$n<count($fields);$n++)
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
+	<? } ?>
 	
 	<!-- Access -->
+	<? if ($ref<0) { 
+		# Do not show for user editable templates.
+		?>
+		<input type=hidden name="access" value="<?=$resource["access"]?>">
+		<?
+		}
+	else { ?>
 	<? if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["access"]?></label></div><? } ?>
 	<div class="Question" id="question_access" <? if ($multiple) {?>style="display:none;"<?}?>>
 	<label for="archive"><?=$lang["access"]?></label>
@@ -505,7 +520,7 @@ for ($n=0;$n<count($fields);$n++)
 	?></table>
 	<div class="clearerleft"> </div>
 	</div>
-	
+	<? } ?>
 
 	<!-- Related Resources -->
 	<? if ($enable_related_resources) { ?>

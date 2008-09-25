@@ -320,6 +320,9 @@ $about_link=true;
 # If set to false, the previously entered date is used.
 $reset_date_upload_template=false;
 
+# Enable sorting resources by colour
+$colour_sort=true;
+
 #
 # ----------------- Development Items ---------------------
 #

@@ -159,8 +159,12 @@ if (true) #search condition
 			
 			&nbsp;|&nbsp;
 			<? if ($order_by=="date") {?><span class="Selected"><?=$lang["date"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=date&archive=<?=$archive?>"><?=$lang["date"]?></a><? } ?>
+			
+			<? if ($colour_sort) { ?>
 			&nbsp;|&nbsp;
 			<? if ($order_by=="colour") {?><span class="Selected"><?=$lang["colour"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=colour&archive=<?=$archive?>"><?=$lang["colour"]?></a><? } ?>
+			<? } ?>
+			
 			<? if ($country_sort) { ?>
 			&nbsp;|&nbsp;
 			<? if ($order_by=="country") {?><span class="Selected"><?=$lang["country"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=country&archive=<?=$archive?>"><?=$lang["country"]?></a><? } ?>
