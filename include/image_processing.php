@@ -377,7 +377,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 
-			if ((!$highestsize && ($extension != "jpg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
+			if ((!$highestsize && !eregi("jp[e]?g", $extension)) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
 				{
 				if (($sw<$tw) && ($sh<$th))
 					{
