@@ -547,11 +547,14 @@ function get_themes_by_resource($ref)
 	# Combine the theme categories into one string so multiple category levels display correctly.
 	for ($n=0;$n<count($return);$n++)
 		{
-		$theme="";
-		if ($return[$n]["theme"]!="") {$theme=$return[$n]["theme"];}
-		if ($return[$n]["theme2"]!="") {$theme.=" / " . $return[$n]["theme2"];}
-		if ($return[$n]["theme3"]!="") {$theme.=" / " . $return[$n]["theme3"];}
-		$return[$n]["theme"]=$theme;
+		if (checkperm("j*") || checkperm("j" . $return[$n]["theme"]))
+			{
+			$theme="";
+			if ($return[$n]["theme"]!="") {$theme=$return[$n]["theme"];}
+			if ($return[$n]["theme2"]!="") {$theme.=" / " . $return[$n]["theme2"];}
+			if ($return[$n]["theme3"]!="") {$theme.=" / " . $return[$n]["theme3"];}
+			$return[$n]["theme"]=$theme;
+			}
 		}
 	return $return;
 	}
