@@ -548,17 +548,19 @@ function get_custom_access($resource,$usergroup)
 	
 function get_themes_by_resource($ref)
 	{
-	$return=sql_query("select c.ref,c.theme,c.theme2,c.theme3,c.name,u.fullname from collection_resource cr join collection c on cr.collection=c.ref and cr.resource='$ref' and c.public=1 left outer join user u on c.user=u.ref order by length(theme) desc");
+	$themes=sql_query("select c.ref,c.theme,c.theme2,c.theme3,c.name,u.fullname from collection_resource cr join collection c on cr.collection=c.ref and cr.resource='$ref' and c.public=1 left outer join user u on c.user=u.ref order by length(theme) desc");
 	# Combine the theme categories into one string so multiple category levels display correctly.
-	for ($n=0;$n<count($return);$n++)
+	$return=array();
+	for ($n=0;$n<count($themes);$n++)
 		{
-		if (checkperm("j*") || checkperm("j" . $return[$n]["theme"]))
+		if (checkperm("j*") || checkperm("j" . $themes[$n]["theme"]))
 			{
 			$theme="";
-			if ($return[$n]["theme"]!="") {$theme=$return[$n]["theme"];}
-			if ($return[$n]["theme2"]!="") {$theme.=" / " . $return[$n]["theme2"];}
-			if ($return[$n]["theme3"]!="") {$theme.=" / " . $return[$n]["theme3"];}
-			$return[$n]["theme"]=$theme;
+			if ($themes[$n]["theme"]!="") {$theme=$themes[$n]["theme"];}
+			if ($themes[$n]["theme2"]!="") {$theme.=" / " . $themes[$n]["theme2"];}
+			if ($themes[$n]["theme3"]!="") {$theme.=" / " . $themes[$n]["theme3"];}
+			$themes[$n]["theme"]=$theme;			
+			$return[]=$themes[$n];
 			}
 		}
 	return $return;
