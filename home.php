@@ -120,19 +120,19 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <? } ?>
 
-<? if ($home_helpadvice) { ?>
+<? if ($home_mycontributions) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-	<h2><a href="help.php"><?=$lang["helpandadvice"]?></a></h2>
-	<?=text("help")?>
+	<h2><a href="help.php"><?=$lang["mycontributions"]?></a></h2>
+	<?=text("mycontributions")?>
 	</div>
 	<div class="PanelShadow"></div>
 	</div>
 <? } ?>
 
-<? if ($home_mycontributions) { ?>
+<? if ($home_helpadvice) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-	<h2><a href="help.php"><?=$lang["mycontributions"]?></a></h2>
-	<?=text("mycontributions")?>
+	<h2><a href="help.php"><?=$lang["helpandadvice"]?></a></h2>
+	<?=text("help")?>
 	</div>
 	<div class="PanelShadow"></div>
 	</div>
