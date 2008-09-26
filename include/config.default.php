@@ -346,6 +346,10 @@ $show_access_field=true;
 # Show the extension after the truncated text in the search results.
 $show_extension_in_search=false;
 
+# Should the category tree field (if one exists) default to being open instead of closed?
+$category_tree_open=false;
+
+
 #
 # ----------------- Development Items ---------------------
 #

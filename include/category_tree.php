@@ -6,7 +6,7 @@
 <a href="#" onclick="if (confirm('<?=$lang["clearcategoriesareyousure"]?>')) {DeselectAll();} return false;">&gt; <?=$lang["clearall"]?></a>
 </div>
 
-<div id="tree" class="CategoryTree">&nbsp;</div>
+<div id="tree" class="CategoryTree" <? if ($category_tree_open) { ?>style="display:block;"<? } ?>>&nbsp;</div>
 <script language="JavaScript">
 
 var TreeParents=new Array();

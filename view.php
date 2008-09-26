@@ -132,7 +132,7 @@ elseif ($resource["has_image"]==1)
 	
 	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
 	if (file_exists($imagepath))
-		{ ?><img src="<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" /><? } 
+		{ ?><img src="<?=$imagepath?>?nc=<?=time()?>" alt="<?=$lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><? } 
 	else # use the thumbnail instead, the uploaded file wasn't big enough to create a preview.
 		{ ?><img src="<?=get_resource_path($ref,"thm",false,-1,1,checkperm("w"))?>" alt="" class="Picture" /><? }
 	if (file_exists($previewpath)) { ?></a><? }

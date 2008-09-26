@@ -283,7 +283,7 @@ if (true) #search condition
 <? } ?> <!-- END HOOK Rendertitlethumb -->			
 			
 			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><? } ?>&nbsp;</div>				
-			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 			<? if (!checkperm("b")) { ?><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?>
 			<? if ($allow_share) { ?><span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><? } ?>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
@@ -337,7 +337,7 @@ if (true) #search condition
 			<td><?=$result[$n]["ref"]?></td>
 			<td><? if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><? } ?></td>
 			<td><?=nicedate($result[$n]["creation_date"],false,true)?></td>
-			<td ><div class="ListTools"><a <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?> href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<? if (!checkperm("b")) { ?><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<? } ?><a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
+			<td><div class="ListTools"><a <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?> href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<? if (!checkperm("b")) { ?><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<? } ?><a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
 			</tr>
 			<?
 			}
