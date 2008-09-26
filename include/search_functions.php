@@ -44,7 +44,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# append ref filter - never return the batch upload template (negative refs)
 	if ($filter!="") {$filter.=" and ";}
-	$filter.="ref>0";
+	$filter.="r.ref>0";
 	
 	# ------ Advanced 'custom' permissions, need to join to access table.
 	$custperm="";
@@ -81,6 +81,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					
 			$custperm.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$k) . "') ";	
 			}
+		}
+	
+	# Can only search for resources that belong to themes
+	if (checkperm("J"))
+		{
+		$custperm.=" join collection_resource jcr on jcr.resource=r.ref join collection jc on jcr.collection=jc.ref and length(jc.theme)>0 ";
 		}
 		
 	# ------ Special searches ------
@@ -292,7 +298,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (($t2!="") && ($sql!="")) {$sql=" and " . $sql;}
 	
 	# Compile final SQL
-	$sql="select r.*,$score score from resource r" . $t . " where $t2 $sql group by r.ref order by $order_by limit $max_results";
+	$sql="select distinct r.*,$score score from resource r" . $t . " where $t2 $sql group by r.ref order by $order_by limit $max_results";
 
 	# Execute query
 	$result=sql_query($sql,false,$fetchrows);

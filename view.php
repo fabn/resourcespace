@@ -475,7 +475,7 @@ if (count($result)>0)
 		for ($n=0;$n<count($result);$n++)			
 			{
 			?>
-			<li><a href="search.php?search=!collection<?=$result[$n]["ref"]?>"><?=(strlen($result[$n]["theme"])>0)?htmlspecialchars($result[$n]["theme"] . " / "):$lang["public"] . " : " . htmlspecialchars($result[$n]["fullname"] . " / ")?><?=htmlspecialchars($result[$n]["name"])?></a></li>
+			<li><a href="search.php?search=!collection<?=$result[$n]["ref"]?>"><?=(strlen($result[$n]["theme"])>0)?htmlspecialchars(str_replace("*","",$result[$n]["theme"]) . " / "):$lang["public"] . " : " . htmlspecialchars($result[$n]["fullname"] . " / ")?><?=htmlspecialchars($result[$n]["name"])?></a></li>
 			<?		
 			}
 		?>

@@ -44,6 +44,7 @@ b	Supress bottom collections frame and all associated collections functionality 
 h	Can publish themes, and edit all collections
 j*	Can see all theme categories
 j?	Can see theme in category ? (e.g. jCars,jAnimals)
+J	Can only search for resources that belong to themes (not advisable!)
 
 Administration
 --------------
