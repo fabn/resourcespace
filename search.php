@@ -329,8 +329,10 @@ if (true) #search condition
 			<!--List Item-->
 			<tr>
 			<td nowrap><div class="ListTitle"><a <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?> href="<?=$url?>"><?=highlightkeywords(tidy_trim($result[$n]["title"],45) . 
-			($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"") .
-			((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):""),$search) ?></a></div></td>
+			
+			((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
+			($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
+			,$search) ?></a></div></td>
 			<td><? if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><? } else { ?>&nbsp;<? } ?></td>
 			<td><?=$result[$n]["ref"]?></td>
 			<td><? if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><? } ?></td>
