@@ -265,15 +265,18 @@ if ($nodownloads || $counter==0)
 </table>
 <? } ?>
 <br />
+<ul>
 <? hook ("resourceactions") ?>
 <? if ($k=="") { ?>
-<? if (!checkperm("b")) { ?><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a>&nbsp;&nbsp;<? } ?>
-<? if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a>&nbsp;&nbsp;<? } ?>
-<? if ($allow_share) { ?><a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a>&nbsp;&nbsp;<? } ?>
-<? if (checkperm("e" . $resource["archive"])) { ?><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a><? } ?>
-&nbsp;&nbsp;<a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a>
+<? if (!checkperm("b")) { ?><li><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt; <?=$lang["addtocollection"]?></a></li><? } ?>
+<? if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><li><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a></li><? } ?>
+<? if ($allow_share) { ?><li><a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a></li><? } ?>
+<? if (checkperm("e" . $resource["archive"])) { ?><li><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a></li><? } ?>
+<li><a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a></li>
 <? } ?>
 <? } /* End of renderinnerresourcedownloadspace hook */ ?>
+</ul>
+<div class="clearerleft"> </div>
 </div>
 <? } /* End of renderinnerresourceview hook */ ?>
 </div>

@@ -249,13 +249,13 @@ if ($k!="")
   <ul>
   	<? if ((!(sql_value("select count(*) value from research_request where collection='$usercollection'",0)>0)) || (!checkperm("r"))) { ?>
     		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?=$lang["managemycollections"]?></a></li>
-    <? if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?>&nbsp;&nbsp;</a><? } ?>
+    <? if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?></a></li><? } ?>
     
-    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$allow_share?$lang["edit"]:$lang["editcollection"]?></a><? } ?>
+    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><? } ?>
 
-    <? if ($feedback) {?><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a><? } ?>
+    <? if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a></li><? } ?>
     
-    </li><? } ?>
+    <? } ?>
     <? } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
@@ -266,21 +266,17 @@ if ($k!="")
     <? 
     # If this collection is (fully) editable, then display an extra edit all link
     if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
-    <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a>
-    &nbsp;&nbsp;
-    <a href="edit.php?collection=<?=$usercollection?>" target="main">&gt; <?=$lang["editall"]?></a>
+    <li class="clearerleft"><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
+    <li><a href="edit.php?collection=<?=$usercollection?>" target="main">&gt; <?=$lang["editall"]?></a></li>
     </li>    
     <? } else { ?>
     <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
     <? } ?>
     
-    <li>
    	<? if (isset($zipcommand)) { ?>
-    <a target="main" href="collection_download.php?collection=<?=$usercollection?>">&gt; <?=$lang["zipall"]?></a>
-    &nbsp;&nbsp;
+    <li><a target="main" href="collection_download.php?collection=<?=$usercollection?>">&gt; <?=$lang["zipall"]?></a></li>
 	<? } ?>
-    <a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?=$lang["hidethumbnails"]?></a>
-	</li>
+    <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?=$lang["hidethumbnails"]?></a></li>
   </ul>
 <? } ?>
 </div>

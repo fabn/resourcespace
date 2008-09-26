@@ -62,12 +62,12 @@ a:active {text-decoration:underline;}
 .HorizontalNav a:hover, .HorizontalNav a:active {text-decoration:underline;}
 
 /*Collection layout*/
-#CollectionMenu{width: 163px;position: absolute;left: 25px;top: 6px;text-align:left;}
+#CollectionMenu{width: 166px;position: absolute;left: 25px;top: 6px;text-align:left;}
 
 #CollectionSpace{position: absolute;left: 199px;top: 6px;font-size: 0.95em;text-align:left;}
 .CollectBack h2 {font-size: 1.3em;}
 #CollectionMenu ul {padding:0.2em 0;margin:0;list-style:none;}
-#CollectionMenu li {padding:0;margin:0px 0px 1px;}
+#CollectionMenu li {padding:0;margin:0px 8px 1px 0px;float:left;white-space:nowrap;}
 .CollectBack a:link, .CollectBack a:visited {text-decoration:none;}
 .CollectBack a:hover, .CollectBack a:active {text-decoration:underline;}
 
@@ -201,6 +201,8 @@ a:active {text-decoration:underline;}
 .RecordPanel .RecordDownload td {padding: 5px;margin: 0;}
 .RecordPanel .RecordDownload .DownloadDBlend td {margin: 0;vertical-align: middle;}
 .RecordPanel .RecordDownloadSpace {padding: 6px;}
+.RecordPanel .RecordDownloadSpace ul {padding:0.2em 0;margin:0;list-style:none;}
+.RecordPanel .RecordDownloadSpace li {padding:0;margin:0 8px 1px 0;float:left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {text-align: center;font-weight: bold;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend h2 {margin:0;padding:0;font-size: 1em;	text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend p {margin:0;padding:0;	text-align: left;}
