@@ -343,6 +343,8 @@ $show_resourceid=true;
 # Show the access on the resource view page.
 $show_access_field=true;
 
+# Show the extension after the truncated text in the search results.
+$show_extension_in_search=false;
 
 #
 # ----------------- Development Items ---------------------
