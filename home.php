@@ -120,9 +120,9 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <? } ?>
 
-<? if ($home_mycontributions) { ?>
+<? if ($home_mycontributions && checkperm("d")) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
-	<h2><a href="help.php"><?=$lang["mycontributions"]?></a></h2>
+	<h2><a href="contribute.php"><?=$lang["mycontributions"]?></a></h2>
 	<?=text("mycontributions")?>
 	</div>
 	<div class="PanelShadow"></div>
