@@ -129,6 +129,14 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <? } ?>
 
+<? if ($home_mycontributions) { ?>
+	<div class="HomePanel"><div class="HomePanelIN">
+	<h2><a href="help.php"><?=$lang["mycontributions"]?></a></h2>
+	<?=text("mycontributions")?>
+	</div>
+	<div class="PanelShadow"></div>
+	</div>
+<? } ?>
 	
 	<div class="clearerleft"></div>
 

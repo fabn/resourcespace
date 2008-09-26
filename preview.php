@@ -63,6 +63,8 @@ include "include/header.php";
 <? } ?>
 
 </p>
+
+<? if (!hook("previewimage")) { ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
 <td valign="middle"><? if ($previouspage!=-1) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$ext?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&page=<?=$previouspage?>" class="PDFnav">&lt;</a><? } 
@@ -70,7 +72,7 @@ elseif ($nextpage!=-1) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><? }
 <td><a href="<?=((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&k=<?=$k?>"><img src="download.php?ref=<?=$ref?>&size=scr&ext=<?=$ext?>&noattach=true&k=<?=$k?>&page=<?=$page?>" alt="" <? if ($border) { ?>style="border:1px solid white;"<? } ?> /></a></td>
 <td valign="middle"><? if ($nextpage!=-1) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$ext?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&page=<?=$nextpage?>" class="PDFnav">&gt;</a><? } ?></td>
 </tr></table>
-
+<? } ?>
 
 <?
 include "include/footer.php";

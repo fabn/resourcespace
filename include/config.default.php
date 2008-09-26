@@ -148,6 +148,9 @@ $theme_category_levels=1;
 # Show advanced search on the home page?
 $home_advancedsearch=false;
 
+# Show My Contributions on the home page?
+$home_mycontributions=false;
+
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
 

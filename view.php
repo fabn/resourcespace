@@ -113,9 +113,9 @@ include "include/header.php";
 <? if (!hook("renderinnerresourcepreview")) { ?>
 <?
 $flvfile=get_resource_path($ref,"",false,"flv");
-if (file_exists("plugins/players/type" . $resource["resource_type"] . ".php"))
+if (file_exists("players/type" . $resource["resource_type"] . ".php"))
 	{
-	include "plugins/players/type" . $resource["resource_type"] . ".php";
+	include "players/type" . $resource["resource_type"] . ".php";
 	}
 elseif (file_exists($flvfile) && (strpos(strtolower($flvfile),".flv")!==false))
 	{
