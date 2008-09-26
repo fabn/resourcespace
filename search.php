@@ -319,7 +319,7 @@ if (true) #search condition
 			/><? } ?></a>
 			</td>
 			</tr></table>
-			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? if (!checkperm("b")) { ?><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?></div>
+			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><? if (!checkperm("b")) { ?><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?></div>
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
 			 
