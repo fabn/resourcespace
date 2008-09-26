@@ -19,7 +19,7 @@ include "include/header.php";
 
 
 <div class="BasicsBox"> 
-<form method=post id="themeform">
+<form method=get id="themeform">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
   <h1><?=$lang["themes"]?></h1>
