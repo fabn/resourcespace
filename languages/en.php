@@ -539,4 +539,6 @@ $lang["generateurlexternal"]="The below URL will work for everyone and does not 
 $lang["archive"]="Archive";
 $lang["collectionviewhover"]="Click to see the resources in this collection";
 $lang["collectioncontacthover"]="Create a contact sheet with the resources in this collection";
+$lang["original"]="Original";
+
 ?>
