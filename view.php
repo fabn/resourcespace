@@ -130,7 +130,7 @@ elseif ($resource["has_image"]==1)
 	$previewpath=get_resource_path($ref,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
 	if (!file_exists($previewpath)) {$previewpath=get_resource_path($ref,"",false,$resource["preview_extension"]);}
 	
-	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>"><? }
+	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
 	if (file_exists($imagepath))
 		{ ?><img src="<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" /><? } 
 	else # use the thumbnail instead, the uploaded file wasn't big enough to create a preview.
