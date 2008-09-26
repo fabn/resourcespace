@@ -359,7 +359,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
 		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
 		# Get image's dimensions.
-		$identcommand .= ' -format %wx%h "'. $prefix . $file .'[0]"';
+		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 		$identoutput=shell_exec($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
