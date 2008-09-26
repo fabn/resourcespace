@@ -50,7 +50,7 @@ if (!file_exists(get_resource_path($ref,"scr",false,$ext,-1,$nextpage))) {$nextp
 include "include/header.php";
 ?>
 
-<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&lt; <?=$lang["backtoview"]?></a>
+<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&k=<?=$k?>">&lt; <?=$lang["backtoview"]?></a>
 <? if ($k=="") { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections"> <?=$lang["addtocollection"]?></a>
