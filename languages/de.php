@@ -511,7 +511,7 @@ $lang["size"]="Größe";
 $lang["orientation"]="Ausrichtung";
 $lang["requiredfield"]="Das ist ein Pflichtfeld";
 $lang["requiredfields"]="Einige Felder wurden nicht komplett ausgefüllt. Bitte überprüfen Sie das Formular und versuchen Sie es erneut.";
-$lang["viewduplicates"]="Kopierte Ressourcen anzeigen";
+$lang["viewduplicates"]="Doppelte Ressourcen anzeigen";
 $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschränkung (optional)";
 $lang["format"]="Format";
@@ -541,4 +541,7 @@ $lang["generateurl"]="URL generieren";
 $lang["generateurlinternal"]="Die folgende URL funktioniert nur für eingeloggte Benutzer.";
 $lang["generateurlexternal"]="Die folgende URL funktioniert ohne Login. <strong>Bitte beachten Sie, wenn neue Ressourcen zur Kollektion hinzugefügt werden, funktioniert diese URL aus Sicherheitsgriünden nicht mehr und muss neu generiert werden.</strong>";
 $lang["archive"]="Archiv";
+$lang["collectionviewhover"]="Ressourcen dieser Kollektion anzeigen";
+$lang["collectioncontacthover"]="Kontaktabzug der Ressourcen dieser Kollektion erstellen";
+$lang["original"]="Original";
 ?>
