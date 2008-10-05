@@ -150,7 +150,7 @@ if ($header=="")
 			<div class="RecordPanel">  
 
 			<div class="RecordHeader">
-			<h1 style="margin-top:5px;"><?=i18n_get_translated($headers[$n]["smart_theme_name"])?></h1>
+			<h1 style="margin-top:5px;"><?=str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
 			</div>
 		
 			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">

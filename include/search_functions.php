@@ -154,6 +154,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# View Contributions
 	if (substr($search,0,14)=="!contributions") 
 		{
+		global $userref;
+		if ($userref==str_replace("!contributions","",$search)) {$filter="1=1";$custperm="";} # Disable permissions when viewing your own contributions
 		return sql_query("select r.*,r.hit_count score from resource r $custperm where created_by='" . str_replace("!contributions","",$search) . "' and $filter group by r.ref order by $order_by",false,$fetchrows);
 		}
 	

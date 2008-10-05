@@ -118,19 +118,22 @@ function save_resource_data($ref,$multi)
 		
 	# Save all the resource defaults
 	global $userresourcedefaults;
-	$s=explode(";",$userresourcedefaults);
-	for ($n=0;$n<count($s);$n++)
+	if ($userresourcedefaults!="")
 		{
-		$e=explode("=",$s[$n]);
-		# Find field(s) - multiple fields can be returned to support several fields with the same name.
-		$f=sql_array("select ref value from resource_type_field where name='" . escape_check($e[0]) . "'");
-		if (count($f)==0) {exit ("Field(s) with short name '" . $e[0] . "' not found in resource defaults for this user group.");}
-		for ($m=0;$m<count($f);$m++)
+		$s=explode(";",$userresourcedefaults);
+		for ($n=0;$n<count($s);$n++)
 			{
-			update_field($ref,$f[$m],$e[1]);
+			$e=explode("=",$s[$n]);
+			# Find field(s) - multiple fields can be returned to support several fields with the same name.
+			$f=sql_array("select ref value from resource_type_field where name='" . escape_check($e[0]) . "'");
+			if (count($f)==0) {exit ("Field(s) with short name '" . $e[0] . "' not found in resource defaults for this user group.");}
+			for ($m=0;$m<count($f);$m++)
+				{
+				update_field($ref,$f[$m],$e[1]);
+				}
 			}
 		}
-	
+		
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref'"); # remove existing related items
 	$related=explode(",",getvalescaped("related",""));
