@@ -374,6 +374,10 @@ $max_login_attempts_per_ip=10;
 # How long the user must wait after failing the login $max_login_attempts_per_ip times.
 $max_login_attempts_wait_minutes=10;
 
+# Use imperial instead of metric for the download size guidelines
+$imperial_measurements=false;
+
+
 #
 # ----------------- Development Items ---------------------
 #

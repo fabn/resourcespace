@@ -181,9 +181,20 @@ if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resour
 		{
 		# DPI calculations
 		$dpi=300;
-		$dpi_w=round(($sizes[$n]["width"]/$dpi)*2.54,1);
-		$dpi_h=round(($sizes[$n]["height"]/$dpi)*2.54,1);
-
+		
+		if ($imperial_measurements)
+			{
+			$dpi_unit="in";
+			$dpi_w=round(($sizes[$n]["width"]/$dpi),1);
+			$dpi_h=round(($sizes[$n]["height"]/$dpi),1);
+			}
+		else
+			{
+			$dpi_unit="cm";
+			$dpi_w=round(($sizes[$n]["width"]/$dpi)*2.54,1);
+			$dpi_h=round(($sizes[$n]["height"]/$dpi)*2.54,1);
+			}
+			
 		# MP calculation
 		$mp=round(($sizes[$n]["width"]*$sizes[$n]["height"])/1000000,1);
 		
@@ -209,7 +220,7 @@ if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resour
 			<tr class="DownloadDBlend" id="DownloadBox<?=$n?>">
 			<td><h2><?=$headline?></h2>
 			<p><?=$sizes[$n]["width"]?> x <?=$sizes[$n]["height"]?> <?=$lang["pixels"]?> <? if ($mp>=1) { ?> (<?=$mp?> MP)<? } ?></p>
-			<p><?=$dpi_w?> cm x <?=$dpi_h?> cm @ 300dpi</p></td>
+			<p><?=$dpi_w?> <?=$dpi_unit?> x <?=$dpi_h?> <?=$dpi_unit?> @ <?=$dpi?> dpi</p></td>
 			<td><?=$sizes[$n]["filesize"]?></td>
 			<!--<td><?=$sizes[$n]["filedown"]?></td>-->
 			<td class="DownloadButton">
