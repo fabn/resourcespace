@@ -278,7 +278,7 @@ if (true) #search condition
 			
 <? if (!hook("rendertitlethumb")) { ?>			
 
-			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],22)),$search)?><? if ($show_extension_in_search) { ?><?=" [" . strtoupper($result[$n]["file_extension"] . "]")?><? } ?></a>&nbsp;</div>
+			<div class="ResourcePanelInfo"><a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars($result[$n]["title"]))?>"<? } ?>><?=highlightkeywords(htmlspecialchars(tidy_trim($result[$n]["title"],32)),$search)?><? if ($show_extension_in_search) { ?><?=" [" . strtoupper($result[$n]["file_extension"] . "]")?><? } ?></a>&nbsp;</div>
 
 <? } ?> <!-- END HOOK Rendertitlethumb -->			
 			
