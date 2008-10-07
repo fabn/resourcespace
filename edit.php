@@ -470,7 +470,7 @@ for ($n=0;$n<count($fields);$n++)
 				if ($first=="") {$first=$n;}
 				}
 			}
-		if ($mode=="") {$mode=$first;}
+		if ($mode==="") {$mode=$first;}
 		?>
 		<input type=hidden name="archive" value="<?=$mode?>">
 		<?
