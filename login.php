@@ -16,9 +16,9 @@ if (array_key_exists("username",$_POST))
     $password_hash=md5("RS" . $username . $password);
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
     
-    $valid=sql_query("select count(*) c from user where username='$username' and (password='$password' or password='$password_hash')");$valid=$valid[0]["c"];
-      
-    if ($valid>=1)
+    $valid=sql_query("select ref from user where username='$username' and (password='$password' or password='$password_hash')");
+    
+    if (count($valid)>=1)
         {
    	    # Account expiry
         $expires=sql_value("select account_expires value from user where username='$username' and password='$password'","");
@@ -35,7 +35,10 @@ if (array_key_exists("username",$_POST))
 			setcookie("language",getval("language",""),time()+(3600*24*1000));
 
 			# Update the user record. Set the password hash again in case a plain text password was provided.
-			sql_query("update user set password='$password_hash',session='$session_hash' where username='$username' and (password='$password' or password='$password_hash')");
+			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now() where username='$username' and (password='$password' or password='$password_hash')");
+
+			# Log this
+			daily_stat("User session",$valid[0]["ref"]);
 
 	        setcookie("user",$username . "|" . $session_hash,$expires);
 	        

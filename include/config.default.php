@@ -349,6 +349,12 @@ $show_extension_in_search=false;
 # Should the category tree field (if one exists) default to being open instead of closed?
 $category_tree_open=false;
 
+# Length of a user session. This is used for statistics (user sessions per day) and also for auto-log out if $session_autologout is set.
+$session_length=30;
+
+# Automatically log a user out at the end of a session (a period of idleness equal to $session_length above).
+$session_autologout=false;
+
 
 #
 # ----------------- Development Items ---------------------

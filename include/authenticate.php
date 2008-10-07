@@ -50,11 +50,40 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         if (strlen(trim($userdata[0]["last_active"]))>0)
         	{
 	        $last_active=time()-strtotime($userdata[0]["last_active"]);
-	        if ($last_active>(30*60)) # Last active more than 30 mins ago? This is a new 'session' for the purposes of statistics.
+	        if ($last_active>($session_length*60))
 	        	{
-	        	#Log this
+          	    # Last active more than $session_length mins ago?
+				$al="";if (isset($anonymous_login)) {$al=$anonymous_login;}
+				
+				if ($session_autologout && $username!=$al)
+					{
+					# Reached the end of valid session time, auto log out the user.
+					
+					# Remove session
+					sql_query("update user set logged_in=0,session='' where ref='$userref'");
+			
+					# Blank cookie / var
+					setcookie("user","");
+					unset($username);
+		
+					if (isset($anonymous_login))
+						{
+						# If the system is set up with anonymous access, redirect to the home page after logging out.
+						redirect("home.php");
+						}
+					else
+						{
+						redirect("login.php");
+						}
+					}
+				}
+			else
+	        	{
+	        	# Session end reached, but the user may still remain logged in.
+		        # This is a new 'session' for the purposes of statistics.
 				daily_stat("User session",$userref);
 				}
+			
 			}
         }
         else {$valid=false;}
