@@ -8,12 +8,12 @@ http://www.montala.net/resourcespace.php
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?=htmlspecialchars($applicationname)?></title>
-<link href="<?=$baseurl?>/css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
-<link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
-<!--[if lte IE 7]> <link href="<?=$baseurl?>/css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<!--[if lte IE 5.6]> <link href="<?=$baseurl?>/css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<script src="js/prototype.js" type="text/javascript"></script>
-<script src="js/scriptaculous.js" type="text/javascript"></script>
+<link href="<?=$baseurl?>/css/global.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" />
+<link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
+<!--[if lte IE 7]> <link href="<?=$baseurl?>/css/globalIE.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<!--[if lte IE 5.6]> <link href="<?=$baseurl?>/css/globalIE5.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+<script src="js/prototype.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
+<script src="js/scriptaculous.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
 
 <?
 # Include CSS files for for each of the plugins too (if provided)
