@@ -368,6 +368,12 @@ $password_min_special=0; # Minimum number of 'special' i.e. non alphanumeric cha
 # How often do passwords expire, in days? (set to zero for no expiry).
 $password_expiry=0;
 
+# How many failed login attempts per IP address until a temporary ban is placed on this IP
+$max_login_attempts_per_ip=10;
+
+# How long the user must wait after failing the login $max_login_attempts_per_ip times.
+$max_login_attempts_wait_minutes=10;
+
 #
 # ----------------- Development Items ---------------------
 #

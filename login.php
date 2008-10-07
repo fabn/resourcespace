@@ -6,7 +6,17 @@ $url=getval("url","index.php");
 
 # process log in
 $error="";
-if (array_key_exists("username",$_POST))
+
+# First check that this IP address has not been locked out due to excessive attempts.
+$ip=$_SERVER["REMOTE_ADDR"];
+$lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()","");
+if ($lockouts>0)
+	{
+	$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
+	}
+
+# Process the submitted login
+elseif (array_key_exists("username",$_POST))
     {
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
@@ -52,6 +62,30 @@ if (array_key_exists("username",$_POST))
     else
         {
         $error=$lang["loginincorrect"];
+        
+        # Add / increment a lockout value for this IP
+        $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries<'" . $max_login_attempts_per_ip . "'","");
+        
+        if ($lockouts>0)
+        	{
+        	# Existing row with room to move
+			$tries=sql_value("select tries value from ip_lockout where ip='" . escape_check($ip) . "'",0);
+			$tries++;
+			if ($tries==$max_login_attempts_per_ip)
+				{
+				# Show locked out message.
+				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
+				}
+				
+			# Increment
+        	sql_query("update ip_lockout set last_try=now(),tries=tries+1 where ip='" . escape_check($ip) . "'");
+        	}
+        else
+        	{
+        	# New row
+        	sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
+        	sql_query("insert into ip_lockout (ip,tries,last_try) values ('" . escape_check($ip) . "',1,now())");
+        	}
         }
     }
 

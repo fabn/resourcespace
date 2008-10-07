@@ -548,4 +548,6 @@ $lang["password_not_min_numeric"]="The password must have at least ? numeric (0-
 $lang["password_not_min_special"]="The password must have at least ? non alpha-numeric characters (!@$%&* etc.)";
 $lang["password_matches_existing"]="The entered password is the same as your existing password";
 $lang["password_expired"]="Your password has expired and you must now enter a new password";
+$lang["max_login_attempts_exceeded"]="You have exceeded the maximum number of login attempts. You must now wait ? minutes before you can attempt to log in again.";
+
 ?>
