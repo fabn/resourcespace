@@ -355,6 +355,8 @@ $session_length=30;
 # Automatically log a user out at the end of a session (a period of idleness equal to $session_length above).
 $session_autologout=false;
 
+# Allow browsers to save the login information on the login form.
+$login_autocomplete=true;
 
 #
 # ----------------- Development Items ---------------------

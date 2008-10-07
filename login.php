@@ -81,17 +81,17 @@ include "include/header.php";
   <p><? if ($allow_account_request) { ?><a href="user_request.php">&gt; <?=$lang["nopassword"]?> </a><br/><? } ?>
   <a href="user_password.php">&gt; <?=$lang["forgottenpassword"]?></a></p>
   <? if ($error!="") { ?><div class="FormIncorrect"><?=$error?></div><? } ?>
-  <form id="form1" method="post">
+  <form id="form1" method="post" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?>>
   <input type=hidden name=url value="<?=$url?>">
 		<div class="Question">
 			<label for="name"><?=$lang["username"]?> </label>
-			<input type="text" name="username" id="name" class="stdwidth" />
+			<input type="text" name="username" id="name" class="stdwidth" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?> />
 			<div class="clearerleft"> </div>
 		</div>
 		
 		<div class="Question">
 			<label for="pass"><?=$lang["password"]?> </label>
-			<input type="password" name="password" id="name" class="stdwidth" />
+			<input type="password" name="password" id="name" class="stdwidth" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?> />
 			<div class="clearerleft"> </div>
 		</div>
 <? if ($disable_languages==false) { ?>	
