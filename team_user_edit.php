@@ -8,9 +8,14 @@ $ref=getvalescaped("ref","");
 if ((getval("save","")!="") || (getval("suggest","")!=""))
 	{
 	# Save user data
-	if (save_user($ref)===false)
+	$result=save_user($ref);
+	if ($result===false)
 		{
 		$error=$lang["useralreadyexists"];
+		}
+	elseif ($result!==true)
+		{
+		$error=$result;
 		}
 	else
 		{

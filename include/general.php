@@ -455,6 +455,8 @@ function get_user($ref)
 	
 function save_user($ref)
 	{
+	global $lang;
+		
 	# Save user details, data is taken from the submitted form.
 	if (getval("deleteme","")!="")
 		{
@@ -467,18 +469,25 @@ function save_user($ref)
 		if (($c>0) && (getvalescaped("email","")!="")) {return false;}
 		
 		$password=getvalescaped("password","");
-		if (getval("suggest","")!="") {$password=make_password(8,5);}
+		if (getval("suggest","")!="")
+			{
+			$password=make_password(8,5);
+			}
+		elseif ($password!=$lang["hidden"])	
+			{
+			$message=check_password($password);
+			if ($message!==true) {return $message;}
+			}
 		
 		$expires="'" . getvalescaped("account_expires","") . "'";
 		if ($expires=="''") {$expires="null";}
 		
 		$passsql="";
-		global $lang;
 		if ($password!=$lang["hidden"])	
 			{
 			# Save password.
 			if (getval("suggest","")=="") {$password=md5("RS" . getvalescaped("username","") . $password);}
-			$passsql=",password='" . $password . "'";
+			$passsql=",password='" . $password . "',password_last_change=now()";
 			}
 		
 		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "' where ref='$ref'");
@@ -679,14 +688,32 @@ function formatfilesize($bytes)
 function change_password($password)
 	{
 	# Sets a new password for the current user.
-	global $userref,$username;
-	if (strlen($password)<6) {return false;}
+	global $userref,$username,$lang,$userpassword;
+
+	# Check password
+	$message=check_password($password);
+	if ($message!==true) {return $message;}
+
+	# Generate new password hash
 	$password_hash=md5("RS" . $username . $password);
-	sql_query("update user set password='$password_hash' where ref='$userref' limit 1");
+	
+	# Check password is not the same as the current
+	if ($userpassword==$password_hash) {return $lang["password_matches_existing"];}
+	
+	sql_query("update user set password='$password_hash',password_last_change=now() where ref='$userref' limit 1");
 	return true;
 	}
 	
 function make_password($length,$strength=0) {
+	
+	# Work out the correct strength to use
+	global $password_min_length, $password_min_uppercase, $password_min_numeric, $password_min_special;
+	
+	if ($length<$password_min_length) {$length=password_min_length;}
+	if ($password_min_uppercase>0) {$strength=$strength | 1 | 2;}
+	if ($password_min_numeric>0) {$strength=$strength | 4;}	
+	if ($password_min_special>0) {$strength=$strength | 8;}	
+	
     $vowels = 'aeiou';
     $consonants = 'bdghjlmnpqrstvwxz';
     if ($strength & 1) {
@@ -1035,4 +1062,38 @@ function get_suggested_keywords($search)
 	global $autocomplete_search_items;
 	return sql_array("select keyword value from keyword where keyword like '" . escape_check($search) . "%' order by hit_count desc limit $autocomplete_search_items");
 	}
+	
+function check_password($password)
+	{
+	# Checks that a password conforms to the configured paramaters.
+	# Returns true if it does, or a descriptive string if it doesn't.
+	global $lang, $password_min_length, $password_min_alpha, $password_min_uppercase, $password_min_numeric, $password_min_special;
+
+	if (strlen($password)<$password_min_length) {return str_replace("?",$password_min_length,$lang["password_not_min_length"]);}
+
+	$uppercase="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$alpha=$uppercase . "abcdefghijklmnopqrstuvwxyz";
+	$numeric="0123456789";
+	
+	$a=0;$u=0;$n=0;$s=0;
+	for ($m=0;$m<strlen($password);$m++)
+		{
+		$l=substr($password,$m,1);
+		if (strpos($uppercase,$l)!==false) {$u++;}
+
+		if (strpos($alpha,$l)!==false) {$a++;}
+		elseif (strpos($numeric,$l)!==false) {$n++;}
+		else {$s++;} # Not alpha/numeric, must be a special char.
+		}
+	
+	if ($a<$password_min_alpha) {return str_replace("?",$password_min_alpha,$lang["password_not_min_alpha"]);}
+	if ($u<$password_min_uppercase) {return str_replace("?",$password_min_uppercase,$lang["password_not_min_uppercase"]);}
+	if ($n<$password_min_numeric) {return str_replace("?",$password_min_numeric,$lang["password_not_min_numeric"]);}
+	if ($s<$password_min_special) {return str_replace("?",$password_min_special,$lang["password_not_min_special"]);}
+	
+	
+	return true;
+	}
+	
+	
 ?>

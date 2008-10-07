@@ -26,7 +26,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 	$hashsql="and u.session='$session_hash'";
 	if (isset($anonymous_login) && ($username==$anonymous_login)) {$hashsql="";} # Automatic anonymous login, do not require session hash.
 	
-    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter,g.ip_restrict ip_restrict_group,u.ip_restrict ip_restrict_user,resource_defaults from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
+    $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter, g.ip_restrict ip_restrict_group, u.ip_restrict ip_restrict_user, resource_defaults, u.password_last_change from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
     if (count($userdata)>0)
         {
         $valid=true;
@@ -46,6 +46,16 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $usercollection=$userdata[0]["current_collection"];
         $usersearchfilter=$userdata[0]["search_filter"];
         $userresourcedefaults=$userdata[0]["resource_defaults"];
+        
+        if ($password_expiry>0 && $pagename!="change_password" && strlen(trim($userdata[0]["password_last_change"]))>0)
+        	{
+        	# Redirect the user to the password change page if their password has expired.
+	        $last_password_change=time()-strtotime($userdata[0]["password_last_change"]);
+			if ($last_password_change>($password_expiry*60*60*24))
+				{
+				redirect("change_password.php?expired=true");
+				}
+        	}
         
         if (strlen(trim($userdata[0]["last_active"]))>0)
         	{

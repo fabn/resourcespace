@@ -8,7 +8,8 @@ if (getval("save","")!="")
 	if (getval("password","")!=getval("password2","")) {$error2=true;}
 	else
 		{
-		if (change_password(getvalescaped("password","")))
+		$message=change_password(getvalescaped("password",""));
+		if ($message===true)
 			{
 			redirect("home.php");
 			}
@@ -21,14 +22,18 @@ if (getval("save","")!="")
 include "include/header.php";
 ?>
 
-    <h1><?=$lang["changeyourpassword"]?></h1>
+	<h1><?=$lang["changeyourpassword"]?></h1>
+
     <p><?=text("introtext")?></p>
-	  
+	
+	<? if (getval("expired","")!="") { ?><div class="FormError">!! <?=$lang["password_expired"]?> !!</div><? } ?>
+	    
 	<form method="post">  
+	<input type="hidden" name="expired" value="<?=getval("expired","")?>">
 	<div class="Question">
 	<label for="password"><?=$lang["newpassword"]?></label>
 	<input type="password" name="password" id="password" class="stdwidth">
-	<? if (isset($error)) { ?><div class="FormError">!! <?=$lang["passwordnotvalid"]?> !!</div><? } ?>
+	<? if (isset($error)) { ?><div class="FormError">!! <?=$message?> !!</div><? } ?>
 	<div class="clearerleft"> </div>
 	</div>
 

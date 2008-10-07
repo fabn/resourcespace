@@ -541,4 +541,11 @@ $lang["collectionviewhover"]="Click to see the resources in this collection";
 $lang["collectioncontacthover"]="Create a contact sheet with the resources in this collection";
 $lang["original"]="Original";
 
+$lang["password_not_min_length"]="The password must be at least ? characters in length";
+$lang["password_not_min_alpha"]="The password must have at least ? alphabetical (a-z, A-Z) characters";
+$lang["password_not_min_uppercase"]="The password must have at least ? upper case (A-Z) characters";
+$lang["password_not_min_numeric"]="The password must have at least ? numeric (0-9) characters";
+$lang["password_not_min_special"]="The password must have at least ? non alpha-numeric characters (!@$%&* etc.)";
+$lang["password_matches_existing"]="The entered password is the same as your existing password";
+$lang["password_expired"]="Your password has expired and you must now enter a new password";
 ?>
