@@ -498,6 +498,7 @@ function save_user($ref)
 		$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","") . "\n\n$baseurl";
 		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message);
 		}
+	return true;
 	}
 
 function email_reminder($email)
