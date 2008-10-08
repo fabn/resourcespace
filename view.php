@@ -283,7 +283,7 @@ if ($nodownloads || $counter==0)
 <? if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><li><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a></li><? } ?>
 <? if ($allow_share) { ?><li><a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a></li><? } ?>
 <? if (checkperm("e" . $resource["archive"])) { ?><li><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a></li><? } ?>
-<li><a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a></li>
+<? if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a></li><? } ?>
 <? } ?>
 <? } /* End of renderinnerresourcedownloadspace hook */ ?>
 </ul>
