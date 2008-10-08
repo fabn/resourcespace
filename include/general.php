@@ -494,9 +494,9 @@ function save_user($ref)
 		}
 	if (getval("emailme","")!="")
 		{
-		global $applicationname,$email_from,$baseurl;
-		$message="Your login details for the $applicationname system are as follows:\n\nUsername: " . getval("username","") . "\nPassword: " . getval("password","") . "\n\nVisit the below URL to access ths system.\n$baseurl";
-		send_mail(getval("email",""),$applicationname . ": Login Details",$message);
+		global $applicationname,$email_from,$baseurl,$lang;
+		$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","") . "\n\n$baseurl";
+		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message);
 		}
 	}
 
@@ -506,12 +506,14 @@ function email_reminder($email)
 	$details=sql_query("select username from user where email like '$email'");
 	if (count($details)==0) {return false;}
 	$details=$details[0];
-	global $applicationname,$email_from,$baseurl;
+	global $applicationname,$email_from,$baseurl,$lang;
 	$password=make_password(8,5);
 	$password_hash=md5("RS" . $details["username"] . $password);
+	
 	sql_query("update user set password='$password_hash' where username='" . escape_check($details["username"]) . "'");
-	$message="Your login details for the $applicationname system are as follows:\n\nUsername: " . $details["username"] . "\nPassword: " . $password . "\n\nVisit the below URL to access ths system.\n$baseurl";
-	send_mail($email,$applicationname . ": Password Reminder",$message);
+	
+	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $details["username"] . "\n" . $lang["password"] . ": " . $password . "\n\n$baseurl";
+	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message);
 	return true;
 	}
 

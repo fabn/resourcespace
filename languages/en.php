@@ -550,4 +550,6 @@ $lang["password_matches_existing"]="The entered password is the same as your exi
 $lang["password_expired"]="Your password has expired and you must now enter a new password";
 $lang["max_login_attempts_exceeded"]="You have exceeded the maximum number of login attempts. You must now wait ? minutes before you can attempt to log in again.";
 
+$lang["newlogindetails"]="Please find your new login details below.";
+$lang["youraccountdetails"]="Your account details";
 ?>
