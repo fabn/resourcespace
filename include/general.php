@@ -838,7 +838,11 @@ function send_mail($email,$subject,$message,$from="")
 	
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
-	mail ($email,$subject,$message,"From: " . $from . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=\"UTF-8\"\r\nContent-Transfer-Encoding: quoted-printable");
+	
+	# Work out correct EOL to use for mails (should use the system EOL).
+	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
+	
+	mail ($email,$subject,$message,"From: " . $from . $eol . "MIME-Version: 1.0" . $eol . "Content-Type: text/plain; charset=\"UTF-8\"" . $eol . "Content-Transfer-Encoding: quoted-printable");
 	}
 
 function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
