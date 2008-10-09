@@ -334,6 +334,10 @@ $colour_sort=true;
 # Make the frameset resizeable. Useful for viewing large collections, especially if re-ordering.
 $collection_resize=false;
 
+# Make selection box in collection edit menu that allows you to select another accessible collection to base the current one upon.
+# It is helpful if you would like to make variations on collections that are heavily commented upon or re-ordered.
+$enable_collection_copy=false;
+
 # Default resource types to use for searching (leave empty for all)
 $default_res_types="";
 

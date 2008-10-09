@@ -8,6 +8,11 @@ include "include/search_functions.php";
 
 $ref=getvalescaped("ref","");
 
+# Fetch collection data
+$collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
+
+$copy=getval("copy","");
+if ($copy!=""){copy_collection($copy,$ref);refresh_collection_frame();}
 
 if (getval("name","")!="")
 	{
@@ -27,8 +32,6 @@ if (getval("name","")!="")
 	refresh_collection_frame();
 	}
 
-# Fetch collection data
-$collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
 	
 include "include/header.php";
 ?>
@@ -43,7 +46,27 @@ include "include/header.php";
 <label for="name"><?=$lang["name"]?></label><input type=text class="stdwidth" name="name" id="name" value="<?=$collection["name"]?>" maxlength="100" <? if ($collection["cant_delete"]==1) { ?>readonly=true<? } ?>>
 <div class="clearerleft"> </div>
 </div>
-
+<?
+if ($enable_collection_copy) 
+	{
+	?>
+	<div class="Question">
+	<label for="copy"><?=$lang["copyfromcollection"]?></label>
+	<select name="copy" id="copy" class="stdwidth">
+	<option value=""><?=$lang["donotcopycollection"]?></option>
+	<?
+	$list=get_user_collections($userref);
+	for ($n=0;$n<count($list);$n++)
+		{
+		?>
+		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
+		<?
+		}
+		}
+	?>
+	</select>
+	<div class="clearerleft"> </div>
+	</div>
 <div class="Question">
 <label><?=$lang["id"]?></label><div class="Fixed"><?=$collection["ref"]?></div>
 <div class="clearerleft"> </div>

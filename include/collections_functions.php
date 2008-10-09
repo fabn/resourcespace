@@ -528,5 +528,18 @@ function send_collection_feedback($collection,$comment)
 		}
 	}
 
+function copy_collection($old,$new)
+	{	
+
+	$data=sql_query("select * from collection_resource where collection='$old'","");
+	sql_query("delete from collection_resource where collection='$new'");
+	foreach($data as $col_resource)
+	{
+	sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
+	values ( $new ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+	}
+	
+	}
+
 
 ?>
