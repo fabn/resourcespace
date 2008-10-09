@@ -104,7 +104,9 @@ if (!$basic_simple_search)
 	<div class="SearchItem"><? if (!$basic_simple_search) { ?><input name="Clear" type="button" value="&nbsp;&nbsp;<?=$lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';
 	<? if ($country_search==true) {?>document.getElementById('basiccountry').value='';
 	<? } ?>
-	document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';document.getElementById('basicday').value='';ResetTicks();"/><? } ?><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
+	document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';
+	<? if ($searchbyday) { ?>document.getElementById('basicday').value='';<? } ?>
+	ResetTicks();"/><? } ?><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
 	<br />
 
 
