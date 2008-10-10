@@ -156,6 +156,7 @@ $lang["mustspecifyoneusername"]="You must specify at least one username";
 $lang["couldnotmatchallusernames"]="Could not match all the usernames";
 $lang["emailcollectionmessage"]="has e-mailed you a collection of resources from $applicationname which has been added to your 'My Collections' page."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Click the link below to view the collection.";
+$lang["zippedcollectiontextfile"]="Include text file with resource/collection data.";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";

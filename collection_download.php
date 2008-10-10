@@ -10,6 +10,15 @@ include "include/resource_functions.php";
 $collection=getvalescaped("collection","");
 $size=getvalescaped("size","");
 $submitted=getvalescaped("submitted","");
+$includetext=getvalescaped("text","false");
+
+# initiate text file
+if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
+$collectiondata=get_collection($collection);
+$text=$collectiondata['name']."
+Downloaded ". date("D, F d, Y, H:i:s e")."\r\n
+Contents:\r\n\r\n";
+}
 
 if ($submitted != "")
 	{
@@ -53,6 +62,7 @@ if ($submitted != "")
 				$tmpfile=write_metadata($p,$ref);
 				if($tmpfile!="" && file_exists($tmpfile)){$p=$tmpfile;}		
 				
+	
 				# if the tmpfile is made, from here on we are working with that. 
 				
 				
@@ -86,6 +96,24 @@ if ($submitted != "")
 						}
 					}
 				
+				#Add resource data/collection_resource data to text file
+				if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
+					if ($size==""){$sizetext="";}else{$sizetext="-".$size;}
+					$fields=get_resource_field_data($ref);
+					$commentdata=get_collection_resource_comment($ref,$collection);
+					if (count($fields)>0){ 
+					$text.= "Ref: ".$ref.$sizetext." \r\n-----------------------------------------------------------------\r\n";
+						for ($i=0;$i<count($fields);$i++){
+							$value=$fields[$i]["value"];
+							$title=str_replace("Keywords - ","",i18n_get_translated($fields[$i]["title"]));
+							if ((trim($value)!="")&&(trim($value)!=",")){$text.=wordwrap ("* ".$title.": ".$value."\r\n",65);}
+						}
+					if(trim($commentdata['comment'])!=""){$text.=wordwrap ("Comment: ".$commentdata['comment']."\r\n",65);}	
+					if(trim($commentdata['rating'])!=""){$text.=wordwrap ("Rating: ".$commentdata['rating']."\r\n",65);}	
+					$text.= "-----------------------------------------------------------------\r\n\r\n";	
+					}
+				}
+				
 				$path.=" \"" . $p . "\"";	
 				
 				# build an array of paths so we can clean up any exiftool-modified files.
@@ -97,7 +125,18 @@ if ($submitted != "")
 			}
 		}
 	if ($path=="") {exit("Nothing to download.");}	
-	
+
+	# write text file, add to zip, and schedule for deletion 	
+	if (($zipped_collection_textfile==true)&&($includetext=="true")){
+	$textfile = "filestore/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
+	$fh = fopen($textfile, 'w') or die("can't open file");
+	fwrite($fh, $text);
+	fclose($fh);
+
+	$path.=" \"" . $textfile . "\"";	
+	$deletion_array[]=$textfile;	
+	}
+
 	# Create and send the zipfile
 	if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
 	
@@ -127,7 +166,7 @@ include "include/header.php";
 <div class="Question">
 <label for="downloadsize"><?=$lang["downloadsize"]?></label>
 <div class="tickset">
-<div class="Inline"><select name="size" class="shrtwidth" id="downloadsize">
+<select name="size" class="shrtwidth" id="downloadsize">
 <?
 $sizes=get_all_image_sizes();
 $sizes[]=array("id" => "", "name" => $lang["collection_download_original"]);
@@ -135,7 +174,19 @@ for ($n=0;$n<count($sizes);$n++)
 	{
 	?><option value="<?=$sizes[$n]["id"]?>"><?=i18n_get_translated($sizes[$n]["name"])?></option><?
 	}
-?></select></div>
+?></select>
+<div class="clearerleft"> </div></div>
+<div class="clearerleft"> </div></div>
+
+<? if ($zipped_collection_textfile=="true") { ?>
+<div class="Question">
+<label for="text"><?=$lang["zippedcollectiontextfile"]?></label>
+<select name="text" class="shrtwidth" id="text">
+<option value="true"><?=$lang["yes"]?></option>
+<option value="false"><?=$lang["no"]?></option>
+</select>
+<div class="clearerleft"> </div><br>
+<? } ?>
 <div class="Inline"><input name="submitted" type="submit" value="&nbsp;&nbsp;<?=$lang["download"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>

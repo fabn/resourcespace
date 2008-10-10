@@ -189,6 +189,9 @@ $orderbyrating=false;
 # Zip command to use to create zip archive (uncomment to enable download of collections as a zip file)
 # $zipcommand="zip -j";
 
+# Option to write a text file into zipped collections containing resource data
+$zipped_collection_textfile=false;
+
 # Enable speed tagging feature? (development)
 $speedtagging=false;
 $speedtaggingfield=1;
