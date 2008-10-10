@@ -46,27 +46,7 @@ include "include/header.php";
 <label for="name"><?=$lang["name"]?></label><input type=text class="stdwidth" name="name" id="name" value="<?=$collection["name"]?>" maxlength="100" <? if ($collection["cant_delete"]==1) { ?>readonly=true<? } ?>>
 <div class="clearerleft"> </div>
 </div>
-<?
-if ($enable_collection_copy) 
-	{
-	?>
-	<div class="Question">
-	<label for="copy"><?=$lang["copyfromcollection"]?></label>
-	<select name="copy" id="copy" class="stdwidth">
-	<option value=""><?=$lang["donotcopycollection"]?></option>
-	<?
-	$list=get_user_collections($userref);
-	for ($n=0;$n<count($list);$n++)
-		{
-		?>
-		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
-		<?
-		}
-		}
-	?>
-	</select>
-	<div class="clearerleft"> </div>
-	</div>
+
 <div class="Question">
 <label><?=$lang["id"]?></label><div class="Fixed"><?=$collection["ref"]?></div>
 <div class="clearerleft"> </div>
@@ -167,6 +147,30 @@ if ($theme_category_levels>=3)
 <label for="deleteall"><?=$lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?=$lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>
 </div><? } ?>
+
+<?
+if ($enable_collection_copy) 
+	{
+	?>
+	<div class="Question">
+	<label for="copy"><?=$lang["copyfromcollection"]?></label>
+	<select name="copy" id="copy" class="stdwidth">
+	<option value=""><?=$lang["donotcopycollection"]?></option>
+	<?
+	$list=get_user_collections($userref);
+	for ($n=0;$n<count($list);$n++)
+		{
+		?>
+		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
+		<?
+		}
+	?>
+	</select>
+	<div class="clearerleft"> </div>
+	</div>
+	<?
+	}
+?>
 
 <? if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <!-- Archive Status -->

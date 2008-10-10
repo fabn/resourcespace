@@ -140,8 +140,6 @@ $lang["searchpubliccollections"]="Search Public Collections";
 $lang["addtomycollections"]="add to my collections";
 $lang["action-addtocollection"]="Add to collection";
 $lang["addtocollection"]="Add to collection";
-$lang["copyfromcollection"]="Copy from collection";
-$lang["donotcopycollection"]="Do not copy another collection";
 $lang["cantmodifycollection"]="You can't modify this collection.";
 $lang["currentcollection"]="Current Collection";
 $lang["viewcollection"]="View collection";
@@ -554,5 +552,9 @@ $lang["max_login_attempts_exceeded"]="You have exceeded the maximum number of lo
 
 $lang["newlogindetails"]="Please find your new login details below."; # For new password mail
 $lang["youraccountdetails"]="Your Account Details"; # Subject of mail sent to user on user details save
+
+$lang["copyfromcollection"]="Copy from collection";
+$lang["donotcopycollection"]="Do not copy from a collection";
+
 
 ?>
