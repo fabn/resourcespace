@@ -69,7 +69,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
           	    # Last active more than $session_length mins ago?
 				$al="";if (isset($anonymous_login)) {$al=$anonymous_login;}
 				
-				if ($session_autologout && $username!=$al)
+				if ($session_autologout && $username!=$al) # If auto logout enabled, but this is not the anonymous user, log them out.
 					{
 					# Reached the end of valid session time, auto log out the user.
 					

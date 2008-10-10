@@ -123,7 +123,8 @@ $restricted_full_download=false;
 $archive_search=false;
 
 # Display the Research Request functionality?
-$research_request=true;
+# Allows users to request resources via a form, which is e-mailed.
+$research_request=false;
 
 # Country search in the right nav? (requires a field with the short name 'country')
 $country_search=false;
