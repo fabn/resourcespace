@@ -116,6 +116,7 @@ a:active {text-decoration:underline;}
 
 
 .IconCollect	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
+.IconCollectOut	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
 .IconEmail	{width:16px;height:12px;padding: 0;display: block;margin-left: 4px;float: right;}
 .IconPreview	{width:16px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;margin-right: 5px;}
 
@@ -276,6 +277,11 @@ behavior: url(iepngfix.htc);
 
 .URLDisplay {width: 500px;font: 11px Tahoma, Arial, Helvetica, sans-serif;}
 
+#CollectionFramelessNav ul {padding:0.4em 0;margin:0;list-style:none;}
+#CollectionFramelessNav li {padding:0;margin:0px 8px 1px 0px;float:left;white-space:nowrap;}
+
+#CollectionFramelessDropTitle {padding-top:5px;}
+#CollectionFramelessDrop {padding:0;}
 
 
 /* Autocomplete dropdown CSS - colours can be overridden in the colour CSS files */
@@ -301,3 +307,4 @@ div.autocomplete ul li {
   cursor:pointer;
   color: #000;
 }
+

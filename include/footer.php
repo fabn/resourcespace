@@ -21,7 +21,7 @@ function SetCookie(cookieName,cookieValue,nDays) {
 function SwapCSS(css)
 	{
 	document.getElementById('colourcss').href='<?=$baseurl?>/css/Col-' + css + '.css';
-	top.collections.document.getElementById('colourcss').href='<?=$baseurl?>/css/Col-' + css + '.css';
+	<? if (!checkperm("b") && !$frameless_collections) { ?>top.collections.document.getElementById('colourcss').href='<?=$baseurl?>/css/Col-' + css + '.css';<? } ?>
 	SetCookie("colourcss",css,1000);	
 	}
 </script>

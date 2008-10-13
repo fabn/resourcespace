@@ -50,6 +50,7 @@ a:active {color:#B5C3D4;}
 
 .PanelShadow {background: url(../gfx/greyblu/interface/panelshadow.gif) repeat-x;height: 5px;}
 .IconCollect, .KeyCollect	{background: url(../gfx/greyblu/interface/IcCol.gif) no-repeat;}
+.IconCollectOut, .KeyCollectOut	{background: url(../gfx/greyblu/interface/IcColOut.gif) no-repeat;}
 .IconEmail, .KeyEmail	{background: url(../gfx/greyblu/interface/IcEml.gif) no-repeat;}
 .IconPreview, .KeyPreview	{background: url(../gfx/greyblu/interface/IcPre.gif) no-repeat;}
 .IconStar, .KeyStar	{	background: url(../gfx/greyblu/interface/IcStar.gif) no-repeat;}

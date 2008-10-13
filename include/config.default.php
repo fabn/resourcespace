@@ -386,14 +386,27 @@ $max_login_attempts_wait_minutes=10;
 $imperial_measurements=false;
 
 
+
+
+
+
+
 #
-# ----------------- Development Items ---------------------
+# ------------------------- Development Items -------------------------
 #
-# The items below are under development. Functionality is incomplete. You are advised to leave these switched off.
+#
+# The items below are under development. Functionality is incomplete. You are advised to leave these switched off unless you have the ability to correct any problems yourself.
 
 # Display a breadcrumbs trail (list of pages previously visited to aid navigation)
 $breadcrumbs=false;
 
+# Enable multi-lingual free text fields
+# By default, only the checkbox list/dropdown fields can be multilingual by using the special syntax when defining
+# the options. However, setting the below to true means that free text fields can also be multi-lingual. Several text boxes appear when entering data so that translations can be entered.
+$multilingual_text_fields=false;
+
+# Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
+$frameless_collections=false;
 
 
 ?>

@@ -108,10 +108,16 @@ function delete_collection($ref)
 	
 function refresh_collection_frame()
 	{
-	global $headerinsert,$baseurl;
-	$headerinsert.="<script language=\"Javascript\">
-	top.collections.location.href=\"" . $baseurl . "/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
-	</script>";
+	# Refresh the collections frame
+	# Only works when we are using a frameset.
+	global $frameless_collections;
+	if (!$frameless_collections)
+		{
+		global $headerinsert,$baseurl;
+		$headerinsert.="<script language=\"Javascript\">
+		top.collections.location.href=\"" . $baseurl . "/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
+		</script>";
+		}
 	}
 	
 function search_public_collections($search)
@@ -530,16 +536,61 @@ function send_collection_feedback($collection,$comment)
 
 function copy_collection($old,$new)
 	{	
-
+	# Copy resources in collection $old to collection $new
 	$data=sql_query("select * from collection_resource where collection='$old'","");
 	sql_query("delete from collection_resource where collection='$new'");
 	foreach($data as $col_resource)
+		{
+		sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
+		values ( $new ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+		}
+	}
+
+function collection_is_research_request($collection)
 	{
-	sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
-	values ( $new ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+	# Returns true if a collection is a research request
+	return (sql_value("select count(*) value from research_request where collection='$collection'",0)>0);
+	}
+
+function add_to_collection_link($resource,$search="")
+	{
+	# Generates a HTML link for adding a resource to a collection
+	global $frameless_collections,$lang;
+	if ($frameless_collections)
+		{
+		return "<a href=\"#\" onClick=\"AddResourceToCollection('" . $resource . "');return false;\">";
+		}
+	else
+		{
+		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["addtocurrentcollection"] . "\">";
+		}
 	}
 	
+function remove_from_collection_link($resource,$search="")
+	{
+	# Generates a HTML link for removing a resource to a collection
+	global $frameless_collections,$lang,$pagename;
+	if ($frameless_collections)
+		{
+		return "<a href=\"#\" onClick=\"RemoveResourceFromCollection('" . $resource . "','" . $pagename . "');return false;\">";
+		}
+	else
+		{
+		return "<a href=\"collections.php?remove=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["removefromcurrentcollection"] . "\">";
+		}
 	}
-
-
+	
+function change_collection_link($collection)
+	{
+	# Generates a HTML link for adding a changing the current collection
+	global $frameless_collections,$lang;
+	if ($frameless_collections)
+		{
+		return "<a href=\"#\" onClick=\"ChangeCollection('" . $collection . "');return false;\">";
+		}
+	else
+		{
+		return "<a href=\"collections.php?collection=" . $collection. "\" target=\"collections\">";
+		}
+	}
 ?>

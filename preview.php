@@ -4,6 +4,7 @@ include "include/db.php";
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "include/authenticate.php";}
 include "include/general.php";
 include "include/search_functions.php";
+include "include/collections_functions.php";
 
 $ref=getval("ref","");
 $ext=getval("ext","");
@@ -55,7 +56,7 @@ include "include/header.php";
 
 <? if (!checkperm("b")) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections"> <?=$lang["addtocollection"]?></a><? } ?>
+<?=add_to_collection_link($ref,$search)?><?=$lang["addtocollection"]?></a><? } ?>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="preview.php?from=<?=getval("from","")?>&ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
@@ -76,6 +77,8 @@ elseif ($nextpage!=-1) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><? }
 <td valign="middle"><? if ($nextpage!=-1) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$ext?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&page=<?=$nextpage?>" class="PDFnav">&gt;</a><? } ?></td>
 </tr></table>
 <? } ?>
+
+<div id="CollectionFramelessCount" style="display:none;"> </div>
 
 <?
 include "include/footer.php";

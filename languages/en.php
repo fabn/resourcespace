@@ -557,5 +557,6 @@ $lang["youraccountdetails"]="Your Account Details"; # Subject of mail sent to us
 $lang["copyfromcollection"]="Copy from collection";
 $lang["donotcopycollection"]="Do not copy from a collection";
 
-
+$lang["resourcesincollection"]="resources in this collection"; # E.g. 3 resources in this collection
+$lang["removefromcurrentcollection"]="Remove from current collection";
 ?>

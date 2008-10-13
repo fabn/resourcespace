@@ -1,9 +1,11 @@
 <?
 include "include/db.php";
-include "include/authenticate.php";
 include "include/general.php";
 include "include/search_functions.php";
 include "include/collections_functions.php";
+# External access support (authenticate only if no key provided, or if invalid access key provided)
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(str_replace("!collection","",getvalescaped("search","")),$k))) {include "include/authenticate.php";}
+
 
 $search=getvalescaped("search","");
 
@@ -148,26 +150,26 @@ if (true) #search condition
 			$rel=$lang["relevance"];
 			if (strpos($search,"!")!==false) {$rel=$lang["asadded"];}
 			?>
-			<div class="InpageNavLeftBlock "><?=$lang["sortorder"]?>:<br /><? if ($order_by=="relevance") {?><span class="Selected"><?=$rel?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=relevance&archive=<?=$archive?>"><?=$rel?></a><? } ?>
+			<div class="InpageNavLeftBlock "><?=$lang["sortorder"]?>:<br /><? if ($order_by=="relevance") {?><span class="Selected"><?=$rel?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=relevance&archive=<?=$archive?>&k=<?=$k?>"><?=$rel?></a><? } ?>
 			&nbsp;|&nbsp;
-			<? if ($order_by=="popularity") {?><span class="Selected"><?=$lang["popularity"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=popularity&archive=<?=$archive?>"><?=$lang["popularity"]?></a><? } ?>
+			<? if ($order_by=="popularity") {?><span class="Selected"><?=$lang["popularity"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=popularity&archive=<?=$archive?>&k=<?=$k?>"><?=$lang["popularity"]?></a><? } ?>
 			
 			<? if ($orderbyrating) { ?>
 			&nbsp;|&nbsp;
-			<? if ($order_by=="rating") {?><span class="Selected"><?=$lang["rating"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=rating&archive=<?=$archive?>"><?=$lang["rating"]?></a><? } ?>
+			<? if ($order_by=="rating") {?><span class="Selected"><?=$lang["rating"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=rating&archive=<?=$archive?>&k=<?=$k?>"><?=$lang["rating"]?></a><? } ?>
 			<? } ?>
 			
 			&nbsp;|&nbsp;
-			<? if ($order_by=="date") {?><span class="Selected"><?=$lang["date"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=date&archive=<?=$archive?>"><?=$lang["date"]?></a><? } ?>
+			<? if ($order_by=="date") {?><span class="Selected"><?=$lang["date"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=date&archive=<?=$archive?>&k=<?=$k?>"><?=$lang["date"]?></a><? } ?>
 			
 			<? if ($colour_sort) { ?>
 			&nbsp;|&nbsp;
-			<? if ($order_by=="colour") {?><span class="Selected"><?=$lang["colour"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=colour&archive=<?=$archive?>"><?=$lang["colour"]?></a><? } ?>
+			<? if ($order_by=="colour") {?><span class="Selected"><?=$lang["colour"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=colour&archive=<?=$archive?>&k=<?=$k?>"><?=$lang["colour"]?></a><? } ?>
 			<? } ?>
 			
 			<? if ($country_sort) { ?>
 			&nbsp;|&nbsp;
-			<? if ($order_by=="country") {?><span class="Selected"><?=$lang["country"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=country&archive=<?=$archive?>"><?=$lang["country"]?></a><? } ?>
+			<? if ($order_by=="country") {?><span class="Selected"><?=$lang["country"]?></span><? } else { ?><a href="search.php?search=<?=urlencode($search)?>&order_by=country&archive=<?=$archive?>&k=<?=$k?>"><?=$lang["country"]?></a><? } ?>
 			<? } ?>
 			</div>
 			<?
@@ -177,7 +179,7 @@ if (true) #search condition
 	    $totalpages=ceil($results/$per_page);
 	    if ($offset>$results) {$offset=0;}
     	$curpage=floor($offset/$per_page)+1;
-        $url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive;	
+        $url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k;	
 
 		pager();
 		$draw_pager=true;
@@ -252,7 +254,7 @@ if (true) #search condition
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
 			{
 			$ref=$result[$n]["ref"];
-			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive; ?>
+			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
 			
 				<?	
 				if ($display=="thumbs") { #Thumbnails view
@@ -284,11 +286,14 @@ if (true) #search condition
 			
 			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><? } ?>&nbsp;</div>				
 			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
-			<? if (!checkperm("b")) { ?><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?>
-			<? if ($allow_share) { ?><span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" <? if (!$infobox) { ?>title="<?=$lang["emailresource"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><? } ?>
+			<? if (!checkperm("b")) { ?><span class="IconCollect"><?=add_to_collection_link($ref,$search)?><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?>
+			<? if (!checkperm("b") && substr($search,0,11)=="!collection") { ?>
+			<span class="IconCollectOut"><?=remove_from_collection_link($ref,$search)?><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<? } ?>
+			<? if ($allow_share) { ?><span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" title="<?=$lang["emailresource"]?>"><img src="gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><? } ?>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
 			<? if ($collection_reorder_caption && $allow_reorder) { ?>
-			<span class="IconComment"><a href="collection_comment.php?ref=<?=$ref?>&collection=<?=substr($search,11)?>" <? if (!$infobox) { ?>title="<?=$lang["addorviewcomments"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
+			<span class="IconComment"><a href="collection_comment.php?ref=<?=$ref?>&collection=<?=substr($search,11)?>" title="<?=$lang["addorviewcomments"]?>"><img src="gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 			<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 			<? } ?>
 			<div class="clearer"></div>
@@ -319,7 +324,7 @@ if (true) #search condition
 			/><? } ?></a>
 			</td>
 			</tr></table>
-			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><? if (!checkperm("b")) { ?><span class="IconCollect"><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections" <? if (!$infobox) { ?>title="<?=$lang["addtocurrentcollection"]?>"<? } ?>><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?></div>
+			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><? if (!checkperm("b")) { ?><span class="IconCollect"><?=add_to_collection_link($ref,$search)?><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><span class="IconCollectOut"><?=remove_from_collection_link($ref,$search)?><img src="gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?></div>
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
 			 
@@ -337,7 +342,7 @@ if (true) #search condition
 			<td><?=$result[$n]["ref"]?></td>
 			<td><? if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?=i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><? } ?></td>
 			<td><?=nicedate($result[$n]["creation_date"],false,true)?></td>
-			<td><div class="ListTools"><a <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?> href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<? if (!checkperm("b")) { ?><a href="collections.php?add=<?=$ref?>&nc=<?=time()?>&search=<?=urlencode($search)?>" target="collections">&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<? } ?><a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
+			<td><div class="ListTools"><a <? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?> href="<?=$url?>">&gt;&nbsp;<?=$lang["action-view"]?></a> &nbsp;<? if (!checkperm("b")) { ?><?=add_to_collection_link($ref,$search)?>&gt;&nbsp;<?=$lang["action-addtocollection"]?></a> &nbsp;<? } ?><a href="resource_email.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["action-email"]?></a></div></td>
 			</tr>
 			<?
 			}

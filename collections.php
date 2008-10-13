@@ -53,8 +53,7 @@ if ($collection!="")
 # Load collection info.
 $cinfo=get_collection($usercollection);
 
-# Check to see if the user can edit this resource.
-$collectiondata=get_collection($collection);
+# Check to see if the user can edit this collection.
 $allow_reorder=false;
 if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h"))))
 	{
@@ -247,7 +246,7 @@ if ($k!="")
   </form>
 
   <ul>
-  	<? if ((!(sql_value("select count(*) value from research_request where collection='$usercollection'",0)>0)) || (!checkperm("r"))) { ?>
+  	<? if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?=$lang["managemycollections"]?></a></li>
     <? if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?></a></li><? } ?>
     
@@ -399,7 +398,7 @@ else
 <!--Menu-->	
 <div id="CollectionMinRightNav">
   <ul>
-  	<? if ((!(sql_value("select count(*) value from research_request where collection='$usercollection'",0)>0)) || (!checkperm("r"))) { ?>
+  	<? if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main"><?=$lang["managemycollections"]?></a></li>
     <li><a href="collection_share.php?ref=<?=$usercollection?>" target="main"><?=$lang["share"]?></a></li><? } ?>
         <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?=$usercollection?>"><?=$lang["edit"]?></a></li><? } ?>

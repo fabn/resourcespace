@@ -50,6 +50,7 @@ a:active {color:#737373;}
 
 .PanelShadow {background: url(../gfx/whitegry/interface/panelshadow.gif) repeat-x;height: 5px;}
 .IconCollect, .KeyCollect	{background: url(../gfx/whitegry/interface/IcCol.gif) no-repeat;}
+.IconCollectOut, .KeyCollectOut	{background: url(../gfx/whitegry/interface/IcColOut.gif) no-repeat;}
 .IconEmail, .KeyEmail	{background: url(../gfx/whitegry/interface/IcEml.gif) no-repeat;}
 .IconPreview, .KeyPreview	{background: url(../gfx/whitegry/interface/IcPre.gif) no-repeat;}
 .IconStar, .KeyStar	{	background: url(../gfx/whitegry/interface/IcStar.gif) no-repeat;}

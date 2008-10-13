@@ -12,7 +12,7 @@ if (getval("c","")!="")
 	{
 	# quick redirect to a collection (from e-mails, keep the URL nice and short)
 	$c=getvalescaped("c","");
-	$topurl="search.php?search=" . urlencode("!collection" . $c);
+	$topurl="search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;;
 	$bottomurl="collections.php?collection=" . $c . "&k=" . $k;
 	
 	if ($k!="")
@@ -21,7 +21,8 @@ if (getval("c","")!="")
 		$r=get_collection_resources($c);
 		if (count($r)>0)
 			{
-			$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
+			#$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
+			$topurl="search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
 			}
 		else
 			{
@@ -44,7 +45,9 @@ if (getval("url","")!="")
 	$topurl=getval("url",$topurl);
 	}
 
-if (checkperm("b")) {redirect($topurl);}
+# If not using framesets, redirect instead.
+if (checkperm("b") || $frameless_collections) {redirect($topurl);}
+
 ?>
 <html>
 <head>
