@@ -12,11 +12,11 @@ http://www.montala.net/resourcespace.php
 <link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
 <!--[if lte IE 7]> <link href="<?=$baseurl?>/css/globalIE.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="<?=$baseurl?>/css/globalIE5.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<script src="js/prototype.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
-<script src="js/scriptaculous.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
+<script src="<?=$baseurl?>/lib/js/prototype.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
+<script src="<?=$baseurl?>/lib/js/scriptaculous.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
 
 <? if ($frameless_collections) { ?>
-<script src="js/frameless_collections.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
+<script src="<?=$baseurl?>/lib/js/frameless_collections.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
 <? } ?>
 
 <?
@@ -71,8 +71,8 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 	{
 	?>
 	<ul>
-	<li><a href="<?=$baseurl?>/login.php" target="_top"><?=$lang["login"]?></a></li>
-	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
+	<li><a href="<?=$baseurl?>/pages/login.php" target="_top"><?=$lang["login"]?></a></li>
+	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/pages/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
 	<?
 	}
@@ -80,10 +80,10 @@ else
 	{
 	?>
 	<ul>
-	<li><? if ($allow_password_change) { ?><a href="<?=$baseurl?>/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
-	<li><a href="<?=$baseurl?>/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
+	<li><? if ($allow_password_change) { ?><a href="<?=$baseurl?>/pages/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change) { ?></a><? } ?></li>
+	<li><a href="<?=$baseurl?>/pages/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
 	<?hook("addtologintoolbarmiddle");?>
-	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
+	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/pages/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
 	<?
 	}
@@ -102,8 +102,8 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <? } ?>
 
 		<ul>
-		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/home.php"<? if (!checkperm("b")) { ?> target="main"<? } ?>><?=$lang["home"]?></a></li><? }  ?>
-		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/search_advanced.php" <? if (!checkperm("b")) { ?>target="main"<? } ?>><?=$lang["advancedsearch"]?></a></li><? }  ?>
+		<? if (!$use_theme_as_home) { ?><li><a href="<?=$baseurl?>/pages/home.php"<? if (!checkperm("b")) { ?> target="main"<? } ?>><?=$lang["home"]?></a></li><? }  ?>
+		<? if ($advanced_search_nav) { ?><li><a href="<?=$baseurl?>/pages/search_advanced.php" <? if (!checkperm("b")) { ?>target="main"<? } ?>><?=$lang["advancedsearch"]?></a></li><? }  ?>
 		<? if 	(
 			(checkperm("s"))
 		&&
@@ -113,17 +113,17 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 				((strlen(@$search)>0) && (strpos($search,"!")===false))
 			)
 		)
-		{?><li><a<? if (!checkperm("b")) { ?> target="main"<? } ?> href="<?=$baseurl?>/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
-		<? if (checkperm("s") && $enable_themes) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/themes.php"><?=$lang["themes"]?></a></li><? } ?>
-		<? if (checkperm("s") && $recent_link) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
-		<? if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
-		<? if (checkperm("d")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
-		<? if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
+		{?><li><a<? if (!checkperm("b")) { ?> target="main"<? } ?> href="<?=$baseurl?>/pages/search.php"><?=$lang["searchresults"]?></a></li><? } ?>
+		<? if (checkperm("s") && $enable_themes) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/themes.php"><?=$lang["themes"]?></a></li><? } ?>
+		<? if (checkperm("s") && $recent_link) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/search.php?search=<?=urlencode("!last1000")?>"><?=$lang["recent"]?></a></li><? } ?>
+		<? if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/collection_manage.php"><?=$lang["mycollections"]?></a></li><? } ?>
+		<? if (checkperm("d")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/contribute.php"><?=$lang["mycontributions"]?></a></li><? } ?>
+		<? if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/research_request.php"><?=$lang["researchrequest"]?></a></li><? } ?>
 		
-		<? if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/tag.php"><?=$lang["tagging"]?></a></li><? } ?>
+		<? if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/tag.php"><?=$lang["tagging"]?></a></li><? } ?>
 		
-		<li><a target="<?=$target?>" href="<?=$baseurl?>/help.php"><?=$lang["helpandadvice"]?></a></li>
-		<? if (checkperm("t")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
+		<li><a target="<?=$target?>" href="<?=$baseurl?>/pages/help.php"><?=$lang["helpandadvice"]?></a></li>
+		<? if (checkperm("t")) { ?><li><a target="<?=$target?>" href="<?=$baseurl?>/pages/team/team_home.php"><?=$lang["teamcentre"]?></a></li><? } ?>
 
 <? hook("toptoolbaradder"); ?>
 

@@ -30,16 +30,16 @@ function SwapCSS(css)
 <div id="FooterNavLeft" class=""><? if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?=$lang["interface"]?>:&nbsp;&nbsp;<a href="#" onClick="SwapCSS('greyblu');return false;"><img src="<?=$baseurl?>/gfx/interface/BlueChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('whitegry');return false;"><img src="<?=$baseurl?>/gfx/interface/WhiteChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('black');return false;"><img src="<?=$baseurl?>/gfx/interface/BlackChip.gif" alt="" width="11" height="11" /></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<? } ?>
 <? if ($disable_languages==false){?>
-<?=$lang["language"]?>: <a href="<?=$baseurl?>/change_language.php"><?=$languages[$language]?></a>
+<?=$lang["language"]?>: <a href="<?=$baseurl?>/pages/change_language.php"><?=$languages[$language]?></a>
 <? } ?>
 </div>
 
 <? if ($about_link || $contact_link) { ?>
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
 		<ul>
-		<li><a href="<?=$baseurl?>/home.php"><?=$lang["home"]?></a></li>
-		<? if ($about_link) { ?><li><a href="<?=$baseurl?>/about.php"><?=$lang["aboutus"]?></a></li><? } ?>
-		<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
+		<li><a href="<?=$baseurl?>/pages/home.php"><?=$lang["home"]?></a></li>
+		<? if ($about_link) { ?><li><a href="<?=$baseurl?>/pages/about.php"><?=$lang["aboutus"]?></a></li><? } ?>
+		<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/pages/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 <!--	<li><a href="#">Terms&nbsp;&amp;&nbsp;Conditions</a></li>-->
 <!--	<li><a href="#">Team&nbsp;Centre</a></li>-->
 		</ul>

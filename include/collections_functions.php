@@ -115,7 +115,7 @@ function refresh_collection_frame()
 		{
 		global $headerinsert,$baseurl;
 		$headerinsert.="<script language=\"Javascript\">
-		top.collections.location.href=\"" . $baseurl . "/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
+		top.collections.location.href=\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
 		</script>";
 		}
 	}
@@ -391,12 +391,15 @@ function remove_saved_search($collection,$search)
 function add_saved_search_items($collection)
 	{
 	$results=do_search(getvalescaped("addsearch",""), getvalescaped("restypes",""), "relevance", getvalescaped("archive",""));
-	for ($n=0;$n<count($results);$n++)
+	if (is_array($results))
 		{
-		$resource=$results[$n]["ref"];
-		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
-		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
- 		}
+		for ($n=0;$n<count($results);$n++)
+			{
+			$resource=$results[$n]["ref"];
+			sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
+			sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
+			}
+		}
 	}
 
 function allow_multi_edit($collection)

@@ -37,7 +37,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 	  <h2><?=$lang["login"]?></h2>
 
   
-  <form id="form1" method="post" action="login.php" target="_top">
+  <form id="form1" method="post" action="<?=$baseurl?>/pages/login.php" target="_top">
   <div class="SearchItem"><?=$lang["username"]?><br/><input type="text" name="username" id="name" class="SearchWidth" /></div>
   
   <div class="SearchItem"><?=$lang["password"]?><br/><input type="password" name="password" id="name" class="SearchWidth" /></div>
@@ -66,7 +66,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
   <h2><?=$lang["simplesearch"]?></h2>
 	<p><?=text("searchpanel")?></p>
 	
-	<form id="form1" method="get" action="<?=$baseurl?>/search.php">
+	<form id="form1" method="get" action="<?=$baseurl?>/pages/search.php">
 
         <input id="ssearchbox" name="search" type="text" class="SearchWidth" value="<?=htmlspecialchars(stripslashes(@$quicksearch))?>">
 
@@ -204,8 +204,8 @@ if (!$basic_simple_search)
 			
   </form>
 	
-  <p><br /><a href="<?=$baseurl?>/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
-  <? if ($view_new_material) { ?><p><a href="<?=$baseurl?>/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></p><? } ?>
+  <p><br /><a href="<?=$baseurl?>/pages/search_advanced.php">&gt; <?=$lang["gotoadvancedsearch"]?></a></p>
+  <? if ($view_new_material) { ?><p><a href="<?=$baseurl?>/pages/search.php?search=<?=urlencode("!last1000")?>">&gt; <?=$lang["viewnewmaterial"]?></a></p><? } ?>
 	</div>
 	
 	<? } ?> <!-- END of Searchbarreplace hook -->
@@ -220,7 +220,7 @@ if (!$basic_simple_search)
   <div class="SearchSpace">
   <h2><?=$lang["researchrequest"]?></h2>
 	<p><?=text("researchrequest")?></p>
-	<div class="HorizontalWhiteNav"><a href="<?=$baseurl?>/research_request.php">&gt; <?=$lang["researchrequestservice"]?></a></div>
+	<div class="HorizontalWhiteNav"><a href="<?=$baseurl?>/pages/research_request.php">&gt; <?=$lang["researchrequestservice"]?></a></div>
 	</div><br />
 	</div>
 	<div class="PanelShadow"></div>
@@ -231,7 +231,7 @@ if (!$basic_simple_search)
 		# Support for frameless collections.
 
 		# Ensure collections functions loaded.
-		include_once "include/collections_functions.php";
+		include_once dirname(__FILE__)."/collections_functions.php";
 
 		# Load collection info.
 		# If $usercollection is not set then this is an external user. Extract the collection ID from the URL.

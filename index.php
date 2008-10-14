@@ -5,15 +5,15 @@ include "include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("c",""),$k) && !check_access_key(getvalescaped("r",""),$k))) {include "include/authenticate.php";}
 
-$topurl=$use_theme_as_home?"themes.php":"home.php";
-$bottomurl="collections.php?k=" . $k;
+$topurl=$use_theme_as_home?"pages/themes.php":"pages/home.php";
+$bottomurl="pages/collections.php?k=" . $k;
 
 if (getval("c","")!="")
 	{
 	# quick redirect to a collection (from e-mails, keep the URL nice and short)
 	$c=getvalescaped("c","");
-	$topurl="search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;;
-	$bottomurl="collections.php?collection=" . $c . "&k=" . $k;
+	$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;;
+	$bottomurl="pages/collections.php?collection=" . $c . "&k=" . $k;
 	
 	if ($k!="")
 		{
@@ -22,11 +22,11 @@ if (getval("c","")!="")
 		if (count($r)>0)
 			{
 			#$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
-			$topurl="search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
+			$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
 			}
 		else
 			{
-			$topurl="home.php";
+			$topurl="pages/home.php";
 			}
 		}
 	}
@@ -35,7 +35,7 @@ if (getval("r","")!="")
 	{
 	# quick redirect to a resource (from e-mails)
 	$r=getvalescaped("r","");
-	$topurl="view.php?ref=" . $r . "&k=" . $k;
+	$topurl="pages/view.php?ref=" . $r . "&k=" . $k;
 	if ($k!="") {$bottomurl="";} # No bottom frame if anon. access for single resource
 	}
 
@@ -63,7 +63,7 @@ Copyright Oxfam GB 2006-2008
 <frame name="main" id="main" src="<?=$topurl?>" <? if ($collection_resize!=true){?>frameborder="no"<?}?>>
 
 <? if ($bottomurl!="") { ?>
-<? if ($collection_resize!=true){?><frame src="frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" /><?}?>
+<? if ($collection_resize!=true){?><frame src="pages/frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" /><?}?>
 <frame name="collections" id="collections" src="<?=$bottomurl?>" frameborder=no>
 <? } ?>
 

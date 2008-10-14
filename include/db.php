@@ -21,12 +21,13 @@ header("Cache-Control: max-age=0");  // HTTP/1.1
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
 	{
+	global $baseurl;
 	if (error_reporting())
 		{
 		?>
 		</select></table></table></table>
 		<div style="border:1px solid black;font-family:verdana,arial,helvetica;position:absolute;top:100px;left:100px; background-color:white;width:400px;padding:20px;border-bottom-width:4px;border-right-width:4px;font-size:15px;color:black;">
-		<table cellpadding=5 cellspacing=0><tr><td valign=middle><img src="admin/gfx/cherrybomb.gif" width="48" height="48"></td><td valign=middle align=left><span style="font-size:23px;">Sorry, an error has occured.</span></td></tr></table>
+		<table cellpadding=5 cellspacing=0><tr><td valign=middle><img src="<?=$baseurl?>/pages/admin/gfx/cherrybomb.gif" width="48" height="48"></td><td valign=middle align=left><span style="font-size:22px;">Sorry, an error has occured.</span></td></tr></table>
 		<p style="font-size:11px;color:black;margin-top:20px;">Please <a href="#" onClick="history.go(-1)">go back</a> and try something else.</p>
 		<p style="font-size:11px;color:black;">You can <a href="check.php">check</a> your installation configuration.</p>
 		<hr style="margin-top:20px;"><p style="font-size:11px;color:black;"><? echo "$errfile line $errline: $errstr"; ?></p>

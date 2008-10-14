@@ -54,7 +54,7 @@ $minyear=1980; # The year of the earliest resource record, used for the date sel
 
 # Set folder for home images. Ex: "gfx/homeanim/mine/" 
 # Files should be numbered sequentially, and will be auto-counted.
-$homeanim_folder="gfx/homeanim/gfx/";
+$homeanim_folder="gfx/homeanim/gfx";
 
 # Optional 'quota size' for allocation of a set amount of disk space to this application. Value is in GB.
 # Note: Unix systems only.

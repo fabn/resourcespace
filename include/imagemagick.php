@@ -9,14 +9,14 @@ global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pd
 
 if (!$previewonly)
 	{
-	$file=myrealpath(get_resource_path($ref,"",false,$extension)); 
-	$target=myrealpath(get_resource_path($ref,"",false,"jpg")); 
+	$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension); 
+	$target=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,"jpg"); 
 	}
 else
 	{
 	# Use preview source/destination
-	$file=myrealpath(get_resource_path($ref,"tmp",false,$extension)); 
-	$target=myrealpath(get_resource_path($ref,"tmp",false,"jpg")); 
+	$file=get_resource_path($ref,"tmp",false,$extension);
+	$target=dirname(__FILE__) . "/../" . get_resource_path($ref,"tmp",false,"jpg");
 	}
 	
 # Set up ImageMagick 
@@ -133,7 +133,7 @@ if ($extension=="txt")
    ----------------------------------------
 */
 global $ffmpeg_path; 
-if (isset($ffmpeg_path) && !isset($newfile) && $extension!="tiff" && $extension!="tif") 
+if (isset($ffmpeg_path) && !isset($newfile)) 
         { 
         $ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
          
@@ -150,7 +150,7 @@ if (isset($ffmpeg_path) && !isset($newfile) && $extension!="tiff" && $extension!
             if ($ffmpeg_preview && $extension!="flv")
                 {
                 # Create a preview video (FLV)
-                $targetfile=myrealpath(get_resource_path($ref,"",false,"flv")); 
+                $targetfile=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,"flv"); 
                 $ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
                 $output=shell_exec($ffcommand); 
                 }
@@ -192,7 +192,7 @@ if (!isset($newfile))
 			{
 			# Set up target file
 			$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
-			$target=myrealpath(get_resource_path($ref,$size,false,"jpg",-1,$n)); 
+			$target=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,"jpg",-1,$n); 
 			if (file_exists($target)) {unlink($target);}
 			
 			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
@@ -214,7 +214,7 @@ if (!isset($newfile))
 				global $watermark;
     			if (isset($watermark))
     				{
-					$path=myrealpath(get_resource_path($ref,$size,false,"",-1,$n,true));
+					$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,"",-1,$n,true);
 					if (file_exists($path)) {unlink($path);}
     				$watermarkreal=myrealpath($watermark);
     				

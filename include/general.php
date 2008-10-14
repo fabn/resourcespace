@@ -52,7 +52,7 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$p
 		if (($scramble) && ($n==(strlen($ref)-1))) {$folder.="_" . $scramblepath;}
 		$folder.="/";
 		#echo "<li>" . $folder;
-		if ((!(file_exists($folder))) && $generate) {mkdir($folder,0777);chmod($folder,0777);}
+		if ((!(file_exists(dirname(__FILE__) . "/../" . $folder))) && $generate) {mkdir(dirname(__FILE__) . "/../" . $folder,0777);chmod(dirname(__FILE__) . "/../" . $folder,0777);}
 		}
 		
 	# Add the page to the filename for everything except page 1.
@@ -265,7 +265,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	# add the original image
 	$return=array();
 	$lastname="";$lastpreview=0;$lastrestricted=0;
-	$path2=get_resource_path($ref,'',false,$extension);
+	$path2="../" . get_resource_path($ref,'',false,$extension);
 	if (file_exists($path2))
 	{
 		$returnline=array();
@@ -306,7 +306,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$sizes=sql_query("select * from preview_size order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
 	{
-		$path=get_resource_path($ref,$sizes[$n]["id"],false);
+		$path="../" . get_resource_path($ref,$sizes[$n]["id"],false);
 		if (file_exists($path) || (!$onlyifexists))
 			{
 			if (($sizes[$n]["internal"]==0) || ($internal))

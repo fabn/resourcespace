@@ -625,10 +625,10 @@ function write_metadata($path,$ref)
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
-		      if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+		      if(!is_dir(dirname(__FILE__). "/../filestore/tmp")){mkdir(dirname(__FILE__)."/../filestore/tmp",0777);}
 				$filename = pathinfo($path);
 				$filename = $filename['basename'];	
-				$tmpfile="filestore/tmp/".$filename;				
+				$tmpfile=dirname(__FILE__)."/../filestore/tmp/".$filename;				
 				copy($path,$tmpfile);
 				
 				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
@@ -648,6 +648,14 @@ function write_metadata($path,$ref)
 			$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
 			return $tmpfile;
 			}
+		else
+			{
+			return false;
+			}
+		}
+	else
+		{
+		return false;
 		}
 	}
 

@@ -15,7 +15,7 @@ foreach ($languages as $langkey => $langname)
 		if (array_key_exists($langkey,$translations)) {$transval=$translations[$langkey];} else {$transval="";}
 		?>
 		<tr>
-		<td><?=htmlspecialchars($langname)?></td>
+		<td nowrap valign="top"><?=htmlspecialchars($langname)?>&nbsp;&nbsp;</td>
 
 		<?
 		if ($fields[$n]["type"]==0)
