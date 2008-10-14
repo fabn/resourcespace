@@ -1,6 +1,6 @@
 thm,150,150,0,Thumbnail,1,0,0
 pre,350,350,0,Preview,1,0,1
-scr,800,800,0,Screen,0,1,0
-lpr,9000,9000,0,Printable,0,0,0
-hpr,999999,999999,0,"High resolution print",0,0,0
+scr,850,850,0,Screen,0,1,0
+lpr,2000,2000,0,"Low resolution print",0,0,0
+hpr,999999,999999,0,"Original File",0,0,0
 col,75,75,0,Collection,1,0,0

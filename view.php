@@ -102,7 +102,7 @@ include "include/header.php";
 <a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
 <? } ?>
-<h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle">ARCHIVE RESOURCE:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars($resource["title"]),$search)?></h1>
+<h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?=$lang["archivedresource"]?>:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?></h1>
 <? } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
@@ -453,7 +453,7 @@ if (count($result)>0)
 			<table border="0" class="CollectionResourceAlign"><tr><td>
 			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($rref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
 			</tr></table>
-			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$rref?>"><?=tidy_trim($result[$n]["title"],25)?></a>&nbsp;</div>
+			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$rref?>"><?=tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
 		</div>
 		<?		
 		}

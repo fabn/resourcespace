@@ -308,6 +308,13 @@ for ($n=0;$n<count($fields);$n++)
 	$name="field_" . $fields[$n]["ref"];
 	$value=$fields[$n]["value"];
 	
+	if ($multilingual_text_fields)
+		{
+		# Multilingual text fields - find all translations and display the translation for the current language.
+		$translations=i18n_get_translations($value);
+		if (array_key_exists($language,$translations)) {$value=$translations[$language];} else {$value="";}
+		}
+	
 	if ($multiple) {$value="";} # Blank the value for multi-edits.
 	
 	if (($fields[$n]["resource_type"]!=$lastrt)&& ($lastrt!=-1))
@@ -447,12 +454,17 @@ for ($n=0;$n<count($fields);$n++)
 			<div class="FormError">!! <?=$errors[$fields[$n]["ref"]]?> !!</div>
 			<?
 			}
-		?>
-		
+
+		# If enabled, include code to produce extra fields to allow multilingual free text to be entered.
+		if ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
+			{
+			include "include/multilingual_fields.php";
+			}
+		?>			
 		<div class="clearerleft"> </div>
 		</div>
 		<?
-	}
+		}
 	}
 ?>
 <? if ($ref>=0) { ?><br><h1><?=$lang["statusandrelationships"]?></h1><? } ?>

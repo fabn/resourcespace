@@ -166,6 +166,8 @@ a:active {text-decoration:underline;}
 .Question .vshrtwidth{width: 93px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .Inline {float: left;margin: 3px 10px 0px 0px;}
 .Question .tickset {float: left;}
+.Question .OptionTable, .Question .OptionToggle {margin: 0 0 0 150px;padding:0;}
+
 
 .Question .Fixed {    width: 300px;float: left;margin-top: 0.4em;font-weight: bold;} 
 .FormError{font-weight: bold;font-size: 1.1em;margin: 0px 0px 10px 150px;padding: 10px 0px 0px;}

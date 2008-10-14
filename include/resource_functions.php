@@ -35,7 +35,7 @@ function save_resource_data($ref,$multi)
 	# Save all submitted data for resource $ref.
 	# Also re-index all keywords from indexable fields.
 		
-	global $auto_order_checkbox,$userresourcedefaults;
+	global $auto_order_checkbox,$userresourcedefaults,$multilingual_text_fields,$languages,$language;
 	# Loop through the field data and save (if necessary)
 	$errors=array();
 	$resource_sql="";
@@ -66,8 +66,23 @@ function save_resource_data($ref,$multi)
 			$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
 			if (strlen($val)!=10) {$val="";}
 			}
+		elseif ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
+			{
+			# Construct a multilingual string from the submitted translations
+			$val=getvalescaped("field_" . $fields[$n]["ref"],"");
+			$val="~" . $language . ":" . $val;
+			reset ($languages);
+			foreach ($languages as $langkey => $langname)
+				{
+				if ($language!=$langkey)
+					{
+					$val.="~" . $langkey . ":" . getvalescaped("multilingual_" . $n . "_" . $langkey,"");
+					}
+				}
+			}
 		else
 			{
+			# Set the value exactly as sent.
 			$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 			}
 		if ($fields[$n]["value"]!=$val)

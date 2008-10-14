@@ -341,7 +341,7 @@ if (count($result)>0)
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
 		/><? } ?></a></td>
 		</tr></table>
-		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim($result[$n]["title"],14)?></a>&nbsp;</div>
+		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim(i18n_get_translated($result[$n]["title"]),14)?></a>&nbsp;</div>
 	
 		<? if ($k!="" && $feedback) { # Allow feedback for external access key users
 		?>

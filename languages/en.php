@@ -559,4 +559,7 @@ $lang["donotcopycollection"]="Do not copy from a collection";
 
 $lang["resourcesincollection"]="resources in this collection"; # E.g. 3 resources in this collection
 $lang["removefromcurrentcollection"]="Remove from current collection";
+$lang["showtranslations"]="+ Show translations";
+$lang["hidetranslations"]="- Hide translations";
+$lang["archivedresource"]="Archived Resource";
 ?>

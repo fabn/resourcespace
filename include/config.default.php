@@ -385,10 +385,8 @@ $max_login_attempts_wait_minutes=10;
 # Use imperial instead of metric for the download size guidelines
 $imperial_measurements=false;
 
-
-
-
-
+# What is the default resource type to use for batch upload templates?
+$default_resource_type=1;
 
 
 #

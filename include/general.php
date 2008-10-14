@@ -68,6 +68,7 @@ function get_resource_data($ref)
 	{
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
+	global $default_resource_type;
 	$resource=sql_query("select * from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
@@ -78,7 +79,7 @@ function get_resource_data($ref)
 		else
 			{
 			# For batch upload templates (negative reference numbers), generate a new resource.
-			sql_query("insert into resource (ref) values ('$ref')");
+			sql_query("insert into resource (ref,resource_type) values ('$ref','$default_resource_type')");
 			$resource=sql_query("select * from resource where ref='$ref'");
 			}
 		}
@@ -291,7 +292,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$command .= ' -format %wx%h '. escapeshellarg($prefix . $path2) .'[0]';
 				$output=shell_exec($command);
 				preg_match('/^([0-9]+)x([0-9]+)$/ims',$output,$smatches);
-				if ((list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
+				if (count($smatches)>=3 && (list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
 				}
 			}
 		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
@@ -1102,5 +1103,21 @@ function check_password($password)
 	return true;
 	}
 	
+function i18n_get_translations($value)
+	{
+	# For a string in the language format, return all translations as an associative array
+	# E.g. "en"->"English translation";
+	# "fr"->"French translation"
+	global $defaultlanguage;
+	if (strpos($value,"~")===false) {return array($defaultlanguage=>$value);}
+	$s=explode("~",$value);
+	$return=array();
+	for ($n=1;$n<count($s);$n++)
+		{
+		$e=explode(":",$s[$n]);
+		if (count($e)==2) {$return[$e[0]]=$e[1];}
+		}
+	return $return;
+	}
 	
 ?>
