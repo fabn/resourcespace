@@ -25,7 +25,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 
 	$hashsql="and u.session='$session_hash'";
 	if (isset($anonymous_login) && ($username==$anonymous_login)) {$hashsql="";} # Automatic anonymous login, do not require session hash.
-	
+
     $userdata=sql_query("select u.ref,u.username,g.permissions,g.fixed_theme,g.parent,u.usergroup,u.current_collection,u.last_active,u.email,u.password,u.fullname,g.search_filter, g.ip_restrict ip_restrict_group, u.ip_restrict ip_restrict_user, resource_defaults, u.password_last_change,g.config_options from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
     if (count($userdata)>0)
         {
@@ -57,7 +57,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 	        $last_password_change=time()-strtotime($userdata[0]["password_last_change"]);
 			if ($last_password_change>($password_expiry*60*60*24))
 				{
-				redirect("change_password.php?expired=true");
+				redirect("pages/change_password.php?expired=true");
 				}
         	}
         
@@ -83,11 +83,11 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 					if (isset($anonymous_login))
 						{
 						# If the system is set up with anonymous access, redirect to the home page after logging out.
-						redirect("home.php");
+						redirect("pages/home.php");
 						}
 					else
 						{
-						redirect("login.php");
+						redirect("pages/login.php");
 						}
 					}
 				}
@@ -115,7 +115,7 @@ if (!$valid)
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script>
-	top.location.href="<?=$baseurl?>/login.php?url=<?=urlencode($path)?>";
+	top.location.href="<?=$baseurl?>/pages/login.php?url=<?=urlencode($path)?>";
 	</script>
 	<?
     exit();
