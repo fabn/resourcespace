@@ -451,18 +451,18 @@ function delete_resource($ref)
 	$sizes=get_image_sizes($ref,true,$extension);
 	for ($n=0;$n<count($sizes);$n++)
 		{
-		$path=get_resource_path($ref,$sizes[$n]["id"],false,$extension);
+		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$sizes[$n]["id"],false,$extension);
 		if (file_exists($path)) {unlink($path);}
 		}
 	$sizes=get_image_sizes($ref,true,$extension2);
 	for ($n=0;$n<count($sizes);$n++)
 		{
 		# Also delete alternative previews (where extension is different)
-		$path=get_resource_path($ref,$sizes[$n]["id"],false,$extension2);
+		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$sizes[$n]["id"],false,$extension2);
 		if (file_exists($path)) {unlink($path);}
 		}
 
-	$path=get_resource_path($ref,"",false,$extension);
+	$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension);
 	if (file_exists($path)) {unlink($path);}
 	
 	# Delete all database entries
