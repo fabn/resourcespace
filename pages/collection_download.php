@@ -48,19 +48,19 @@ if ($submitted != "")
 		# Only download resources with proper access level
 		if ($access==0)
 			{
-			$p=get_resource_path($ref,$size,false,$result[$n]["file_extension"]);
+			$p=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,$result[$n]["file_extension"]);
 			if (!file_exists($p))
 				{
 				# If the file doesn't exist for this size, then the original file must be in the requested size.
 				# Try again with the size omitted to get the original.
-				$p=get_resource_path($ref,"",false,$result[$n]["file_extension"]);
+				$p=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$result[$n]["file_extension"]);
 				}
 			if (file_exists($p))
 				{
 				# when writing metadata, we take an extra security measure by copying the files to filestore/tmp
 
 				$tmpfile=write_metadata($p,$ref);
-				if($tmpfile!="" && file_exists($tmpfile)){$p=$tmpfile;}		
+				if($tmpfile!==false && file_exists($tmpfile)){$p=$tmpfile;}		
 				
 	
 				# if the tmpfile is made, from here on we are working with that. 
@@ -69,7 +69,7 @@ if ($submitted != "")
 				# If using original filenames when downloading, copy the file to new location so the name is included.
 				if ($original_filenames_when_downloading)	
 					{
-					if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+					if(!is_dir(dirname(__FILE__) . "/../filestore/tmp")){mkdir(dirname(__FILE__) . "/../filestore/tmp",0777);}
 					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
 					$filename=get_resource_data($ref);
 					# Prepend file name with resource ID to prevent collisions
@@ -85,7 +85,7 @@ if ($submitted != "")
 						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
 						
 						# Copy to a new location
-						$newpath="filestore/tmp/" . $filename;
+						$newpath=dirname(__FILE__) . "/../filestore/tmp/" . $filename;
 						copy($p,$newpath);
 						
 						# Add the temporary file to the post-zip deletion list.
@@ -118,7 +118,7 @@ if ($submitted != "")
 				
 				# build an array of paths so we can clean up any exiftool-modified files.
 				
-				if($tmpfile!="" && file_exists($tmpfile)){$deletion_array[]=$tmpfile;}
+				if($tmpfile!==false && file_exists($tmpfile)){$deletion_array[]=$tmpfile;}
 				daily_stat("Resource download",$ref);
 				resource_log($ref,'d',0);
 				}
@@ -128,7 +128,7 @@ if ($submitted != "")
 
 	# write text file, add to zip, and schedule for deletion 	
 	if (($zipped_collection_textfile==true)&&($includetext=="true")){
-	$textfile = "filestore/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
+	$textfile = dirname(__FILE__) . "/../filestore/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
 	$fh = fopen($textfile, 'w') or die("can't open file");
 	fwrite($fh, $text);
 	fclose($fh);
@@ -138,21 +138,21 @@ if ($submitted != "")
 	}
 
 	# Create and send the zipfile
-	if(!is_dir("filestore/tmp")){mkdir("filestore/tmp",0777);}
+	if(!is_dir(dirname(__FILE__) . "/../filestore/tmp")){mkdir(dirname(__FILE__) . "/../filestore/tmp",0777);}
 	
 	$file="collection_" . $collection . "_" . $size . ".zip";
-	exec("$zipcommand filestore/tmp/" . $file . $path);
-	$filesize=filesize("filestore/tmp/" . $file);
+	exec("$zipcommand " . dirname(__FILE__) . "/../filestore/tmp/" . $file . $path);
+	$filesize=filesize(dirname(__FILE__) . "/../filestore/tmp/" . $file);
 	
 	header("Content-Disposition: attachment; filename=" . $file);
 	header("Content-Type: application/zip");
 	header("Content-Length: " . $filesize);
 	
 	set_time_limit(0);
-	echo file_get_contents("filestore/tmp/" . $file);
+	echo file_get_contents(dirname(__FILE__) . "/../filestore/tmp/" . $file);
 	
-	unlink("filestore/tmp/" . $file);
-	foreach($deletion_array as $tmpfile){delete_exif_tmpfile($tmpfile);}
+	unlink(dirname(__FILE__) . "/../filestore/tmp/" . $file);
+	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
 	exit();
 	}
 include "../include/header.php";
