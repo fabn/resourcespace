@@ -99,11 +99,11 @@ for ($n=0;$n<count($result);$n++)
 		if ($ref!==false)
 			{
 			# Find image
-			$imgpath = "../" . get_resource_path($ref,$imgsize,false,$preview_extension);
+			$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
 			
-			if (!file_exists(myrealpath($imgpath))){
+			if (!file_exists($imgpath)){
 			$resource="../" . get_resource_data($ref);
-				$imgpath="gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
+				$imgpath="../gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
 				
 			if (file_exists($imgpath))
 			{
@@ -205,7 +205,7 @@ relate_to_collection($newresource,$collection);
 	sql_query("update resource set file_extension='pdf' where ref='$newresource'");
 	
 	# Create the file in the new resource folder:
-	$path="../" . get_resource_path($newresource,"",true,"pdf");
+	$path=get_resource_path($newresource,true,"",true,"pdf");
 	$pdf->Output($path,"F");
 	
 	#Create thumbnails and redirect browser to the new contact sheet resource

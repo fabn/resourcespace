@@ -48,7 +48,7 @@ if ($ref!="")
 	$resource=get_resource_data($ref);$resourcedata=get_resource_field_data($ref);
 	if ($resource["has_image"]==1)
 		{
-		$thumbnail=get_resource_path($ref,"col",false,$resource["preview_extension"]);
+		$thumbnail=get_resource_path($ref,false,"col",false,$resource["preview_extension"]);
 		}
 	else
 		{

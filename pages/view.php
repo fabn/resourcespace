@@ -113,29 +113,36 @@ include "../include/header.php";
 <? if (!hook("renderinnerresourceview")) { ?>
 <? if (!hook("renderinnerresourcepreview")) { ?>
 <?
-$flvfile=get_resource_path($ref,"",false,"flv");
+$flvfile=get_resource_path($ref,true,"",false,"flv");
 if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../players/type" . $resource["resource_type"] . ".php";
 	}
-elseif (file_exists("../" . $flvfile) && (strpos(strtolower($flvfile),".flv")!==false))
+elseif (file_exists($flvfile) && (strpos(strtolower($flvfile),".flv")!==false))
 	{
 	# Include the Flash player if an FLV file exists for this resource.
 	include "flv_play.php";
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
-	if (!file_exists("../" . $imagepath))
-	{$imagepath=get_resource_path($ref,"col",false,$resource["preview_extension"],-1,1,checkperm("w"));}
-	$previewpath=get_resource_path($ref,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
-	if (!file_exists("../" . $previewpath)) {$previewpath=get_resource_path($ref,"",false,$resource["preview_extension"]);}
+	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	if (!file_exists($imagepath))
+		{
+		$imagepath=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"));
+		}
+	else
+		{
+		$imagepath=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+		}
+	$previewpath=get_resource_path($ref,true,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	if (!file_exists($previewpath))
+		{
+		$previewpath=get_resource_path($ref,true,"",false,$resource["preview_extension"]);
+		}
 	
-	if (file_exists("../" . $previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
+	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
 	if (file_exists("../" . $imagepath))
 		{ ?><img src="../<?=$imagepath?>?nc=<?=time()?>" alt="<?=$lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><? } 
-	else # use the thumbnail instead, the uploaded file wasn't big enough to create a preview.
-		{ ?><img src="../<?=get_resource_path($ref,"thm",false,-1,1,checkperm("w"))?>" alt="" class="Picture" /><? }
 	if (file_exists("../" . $previewpath)) { ?></a><? }
 	}
 else
@@ -245,7 +252,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 	{
 	# Files without multiple download sizes (i.e. no thumbnail, or ImageMagick generated).
 	$counter++;
-	$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$resource["file_extension"]);
+	$path=get_resource_path($ref,true,"",false,$resource["file_extension"]);
 	if (file_exists($path))
 		{
 		?>
@@ -452,7 +459,7 @@ if (count($result)>0)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 			<table border="0" class="CollectionResourceAlign"><tr><td>
-			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="../<?=get_resource_path($rref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
+			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="../<?=get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
 			</tr></table>
 			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$rref?>"><?=tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
 		</div>

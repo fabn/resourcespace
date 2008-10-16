@@ -427,7 +427,7 @@ function get_theme_image($theme,$theme2="",$theme3="")
 	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
 	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
 	. " and r.has_image=1 order by r.hit_count desc limit 1",0);
-	if ($image==0) {return false;} else {return get_resource_path($image,"col",false);}
+	if ($image==0) {return false;} else {return get_resource_path($image,false,"col",false);}
 	}
 
 function swap_collection_order($resource1,$resource2,$collection)

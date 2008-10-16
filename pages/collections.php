@@ -318,24 +318,12 @@ if (count($result)>0)
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
 		
-		$colimgpath = get_resource_path($ref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"));
-		if (file_exists("../" . $colimgpath))
-		{
-?>
-<img border=0 src="../<?=$colimgpath?>" class="CollectImageBorder"
-<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
-/>
-<?
-		}			
-		else
-		{
-			$colimgpath = get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"));
-?>
-<img border=0 src="../<?=$colimgpath?>" class="CollectImageBorder" width="90" height="75"
-<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
-/>
-<?		
-		}
+		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))
+		?>
+		<img border=0 src="../<?=$colimgpath?>" class="CollectImageBorder"
+		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+		/>
+			<?
 		
 		} else { ?><img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>

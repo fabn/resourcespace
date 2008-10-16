@@ -1,7 +1,7 @@
 <?
 # General functions, useful across the whole solution
 
-function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false)
+function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false)
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
@@ -19,7 +19,7 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$p
 		
 		if (($test_ext == $extension)){
 		
-		if ((strlen($fp)>0) && (strpos($fp,"/")!==false))
+		if ($getfilepath && (strlen($fp)>0) && (strpos($fp,"/")!==false))
 			{
 			global $syncdir;  
             return $syncdir . "/" . $fp;
@@ -60,6 +60,9 @@ function get_resource_path($ref,$size,$generate,$extension="jpg",$scramble=-1,$p
 		
 	# Add the watermarked url too
 	if ($watermarked) {$p.="_wm";}
+	
+	# Fetching the file path? Add the full path to the file
+	if ($getfilepath) {$folder=dirname(__FILE__) . "/../" . $folder;}
 	
 	return $folder . $ref . $size . $p . "." . $extension;
 	}
@@ -265,7 +268,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	# add the original image
 	$return=array();
 	$lastname="";$lastpreview=0;$lastrestricted=0;
-	$path2="../" . get_resource_path($ref,'',false,$extension);
+	$path2=get_resource_path($ref,true,'',false,$extension);
 	if (file_exists($path2))
 	{
 		$returnline=array();
@@ -292,7 +295,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$command .= ' -format %wx%h '. escapeshellarg($prefix . $path2) .'[0]';
 				$output=shell_exec($command);
 				preg_match('/^([0-9]+)x([0-9]+)$/ims',$output,$smatches);
-				if (count($smatches)>=3 && (list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
+				if (count($smatches)<3 || (list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
 				}
 			}
 		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
@@ -306,7 +309,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$sizes=sql_query("select * from preview_size order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
 	{
-		$path="../" . get_resource_path($ref,$sizes[$n]["id"],false);
+		$path=get_resource_path($ref,true,$sizes[$n]["id"],false);
 		if (file_exists($path) || (!$onlyifexists))
 			{
 			if (($sizes[$n]["internal"]==0) || ($internal))

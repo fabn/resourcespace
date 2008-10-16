@@ -3,7 +3,7 @@
 $flashpath="../../pages/download.php?noattach=true&ref=$ref&ext=flv";
 $flashpath=urlencode($flashpath);
 
-$thumb=get_resource_path($ref,"pre",false,"jpg");
+$thumb="../".get_resource_path($ref,false,"pre",false,"jpg");
 $thumb=urlencode($thumb);
 
 # Choose a colour based on the theme.

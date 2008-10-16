@@ -191,9 +191,9 @@ if ($multiple) { ?>
 <div class="Question">
 <label><?=$lang["file"]?></label>
 <div class="Fixed">
-<? if ($resource["has_image"]==1) { ?><img align="top" src="<?="../" . get_resource_path($ref,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/><br />
+<? if ($resource["has_image"]==1) { ?><img align="top" src="<?="../" . get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>?nc=<?=time()?>" class="ImageBorder" style="margin-right:10px;"/><br />
 <? } 
-if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize("../" . get_resource_path($ref,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><? } ?>
+if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize("../" . get_resource_path($ref,false,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><? } ?>
 
 <a href="upload.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadafile"]?></a>
 <br />

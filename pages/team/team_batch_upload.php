@@ -64,7 +64,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
     sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
 
 
-	$localpath=get_resource_path($ref,"",true,$extension);
+	$localpath=get_resource_path($ref,true,"",true,$extension);
 	
 	$result=false;
 	error_reporting(0);
@@ -102,10 +102,10 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		$status=$lang["uploaded"] . " " . ($n+1) . " " . $lang["of"] . " " . count($uploadfiles);
 		
 		# Show thumb?
-		$rd=get_resource_data($ref);$thumb=get_resource_path($ref,"thm",false,$rd["preview_extension"]);
+		$rd=get_resource_data($ref);$thumb=get_resource_path($ref,false,"thm",false,$rd["preview_extension"]);
 		if (file_exists($thumb))
 			{
-			$status.="<br/><img src='" . $thumb . "'>";
+			$status.="<br/><img src='../../" . $thumb . "'>";
 			}
 		$done++;
 		

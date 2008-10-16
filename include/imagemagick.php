@@ -9,14 +9,14 @@ global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pd
 
 if (!$previewonly)
 	{
-	$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension); 
-	$target=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,"jpg"); 
+	$file=get_resource_path($ref,true,"",false,$extension); 
+	$target=get_resource_path($ref,true,"",false,"jpg"); 
 	}
 else
 	{
-	# Use preview source/destination
-	$file=get_resource_path($ref,"tmp",false,$extension);
-	$target=dirname(__FILE__) . "/../" . get_resource_path($ref,"tmp",false,"jpg");
+	# Use temporary preview source/destination - user has uploaded a file intended to replace the previews only.
+	$file=get_resource_path($ref,true,"tmp",false,$extension);
+	$target=get_resource_path($ref,true,"tmp",false,"jpg");
 	}
 	
 # Set up ImageMagick 
@@ -150,7 +150,7 @@ if (isset($ffmpeg_path) && !isset($newfile))
             if ($ffmpeg_preview && $extension!="flv")
                 {
                 # Create a preview video (FLV)
-                $targetfile=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,"flv"); 
+                $targetfile=get_resource_path($ref,true,"",false,"flv"); 
                 $ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
                 $output=shell_exec($ffcommand); 
                 }
@@ -192,7 +192,7 @@ if (!isset($newfile))
 			{
 			# Set up target file
 			$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
-			$target=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,"jpg",-1,$n); 
+			$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
 			if (file_exists($target)) {unlink($target);}
 			
 			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
@@ -214,7 +214,7 @@ if (!isset($newfile))
 				global $watermark;
     			if (isset($watermark))
     				{
-					$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,"",-1,$n,true);
+					$path=get_resource_path($ref,true,$size,false,"",-1,$n,true);
 					if (file_exists($path)) {unlink($path);}
     				$watermarkreal=myrealpath($watermark);
     				

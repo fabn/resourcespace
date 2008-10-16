@@ -27,10 +27,10 @@ for ($n=0;$n<count($resources);$n++)
 	$sizes=get_image_sizes($ref,true,$extension,false);
 	for ($m=0;$m<count($sizes);$m++)
 		{
-		$path=get_resource_path($ref,$sizes[$m]["id"],false,$extension,false);
+		$path=get_resource_path($ref,true,$sizes[$m]["id"],false,$extension,false);
 		if (file_exists($path))
 			{
-			$newpath=get_resource_path($ref,$sizes[$m]["id"],true,$extension,true);
+			$newpath=get_resource_path($ref,true,$sizes[$m]["id"],true,$extension,true);
 			
 			echo "<li>$ref - old path=$path, new path=$newpath";
 			rename ($path,$newpath);

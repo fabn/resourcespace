@@ -17,7 +17,7 @@ function upload_file($ref)
     $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
     
     $status="Please provide a file name.";
-    $filepath=dirname(__FILE__) . "/../" . get_resource_path($ref,"",true,$extension);
+    $filepath=get_resource_path($ref,true,"",true,$extension);
 
     if ($filename!="")
     	{
@@ -52,16 +52,16 @@ function upload_file($ref)
 	for ($n=2;$n<=$pdf_pages;$n++)
 		{
 		# Remove preview page.
-		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"scr",false,"jpg",-1,$n,false);
+		$path=get_resource_path($ref,true,"scr",false,"jpg",-1,$n,false);
 		if (file_exists($path)) {unlink($path);}
 		# Also try the watermarked version.
-		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"scr",false,"jpg",-1,$n,true);
+		$path=get_resource_path($ref,true,"scr",false,"jpg",-1,$n,true);
 		if (file_exists($path)) {unlink($path);}
 		}
 	# Remove any FLV video preview (except if the actual resource is an FLV file).
 	if ($extension!="flv")
 		{
-		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,"flv");
+		$path=get_resource_path($ref,true,"",false,"flv");
 		if (file_exists($path)) {unlink($path);}
 		}
     
@@ -78,7 +78,7 @@ function extract_exif_comment($ref,$extension)
 	
 	# EXIF headers
 
-	$image=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension);
+	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
 
 global $exiftool_path,$exif_comment;
@@ -229,12 +229,12 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 
 			if (!$previewonly)
 				{
-				$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension);	
+				$file=get_resource_path($ref,true,"",false,$extension);	
 				}
 			else
 				{
 				# We're generating based on a new preview (scr) image.
-				$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"tmp",false,$extension);	
+				$file=get_resource_path($ref,true,"tmp",false,$extension);	
 				}
 
 			$sizes="";
@@ -252,10 +252,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$id=$ps[$n]["id"];
 			
 				# Find the target path and delete anything that's already there.
-				$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false);
+				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
 				if (file_exists($path)) {unlink($path);}
 				# Also try the watermarked version.
-				$wpath=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
 				if (file_exists($wpath)) {unlink($wpath);}
 
 	      # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
@@ -299,7 +299,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				elseif (($id=="pre") || ($id=="thm") || ($id=="col"))	
 					{
 					# If the source is smaller than the pre/thm/col, we still need these sizes; just copy the file
-					copy($file,dirname(__FILE__) . "/../" . get_resource_path($ref,$id,false,$extension));
+					copy($file,get_resource_path($ref,true,$id,false,$extension));
 					if ($id=="thm") {sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");}
 					}
 				}
@@ -335,12 +335,12 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 		if (!$previewonly)
 			{
-			$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension);	
+			$file=get_resource_path($ref,true,"",false,$extension);	
 			}
 		else
 			{
 			# We're generating based on a new preview (scr) image.
-			$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"tmp",false,$extension);	
+			$file=get_resource_path($ref,true,"tmp",false,$extension);	
 			}
 
 		# Locate imagemagick.
@@ -385,10 +385,10 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					$highestsize = true;
 					}
 				# Find the target path and delete anything that's already there.
-				$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false);
+				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
 				if (file_exists($path)) {unlink($path);}
 				# Also try the watermarked version.
-				$wpath=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false,"jpg",-1,1,true);
+				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
 				if (file_exists($wpath)) {unlink($wpath);}
 	
 				# Preserve colour profiles? (omit for smaller sizes)   
@@ -402,7 +402,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				global $watermark;
 				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
 					{
-					$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false,"",-1,1,true);
+					$path=get_resource_path($ref,true,$ps[$n]["id"],false,"",-1,1,true);
 					if (file_exists($path)) {unlink($path);}
    					$watermarkreal=myrealpath($watermark);
 
@@ -413,7 +413,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			}
 
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
-		$target=@imagecreatefromjpeg(dirname(__FILE__) . "/../" . get_resource_path($ref,"thm",false));
+		$target=@imagecreatefromjpeg(get_resource_path($ref,true,"thm",false));
 		if ($target) 
 			{
 			extract_mean_colour($target,$ref);
@@ -549,7 +549,7 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	# On the edit screen, preview images can be either rotated or gamma adjusted. We keep the high(original) and low resolution print versions intact as these would be adjusted professionally when in use in the target application.
 
 	# Use the screen resolution version for processing
-	$file=dirname(__FILE__) . "/../" . get_resource_path($ref,"scr",false,$extension);
+	$file=get_resource_path($ref,true,"scr",false,$extension);
 	if (!file_exists($file)) {return false;}
 	
 	if ($extension=="png")
@@ -602,7 +602,7 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	for ($n=0;$n<count($ps);$n++)
 		{
 		# fetch target width and height
-	    $file=dirname(__FILE__) . "/../" . get_resource_path($ref,$ps[$n]["id"],false,$extension);		
+	    $file=get_resource_path($ref,true,$ps[$n]["id"],false,$extension);		
 	    list($sw,$sh) = @getimagesize($file);
 	    
 		if ($rotateangle!=0) {$temp=$sw;$sw=$sh;$sh=$temp;}
@@ -708,7 +708,7 @@ function generate_file_checksum($resource,$extension)
 	if ($file_checksums)
 		{
 		# Generates a unique checksum for the given file, based on the first 50K and the file size.
-		$path=dirname(__FILE__) . "/../" . get_resource_path($resource,"",false,$extension);
+		$path=get_resource_path($resource,true,"",false,$extension);
 		if (file_exists($path))
 			{
 			# Fetch the string used to generate the unique ID
@@ -732,7 +732,7 @@ function upload_preview($ref)
     $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
 
 	# Move uploaded file into position.	
-    $filepath=dirname(__FILE__) . "/../" . get_resource_path($ref,"tmp",true,$extension);
+    $filepath=get_resource_path($ref,true,"tmp",true,$extension);
     $result=move_uploaded_file($processfile['tmp_name'], $filepath);
    	if ($result!=false) {chmod($filepath,0777);}
     

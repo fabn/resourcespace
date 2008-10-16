@@ -451,18 +451,18 @@ function delete_resource($ref)
 	$sizes=get_image_sizes($ref,true,$extension);
 	for ($n=0;$n<count($sizes);$n++)
 		{
-		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$sizes[$n]["id"],false,$extension);
+		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension);
 		if (file_exists($path)) {unlink($path);}
 		}
 	$sizes=get_image_sizes($ref,true,$extension2);
 	for ($n=0;$n<count($sizes);$n++)
 		{
 		# Also delete alternative previews (where extension is different)
-		$path=dirname(__FILE__) . "/../" . get_resource_path($ref,$sizes[$n]["id"],false,$extension2);
+		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension2);
 		if (file_exists($path)) {unlink($path);}
 		}
 
-	$path=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$extension);
+	$path=get_resource_path($ref,true,"",false,$extension);
 	if (file_exists($path)) {unlink($path);}
 	
 	# Delete all database entries
@@ -693,7 +693,7 @@ function import_resource($path,$type,$title)
 	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.
-	$temp=get_resource_path($r,"pre",true,$extension);	
+	$temp=get_resource_path($r,false,"pre",true,$extension);	
 	create_previews($r,false,$extension);
 
 	# Pass back the newly created resource ID.

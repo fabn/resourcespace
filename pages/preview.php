@@ -44,9 +44,9 @@ if ($go!="")
 
 # Next / previous page browsing (e.g. pdfs)
 $previouspage=$page-1;
-if (!file_exists(dirname(__FILE__) . "/../" . get_resource_path($ref,"scr",false,$ext,-1,$previouspage))) {$previouspage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage))) {$previouspage=-1;}
 $nextpage=$page+1;
-if (!file_exists(dirname(__FILE__) . "/../" . get_resource_path($ref,"scr",false,$ext,-1,$nextpage))) {$nextpage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage))) {$nextpage=-1;}
 
 include "../include/header.php";
 ?>

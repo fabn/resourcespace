@@ -269,7 +269,7 @@ if (true) #search condition
 <? if (!hook("renderimagethumb")) { ?>			
 		
 		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="../<?=get_resource_path($ref,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
+		<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="../<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
 		/><? } else { ?><img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>.gif" 
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
@@ -317,7 +317,7 @@ if (true) #search condition
 <div class="ResourcePanelShellSmall" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanelSmall">	
 			<table border="0" class="ResourceAlignSmall"><tr><td>
-			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="../<?=get_resource_path($ref,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
+			<a href="<?=$url?>" <? if (!$infobox) { ?>title="<?=str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<? } ?>><? if ($result[$n]["has_image"]==1) { ?><img  src="../<?=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder"
 			<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
 			/><? } else { ?><img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"
 			<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>

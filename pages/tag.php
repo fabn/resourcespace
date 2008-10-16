@@ -48,9 +48,9 @@ include "../include/header.php";
 <p><?=text("introtext")?></p>
 
 <? 
-$imagepath=get_resource_path($ref,"pre",false,$resource["preview_extension"]);
+$imagepath=get_resource_path($ref,false,"pre",false,$resource["preview_extension"]);
 ?>
-<div class="RecordBox"><div class="RecordPanel"><img src="<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" />
+<div class="RecordBox"><div class="RecordPanel"><img src="../<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" />
 
 
 <!--<div class="Question">

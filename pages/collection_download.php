@@ -48,12 +48,12 @@ if ($submitted != "")
 		# Only download resources with proper access level
 		if ($access==0)
 			{
-			$p=dirname(__FILE__) . "/../" . get_resource_path($ref,$size,false,$result[$n]["file_extension"]);
+			$p=get_resource_path($ref,true,$size,false,$result[$n]["file_extension"]);
 			if (!file_exists($p))
 				{
 				# If the file doesn't exist for this size, then the original file must be in the requested size.
 				# Try again with the size omitted to get the original.
-				$p=dirname(__FILE__) . "/../" . get_resource_path($ref,"",false,$result[$n]["file_extension"]);
+				$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
 				}
 			if (file_exists($p))
 				{
