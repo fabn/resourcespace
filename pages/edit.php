@@ -471,18 +471,10 @@ for ($n=0;$n<count($fields);$n++)
 
 	<!-- Archive Status -->
 	<? if ($ref<0) { 
-		# Hide the dropdown, but work out the appropriate status just as if the dropdown was there (i.e. default to first available status if status not already set).
-		$first="";
-		$mode="";
-		for ($n=-2;$n<=2;$n++)
-			{
-			if (checkperm("e" . $n))
-				{
-				if ($resource["archive"]==$n) {$mode=$n;}
-				if ($first=="") {$first=$n;}
-				}
-			}
-		if ($mode==="") {$mode=$first;}
+		# Hide the dropdown, and set the default status depending on user permissions.
+		if (checkperm("e-2")) {$mode=-2;}
+		if (checkperm("e2")) {$mode=2;}
+		if (checkperm("e0")) {$mode=0;}
 		?>
 		<input type=hidden name="archive" value="<?=$mode?>">
 		<?
