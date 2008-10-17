@@ -283,8 +283,8 @@ if ($enable_add_collection_on_upload)
 <?
 $lastrt=-1;
 
-# Batch uploads - "copy data from" feature
-if ($ref<0 && $enable_copy_data_from)
+# "copy data from" feature
+if ($enable_copy_data_from)
 	{ 
 	?>
 	<div class="Question">
