@@ -42,7 +42,7 @@ elseif (array_key_exists("username",$_POST))
         	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
 
 			# Store language cookie
-			setcookie("language",getval("language",""),time()+(3600*24*1000));
+			setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short);
 
 			# Update the user record. Set the password hash again in case a plain text password was provided.
 			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now() where username='$username' and (password='$password' or password='$password_hash')");
@@ -50,7 +50,7 @@ elseif (array_key_exists("username",$_POST))
 			# Log this
 			daily_stat("User session",$valid[0]["ref"]);
 
-	        setcookie("user",$username . "|" . $session_hash,$expires,$baseurl);
+	        setcookie("user",$username . "|" . $session_hash,$expires,$baseurl_short);
 	        
 	        # Set default resource types
 	        setcookie("restypes",$default_res_types);
@@ -97,7 +97,7 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     sql_query("update user set logged_in=0,session='' where username='$username'");
         
     #blank cookie
-    setcookie("user","");
+    setcookie("user","",0,$baseurl_short);
     
     unset($username);
     

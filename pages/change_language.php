@@ -4,7 +4,7 @@ include "../include/general.php";
 
 if (getval("save","")!="")
 	{
-	setcookie("language",getval("language",""),time()+(3600*24*1000));
+	setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short);
 	redirect("pages/home.php");
 	}
 include "../include/header.php";
