@@ -190,7 +190,7 @@ $orderbyrating=false;
 # $zipcommand="zip -j";
 
 # Option to write a text file into zipped collections containing resource data
-$zipped_collection_textfile=true;
+$zipped_collection_textfile=false;
 
 # Enable speed tagging feature? (development)
 $speedtagging=false;
@@ -404,7 +404,7 @@ $breadcrumbs=false;
 $multilingual_text_fields=false;
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
-$frameless_collections=true;
+$frameless_collections=false;
 
 
 ?>
