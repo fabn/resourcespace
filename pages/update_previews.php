@@ -30,7 +30,7 @@ else
 if ($ref<$max && getval("only","")=="")
 	{
 	?>
-	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/update_previews.php?ref=<?=$ref+1?>"/>
+	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/pages/update_previews.php?ref=<?=$ref+1?>"/>
 	<?
 	}
 else
