@@ -1,8 +1,8 @@
 <?
-include "../include/db.php";
-include "../include/general.php";
-include "../include/resource_functions.php";
-include "../include/image_processing.php";
+include "../../include/db.php";
+include "../../include/general.php";
+include "../../include/resource_functions.php";
+include "../../include/image_processing.php";
 
 set_time_limit(60*60*40);
 

@@ -1,5 +1,5 @@
 <?
-include "../include/db.php";
+include "../../include/db.php";
 
 # Use the below to set which tables we will extract data for.
 #$datafor=array("usergroup","resource_type_field","site_text","user","collection","user_collection","report","preview_size","resource_type");
@@ -14,7 +14,7 @@ if (getval("execute","")!="")
 		$table=$tables[$n]["Tables_in_" . $mysql_db];
 		
 		# Table structure		
-		$f=fopen("dbstruct/table_" . $table . ".txt","w");
+		$f=fopen("../../dbstruct/table_" . $table . ".txt","w");
 		$describe=sql_query("describe $table");
 		for ($m=0;$m<count($describe);$m++)
 			{
@@ -23,7 +23,7 @@ if (getval("execute","")!="")
 		fclose($f);
 		
 		# Indices
-		$f=fopen("dbstruct/index_" . $table . ".txt","w");
+		$f=fopen("../../dbstruct/index_" . $table . ".txt","w");
 		$index=sql_query("show index from $table");
 		for ($m=0;$m<count($index);$m++)
 			{
@@ -34,7 +34,7 @@ if (getval("execute","")!="")
 		# Data
 		if (in_array($table,$datafor))
 			{
-			$f=fopen("dbstruct/data_" . $table . ".txt","w");
+			$f=fopen("../../dbstruct/data_" . $table . ".txt","w");
 			$index=sql_query("select * from $table");
 			for ($m=0;$m<count($index);$m++)
 				{

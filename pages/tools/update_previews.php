@@ -5,11 +5,11 @@
 # It's done one at a time via the browser so progress can be monitored.
 #
 #
-include "../include/db.php";
-include "../include/authenticate.php";
-include "../include/general.php";
-include "../include/image_processing.php";
-include "../include/resource_functions.php";
+include "../../include/db.php";
+include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
+include "../../include/general.php";
+include "../../include/image_processing.php";
+include "../../include/resource_functions.php";
 
 $max=sql_value("select max(ref) value from resource",0);
 $ref=getvalescaped("ref",1);
@@ -19,7 +19,7 @@ if (count($resourceinfo)>0)
 	{
 	create_previews($ref,false,$resourceinfo[0]["file_extension"]);
 	?>
-	<img src="../<?=get_resource_path($ref,false,"pre",false)?>">
+	<img src="../../<?=get_resource_path($ref,false,"pre",false)?>">
 	<?
 	}
 else
@@ -30,7 +30,7 @@ else
 if ($ref<$max && getval("only","")=="")
 	{
 	?>
-	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/pages/update_previews.php?ref=<?=$ref+1?>"/>
+	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/pages/tools/update_previews.php?ref=<?=$ref+1?>"/>
 	<?
 	}
 else
