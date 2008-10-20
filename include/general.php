@@ -277,10 +277,16 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
 		$returnline["id"]="";
-		if (((list($sw,$sh) = @getimagesize($path2))===false) || (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)))
+		$dimensions = sql_query("select * from resource_dimensions where resource=". $ref);
+		if (count($dimensions))
 			{
-			# 'Identify' dimensions with ImageMagick
-			global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
+			$sw = $dimensions[0]['width'];
+			$sh = $dimensions[0]['height'];
+			}
+		else
+			{
+			global $imagemagick_path;
+			$file=$path2;
 			if (isset($imagemagick_path))
 				{
 				$prefix = '';
@@ -288,14 +294,27 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
 				# Locate imagemagick.
-			  $command=$imagemagick_path . "/bin/identify";
-			  if (!file_exists($command)) {$command=$imagemagick_path . "/identify";}
-			  if (!file_exists($command)) {$command=$imagemagick_path . "\identify.exe";}
-			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
-				$command .= ' -format %wx%h '. escapeshellarg($prefix . $path2) .'[0]';
-				$output=shell_exec($command);
-				preg_match('/^([0-9]+)x([0-9]+)$/ims',$output,$smatches);
-				if (count($smatches)<3 || (list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
+				$identcommand=$imagemagick_path . "/bin/identify";
+				if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "/identify";}
+				if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
+				if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
+				# Get image's dimensions.
+				$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
+				$identoutput=shell_exec($identcommand);
+				preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
+				@list(,$sw,$sh) = $smatches;
+				if (($sw!='') && ($sh!=''))
+				  {
+					sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+					}
+				}
+			else
+				{
+				# fetch source image size.
+				if (!((@list($sw,$sh) = @getimagesize($file))===false))
+				 	{
+					sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+					}
 				}
 			}
 		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
