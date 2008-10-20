@@ -223,7 +223,7 @@ if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resour
 		if ($downloadthissize)
 			{
 			$counter++;
-			$headline = ($n == 0) ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
+			$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 			?>
 			<tr class="DownloadDBlend" id="DownloadBox<?=$n?>">
 			<td><h2><?=$headline?></h2>
