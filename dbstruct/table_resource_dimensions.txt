@@ -1,3 +1,0 @@
-resource,int(11),NO,MUL,,
-width,int(11),YES,,0,
-height,int(11),YES,,0,
