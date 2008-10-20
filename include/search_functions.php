@@ -194,16 +194,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				
 				$c++;
 				$t.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
-			
-				# Old (non join) method
-				#if ($t2!="") {$t2.=" and ";}
-				#$t2.="k" . $c . ".resource=r.ref";
 						
 				if ($score!="") {$score.="+";}
 				$score.="k" . $c . ".hit_count";
-					
-				#if ($sql!="") {$sql.=" and ";}
-				#$sql.="k" . $c . ".resource_type_field='" . $field . "'";
 				
 				# work through all options in an OR approach for multiple selects on the same field
 				# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
@@ -216,8 +209,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					
 					# Log this
 					daily_stat("Keyword usage",$keyref);
+	
+					# Also add related.
+					$related=get_related_keywords($keyref);
+					for ($m=0;$m<count($related);$m++)
+						{
+						$t.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+						}
+
 					}
-					$t.=")";
+				$t.=")";
 				}
 			}
 		else
@@ -246,12 +247,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					# Key match, add to query.
 					$c++;
 					if ($sql!="") {$sql.=" and ";}
-					#$sql.="k" . $c. ".keyword='$keyref'";
-					$t.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c. ".keyword='$keyref'";
-		
-					# Old (non join) method
-					#if ($t2!="") {$t2.=" and ";}
-					#$t2.="k" . $c . ".resource=r.ref";
+
+					# Add related keywords
+					$related=get_related_keywords($keyref);$relatedsql="";
+					for ($m=0;$m<count($related);$m++)
+						{
+						$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+						}
+					
+					$t.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
 					
 					if ($score!="") {$score.="+";}
 					$score.="k" . $c . ".hit_count";

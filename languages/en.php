@@ -562,4 +562,12 @@ $lang["removefromcurrentcollection"]="Remove from current collection";
 $lang["showtranslations"]="+ Show translations";
 $lang["hidetranslations"]="- Hide translations";
 $lang["archivedresource"]="Archived Resource";
+
+$lang["managerelatedkeywords"]="Manage Related Keywords";
+$lang["keyword"]="Keyword";
+$lang["relatedkeywords"]="Related Keywords";
+$lang["matchingrelatedkeywords"]="Matching Related Keywords";
+$lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
+
+
 ?>

@@ -54,6 +54,7 @@ r	Can manage research requests
 o	Can manage content
 m	Can bulk-mail users
 u	Can manage users
+k	Can manage related keywords
 
 Restrictive group permissions (allows isolated groups to be created)
 -----

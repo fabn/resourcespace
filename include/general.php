@@ -214,10 +214,17 @@ function split_keywords($search,$index=false)
 
 	}
 
-function resolve_keyword($keyword)
+function resolve_keyword($keyword,$create=false)
 	{
 	# Returns the keyword reference for $keyword, or false if no such keyword exists.
-	return sql_value("select ref value from keyword where keyword='" . trim(escape_check($keyword)) . "'",false);
+	$return=sql_value("select ref value from keyword where keyword='" . trim(escape_check($keyword)) . "'",false);
+	if ($return==false && $create)
+		{
+		# Create a new keyword.
+		sql_query("insert into keyword (keyword,soundex,hit_count) values ('" . escape_check($keyword) . "',soundex('" . escape_check($keyword) . "'),0)");
+		$return=sql_insert_id();
+		}
+	return $return;
 	}
 	
 function trim_spaces($text)
@@ -1142,4 +1149,43 @@ function i18n_get_translations($value)
 	return $return;
 	}
 	
+function get_related_keywords($keyref)
+	{
+	# For a given keyword reference returns the related keywords
+	return sql_array("select related value from keyword_related where keyword='$keyref' union select keyword value from keyword_related where related='$keyref'");
+	}
+	
+function get_grouped_related_keywords($find="",$specific="")
+	{
+	# Returns each keyword and the related keywords grouped, along with the resolved keywords strings.
+	$sql="";
+	if ($find!="") {$sql="where k1.keyword='" . escape_check($find) . "' or k2.keyword='" . escape_check($find) . "'";}
+	if ($specific!="") {$sql="where k1.keyword='" . escape_check($specific) . "'";}
+	
+	return sql_query("
+		select k1.keyword,group_concat(k2.keyword order by k2.keyword separator ', ') related from keyword_related kr
+			join keyword k1 on kr.keyword=k1.ref
+			join keyword k2 on kr.related=k2.ref
+		$sql
+		group by k1.keyword order by k1.keyword
+		");
+	}
+
+function save_related_keywords($keyword,$related)
+	{
+	$keyref=resolve_keyword($keyword,true);
+	$s=trim_array(explode(",",$related));
+
+	# Blank existing relationships.
+	sql_query("delete from keyword_related where keyword='$keyref'");
+	if (trim($related)!="")
+		{
+		for ($n=0;$n<count($s);$n++)
+			{
+			sql_query("insert into keyword_related (keyword,related) values ('$keyref','" . resolve_keyword($s[$n],true) . "')");
+			}
+		}
+	return true;
+	}
+
 ?>
