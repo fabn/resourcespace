@@ -243,6 +243,15 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 
 			# fetch source image size, if we fail, exit this function (file not an image, or file not a valid jpg/png/gif).
 			if ((list($sw,$sh) = @getimagesize($file))===false) {return false;}
+			$size_db=sql_query("select 'true' from resource_dimensions where resource = ". $ref);
+			if (count($size_db))
+				{
+				sql_query("update resource_dimensions set width=". $sw .", height=". $sh ." where resource=". $ref);
+				}
+			else
+				{
+				sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+				}
 		
 			$ps=sql_query("select * from preview_size $sizes");
 			for ($n=0;$n<count($ps);$n++)
@@ -364,7 +373,18 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 		$identoutput=shell_exec($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
-				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
+		@list(,$sw,$sh) = $smatches;
+		if (($sw=='') || ($sh=='')) { return false; }
+		$size_db=sql_query("select 'true' from resource_dimensions where resource = ". $ref);
+		if (count($size_db))
+			{
+			sql_query("update resource_dimensions set width=". $sw .", height=". $sh ." where resource=". $ref);
+			}
+		else
+			{
+			sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+			}
+		
 
 		$sizes="";
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}

@@ -262,6 +262,7 @@ function copy_hitcount_to_live()
 	
 function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=true)
 	{
+	global $usergroup;
 	# Returns a table of available image sizes for resource $ref.
 	# The original image file assumes the name of the 'nearest size (up)' in the table
 
@@ -269,34 +270,24 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$return=array();
 	$lastname="";$lastpreview=0;$lastrestricted=0;
 	$path2=get_resource_path($ref,true,'',false,$extension);
-	if (file_exists($path2))
-	{
+	$src_size=sql_query("select 'true' from usergroup u where u.ref = ". $usergroup ." and u.preview_sizes regexp '(^|,)source(,|$)'");
+	if (count($src_size) && file_exists($path2))
+	  {
 		$returnline=array();
 		$returnline["name"]=$lastname;
 		$returnline["allow_preview"]=$lastpreview;
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
 		$returnline["id"]="";
-		if (((list($sw,$sh) = @getimagesize($path2))===false) || (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)))
+		$dimensions = sql_query("select * from resource_dimensions where resource=". $ref);
+		if (count($dimensions))
 			{
-			# 'Identify' dimensions with ImageMagick
-			global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
-			if (isset($imagemagick_path))
-				{
-				$prefix = '';
-				# Camera RAW images need prefix
-				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
-
-				# Locate imagemagick.
-			  $command=$imagemagick_path . "/bin/identify";
-			  if (!file_exists($command)) {$command=$imagemagick_path . "/identify";}
-			  if (!file_exists($command)) {$command=$imagemagick_path . "\identify.exe";}
-			  if (!file_exists($command)) {exit("Could not find ImageMagick 'identify' utility.'");}	
-				$command .= ' -format %wx%h '. escapeshellarg($prefix . $path2) .'[0]';
-				$output=shell_exec($command);
-				preg_match('/^([0-9]+)x([0-9]+)$/ims',$output,$smatches);
-				if (count($smatches)<3 || (list(,$sw,$sh) = $smatches)===false) {$sw=0;$sh=0;}
-				}
+			$sw = $dimensions[0]['width'];
+			$sh = $dimensions[0]['height'];
+			}
+		else
+			{
+			$sw = 0; $sh = 0;
 			}
 		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
 		else {$returnline["filedown"]=ceil($filesize/50000) . " seconds @ broadband";$returnline["filesize"]=formatfilesize($filesize);}
@@ -304,9 +295,9 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["height"]=$sh;
 		$returnline["extension"]=$extension;
 		$return[]=$returnline;
-	}
+	  }
 	# loop through all image sizes
-	$sizes=sql_query("select * from preview_size order by width desc");
+	$sizes=sql_query("select * from preview_size p where exists (select 1 from usergroup u where u.ref = ". $usergroup ." and u.preview_sizes regexp concat('(^|,)', p.id, '(,|$)')) order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
 	{
 		$path=get_resource_path($ref,true,$sizes[$n]["id"],false);
