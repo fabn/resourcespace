@@ -17,7 +17,7 @@ if (getval("save","")!="")
 		}
 	else
 		{
-		redirect("pages/" . $url);
+		redirect($url);
 		}
 	}
 include "../include/header.php";
