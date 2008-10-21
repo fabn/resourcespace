@@ -1,1 +1,1 @@
-Please see the "licenses" folder for all applicable licenses.
+Please see the "documentation/licenses" folder for all applicable licenses.
