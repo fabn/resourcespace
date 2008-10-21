@@ -14,6 +14,9 @@ if ($type!="")
 	# Check for mysqldump at configured location
 	if (!file_exists($mysql_bin_path . "/mysqldump")) {exit("Error: mysqldump not found at '$mysql_bin_path' - please check config.php");}
 	
+	# Add options to ignore index tables, which are very large and are easily regenerated (using tools/reindex.php)
+	$param.=" --ignore-table=$mysql_db.resource_keyword --ignore-table=$mysql_db.keyword";
+	
 	# Send them the export.
 	header("Content-type: application/octet-stream");
 	header("Content-disposition: attachment; filename=RS_Export_" . date("Y_m_d") . "." . $extension . "");
