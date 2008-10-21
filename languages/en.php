@@ -569,5 +569,7 @@ $lang["relatedkeywords"]="Related Keywords";
 $lang["matchingrelatedkeywords"]="Matching Related Keywords";
 $lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
 
+$lang["exportdata"]="Export Data";
+$lang["exporttype"]="Export Type";
 
 ?>

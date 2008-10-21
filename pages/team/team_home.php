@@ -56,6 +56,8 @@ include "../../include/header.php";
 
     <? if (checkperm("m")) { ?><li><a href="team_mail.php"><?=$lang["sendbulkmail"]?></a></li><? } ?>
 
+    <li><a href="team_export.php"><?=$lang["exportdata"]?></a></li>
+
 	<? if (checkperm("a")) { ?>
 	<li><a target="main" href="../admin/index.php"><?=$lang["systemsetup"]?></a></li>
 <?	
