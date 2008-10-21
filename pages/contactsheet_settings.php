@@ -11,6 +11,9 @@ $collectiondata= get_collection($collection);
 # Include a couple functions for the Ajax contactsheet update
 $headerinsert.="
 <script src=\"../lib/js/contactsheet.js\" type=\"text/javascript\"></script>
+<script type=\"text/javascript\">
+contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
+</script>
 ";
 
 $bodyattribs="onload=\"previewContactSheet();\"";

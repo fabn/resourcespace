@@ -12,6 +12,10 @@ $email_from="resourcespace@my.site"; # Where e-mails appear to come from
 $email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 
+$storagedir=dirname(__FILE__)."/../filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
+$storageurl=$baseurl."/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
+#$storagedownload="_URL_?download"; # Whether the webserver that serves storageurl should be used for / can handle downloads?
+
 include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
 
@@ -104,7 +108,16 @@ $im_formats = '(tif[f]?|jp[e]?g|psd|eps|dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr|png|
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
 $ffmpeg_preview_seconds=20; # how many seconds to preview
+$ffmpeg_preview_extension="flv";
+$ffmpeg_preview_min_width=32;
+$ffmpeg_preview_min_height=18;
+$ffmpeg_preview_max_width=480;
+$ffmpeg_preview_max_height=270;
+$ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32 -ac 1";
 
+# Use qt-faststart to make mp4 videoes start faster
+$qtfaststart_path="/usr/bin";
+$qtfaststart_extensions=array("mp4","m4v","mov");
 
 # Allow users to request accounts?
 $allow_account_request=true;

@@ -59,9 +59,10 @@ function upload_file($ref)
 		if (file_exists($path)) {unlink($path);}
 		}
 	# Remove any FLV video preview (except if the actual resource is an FLV file).
-	if ($extension!="flv")
+	global $ffmpeg_preview_extension;
+	if ($extension!=$ffmpeg_preview_extension)
 		{
-		$path=get_resource_path($ref,true,"",false,"flv");
+		$path=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);
 		if (file_exists($path)) {unlink($path);}
 		}
     

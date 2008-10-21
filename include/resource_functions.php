@@ -620,15 +620,15 @@ function get_exiftool_fields()
 
 function write_metadata($path,$ref)
 	{
-	global $exiftool_path,$exiftool_remove_existing;
+	global $exiftool_path,$exiftool_remove_existing,$storagedir;
 	if (isset($exiftool_path))
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
-		      if(!is_dir(dirname(__FILE__). "/../filestore/tmp")){mkdir(dirname(__FILE__)."/../filestore/tmp",0777);}
+		      if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 				$filename = pathinfo($path);
 				$filename = $filename['basename'];	
-				$tmpfile=dirname(__FILE__)."/../filestore/tmp/".$filename;				
+				$tmpfile=$storagedir . "/tmp/" . $filename;				
 				copy($path,$tmpfile);
 				
 				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
@@ -693,7 +693,7 @@ function import_resource($path,$type,$title)
 	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.
-	$temp=get_resource_path($r,false,"pre",true,$extension);	
+	get_resource_path($r,false,"pre",true,$extension);	
 	create_previews($r,false,$extension);
 
 	# Pass back the newly created resource ID.

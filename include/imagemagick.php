@@ -134,25 +134,76 @@ if ($extension=="txt")
 */
 global $ffmpeg_path; 
 if (isset($ffmpeg_path) && !isset($newfile)) 
-        { 
-        $ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 1 \"" . $target . "\""; 
-         
-        if ($extension=="mxf")
-       	$ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -t 0.001 -ss 0 \"" . $target . "\""; 
-         
-        $output=shell_exec($ffcommand); 
+        {
+        	
+        $snapshottime = 1;
+        
+        $out = shell_exec($ffmpeg_path."/ffmpeg -i '$file' 2>&1");
+        if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))
+        	{
+			$duration = $match[1]*3600+$match[2]*60+$match[3];
+			if($duration>10)
+				{
+				$snapshottime = 5;
+				}
+			elseif($snapshottime > 2)
+				{
+				$snapshottime = floor($duration / 10);
+				}
+			}
+		
+		if ($extension=="mxf")
+			{ $snapshottime = 0; }
+        
+        $output=shell_exec($ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -vframes 1 -ss ".$snapshottime." \"$target\""); 
         #exit($command . "<br>" . $output); 
         if (file_exists($target)) 
             {
             $newfile=$target;
-            global $ffmpeg_preview,$ffmpeg_preview_seconds;
+            global $ffmpeg_preview,$ffmpeg_preview_seconds,$ffmpeg_preview_extension,$ffmpeg_preview_options;
+            global $ffmpeg_preview_min_width,$ffmpeg_preview_min_height,$ffmpeg_preview_max_width,$ffmpeg_preview_max_height;
+            global $qtfaststart_path,$qtfaststart_extensions;
 
-            if ($ffmpeg_preview && $extension!="flv")
+            if ($ffmpeg_preview)
                 {
                 # Create a preview video (FLV)
-                $targetfile=get_resource_path($ref,true,"",false,"flv"); 
-                $ffcommand=$ffmpeg_path . "/ffmpeg -i \"$file\" -f flv -ar 22050 -b 650k -ab 32 -ac 1 -s 480x270 -t $ffmpeg_preview_seconds  \"$targetfile\"";
-                $output=shell_exec($ffcommand); 
+                $targetfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension); 
+                
+                $snapshotsize = getimagesize($target);
+                $width = $snapshotsize[0];
+                $height = $snapshotsize[1];
+				
+				if($height<$ffmpeg_preview_min_height)
+					{
+					$height = $ffmpeg_preview_min_height;
+					}
+				
+				if($width<$ffmpeg_preview_min_width)
+					{
+					$width = $ffmpeg_preview_min_width;
+					}
+				
+				if($height>$ffmpeg_preview_max_height)
+					{
+					$width = ceil($width*($ffmpeg_preview_max_height/$height));
+					$height = $ffmpeg_preview_max_height;
+					}
+					
+				if($width>$ffmpeg_preview_max_width)
+					{
+					$height = ceil($height*($ffmpeg_preview_max_width/$width));
+					$width = $ffmpeg_preview_max_width;
+					}
+				
+                $output=shell_exec($ffmpeg_path . "/ffmpeg -y -i \"$file\" $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds  \"$targetfile\"");
+                
+                if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_preview_extension, $qtfaststart_extensions) )
+                    {
+                	$targetfiletmp=$targetfile.".tmp";
+                	rename($targetfile, $targetfiletmp);
+	                $output=shell_exec($qtfaststart_path . "/qt-faststart \"$targetfiletmp\" \"$targetfile\"");
+	                unlink($targetfiletmp);
+                    }
                 }
             } 
         } 

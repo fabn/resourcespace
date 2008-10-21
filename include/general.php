@@ -5,14 +5,16 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
+	
+	global $storagedir;
 
 	if ($size=="")
 		{
 		# For the full size, check to see if the full path is set and if so return that.
 		$fp=sql_value("select file_path value from resource where ref='$ref'","");
 		
-		# Test to see if this nosize file is of the extension asked for, else skip the file_path and return a filestore path. 
-		# If using staticsync, file path will be set already, but we still want the filestore path for a nosize preview jpg.
+		# Test to see if this nosize file is of the extension asked for, else skip the file_path and return a $storagedir path. 
+		# If using staticsync, file path will be set already, but we still want the $storagedir path for a nosize preview jpg.
 		# Also, returning the original filename when a nosize 'jpg' is looked for is no good, since imagemagick.php deletes $target.
 		
 		$test_ext = explode(".",$fp);$test_ext=trim(strtolower($test_ext[count($test_ext)-1]));
@@ -43,7 +45,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		}
 	
 	if (($extension=="") || ($size !="")) {$extension="jpg";}
-	$folder="filestore/";
+	$folder="";
 	#if (!file_exists(dirname(__FILE__) . $folder)) {mkdir(dirname(__FILE__) . $folder,0777);}
 	
 	for ($n=0;$n<strlen($ref);$n++)
@@ -52,17 +54,25 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		if (($scramble) && ($n==(strlen($ref)-1))) {$folder.="_" . $scramblepath;}
 		$folder.="/";
 		#echo "<li>" . $folder;
-		if ((!(file_exists(dirname(__FILE__) . "/../" . $folder))) && $generate) {mkdir(dirname(__FILE__) . "/../" . $folder,0777);chmod(dirname(__FILE__) . "/../" . $folder,0777);}
+		if ((!(file_exists($storagedir . "/" . $folder))) && $generate) {mkdir($storagedir . "/" . $folder,0777);chmod($storagedir . "/" . $folder,0777);}
 		}
 		
 	# Add the page to the filename for everything except page 1.
 	if ($page==1) {$p="";} else {$p="_" . $page;}
-		
+	
 	# Add the watermarked url too
 	if ($watermarked) {$p.="_wm";}
 	
 	# Fetching the file path? Add the full path to the file
-	if ($getfilepath) {$folder=dirname(__FILE__) . "/../" . $folder;}
+	if ($getfilepath)
+	    {
+	    $folder=$storagedir . "/" . $folder;
+	    }
+	else
+	    {
+		global $storageurl;
+	    $folder=$storageurl . "/" . $folder;
+	    }
 	
 	return $folder . $ref . $size . $p . "." . $extension;
 	}

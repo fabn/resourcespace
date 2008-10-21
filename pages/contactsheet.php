@@ -102,7 +102,7 @@ for ($n=0;$n<count($result);$n++)
 			$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
 			
 			if (!file_exists($imgpath)){
-			$resource="../" . get_resource_data($ref);
+			$resource=get_resource_data($ref);
 				$imgpath="../gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
 				
 			if (file_exists($imgpath))
@@ -174,10 +174,10 @@ for ($n=0;$n<count($result);$n++)
 #Make AJAX preview?:
 	if ($preview==true && isset($imagemagick_path)) 
 		{
-		if(!is_dir("../filestore/tmp")){mkdir("../filestore/tmp",0777);}
-		if (file_exists("../filestore/tmp/contactsheet.jpg")){unlink("../filestore/tmp/contactsheet.jpg");}
-		if (file_exists("../filestore/tmp/contactsheet.pdf")){unlink("../filestore/tmp/contactsheet.pdf");}
-		$pdf->Output("../filestore/tmp/contactsheet.pdf","F"); 
+		if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
+		if (file_exists($storagedir."/tmp/contactsheet.jpg")){unlink($storagedir."/tmp/contactsheet.jpg");}
+		if (file_exists($storagedir."/tmp/contactsheet.pdf")){unlink($storagedir."/tmp/contactsheet.pdf");}
+		$pdf->Output($storagedir."/tmp/contactsheet.pdf","F"); 
 		# Set up ImageMagick 
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
@@ -186,7 +186,7 @@ for ($n=0;$n<count($result);$n++)
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
-		$command.= " -resize 250x250 -quality 90 -colorspace RGB \"../filestore/tmp/contactsheet.pdf\"[0] \"../filestore/tmp/contactsheet.jpg\"";
+		$command.= " -resize 250x250 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheet.pdf\"[0] \"".$storagedir."/tmp/contactsheet.jpg\"";
 		shell_exec($command);
 		exit();
 		}

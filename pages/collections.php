@@ -320,7 +320,7 @@ if (count($result)>0)
 		
 		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))
 		?>
-		<img border=0 src="../<?=$colimgpath?>" class="CollectImageBorder"
+		<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
 		/>
 			<?

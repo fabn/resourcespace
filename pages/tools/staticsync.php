@@ -30,7 +30,7 @@ echo "...done. Looking for changes...";
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$type,$max,$count,$done,$modtimes,$lastsync;
+	global $syncdir,$nogo,$type,$max,$count,$done,$modtimes,$lastsync,$ffmpeg_preview_extension;
 	
 	$collection=0;
 	
@@ -83,8 +83,8 @@ function ProcessFolder($folder)
 				# Work out extension
 				$extension=explode(".",$file);$extension=trim(strtolower($extension[count($extension)-1]));
 
-				if (($extension=="mov") || ($extension=="3gp") || ($extension=="avi") || ($extension=="mpg") || ($extension=="mp4"))	{$type=3;}
-				elseif (($extension=="flv")) {$type=4;} 
+				if (($extension==$ffmpeg_preview_extension)) {$type=4;} 
+				elseif (($extension=="mov") || ($extension=="3gp") || ($extension=="avi") || ($extension=="mpg") || ($extension=="mp4") || ($extension=="flv"))	{$type=3;}
 				else {$type=1;}
 				
 				# Formulate a title

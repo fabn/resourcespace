@@ -30,10 +30,10 @@ if (array_key_exists("Filedata",$_FILES))
 	
 		$status=upload_file($ref);
 		
-		$thumb="../" . get_resource_path($ref,false,"col",false);
+		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
 			{
-			echo $thumb;
+			echo get_resource_path($ref,false,"col",false);
 			}
 		exit();
 		}
@@ -52,10 +52,10 @@ if (array_key_exists("Filedata",$_FILES))
 				$status=upload_file($ref); # Upload to the specified ref.
 				}
 			}
-		$thumb="../" . get_resource_path($ref,false,"col",false);
+		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
 			{
-			echo $thumb;
+			echo get_resource_path($ref,false,"col",false);
 			}
 		exit();
 		}

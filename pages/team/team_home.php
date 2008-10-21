@@ -4,19 +4,19 @@ include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission
 include "../../include/general.php";
 
 # Some disk size allocation
-if (!file_exists("../../filestore")) {mkdir("../../filestore",0777);}
-$avail=disk_total_space(myrealpath("../../filestore"));
-$free=disk_free_space(myrealpath("../../filestore"));
+if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
+$avail=disk_total_space(myrealpath($storagedir));
+$free=disk_free_space(myrealpath($storagedir));
 $used=$avail-$free;
 
 # Quota?
 $overquota=false;
 if (isset($disksize))
 	{
-	# Disk quota functionality. Calculate the usage by the filestore folder only rather than the whole disk.
+	# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
 	# Unix only due to reliance on 'du' command
 	$avail=$disksize*(1024*1024*1024);
-	$used=explode("\n",shell_exec("du -Lc filestore"));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
+	$used=explode("\n",shell_exec("du -Lc ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
 	$used=$used*1024;
 	
 	$free=$avail-$used;

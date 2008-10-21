@@ -69,10 +69,10 @@ if (ResolveKB($upload_max_filesize)<(100*1024)) {$result="WARNING: should be 100
 ?><tr><td>PHP.INI value for 'upload_max_filesize'</td><td><?=$upload_max_filesize?></td><td><b><?=$result?></b></td></tr><?
 
 
-# Check write access to filestore
-$success=is_writable("filestore");
-if ($success===false) {$result="FAIL: filestore not writable";} else {$result="OK";}
-?><tr><td colspan="2">Write access to 'filestore' directory</td><td><b><?=$result?></b></td></tr><?
+# Check write access to $storagedir
+$success=is_writable($storagedir);
+if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result="OK";}
+?><tr><td colspan="2">Write access to '$storagedir' directory</td><td><b><?=$result?></b></td></tr><?
 
 function CheckImagemagick()
 {

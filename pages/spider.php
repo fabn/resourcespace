@@ -52,13 +52,13 @@ if ($ref!="")
 		}
 	else
 		{
-		$thumbnail="gfx/type" . $resource["resource_type"] . "_col.gif";
+		$thumbnail=$baseurl."/gfx/type" . $resource["resource_type"] . "_col.gif";
 		}
 	?><html><head>
 	<meta name="country" content="<?=TidyList($resource["country"])?>">
 	<meta name="date" content="<?=$resource["creation_date"]?>">
-	<meta name="thumbnail" content="<?=$baseurl?>/<?=$thumbnail?>">
-	<meta name="target" content="<?=$baseurl?>/view.php?ref=<?=$ref?>">
+	<meta name="thumbnail" content="<?=$thumbnail?>">
+	<meta name="target" content="<?=$baseurl?>/pages/view.php?ref=<?=$ref?>">
 	<?
 	$textblock="";
 	for ($n=0;$n<count($resourcedata);$n++)

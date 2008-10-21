@@ -9,17 +9,17 @@ $ref=getval("ref","");
 $size=getval("size","");
 $ext=getval("ext","");
 
-# Add a meta refresh to the header
-$url=$baseurl . "/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
-/*
-Done with Javascript instead (this was a test to see if it got around the Opera blocking issue)
-$headerinsert.="<meta http-equiv=\"refresh\" content=\"1;url=" . $url . "\"/>";
-*/
+if(!empty($storagedownload)) {
+	$url=get_resource_path($ref,false,$size,false,$ext,-1,1,($size=="scr" && checkperm("w")))."?download";
+	$url=str_replace("_URL_",$url,$storagedownload);
+} else {
+	$url="download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
+}
 
 include "../include/header.php";
 ?>
 <script language="Javascript">
-window.setTimeout("document.location='download.php?ref=<?=$ref?>&size=<?=$size?>&ext=<?=$ext?>&k=<?=$k?>'",1000);
+window.setTimeout("document.location='<?=$url?>'",1000);
 </script>
 
 <div class="BasicsBox">

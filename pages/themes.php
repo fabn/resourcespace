@@ -205,7 +205,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		$image=get_theme_image($theme1, $theme2, $theme3);
 		if (($image) && ($theme_images))
 			{
-			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="../<?=$image?>" /></div><?
+			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?=$image?>" /></div><?
 			}
 		?>
 		<h1 style="margin-top:12px;float:left;"><?=stripslashes(str_replace("*","",$themename))?></h1>

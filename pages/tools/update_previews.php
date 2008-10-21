@@ -19,7 +19,7 @@ if (count($resourceinfo)>0)
 	{
 	create_previews($ref,false,$resourceinfo[0]["file_extension"]);
 	?>
-	<img src="../../<?=get_resource_path($ref,false,"pre",false)?>">
+	<img src="<?=get_resource_path($ref,false,"pre",false)?>">
 	<?
 	}
 else

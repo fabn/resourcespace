@@ -28,7 +28,7 @@ if (!file_exists($path))
 if ($noattach=="") # Only for downloads (not previews)
 	{
 	$tmpfile=write_metadata($path,$ref);
-	if ($tmpfile!==false && file_exists("../" . $tmpfile)){$path=$tmpfile;}
+	if ($tmpfile!==false && file_exists($tmpfile)){$path=$tmpfile;}
 	}
 	
 $filesize=filesize($path);

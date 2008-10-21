@@ -57,7 +57,7 @@ if ($submitted != "")
 				}
 			if (file_exists($p))
 				{
-				# when writing metadata, we take an extra security measure by copying the files to filestore/tmp
+				# when writing metadata, we take an extra security measure by copying the files to tmp
 
 				$tmpfile=write_metadata($p,$ref);
 				if($tmpfile!==false && file_exists($tmpfile)){$p=$tmpfile;}		
@@ -69,7 +69,7 @@ if ($submitted != "")
 				# If using original filenames when downloading, copy the file to new location so the name is included.
 				if ($original_filenames_when_downloading)	
 					{
-					if(!is_dir(dirname(__FILE__) . "/../filestore/tmp")){mkdir(dirname(__FILE__) . "/../filestore/tmp",0777);}
+					if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
 					$filename=get_resource_data($ref);
 					# Prepend file name with resource ID to prevent collisions
@@ -85,7 +85,7 @@ if ($submitted != "")
 						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
 						
 						# Copy to a new location
-						$newpath=dirname(__FILE__) . "/../filestore/tmp/" . $filename;
+						$newpath=$storagedir . "/tmp/" . $filename;
 						copy($p,$newpath);
 						
 						# Add the temporary file to the post-zip deletion list.
@@ -128,7 +128,7 @@ if ($submitted != "")
 
 	# write text file, add to zip, and schedule for deletion 	
 	if (($zipped_collection_textfile==true)&&($includetext=="true")){
-	$textfile = dirname(__FILE__) . "/../filestore/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
+	$textfile = $storagedir . "/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
 	$fh = fopen($textfile, 'w') or die("can't open file");
 	fwrite($fh, $text);
 	fclose($fh);
@@ -138,20 +138,20 @@ if ($submitted != "")
 	}
 
 	# Create and send the zipfile
-	if(!is_dir(dirname(__FILE__) . "/../filestore/tmp")){mkdir(dirname(__FILE__) . "/../filestore/tmp",0777);}
+	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 	
 	$file="collection_" . $collection . "_" . $size . ".zip";
-	exec("$zipcommand " . dirname(__FILE__) . "/../filestore/tmp/" . $file . $path);
-	$filesize=filesize(dirname(__FILE__) . "/../filestore/tmp/" . $file);
+	exec("$zipcommand " . $storagedir . "/tmp/" . $file . $path );
+	$filesize=filesize($storagedir . "/tmp/" . $file);
 	
 	header("Content-Disposition: attachment; filename=" . $file);
 	header("Content-Type: application/zip");
 	header("Content-Length: " . $filesize);
 	
 	set_time_limit(0);
-	echo file_get_contents(dirname(__FILE__) . "/../filestore/tmp/" . $file);
+	readfile($storagedir . "/tmp/" . $file);
 	
-	unlink(dirname(__FILE__) . "/../filestore/tmp/" . $file);
+	unlink($storagedir . "/tmp/" . $file);
 	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
 	exit();
 	}
