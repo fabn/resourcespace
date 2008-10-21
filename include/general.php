@@ -1162,8 +1162,11 @@ function i18n_get_translations($value)
 function get_related_keywords($keyref)
 	{
 	# For a given keyword reference returns the related keywords
-	return sql_array("select related value from keyword_related where keyword='$keyref' union select keyword value from keyword_related where related='$keyref'");
+	# Also reverses the process, returning keywords for matching related words
+	# and for matching related words, also returns other words related to the same keyword.
+	return sql_array(" select keyword value from keyword_related where related='$keyref' union select related value from keyword_related where (keyword='$keyref' or keyword in (select keyword value from keyword_related where related='$keyref')) and related<>'$keyref'");
 	}
+	
 	
 function get_grouped_related_keywords($find="",$specific="")
 	{

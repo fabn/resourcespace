@@ -12,8 +12,9 @@ $email_from="resourcespace@my.site"; # Where e-mails appear to come from
 $email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
 
-$storagedir=dirname(__FILE__)."/../filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
-$storageurl=$baseurl."/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
+# Uncomment and set next two lines to configure storage locations (to use another server for file storage)
+#$storagedir="/path/to/filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
+#$storageurl="http://my.storage.server/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
 #$storagedownload="_URL_?download"; # Whether the webserver that serves storageurl should be used for / can handle downloads?
 
 include "version.php";

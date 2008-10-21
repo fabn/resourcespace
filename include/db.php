@@ -51,6 +51,10 @@ if (file_exists(dirname(__FILE__)."/config.default.php")) {include "config.defau
 if (!file_exists(dirname(__FILE__)."/config.php")) {exit("You must copy 'config.default.php' to 'config.php' in the include directory, and edit the file to alter the settings as appropriate.");}
 include "config.php";
 
+# Set the storage directory and URL if not already set.
+if (!isset($storagedir)) {$storagedir=dirname(__FILE__)."/../filestore";}
+if (!isset($storageurl)) {$storageurl=$baseurl."/filestore";}
+
 # *** CONNECT TO DATABASE ***
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
