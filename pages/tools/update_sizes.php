@@ -19,6 +19,7 @@ if (count($resourceinfo)>0)
 	{
 	$extension = $resourceinfo[0]['file_extension'];
 	$file=get_resource_path($ref,true,"",false,$extension);
+	$filesize=@filesize($file);
 	if (isset($imagemagick_path))
 		{
 		$prefix = '';
@@ -40,11 +41,11 @@ if (count($resourceinfo)>0)
 			$size_db=sql_query("select 'true' from resource_dimensions where resource = ". $ref);
 			if (count($size_db))
 				{
-				sql_query("update resource_dimensions set width=". $sw .", height=". $sh ." where resource=". $ref);
+				sql_query("update resource_dimensions set width=". $sw .", height=". $sh .", file_size='$filesize' where resource=". $ref);
 				}
 			else
 				{
-				sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+				sql_query("insert into resource_dimensions (resource, width, height, file_size) values(". $ref .", ". $sw .", ". $sh .", '$filesize')");
 				}
 			}
 		}
@@ -56,11 +57,11 @@ if (count($resourceinfo)>0)
 			$size_db=sql_query("select 'true' from resource_dimensions where resource = ". $ref);
 			if (count($size_db))
 				{
-				sql_query("update resource_dimensions set width=". $sw .", height=". $sh ." where resource=". $ref);
+				sql_query("update resource_dimensions set width=". $sw .", height=". $sh .", file_size='$filesize' where resource=". $ref);
 				}
 			else
 				{
-				sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+				sql_query("insert into resource_dimensions (resource, width, height, file_size) values(". $ref .", ". $sw .", ". $sh .",'$file_size')");
 				}
 			}
 		}
@@ -76,7 +77,7 @@ else
 if ($ref<$max && getval("only","")=="")
 	{
 	?>
-	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/pages/tools/update_sizes.php?ref=<?=$ref+1?>"/>
+	<meta http-equiv="refresh" content="0;url=<?=$baseurl?>/pages/tools/update_sizes.php?ref=<?=$ref+1?>"/>
 	<?
 	}
 else

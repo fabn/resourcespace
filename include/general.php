@@ -294,16 +294,18 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
 		$returnline["id"]="";
-		$dimensions = sql_query("select * from resource_dimensions where resource=". $ref);
+		$dimensions = sql_query("select width,height,file_size from resource_dimensions where resource=". $ref);
 		if (count($dimensions))
 			{
 			$sw = $dimensions[0]['width'];
 			$sh = $dimensions[0]['height'];
+			$filesize=$dimensions[0]['file_size'];
 			}
 		else
 			{
 			global $imagemagick_path;
 			$file=$path2;
+			$filesize=@filesize($file);
 			if (isset($imagemagick_path))
 				{
 				$prefix = '';
@@ -322,7 +324,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				@list(,$sw,$sh) = $smatches;
 				if (($sw!='') && ($sh!=''))
 				  {
-					sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."', '". $sw ."', '". $sh ."', '" . $filesize . "')");
 					}
 				}
 			else
@@ -330,11 +332,11 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				# fetch source image size.
 				if (!((@list($sw,$sh) = @getimagesize($file))===false))
 				 	{
-					sql_query("insert into resource_dimensions (resource, width, height) values(". $ref .", ". $sw .", ". $sh .")");
+					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."',' ". $sw ."', '". $sh ."', '" . $filesize . "')");
 					}
 				}
 			}
-		if (($filesize=filesize($path2))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
+		if (!is_numeric($filesize)) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
 		else {$returnline["filedown"]=ceil($filesize/50000) . " seconds @ broadband";$returnline["filesize"]=formatfilesize($filesize);}
 		$returnline["width"]=$sw;			
 		$returnline["height"]=$sh;
