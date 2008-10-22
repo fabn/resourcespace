@@ -613,12 +613,18 @@ function myrealpath($path)
 
 function get_ip()
 	{
+	global $ip_forwarded_for;
+	
+	if ($ip_forwarded_for)
+		{
+		# Attempt to read Apache forwarding header instead.
+		$headers = @apache_request_headers();
+		if (@array_key_exists('X-Forwarded-For', $headers)) {return $headers["X-Forwarded-For"];}
+		}
+		
 	# Returns the IP address for the current user.
 	if (array_key_exists("REMOTE_ADDR",$_SERVER)) {return $_SERVER["REMOTE_ADDR"];}
-	
-	# Attempt to read Apache forwarding header instead.
-	$headers = @apache_request_headers();
-	if (@array_key_exists('X-Forwarded-For', $headers)) {return $headers["X-Forwarded-For"];}
+
 
 	# Can't find an IP address.
 	return "???";

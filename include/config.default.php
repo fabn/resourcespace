@@ -410,6 +410,11 @@ $imperial_measurements=false;
 # What is the default resource type to use for batch upload templates?
 $default_resource_type=1;
 
+# If ResourceSpace is behind a proxy, enabling this will mean the "X-Forwarded-For" Apache header is used
+# for the IP address. Do not enable this if you are not using such a proxy as it will mean IP addresses can be
+# easily faked.
+$ip_forwarded_for=false;
+
 
 #
 # ------------------------- Development Items -------------------------
