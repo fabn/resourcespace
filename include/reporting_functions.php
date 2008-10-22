@@ -13,7 +13,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d)
 	$report=sql_query("select * from report where ref='$ref'");$report=$report[0];
 
 	$filename=str_replace(array(" ","(",")","-","/"),"_",$report["name"]) . "_" . $from_y . "_" . $from_m . "_" . $from_d . "_to_" . $to_y . "_" . $to_m . "_" . $to_d . ".csv";
-	header("Content-type: text/csv");
+	header("Content-type: application/octet-stream");
 	header("Content-disposition: attachment; filename=" . $filename . "");
 
 	
