@@ -107,6 +107,7 @@ if (!file_exists($blendercommand)) {exit("Could not find blender application. '$
 shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
 if (file_exists($target."0001.jpg")){
 copy($target."0001.jpg","$target");
+unlink($target."0001.jpg");
 $newfile = $target;}
 	}
 
