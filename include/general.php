@@ -836,7 +836,7 @@ function i18n_get_translated($text)
 		}	
 	
 	# No language match, return the first item
-	return substr($s[0],3);
+	if (count($s)>1) {return substr($s[1],3);} else {return $text;}
 	}
 
 function i18n_get_indexable($text)
