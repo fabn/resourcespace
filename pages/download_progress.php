@@ -17,10 +17,16 @@ if(!empty($storagedownload)) {
 }
 
 include "../include/header.php";
+
+if (!$save_as)
+	{
+	?>
+	<script language="Javascript">
+	window.setTimeout("document.location='<?=$url?>'",1000);
+	</script>
+	<?
+	}
 ?>
-<script language="Javascript">
-window.setTimeout("document.location='<?=$url?>'",1000);
-</script>
 
 <div class="BasicsBox">
 
