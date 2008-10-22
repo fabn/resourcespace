@@ -605,9 +605,24 @@ function check_access_key_collection($collection,$key)
 	}
 
 function myrealpath($path) 
-{ 
-        $path_parts = pathinfo($path); 
-        return realpath($path_parts['dirname'])."/". 
-$path_parts['basename']; 
-}
+	{ 
+	$path_parts = pathinfo($path); 
+	return realpath($path_parts['dirname'])."/". 
+	$path_parts['basename']; 
+	}
+
+function get_ip()
+	{
+	# Returns the IP address for the current user.
+	if (array_key_exists("REMOTE_ADDR",$_SERVER)) {return $_SERVER["REMOTE_ADDR"];}
+	
+	# Attempt to read Apache forwarding header instead.
+	$headers = @apache_request_headers();
+	if (@array_key_exists('X-Forwarded-For', $headers)) {return $headers["X-Forwarded-For"];}
+
+	# Can't find an IP address.
+	return "???";
+	}
+
+
 ?>

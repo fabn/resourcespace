@@ -122,12 +122,12 @@ if (!$valid)
     }
 
 # Handle IP address restrictions
+$ip=get_ip();
 $ip_restrict=$ip_restrict_group;
 if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
 if ($ip_restrict!="")
 	{
 	# Match against the IP restriction.
-	$ip=$_SERVER["REMOTE_ADDR"];
 	$wildcard=strpos($ip_restrict,"*");
 	$allow=true;
 	if ($wildcard!==false)
@@ -151,7 +151,7 @@ if ($ip_restrict!="")
 #update activity table
 global $pagename;
 $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_terms=1";} # Accepted terms
-sql_query("update user set last_active=now(),logged_in=1,last_ip='" . $_SERVER["REMOTE_ADDR"] . "',last_browser='" . mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,100)) . "'$terms where ref='$userref'");
+sql_query("update user set last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,100)) . "'$terms where ref='$userref'");
 
 # Add group specific text (if any) when logged in.
 if (isset($usergroup))
@@ -159,5 +159,7 @@ if (isset($usergroup))
 	$results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and specific_to_group='$usergroup'");
 	for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];}
 	}
+
+
 
 ?>

@@ -8,9 +8,13 @@ $url=getval("url","index.php");
 $error="";
 
 # First check that this IP address has not been locked out due to excessive attempts.
-$ip=$_SERVER["REMOTE_ADDR"];
-$lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()","");
-if ($lockouts>0)
+$ip=get_ip();
+$lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
+
+# Also check that the username provided has not been locked out due to excessive login attempts.
+$ulockouts=sql_value("select count(*) value from user where username='" . getvalescaped("username","") . "' and login_tries>='" . $max_login_attempts_per_username . "' and date_add(login_last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
+
+if ($lockouts>0 || $ulockouts>0)
 	{
 	$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
 	}
@@ -45,11 +49,15 @@ elseif (array_key_exists("username",$_POST))
 			setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short);
 
 			# Update the user record. Set the password hash again in case a plain text password was provided.
-			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now() where username='$username' and (password='$password' or password='$password_hash')");
+			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0 where username='$username' and (password='$password' or password='$password_hash')");
 
 			# Log this
 			daily_stat("User session",$valid[0]["ref"]);
 
+			# Blank the IP address lockout counter for this IP
+			sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
+
+			# Set the session cookie.
 	        setcookie("user",$username . "|" . $session_hash,$expires,$baseurl_short);
 	        
 	        # Set default resource types
@@ -86,6 +94,23 @@ elseif (array_key_exists("username",$_POST))
         	sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
         	sql_query("insert into ip_lockout (ip,tries,last_try) values ('" . escape_check($ip) . "',1,now())");
         	}
+        	
+        # Increment a lockout value for any matching username.
+        $ulocks=sql_query("select ref,login_tries,login_last_try from user where username='$username'");
+        if (count($ulocks)>0)
+        	{
+			$tries=$ulocks[0]["login_tries"];
+			if ($tries=="") {$tries=1;} else {$tries++;}
+			if ($tries>$max_login_attempts_per_username) {$tries=1;}
+			if ($tries==$max_login_attempts_per_username)
+				{
+				# Show locked out message.
+				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"] . "!");
+				}
+			sql_query("update user set login_tries='$tries',login_last_try=now() where username='$username'");
+        	}
+        	
+        
         }
     }
 

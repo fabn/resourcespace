@@ -395,9 +395,13 @@ $password_min_special=0; # Minimum number of 'special' i.e. non alphanumeric cha
 $password_expiry=0;
 
 # How many failed login attempts per IP address until a temporary ban is placed on this IP
-$max_login_attempts_per_ip=10;
+# This helps to prevent dictionary attacks.
+$max_login_attempts_per_ip=20;
 
-# How long the user must wait after failing the login $max_login_attempts_per_ip times.
+# How many failed login attempts per username until a temporary ban is placed on this IP
+$max_login_attempts_per_username=5;
+
+# How long the user must wait after failing the login $max_login_attempts_per_ip or $max_login_attempts_per_username times.
 $max_login_attempts_wait_minutes=10;
 
 # Use imperial instead of metric for the download size guidelines
