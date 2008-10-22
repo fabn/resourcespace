@@ -105,7 +105,7 @@ elseif (array_key_exists("username",$_POST))
 			if ($tries==$max_login_attempts_per_username)
 				{
 				# Show locked out message.
-				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"] . "!");
+				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
 				}
 			sql_query("update user set login_tries='$tries',login_last_try=now() where username='$username'");
         	}
