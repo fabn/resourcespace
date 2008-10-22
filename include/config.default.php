@@ -7,7 +7,7 @@ $mysql_db="resourcespace";			# MySQL database name
 
 # The path to the MySQL client binaries - e.g. mysqldump
 # (only needed if you plan to use the export tool)
-$mysql_bin_path="/usr/local/mysql/bin"; # Note: no trailing slash
+$mysql_bin_path="/usr/bin"; # Note: no trailing slash
 
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
