@@ -16,6 +16,11 @@ if(!empty($storagedownload)) {
 	$url="download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
 }
 
+# For Opera and Internet Explorer 7 - redirected downloads are always blocked, so use the '$save_as' config option
+# to present a link instead.
+if (strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
+if (strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 7.")!==false) {$save_as=true;}
+
 include "../include/header.php";
 
 if (!$save_as)
@@ -31,7 +36,7 @@ if (!$save_as)
 <div class="BasicsBox">
 
     
-	<? if ($save_as || strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) { 
+	<? if ($save_as) { 
 	# $save_as set or Opera browser? Provide a download link instead. Opera blocks any attempt to send it a download (meta/js redirect)	?>
     <h1><?=$lang["downloadresource"]?></h1>
     <p style="font-weight:bold;">&gt;&nbsp;<a href="<?=$url?>"><?=$lang["rightclicktodownload"]?></a></p>
