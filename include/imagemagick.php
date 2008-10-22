@@ -101,7 +101,10 @@ shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $t
 if ($extension=="blend")
 
 	{
-shell_exec("blender -b $file -F JPEG -o $target -f 1");
+$blendercommand="blender";	
+if (!file_exists($blendercommand)) {$blendercommand="/Applications/blender.app/Contents/MacOS/blender";}
+if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
+shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
 if (file_exists($target."0001.jpg")){
 copy($target."0001.jpg","$target");
 $newfile = $target;}
