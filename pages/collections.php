@@ -318,7 +318,7 @@ if (count($result)>0)
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
 		
-		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))
+		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])
 		?>
 		<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"
 		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
