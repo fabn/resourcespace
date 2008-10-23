@@ -272,28 +272,86 @@ function get_smart_themes($field)
 	# Returns a list of smart themes (which are really field options).
 	# The results are filtered so that only field options that are in use are returned.
 	
-	# Return raw options list
-	$options=explode(",",sql_value("select options value from resource_type_field where ref='$field'",""));
-	
-	# Tidy list so it matches the storage format used for keywords.
-	# The translated version is fetched as each option will be indexed in the local language version of each option.
-	$options_base=array();
-	for ($n=0;$n<count($options);$n++) {$options_base[$n]=escape_check(trim(strtolower(i18n_get_translated($options[$n]))));}
+	# Fetch field info
+	$fielddata=sql_query("select * from resource_type_field where ref='$field'");
+	if (count($fielddata)>0) {$fielddata=$fielddata[0];} else {return false;}
 	
 	# Return a list of keywords that are in use for this field
 	$inuse=sql_array("select distinct k.keyword value from keyword k join resource_keyword rk on k.ref=rk.keyword where 
-	resource_type_field='$field'");
-	
-	# For each option, if it is in use, add it to the return list.
-	$return=array();
-	for ($n=0;$n<count($options);$n++)
+		resource_type_field='$field' and resource>0");
+
+	if ($fielddata["type"]==7)
 		{
-		#echo "<li>Looking for " . $options_base[$n] . " in " . join (",",$inuse);
-		if (in_array(str_replace("-"," ",$options_base[$n]),$inuse)) {$return[]=trim(i18n_get_translated($options[$n]));}
+		# Category tree style view
+		$tree=explode("\n",$fielddata["options"]);
+
+		$return=array();	
+		$return=populate_smart_theme_tree_node($tree,0,$return,0);
+		
+		# For each option, if it is in use, add it to the return list.
+		$out=array();
+		for ($n=0;$n<count($return);$n++)
+			{
+			# Prepare a 'tidied' local language version of the name to use for the comparison
+			# Only return items that are in use.
+			$tidy=escape_check(trim(strtolower(str_replace("-"," ",i18n_get_translated($return[$n]["name"])))));
+			
+			if (in_array($tidy,$inuse))
+				{
+				$c=count($out);
+				$out[$c]["indent"]=$return[$n]["indent"];
+				$out[$c]["name"]=trim(i18n_get_translated($return[$n]["name"]));
+				}
+			}
+		return $out;
+		}
+	else
+		{
+		# Standard checkbox list or drop-down box
+		
+		# Fetch raw options list
+		$options=explode(",",$field["options"]);
+		
+		# Tidy list so it matches the storage format used for keywords.
+		# The translated version is fetched as each option will be indexed in the local language version of each option.
+		$options_base=array();
+		for ($n=0;$n<count($options);$n++) {$options_base[$n]=escape_check(trim(strtolower(i18n_get_translated($options[$n]))));}
+		
+		# For each option, if it is in use, add it to the return list.
+		$return=array();
+		for ($n=0;$n<count($options);$n++)
+			{
+			#echo "<li>Looking for " . $options_base[$n] . " in " . join (",",$inuse);
+			if (in_array(str_replace("-"," ",$options_base[$n]),$inuse)) 		
+				{
+				$c=count($return);
+				$return[$c][$name]=trim(i18n_get_translated($options[$n]));
+				$return[$c]["indent"]=0;
+				}
+			}
+		return $return;
+		}
+	}
+
+function populate_smart_theme_tree_node($tree,$node,$return,$indent)
+	{
+	# When displaying category trees as smart themes, this function is used to recursively
+	# parse each node adding items sequentially with an appropriate indent level.
+	for ($n=0;$n<count($tree);$n++)
+		{
+		$s=explode(",",$tree[$n]);
+		if ($s[1]==$node)
+			{
+			# Add this node
+			$c=count($return);
+			$return[$c]["indent"]=$indent;
+			$return[$c]["name"]=$s[2];
+			$return=populate_smart_theme_tree_node($tree,$n+1,$return,$indent+1);
+			}
 		}
 	return $return;
 	}
-
+	
 function email_collection($collection,$collectionname,$fromusername,$userlist,$message,$feedback)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.

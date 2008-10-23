@@ -164,10 +164,15 @@ if ($header=="")
 			$themes=get_smart_themes($headers[$n]["ref"]);
 			for ($m=0;$m<count($themes);$m++)
 				{
-				$s=$headers[$n]["name"] . ":" . $themes[$m];
+				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
+
+				# Indent this item?				
+				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
+				$indent=str_replace(" ","&nbsp;",$indent);
+
 				?>
 				<tr>
-				<td><div class="ListTitle"><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true"><?=htmlspecialchars(i18n_get_translated($themes[$m]))?></a></div></td>
+				<td><div class="ListTitle"><?=$indent?><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true"><?=i18n_get_translated($themes[$m]["name"])?></a></div></td>
 				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
 				</tr>
 				<?
