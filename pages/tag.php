@@ -50,7 +50,7 @@ include "../include/header.php";
 <? 
 $imagepath=get_resource_path($ref,false,"pre",false,$resource["preview_extension"]);
 ?>
-<div class="RecordBox"><div class="RecordPanel"><img src="<?=$imagepath?>?nc=<?=time()?>" alt="" class="Picture" />
+<div class="RecordBox"><div class="RecordPanel"><img src="<?=$imagepath?>" alt="" class="Picture" />
 
 
 <!--<div class="Question">

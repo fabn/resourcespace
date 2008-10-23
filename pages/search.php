@@ -254,6 +254,7 @@ if (true) #search condition
 		for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
 			{
 			$ref=$result[$n]["ref"];
+			$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
 			$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
 			
 				<?	

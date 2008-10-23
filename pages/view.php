@@ -142,7 +142,7 @@ elseif ($resource["has_image"]==1)
 	
 	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
 	if (file_exists($imagepath))
-		{ ?><img src="<?=$imageurl?>?nc=<?=time()?>" alt="<?=$lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><? } 
+		{ ?><img src="<?=$imageurl?>" alt="<?=$lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><? } 
 	if (file_exists($previewpath)) { ?></a><? }
 	}
 else

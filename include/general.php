@@ -83,14 +83,23 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	    $folder=$storageurl . "/" . $folder;
 	    }
 	
-	return $folder . $ref . $size . $p . "." . $extension;
+	$file=$folder . $ref . $size . $p . "." . $extension;
+	if (!$getfilepath)
+		{
+		$data=get_resource_data($ref);
+		$file .= "?v=" . urlencode($data['file_modified']);
+		}
+	
+	return  $file;
 	}
 	
+$GLOBALS['get_resource_data_cache'] = array();
 function get_resource_data($ref)
 	{
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
-	global $default_resource_type;
+	global $default_resource_type, $get_resource_data_cache;
+	if (isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
 	$resource=sql_query("select * from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
@@ -107,6 +116,7 @@ function get_resource_data($ref)
 		}
 	# update hit count
 	sql_query("update resource set hit_count=hit_count+1 where ref='$ref'");
+	$get_resource_data_cache[$ref]=$resource[0];
 	return $resource[0];
 	}
 
