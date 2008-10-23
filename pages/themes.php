@@ -186,7 +186,7 @@ if ($header=="")
 
 function DisplayTheme($theme1,$theme2="",$theme3="")
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand;
 
 	# Work out theme name
 	if ($theme1!="") {$themename=$theme1;}
