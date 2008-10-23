@@ -32,8 +32,8 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 				}
 			else 
 				{
-				global $basedir, $k;
-				return $basedir . "/pages/download.php?ref={$ref}&size={$size}&ext={$extension}&noattach=true&k={$k}&page={$page}"; 
+				global $baseurl_short, $k;
+				return $baseurl_short . "pages/download.php?ref={$ref}&size={$size}&ext={$extension}&noattach=true&k={$k}&page={$page}"; 
 				}
 			}
 		}
