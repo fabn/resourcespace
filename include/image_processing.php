@@ -25,6 +25,7 @@ function upload_file($ref)
     	if ($result==false)
        	 	{
        	 	$status="File upload error. Please check the size of the file you are trying to upload.";
+       	 	return false;
        	 	}
      	else
      		{
@@ -33,8 +34,8 @@ function upload_file($ref)
     	 	}
     	}
     	
-    # Store extension in the database
-    sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
+    # Store extension in the database and update file modified time.
+    sql_query("update resource set file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$ref'");
 
 	# get file metadata 
     global $exiftool_path;
@@ -305,7 +306,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 					}
 				}
 			# flag database so a thumbnail appears on the site
-			sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
+			sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
 			}
 		}
 	else
@@ -422,7 +423,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			{
 			extract_mean_colour($target,$ref);
 			# flag database so a thumbnail appears on the site
-			sql_query("update resource set has_image=1,preview_extension='jpg' where ref='$ref'");
+			sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
 			}
 
 		return true;
