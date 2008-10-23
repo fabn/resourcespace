@@ -41,6 +41,10 @@ function upload_file($ref)
     global $exiftool_path;
     extract_exif_comment($ref,$extension);
 
+	# extract text from documents (e.g. PDF, DOC).
+	global $extracted_text_field;
+	if (isset($extracted_text_field)) {extract_text($ref,$extension);}
+
 	# Store original filename in field, if set
 	global $filename_field;
 	if (isset($filename_field))
@@ -750,4 +754,52 @@ function upload_preview($ref)
     return true;
     }}
  
+function extract_text($ref,$extension)
+	{
+	# Extract text from the resource and save to the configured field.
+	global $extracted_text_field,$antiword_path,$pdftotext_path;
+	$text="";
+	$path=get_resource_path($ref,true,"",false,$extension);
+	
+	# Microsoft Word extraction using AntiWord.
+	if ($extension=="doc" && isset($antiword_path))
+		{
+		$command=$antiword_path . "/antiword";
+		if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
+		if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
+		$text=shell_exec($command . " \"" . $path . "\"");
+		}
+	
+	# PDF extraction using pdftotext (part of the XPDF project)
+	if ($extension=="pdf" && isset($pdftotext_path))
+		{
+		$command=$pdftotext_path . "/pdftotext";
+		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
+		if (!file_exists($command)) {exit("pdftotext executable not found at '$pdftotext_path'");}
+		$text=shell_exec($command . " \"" . $path . "\" -");
+		}
+	
+	# HTML extraction
+	if ($extension=="html" || $extension=="htm")
+		{
+		$text=strip_tags(file_get_contents($path));
+		}
+
+	# TXT extraction
+	if ($extension=="txt")
+		{
+		$text=file_get_contents($path);
+		}
+
+		
+		
+	# Save the extracted text.
+	if ($text!="")
+		{
+		# Save text
+		update_field($ref,$extracted_text_field,$text);
+		}
+	
+	}
+
 ?>

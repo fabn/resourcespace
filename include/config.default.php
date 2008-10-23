@@ -415,6 +415,17 @@ $default_resource_type=1;
 # easily faked.
 $ip_forwarded_for=false;
 
+# When extracting text from documents (e.g. HTML, DOC, TXT, PDF) which field is used for the actual content?
+# Comment out the line to prevent extraction of text content
+$extracted_text_field=72;
+
+# Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
+# $antiword_path="/usr/bin";
+
+# Path to pdftotext - part of the XPDF project, see http://www.foolabs.com/xpdf/
+# Enables extraction of text from PDF files
+# $pdftotext_path="/usr/bin";
+
 
 #
 # ------------------------- Development Items -------------------------

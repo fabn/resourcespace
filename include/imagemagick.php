@@ -120,7 +120,7 @@ if ($extension=="txt")
 	{
 	$text=wordwrap(file_get_contents($file),90);
 	$width=600;$height=800;
-	$font="gfx/fonts/vera.ttf";
+	$font=dirname(__FILE__). "/../gfx/fonts/vera.ttf";
 	$im=imagecreatetruecolor($width,$height);
 	$col=imagecolorallocate($im,255,255,255);
 	imagefilledrectangle($im,0,0,$width,$height,$col);

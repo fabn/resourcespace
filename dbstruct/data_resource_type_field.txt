@@ -44,3 +44,4 @@
 68,,"Aspect Ratio",0,,6002,0,3,,1,1,,,,0,,aspectratio,1
 69,,"Video Size",0,,6003,0,3,,1,1,,,,0,,imagesize,1
 71,,"Image Size",0,,1602,0,1,,1,1,,,,0,,imagesize,1
+72,text,"Extracted Text",5,,56,1,0,,0,0,,"<div class=""item""><h3>[title]</h3><p>[value]</p></div><div class=""clearerleft""> </div>",,0,,,1
