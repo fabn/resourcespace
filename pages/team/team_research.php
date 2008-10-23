@@ -61,7 +61,7 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	<td><?=$statusname[$requests[$n]["status"]]?></td>
 	<td><?=(strlen($requests[$n]["assigned_username"])==0)?"-":$requests[$n]["assigned_username"]?></td>
 	<td><?=(strlen($requests[$n]["collection"])==0)?"-":$requests[$n]["collection"]?></td>
-	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?=$requests[$n]["ref"]?>">&gt;&nbsp;<?=$lang["editresearch"]?></a>&nbsp;&nbsp;<a href="collections.php?research=<?=$requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["editcollection"]?></a></div></td>
+	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?=$requests[$n]["ref"]?>">&gt;&nbsp;<?=$lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?=$requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["editcollection"]?></a></div></td>
 	</tr>
 	<?
 	}
@@ -69,7 +69,7 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 
 </table>
 </div>
-<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="research_request.php?assign=true">&gt;&nbsp;<?=$lang["createresearchforuser"]?></a></div><? pager(false); ?></div>
+<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="../research_request.php?assign=true">&gt;&nbsp;<?=$lang["createresearchforuser"]?></a></div><? pager(false); ?></div>
 </div>
 
 
