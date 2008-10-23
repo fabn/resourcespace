@@ -11,7 +11,9 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	if ($size=="")
 		{
 		# For the full size, check to see if the full path is set and if so return that.
-		$fp=sql_value("select file_path value from resource where ref='$ref'","");
+		static $fpcache = array();
+		if (!isset($fpcache[$ref]))	{$fpcache[$ref]=sql_value("select file_path value from resource where ref='$ref'","");}
+		$fp=$fpcache[$ref];
 		
 		# Test to see if this nosize file is of the extension asked for, else skip the file_path and return a $storagedir path. 
 		# If using staticsync, file path will be set already, but we still want the $storagedir path for a nosize preview jpg.
@@ -19,14 +21,20 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		
 		$test_ext = explode(".",$fp);$test_ext=trim(strtolower($test_ext[count($test_ext)-1]));
 		
-		if (($test_ext == $extension)){
-		
-		if ($getfilepath && (strlen($fp)>0) && (strpos($fp,"/")!==false))
+		if (($test_ext == $extension) && (strlen($fp)>0) && (strpos($fp,"/")!==false))
 			{
-			global $syncdir;  
-            return $syncdir . "/" . $fp;
-            }
-		}
+				
+			if ($getfilepath)
+				{
+				global $syncdir;  
+            	return $syncdir . "/" . $fp;
+				}
+			else 
+				{
+				global $basedir, $k;
+				return $basedir . "/pages/download.php?ref={$ref}&size={$size}&ext={$extension}&noattach=true&k={$k}&page={$page}"; 
+				}
+			}
 		}
 
 	global $scramble_key;	
