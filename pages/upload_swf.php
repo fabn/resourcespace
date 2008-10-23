@@ -62,8 +62,8 @@ if (array_key_exists("Filedata",$_FILES))
     }
     
 $headerinsert="
-<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js\"></script>
-<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?2\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?2\"></script>
 ";
 
 include "../include/header.php";
@@ -167,7 +167,7 @@ window.onload =  function()
 
 	swfu = new SWFUpload({
 		upload_url : "<?=$baseurl?>/pages/upload_swf.php?replace=<?=getval("replace","")?>&collection_add=<?=$collection_add?>&user=<?=urlencode($_COOKIE["user"])?>",
-		flash_url : "<?=$baseurl?>/lib/swfupload/swfupload_f9.swf",
+		flash_url : "<?=$baseurl?>/lib/swfupload/swfupload.swf",
 		
 
 				// File Upload Settings
@@ -184,6 +184,14 @@ window.onload =  function()
 				upload_error_handler : uploadError,
 				upload_success_handler : uploadSuccess,
 				upload_complete_handler : uploadComplete,
+				
+				button_placeholder_id : "btnBrowse",
+				button_image_url : "<?=$baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
+				button_width : 160,
+				button_height : 22,
+				button_text : "<span class=\"button\"><?=$lang["selectfiles"]?></span>",
+				button_text_style : ".button { margin: auto; text-align: center; font-weight: bold; font-family: Helvetica, Arial, sans-serif; font-size: 12px; }",
+				button_text_top_padding : 1,
 
 				custom_settings : {
 					upload_target : "divFileProgressContainer"
@@ -214,7 +222,7 @@ window.onload =  function()
 	<div style="margin: 0px 10px;">
 		<div>
 			<form>
-				<button id="btnBrowse" type="button" style="padding: 5px;" onclick="swfu.selectFiles(); this.blur();">Select Images</button>
+				<span id="btnBrowse"></span>
 			</form>
 		</div>
 		<div id="divFileProgressContainer" style="height: 75px;"></div>
