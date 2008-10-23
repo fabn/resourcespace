@@ -62,8 +62,8 @@ if (array_key_exists("Filedata",$_FILES))
     }
     
 $headerinsert="
-<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?2\"></script>
-<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?2\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?<?=$css_reload_key?>\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?<?=$css_reload_key?>\"></script>
 ";
 
 include "../include/header.php";
