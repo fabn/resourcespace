@@ -96,10 +96,10 @@ if (isset($exiftool_path))
 			$read_from=get_exiftool_fields();
 			for($i=0;$i< count($read_from);$i++)
 				{
-				$command=$exiftool_path."/exiftool -p ";
 				$field=explode(",",$read_from[$i]['exiftool_field']);
-				foreach ($field as $field){
-				$command.="'$".$field."' -f -m -ScanforXMP -fast $image" ;}
+				foreach ($field as $subfield){
+				$command=$exiftool_path."/exiftool -p ";
+				$command.="'$".$subfield."' -f -m -ScanforXMP -fast $image" ;}
 				$metadata=shell_exec($command);
 				if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata));}
 				}
