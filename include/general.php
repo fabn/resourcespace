@@ -1,6 +1,7 @@
 <?
 # General functions, useful across the whole solution
 
+$GLOBALS['get_resource_path_fpcache'] = array();
 function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false)
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
@@ -11,9 +12,9 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	if ($size=="")
 		{
 		# For the full size, check to see if the full path is set and if so return that.
-		static $fpcache = array();
-		if (!isset($fpcache[$ref]))	{$fpcache[$ref]=sql_value("select file_path value from resource where ref='$ref'","");}
-		$fp=$fpcache[$ref];
+		global $get_resource_path_fpcache;
+		if (!isset($get_resource_path_fpcache[$ref])) {$get_resource_path_fpcache[$ref]=sql_value("select file_path value from resource where ref='$ref'","");}
+		$fp=$get_resource_path_fpcache[$ref];
 		
 		# Test to see if this nosize file is of the extension asked for, else skip the file_path and return a $storagedir path. 
 		# If using staticsync, file path will be set already, but we still want the $storagedir path for a nosize preview jpg.
