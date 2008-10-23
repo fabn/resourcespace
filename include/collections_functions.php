@@ -537,16 +537,27 @@ function send_collection_feedback($collection,$comment)
 		}
 	}
 
-function copy_collection($old,$new)
+function copy_collection($copied,$current,$remove_existing="off")
 	{	
-	# Copy resources in collection $old to collection $new
-	$data=sql_query("select * from collection_resource where collection='$old'","");
-	sql_query("delete from collection_resource where collection='$new'");
-	foreach($data as $col_resource)
-		{
-		sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
-		values ( $new ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+	# Get all data from both collections
+	$copied_collection=sql_query("select * from collection_resource where collection='$copied'","");
+	$current_collection=sql_query("select * from collection_resource where collection='$current'","");
+	
+	if ($remove_existing=="on"){
+		#delete all existing data in the current collection
+		sql_query("delete from collection_resource where collection='$current'");
 		}
+	
+	#put all the copied collection records in
+	foreach($copied_collection as $col_resource){
+	
+		#test if the resource is already there before adding it to avoid duplicates if remove_existing isn't used...
+		$test= sql_query("select * from collection_resource where collection='$current' and resource='".$col_resource['resource']."'","");
+			if (!count($test)>0){
+			sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
+			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+			}
+	}
 	}
 
 function collection_is_research_request($collection)

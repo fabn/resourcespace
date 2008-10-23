@@ -10,9 +10,10 @@ $ref=getvalescaped("ref","");
 
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
+$copycollectionremoveall=getvalescaped("copycollectionremoveall","");
 
 $copy=getval("copy","");
-if ($copy!=""){copy_collection($copy,$ref);refresh_collection_frame();}
+if ($copy!=""){copy_collection($copy,$ref,$remove_existing=$copycollectionremoveall);refresh_collection_frame();}
 
 if (getval("name","")!="")
 	{
@@ -154,7 +155,10 @@ if ($enable_collection_copy)
 	?>
 	<div class="Question">
 	<label for="copy"><?=$lang["copyfromcollection"]?></label>
-	<select name="copy" id="copy" class="stdwidth">
+	<select name="copy" id="copy" class="stdwidth" onChange="
+	var ccra =document.getElementById('copycollectionremoveall');
+	if ($('copy').value!=''){ccra.style.display='block';}
+	else{ccra.style.display='none';}">
 	<option value=""><?=$lang["donotcopycollection"]?></option>
 	<?
 	$list=get_user_collections($userref);
@@ -168,9 +172,12 @@ if ($enable_collection_copy)
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
-	<?
-	}
-?>
+<div class="Question" id="copycollectionremoveall" style="display:none;">
+<label for="copycollectionremoveall"><?=$lang["copycollectionremoveall"]?></label><input type=checkbox id="copycollectionremoveall" name="copycollectionremoveall">
+<div class="clearerleft"> </div>
+</div>
+
+<? } ?>
 
 <? if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <!-- Archive Status -->
