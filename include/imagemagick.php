@@ -37,7 +37,6 @@ if (file_exists($target)) {unlink($target);}
  if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
  if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
 
-
 hook("metadata");
 
 /* ----------------------------------------

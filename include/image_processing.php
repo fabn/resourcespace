@@ -349,7 +349,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
-
+		
 		$prefix = '';
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
@@ -363,6 +363,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
 		# Get image's dimensions.
 		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
+
 		$identoutput=shell_exec($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
@@ -396,8 +397,9 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 				if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
 
-				$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" $path";
+				$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
 				$output=shell_exec($runcommand);  
+				
 
 				# Add a watermarked image too?
 				global $watermark;
@@ -408,6 +410,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
    					$watermarkreal=myrealpath($watermark);
 
 					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" $path"; 
+				
 					$output=shell_exec($runcommand);  
 					}
 				}
