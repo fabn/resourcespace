@@ -414,7 +414,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					if (file_exists($path)) {unlink($path);}
    					$watermarkreal=myrealpath($watermark);
 
-					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" $path"; 
+					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
 				
 					$output=shell_exec($runcommand);  
 					}
