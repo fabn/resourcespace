@@ -164,9 +164,7 @@ if ($enable_collection_copy)
 	$list=get_user_collections($userref);
 	for ($n=0;$n<count($list);$n++)
 		{
-		?>
-		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
-		<?
+		if ($ref!=$list[$n]["ref"]){?><option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option> <? }
 		}
 	?>
 	</select>

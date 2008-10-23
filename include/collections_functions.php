@@ -539,9 +539,8 @@ function send_collection_feedback($collection,$comment)
 
 function copy_collection($copied,$current,$remove_existing="off")
 	{	
-	# Get all data from both collections
+	# Get all data from the collection to copy.
 	$copied_collection=sql_query("select * from collection_resource where collection='$copied'","");
-	$current_collection=sql_query("select * from collection_resource where collection='$current'","");
 	
 	if ($remove_existing=="on"){
 		#delete all existing data in the current collection
