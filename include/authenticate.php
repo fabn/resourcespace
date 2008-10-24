@@ -51,7 +51,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $config_options=trim($userdata[0]["config_options"]);
         if ($config_options!="") {eval($config_options);}
         
-        if ($password_expiry>0 && $pagename!="change_password" && strlen(trim($userdata[0]["password_last_change"]))>0)
+        if ($password_expiry>0 && !checkperm("p") && $allow_password_change && $pagename!="change_password" && strlen(trim($userdata[0]["password_last_change"]))>0)
         	{
         	# Redirect the user to the password change page if their password has expired.
 	        $last_password_change=time()-strtotime($userdata[0]["password_last_change"]);

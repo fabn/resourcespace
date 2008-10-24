@@ -1,6 +1,6 @@
 <?
 $productname="ResourceSpace"; # Product name. Do not change.
-$productversion="1.6dev";
+$productversion="1.7dev";
 
 # External items reload key
 # Increment the below value to force a reload of the CSS and other included items.

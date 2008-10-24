@@ -1,6 +1,6 @@
 <?
 include "../include/db.php";
-include "../include/authenticate.php";
+include "../include/authenticate.php"; if (checkperm("p")) {exit("Not allowed.");}
 include "../include/general.php";
 
 if (getval("save","")!="")
