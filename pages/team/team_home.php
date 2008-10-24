@@ -5,8 +5,8 @@ include "../../include/general.php";
 
 # Some disk size allocation
 if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
-$avail=disk_total_space(myrealpath($storagedir));
-$free=disk_free_space(myrealpath($storagedir));
+$avail=disk_total_space($storagedir);
+$free=disk_free_space($storagedir);
 $used=$avail-$free;
 
 # Quota?

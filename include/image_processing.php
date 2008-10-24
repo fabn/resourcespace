@@ -412,13 +412,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					{
 					$path=get_resource_path($ref,true,$ps[$n]["id"],false,"",-1,1,true);
 					if (file_exists($path)) {unlink($path);}
-   					
 					
-					#peveleigh 2008-10-24 10:59:00
-					#May be a built in function to return proper path to watermark image
-					#myrealpath() won't do it as it only returns the basedir and not from the server root
-					#$watermarkreal=myrealpath($watermark);
-					$watermarkreal=$_SERVER['DOCUMENT_ROOT']."/".$watermark;
+					$watermarkreal=dirname(__FILE__) ."/../" . $watermark;
 					
 					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile ".escapeshellarg($watermarkreal)." -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
 					

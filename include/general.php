@@ -311,6 +311,8 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	# Returns a table of available image sizes for resource $ref.
 	# The original image file assumes the name of the 'nearest size (up)' in the table
 
+	global $imagemagick_calculate_sizes;
+
 	# add the original image
 	$return=array();
 	$lastname="";$lastpreview=0;$lastrestricted=0;
@@ -335,8 +337,10 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			global $imagemagick_path;
 			$file=$path2;
 			$filesize=@filesize($file);
-			if (isset($imagemagick_path))
+			if (isset($imagemagick_path) && $imagemagick_calculate_sizes)
 				{
+				# Use ImageMagick to calculate the size
+				
 				$prefix = '';
 				# Camera RAW images need prefix
 				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
@@ -358,10 +362,15 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				}
 			else
 				{
-				# fetch source image size.
+				# Use GD to calculate the size
 				if (!((@list($sw,$sh) = @getimagesize($file))===false))
 				 	{
 					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."',' ". $sw ."', '". $sh ."', '" . $filesize . "')");
+					}
+				else
+					{
+					# Size cannot be calculated.
+					$sw="?";$sh="?";
 					}
 				}
 			}

@@ -604,13 +604,6 @@ function check_access_key_collection($collection,$key)
 	return true;
 	}
 
-function myrealpath($path) 
-	{ 
-	$path_parts = pathinfo($path); 
-	return realpath($path_parts['dirname'])."/". 
-	$path_parts['basename']; 
-	}
-
 function get_ip()
 	{
 	global $ip_forwarded_for;

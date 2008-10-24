@@ -270,7 +270,7 @@ if (!isset($newfile))
     				{
 					$path=get_resource_path($ref,true,$size,false,"",-1,$n,true);
 					if (file_exists($path)) {unlink($path);}
-    				$watermarkreal=myrealpath($watermark);
+    				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
 				    $command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile $watermarkreal -draw \"rectangle 0,0 800,800\" \"$path\""; 
 					$output=shell_exec($command2); 
