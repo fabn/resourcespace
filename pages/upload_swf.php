@@ -35,6 +35,10 @@ if (array_key_exists("Filedata",$_FILES))
 			{
 			echo get_resource_path($ref,false,"col",false);
 			}
+		else
+			{
+			echo "../gfx/type1_col.gif";
+			}
 		exit();
 		}
 	else

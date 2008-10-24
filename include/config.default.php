@@ -111,8 +111,8 @@ $imagemagick_calculate_sizes=false;
 # If this is set to more than one the user will be able to page through the PDF file.
  $pdf_pages=30;
 
-# If using ffmpeg, uncomment and set next 2 lines.
-# $ffmpeg_path="/Applications/ffmpegX.app/Contents/Resources";
+# If using ffmpeg, uncomment and set next line.
+# $ffmpeg_path="/usr/bin";
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
@@ -125,8 +125,8 @@ $ffmpeg_preview_max_height=270;
 $ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32 -ac 1";
 
 # Use qt-faststart to make mp4 videoes start faster
-$qtfaststart_path="/usr/bin";
-$qtfaststart_extensions=array("mp4","m4v","mov");
+# $qtfaststart_path="/usr/bin";
+# $qtfaststart_extensions=array("mp4","m4v","mov");
 
 # Allow users to request accounts?
 $allow_account_request=true;

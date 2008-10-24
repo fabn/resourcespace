@@ -136,12 +136,15 @@ if ($extension=="txt")
    ----------------------------------------
 */
 global $ffmpeg_path; 
+$ffmpeg_path.="/ffmpeg";
+if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
+$ffmpeg_path=escapeshellarg($ffmpeg_path);
+
 if (isset($ffmpeg_path) && !isset($newfile)) 
         {
         	
         $snapshottime = 1;
-        
-        $out = shell_exec($ffmpeg_path."/ffmpeg -i '$file' 2>&1");
+        $out = shell_exec($ffmpeg_path." -i " . escapeshellarg($file) . " 2>&1");
         if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))
         	{
 			$duration = $match[1]*3600+$match[2]*60+$match[3];
@@ -158,8 +161,8 @@ if (isset($ffmpeg_path) && !isset($newfile))
 		if ($extension=="mxf")
 			{ $snapshottime = 0; }
         
-        $output=shell_exec($ffmpeg_path . "/ffmpeg -i \"$file\" -f image2 -vframes 1 -ss ".$snapshottime." \"$target\""); 
-        #exit($command . "<br>" . $output); 
+        $output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target)); 
+
         if (file_exists($target)) 
             {
             $newfile=$target;
@@ -198,13 +201,13 @@ if (isset($ffmpeg_path) && !isset($newfile))
 					$width = $ffmpeg_preview_max_width;
 					}
 				
-                $output=shell_exec($ffmpeg_path . "/ffmpeg -y -i \"$file\" $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds  \"$targetfile\"");
+                $output=shell_exec($ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile));
                 
                 if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_preview_extension, $qtfaststart_extensions) )
                     {
                 	$targetfiletmp=$targetfile.".tmp";
                 	rename($targetfile, $targetfiletmp);
-	                $output=shell_exec($qtfaststart_path . "/qt-faststart \"$targetfiletmp\" \"$targetfile\"");
+	                $output=shell_exec($qtfaststart_path . "/qt-faststart " . escapeshellarg($targetfiletmp) . " " . escapeshellarg($targetfile));
 	                unlink($targetfiletmp);
                     }
                 }
@@ -239,7 +242,7 @@ if (!isset($newfile))
 		$gscommand= $ghostscript_path. "/gs";
 	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
         if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
-
+		
         
 		# Create multiple pages.
 		for ($n=1;$n<=$pdf_pages;$n++)
@@ -249,7 +252,7 @@ if (!isset($newfile))
 			$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
 			if (file_exists($target)) {unlink($target);}
 			
-			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=\"$target\" -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop \"$file\"";
+			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
  			$output=shell_exec($gscommand2); 
 	
 			# Set that this is the file to be used.
@@ -261,7 +264,7 @@ if (!isset($newfile))
 			# For files other than page 1, resize directly to the screen size (no other sizes needed)
 			if (file_exists($target) && $n>1)
 				{
-				$command2=$command . " " . $prefix . "\"$target\"[0] -quality $imagemagick_quality -resize 800x800 \"$target\""; 
+				$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 800x800 " . escapeshellarg($target); 
 				$output=shell_exec($command2); 
 				
 				# Add a watermarked image too?
@@ -272,7 +275,7 @@ if (!isset($newfile))
 					if (file_exists($path)) {unlink($path);}
     				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
-				    $command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile $watermarkreal -draw \"rectangle 0,0 800,800\" \"$path\""; 
+				    $command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
 					$output=shell_exec($command2); 
 					}
 				

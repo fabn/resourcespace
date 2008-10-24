@@ -117,6 +117,7 @@ if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text
 
 
 # Set a base URL part consisting of the part after the server name, i.e. for absolute URLs and cookie paths.
+$baseurl=str_replace(" ","%20",$baseurl);
 $bs=explode("/",$baseurl);
 $bs=array_slice($bs,3);
 $baseurl_short="/" . join("/",$bs) . (count($bs)>0?"/":"");
