@@ -99,7 +99,7 @@ if (isset($exiftool_path))
 				$field=explode(",",$read_from[$i]['exiftool_field']);
 				foreach ($field as $subfield){
 				$command=$exiftool_path."/exiftool -p ";
-				$command.="'$".$subfield."' -f -m -ScanforXMP -fast $image" ;}
+				$command.="'$".$subfield."' -f -m -ScanforXMP -fast ".escapeshellarg($image);}
 				$metadata=shell_exec($command);
 				if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata));}
 				}
@@ -412,11 +412,19 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					{
 					$path=get_resource_path($ref,true,$ps[$n]["id"],false,"",-1,1,true);
 					if (file_exists($path)) {unlink($path);}
-   					$watermarkreal=myrealpath($watermark);
-
-					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile $watermarkreal -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
-				
-					$output=shell_exec($runcommand);  
+   					
+					
+					#peveleigh 2008-10-24 10:59:00
+					#May be a built in function to return proper path to watermark image
+					#myrealpath() won't do it as it only returns the basedir and not from the server root
+					#$watermarkreal=myrealpath($watermark);
+					$watermarkreal=$_SERVER['DOCUMENT_ROOT']."/".$watermark;
+					
+					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile ".escapeshellarg($watermarkreal)." -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
+					
+					#die($runcommand);
+					$output=shell_exec($runcommand); 
+					 
 					}
 				}
 			}
