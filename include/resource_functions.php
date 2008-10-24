@@ -468,6 +468,7 @@ function delete_resource($ref)
 	# Delete all database entries
 	sql_query("delete from resource where ref='$ref'");
 	sql_query("delete from resource_data where resource='$ref'");
+	sql_query("delete from resource_dimensions where resource='$ref'");
 	sql_query("delete from resource_keyword where resource='$ref'");
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'");
 	sql_query("delete from collection_resource where resource='$ref'");
