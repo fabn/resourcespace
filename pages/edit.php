@@ -284,7 +284,7 @@ if ($enable_add_collection_on_upload)
 $lastrt=-1;
 
 # "copy data from" feature
-if ($enable_copy_data_from)
+if ($enable_copy_data_from && !$multiple)
 	{ 
 	?>
 	<div class="Question">
