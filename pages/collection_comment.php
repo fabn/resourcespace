@@ -42,6 +42,15 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?=$lang["collectioncomments"]?></h1>
 <p><?=$lang["collectioncommentsinfo"]?></p>
+<? 
+$imagepath = get_resource_path($ref,true,"col",false,"jpg");
+$imageurl = get_resource_path($ref,false,"col",false,"jpg");
+if (file_exists($imagepath)){?>
+<div class="Question">
+<label for="image"><?=$lang["preview"]?></label><img src="<?=$imageurl?>?nc=<?=time()?>" alt="" class="Picture" />
+<div class="clearerleft"> </div>
+</div>
+<? } ?>
 <form method="post">
 <input type="hidden" name="ref" value="<?=$ref?>">
 <input type="hidden" name="k" value="<?=$k?>">
