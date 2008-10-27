@@ -441,29 +441,30 @@ function delete_resource($ref)
 	{
 	if ($ref<0) {return false;} # Can't delete the template
 	# Delete the resource, all related entries in tables and all files on disk
+	
+	# Get info
+	$resource=sql_query("select is_transcoding, file_extension, preview_extension from resource where ref='$ref'","jpg");
+	if (!$resource) {return false;} # Resource not found in database
+	$resource=$resource[0];
+	
+	# Is transcoding
+	if ($resource['is_transcoding']==1) {return false;} # Can't delete when transcoding
 
 	# Delete files first
-	$extension=sql_value("select file_extension value from resource where ref='$ref'","jpg");
-	if ($extension=="") {$extension="jpg";}
-	$extension2=sql_value("select preview_extension value from resource where ref='$ref'","jpg");
-	if ($extension2=="") {$extension2="jpg";}
+	$extensions = array();
+	$extensions[]=$resource['file_extension']?$resource['file_extension']:"jpg";
+	$extensions[]=$resource['preview_extension']?$resource['preview_extension']:"jpg";
+	$extensions[]=$GLOBALS['ffmpeg_preview_extension'];
+	$extensions=array_unique($extensions);
 
-	$sizes=get_image_sizes($ref,true,$extension);
-	for ($n=0;$n<count($sizes);$n++)
+	foreach ($extensions as $extension)
 		{
-		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension);
-		if (file_exists($path)) {unlink($path);}
+		$sizes=get_image_sizes($ref,true,$extension);
+		foreach ($sizes as $size)
+			{
+			if (file_exists($size['path'])) {unlink($size['path']);}
+			}
 		}
-	$sizes=get_image_sizes($ref,true,$extension2);
-	for ($n=0;$n<count($sizes);$n++)
-		{
-		# Also delete alternative previews (where extension is different)
-		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension2);
-		if (file_exists($path)) {unlink($path);}
-		}
-
-	$path=get_resource_path($ref,true,"",false,$extension);
-	if (file_exists($path)) {unlink($path);}
 	
 	# Delete all database entries
 	sql_query("delete from resource where ref='$ref'");
@@ -474,6 +475,8 @@ function delete_resource($ref)
 	sql_query("delete from collection_resource where resource='$ref'");
 	sql_query("delete from resource_custom_access where resource='$ref'");
 	sql_query("delete from external_access_keys where resource='$ref'");	
+	
+	return true;
 	}
 
 function get_max_resource_ref()

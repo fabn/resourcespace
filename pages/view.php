@@ -107,6 +107,8 @@ include "../include/header.php";
 <? } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
+<? if ($resource['is_transcoding']==1) { ?><div class="PageInformal"><?=$lang['resourceistranscoding']?></div><? } ?>
+
 <? hook("renderbeforeresourceview"); ?>
 
 <div class="RecordResouce">
@@ -118,7 +120,7 @@ if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../players/type" . $resource["resource_type"] . ".php";
 	}
-elseif (file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+elseif ($resource['is_transcoding']!=1 && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
 	{
 	# Include the Flash player if an FLV file exists for this resource.
 	include "flv_play.php";

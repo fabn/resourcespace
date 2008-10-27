@@ -23,6 +23,7 @@ a:active {color:#737373;}
 
 .FormError {color: #FF0000;}
 .FormIncorrect {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
+.PageInformal {color: #FF0000;border: 1px solid #BBBBBB;background: #FFFFFF;}
 
 .HorizontalWhiteNav a:link, .HorizontalWhiteNav a:visited, .HorizontalWhiteNav a:active, .BasicsBox .VerticalNav a:link, .BasicsBox .VerticalNav a:visited, .BasicsBox .VerticalNav a:active,  .ListTitle a:link, .ListTitle a:visited, .ListTitle a:active, .HomePanel a:link, .HomePanel a:visited, .HomePanel a:active, .HomePanel a:hover {color:#737373;}
 

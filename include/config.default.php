@@ -123,7 +123,13 @@ $ffmpeg_preview_max_width=480;
 $ffmpeg_preview_max_height=270;
 $ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32 -ac 1";
 
-# Use qt-faststart to make mp4 videoes start faster
+# Encode preview asynchronous?
+$ffmpeg_preview_async=false;
+
+# To be able to run certain actions asyncronus (eg. preview transcoding), define the path to php:
+# $php_path="/usr/bin";
+
+# Use qt-faststart to make mp4 previews start faster
 # $qtfaststart_path="/usr/bin";
 # $qtfaststart_extensions=array("mp4","m4v","mov");
 

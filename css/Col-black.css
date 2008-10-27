@@ -21,6 +21,7 @@ a:active {color:#CCC;}
 .Listview td {border-bottom: 1px solid #777;}
 .FormError {color: #C2E066;}
 .FormIncorrect {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
+.PageInformal {color: #C2E066;border: 1px solid #6C8963;background: #203B5D;}
 
 .NoFind {border: 1px solid #AAA;background: #333;}
 .NoFind .highlight {color:#FFFFFF;}

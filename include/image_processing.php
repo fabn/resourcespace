@@ -752,8 +752,11 @@ function upload_preview($ref)
 	# Create previews
 	create_previews($ref,false,$extension,true);
 
-	# Delete temporary file.
-	unlink($filepath);
+	# Delete temporary file, if not transcoding.
+	if(!sql_value("SELECT is_transcoding value FROM resource WHERE ref = '".escape_check($ref)."'", false))
+		{
+		unlink($filepath);
+		}
 
     return true;
     }}

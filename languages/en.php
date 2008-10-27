@@ -573,4 +573,7 @@ $lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
 $lang["exportdata"]="Export Data";
 $lang["exporttype"]="Export Type";
 
+$lang['resourceistranscoding']="Resource is currently being transcoded";
+$lang['cantdeletewhiletranscoding']="You can't delete resources while they are transcoding";
+
 ?>

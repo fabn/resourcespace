@@ -172,6 +172,7 @@ a:active {text-decoration:underline;}
 .Question .Fixed {    width: 300px;float: left;margin-top: 0.4em;font-weight: bold;} 
 .FormError{font-weight: bold;font-size: 1.1em;margin: 0px 0px 10px 150px;padding: 10px 0px 0px;}
 .FormIncorrect {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
+.PageInformal {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
 
 /*Record Panel layout*/
 .RecordBox {margin: 0px 15px 15px 0px;}

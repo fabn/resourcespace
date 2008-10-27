@@ -138,10 +138,10 @@ if ($extension=="txt")
 global $ffmpeg_path; 
 $ffmpeg_path.="/ffmpeg";
 if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
-$ffmpeg_path=escapeshellarg($ffmpeg_path);
 
-if (isset($ffmpeg_path) && !isset($newfile)) 
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile)) 
         {
+        $ffmpeg_path=escapeshellarg($ffmpeg_path);
         	
         $snapshottime = 1;
         $out = shell_exec($ffmpeg_path." -i " . escapeshellarg($file) . " 2>&1");
@@ -168,48 +168,25 @@ if (isset($ffmpeg_path) && !isset($newfile))
             $newfile=$target;
             global $ffmpeg_preview,$ffmpeg_preview_seconds,$ffmpeg_preview_extension,$ffmpeg_preview_options;
             global $ffmpeg_preview_min_width,$ffmpeg_preview_min_height,$ffmpeg_preview_max_width,$ffmpeg_preview_max_height;
-            global $qtfaststart_path,$qtfaststart_extensions;
+            global $php_path, $ffmpeg_preview_async;
 
             if ($ffmpeg_preview)
                 {
-                # Create a preview video (FLV)
-                $targetfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension); 
-                
-                $snapshotsize = getimagesize($target);
-                $width = $snapshotsize[0];
-                $height = $snapshotsize[1];
-				
-				if($height<$ffmpeg_preview_min_height)
-					{
-					$height = $ffmpeg_preview_min_height;
-					}
-				
-				if($width<$ffmpeg_preview_min_width)
-					{
-					$width = $ffmpeg_preview_min_width;
-					}
-				
-				if($height>$ffmpeg_preview_max_height)
-					{
-					$width = ceil($width*($ffmpeg_preview_max_height/$height));
-					$height = $ffmpeg_preview_max_height;
-					}
-					
-				if($width>$ffmpeg_preview_max_width)
-					{
-					$height = ceil($height*($ffmpeg_preview_max_width/$width));
-					$width = $ffmpeg_preview_max_width;
-					}
-				
-                $output=shell_exec($ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile));
-                
-                if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_preview_extension, $qtfaststart_extensions) )
-                    {
-                	$targetfiletmp=$targetfile.".tmp";
-                	rename($targetfile, $targetfiletmp);
-	                $output=shell_exec($qtfaststart_path . "/qt-faststart " . escapeshellarg($targetfiletmp) . " " . escapeshellarg($targetfile));
-	                unlink($targetfiletmp);
-                    }
+                	if ($ffmpeg_preview_async && $php_path && file_exists($php_path . "/php"))
+	                	{
+	                	global $scramble_key;
+	                	exec($php_path . "/php " . dirname(__FILE__)."/imagemagick_preview.php " . 
+	                		escapeshellarg($scramble_key) . " " . 
+	                		escapeshellarg($ref) . " " . 
+	                		escapeshellarg($file) . " " . 
+	                		escapeshellarg($target) . " " . 
+	                		escapeshellarg($previewonly) . " " . 
+	                		"&> /dev/null &");
+	                	}
+                	else 
+	                	{
+	                	include(dirname(__FILE__)."/imagemagick_preview.php");
+	                	}
                 }
             } 
         } 
