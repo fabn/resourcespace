@@ -370,19 +370,14 @@ if (true) #search condition
 			<!--Key to Panel-->
 			<div class="BottomInpageKey"> 
 				<?=$lang["key"]?>:
-				
-				<? if ($orderbyrating) { ?>
-				<div class="KeyStar"><?=$lang["verybestresources"]?></div>
-				<? } ?>
-				
-				<? if ($allow_reorder) { ?>
-					<? if ($display=="thumbs") { ?>
-					<div class="KeyReorder"><?=$lang["reorderresources"]?></div>
+				<? if ($display=="thumbs") { ?>
+					
+					<? if ($orderbyrating) { ?><div class="KeyStar"><?=$lang["verybestresources"]?></div><? } ?>
+					<? if ($allow_reorder) { ?><div class="KeyReorder"><?=$lang["reorderresources"]?></div><? } ?>
 					<div class="KeyComment"><?=$lang["addorviewcomments"]?></div>
-					<? if ($allow_share) { ?><div class="KeyEmail"><?=$lang["emailresource"]?></div>
-					<? } ?>
+					<? if ($allow_share) { ?><div class="KeyEmail"><?=$lang["emailresource"]?></div><? } ?>
 				<? } ?>
-				<? } ?>
+				
 				<? if (!checkperm("b")) { ?><div class="KeyCollect"><?=$lang["addtocurrentcollection"]?></div><? } ?>
 				<div class="KeyPreview"><?=$lang["fullscreenpreview"]?></div>
 			</div>
