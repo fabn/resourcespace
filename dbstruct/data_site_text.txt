@@ -19,8 +19,10 @@ help,introtext,"Get the most out of ResourceSpace. These guides will help you us
 <p>Use ""Themes"" to browse resources by theme or use the simple search box to search for specific resources.</p>
 
 
+<p><a href=""http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf"">Download the user guide (PDF file)</a>
 
-<p><a href=""http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf"">Download the user guide (PDF file)</a>",13,en,,
+
+<p><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Online Documentation (Wiki)</a>",13,en,,
 "terms and conditions","terms and conditions","Your terms and conditions go here.",27,en,,
 contribute,introtext,"You can contribute your own resources. When you initially create a resource it is in the ""Pending Submission"" status. When you have uploaded your file and edited the fields, set the status field to ""Pending Review"". It will then be reviewed by the resources team.",62,en,,
 done,user_password,"An e-mail containing your username and password has been sent.",50,en,,
