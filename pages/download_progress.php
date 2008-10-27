@@ -9,12 +9,10 @@ $ref=getval("ref","");
 $size=getval("size","");
 $ext=getval("ext","");
 
-if(!empty($storagedownload)) {
-	$url=get_resource_path($ref,false,$size,false,$ext,-1,1,($size=="scr" && checkperm("w")))."?download";
-	$url=str_replace("_URL_",$url,$storagedownload);
-} else {
-	$url="download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
-}
+if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext))))
+	{
+	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
+	}
 
 # For Opera and Internet Explorer 7 - redirected downloads are always blocked, so use the '$save_as' config option
 # to present a link instead.

@@ -135,7 +135,7 @@ $headerinsert="";
 # Initialise hook for plugins
 hook("initialise");
 
-function hook($name,$pagename="")
+function hook($name,$pagename="",$params=array())
 	{
 	# Plugin architecture. Look for a hook with this name and execute.
 	if ($pagename=="") {global $pagename;} # If page name not provided, use global page name.
@@ -149,7 +149,7 @@ function hook($name,$pagename="")
 		if (function_exists($function)) 
 			{
 			# Function must return 'true' if successful (so existing functionality is replaced)
-			$found=eval ("return " . $function . "();");
+			$found=call_user_func_array($function, $params);
 			}
 	
 		# Specific hook	
@@ -157,7 +157,7 @@ function hook($name,$pagename="")
 		if (function_exists($function))
 			{
 			# Function must return 'true' if successful (so existing functionality is replaced)
-			$found=eval ("return " . $function . "();");
+			$found=call_user_func_array($function, $params);
 			}
 		}
 	return $found;

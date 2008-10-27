@@ -25,6 +25,20 @@ if (getval("save","")!="")
 		}
 	}
 include "../include/header.php";
+
+$resource=get_resource_data($ref);
+if ($resource['is_transcoding']==1)
+	{
+?>
+<div class="BasicsBox"> 
+  <h2>&nbsp;</h2>
+  <h1><?=$lang["deleteresource"]?></h1>
+  <p class="FormIncorrect"><?=$lang["cantdeletewhiletranscoding"]?></p>
+</div>
+<?	
+	}
+else
+	{
 ?>
 
 <div class="BasicsBox"> 
@@ -57,5 +71,7 @@ include "../include/header.php";
 </div>
 
 <?
+	}
+	
 include "../include/footer.php";
 ?>

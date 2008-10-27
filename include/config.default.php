@@ -19,7 +19,6 @@ $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT -
 # Uncomment and set next two lines to configure storage locations (to use another server for file storage)
 #$storagedir="/path/to/filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
 #$storageurl="http://my.storage.server/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
-#$storagedownload="_URL_?download"; # Whether the webserver that serves storageurl should be used for / can handle downloads?
 
 include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
