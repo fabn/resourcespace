@@ -27,7 +27,7 @@ if (getval("save","")!="")
 include "../include/header.php";
 
 $resource=get_resource_data($ref);
-if ($resource['is_transcoding']==1)
+if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1)
 	{
 ?>
 <div class="BasicsBox"> 
