@@ -65,4 +65,4 @@ Restrictive group permissions (allows isolated groups to be created)
 U	(upper case) Can manage users in children groups to the user's group only
 E	(upper case) Can email resources to users in the user's own group, children groups and parent
 	group only. Also when using custom access, can only select groups from own group, children
-	groups and parent group.
+	groups and parent group. For user list auto-completion (e.g. when e-mailing a resource) the user will only see uesrs from their own group, children groups and parent group.

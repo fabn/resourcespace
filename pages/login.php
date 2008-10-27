@@ -64,7 +64,7 @@ elseif (array_key_exists("username",$_POST))
 	        setcookie("restypes",$default_res_types);
 
 	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
-	        if (($accepted==0) && ($terms_login)) {redirect ("pages/terms.php?url=" . urlencode("change_password.php"));} else {redirect($url);}
+	        if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
 	        }
         }
     else
