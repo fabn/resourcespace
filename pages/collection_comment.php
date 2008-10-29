@@ -51,6 +51,9 @@ if (file_exists($imagepath)){?>
 <div class="clearerleft"> </div>
 </div>
 <? } ?>
+
+<? if (!hook("replacecollectioncommentform")) { ?>
+
 <form method="post">
 <input type="hidden" name="ref" value="<?=$ref?>">
 <input type="hidden" name="k" value="<?=$k?>">
@@ -76,6 +79,9 @@ if (file_exists($imagepath)){?>
 <input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["save"]?>&nbsp;&nbsp;" />
 </div>
 </form>
+
+<? } ?> <!--End Replacecollectioncommentform hook-->
+
 </div>
 
 <?		

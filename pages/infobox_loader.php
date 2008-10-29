@@ -38,9 +38,11 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 ?>
-<h2><?=htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
-<?
+<? if (!hook("infoboxreplace")) { ?>
 
+<h2><?=htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
+
+<?
 # Display fields
 for ($n=0;$n<count($infobox_fields);$n++)
 	{
@@ -58,5 +60,6 @@ for ($n=0;$n<count($infobox_fields);$n++)
 			}
 		}
 	}
-
 ?>
+
+<? } ?>
