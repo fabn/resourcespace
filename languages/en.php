@@ -573,7 +573,27 @@ $lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
 $lang["exportdata"]="Export Data";
 $lang["exporttype"]="Export Type";
 
-$lang['resourceistranscoding']="Resource is currently being transcoded";
-$lang['cantdeletewhiletranscoding']="You can't delete resources while they are transcoding";
+# New for 1.7
+$lang["managealternativefiles"]="Manage alternative files";
+$lang["managealternativefilestitle"]="Manage Alternative Files";
+$lang["alternativefiles"]="Alternative Files";
+$lang["filetype"]="File Type";
+$lang["filedeleteconfirm"]="Are you sure you wish to delete this file?";
+$lang["addalternativefile"]="Add alternative file";
+$lang["editalternativefile"]="Edit Alternative File";
+$lang["description"]="Description";
+$lang["notuploaded"]="Not uploaded";
+$lang["uploadreplacementfile"]="Upload replacement file";
+
+
+$lang["resourceistranscoding"]="Resource is currently being transcoded";
+$lang["cantdeletewhiletranscoding"]="You can't delete resources while they are transcoding";
+
+$lang["maxcollectionthumbsreached"]="There are too many resources in this collection to display thumbnails. Thumbnails will now be hidden.";
+
+$lang["ratethisresource"]="How do you rate this resource?";
+$lang["ratingthankyou"]="Thank you for your rating.";
+$lang["ratings"]="ratings";
+$lang["rating"]="rating";
 
 ?>

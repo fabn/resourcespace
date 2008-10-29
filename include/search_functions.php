@@ -13,7 +13,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score desc, creation_date desc","popularity"=>"hit_count desc, creation_date desc","rating"=>"rating desc, score desc","date"=>"creation_date desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date","country"=>"country");
+	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc","popularity"=>"user_rating desc,hit_count desc,creation_date desc","rating"=>"rating desc, user_rating desc, score desc","date"=>"creation_date desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date","country"=>"country");
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search); # remove any trailing or leading spaces
@@ -38,9 +38,22 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# append archive searching (don't do this for collections, archived resources can still appear in collections)
 	if (substr($search,0,11)!="!collection")
 		{
-		if ($filter!="") {$filter.=" and ";}
-		$filter.="archive='$archive'";
+		global $pending_review_visible_to_all;
+		if ($archive==0 && $pending_review_visible_to_all)
+			{
+			# If resources pending review are visible to all, when listing only live resources include
+			# pending review (-1) resources too.
+			if ($filter!="") {$filter.=" and ";}
+			$filter.="(archive='0' or archive=-1)";
+			}
+		else
+			{
+			# Append normal filtering.
+			if ($filter!="") {$filter.=" and ";}
+			$filter.="archive='$archive'";
+			}
 		}
+	
 	
 	# append ref filter - never return the batch upload template (negative refs)
 	if ($filter!="") {$filter.=" and ";}
@@ -148,6 +161,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	if ($search=="!userpending")
 		{
+		if ($order_by="user_rating desc,hit_count desc,creation_date desc") {$order_by="request_count desc," . $order_by;}
 		return sql_query("select r.*,r.hit_count score from resource r $custperm where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 		

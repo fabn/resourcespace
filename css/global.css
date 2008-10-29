@@ -311,3 +311,11 @@ div.autocomplete ul li {
   color: #000;
 }
 
+/* CSS for the user ratings */
+.StarSelect {background: transparent url('../gfx/interface/RatingStarRed.gif') no-repeat;}
+.StarWhite {background: transparent url('../gfx/interface/RatingStarWhite.gif') no-repeat;;}
+.StarGrey {background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;;}
+.RatingCount {font-size:11px;}
+.RatingStars a:hover {text-decoration:none;}
+
+

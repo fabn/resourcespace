@@ -9,12 +9,14 @@ include "../include/resource_functions.php";
 $ref=getvalescaped("ref","");
 $size=getvalescaped("size","");
 $ext=getvalescaped("ext","");
+$alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w")));
-if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page);}
+$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w") && $alternative==-1),"",$alternative);
+
+if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page,false,"",$alternative);}
 
 if (!file_exists($path))
 	{
@@ -43,17 +45,27 @@ if ($noattach=="")
 
 if ($noattach=="") 
 	{
-	$filename=$ref . $size . "." . $ext;
+	$filename=$ref . $size . ($alternative>0?"_" . $alternative:"") . "." . $ext;
 	
 	if ($original_filenames_when_downloading)
 		{
 		# Use the original filename.
-		$origfile=get_resource_data($ref);$origfile=$origfile["file_path"];
+		if ($alternative>0)
+			{
+			# Fetch from the resource_alt_files alternatives table (this is an alternative file)
+			$origfile=get_alternative_file($ref,$alternative);$origfile=$origfile["file_name"];
+			}
+		else
+			{
+			# Fetch from the standard table.
+			$origfile=get_resource_data($ref);$origfile=$origfile["file_path"];
+			}
 		if ($origfile!="")
 			{
 			# Use the original filename if one has been set.
 			# Strip any path information (e.g. if the staticsync.php is used).
 			$fs=explode("/",$origfile);$filename=$fs[count($fs)-1];
+			if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
 			}
 		}
 		

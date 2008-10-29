@@ -75,7 +75,7 @@ if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found
 ?>
 <div id="autocomplete_search_choices" class="autocomplete"></div>
 <script type="text/javascript">
-new Ajax.Autocompleter("ssearchbox", "autocomplete_search_choices", "autocomplete_search.php");
+new Ajax.Autocompleter("ssearchbox", "autocomplete_search_choices", "<?=$baseurl?>/pages/ajax/autocomplete_search.php");
 </script>
 
 <? } ?>

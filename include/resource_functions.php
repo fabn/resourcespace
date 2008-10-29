@@ -466,6 +466,14 @@ function delete_resource($ref)
 			}
 		}
 	
+	# Delete any alternative files
+	$alternatives=get_alternative_files($ref);
+	for ($n=0;$n<count($alternatives);$n++)
+		{
+		$path=get_resource_path($ref, true, "", true, $alternatives[$n]["file_extension"], -1, 1, false, "", $alternatives[$n]["ref"]);
+		if (file_exists($path)) {unlink($path);}
+		}
+	
 	# Delete all database entries
 	sql_query("delete from resource where ref='$ref'");
 	sql_query("delete from resource_data where resource='$ref'");
@@ -704,4 +712,90 @@ function import_resource($path,$type,$title)
 	return $r;
 	}
 
+function get_alternative_files($resource)
+	{
+	# Returns a list of alternative files for the given resource
+	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date from resource_alt_files where resource='$resource'");
+	}
+	
+function add_alternative_file($resource,$name)
+	{
+	sql_query("insert into resource_alt_files(resource,name,creation_date) values ('$resource','$name',now())");
+	return sql_insert_id();
+	}
+	
+function delete_alternative_file($resource,$ref)
+	{
+	# Delete any uploaded file.
+	$info=get_alternative_file($resource,$ref);
+	$path=get_resource_path($resource, true, "", true, $info["file_extension"], -1, 1, false, "", $ref);
+	if (file_exists($path)) {unlink($path);}
+	
+	# Delete the database row
+	sql_query("delete from resource_alt_files where resource='$resource' and ref='$ref'");
+	}
+	
+function get_alternative_file($resource,$ref)
+	{
+	# Returns the row for the requested alternative file
+	$return=sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date from resource_alt_files where resource='$resource' and ref='$ref'");
+	if (count($return)==0) {return false;} else {return $return[0];}
+	}
+	
+function save_alternative_file($resource,$ref)
+	{
+	# Saves the 'alternative file' edit form back to the database
+	$sql="";
+	
+	# Uploaded file provided?
+	if (array_key_exists("userfile",$_FILES))
+    	{
+    	# Fetch filename / path
+    	$processfile=$_FILES['userfile'];
+   	    $filename=strtolower(str_replace(" ","_",$processfile['name']));
+    
+    	# Work out extension
+    	$extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
+
+		# Find the path for this resource.
+    	$path=get_resource_path($resource, true, "", true, $extension, -1, 1, false, "", $ref);
+
+		if ($filename!="")
+			{
+			$result=move_uploaded_file($processfile['tmp_name'], $path);
+			if ($result==false)
+				{
+				exit("File upload error. Please check the size of the file you are trying to upload.");
+				}
+			else
+				{
+				chmod($path,0777);
+				$file_size=@filesize($path);
+				$sql.=",file_name='" . escape_check($filename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now()";
+				}
+			}
+
+		}
+	# Save data back to the database.
+	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "' $sql where resource='$resource' and ref='$ref'");
+	}
+	
+function user_rating_save($ref,$rating)
+	{
+	# Save a user rating for a given resource
+	$resource=get_resource_data($ref);
+	
+	# Recalculate the averate rating
+	$total=$resource["user_rating_total"]; if ($total=="") {$total=0;}
+	$count=$resource["user_rating_count"]; if ($count=="") {$count=0;}
+
+	# Increment the total and count and work out a new average.
+	$total+=$rating;
+	$count++;
+	$average=ceil($total/$count);
+	
+	# Save to the database
+	sql_query("update resource set user_rating='$average',user_rating_total='$total',user_rating_count='$count' where ref='$ref'");
+	}
+	
 ?>

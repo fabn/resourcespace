@@ -70,6 +70,13 @@ if ($access==2)
 		{
 		exit("This is a confidential resource.");
 		}
+		
+if ($pending_review_visible_to_all && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
+	{
+	# When users can view resources in the 'User Contributed - Pending Review' state in the main search
+	# via the $pending_review_visible_to_all option, set access to restricted.
+	$access=1;
+	}
 
 # If requested, refresh the collection frame (for redirects from saves)
 if (getval("refreshcollectionframe","")!="")
@@ -282,6 +289,30 @@ if ($nodownloads || $counter==0)
 	</tr>
 	<?
 	}
+	
+# Alternative files listing
+$altfiles=get_alternative_files($ref);
+for ($n=0;$n<count($altfiles);$n++)
+	{
+	if ($n==0)
+		{
+		?>
+		<tr>
+		<td colspan="3"><?=$lang["alternativefiles"]?></td>
+		</tr>
+		<?
+		}
+	?>
+	<tr class="DownloadDBlend">
+	<td><h2><?=htmlspecialchars($altfiles[$n]["name"])?></h2>
+	<!--<p><?=strtoupper($altfiles[$n]["file_extension"])?> <?=$lang["file"]?></p>-->
+	<p><?=htmlspecialchars($altfiles[$n]["description"])?></p>
+	</td>
+	<td><?=formatfilesize($altfiles[$n]["file_size"])?></td>
+	<td class="DownloadButton"><a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"])?>">Download</a></td>
+	</tr>
+	<?	
+	}
 ?>
 </table>
 <? } ?>
@@ -298,6 +329,13 @@ if ($nodownloads || $counter==0)
 <? } /* End of renderinnerresourcedownloadspace hook */ ?>
 </ul>
 <div class="clearerleft"> </div>
+
+<?
+# Include user rating box, if enabled and the user is not external.
+if ($user_rating && $k=="") { include "../include/user_rating.php"; }
+?>
+
+
 </div>
 <? } /* End of renderinnerresourceview hook */ ?>
 </div>

@@ -1,80 +1,16 @@
 <?
 
-/* ---------------------------------------------------
-BASIC PARAMETERS
-
-The below options must be reviewed and changed
-as necessary for every installation.
------------------------------------------------------- */
-
-
 $mysql_server="localhost";	# Use 'localhost' if MySQL is installed on the same server as your web server.
 $mysql_username="root";		# MySQL username
 $mysql_password="";			# MySQL password
 $mysql_db="resourcespace";			# MySQL database name
 
-# The path to the MySQL client binaries - e.g. mysqldump
-# (only needed if you plan to use the export tool)
-$mysql_bin_path="/usr/bin"; # Note: no trailing slash
-
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
-$baseurl="http://my.site/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
-$email_from="resourcespace@my.site"; # Where e-mails appear to come from
-$email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
+$baseurl="http://dev.montala.net/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
+$email_from="resourcespace@montala.net"; # Where e-mails appear to come from
+$email_notify="resourcespace@montala.net"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
-
-# Scramble resource paths? If this is a public installation then this is a very wise idea.
-# Set the scramble key to be a hard-to-guess string (similar to a password).
-# To disable, set to the empty string ("").
-$scramble_key="abcdef123";
-
-
-# ---- Paths to various external utilities ----
-
-# If using ImageMagick, uncomment and set next 2 lines
-# $imagemagick_path="/sw/bin";
-# $ghostscript_path="/sw/bin";
-
-# If using FFMpeg to generate video thumbs and previews, uncomment and set next line.
-# $ffmpeg_path="/usr/bin";
-
-# Install Exiftool and set this path to enable metadata-writing when resources are downloaded
-# $exiftool_path="/usr/local/bin";
-
-# Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
-# $antiword_path="/usr/bin";
-
-# Path to pdftotext - part of the XPDF project, see http://www.foolabs.com/xpdf/
-# Enables extraction of text from PDF files
-# $pdftotext_path="/usr/bin";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ---------------------------------------------------
-OTHER PARAMETERS
-
-The below options customise your installation. 
-You do not need to review these items immediately
-but may want to review them once everything is up 
-and running.
------------------------------------------------------- */
-
-
-# Uncomment and set next two lines to configure storage locations (to use another server for file storage)
-#$storagedir="/path/to/filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
-#$storageurl="http://my.storage.server/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
 
 include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
@@ -104,6 +40,11 @@ $ftp_defaultfolder="temp/";
 # Can users change passwords?
 $allow_password_change=true;
 
+# Scramble resource paths? If this is a public installation then this is a very wise idea.
+# Set the scramble key to be a hard-to-guess string (similar to a password).
+# To disable, set to the empty string ("").
+$scramble_key="abcdef123";
+
 # search params
 # Common keywords to ignore both when searching and when indexing.
 $noadd=array("", "a","the","this","then","another","is","with","in","and","where","how","on","of","to", "from", "at", "for", "-", "by", "be");
@@ -113,7 +54,7 @@ $minyear=1980; # The year of the earliest resource record, used for the date sel
 
 # Set folder for home images. Ex: "gfx/homeanim/mine/" 
 # Files should be numbered sequentially, and will be auto-counted.
-$homeanim_folder="gfx/homeanim/gfx";
+$homeanim_folder="gfx/homeanim/gfx/";
 
 # Optional 'quota size' for allocation of a set amount of disk space to this application. Value is in GB.
 # Note: Unix systems only.
@@ -138,12 +79,12 @@ $exif_comment=18;
 $exif_model=52;
 $exif_date=12;
 
-# Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources using exiftool.
-$exiftool_remove_existing=false; 
-
-
 # Which field do we drop the original filename in to?
 $filename_field=51;
+
+# If using imagemagick, uncomment and set next 2 lines
+$imagemagick_path="/sw/bin";
+$ghostscript_path="/sw/bin";
 
 
 # If using imagemagick, should colour profiles be preserved? (for larger sizes only - above 'scr')
@@ -155,34 +96,17 @@ $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=be
 # See http://www.imagemagick.org/script/formats.php for supported formats
 $im_formats = '(tif[f]?|jp[e]?g|psd|eps|dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr|png|tga|bmp)';
 
-# Attempt to resolve a height and width of the ImageMagick file formats at view time
-# (enabling may cause a slowdown on viewing resources when large files are used)
-$imagemagick_calculate_sizes=false;
-
 # If using imagemagick for PDF, EPS and PS files, up to how many pages should be extracted for the previews?
 # If this is set to more than one the user will be able to page through the PDF file.
  $pdf_pages=30;
 
+# If using ffmpeg, uncomment and set next 2 lines.
+$ffmpeg_path="/Users/dan/";
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
 $ffmpeg_preview_seconds=20; # how many seconds to preview
-$ffmpeg_preview_extension="flv";
-$ffmpeg_preview_min_width=32;
-$ffmpeg_preview_min_height=18;
-$ffmpeg_preview_max_width=480;
-$ffmpeg_preview_max_height=270;
-$ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32 -ac 1";
 
-# Encode preview asynchronous?
-$ffmpeg_preview_async=false;
-
-# To be able to run certain actions asyncronus (eg. preview transcoding), define the path to php:
-# $php_path="/usr/bin";
-
-# Use qt-faststart to make mp4 previews start faster
-# $qtfaststart_path="/usr/bin";
-# $qtfaststart_extensions=array("mp4","m4v","mov");
 
 # Allow users to request accounts?
 $allow_account_request=true;
@@ -286,7 +210,7 @@ $defaulttheme="greyblu";
 # List of active plugins.
 # Note that multiple plugins must be specified within array() as follows:
 # $plugins=array("loader","rss","messaging","googledisplay"); 
-$plugins=array();
+$plugins=array("resourceinbox");
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
 # to the account with the username specified.
@@ -326,6 +250,9 @@ $disable_quoted_printable_enc=false;
 # Enable small thumbnails option
 $smallthumbs=true;
 
+# Install Exiftool and set this path to experiment with metadata-writing
+$exiftool_path="/usr/bin";
+$exiftool_remove_existing=false; # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources.
 
 # Watermarking - generate watermark images for 'internal' (thumb/preview) images.
 # Groups with the 'w' permission will see these watermarks.
@@ -344,16 +271,7 @@ $home_mycollections=true;
 $home_helpadvice=true;
 
 # Use original filename when downloading a file?
-$original_filenames_when_downloading=true;
-
-# When $original_filenames_when_downloading, should the original filename be prefixed with the resource ID?
-# This ensures unique filenames when downloading multiple files.
-$prefix_resource_id_to_filename=true;
-
-# When using $prefix_resource_id_to_filename above, what string should be used prior to the resource ID?
-# This is useful to establish that a resource was downloaded from ResourceSpace and that the following number
-# is a ResourceSpace resource ID.
-$prefix_filename_string="RS";
+$original_filenames_when_downloading=false;
 
 # Display a 'new' flag next to new themes (added < 1 month ago)
 $flag_new_themes=true;
@@ -461,13 +379,9 @@ $password_min_special=0; # Minimum number of 'special' i.e. non alphanumeric cha
 $password_expiry=0;
 
 # How many failed login attempts per IP address until a temporary ban is placed on this IP
-# This helps to prevent dictionary attacks.
-$max_login_attempts_per_ip=20;
+$max_login_attempts_per_ip=10;
 
-# How many failed login attempts per username until a temporary ban is placed on this IP
-$max_login_attempts_per_username=5;
-
-# How long the user must wait after failing the login $max_login_attempts_per_ip or $max_login_attempts_per_username times.
+# How long the user must wait after failing the login $max_login_attempts_per_ip times.
 $max_login_attempts_wait_minutes=10;
 
 # Use imperial instead of metric for the download size guidelines
@@ -476,27 +390,19 @@ $imperial_measurements=false;
 # What is the default resource type to use for batch upload templates?
 $default_resource_type=1;
 
-# If ResourceSpace is behind a proxy, enabling this will mean the "X-Forwarded-For" Apache header is used
-# for the IP address. Do not enable this if you are not using such a proxy as it will mean IP addresses can be
-# easily faked.
-$ip_forwarded_for=false;
+# Path to Antiword - for text extraction from Microsoft Word Document (.doc) files
+$antiword_path="/sw/bin";
 
-# When extracting text from documents (e.g. HTML, DOC, TXT, PDF) which field is used for the actual content?
-# Comment out the line to prevent extraction of text content
-$extracted_text_field=72;
+# Path to pdftotext - part of the XPDF project, see http://www.foolabs.com/xpdf/
+# Enables extraction of text from PDF files
+$pdftotext_path="/sw/bin";
 
-# Should the resources that are in the archive state "User Contributed - Pending Review" (-1) be
-# visible in the main searches (as with resources in the live state)?
-# The resources will not be downloadable, except to the contributer and those with edit capability to the resource.
-$pending_review_visible_to_all=false;
 
-# How many thumbnails to show in the collections frame until the frame automatically hides thumbnails.
-$max_collection_thumbs=150;
+$pending_review_visible_to_all=true;
 
 # Enable user rating of resources
-# Users can rate resources using a star ratings system on the resource view page.
-# Average ratings are automatically calculated and used for the 'popularity' search ordering.
-$user_rating=false;
+$user_rating=true;
+
 
 #
 # ------------------------- Development Items -------------------------
@@ -515,5 +421,8 @@ $multilingual_text_fields=false;
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
 $frameless_collections=false;
 
+$zipcommand="zip -j";
+
+$original_filenames_when_downloading=true;
 
 ?>

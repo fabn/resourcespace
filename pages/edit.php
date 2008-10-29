@@ -198,6 +198,8 @@ if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_e
 <a href="upload.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadafile"]?></a>
 <br />
 <a href="upload_preview.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadpreview"]?></a>
+<br />
+<a href="alternative_files.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["managealternativefiles"]?></a>
 
 </div>
 <div class="clearerleft"> </div>

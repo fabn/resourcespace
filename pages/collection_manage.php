@@ -168,7 +168,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 <div class="BottomInpageNav"><? pager(false); ?></div>
 </div>
 
-<!--Find a collection-->
+<!--Create a collection-->
 <div class="BasicsBox">
     <h1><?=$lang["createnewcollection"]?></h1>
     <p class="tight"><?=text("newcollection")?></p>
@@ -184,6 +184,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	</form>
 </div>
 
+<!--Find a collection-->
 <div class="BasicsBox">
     <h1><?=$lang["findpubliccollection"]?></h1>
     <p class="tight"><?=text("findpublic")?></p>

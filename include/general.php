@@ -2,7 +2,7 @@
 # General functions, useful across the whole solution
 
 $GLOBALS['get_resource_path_fpcache'] = array();
-function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false,$file_modified="")
+function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false,$file_modified="",$alternative=-1)
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
@@ -69,6 +69,9 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	# Add the page to the filename for everything except page 1.
 	if ($page==1) {$p="";} else {$p="_" . $page;}
 	
+	# Add the alternative file ID to the filename if provided
+	if ($alternative>0) {$a="_alt_" . $alternative;} else {$a="";}
+	
 	# Add the watermarked url too
 	if ($watermarked) {$p.="_wm";}
 	
@@ -83,7 +86,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	    $folder=$storageurl . "/" . $folder;
 	    }
 	
-	$file=$folder . $ref . $size . $p . "." . $extension;
+	$file=$folder . $ref . $size . $p . $a . "." . $extension;
 
 	# Append modified date/time to the URL so the cached copy is not used if the file is changed.
 	if (!$getfilepath)
@@ -110,7 +113,7 @@ function get_resource_data($ref)
 	# For 'dynamic' field data, see get_resource_field_data
 	global $default_resource_type, $get_resource_data_cache;
 	if (isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
-	$resource=sql_query("select * from resource where ref='$ref'");
+	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
 		if ($ref>0)
@@ -649,6 +652,9 @@ function email_resource_request($ref,$details)
 	if (trim($details)!="") {$message.=$lang["message"] . ":\n" . newlines($details) . "\n\n";}
 	$message.=$lang["clicktoviewresource"] . "\n$baseurl/?r=$ref";
 	send_mail($email_notify,$applicationname . ": " . $lang["researchrequest"] . " - $ref",$message,$useremail);
+	
+	# Increment the request counter
+	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
 	}
 
 function newlines($text)
@@ -752,19 +758,19 @@ function formatfilesize($bytes)
 	# Return a human-readable string representing $bytes in either KB or MB.
 	if ($bytes<pow(1024,2))
 		{
-		return number_format(floor($bytes/1024)) . "KB";
+		return number_format(floor($bytes/1024)) . "&nbsp;KB";
 		}
 	elseif ($bytes<pow(1024,3))
 		{
-		return number_format($bytes/pow(1024,2),1) . "MB";
+		return number_format($bytes/pow(1024,2),1) . "&nbsp;MB";
 		}
 	elseif ($bytes<pow(1024,4))
 		{
-		return number_format($bytes/pow(1024,3),1) . "GB";
+		return number_format($bytes/pow(1024,3),1) . "&nbsp;GB";
 		}
 	else
 		{
-		return number_format($bytes/pow(1024,4),1) . "TB";
+		return number_format($bytes/pow(1024,4),1) . "&nbsp;TB";
 		}
 	}
 

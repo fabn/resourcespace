@@ -8,10 +8,11 @@ include "../include/general.php";
 $ref=getval("ref","");
 $size=getval("size","");
 $ext=getval("ext","");
+$alternative=getval("alternative",-1);
 
 if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext))))
 	{
-	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k;
+	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative;
 	}
 
 # For Opera and Internet Explorer 7 - redirected downloads are always blocked, so use the '$save_as' config option

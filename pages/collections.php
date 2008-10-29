@@ -197,6 +197,19 @@ $cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
 
 if ($thumbs=="show") { 
+
+# Too many to show?
+if (count($result)>$max_collection_thumbs)
+	{
+	?>
+	<script type="text/javascript">
+	alert("<?=$lang["maxcollectionthumbsreached"]?>");
+	window.setTimeout("ToggleThumbs();document.location='collections.php?thumbs=hide';",1000);
+	</script>
+	<?
+	$result=array(); # Empty the result set so nothing is drawn; the window will be resized shortly anyway.
+	}
+
 # ---------------------------- Maximised view
 if ($k!="")
 	{
@@ -407,7 +420,9 @@ else
    	<? if (isset($zipcommand)) { ?>
     <li><a target="main" href="collection_download.php?collection=<?=$usercollection?>"><?=$lang["zipall"]?></a></li>
 	<? } ?>
-    <li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?=$lang["showthumbnails"]?></a></li>
+    
+    <? if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?=$lang["showthumbnails"]?></a></li><? } ?>
+    
   </ul>
 </div>
 

@@ -12,7 +12,7 @@
 
 <div id="autocomplete_choices" class="autocomplete"></div>
 <script type="text/javascript">
-new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "autocomplete_user.php",
+new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "<?=$baseurl?>/pages/ajax/autocomplete_user.php",
 	{
 	afterUpdateElement : addUser
 	}
