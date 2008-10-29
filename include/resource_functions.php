@@ -365,16 +365,29 @@ function add_keyword_mappings($ref,$string,$resource_type_field)
 	
 function update_field($resource,$field,$value)
 	{
-	# Updates a field. Works out the previous value, so this is not efficient if we already know what this previous value is
-	$existing=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
-	remove_keyword_mappings($resource,$existing,$field);
-	add_keyword_mappings($resource,$value,$field);
+	# Updates a field. Works out the previous value, so this is not efficient if we already know what this previous value is (hence it is not used for edit where multiple fields are saved)
+
+	# Fetch some information about the field
+	$fieldinfo=sql_query("select keywords_index,resource_column from resource_type_field where ref='$field'");
+	if (count($fieldinfo)==0) {return false;} else {$fieldinfo=$fieldinfo[0];}
+	
+	if ($fieldinfo["keywords_index"])
+		{
+		# Fetch previous value and remove the index for those keywords
+		$existing=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
+		remove_keyword_mappings($resource,$existing,$field);
+		
+		# Index the new value
+		add_keyword_mappings($resource,$value,$field);
+		}
+		
+	# Delete the old value (if any) and add a new value.
 	sql_query("delete from resource_data where resource='$resource' and resource_type_field='$field' limit 1");
 	$value=escape_check($value);
 	sql_query("insert into resource_data(resource,resource_type_field,value) values ('$resource','$field','$value')");
 	
 	# Also update resource table?
-	$column=sql_value("select resource_column value from resource_type_field where ref='$field'","");
+	$column=$fieldinfo["resource_column"];
 	if (strlen($column)>0)
 		{
 		sql_query("update resource set $column = '$value' where ref='$resource'");
