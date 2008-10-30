@@ -394,6 +394,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 ?>
 <? if ($show_resourceid) { ?><div class="itemNarrow"><h3><?=$lang["resourceid"]?></h3><p><?=$ref?></p></div><? } ?>
 <? if ($show_access_field) { ?><div class="itemNarrow"><h3><?=$lang["access"]?></h3><p><?=@$lang["access" . $resource["access"]]?></p></div><? } ?>
+<? hook("extrafields");?>
 <?
 # contributed by field
 $udata=get_user($resource["created_by"]);
