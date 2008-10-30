@@ -466,6 +466,7 @@ for ($n=0;$n<count($fields);$n++)
 		}
 	}
 ?>
+<? hook("extrafields2");?>
 <div class="clearerleft"> </div>
 
 <?=$extra?>
