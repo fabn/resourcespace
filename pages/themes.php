@@ -272,7 +272,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 </form>
 </div>
 
-<? if (!checkperm("b")) { ?>
+<? if (!checkperm("b") && $enable_public_collections) { ?>
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>

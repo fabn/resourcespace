@@ -294,7 +294,7 @@ $lang["login"]="Log in";
 $lang["loginincorrect"]="Sorry, your login in details were incorrect.<br /><br />If you have forgotten your password,<br />use the link above to request a new one.";
 $lang["accountexpired"]="Your account has expired. Please contact the resources team.";
 $lang["useralreadyexists"]="An account with that e-mail or username already exists, changes not saved";
-$lang["ticktoemail"]="Tick to e-mail this user their username and password";
+$lang["ticktoemail"]="E-mail this user their username and new password";
 $lang["ticktodelete"]="Tick to delete this user";
 $lang["edituser"]="Edit User";
 $lang["fullname"]="Full Name";
@@ -595,5 +595,6 @@ $lang["ratethisresource"]="How do you rate this resource?";
 $lang["ratingthankyou"]="Thank you for your rating.";
 $lang["ratings"]="ratings";
 $lang["rating"]="rating";
+$lang["cannotemailpassword"]="You cannot e-mail the user their existing password as it is not stored (a cryptographic hash is stored instead).<br /><br />You must use the 'Suggest' button above which will generate a new password and enable the e-mail function.";
 
 ?>

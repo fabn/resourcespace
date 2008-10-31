@@ -54,7 +54,10 @@ include "../include/header.php";
 </div>
 
 <div class="Question">
-<label for="public"><?=$lang["access"]?></label><select id="public" name="public" class="shrtwidth" onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();"><option value="0" <? if ($collection["public"]==0) {?>selected<?}?>><?=$lang["private"]?></option><option value="1" <? if ($collection["public"]==1) {?>selected<?}?>><?=$lang["public"]?></option></select>
+<label for="public"><?=$lang["access"]?></label><select id="public" name="public" class="shrtwidth" onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();">
+<option value="0" <? if ($collection["public"]==0) {?>selected<?}?>><?=$lang["private"]?></option>
+<? if ($enable_public_collections || checkperm("h")) { ?><option value="1" <? if ($collection["public"]==1) {?>selected<?}?>><?=$lang["public"]?></option><? } ?>
+</select>
 <div class="clearerleft"> </div>
 </div>
 

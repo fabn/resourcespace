@@ -498,6 +498,12 @@ $max_collection_thumbs=150;
 # Average ratings are automatically calculated and used for the 'popularity' search ordering.
 $user_rating=false;
 
+# Enable public collections
+# Public collections are collections that have been set as public by users and are searchable at the bottom
+# of the themes page. Note that, if turned off, it will still be possible for administrators to set collections
+# as public as this is how themes are published.
+$enable_public_collections=true;
+
 #
 # ------------------------- Development Items -------------------------
 #

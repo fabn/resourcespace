@@ -73,8 +73,15 @@ for ($n=0;$n<count($groups);$n++)
 <div class="Question"><label><?=$lang["comments"]?></label><textarea name="comments" class="stdwidth" rows=5 cols=50><?=htmlspecialchars($user["comments"])?></textarea><div class="clearerleft"> </div></div>
 
 <? 
-# Only allow sending of password when this is not an MD5 string (i.e. only when first created).
-if (strlen($user["password"])!=32) { ?><div class="Question"><label><?=$lang["ticktoemail"]?></label><input name="emailme" type="checkbox" value="yes"><div class="clearerleft"> </div></div><? } ?>
+# Only allow sending of password when this is not an MD5 string (i.e. only when first created or 'Suggest' is used).
+?>
+<div class="Question"><label><?=$lang["ticktoemail"]?></label>
+<? if (strlen($user["password"])!=32) { ?>
+<input name="emailme" type="checkbox" value="yes" checked>
+<? } else { ?>
+<div class="Fixed"><?=$lang["cannotemailpassword"]?></div>
+<? } ?>
+<div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?=$lang["ticktodelete"]?></label><input name="deleteme" type="checkbox"  value="yes"><div class="clearerleft"> </div></div>
 
