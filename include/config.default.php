@@ -508,6 +508,10 @@ $enable_public_collections=true;
 # Uncomment the next line and set the field names, comma separated
 #$custom_registration_fields="Phone Number,Department";
 
+# Send an e-mail to the address set at $email_notify above when user contributed
+# resources are submitted (status changes from "User Contributed - Pending Submission" to "User Contributed - Pending Review").
+$notify_user_contributed_submitted=true;
+
 #
 # ------------------------- Development Items -------------------------
 #

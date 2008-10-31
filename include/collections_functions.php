@@ -310,7 +310,7 @@ function get_smart_themes($field)
 		# Standard checkbox list or drop-down box
 		
 		# Fetch raw options list
-		$options=explode(",",$field["options"]);
+		$options=explode(",",$fielddata["options"]);
 		
 		# Tidy list so it matches the storage format used for keywords.
 		# The translated version is fetched as each option will be indexed in the local language version of each option.
@@ -325,7 +325,7 @@ function get_smart_themes($field)
 			if (in_array(str_replace("-"," ",$options_base[$n]),$inuse)) 		
 				{
 				$c=count($return);
-				$return[$c][$name]=trim(i18n_get_translated($options[$n]));
+				$return[$c]["name"]=trim(i18n_get_translated($options[$n]));
 				$return[$c]["indent"]=0;
 				}
 			}

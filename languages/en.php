@@ -600,4 +600,6 @@ $lang["cannotemailpassword"]="You cannot e-mail the user their existing password
 $lang["userrequestnotification1"]="The User Login Request form has been completed with the following details:";
 $lang["userrequestnotification2"]="If this is a valid request, please visit the system at the URL below and create an account for this user.";
 $lang["ipaddress"]="IP Address";
+$lang["userresourcessubmitted"]="The following user contributed resources have been submitted for review:";
+$lang["viewalluserpending"]="View all user contributed resources pending review:";
 ?>

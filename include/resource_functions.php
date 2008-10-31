@@ -155,7 +155,15 @@ function save_resource_data($ref,$multi)
 	# Make sure all submitted values are numeric
 	$ok=array();for ($n=0;$n<count($related);$n++) {if (is_numeric(trim($related[$n]))) {$ok[]=trim($related[$n]);}}
 	if (count($ok)>0) {sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$ok) . ")");}
-	
+					
+	// Notify the resources team ($email_notify) if moving from pending review->submission.
+	$archive=getvalescaped("archive",0);
+	$oldarchive=sql_value("select archive value from resource where ref='$ref'",0);
+	if ($oldarchive==-2 && $archive==-1)
+		{
+		notify_user_contributed_submitted(array($ref));
+		}
+
 	# Also update archive status and access level
 	sql_query("update resource set archive='" . getvalescaped("archive",0) . "',access='" . getvalescaped("access",0) . "' where ref='$ref'");
 	
@@ -293,10 +301,28 @@ function save_resource_data_multi($collection)
 	# Also update archive status
 	if (getval("editthis_status","")!="")
 		{
+		$notifyrefs=array();
 		for ($m=0;$m<count($list);$m++)
 			{
 			$ref=$list[$m];
-			sql_query("update resource set archive='" . getvalescaped("archive",0) . "' where ref='$ref'");
+			$archive=getvalescaped("archive",0);
+			$oldarchive=sql_value("select archive value from resource where ref='$ref'",0);
+			
+			if ($oldarchive!=$archive)
+				{
+				sql_query("update resource set archive='" . $archive . "' where ref='$ref'");
+
+				if ($oldarchive==-2 && $archive==-1)
+					{
+					# Notify the admin users of this change.
+					$notifyrefs[]=$ref;
+					}
+				}
+			}
+		if (count($notifyrefs)>0)
+			{
+			# Notify the admin users of any submitted resources.
+			notify_user_contributed_submitted($notifyrefs);
 			}
 		}
 	
@@ -810,5 +836,23 @@ function user_rating_save($ref,$rating)
 	# Save to the database
 	sql_query("update resource set user_rating='$average',user_rating_total='$total',user_rating_count='$count' where ref='$ref'");
 	}
+		
+function notify_user_contributed_submitted($refs)
+	{
+	// Send a notification mail to the administrators when resources are moved from "User Contributed - Pending Submission" to "User Contributed - Pending Review"
 	
+	global $notify_user_contributed_submitted,$applicationname,$email_notify,$baseurl,$lang;;
+	if (!$notify_user_contributed_submitted) {return false;} # Only if configured.
+	
+	$message=$lang["userresourcessubmitted"] . "\n";
+	for ($n=0;$n<count($refs);$n++)
+		{
+		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
+		}
+	$message.="\n" . $lang["viewalluserpending"] . "\n" . $baseurl . "/pages/search.php?search=!userpending";
+	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message);
+	}
+	
+	
+
 ?>
