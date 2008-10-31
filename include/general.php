@@ -578,7 +578,12 @@ function save_user($ref)
 	if (getval("emailme","")!="")
 		{
 		global $applicationname,$email_from,$baseurl,$lang;
-		$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","") . "\n\n$baseurl";
+		
+		# Fetch any welcome message for this user group
+		$welcome=sql_value("select welcome_message value from usergroup where ref='" . getvalescaped("usergroup","") . "'","");
+		if (trim($welcome)!="") {$welcome.="\n\n";}
+		
+		$message=$welcome . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","") . "\n\n$baseurl";
 		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message);
 		}
 	return true;
@@ -668,9 +673,24 @@ function newlines($text)
 function email_user_request()
 	{
 	# E-mails the submitted user request form to the team.
-	global $applicationname,$email_from,$baseurl,$email_notify;
-	$message="The User Login Request form has been completed with the following details:\n\nName: " . getval("name","") . "\nE-mail: " . getval("email","") . "\nComment: " . getval("userrequestcomment","") . "\nIP Address: '" . $_SERVER["REMOTE_ADDR"] . "'\n\nIf this is a valid request, please visit the system at the URL below and create an account for this user.\n$baseurl";
-	send_mail($email_notify,$applicationname . ": Login Request - " . getval("name",""),$message);
+	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields;
+	
+	# Add custom fields
+	$c="";
+	if (isset($custom_registration_fields))
+		{
+		$custom=explode(",",$custom_registration_fields);
+		for ($n=0;$n<count($custom);$n++)
+			{
+			$c.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
+			}
+		}
+
+	# Build a message
+	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification2"] . "\n$baseurl";
+	
+	
+	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message);
 	}
 
 function get_active_users()

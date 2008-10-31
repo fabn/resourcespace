@@ -504,6 +504,10 @@ $user_rating=false;
 # as public as this is how themes are published.
 $enable_public_collections=true;
 
+# Additional custom fields that are collected and e-mailed when new users apply for an account
+# Uncomment the next line and set the field names, comma separated
+#$custom_registration_fields="Phone Number,Department";
+
 #
 # ------------------------- Development Items -------------------------
 #
