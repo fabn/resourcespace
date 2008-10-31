@@ -1,6 +1,7 @@
 <?
 # FLV player - plays the FLV file created to preview video resources.
-$flashpath=get_resource_path($ref,false,"",false,$ffmpeg_preview_extension);
+
+$flashpath=get_resource_path($ref,false,"",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
 $flashpath=urlencode($flashpath);
 
 $thumb=get_resource_path($ref,false,"pre",false,"jpg");

@@ -2,7 +2,7 @@
 # General functions, useful across the whole solution
 
 $GLOBALS['get_resource_path_fpcache'] = array();
-function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false,$file_modified="",$alternative=-1)
+function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$scramble=-1,$page=1,$watermarked=false,$file_modified="",$alternative=-1,$includemodified=true)
 	{
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
@@ -89,7 +89,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	$file=$folder . $ref . $size . $p . $a . "." . $extension;
 
 	# Append modified date/time to the URL so the cached copy is not used if the file is changed.
-	if (!$getfilepath)
+	if (!$getfilepath && $includemodified)
 		{
 		if ($file_modified=="")
 			{
