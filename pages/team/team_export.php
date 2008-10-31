@@ -1,6 +1,6 @@
 <?
 include "../../include/db.php";
-include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission denied.");}
+include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 include "../../include/general.php";
 include "../../include/reporting_functions.php";
 
