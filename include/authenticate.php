@@ -90,14 +90,14 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 						redirect("pages/login.php");
 						}
 					}
+				else
+	        		{
+		        	# Session end reached, but the user may still remain logged in.
+			        # This is a new 'session' for the purposes of statistics.
+					daily_stat("User session",$userref);
+					}
 				}
-			else
-	        	{
-	        	# Session end reached, but the user may still remain logged in.
-		        # This is a new 'session' for the purposes of statistics.
-				daily_stat("User session",$userref);
-				}
-			
+		
 			}
         }
         else {$valid=false;}
