@@ -376,7 +376,7 @@ $custom_access=true;
 $config_search_for_number=true;
 
 # Display the download as a 'save as' link instead of redirecting the browser to the download (which sometimes causes a security warning).
-# For the Opera browser this will always be enabled regardless of the below setting as Opera does not warn about failed downloads (so the download looks broken).
+# For the Opera and Internet Explorer 7 browsers this will always be enabled regardless of the below setting as these browsers block automatic downloads by default.
 $save_as=false;
 
 # Allow resources to be e-mailed / shared (internally and externally)

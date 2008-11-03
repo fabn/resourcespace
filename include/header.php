@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--
 ResourceSpace version <?=$productversion?>
-Copyright Oxfam GB 2006-2008
+Copyright Oxfam GB and Montala 2006-2008
 http://www.montala.net/resourcespace.php
 -->
 <head>

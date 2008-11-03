@@ -948,7 +948,21 @@ function send_mail($email,$subject,$message,$from="")
 	# Work out correct EOL to use for mails (should use the system EOL).
 	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
 	
-	mail ($email,$subject,$message,"From: " . $from . $eol . "MIME-Version: 1.0" . $eol . "Content-Type: text/plain; charset=\"UTF-8\"" . $eol . "Content-Transfer-Encoding: quoted-printable");
+	# Add headers
+	$headers="";
+   	$headers .= "X-Sender:  $email_from" . $eol;
+   	$headers .= "From: $email_from" . $eol;
+ 	$headers .= "Reply-To: $email_from" . $eol;
+   	$headers .= "Date: " . date("r") .  $eol;
+   	$headers .= "Message-ID: <" . date("YmdHis") . $email_from . ">" . $eol;
+   	$headers .= "Return-Path: $email_from" . $eol;
+   	$headers .= "Delivered-to: $email" . $eol;
+   	$headers .= "MIME-Version: 1.0" . $eol;
+   	$headers .= "X-Mailer: PHP Mail Function" . $eol;
+	$headers .= "Content-Type: text/plain; charset=\"UTF-8\"" . $eol;
+	$headers .= "Content-Transfer-Encoding: quoted-printable" . $eol;
+	
+	mail ($email,$subject,$message,$headers);
 	}
 
 function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
