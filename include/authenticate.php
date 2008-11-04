@@ -97,7 +97,6 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 					daily_stat("User session",$userref);
 					}
 				}
-		
 			}
         }
         else {$valid=false;}

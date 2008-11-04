@@ -45,7 +45,9 @@ if ($lower!="")
 if ($ref!="")
 	{
 	# Resource view
+	$userpermissions[]="f*"; # Set access to all fields.
 	$resource=get_resource_data($ref);$resourcedata=get_resource_field_data($ref);
+
 	if ($resource["has_image"]==1)
 		{
 		$thumbnail=get_resource_path($ref,false,"col",false,$resource["preview_extension"]);
