@@ -137,8 +137,8 @@ include "include/header.php";
 ?>
 
   <h1><?=text("welcomelogin")?></h1>
-  <p><? if ($allow_account_request) { ?><a href="user_request.php">&gt; <?=$lang["nopassword"]?> </a><br/><? } ?>
-  <a href="user_password.php">&gt; <?=$lang["forgottenpassword"]?></a></p>
+  <p><? if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?=$lang["nopassword"]?> </a><br/><? } ?>
+  <a href="pages/user_password.php">&gt; <?=$lang["forgottenpassword"]?></a></p>
   <? if ($error!="") { ?><div class="FormIncorrect"><?=$error?></div><? } ?>
   <form id="form1" method="post" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?>>
   <input type=hidden name=url value="<?=$url?>">
