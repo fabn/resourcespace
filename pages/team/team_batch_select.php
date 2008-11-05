@@ -9,7 +9,7 @@ $use_local=getvalescaped("use_local","");if ($use_local!="") {$use_local=true;} 
 if ($use_local)
 	{
 	# File list from local upload directory.
-	$folder="upload";
+	$folder=dirname(__FILE__)."/../../upload";
 	if ($groupuploadfolders) {$folder.="/" . $usergroup;}
 	if (!file_exists($folder)) {mkdir($folder,0777);}
 	$dh=opendir($folder);
@@ -17,11 +17,11 @@ if ($use_local)
 	while (($file = readdir($dh)) !== false)
 		{
 		$filetype=filetype($folder . "/" . $file);
-	    if ($filetype=="file")
-	    	{
-	    	$files[]=$file;
-	    	}
-	    }
+	  if ($filetype=="file")
+	  	{
+	   	$files[]=$file;
+	   	}
+	  }
 	}
 else
 	{

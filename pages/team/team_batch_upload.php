@@ -71,7 +71,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 
 	if ($use_local)
 		{
-		$folder="upload";
+		$folder=dirname(__FILE__)."/../../upload";;
 		if ($groupuploadfolders) {$folder.="/" . $usergroup;}
 		$result=copy($folder . "/" . $uploadfiles[$n],$localpath);
 		}
