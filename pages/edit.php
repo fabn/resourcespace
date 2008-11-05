@@ -105,7 +105,7 @@ if (getval("submitted","")!="")
 				else
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team_batch.php");}
+					if (getval("save","")!="") {redirect("pages/team/team_batch.php");}
 					}
 				}
 			}
