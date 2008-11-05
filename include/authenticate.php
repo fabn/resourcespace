@@ -87,7 +87,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 						}
 					else
 						{
-						redirect("pages/login.php");
+						redirect("login.php");
 						}
 					}
 				else
@@ -114,7 +114,7 @@ if (!$valid)
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script>
-	top.location.href="<?=$baseurl?>/pages/login.php?url=<?=urlencode($path)?>";
+	top.location.href="<?=$baseurl?>/login.php?url=<?=urlencode($path)?>";
 	</script>
 	<?
     exit();

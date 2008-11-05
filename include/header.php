@@ -71,7 +71,7 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 	{
 	?>
 	<ul>
-	<li><a href="<?=$baseurl?>/pages/login.php" target="_top"><?=$lang["login"]?></a></li>
+	<li><a href="<?=$baseurl?>/login.php" target="_top"><?=$lang["login"]?></a></li>
 	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/pages/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
 	<?
@@ -81,7 +81,7 @@ else
 	?>
 	<ul>
 	<li><? if ($allow_password_change && !checkperm("p")) { ?><a href="<?=$baseurl?>/pages/change_password.php"><? } ?><?=$userfullname?><? if ($allow_password_change && !checkperm("p")) { ?></a><? } ?></li>
-	<li><a href="<?=$baseurl?>/pages/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
+	<li><a href="<?=$baseurl?>/login.php?logout=true&nc=<?=time()?>" target="_top"><?=$lang["logout"]?></a></li>
 	<?hook("addtologintoolbarmiddle");?>
 	<? if ($contact_link) { ?><li><a href="<?=$baseurl?>/pages/contact.php"><?=$lang["contactus"]?></a></li><? } ?>
 	</ul>
