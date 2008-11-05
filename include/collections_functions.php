@@ -202,6 +202,7 @@ function save_collection($ref)
 				{
 				if ($rlist[$n]!=$rlist[$m]) # Don't relate a resource to itself
 					{
+					sql_query("delete from resource_related where resource='" . $rlist[$n] . "' and related='" . $rlist[$m] . "'");
 					sql_query("insert into resource_related (resource,related) values ('" . $rlist[$n] . "','" . $rlist[$m] . "')");
 					}
 				}
