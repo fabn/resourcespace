@@ -122,7 +122,8 @@ include "../include/header.php";
 <? if (!hook("renderinnerresourceview")) { ?>
 <? if (!hook("renderinnerresourcepreview")) { ?>
 <?
-$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);
+$flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
+if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
 if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../players/type" . $resource["resource_type"] . ".php";
@@ -290,7 +291,7 @@ if ($nodownloads || $counter==0)
 	<?
 	}
 	
-# Alternative files listing
+# Alternative files listing
 $altfiles=get_alternative_files($ref);
 for ($n=0;$n<count($altfiles);$n++)
 	{

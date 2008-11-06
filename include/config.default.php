@@ -174,6 +174,9 @@ $ffmpeg_preview_max_width=480;
 $ffmpeg_preview_max_height=270;
 $ffmpeg_preview_options="-f flv -ar 22050 -b 650k -ab 32 -ac 1";
 
+# If uploaded file is FLV, should we transcode it anyway?
+$ffmpeg_preview_force=false;
+
 # Encode preview asynchronous?
 $ffmpeg_preview_async=false;
 

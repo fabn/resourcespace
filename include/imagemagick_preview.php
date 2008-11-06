@@ -31,34 +31,37 @@ else
 	{
 	global $qtfaststart_path, $qtfaststart_extensions;
 	}
+	
+# Increase timelimit
+set_time_limit(0);
 
 # Create a preview video (FLV)
-$targetfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension); 
+$targetfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension); 
 
-$snapshotsize = getimagesize($target);
-$width = $snapshotsize[0];
-$height = $snapshotsize[1];
+$snapshotsize=getimagesize($target);
+$width=$snapshotsize[0];
+$height=$snapshotsize[1];
 
 if($height<$ffmpeg_preview_min_height)
 	{
-	$height = $ffmpeg_preview_min_height;
+	$height=$ffmpeg_preview_min_height;
 	}
 
 if($width<$ffmpeg_preview_min_width)
 	{
-	$width = $ffmpeg_preview_min_width;
+	$width=$ffmpeg_preview_min_width;
 	}
 
 if($height>$ffmpeg_preview_max_height)
 	{
-	$width = ceil($width*($ffmpeg_preview_max_height/$height));
-	$height = $ffmpeg_preview_max_height;
+	$width=ceil($width*($ffmpeg_preview_max_height/$height));
+	$height=$ffmpeg_preview_max_height;
 	}
 	
 if($width>$ffmpeg_preview_max_width)
 	{
-	$height = ceil($height*($ffmpeg_preview_max_width/$width));
-	$width = $ffmpeg_preview_max_width;
+	$height=ceil($height*($ffmpeg_preview_max_width/$width));
+	$width=$ffmpeg_preview_max_width;
 	}
 
 $output=shell_exec($ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile));

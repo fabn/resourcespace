@@ -53,7 +53,8 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		$scramblepath=substr(md5($ref . "_" . $scramble_key),0,15);
 		}
 	
-	if (($extension=="") || ($size !="")) {$extension="jpg";}
+	if ($extension=="") {$extension="jpg";}
+	
 	$folder="";
 	#if (!file_exists(dirname(__FILE__) . $folder)) {mkdir(dirname(__FILE__) . $folder,0777);}
 	
@@ -388,7 +389,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$sizes=sql_query("select * from preview_size order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
 	{
-		$path=get_resource_path($ref,true,$sizes[$n]["id"],false);
+		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension);
 		if (file_exists($path) || (!$onlyifexists))
 			{
 			if (($sizes[$n]["internal"]==0) || ($internal))

@@ -1,11 +1,18 @@
 <?
 # FLV player - plays the FLV file created to preview video resources.
 
-$flashpath=get_resource_path($ref,false,"",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+if (file_exists(get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension)))
+	{
+	$flashpath=get_resource_path($ref,false,"pre",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+	}
+else 
+	{
+	$flashpath=get_resource_path($ref,false,"",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+	}
 $flashpath=urlencode($flashpath);
 
-$thumb=get_resource_path($ref,false,"pre",false,"jpg");
-$thumb=urlencode($thumb);
+$thumb=get_resource_path($ref,false,"pre",false,"jpg"); // Dan: Is it needed?
+$thumb=urlencode($thumb); // Dan: Is it needed?
 
 # Choose a colour based on the theme.
 # This is quite hacky, and ideally of course this would be CSS based, but the FLV player requires that the colour

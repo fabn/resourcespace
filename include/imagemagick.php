@@ -168,9 +168,9 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile))
             $newfile=$target;
             global $ffmpeg_preview,$ffmpeg_preview_seconds,$ffmpeg_preview_extension,$ffmpeg_preview_options;
             global $ffmpeg_preview_min_width,$ffmpeg_preview_min_height,$ffmpeg_preview_max_width,$ffmpeg_preview_max_height;
-            global $php_path, $ffmpeg_preview_async;
+            global $php_path, $ffmpeg_preview_async, $ffmpeg_preview_force;
 
-            if ($ffmpeg_preview)
+            if ($ffmpeg_preview && ($extension!=$ffmpeg_preview_extension || $ffmpeg_preview_force) )
                 {
                 	if ($ffmpeg_preview_async && $php_path && file_exists($php_path . "/php"))
 	                	{
