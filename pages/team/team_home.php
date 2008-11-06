@@ -58,6 +58,7 @@ include "../../include/header.php";
 
 	<? if (checkperm("a")) { ?>
     <li><a href="team_export.php"><?=$lang["exportdata"]?></a></li>
+    <li><a href="../check.php"><?=$lang["installationcheck"]?></a></li>
 	<? } ?>
 	
 	<? if (checkperm("a")) { ?>

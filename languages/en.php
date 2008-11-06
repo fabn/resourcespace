@@ -573,7 +573,6 @@ $lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
 $lang["exportdata"]="Export Data";
 $lang["exporttype"]="Export Type";
 
-# New for 1.7
 $lang["managealternativefiles"]="Manage alternative files";
 $lang["managealternativefilestitle"]="Manage Alternative Files";
 $lang["alternativefiles"]="Alternative Files";
@@ -602,4 +601,8 @@ $lang["userrequestnotification2"]="If this is a valid request, please visit the 
 $lang["ipaddress"]="IP Address";
 $lang["userresourcessubmitted"]="The following user contributed resources have been submitted for review:";
 $lang["viewalluserpending"]="View all user contributed resources pending review:";
+
+# New for 1.7
+$lang["installationcheck"]="Installation Check";
+
 ?>

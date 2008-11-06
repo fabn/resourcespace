@@ -1,6 +1,7 @@
 <?
 include "../include/db.php";
 include "../include/general.php";
+include "../include/authenticate.php"; if (!checkperm("a")) {exit("Access denied.");}
 include "../include/header.php";
 
 # A simple script to check the ResourceSpace hosting environment supports our needs.
@@ -27,7 +28,7 @@ function ResolveKB($value)
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>Installation Check</h1>
+  <h1><?=$lang["installationcheck"]?></h1>
   
 <table class="InfoTable">
 <?
