@@ -110,7 +110,7 @@ include "../include/header.php";
 <a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
 <? } ?>
-<h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?=$lang["archivedresource"]?>:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?></h1>
+<h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?=$lang["archivedresource"]?>:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?>&nbsp;</h1>
 <? } /* End of renderinnerresourceheader hook */ ?>
 </div>
 

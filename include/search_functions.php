@@ -111,6 +111,14 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		return sql_query("select *,r2.hit_count score from (select r.* from resource r $custperm where $filter order by ref desc limit " . str_replace("!last","",$search) . ") r2 order by $order_by",false,$fetchrows);
 		}
 	
+	# View Resources With No Downloads
+	if (substr($search,0,12)=="!nodownloads") 
+		{
+		if ($orig_order=="relevance") {$order_by="ref desc";}
+
+		return sql_query("select *,hit_count score from resource r $custperm where $filter and ref not in (select distinct object_ref from daily_stat where activity_type='Resource download') order by $order_by",false,$fetchrows);
+		}
+	
 	# Duplicate Resources (based on file_checksum)
 	if (substr($search,0,11)=="!duplicates") 
 		{

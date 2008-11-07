@@ -192,6 +192,8 @@ if (!$basic_simple_search)
 	  <option value="24" <? if (getval("per_page",$default_perpage)==24) { ?>selected<? } ?> >24 <?=$lang["perpage"]?></option>
 	  <option value="48" <? if (getval("per_page",$default_perpage)==48) { ?>selected<? } ?> >48 <?=$lang["perpage"]?></option>
 	  <option value="72" <? if (getval("per_page",$default_perpage)==72) { ?>selected<? } ?> >72 <?=$lang["perpage"]?></option>
+   	  <option value="120" <? if (getval("per_page",$default_perpage)==120) { ?>selected<? } ?> >120 <?=$lang["perpage"]?></option>
+  	  <option value="240" <? if (getval("per_page",$default_perpage)==240) { ?>selected<? } ?> >240 <?=$lang["perpage"]?></option>
 	</select>
 	</div>
 

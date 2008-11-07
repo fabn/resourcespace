@@ -27,7 +27,6 @@ function ResolveKB($value)
 ?>
 
 <div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
   <h1><?=$lang["installationcheck"]?></h1>
   
 <table class="InfoTable">

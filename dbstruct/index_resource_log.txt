@@ -1,0 +1,2 @@
+resource_log,1,resource,1,resource,A,900,,,,BTREE,
+resource_log,1,type,1,type,A,900,,,,BTREE,
