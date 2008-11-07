@@ -555,7 +555,7 @@ function save_user($ref)
 		$password=getvalescaped("password","");
 		if (getval("suggest","")!="")
 			{
-			$password=make_password(8,5);
+			$password=make_password();
 			}
 		elseif ($password!=$lang["hidden"])	
 			{
@@ -597,7 +597,7 @@ function email_reminder($email)
 	if (count($details)==0) {return false;}
 	$details=$details[0];
 	global $applicationname,$email_from,$baseurl,$lang;
-	$password=make_password(8,5);
+	$password=make_password();
 	$password_hash=md5("RS" . $details["username"] . $password);
 	
 	sql_query("update user set password='$password_hash' where username='" . escape_check($details["username"]) . "'");
@@ -814,44 +814,60 @@ function change_password($password)
 	return true;
 	}
 	
-function make_password($length,$strength=0) {
+function make_password()
+	{
+	# Generate a password using the configured settings.
 	
-	# Work out the correct strength to use
-	global $password_min_length, $password_min_uppercase, $password_min_numeric, $password_min_special;
+	global $password_min_length, $password_min_alpha, $password_min_uppercase, $password_min_numeric, $password_min_special;
+
+	$lowercase="abcdefghijklmnopqrstuvwxyz";
+	$uppercase="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	$alpha=$uppercase . $lowercase;
+	$numeric="0123456789";
+	$special="!@$%^&*().?";
 	
-	if ($length<$password_min_length) {$length=password_min_length;}
-	if ($password_min_uppercase>0) {$strength=$strength | 1 | 2;}
-	if ($password_min_numeric>0) {$strength=$strength | 4;}	
-	if ($password_min_special>0) {$strength=$strength | 8;}	
+	$password="";
 	
-    $vowels = 'aeiou';
-    $consonants = 'bdghjlmnpqrstvwxz';
-    if ($strength & 1) {
-        $consonants .= 'BDGHJLMNPQRSTVWXZ';
-    }
-    if ($strength & 2) {
-        $vowels .= "AEIOU";
-    }
-    if ($strength & 4) {
-        $consonants .= '123456789';
-    }
-    if ($strength & 8) {
-        $consonants .= '@#$%^';
-    }
-    $password = '';
-    $alt = time() % 2;
-    srand(time());
-    for ($i = 0; $i < $length; $i++) {
-        if ($alt == 1) {
-            $password .= $consonants[(rand() % strlen($consonants))];
-            $alt = 0;
-        } else {
-            $password .= $vowels[(rand() % strlen($vowels))];
-            $alt = 1;
-        }
-    }
+	# Add alphanumerics
+	for ($n=0;$n<$password_min_alpha;$n++)
+		{
+		$password.=substr($alpha,rand(0,strlen($alpha)-1),1);
+		}
+	
+	# Add upper case
+	for ($n=0;$n<$password_min_uppercase;$n++)
+		{
+		$password.=substr($uppercase,rand(0,strlen($uppercase)-1),1);
+		}
+	
+	# Add numerics
+	for ($n=0;$n<$password_min_numeric;$n++)
+		{
+		$password.=substr($numeric,rand(0,strlen($numeric)-1),1);
+		}
+	
+	# Add special
+	for ($n=0;$n<$password_min_special;$n++)
+		{
+		$password.=substr($special,rand(0,strlen($special)-1),1);
+		}
+
+	# Pad with lower case
+	$padchars=$password_min_length-strlen($password);
+	for ($n=0;$n<$padchars;$n++)
+		{
+		$password.=substr($lowercase,rand(0,strlen($lowercase)-1),1);
+		}
+		
+	# Shuffle the password.
+	$password=str_shuffle($password);
+	
+	# Check the password
+	$check=check_password($password);
+	if ($check!==true) {exit("Error: unable to automatically produce a password that met the criteria. Please check the password criteria in config.php. Generated password was '$password'. Error was: " . $check);}
+	
     return $password;
-}
+	}
 
 
 function bulk_mail($userlist,$subject,$text)
