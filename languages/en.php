@@ -604,5 +604,11 @@ $lang["viewalluserpending"]="View all user contributed resources pending review:
 
 # New for 1.7
 $lang["installationcheck"]="Installation Check";
-
+$lang["managefieldoptions"]="Manage Field Options";
+$lang["matchingresourcesheading"]="Matching Resources";
+$lang["backtofieldlist"]="Back to field list";
+$lang["rename"]="Rename";
+$lang["showalllanguages"]="Show all languages";
+$lang["hidealllanguages"]="Hide all languages";
+$lang["clicktologinasthisuser"]="Click to log in as this user";
 ?>
