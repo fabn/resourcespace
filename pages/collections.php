@@ -14,8 +14,8 @@ $thumbs=getval("thumbs",$thumbs_default);
 if ($k!="") {$thumbs="show";} # Always show thumbnails for external user access.
 setcookie("thumbs",$thumbs,0,$baseurl_short);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?=$applicationname?></title>
@@ -280,7 +280,7 @@ if ($k!="")
     if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
     <li class="clearerleft"><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
     <li><a href="edit.php?collection=<?=$usercollection?>" target="main">&gt; <?=$lang["editall"]?></a></li>
-    </li>    
+
     <? } else { ?>
     <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
     <? } ?>

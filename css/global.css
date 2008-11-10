@@ -125,7 +125,7 @@ a:active {text-decoration:underline;}
 .IconRemove		{width:14px;height:12px;padding: 0;display: block;float: right;}
 .IconReorder	{width:16px;height:12px;padding: 0;display: block;float: right;}
 .IconComment	{width:13px;height:12px;padding: 0;display: block;float: right;}
-
+.ResourceSelect {display:block;float:right;}
 
 .KeyReorder {margin: 0px 5px 10px;display: inline;padding-left: 18px;}
 .KeyComment {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
@@ -161,8 +161,9 @@ a:active {text-decoration:underline;}
 .QuestionSubmit{	padding: 0.75em 0em 1em;margin-top: 1em;}
 .Question label, .QuestionSubmit label{	width: 150px;float: left;margin-top: 0.4em;}
 .Question .Lineup {margin: 3px 0px;}
-.Question .stdwidth{width: 360px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
-.Question .shrtwidth{width: 145px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .stdwidth,.stdwidth{width: 360px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .medwidth,.medwidth{width: 250px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .shrtwidth,.shrtwidth{width: 145px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .vshrtwidth{width: 93px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .Inline {float: left;margin: 3px 10px 0px 0px;}
 .Question .tickset {float: left;}
@@ -318,4 +319,5 @@ div.autocomplete ul li {
 .RatingCount {font-size:11px;}
 .RatingStars a:hover {text-decoration:none;}
 
+.Listview .ListViewSubTable,.Listview .ListViewSubTable td,.Listview .ListViewSubTable tr {background-image: none;}
 

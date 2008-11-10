@@ -563,7 +563,7 @@ function get_collection_comments($collection)
 function send_collection_feedback($collection,$comment)
 	{
 	# Sends the feedback to the owner of the collection.
-	global $applicationname,$lang,$userfullname,$userref,$k;
+	global $applicationname,$lang,$userfullname,$userref,$k,$feedback_resource_select;
 	
 	$cinfo=get_collection($collection);if ($cinfo===false) {exit("Collection not found");}
 	$user=get_user($cinfo["user"]);
@@ -583,9 +583,27 @@ function send_collection_feedback($collection,$comment)
 		$body.="\n" . $lang["rating"] . ": " . substr("**********",0,$f[$n]["rating"]);
 		}
 	
+	if ($feedback_resource_select)
+		{
+		$body.="\n\n" . $lang["selectedresources"] . ": ";
+		$result=do_search("!collection" . $collection);
+		for ($n=0;$n<count($result);$n++)
+			{
+			$ref=$result[$n]["ref"];
+			if (getval("select_" . $ref,"")!="")
+				{
+				$info=get_resource_data($ref);
+				$body.="\n" . $ref . " : " . $info["file_path"];
+				}
+			}
+		}	
+		
 	send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
 	
 	# Cancel the feedback request for this resource.
+	/* - Commented out - as it may be useful to leave the feedback request in case the user wishes to leave
+	     additional feedback or make changes.
+	     
 	if (isset($userref))
 		{
 		sql_query("update user_collection set request_feedback=0 where collection='$collection' and user='$userref'");
@@ -594,6 +612,7 @@ function send_collection_feedback($collection,$comment)
 		{
 		sql_query("update external_access_keys set request_feedback=0 where access_key='$k'");
 		}
+	*/
 	}
 
 function copy_collection($copied,$current,$remove_existing="off")

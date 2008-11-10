@@ -71,7 +71,7 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 		
-if ($pending_review_visible_to_all && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
+if ($pending_review_visible_to_all && isset($userref) && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
 	{
 	# When users can view resources in the 'User Contributed - Pending Review' state in the main search
 	# via the $pending_review_visible_to_all option, set access to restricted.

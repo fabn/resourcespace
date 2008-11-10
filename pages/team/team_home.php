@@ -47,7 +47,10 @@ include "../../include/header.php";
 
     <? if (checkperm("o")) { ?><li><a href="team_content.php"><?=$lang["managecontent"]?></a></li><? } ?>
 
-    <? if (checkperm("k")) { ?><li><a href="team_related_keywords.php"><?=$lang["managerelatedkeywords"]?></a></li><? } ?>
+    <? if (checkperm("k")) { ?>
+    <li><a href="team_related_keywords.php"><?=$lang["managerelatedkeywords"]?></a></li>
+    <!--<li><a href="team_fields.php"><?=$lang["managefieldoptions"]?></a></li>-->
+    <? } ?>
 
     
     <li><a href="team_stats.php"><?=$lang["viewstatistics"]?></a></li>

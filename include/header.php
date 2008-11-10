@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
 <!--
 ResourceSpace version <?=$productversion?>
 Copyright Oxfam GB and Montala 2006-2008
@@ -17,6 +17,9 @@ http://www.montala.net/resourcespace.php
 
 <? if ($frameless_collections) { ?>
 <script src="<?=$baseurl?>/lib/js/frameless_collections.js?css_reload_key=<?=$css_reload_key?>" type="text/javascript"></script>
+<script type="text/javascript">
+var baseurl_short="<?=$baseurl_short?>";
+</script>
 <? } ?>
 
 <?

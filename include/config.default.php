@@ -515,6 +515,13 @@ $enable_public_collections=true;
 # resources are submitted (status changes from "User Contributed - Pending Submission" to "User Contributed - Pending Review").
 $notify_user_contributed_submitted=true;
 
+# Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
+$frameless_collections=false;
+
+# When requesting feedback, allow the user to select resources (e.g. pick preferred photos from a photo shoot).
+$feedback_resource_select=false;
+
+
 #
 # ------------------------- Development Items -------------------------
 #
@@ -529,8 +536,7 @@ $breadcrumbs=false;
 # the options. However, setting the below to true means that free text fields can also be multi-lingual. Several text boxes appear when entering data so that translations can be entered.
 $multilingual_text_fields=false;
 
-# Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
-$frameless_collections=false;
+
 
 
 ?>

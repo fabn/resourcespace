@@ -853,6 +853,56 @@ function notify_user_contributed_submitted($refs)
 	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message);
 	}
 	
-	
+function get_fields_with_options()
+	{
+	# Returns a list of fields that have option lists (checking user permissions)
+	# Used for 'manage field options' page.
+	$fields=sql_query("select * from resource_type_field where type=2 or type=3 order by resource_type,order_by");
+	$return=array();
+	# Apply permissions.
+	for ($n=0;$n<count($fields);$n++)
+		{
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"])) && 
+		!checkperm("f-" . $fields[$n]["ref"]))
+			{
+			$return[]=$fields[$n];
+			}
+		}
+	return $return;
+	}
 
+function get_field($field)
+	{
+	$return=sql_query("select * from resource_type_field where ref='$field'");
+	if (count($return)>0) {return $return[0];} else {return false;}
+	}
+	
+function get_field_options_with_stats($field)
+	{
+	# For a given field, list all options with usage stats.
+	# This is for the 'manage field options' page.
+
+	$options=sql_value("select options value from resource_type_field where ref='$field'","");
+	$options=trim_array(explode(",",i18n_get_translated($options)));
+	
+	# For the given field, fetch a stats count for each keyword.
+	$usage=sql_query("select rk.resource_type_field,k.keyword,count(*) c from resource_keyword rk join keyword k on rk.keyword=k.ref where resource_type_field='$field' group by k.keyword");
+	
+	$return=array();
+	for ($n=0;$n<count($options);$n++)
+		{
+		# Find the option in the usage array and extract the count
+		$count=0;
+		for ($m=0;$m<count($usage);$m++)
+			{
+			if (strtolower($options[$n])==$usage[$m]["keyword"]) {$count=$usage[$m]["c"];}
+			}
+			
+		$return[]=array("option"=>$options[$n],"count"=>$count);
+		}
+	return $return;
+	}
+	
+	
+	
 ?>

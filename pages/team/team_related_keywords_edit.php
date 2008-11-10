@@ -1,6 +1,6 @@
 <?
 include "../../include/db.php";
-include "../../include/authenticate.php"; if (!checkperm("o")) {exit ("Permission denied.");}
+include "../../include/authenticate.php"; if (!checkperm("k")) {exit ("Permission denied.");}
 include "../../include/general.php";
 include "../../include/research_functions.php";
 
@@ -28,7 +28,7 @@ else
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["managecontent"]?></h1>
+<h1><?=$lang["managerelatedkeywords"]?></h1>
 
 <form method=post id="mainform">
 <input type="hidden" name="keyword" value="<?=$keyword?>">
