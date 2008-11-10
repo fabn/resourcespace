@@ -27,8 +27,28 @@ if ((getval("save","")!="") || (getval("suggest","")!=""))
 $user=get_user($ref);
 if (($user["usergroup"]==3) && ($usergroup!=3)) {exit("Permission denied.");}
 
-
 include "../../include/header.php";
+
+
+# Log in as this user?
+if (getval("loginas","")!="")
+	{
+	# Log in as this user
+	# A user key must be generated to enable login using the MD5 hash as the password.
+	?>
+	<form method="post" action="../../login.php" id="autologin">
+	<input type="hidden" name="username" value="<?=$user["username"]?>">
+	<input type="hidden" name="password" value="<?=$user["password"]?>">
+	<input type="hidden" name="userkey" value="<?=md5($user["username"] . $scramble_key)?>">
+	<noscript><input type="submit" value="<?=$lang["login"]?>"></noscript>
+	</form>
+	<script type="text/javascript">
+	document.getElementById("autologin").submit();
+	</script>
+	<?
+	exit();
+	}
+
 ?>
 <div class="BasicsBox">
 <h1><?=$lang["edituser"]?></h1>
@@ -84,6 +104,11 @@ for ($n=0;$n<count($groups);$n++)
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?=$lang["ticktodelete"]?></label><input name="deleteme" type="checkbox"  value="yes"><div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?=$lang["login"]?></label>
+<div class="Fixed"><a href="team_user_edit.php?ref=<?=$ref?>&loginas=true">&gt;&nbsp;<?=$lang["clicktologinasthisuser"]?></a></div>
+<div class="clearerleft"> </div></div>
+
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			

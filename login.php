@@ -25,7 +25,7 @@ elseif (array_key_exists("username",$_POST))
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
     
-    if (strlen($password)==32) {exit("Invalid password.");} # Prevent MD5s being entered directly.
+    if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key)) {exit("Invalid password.");} # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added).
     
     $password_hash=md5("RS" . $username . $password);
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
