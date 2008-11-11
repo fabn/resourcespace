@@ -30,7 +30,7 @@ elseif (array_key_exists("username",$_POST))
     if (strlen($password)!=32)
     	{
     	# Provided password is not a hash, so generate a hash.
-    	$password_hash=md5("RS" . $username . $password);}
+    	$password_hash=md5("RS" . $username . $password);
     	}
     else
     	{

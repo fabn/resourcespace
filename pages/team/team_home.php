@@ -49,7 +49,7 @@ include "../../include/header.php";
 
     <? if (checkperm("k")) { ?>
     <li><a href="team_related_keywords.php"><?=$lang["managerelatedkeywords"]?></a></li>
-    <!--<li><a href="team_fields.php"><?=$lang["managefieldoptions"]?></a></li>-->
+    <li><a href="team_fields.php"><?=$lang["managefieldoptions"]?></a></li>
     <? } ?>
 
     
@@ -66,16 +66,7 @@ include "../../include/header.php";
 	
 	<? if (checkperm("a")) { ?>
 	<li><a target="main" href="../admin/index.php"><?=$lang["systemsetup"]?></a></li>
-<?	
-/*
-if ($config_pluginmanager_enabled)
-{
-?>
-	<li><a target="main" href="team_pluginmanager.php">Manage Software Plugins</a></li>
-<?	
-}
-*/
-?>
+
 	<?hook("customteamfunctionadmin")?>
 	<? } ?>
 	

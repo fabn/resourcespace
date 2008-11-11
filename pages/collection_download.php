@@ -72,15 +72,17 @@ if ($submitted != "")
 					if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
 					$filename=get_resource_data($ref);
-					# Prepend file name with resource ID to prevent collisions
-					$filename=$ref.'_'.$filename["file_path"];
+					$filename=$filename["file_path"];
+					
 					# Replace (instead of appending) original extension with extension of the actual file that is sent
 					preg_match('/\.[^\.]+$/', $p, $pext);
 					$filename=preg_replace('/\.[^\.]+$/', $pext[0], $filename);
 
-					if ($filename!="")
+					if (strlen($filename)>0)
 						{
 						# Only perform the copy if an original filename is set.
+
+						if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
 						
 						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
 						

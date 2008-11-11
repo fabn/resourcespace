@@ -895,7 +895,8 @@ function get_field_options_with_stats($field)
 		$count=0;
 		for ($m=0;$m<count($usage);$m++)
 			{
-			if (strtolower($options[$n])==$usage[$m]["keyword"]) {$count=$usage[$m]["c"];}
+			$keyword=get_keyword_from_option($options[$n]);
+			if ($keyword==$usage[$m]["keyword"]) {$count=$usage[$m]["c"];}
 			}
 			
 		$return[]=array("option"=>$options[$n],"count"=>$count);
@@ -903,6 +904,45 @@ function get_field_options_with_stats($field)
 	return $return;
 	}
 	
+function save_field_options($field)
+	{
+	# Save the field options after editing.
+	global $languages;
 	
+	$fieldata=get_field($field);
+	$options=trim_array(explode(",",$field["options"]));
+
+	for ($n=0;$n<count($options);$n++)
+		{
+		foreach ($languages as $langcode=>$langname)
+			{
+			if (getval("submit_field_" . $langcode . "_" . $n,"")!="")
+				{
+				# This option/language combination is being renamed.
+				$val=getvalescaped("field_" . $langcode . "_" . $n);
+				}
+			}
+		if (getval("delete_field_" . $n,"")!="")
+			{
+			# This field option is being deleted.
+			
+			# Construct a new options value by creating a new array ommitting the item in position $n
+			$new=array_merge(array_slice($options,0,$n),array_slice($options,$n+1));
+			exit(join(", ",$new));
+			
+
+			# Delete from matching resource_data rows
+			
+			# Delete all stored keywords (each language)
+			}
+		}
+	}
+	
+function get_keyword_from_option($option)
+	{
+	# For the given field option, return the keyword that will be indexed.
+	$keywords=split_keywords("," . $option);
+	return $keywords[1];
+	}
 	
 ?>

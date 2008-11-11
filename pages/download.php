@@ -60,7 +60,7 @@ if ($noattach=="")
 			# Fetch from the standard table.
 			$origfile=get_resource_data($ref);$origfile=$origfile["file_path"];
 			}
-		if ($origfile!="")
+		if (strlen($origfile)>0)
 			{
 			# Use the original filename if one has been set.
 			# Strip any path information (e.g. if the staticsync.php is used).
