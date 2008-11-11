@@ -25,9 +25,18 @@ elseif (array_key_exists("username",$_POST))
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
     
-    if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key)) {exit("Invalid password.");} # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added).
+    if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key)) {exit("Invalid password.");} # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added). If a special key is sent, which is the md5 hash of the username and the secret scramble key, then allow a login using the MD5 password hash as the password. This is for the 'log in as this user' feature.
     
-    $password_hash=md5("RS" . $username . $password);
+    if (strlen($password)!=32)
+    	{
+    	# Provided password is not a hash, so generate a hash.
+    	$password_hash=md5("RS" . $username . $password);}
+    	}
+    else
+    	{
+    	$password_hash=$password;
+    	}
+    	
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
     
     $valid=sql_query("select ref from user where username='$username' and (password='$password' or password='$password_hash')");
