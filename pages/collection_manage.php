@@ -85,7 +85,6 @@ $per_page=15;
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
-$url="collection_manage.php?paging=true";
 $jumpcount=1;
 
 # Create an a-z index
@@ -102,6 +101,8 @@ for ($n=ord("A");$n<=ord("Z");$n++)
 	$atoz.=" ";
 	}
 $atoz.="</div>";
+
+$url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
 
 	?><div class="TopInpageNav"><?=$atoz?><? pager(false); ?></div><?	
 ?>
