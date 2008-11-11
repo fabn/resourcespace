@@ -642,6 +642,8 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 		$ts=sql_query("select thumb_width,thumb_height from resource where ref='$ref'");
 		sql_query("update resource set thumb_width='" . $ts[0]["thumb_height"] . "',thumb_height='" . $ts[0]["thumb_width"] . "' where ref='$ref'");
 		}
+	# Update the modified date to force the browser to reload the new thumbs.
+	sql_query("update resource set file_modified=now() where ref='$ref'");
 	}
 
 function AltImageRotate($src_img, $angle) {
