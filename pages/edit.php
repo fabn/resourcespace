@@ -147,6 +147,9 @@ if (getval("tweak","")!="")
 		create_previews($ref,false,$resource["file_extension"]);
 		break;
 		}
+
+	# Reload resource data.
+	$resource=get_resource_data($ref,false);
 	}
 
 # If requested, refresh the collection frame (for redirects from saves)

@@ -108,12 +108,12 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	}
 	
 $GLOBALS['get_resource_data_cache'] = array();
-function get_resource_data($ref)
+function get_resource_data($ref,$cache=true)
 	{
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
 	global $default_resource_type, $get_resource_data_cache;
-	if (isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
+	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
 	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
@@ -389,7 +389,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$sizes=sql_query("select * from preview_size order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
 	{
-		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,$extension);
+		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,"jpg");
 		if (file_exists($path) || (!$onlyifexists))
 			{
 			if (($sizes[$n]["internal"]==0) || ($internal))
