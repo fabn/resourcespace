@@ -37,6 +37,8 @@ elseif (array_key_exists("username",$_POST))
     	$password_hash=$password;
     	}
     	
+    hook("externalauth","",array( $username, $password)); #Attempt external auth if configured
+
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
     
     $valid=sql_query("select ref from user where username='$username' and (password='$password' or password='$password_hash')");
