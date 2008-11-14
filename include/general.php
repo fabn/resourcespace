@@ -899,7 +899,7 @@ function i18n_get_translated($text)
 	$text=trim($text);
 	
 	# For multiple keywords, parse each keyword.
-	if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($out!="") {$out.=",";}; $out.=i18n_get_translated(trim($s[$n]));};return $out;}
+	if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($n>0) {$out.=",";}; $out.=i18n_get_translated(trim($s[$n]));};return $out;}
 	
 	global $language;
 	

@@ -26,6 +26,12 @@ include "../../include/header.php";
     <li><a href="../search.php?search=<?=urlencode("!userpending")?>"><?=$lang["viewuserpending"]?></a></li>
 
     <!--<li><a href="../search.php?search=<?=urlencode("!duplicates")?>"><?=$lang["viewduplicates"]?></a></li>-->
+    
+    <? if (checkperm("k")) { ?>
+    <li><a href="team_related_keywords.php"><?=$lang["managerelatedkeywords"]?></a></li>
+    <li><a href="team_fields.php"><?=$lang["managefieldoptions"]?></a></li>
+    <? } ?>
+    
     <? } ?>
 
 	</ul>

@@ -401,10 +401,10 @@ function update_field($resource,$field,$value)
 		{
 		# Fetch previous value and remove the index for those keywords
 		$existing=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
-		remove_keyword_mappings($resource,$existing,$field);
+		remove_keyword_mappings($resource,i18n_get_indexable($existing),$field);
 		
 		# Index the new value
-		add_keyword_mappings($resource,$value,$field);
+		add_keyword_mappings($resource,i18n_get_indexable($value),$field);
 		}
 		
 	# Delete the old value (if any) and add a new value.
@@ -882,8 +882,9 @@ function get_field_options_with_stats($field)
 	# For a given field, list all options with usage stats.
 	# This is for the 'manage field options' page.
 
-	$options=sql_value("select options value from resource_type_field where ref='$field'","");
-	$options=trim_array(explode(",",i18n_get_translated($options)));
+	$rawoptions=sql_value("select options value from resource_type_field where ref='$field'","");
+	$options=trim_array(explode(",",i18n_get_translated($rawoptions)));
+	$rawoptions=trim_array(explode(",",$rawoptions));
 	
 	# For the given field, fetch a stats count for each keyword.
 	$usage=sql_query("select rk.resource_type_field,k.keyword,count(*) c from resource_keyword rk join keyword k on rk.keyword=k.ref where resource_type_field='$field' group by k.keyword");
@@ -899,7 +900,7 @@ function get_field_options_with_stats($field)
 			if ($keyword==$usage[$m]["keyword"]) {$count=$usage[$m]["c"];}
 			}
 			
-		$return[]=array("option"=>$options[$n],"count"=>$count);
+		$return[]=array("option"=>$options[$n],"rawoption"=>$rawoptions[$n],"count"=>$count);
 		}
 	return $return;
 	}
@@ -909,33 +910,110 @@ function save_field_options($field)
 	# Save the field options after editing.
 	global $languages;
 	
-	$fieldata=get_field($field);
-	$options=trim_array(explode(",",$field["options"]));
+	$fielddata=get_field($field);
+	$options=trim_array(explode(",",$fielddata["options"]));
 
 	for ($n=0;$n<count($options);$n++)
 		{
-		foreach ($languages as $langcode=>$langname)
+		if (getval("submit_field_" . $n,"")!="")
 			{
-			if (getval("submit_field_" . $langcode . "_" . $n,"")!="")
+			# This option/language combination is being renamed.
+
+			# Construct a new option from the posted languages
+			$new="";
+			foreach ($languages as $langcode=>$langname)
 				{
-				# This option/language combination is being renamed.
-				$val=getvalescaped("field_" . $langcode . "_" . $n);
+				$val=getvalescaped("field_" . $langcode . "_" . $n,"");
+				if ($val!="") {$new.="~" . $langcode . ":" . $val;}
 				}
+
+			# Construct a new options value by creating a new array replacing the item in position $n
+			$newoptions=array_merge(array_slice($options,0,$n),array($new),array_slice($options,$n+1));
+
+			# Update the options field.
+			sql_query("update resource_type_field set options='" . escape_check(join(", ",$newoptions)) . "' where ref='$field'");
+			
+			# Loop through all matching resources.
+			# The matches list uses 'like' so could potentially return values that do not have this option set. However each value list split out and analysed separately.
+			$matching=sql_query("select resource,value from resource_data where resource_type_field='$field' and value like '%" . escape_check($options[$n]) . "%'");
+			for ($m=0;$m<count($matching);$m++)
+				{
+				$ref=$matching[$m]["resource"];
+				#echo "Processing $ref to update " . $options[$n] . "<br>existing value is " . $matching[$m]["value"] . "<br/>";
+								
+				$set=trim_array(explode(",",$matching[$m]["value"]));
+				
+				# Construct a new value omitting the old and adding the new.
+				$newval=array();
+				for ($s=0;$s<count($set);$s++)
+					{
+					if ($set[$s]!==$options[$n]) {$newval[]=$set[$s];}
+					}
+				$newval[]=$new; # Set the new value on the end of this string
+				$newval=join(",",$newval);
+				
+				#echo "Old value = '" . $matching[$m]["value"] . "', new value = '" . $newval . "'";
+				
+				if ($matching[$m]["value"]!=$newval)
+					{
+					# Value has changed. Update.
+
+					# Delete existing keywords index for this field.
+					sql_query("delete from resource_keyword where resource='$ref' and resource_type_field='$field'");
+					
+					# Store value and reindex
+					update_field($ref,$field,$newval);
+					}
+				}
+			
 			}
+
+
 		if (getval("delete_field_" . $n,"")!="")
 			{
 			# This field option is being deleted.
 			
 			# Construct a new options value by creating a new array ommitting the item in position $n
 			$new=array_merge(array_slice($options,0,$n),array_slice($options,$n+1));
-			exit(join(", ",$new));
 			
+			sql_query("update resource_type_field set options='" . escape_check(join(", ",$new)) . "' where ref='$field'");
+			
+			# Loop through all matching resources.
+			# The matches list uses 'like' so could potentially return values that do not have this option set. However each value list split out and analysed separately.
+			$matching=sql_query("select resource,value from resource_data where resource_type_field='$field' and value like '%" . escape_check($options[$n]) . "%'");
+			for ($m=0;$m<count($matching);$m++)
+				{
+				$ref=$matching[$m]["resource"];
+				#echo "Processing $ref to remove " . $options[$n] . "<br>existing value is " . $matching[$m]["value"] . "<br/>";
+								
+				$set=trim_array(explode(",",$matching[$m]["value"]));
+				$new=array();
+				for ($s=0;$s<count($set);$s++)
+					{
+					if ($set[$s]!==$options[$n]) {$new[]=$set[$s];}
+					}
+				$new=join(",",$new);
+				
+				if ($matching[$m]["value"]!=$new)
+					{
+					# Value has changed. Update.
 
-			# Delete from matching resource_data rows
-			
-			# Delete all stored keywords (each language)
+					# Delete existing keywords index for this field.
+					sql_query("delete from resource_keyword where resource='$ref' and resource_type_field='$field'");
+					
+					# Store value and reindex
+					update_field($ref,$field,$new);
+					}
+				}
 			}
 		}
+	}
+	
+function get_resources_matching_keyword($keyword,$field)
+	{
+	# Returns an array of resource references for resources matching the given keyword string.
+	$keyref=resolve_keyword($keyword);echo $keyref;
+	return sql_array("select distinct resource value from resource_keyword where keyword='$keyref' and resource_type_field='$field'");
 	}
 	
 function get_keyword_from_option($option)
@@ -943,6 +1021,12 @@ function get_keyword_from_option($option)
 	# For the given field option, return the keyword that will be indexed.
 	$keywords=split_keywords("," . $option);
 	return $keywords[1];
+	}
+	
+function add_field_option($field,$option)
+	{
+	sql_query("update resource_type_field set options=concat(options,', " . escape_check($option) . "') where ref='$field'");
+	return true;
 	}
 	
 ?>
