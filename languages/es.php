@@ -425,6 +425,7 @@ $lang["stat-resourceupload"]="Subida de materiales";
 $lang["stat-resourceview"]="Vista de materiales";
 $lang["stat-search"]="Búsqueda";
 $lang["stat-usersession"]="Sesión de usuario";
+
 # Others
 $lang["access0"]="Abrir";
 $lang["access1"]="Restringido";
@@ -434,7 +435,144 @@ $lang["access3"]="Costumbre";
 $lang["statusandrelationships"]="Estado y relaciones";
 
 
+# New for 1.3
+$lang["savesearchitemstocollection"]="Guardar items de busqueda en la colección"; 
+$lang["removeallresourcesfromcollection"]="Remover todos los materiales de esta colección";
+$lang["deleteallresourcesfromcollection"]="Eliminar todos los materiales de esta colección";
+$lang["deleteallsure"]="¿Estás seguro que deseas ELIMINAR estos materiales? Esto eliminará los materiales de la aplicación, no solo de la colección";
+$lang["batchdonotaddcollection"]="(no añadir a la colección)";
+$lang["collectionsthemes"]="Relacionar temas y colecciones públicas";
+$lang["recent"]="Materiales recientes";
+$lang["batchcopyfrom"]="Copiar la información del material con ID";
+$lang["copy"]="Copiar";
+$lang["zipall"]="Comprimir";
+$lang["downloadzip"]="Descargar la colección como un archivo comprimido";
+$lang["downloadsize"]="Tamaño de descarga";
+$lang["tagging"]="Etiquetar";
+$lang["speedtagging"]="Etiquetado rápido";
+$lang["existingkeywords"]="Palabras claves existentes:";
+$lang["extrakeywords"]="Palabras claves extras";
+$lang["leaderboard"]="Leaderboard";
+$lang["confirmeditall"]="¿Estás seguro que deseas guardar? Esta acción sobreescribirá los valores existentes de los campos seleccionados en todos los materiales de la actual colección";
+$lang["collectiondeleteconfirm"]="¿Estás seguro que deseas ELIMINAR esta colección?";
+$lang["hidden"]="(esconder)";
+$lang["requestnewpassword"]="Solicitar Nuevo Password";
+
+# New for 1.4
+$lang["reorderresources"]="Reorder resources within collection (hold and drag)";
+$lang["addorviewcomments"]="Agregar o ver comentarios";
+$lang["collectioncomments"]="Comentarios de la colección";
+$lang["collectioncommentsinfo"]="Agregar a la colección comentarios de este material. Este comentario solo se aplicará a esta colección.";
+$lang["comment"]="Comentario";
+$lang["warningexpired"]="Material caducado";
+$lang["warningexpiredtext"]="Atención! Este material ha excedido la fecha de caducidad. Deberás clikar el siguiente link para abilitar la función de descarga.";
+$lang["warningexpiredok"]="&gt; Abilitar descarga de material";
+$lang["userrequestcomment"]="Comentario";
+$lang["addresourcebatchbrowser"]="Adjuntar lote de materiales - Buscar (recomendado)";
+$lang["addresourcebatchftp"]="Adjuntar lote de materiales - FTP";
+$lang["replaceresourcebatch"]="Reemplazar lote de materiales";
+$lang["editmode"]="Modo Edición";
+$lang["replacealltext"]="Reemplazar Todo el Texto";
+$lang["findandreplace"]="Buscar y Reemplazar";
+$lang["appendtext"]="Texto Apéndice";
+$lang["find"]="Buscar";
+$lang["andreplacewith"]="...y reemplazar con...";
+$lang["relateallresources"]="Relacionar todos los materiales de esta colección";
+$lang["country"]="País";
+
+# New for 1.5
+$lang["columns"]="Columnas";
+$lang["contactsheetconfiguration"]="Contactar con la Configuración Lista";
+$lang["thumbnails"]="Vista miniatura";
+$lang["contactsheetintrotext"]="Por favor selecciona el tamaño de la lista y el número de columnas para tu lista de contactos.";
+$lang["size"]="Tamaño";
+$lang["orientation"]="Orientación";
+$lang["requiredfield"]="Este es un campo solicitado";
+$lang["requiredfields"]="Algunos campos solicitados no estan rellenados. Por favor revísa el formulario e intentalo de nuevo.";
+$lang["viewduplicates"]="Ver Materiales Duplicados";
+$lang["userlog"]="Usuario";
+$lang["ipaddressrestriction"]="Restricción de dirección IP (opcional)";
+$lang["format"]="Formato";
+$lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
+
 # New for 1.6
+$lang["collection_download_original"]="Archivo Original";
 $lang["newflag"]="NUEVO!";
+$lang["link"]="Link";
+$lang["uploadpreview"]="Cargar solo una imágen previa";
+$lang["starttypingusername"]="(comenza a escribir un nombre de usuario / nombre completo / nombre de grupo)";
+$lang["requestfeedback"]="Respuesta de petición<br />(tendrás una repuesta via e-mail)";
+$lang["sendfeedback"]="Enviar respuesta";
+$lang["feedbacknocomments"]="No has dejado ningún comentario sobre los materiales de la colección.<br />Click the speech bubble next to each resource to add comments.";
+$lang["collectionfeedback"]="Collection Feedback";
+$lang["collectionfeedbackemail"]="Has recibido la siguiente respuesta:";
+$lang["feedbacksent"]="Tu respuesta ha sido enviada.";
+$lang["newarchiveresource"]="Nuevo Material Archivado";
+$lang["nocategoriesselected"]="No hay categorias seleccionadas";
+$lang["showhidetree"]="Mostrar/ocultar árbol";
+$lang["clearall"]="Clear all";
+$lang["clearcategoriesareyousure"]="Deseas limpiar todas las opciones selecionadas?";
+$lang["share"]="Compartir";
+$lang["sharecollection"]="Compartir Colección";
+$lang["generateurl"]="Generar URL";
+$lang["generateurlinternal"]="La siguiente URL funcionará solo para los usuarios existentes.";
+$lang["generateurlexternal"]="La siguiente URL funcionará para cualquier persona sin necesidad de ser usuario. <strong> Si agregas nuevos materiales a la colección, por razones de seguridad esta URL no seguirá operativa y deberás generar una nueva.</strong>";
+$lang["archive"]="Archivo";
+$lang["collectionviewhover"]="Click para ver los materiales de esta colección";
+$lang["collectioncontacthover"]="Crear una lista de contactos con los materiales de esta colección";
+$lang["original"]="Original";
+
+$lang["password_not_min_length"]="Debes colocar el password ? mínimo de caracteres";
+$lang["password_not_min_alpha"]="Debes tener un password ? alfabetico (a-z, A-Z) caracteres";
+$lang["password_not_min_uppercase"]="El password debe tener al menos ? casilla superior (A-Z) carateres";
+$lang["password_not_min_numeric"]="El password debe tener al menos ? numérico (0-9) ccaracteres";
+$lang["password_not_min_special"]="El password debe tener al menos ? no son validos los caracteres alfa-numericos (!@$%&* etc.)";
+$lang["password_matches_existing"]="El password ingresado es el mismo que el password existente";
+$lang["password_expired"]="Tu password ha caducado y deberás ingresar uno nuevo";
+$lang["max_login_attempts_exceeded"]="Has exedido el numero máximo de intentos de ingreso. Deberás epesrar ? minutos antes de intentar ingresar de nuevo.";
+
+$lang["newlogindetails"]="Por favor encuentra a contunuación los detalles de tu usuario."; # For new password mail
+$lang["youraccountdetails"]="Los Destalles De Tu Cuenta"; # Subject of mail sent to user on user details save
+
+$lang["copyfromcollection"]="Copiar desde la colección";
+$lang["donotcopycollection"]="No copiar desde la colección";
+
+$lang["resourcesincollection"]="materiales de esta colección"; # E.g. 3 resources in this collection
+$lang["removefromcurrentcollection"]="Remover desde la colección actual";
+$lang["showtranslations"]="+ Mostrar traducciones";
+$lang["hidetranslations"]="- Ocultar traducciones";
+$lang["archivedresource"]="Archivar Material";
+
+$lang["managerelatedkeywords"]="Gestionar Palabras Claves relacionadas";
+$lang["keyword"]="Palabras Claves";
+$lang["relatedkeywords"]="Palabras Claves Relacionadas";
+$lang["matchingrelatedkeywords"]="Palabras Claves Relacionadas Encontradas";
+$lang["newkeywordrelationship"]="Crear uan Nueva Relación de Palabras Claves:";
+
+$lang["exportdata"]="Exportar Información";
+$lang["exporttype"]="Exportar Tipo";
+
+# New for 1.7
+$lang["managealternativefiles"]="Gestionar archivos alternativos";
+$lang["managealternativefilestitle"]="Gestionar Archivos Alternativos";
+$lang["alternativefiles"]="Archivos Alternativos";
+$lang["filetype"]="Tipo de Archivo";
+$lang["filedeleteconfirm"]="Deseas borrar este archivo?";
+$lang["addalternativefile"]="Agragar Archivo Alternativo";
+$lang["editalternativefile"]="Editar Archivo Alternativo";
+$lang["description"]="Descripción";
+$lang["notuploaded"]="No se ha cargado";
+$lang["uploadreplacementfile"]="Cargar archivo de reemplazo";
+
+
+$lang["resourceistranscoding"]="El material esta siendo transcodificado";
+$lang["cantdeletewhiletranscoding"]="No puedes borra materiales mientras se estan transcodificando";
+
+$lang["maxcollectionthumbsreached"]="Hay demasiados materiales en esta colección, las vistas en miniaturas no podrán ser vistas. Las vistas en miniaturas estarán ocultas.";
+
+$lang["ratethisresource"]="¿Cómo puntuas este material?";
+$lang["ratingthankyou"]="Gracias por tu puntuación.";
+$lang["ratings"]="puntajes";
+$lang["rating"]="puntaje";
 
 ?>
