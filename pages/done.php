@@ -12,6 +12,7 @@ include "../include/header.php";
     <? if (getval("user","")!="") { # User logged in? ?>
     <p><a href="home.php">&gt;&nbsp;<?=$lang["backtohome"]?></a></p>
     <p><a href="search.php">&gt;&nbsp;<?=$lang["backtosearch"]?></a></p>
+    <? hook("extra");?>
     <? } else {?>
     <p><a href="../login.php">&gt;&nbsp;<?=$lang["backtouser"]?></a></p>
     <? } ?>
