@@ -583,7 +583,7 @@ function copy_resource($from,$resource_type=-1)
 function resource_log($resource,$type,$field)
 	{
 	global $userref;
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field) values (now(),'$userref','$resource','$type','$field')");
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type','$field')");
 	}
 
 function get_resource_log($resource)

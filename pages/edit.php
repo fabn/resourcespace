@@ -72,7 +72,7 @@ if (getval("regen","")!="")
 	create_previews($ref,false,$resource["file_extension"]);
 	}
 	
-if (getval("submitted","")!="")
+if (getval("submitted","")!="" && getval("resetform","")=="")
 	{
 	# save data
 	if (!$multiple)
