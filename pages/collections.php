@@ -199,7 +199,7 @@ $feedback=$cinfo["request_feedback"];
 if ($thumbs=="show") { 
 
 # Too many to show?
-if (count($result)>$max_collection_thumbs)
+if (count($result)>$max_collection_thumbs && $k=="")
 	{
 	?>
 	<script type="text/javascript">

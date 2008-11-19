@@ -948,6 +948,9 @@ function send_mail($email,$subject,$message,$from="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
+	# No email address? Exit.
+	if (trim($email)=="") {return false;}
+	
 	# Include footer
 	global $email_footer;
 	global $disable_quoted_printable_enc;

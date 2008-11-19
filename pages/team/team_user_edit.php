@@ -97,7 +97,7 @@ for ($n=0;$n<count($groups);$n++)
 ?>
 <div class="Question"><label><?=$lang["ticktoemail"]?></label>
 <? if (strlen($user["password"])!=32) { ?>
-<input name="emailme" type="checkbox" value="yes" checked>
+<input name="emailme" type="checkbox" value="yes">
 <? } else { ?>
 <div class="Fixed"><?=$lang["cannotemailpassword"]?></div>
 <? } ?>
