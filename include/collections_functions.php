@@ -615,26 +615,28 @@ function send_collection_feedback($collection,$comment)
 	*/
 	}
 
-function copy_collection($copied,$current,$remove_existing="off")
+function copy_collection($copied,$current,$remove_existing=false)
 	{	
 	# Get all data from the collection to copy.
 	$copied_collection=sql_query("select * from collection_resource where collection='$copied'","");
 	
-	if ($remove_existing=="on"){
+	if ($remove_existing)
+		{
 		#delete all existing data in the current collection
 		sql_query("delete from collection_resource where collection='$current'");
 		}
 	
 	#put all the copied collection records in
-	foreach($copied_collection as $col_resource){
-	
+	foreach($copied_collection as $col_resource)
+		{
 		#test if the resource is already there before adding it to avoid duplicates if remove_existing isn't used...
 		$test= sql_query("select * from collection_resource where collection='$current' and resource='".$col_resource['resource']."'","");
-			if (!count($test)>0){
+		if (!count($test)>0)
+			{
 			sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
-			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','".$col_resource['comment']."','".$col_resource['rating']."')","");
+			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','". escape_check($col_resource['comment'])."'," . (($col_resource['rating']!="")?"'".$col_resource['rating']."'":"null") . ")","");
 			}
-	}
+		}
 	}
 
 function collection_is_research_request($collection)

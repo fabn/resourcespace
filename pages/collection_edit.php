@@ -7,13 +7,19 @@ include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
 $ref=getvalescaped("ref","");
+$copycollectionremoveall=getvalescaped("copycollectionremoveall","");
 
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
-$copycollectionremoveall=getvalescaped("copycollectionremoveall","");
 
+
+# Collection copy functionality
 $copy=getval("copy","");
-if ($copy!=""){copy_collection($copy,$ref,$remove_existing=$copycollectionremoveall);refresh_collection_frame();}
+if ($copy!="")
+	{
+	copy_collection($copy,$ref,$copycollectionremoveall!="");
+	refresh_collection_frame();
+	}
 
 if (getval("name","")!="")
 	{
@@ -174,7 +180,7 @@ if ($enable_collection_copy)
 	<div class="clearerleft"> </div>
 	</div>
 <div class="Question" id="copycollectionremoveall" style="display:none;">
-<label for="copycollectionremoveall"><?=$lang["copycollectionremoveall"]?></label><input type=checkbox id="copycollectionremoveall" name="copycollectionremoveall">
+<label for="copycollectionremoveall"><?=$lang["copycollectionremoveall"]?></label><input type=checkbox id="copycollectionremoveall" name="copycollectionremoveall" value="yes">
 <div class="clearerleft"> </div>
 </div>
 
