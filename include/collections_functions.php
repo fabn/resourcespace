@@ -525,7 +525,7 @@ function get_collection_resource_comment($resource,$collection)
 	
 function save_collection_resource_comment($resource,$collection,$comment,$rating)
 	{
-	sql_query("update collection_resource set comment='$comment',rating='$rating' where resource='$resource' and collection='$collection'");
+	sql_query("update collection_resource set comment='" . escape_check($comment) . "',rating=" . (($rating!="")?"'$rating'":"null") . " where resource='$resource' and collection='$collection'");
 	return true;
 	}
 
@@ -634,7 +634,7 @@ function copy_collection($copied,$current,$remove_existing=false)
 		if (!count($test)>0)
 			{
 			sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
-			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','". escape_check($col_resource['comment'])."'," . (($col_resource['rating']!="")?"'".$col_resource['rating']."'":"null") . ")","");
+			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','". escape_check($col_resource['comment'])."'," . (($col_resource['rating']!="")?"'".$col_resource['rating']."'":"null") . ")");
 			}
 		}
 	}
