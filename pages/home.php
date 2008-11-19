@@ -65,7 +65,7 @@ function nextPhoto()
 window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?=$homeanim_folder?>/2.jpg');"><img src='../<?=$homeanim_folder?>/1.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
+<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?=$homeanim_folder?>/1.jpg');"><img src='../<?=$homeanim_folder?>/2.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
 
