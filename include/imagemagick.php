@@ -125,7 +125,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
 	$command=$antiword_path . "/antiword";
 	if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
 	if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
-	shell_exec($command . " -i 2 -p a4 \"" . $file . "\" > \"" . $target . ".ps" . "\"");
+	shell_exec($command . " -p a4 \"" . $file . "\" > \"" . $target . ".ps" . "\"");
 	if (file_exists($target . ".ps"))
 		{
 		# Postscript file exists
