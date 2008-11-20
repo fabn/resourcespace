@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path;
 
 if (!$previewonly)
 	{
@@ -92,23 +92,60 @@ shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $t
 	}
 
 
+
+
 /* ----------------------------------------
 	Try Blender 3D. This runs Blender on the command line to render the first frame of the file.
    ----------------------------------------
 */
 
 if ($extension=="blend")
-
 	{
-$blendercommand="blender";	
-if (!file_exists($blendercommand)) {$blendercommand="/Applications/blender.app/Contents/MacOS/blender";}
-if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
-shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
-if (file_exists($target."0001.jpg")){
-copy($target."0001.jpg","$target");
-unlink($target."0001.jpg");
-$newfile = $target;}
+	$blendercommand="blender";	
+	if (!file_exists($blendercommand)) {$blendercommand="/Applications/blender.app/Contents/MacOS/blender";}
+	if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
+	shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
+	if (file_exists($target."0001.jpg"))
+		{
+		copy($target."0001.jpg","$target");
+		unlink($target."0001.jpg");
+		$newfile = $target;
+		}
 	}
+
+
+
+/* ----------------------------------------
+	Microsoft Word previews using Antiword
+	(note: this is very basic)
+   ----------------------------------------
+*/
+if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
+	{
+	$command=$antiword_path . "/antiword";
+	if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
+	if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
+	shell_exec($command . " -i 2 -p a4 \"" . $file . "\" > \"" . $target . ".ps" . "\"");
+	if (file_exists($target . ".ps"))
+		{
+		# Postscript file exists
+		
+		# Locate ghostscript command
+		$gscommand= $ghostscript_path. "/gs";
+	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
+        if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
+		
+		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop " . escapeshellarg($target . ".ps");
+		$output=shell_exec($gscommand); 
+
+		if (file_exists($target))
+			{
+			# A JPEG was created. Set as the file to process.
+			$newfile=$target;
+			}
+		}
+	}
+
 
 
 /* ----------------------------------------
