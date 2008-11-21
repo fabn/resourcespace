@@ -266,7 +266,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		if ($orig_order=="relevance") {$order_by="ref desc";}
 
-		return sql_query("select distinct *,hit_count score from resource r $sql_join where $sql_filter and ref not in (select distinct object_ref from daily_stat where activity_type='Resource download') order by $order_by",false,$fetchrows);
+		return sql_query("select distinct *,r.hit_count score from resource r $sql_join where $sql_filter and ref not in (select distinct object_ref from daily_stat where activity_type='Resource download') order by $order_by",false,$fetchrows);
 		}
 	
 	# Duplicate Resources (based on file_checksum)
