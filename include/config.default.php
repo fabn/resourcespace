@@ -42,6 +42,9 @@ $scramble_key="abcdef123";
 # Install Exiftool and set this path to enable metadata-writing when resources are downloaded
 # $exiftool_path="/usr/local/bin";
 
+# If Exiftool path is set, write metadata to files upon download if possible.
+  $exiftool_write=true;
+
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
 # $antiword_path="/usr/bin";
 

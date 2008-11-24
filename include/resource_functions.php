@@ -671,8 +671,8 @@ function get_exiftool_fields()
 
 function write_metadata($path,$ref)
 	{
-	global $exiftool_path,$exiftool_remove_existing,$storagedir;
-	if (isset($exiftool_path))
+	global $exiftool_path,$exiftool_remove_existing,$storagedir,$exiftool_write;
+	if (isset($exiftool_path)&&($exiftool_write))
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
