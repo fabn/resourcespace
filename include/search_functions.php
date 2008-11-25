@@ -80,104 +80,114 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	$suggested=$keywords; # a suggested search
 	$fullmatch=true;
 	$c=0;$t="";$t2="";$score="";
-	for ($n=0;$n<count($keywords);$n++)
-		{
-		$keyword=$keywords[$n];
-		if (substr($keyword,0,1)!="!")
-			{
-			$field=0;#echo "<li>$keyword<br/>";
-			if (strpos($keyword,":")!==false)
-				{
-				$k=explode(":",$keyword);
-				if ($k[0]=="day")
-					{
-					if ($sql_filter!="") {$sql_filter.=" and ";}
-					$sql_filter.="r.creation_date like '____-__-" . $k[1] . "%' ";
-					}
-				elseif ($k[0]=="month")
-					{
-					if ($sql_filter!="") {$sql_filter.=" and ";}
-					$sql_filter.="r.creation_date like '____-" . $k[1] . "-%' ";
-					}
-				elseif ($k[0]=="year")
-					{
-					if ($sql_filter!="") {$sql_filter.=" and ";}
-					$sql_filter.="r.creation_date like '" . $k[1] . "-%' ";
-					}
-				else
-					{
-					$ckeywords=explode(";",$k[1]);
-					$field=sql_value("select ref value from resource_type_field where name='" . escape_check($k[0]) . "'",0);
-					
-					$c++;
-					$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
-							
-					if ($score!="") {$score.="+";}
-					$score.="k" . $c . ".hit_count";
-					
-					# work through all options in an OR approach for multiple selects on the same field
-					# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
-					$sql_join.=" and (";
-					for ($m=0;$m<count($ckeywords);$m++)
-						{
-						$keyref=resolve_keyword($ckeywords[$m]);
-						if ($m!=0) {$t.=" or ";}
-						$sql_join.="k" . $c. ".keyword='$keyref'";
-						
-						# Log this
-						daily_stat("Keyword usage",$keyref);
-		
-						# Also add related.
-						$related=get_related_keywords($keyref);
-						for ($m=0;$m<count($related);$m++)
-							{
-							$sql_join.=" or k" . $c . ".keyword='" . $related[$m] . "'";
-							}
 	
-						}
-					$sql_join.=")";
-					}
-				}
-			else
+	$keysearch=true;
+	
+	 # Do not process if a numeric search is provided (resource ID)
+	global $config_search_for_number;
+	if ($config_search_for_number && is_numeric($search)) {$keysearch=false;}
+	
+	if ($keysearch)
+		{
+		for ($n=0;$n<count($keywords);$n++)
+			{
+			$keyword=$keywords[$n];
+			if (substr($keyword,0,1)!="!")
 				{
-				global $noadd;
-				if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
+				$field=0;#echo "<li>$keyword<br/>";
+				if (strpos($keyword,":")!==false)
 					{
-					$keyref=resolve_keyword($keyword);
-					if ($keyref==false)
+					$k=explode(":",$keyword);
+					if ($k[0]=="day")
 						{
-						$fullmatch=false;
-						$soundex=resolve_soundex($keyword);
-						if ($soundex===false)
-							{
-							# No keyword match, and no keywords sound like this word. Suggest dropping this word.
-							$suggested[$n]="";
-							}
-						else
-							{
-							# No keyword match, but there's a word that sounds like this word. Suggest this word instead.
-							$suggested[$n]="<i>" . $soundex . "</i>";
-							}
+						if ($sql_filter!="") {$sql_filter.=" and ";}
+						$sql_filter.="r.creation_date like '____-__-" . $k[1] . "%' ";
+						}
+					elseif ($k[0]=="month")
+						{
+						if ($sql_filter!="") {$sql_filter.=" and ";}
+						$sql_filter.="r.creation_date like '____-" . $k[1] . "-%' ";
+						}
+					elseif ($k[0]=="year")
+						{
+						if ($sql_filter!="") {$sql_filter.=" and ";}
+						$sql_filter.="r.creation_date like '" . $k[1] . "-%' ";
 						}
 					else
 						{
-						# Key match, add to query.
+						$ckeywords=explode(";",$k[1]);
+						$field=sql_value("select ref value from resource_type_field where name='" . escape_check($k[0]) . "'",0);
+						
 						$c++;
-
-						# Add related keywords
-						$related=get_related_keywords($keyref);$relatedsql="";
-						for ($m=0;$m<count($related);$m++)
-							{
-							$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
-							}
-						
-						$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
-						
+						$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
+								
 						if ($score!="") {$score.="+";}
 						$score.="k" . $c . ".hit_count";
 						
-						# Log this
-						daily_stat("Keyword usage",$keyref);
+						# work through all options in an OR approach for multiple selects on the same field
+						# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
+						$sql_join.=" and (";
+						for ($m=0;$m<count($ckeywords);$m++)
+							{
+							$keyref=resolve_keyword($ckeywords[$m]);
+							if ($m!=0) {$t.=" or ";}
+							$sql_join.="k" . $c. ".keyword='$keyref'";
+							
+							# Log this
+							daily_stat("Keyword usage",$keyref);
+			
+							# Also add related.
+							$related=get_related_keywords($keyref);
+							for ($m=0;$m<count($related);$m++)
+								{
+								$sql_join.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+								}
+		
+							}
+						$sql_join.=")";
+						}
+					}
+				else
+					{
+					global $noadd;
+					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
+						{
+						$keyref=resolve_keyword($keyword);
+						if ($keyref==false)
+							{
+							$fullmatch=false;
+							$soundex=resolve_soundex($keyword);
+							if ($soundex===false)
+								{
+								# No keyword match, and no keywords sound like this word. Suggest dropping this word.
+								$suggested[$n]="";
+								}
+							else
+								{
+								# No keyword match, but there's a word that sounds like this word. Suggest this word instead.
+								$suggested[$n]="<i>" . $soundex . "</i>";
+								}
+							}
+						else
+							{
+							# Key match, add to query.
+							$c++;
+	
+							# Add related keywords
+							$related=get_related_keywords($keyref);$relatedsql="";
+							for ($m=0;$m<count($related);$m++)
+								{
+								$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+								}
+							
+							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+							
+							if ($score!="") {$score.="+";}
+							$score.="k" . $c . ".hit_count";
+							
+							# Log this
+							daily_stat("Keyword usage",$keyref);
+							}
 						}
 					}
 				}
