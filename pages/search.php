@@ -286,12 +286,12 @@ if (true) #search condition
 <? } ?> <!-- END HOOK Rendertitlethumb -->			
 			
 			<div class="ResourcePanelCountry"><? if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?=highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><? } ?>&nbsp;</div>				
-			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
-			<? if (!checkperm("b")) { ?><span class="IconCollect"><?=add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?>
-			<? if (!checkperm("b") && substr($search,0,11)=="!collection") { ?>
+			<span class="IconPreview"><a href="preview.php?from=search&ref=<?=$ref?>&ext=<?=$result[$n]["preview_extension"]?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&k=<?=$k?>" title="<?=$lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?=$lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+			<? if (!checkperm("b") && $k=="") { ?><span class="IconCollect"><?=add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><? } ?>
+			<? if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
 			<span class="IconCollectOut"><?=remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<? } ?>
-			<? if ($allow_share) { ?><span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" title="<?=$lang["emailresource"]?>"><img src="../gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><? } ?>
+			<? if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="resource_email.php?ref=<?=$ref?>" title="<?=$lang["emailresource"]?>"><img src="../gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><? } ?>
 			<? if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><? } ?>
 			<? if ($collection_reorder_caption && $allow_reorder) { ?>
 			<span class="IconComment"><a href="collection_comment.php?ref=<?=$ref?>&collection=<?=substr($search,11)?>" title="<?=$lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			

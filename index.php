@@ -21,8 +21,14 @@ if (getval("c","")!="")
 		$r=get_collection_resources($c);
 		if (count($r)>0)
 			{
-			#$topurl="view.php?ref=" . $r[0] . "&k=" . $k;		
-			$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
+			if (!$feedback_resource_select)
+				{
+				$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
+				}
+			else
+				{
+				$topurl="pages/collection_feedback.php?collection=" . $c . "&k=" . $k;		
+				}
 			}
 		else
 			{
