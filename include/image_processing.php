@@ -211,11 +211,31 @@ function iptc_return_utf8($text)
 	
 function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
 	{
-	global $imagemagick_path,$ghostscript_path;
+	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
 
 	# File checksum (experimental) - disabled for now
 	# if (!$previewonly) {generate_file_checksum($ref,$extension);}
+
+	if (!$previewonly)
+		{
+		$file=get_resource_path($ref,true,"",false,$extension);	
+		}
+	else
+		{
+		# We're generating based on a new preview (scr) image.
+		$file=get_resource_path($ref,true,"tmp",false,$extension);	
+		}
 	
+	# Make sure the file exists
+	if (!file_exists($file)) {return false;}
+	
+	# If configured, make sure the file is within the size limit for preview generation
+	if (isset($preview_generate_max_file_size))
+		{
+		$filesize=filesize($file)/(1024*1024);# Get filesize in MB
+		if ($filesize>$preview_generate_max_file_size) {return false;}
+		}
+		
 	if (($extension=="jpg") || ($extension=="jpeg") || ($extension=="png") || ($extension=="gif"))
 	# Create image previews for built-in supported file types only (JPEG, PNG, GIF)
 		{
@@ -233,16 +253,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 			# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
 			# Only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
 			# Set thumbonly=true to (re)generate thumbnails only.
-
-			if (!$previewonly)
-				{
-				$file=get_resource_path($ref,true,"",false,$extension);	
-				}
-			else
-				{
-				# We're generating based on a new preview (scr) image.
-				$file=get_resource_path($ref,true,"tmp",false,$extension);	
-				}
 
 			$sizes="";
 			if ($thumbonly) {$sizes=" where id='thm' or id='col'";}

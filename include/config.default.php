@@ -524,6 +524,11 @@ $frameless_collections=false;
 # When requesting feedback, allow the user to select resources (e.g. pick preferred photos from a photo shoot).
 $feedback_resource_select=false;
 
+# Uncomment and set the below value to set the maximum size of uploaded file that thumbnail/preview images will be created for.
+# This is useful when dealing with very large files that may place a drain on system resources - for example 100MB+ Adobe Photoshop files will take a great deal of cpu/memory for ImageMagick to process and it may be better to skip the automatic preview in this case and add a preview JPEG manually using the "Upload a preview image" function on the resource edit page.
+# The value is in MB.
+# $preview_generate_max_file_size=100;
+
 
 #
 # ------------------------- Development Items -------------------------
