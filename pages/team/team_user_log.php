@@ -34,7 +34,7 @@ for ($n=0;$n<count($log);$n++)
 	<tr>
 	<td><?=$log[$n]["date"]?></td>
 	<td><?=$log[$n]["resourceid"]?></td>
-	<td><?=$log[$n]["resourcetitle"]?></td>
+	<td><?=i18n_get_translated($log[$n]["resourcetitle"])?></td>
 	<td><?=$lang["log-" . $log[$n]["type"]]?></td>
 	<td><?=i18n_get_translated($log[$n]["title"])?></td>
 	</tr>
