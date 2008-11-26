@@ -91,6 +91,8 @@ if ((strpos($usearch,"!")===false) && ($usearch!="")) {update_resource_keyword_h
 
 # Log this activity
 daily_stat("Resource view",$ref);
+if ($log_resource_views) {resource_log($ref,'v',0);}
+
 
 include "../include/header.php";
 ?>

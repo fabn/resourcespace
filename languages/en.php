@@ -263,6 +263,9 @@ $lang["log-c"]="Created resource";
 $lang["log-d"]="Downloaded file";
 $lang["log-e"]="Edited resource field";
 $lang["log-m"]="Edited resource field (multi-edit)";
+$lang["log-v"]="Viewed resource";
+$lang["log-l"]="Logged in"; # For user entries only.
+
 $lang["backtoresourceview"]="Back to resource view";
 
 # Resource status

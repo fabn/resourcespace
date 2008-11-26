@@ -1,6 +1,7 @@
 <?
 include "include/db.php";
 include "include/general.php";
+include "include/resource_functions.php";
 
 $url=getval("url","index.php");
 
@@ -63,8 +64,10 @@ elseif (array_key_exists("username",$_POST))
 			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0 where username='$username' and (password='$password' or password='$password_hash')");
 
 			# Log this
-			daily_stat("User session",$valid[0]["ref"]);
-
+			$userref=$valid[0]["ref"];
+			daily_stat("User session",$userref);
+			resource_log(0,'l',0);
+			
 			# Blank the IP address lockout counter for this IP
 			sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
 

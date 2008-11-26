@@ -1137,7 +1137,7 @@ function get_all_image_sizes($internal=false)
 	
 function get_user_log($user)
 	{
-	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title from resource_log l join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
 	}
 	
 function get_breadcrumbs()

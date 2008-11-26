@@ -529,6 +529,11 @@ $feedback_resource_select=false;
 # The value is in MB.
 # $preview_generate_max_file_size=100;
 
+# Should resource views be logged for reporting purposes?
+# Note that general daily statistics for each resource are logged anyway for the statistics graphs
+# - this option relates to specific user tracking for the more detailed report.
+$log_resource_views=false;
+
 
 #
 # ------------------------- Development Items -------------------------
