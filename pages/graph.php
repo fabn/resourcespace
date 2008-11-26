@@ -90,7 +90,7 @@ for ($n=$minx;($n<=$maxx && (   ($year<$thisyear) || ($n<=$thisday)  ));$n++)
 	{
 	if (array_key_exists($n,$days)) {$val=$days[$n];} else {$val=0;}
 	
-	$x=$xoffset + floor((($width)/($maxx-$minx))*($n-$minx));
+	$x=$xoffset + floor((($width-$xoffset)/($maxx-$minx))*($n-$minx));
 	$y=($height-$margin)-(floor((($height-$margin)/($max*1)) * $val));
 		
 	if ($oldx!=-1)
