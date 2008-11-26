@@ -90,21 +90,45 @@ function extract_exif_comment($ref,$extension)
 global $exiftool_path,$exif_comment;
 if (isset($exiftool_path))
 	{
-	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
-		{
+	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
+			{
 			$read_from=get_exiftool_fields();
-			for($i=0;$i< count($read_from);$i++)
-				{
+
+            # run exiftool to get all the valid fields. Use -s -s option so that
+            # the command result isn't printed in columns, which will help in parsing
+            # We then split the lines in the result into an array
+            $command=$exiftool_path."/exiftool -s -s -f -m -ScanforXMP -fast " . escapeshellarg($image);
+            $metalines = explode("\n", shell_exec($command));
+            
+            $metadata = array(); # an associative array to hold metadata field/value pairs
+            
+            # go through each line and split field/value using the first
+            # occurrance of ": ".  The keys in the associative array is converted
+            # into uppercase for easier lookup later
+            foreach($metalines as $metaline)
+            {
+                if (stripos($metaline, ": ")) #get position of first ": ", return false if not exist
+                {
+                    # add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
+                    $metadata[strtoupper(substr($metaline, 0, stripos($metaline, ": ")))] = trim(trim(substr($metaline,stripos($metaline, ": ")+2)),"'");
+                }
+            }
+            
+            # now we lookup fields from the database to see if a corresponding value
+            # exist in the uploaded file
+            for($i=0;$i< count($read_from);$i++)
+			{
 				$field=explode(",",$read_from[$i]['exiftool_field']);
 				foreach ($field as $subfield){
-					$command=$exiftool_path."/exiftool -p ";
-					$command.="'$".$subfield."' -f -m -ScanforXMP -fast ".escapeshellarg($image);
-					$metadata=shell_exec($command);
-					if (trim($metadata)!="-"){update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata));}
-					}
+					$subfield = strtoupper($subfield); // convert to upper case for easier comparision
+                    if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-")
+                    {
+                        update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));
+                    }
 				}
-				
+			}
 		}
+
 	}
 elseif (isset($exif_comment))
 {
