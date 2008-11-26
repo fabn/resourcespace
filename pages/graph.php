@@ -4,8 +4,8 @@ include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
 
-$width=600;
-$height=250;
+$width=700;
+$height=350;
 
 $graph = imagecreatetruecolor($width,$height);
 
@@ -26,9 +26,11 @@ $days=array();
 $max=-1;
 $minx=-1;
 $maxx=0;
-$margin=120;
+$margin=120; # Vertical margin (space below graph)
 $font="../gfx/fonts/vera.ttf";
 $total=0;
+$xoffset=60; # Position of Y axis (space to left of graph)
+$black=imagecolorallocate($graph,0,0,0);
 
 for ($n=0;$n<count($results);$n++)
 	{
@@ -51,21 +53,34 @@ $maxx=365;
 $col=imagecolorallocate($graph,255,255,255);
 imagefilledrectangle($graph,0,0,$width,$height,$col);
 
-# Vertical lines
+
+# Draw left hand axis
+
+# Calculate units to use.
+$units=max(pow(10,strlen(floor($max/2))-1),1);
+
+# Draw horizontal lines / axis text
 $col=imagecolorallocate($graph,230,230,230);
-for ($n=1;$n<=12;$n++)
+for ($n=0;$n<$max;$n+=$units)
 	{
-	$x=($n/12*$width);
-	imageline($graph,$x,0,$x,$height-$margin+16,$col);
+	$y=($height-$margin)-(floor((($height-$margin)/($max*1)) * $n));
+	imageline($graph,$xoffset,floor($y),$width,floor($y),($n==0)?$black:$col);
+
+	$bbox=imagettfbbox(9,0,$font,$n); # Get bounding box to right-align text.
+	imagettftext($graph,9,0,$xoffset-$bbox[2]-$bbox[0]-5,$y+5,$black,$font,$n);
 	}
 
-# Draw horizontal lines
+
+
+# Vertical lines
 $col=imagecolorallocate($graph,230,230,230);
-for ($y=0;$y<=($height-$margin);$y+=($height-$margin)/10)
+for ($n=0;$n<=12;$n++)
 	{
-	if ($y==($height-$margin)) {$col=imagecolorallocate($graph,0,0,0);}
-	imageline($graph,0,floor($y),$width,floor($y),$col);
+	$x=$xoffset+($n/12*($width-$xoffset));
+	imageline($graph,$x,0,$x,$height-$margin+16,($n==0)?$black:$col);
 	}
+
+
 
 	
 # Plot graph
@@ -75,7 +90,7 @@ for ($n=$minx;($n<=$maxx && (   ($year<$thisyear) || ($n<=$thisday)  ));$n++)
 	{
 	if (array_key_exists($n,$days)) {$val=$days[$n];} else {$val=0;}
 	
-	$x=floor((($width)/($maxx-$minx))*($n-$minx));
+	$x=$xoffset + floor((($width)/($maxx-$minx))*($n-$minx));
 	$y=($height-$margin)-(floor((($height-$margin)/($max*1)) * $val));
 		
 	if ($oldx!=-1)
@@ -83,9 +98,7 @@ for ($n=$minx;($n<=$maxx && (   ($year<$thisyear) || ($n<=$thisday)  ));$n++)
 		$col=imagecolorallocate($graph,255,0,0);
 		imageline($graph,$oldx,$oldy,$x,$y,$col);
 		}
-		
 
-	
 	$oldx=$x;$oldy=$y;
 	}
 
@@ -98,14 +111,14 @@ $text=$lang["stat-" . strtolower(str_replace(" ","",$activity_type))] . " " . $l
 if ($max!=-1) {$text.=$lang["mostinaday"] . " = " . number_format($max) . "\n" . $lang["totalfortheyear"] . " = " . number_format($total) . "\n" . $lang["dailyaverage"] . " = " . number_format(round($total/count($results),1));}
 else {$text=$lang["nodata"];}
 
-imagettftext($graph,9,0,5,$height-$margin+46,$col,$font,$text);
-imagettftext($graph,9,0,5,12,$col,$font,$lang["max"] . "=" . number_format($max));
+imagettftext($graph,9,0,5,$height-$margin+40,$col,$font,$text);
+#imagettftext($graph,9,0,5,12,$col,$font,$lang["max"] . "=" . number_format($max));
 
 
 # Draw months
 for ($n=1;$n<=12;$n++)
 	{
-	$x=(($n-1)/12*$width)+14;
+	$x=$xoffset+(($n-1)/12*($width-$xoffset))+14;
 	$text=substr($lang["months"][$n-1],0,3);
 	imagettftext($graph,9,0,$x,$height-$margin+14,$col,$font,$text);
 	}

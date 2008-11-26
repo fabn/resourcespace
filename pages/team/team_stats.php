@@ -115,7 +115,7 @@ else {document.getElementById('groupselector').style.display='block';}">
 	<? if ($activity_type!="") { ?>	
 	<br/>
 	<div class="BasicsBox">
-	<img style="border:1px solid black;" src="../graph.php?activity_type=<?=urlencode($activity_type)?>&year=<?=$year?>&groupselect=<?=$groupselect?>&groups=<?=join("_",$groups)?>" width=600 height=250>
+	<img style="border:1px solid black;" src="../graph.php?activity_type=<?=urlencode($activity_type)?>&year=<?=$year?>&groupselect=<?=$groupselect?>&groups=<?=join("_",$groups)?>" width=700 height=350>
 	</div>
 	<? } ?>
 	
