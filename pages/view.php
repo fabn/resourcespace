@@ -244,7 +244,7 @@ if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resour
 			<td><?=$sizes[$n]["filesize"]?></td>
 			<!--<td><?=$sizes[$n]["filedown"]?></td>-->
 			<td class="DownloadButton">
-			<a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>"><?=$lang["download"]?></a>
+			<a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k)?>"><?=$lang["download"]?></a>
 			</td></tr>
 			<?
 			}
