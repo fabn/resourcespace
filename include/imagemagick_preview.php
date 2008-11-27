@@ -79,6 +79,12 @@ if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_a
     unlink($targetfiletmp);
     }
 
+if (!mysql_ping())
+	{
+	mysql_connect($mysql_server,$mysql_username,$mysql_password,true);
+	mysql_select_db($mysql_db);
+	}
+
 if (RUNNING_ASYNC)
 	{
 	sql_query("UPDATE resource SET is_transcoding = 0 WHERE ref = '".escape_check($ref)."'");
