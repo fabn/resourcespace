@@ -21,13 +21,16 @@ if (getval("c","")!="")
 		$r=get_collection_resources($c);
 		if (count($r)>0)
 			{
-			if (!$feedback_resource_select)
+			# Fetch collection data
+			$cinfo=get_collection($c);if ($cinfo===false) {exit("Collection not found.");}
+		
+			if ($feedback_resource_select && $cinfo["request_feedback"])
 				{
-				$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
+				$topurl="pages/collection_feedback.php?collection=" . $c . "&k=" . $k;		
 				}
 			else
 				{
-				$topurl="pages/collection_feedback.php?collection=" . $c . "&k=" . $k;		
+				$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
 				}
 			}
 		else

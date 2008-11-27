@@ -6,6 +6,8 @@ include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(str_replace("!collection","",getvalescaped("search","")),$k))) {include "../include/authenticate.php";}
 
+# Disable info box for external users.
+if ($k!="") {$infobox=false;}
 
 $search=getvalescaped("search","");
 

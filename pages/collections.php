@@ -11,7 +11,9 @@ include "../include/search_functions.php";
 
 # Hide/show thumbs
 $thumbs=getval("thumbs",$thumbs_default);
-if ($k!="") {$thumbs="show";} # Always show thumbnails for external user access.
+if ($k!="") {$thumbs="show";$infobox=false;} # Always show thumbnails for external user access. Disable info box.
+
+
 setcookie("thumbs",$thumbs,0);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
