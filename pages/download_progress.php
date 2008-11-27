@@ -10,7 +10,7 @@ $size=getval("size","");
 $ext=getval("ext","");
 $alternative=getval("alternative",-1);
 
-if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext))))
+if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext, 1, $alternative)))) // used in remotedownload-plugin
 	{
 	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative;
 	}
