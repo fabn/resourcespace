@@ -77,19 +77,33 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	if ($watermarked) {$p.="_wm";}
 	
 	# Fetching the file path? Add the full path to the file
+	$filefolder=$storagedir . "/" . $folder;
 	if ($getfilepath)
 	    {
-	    $folder=$storagedir . "/" . $folder;
+	    $folder=$filefolder;
 	    }
 	else
 	    {
-		global $storageurl;
+	    global $storageurl;
 	    $folder=$storageurl . "/" . $folder;
 	    }
 	
-	$file=$folder . $ref . $size . $p . $a . "." . $extension;
+	if ($scramble)
+		{
+		$file_old=$filefolder . $ref . $size . $p . $a . "." . $extension;
+		$file_new=$filefolder . $ref . $size . $p . $a . "_" . substr(md5($ref . $size . $p . $a . $scramble_key),0,15) . "." . $extension;
+		$file=$folder . $ref . $size . $p . $a . "_" . substr(md5($ref . $size . $p . $a . $scramble_key),0,15) . "." . $extension;
+		if (file_exists($file_old))
+		  	{
+			rename($file_old, $file_new);
+		  	}
+		}
+	else
+		{
+		$file=$folder . $ref . $size . $p . $a . "." . $extension;
+		}
 
-	# Append modified date/time to the URL so the cached copy is not used if the file is changed.
+# Append modified date/time to the URL so the cached copy is not used if the file is changed.
 	if (!$getfilepath && $includemodified)
 		{
 		if ($file_modified=="")
