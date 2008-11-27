@@ -64,7 +64,12 @@ if($width>$ffmpeg_preview_max_width)
 	$width=$ffmpeg_preview_max_width;
 	}
 
-$output=shell_exec($ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile));
+$shell_exec_cmd = $ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
+$output=shell_exec($shell_exec_cmd);
+if (!file_exists($targetfile))
+    {
+    error_log("FFmpeg failed: ".$shell_exec_cmd);
+    }
 
 if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_preview_extension, $qtfaststart_extensions) )
     {
