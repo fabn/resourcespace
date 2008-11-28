@@ -48,7 +48,8 @@ if ($submitted != "")
 		# Only download resources with proper access level
 		if ($access==0)
 			{
-			$p=get_resource_path($ref,true,$size,false,$result[$n]["file_extension"]);
+			$pextension = $size == '' ? $result[$n]["file_extension"] : 'jpg';
+			$p=get_resource_path($ref,true,$size,false,$pextension);
 			if (!file_exists($p))
 				{
 				# If the file doesn't exist for this size, then the original file must be in the requested size.
