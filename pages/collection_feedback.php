@@ -54,7 +54,7 @@ include "../include/header.php";
 		{
 		$ref=$result[$n]["ref"];
 		
-		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),32));
+		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),60));
 		?>	
 		<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
@@ -62,7 +62,20 @@ include "../include/header.php";
 		
 		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
 		
-		<? if ($result[$n]["has_image"]==1) { ?><a rel="lightbox" href="<?=get_resource_path($ref,false,"scr",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		<? if ($result[$n]["has_image"]==1) {
+			$path=get_resource_path($ref,true,"scr",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
+			if (file_exists($path))
+				{
+				# Use 'scr' path
+				$path=get_resource_path ($ref, false,"scr",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
+				}
+			else
+				{
+				# Use original file.
+				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
+				}
+		
+		?><a rel="lightbox" href="<?=$path?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<? } else { ?>		<img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>.gif" /><? } ?>
 
 		
