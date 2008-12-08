@@ -32,6 +32,9 @@ if (getval("save","")!="")
 	$done=true;
 	}
 
+$headerinsert.="<script src=\"../lib/js/lightbox.js\" type=\"text/javascript\"></script>";
+
+
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
@@ -50,19 +53,24 @@ include "../include/header.php";
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
+		
+		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),32));
 		?>	
 		<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
 		<div class="ResourcePanel">
 		
 		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
-		<? if ($result[$n]["has_image"]==1) { ?><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"
+		
+		<? if ($result[$n]["has_image"]==1) { ?><a rel="lightbox" href="<?=get_resource_path($ref,false,"scr",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<? } else { ?>		<img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>.gif" /><? } ?>
+
+		
 		</td>
 		</tr></table>
 		<span class="ResourceSelect"><input type="checkbox" name="select_<?=$ref?>" value="yes"></span>
 
-		<div class="ResourcePanelInfo"><?=htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),32))?>&nbsp;</div>
+		<div class="ResourcePanelInfo"><?=$title?>&nbsp;</div>
 			
 		<div class="clearer"> </div>
 		</div>
