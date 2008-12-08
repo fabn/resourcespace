@@ -75,7 +75,7 @@ include "../include/header.php";
 				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
 				}
 		
-		?><a rel="lightbox" href="<?=$path?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		?><a rel="lightbox[feedback]" href="<?=$path?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<? } else { ?>		<img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>.gif" /><? } ?>
 
 		
