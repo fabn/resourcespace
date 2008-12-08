@@ -573,6 +573,12 @@ function send_collection_feedback($collection,$comment)
 		{
 		$body.=$lang["user"] . ": " . $userfullname . "\n";
 		}
+	else
+		{
+		# External user.
+		$body.=$lang["fullname"] . ": " . getval("name","") . "\n";
+		$body.=$lang["email"] . ": " . getval("email","") . "\n";
+		}
 	$body.=$lang["message"] . ": " . stripslashes(str_replace("\\r\\n","\n",trim($comment)));
 
 	$f=get_collection_comments($collection);

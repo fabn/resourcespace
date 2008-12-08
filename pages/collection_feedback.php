@@ -98,10 +98,25 @@ include "../include/header.php";
 
 <div class="Question">
 <? if ($errors!="") { ?><div class="FormError">!! <?=$errors?> !!</div><? } ?>
-<label for="name"><?=$lang["message"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"></textarea>
+<label for="comment"><?=$lang["message"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"></textarea>
 <div class="clearerleft"> </div>
 </div>
 
+<? if (!isset($userfullname))
+	{
+	# For external users, ask for their name/e-mail in case this has been passed to several users.
+	?>
+	<div class="Question">
+	<label for="name"><?=$lang["yourname"]?></label><input type="text" class="stdwidth" name="name" id="name"></textarea>
+	<div class="clearerleft"> </div>
+	</div>
+	<div class="Question">
+	<label for="email"><?=$lang["youremailaddress"]?></label><input type="text" class="stdwidth" name="email" id="email"></textarea>
+	<div class="clearerleft"> </div>
+	</div>
+	<?
+	}
+?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
