@@ -53,7 +53,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		$scramblepath=substr(md5($ref . "_" . $scramble_key),0,15);
 		}
 	
-	if (($extension=="") || ($size != '')) {$extension="jpg";}
+	if ($extension=="") {$extension="jpg";}
 	
 	$folder="";
 	#if (!file_exists(dirname(__FILE__) . $folder)) {mkdir(dirname(__FILE__) . $folder,0777);}
