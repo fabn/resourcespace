@@ -990,7 +990,7 @@ function send_mail($email,$subject,$message,$from="")
    	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $email_from . ">" . $eol;
    	$headers .= "Return-Path: $email_from" . $eol;
-   	$headers .= "Delivered-to: $email" . $eol;
+   	//$headers .= "Delivered-to: $email" . $eol;
    	$headers .= "MIME-Version: 1.0" . $eol;
    	$headers .= "X-Mailer: PHP Mail Function" . $eol;
 	$headers .= "Content-Type: text/plain; charset=\"UTF-8\"" . $eol;
