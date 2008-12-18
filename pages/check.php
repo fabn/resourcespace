@@ -69,11 +69,26 @@ if (ResolveKB($upload_max_filesize)<(100*1024)) {$result="WARNING: should be 100
 ?><tr><td>PHP.INI value for 'upload_max_filesize'</td><td><?=$upload_max_filesize?></td><td><b><?=$result?></b></td></tr><?
 
 
-# Check write access to $storagedir
+# Check write access to filestore
 $success=is_writable($storagedir);
 if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result="OK";}
-?><tr><td colspan="2">Write access to '$storagedir' directory</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">Write access to 'filestore' directory</td><td><b><?=$result?></b></td></tr>
 
+
+<?
+# Check filestore folder browseability
+$output=@file_get_contents($baseurl . "/filestore");
+if (strpos($output,"Index of")===false)
+	{
+	$result="OK";
+	}
+else
+	{
+	$result="FAIL: filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
+	}
+?><tr><td colspan="2">Blocked browsing of 'filestore' directory</td><td><b><?=$result?></b></td></tr>
+
+<?
 function CheckImagemagick()
 {
  	global $imagemagick_path;
@@ -182,10 +197,12 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">Exiftool</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">Exiftool</td><td><b><?=$result?></b></td></tr>
 
 
-?>
+
+
+
 </table>
 </div>
 
