@@ -21,7 +21,7 @@ function send_research_request()
 	# E-mails a resource request (posted) to the team
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$userfullname,$useremail,$lang;
 	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";
-	$message.="$baseurl/team_research.php";
+	$message.="$baseurl/pages/team/team_research.php";
 	send_mail($email_notify,$applicationname . ": " . $lang["newresearchrequestwaiting"],$message,$useremail);
 	}
 

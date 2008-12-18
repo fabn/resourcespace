@@ -7,6 +7,8 @@ http://www.montala.net/resourcespace.php
 -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 <title><?=htmlspecialchars($applicationname)?></title>
 <link href="<?=$baseurl?>/css/global.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" />
 <link href="<?=$baseurl?>/css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css?css_reload_key=<?=$css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />

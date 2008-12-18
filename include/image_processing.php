@@ -16,6 +16,10 @@ function upload_file($ref)
     # Work out extension
     $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
     
+    # Banned extension?
+    global $banned_extensions;
+    if (in_array($extension,$banned_extensions)) {return false;}
+    
     $status="Please provide a file name.";
     $filepath=get_resource_path($ref,true,"",true,$extension);
 

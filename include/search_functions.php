@@ -13,7 +13,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc","popularity"=>"user_rating desc,hit_count desc,creation_date desc","rating"=>"rating desc, user_rating desc, score desc","date"=>"creation_date desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date","country"=>"country");
+	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc","popularity"=>"user_rating desc,hit_count desc,creation_date desc","rating"=>"r.rating desc, user_rating desc, score desc","date"=>"creation_date desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date","country"=>"country");
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search); # remove any trailing or leading spaces

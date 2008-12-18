@@ -534,6 +534,9 @@ $feedback_resource_select=false;
 # - this option relates to specific user tracking for the more detailed report.
 $log_resource_views=false;
 
+# A list of file extentions of file types that cannot be uploaded for security reasons.
+# For example; uploading a PHP file may allow arbirtary execution of code, depending on server security settings.
+$banned_extensions=array("php","cgi","pl","exe","asp","jsp");
 
 #
 # ------------------------- Development Items -------------------------

@@ -155,7 +155,7 @@ include "include/header.php";
   <a href="pages/user_password.php">&gt; <?=$lang["forgottenpassword"]?></a></p>
   <? if ($error!="") { ?><div class="FormIncorrect"><?=$error?></div><? } ?>
   <form id="form1" method="post" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?>>
-  <input type=hidden name=url value="<?=$url?>">
+  <input type=hidden name=url value="<?=htmlspecialchars($url)?>">
 		<div class="Question">
 			<label for="name"><?=$lang["username"]?> </label>
 			<input type="text" name="username" id="name" class="stdwidth" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?> />
