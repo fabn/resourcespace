@@ -3,6 +3,8 @@ include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission denied.");}
 include "../../include/general.php";
 
+if ($send_statistics) {send_statistics();}
+
 # Some disk size allocation
 if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
 $avail=disk_total_space($storagedir);

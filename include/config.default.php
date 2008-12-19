@@ -29,6 +29,13 @@ $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT -
 # To disable, set to the empty string ("").
 $scramble_key="abcdef123";
 
+# If you agree to send occasional statistics to Montala, leave this set to 'yes'.
+# The following two numeric metrics alone will be sent every 7 days:
+# - Number of resources
+# - Number of users
+# The information will only be used to provide totals on the Montala site, e.g 
+# global number of installations, users and resources.
+$send_statistics=true;
 
 # ---- Paths to various external utilities ----
 
