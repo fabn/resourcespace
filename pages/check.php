@@ -110,6 +110,13 @@ function CheckGhostscript()
 	if (file_exists($ghostscript_path . "/gs.exe")) return true;	
 	return false;
 }
+function CheckExiftool()
+{
+ 	global $exiftool_path;
+	if (file_exists($exiftool_path . "/exiftool")) return true;
+	if (file_exists($exiftool_path . "/exiftool.exe")) return true;	
+	return false;
+}
 
 # Check ImageMagick path
 if (isset($imagemagick_path))
@@ -184,7 +191,7 @@ else
 # Check Exiftool path
 if (isset($exiftool_path))
 	{
-	if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+	if (CheckExiftool())
 		{
 		$result="OK";
 		}
