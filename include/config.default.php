@@ -94,6 +94,7 @@ $languages["de"]="Deutsch";
 $languages["es"]="Español";
 $languages["fr"]="Français";
 $languages["it"]="Italiano";
+$languages["jp"]="Japanese";
 $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
