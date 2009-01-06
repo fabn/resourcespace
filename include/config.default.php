@@ -49,9 +49,6 @@ $send_statistics=true;
 # Install Exiftool and set this path to enable metadata-writing when resources are downloaded
 # $exiftool_path="/usr/local/bin";
 
-# If Exiftool path is set, write metadata to files upon download if possible.
-  $exiftool_write=true;
-
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
 # $antiword_path="/usr/bin";
 
@@ -141,7 +138,7 @@ if (function_exists("date_default_timezone_set")) {date_default_timezone_set("GM
 # The example given is for Norwegian.
 $iptc_expectedchars="æøåÆØÅ";
 
-# Which field do we drop the EXIF data in to?
+# Which field do we drop the EXIF data in to? (when NOT using exiftool)
 # Comment out these lines to disable basic EXIF reading.
 # See exiftool for more advanced EXIF/IPTC/XMP extraction.
 $exif_comment=18;
@@ -151,6 +148,12 @@ $exif_date=12;
 # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources using exiftool.
 $exiftool_remove_existing=false; 
 
+# If Exiftool path is set, write metadata to files upon download if possible.
+$exiftool_write=true;
+
+# If Exiftool path is set, do NOT send files with the following extensions to exiftool for processing
+# For example: $exiftool_no_process=array("eps","png");
+$exiftool_no_process=array();
 
 # Which field do we drop the original filename in to?
 $filename_field=51;

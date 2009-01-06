@@ -91,8 +91,8 @@ function extract_exif_comment($ref,$extension)
 	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
 
-global $exiftool_path,$exif_comment;
-if (isset($exiftool_path))
+global $exiftool_path,$exif_comment,$exiftool_no_process;
+if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
 			{

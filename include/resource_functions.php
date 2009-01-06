@@ -671,8 +671,13 @@ function get_exiftool_fields()
 
 function write_metadata($path,$ref)
 	{
-	global $exiftool_path,$exiftool_remove_existing,$storagedir,$exiftool_write;
-	if (isset($exiftool_path)&&($exiftool_write))
+	global $exiftool_path,$exiftool_remove_existing,$storagedir,$exiftool_write,$exiftool_no_process;
+	
+	# Fetch file extension
+	$resource_data=get_resource_data($ref);
+	$extension=$resource_data["file_extension"];
+	
+	if (isset($exiftool_path) && ($exiftool_write) && !in_array($extension,$exiftool_no_process))
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
