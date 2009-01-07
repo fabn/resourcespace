@@ -114,7 +114,6 @@ for ($n=0;$n<count($uploadfiles);$n++)
 			{
 			add_resource_to_collection($ref,$collection);
 			refresh_collection_frame();
-			?><script language="Javascript">top.collections.location.href="collections.php?nc=<?=time()?>";</script><?
 			}
 			
 		# Log this
