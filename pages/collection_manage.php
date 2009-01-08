@@ -129,10 +129,10 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?><tr>
 	<td><div class="ListTitle">
-	<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=$collections[$n]["name"]?></a></div></td>
+	<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
-	<td><?=$collections[$n]["username"]?></td>
-	<td><?=$collections[$n]["ref"]?></td>
+	<td><?=highlightkeywords($collections[$n]["username"],$find)?></td>
+	<td><?=highlightkeywords($collections[$n]["ref"],$find)?></td>
 	<td><?=nicedate($collections[$n]["created"],true)?></td>
 	<td><?=$collections[$n]["count"]?></td>
 	<td><?=($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
