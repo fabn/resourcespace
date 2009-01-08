@@ -6,12 +6,11 @@
 function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetchrows=-1)
 	{
 	# Returns a list of user collections.
-
 	$sql="";
-	if (strlen($find)>1) {$sql="and name like '%$find%'";}
-	if (strlen($find)==1) {$sql="and name like '$find%'";}
+	if (strlen($find)>1) {$sql="and name like '%$find%' or u.username like '%$find%' or c.ref like '$find'";}
+	if (strlen($find)==1) {$sql="and name like '$find%' or c.ref like '$find'";}
 
-		if ($sql=="") {$sql=" ";} else {$sql.="  ";}
+	if ($sql=="") {$sql=" ";} else {$sql.="  ";}
    
 	return sql_query ("select * from (select c.*,u.username,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join	collection_resource r on c.ref=r.collection where (length(c.theme)=0 or c.theme is null) $sql group by c.ref
 	union
@@ -120,12 +119,16 @@ function refresh_collection_frame()
 		}
 	}
 	
-function search_public_collections($search)
+function search_public_collections($search="",$order_by="name",$sort="ASC")
 	{
-	if ($search!="") {$qsearch="and (c.name like '%$search%' or u.username like '%$search%' or c.ref='$search')";} else {$qsearch="";}
-	return sql_query("select c.*,u.username from collection c,user u where c.user=u.ref and c.public=1 $qsearch and (length(c.theme)=0 or c.theme is null) order by c.created desc");
+	$sql="";
+	if (strlen($search)>1) {$sql="and (name like '%$search%' or u.username like '%$search%' or c.ref like '$search')";}
+	if (strlen($search)==1) {$sql="and (name like '$search%' or c.ref like '$search')";}	
+	if ($sql=="") {$sql=" ";} else {$sql.="  ";}
+
+	return sql_query("select c.*,u.username from collection c,user u where c.user=u.ref and c.public=1 $sql and (length(c.theme)=0 or c.theme is null) order by $order_by $sort");
 	}
-	
+
 function add_collection($user,$collection)
 	{
 	# Add a collection to a user's 'My Collections'
