@@ -186,12 +186,13 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 <!--Find a collection-->
+<?if($enable_public_collections){?>
 <div class="BasicsBox">
     <h1><?=$lang["findpubliccollection"]?></h1>
     <p class="tight"><?=text("findpublic")?></p>
     <p><a href="collection_public.php"><?=$lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
-
+<?}?>
 
 <?		
 include "../include/footer.php";
