@@ -150,7 +150,7 @@ function save_resource_data($ref,$multi)
 		}
 		
 	# Also save related resources field
-	sql_query("delete from resource_related where resource='$ref'"); # remove existing related items
+	sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
 	$related=explode(",",getvalescaped("related",""));
 	# Make sure all submitted values are numeric
 	$ok=array();for ($n=0;$n<count($related);$n++) {if (is_numeric(trim($related[$n]))) {$ok[]=trim($related[$n]);}}
@@ -293,7 +293,7 @@ function save_resource_data_multi($collection)
 		for ($m=0;$m<count($list);$m++)
 			{
 			$ref=$list[$m];
-			sql_query("delete from resource_related where resource='$ref'"); # remove existing related items
+			sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
 			if (count($ok)>0) {sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$ok) . ")");}
 			}
 		}
@@ -659,7 +659,7 @@ function update_resource_type($ref,$type)
 function relate_to_array($ref,$array)	
 	{
 	# Relates a resource to each in a simple array of ref numbers
-		sql_query("delete from resource_related where resource='$ref'");  
+		sql_query("delete from resource_related where resource='$ref' or related='$ref'");  
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$array) . ")");
 	}		
 
