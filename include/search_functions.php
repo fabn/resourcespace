@@ -1,4 +1,4 @@
-<?
+<?php
 # Search functions
 # Functions to perform searches (read only)
 #  - For resource indexing / keyword creation, see resource_functions.php

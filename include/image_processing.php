@@ -1,4 +1,4 @@
-<?
+<?php
 
 # Image processing functions
 # Functions to allow upload and resizing of images

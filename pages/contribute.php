@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";if (!checkperm("d")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -9,35 +9,35 @@ include "../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["mycontributions"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["mycontributions"]?></h1>
+  <p><?php echo text("introtext")?></p>
 
 	<div class="VerticalNav">
 	<ul>
 	
-	<? if ($usercontribute_swfupload) { ?>
-	<li><a href="edit.php?ref=-<?=$userref?>&swf=true"><?=$lang["contributenewresource"]?></a></li>
-	<? }  else { ?>
-	<li><a href="create.php?archive=-2"><?=$lang["contributenewresource"]?></a></li>
-	<? } ?>
+	<?php if ($usercontribute_swfupload) { ?>
+	<li><a href="edit.php?ref=-<?php echo $userref?>&swf=true"><?php echo $lang["contributenewresource"]?></a></li>
+	<?php }  else { ?>
+	<li><a href="create.php?archive=-2"><?php echo $lang["contributenewresource"]?></a></li>
+	<?php } ?>
 
-	<? if (!checkperm("e0") && checkperm("e-2")) { ?>
-	<li><a href="search.php?search=!contributions<?=$userref?>&archive=-2"><?=$lang["viewcontributedps"]?></a></li>
-	<? } ?>
+	<?php if (!checkperm("e0") && checkperm("e-2")) { ?>
+	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
+	<?php } ?>
 	
-	<? if (!checkperm("e0") && checkperm("e-1")) { ?>
-	<li><a href="search.php?search=!contributions<?=$userref?>&archive=-1"><?=$lang["viewcontributedpr"]?></a></li>
-	<? } ?>
+	<?php if (!checkperm("e0") && checkperm("e-1")) { ?>
+	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=-1"><?php echo $lang["viewcontributedpr"]?></a></li>
+	<?php } ?>
 	
-	<? if ($show_user_contributed_resources) { ?>
-	<li><a href="search.php?search=!contributions<?=$userref?>&archive=0"><?=$lang["viewcontributedsubittedl"]?></a></li>
-	<? } ?>
+	<?php if ($show_user_contributed_resources) { ?>
+	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=0"><?php echo $lang["viewcontributedsubittedl"]?></a></li>
+	<?php } ?>
 	
 	</ul>
 	</div>
 	
   </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

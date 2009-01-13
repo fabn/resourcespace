@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -25,7 +25,7 @@ for ($n=0;$n<count($fields);$n++)
 daily_stat("Print story",$ref);
 ?>
 <html>
-<head><title><?=$applicationname?> <?=$lang["storyextract"]?></title>
+<head><title><?php echo $applicationname?> <?php echo $lang["storyextract"]?></title>
 <style>
 body {font-family:verdana,arial,sans-serif;font-size:12px;}
 h1 {font-size:16px;}
@@ -34,8 +34,8 @@ h2 {font-size:14px;}
 </style>
 </head>
 <body onLoad="print();">
-<h1><?=$applicationname?> <?=$lang["storyextract"]?></h1>
-<h2><?=$lang["resourceid"]?> <?=$ref?>: <?=$resource["title"]?></h2>
-<p><?=nl2br(htmlspecialchars($storyextract))?></p>
+<h1><?php echo $applicationname?> <?php echo $lang["storyextract"]?></h1>
+<h2><?php echo $lang["resourceid"]?> <?php echo $ref?>: <?php echo $resource["title"]?></h2>
+<p><?php echo nl2br(htmlspecialchars($storyextract))?></p>
 </body>
 </html>

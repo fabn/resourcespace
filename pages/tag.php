@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (!checkperm("n")) {exit("Permission denied");}
 include "../include/general.php";
@@ -42,27 +42,27 @@ include "../include/header.php";
 <div class="BasicsBox"> 
 
 <form method="post" id="mainform">
-<input type="hidden" name="ref" value="<?=$ref?>">
+<input type="hidden" name="ref" value="<?php echo $ref?>">
 
-<h1><?=$lang["speedtagging"]?></h1>
-<p><?=text("introtext")?></p>
+<h1><?php echo $lang["speedtagging"]?></h1>
+<p><?php echo text("introtext")?></p>
 
-<? 
+<?php 
 $imagepath=get_resource_path($ref,false,"pre",false,$resource["preview_extension"]);
 ?>
-<div class="RecordBox"><div class="RecordPanel"><img src="<?=$imagepath?>" alt="" class="Picture" />
+<div class="RecordBox"><div class="RecordPanel"><img src="<?php echo $imagepath?>" alt="" class="Picture" />
 
 
 <!--<div class="Question">
-<label for="keywords"><?=$lang["existingkeywords"]?></label>
-<div class="Fixed"><?=join(", ",$existing)?></div>
+<label for="keywords"><?php echo $lang["existingkeywords"]?></label>
+<div class="Fixed"><?php echo join(", ",$existing)?></div>
 </div>-->
 
 <div class="clearerleft"> </div>
 
 <div class="Question">
-<label for="keywords"><?=$lang["extrakeywords"]?></label>
-<input type="text" class="stdwidth" rows=6 cols=50 name="keywords" id="keywords" value="<?=htmlspecialchars($words)?>">
+<label for="keywords"><?php echo $lang["extrakeywords"]?></label>
+<input type="text" class="stdwidth" rows=6 cols=50 name="keywords" id="keywords" value="<?php echo htmlspecialchars($words)?>">
 </div>
 
 <script type="text/javascript">
@@ -71,22 +71,22 @@ document.getElementById('keywords').focus();
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="save" type="submit" default value="&nbsp;&nbsp;<?=$lang["next"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" default value="&nbsp;&nbsp;<?php echo $lang["next"]?>&nbsp;&nbsp;" />
 </div>
 
 <div class="clearerleft"> </div>
 </div></div>
 
-<!--<p>Thanks for helping. The speed tagging project is <?=$percent?>% complete.</p>-->
+<!--<p>Thanks for helping. The speed tagging project is <?php echo $percent?>% complete.</p>-->
 
-<p><?=$lang["leaderboard"]?><table>
-<?
+<p><?php echo $lang["leaderboard"]?><table>
+<?php
 $lb=sql_query("select u.fullname,count(*) c from user u join resource_log rl on rl.user=u.ref where rl.resource_type_field='$speedtaggingfield' group by u.ref order by c desc limit 5;");
 for ($n=0;$n<count($lb);$n++)
 	{
 	?>
-	<tr><td><?=$lb[$n]["fullname"]?></td><td><?=$lb[$n]["c"]?></td></tr>
-	<?
+	<tr><td><?php echo $lb[$n]["fullname"]?></td><td><?php echo $lb[$n]["c"]?></td></tr>
+	<?php
 	}
 ?>
 </table></p>
@@ -94,6 +94,6 @@ for ($n=0;$n<count($lb);$n++)
 </form>
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

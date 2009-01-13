@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
@@ -40,50 +40,50 @@ if (getval("save","")!="")
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["collectioncomments"]?></h1>
-<p><?=$lang["collectioncommentsinfo"]?></p>
-<? 
+<h1><?php echo $lang["collectioncomments"]?></h1>
+<p><?php echo $lang["collectioncommentsinfo"]?></p>
+<?php 
 $imagepath = get_resource_path($ref,true,"col",false,"jpg");
 $imageurl = get_resource_path($ref,false,"col",false,"jpg");
 if (file_exists($imagepath)){?>
 <div class="Question">
-<label for="image"><?=$lang["preview"]?></label><img src="<?=$imageurl?>?nc=<?=time()?>" alt="" class="Picture" />
+<label for="image"><?php echo $lang["preview"]?></label><img src="<?php echo $imageurl?>?nc=<?php echo time()?>" alt="" class="Picture" />
 <div class="clearerleft"> </div>
 </div>
-<? } ?>
+<?php } ?>
 
-<? if (!hook("replacecollectioncommentform")) { ?>
+<?php if (!hook("replacecollectioncommentform")) { ?>
 
 <form method="post">
-<input type="hidden" name="ref" value="<?=$ref?>">
-<input type="hidden" name="k" value="<?=$k?>">
-<input type="hidden" name="collection" value="<?=$collection?>">
+<input type="hidden" name="ref" value="<?php echo $ref?>">
+<input type="hidden" name="k" value="<?php echo $k?>">
+<input type="hidden" name="collection" value="<?php echo $collection?>">
 
 <div class="Question">
-<label for="name"><?=$lang["comment"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"><?=htmlspecialchars($comment)?></textarea>
+<label for="name"><?php echo $lang["comment"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"><?php echo htmlspecialchars($comment)?></textarea>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label for="name"><?=$lang["rating"]?></label><select class="stdwidth" name="rating">
-<option value="" <? if ($rating=="") { ?>selected<? } ?>></option>
-<? for ($n=1;$n<=5;$n++) { ?>
-<option value="<?=$n?>" <? if ($rating==$n) { ?>selected<? } ?>><?=str_pad("",$n,"*")?></option>
-<? } ?>
+<label for="name"><?php echo $lang["rating"]?></label><select class="stdwidth" name="rating">
+<option value="" <?php if ($rating=="") { ?>selected<?php } ?>></option>
+<?php for ($n=1;$n<=5;$n++) { ?>
+<option value="<?php echo $n?>" <?php if ($rating==$n) { ?>selected<?php } ?>><?php echo str_pad("",$n,"*")?></option>
+<?php } ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["save"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 
-<? } ?> <!--End Replacecollectioncommentform hook-->
+<?php } ?> <!--End Replacecollectioncommentform hook-->
 
 </div>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

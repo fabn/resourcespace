@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; 
 include "../include/general.php";
@@ -20,27 +20,27 @@ $bodyattribs="onload=\"previewContactSheet();\"";
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["contactsheetconfiguration"]?></h1>
+<h1><?php echo $lang["contactsheetconfiguration"]?></h1>
 
-<p><?=$lang["contactsheetintrotext"]?></p>
+<p><?php echo $lang["contactsheetintrotext"]?></p>
 
 <!-- this is the container for some Ajax fun. The image will go here...-->
-<? if ($contact_sheet_previews==true){?><div style="float:right;padding:15px 30px 15px 0;height:300px;"><img id="previewimage" name="previewimage"/></div><? } ?>
+<?php if ($contact_sheet_previews==true){?><div style="float:right;padding:15px 30px 15px 0;height:300px;"><img id="previewimage" name="previewimage"/></div><?php } ?>
 
 <!-- each time the form is modified, the variables are sent to contactsheet.php with preview=true
  contactsheet.php makes just the first page of the pdf (with col size images) 
  and then thumbnails it for the ajax request. This creates a very small but helpful 
  preview image that can be judged before initiating a download of sometimes several MB.-->
-<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <? if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?}?> >
-<input type=hidden name="c" value="<?=$collection?>">
+<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <?php if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?php } ?> >
+<input type=hidden name="c" value="<?php echo $collection?>">
 
 <div class="Question">
-<label><?=$lang["collectionname"]?></label><div class="Fixed"><?=$collectiondata['name']?></div>
+<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo $collectiondata['name']?></div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["display"]?></label>
+<label><?php echo $lang["display"]?></label>
 <select class="shrtwidth" name="sheetstyle" id="sheetstyle" onChange="
 	if ($('sheetstyle').value=='list')
 		{
@@ -50,14 +50,14 @@ include "../include/header.php";
 		{
 		Effect.Appear('ThumbnailOptions',{duration:0.5});
 		}"">
-<option value="thumbnails"><?=$lang["thumbnails"]?></option>
-<option value="list"><?=$lang["list"]?></option>
+<option value="thumbnails"><?php echo $lang["thumbnails"]?></option>
+<option value="list"><?php echo $lang["list"]?></option>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["size"]?></label>
+<label><?php echo $lang["size"]?></label>
 <select class="shrtwidth" name="size" id="size">
 <option value="a4">A4 - 210mm x 297mm</option>
 <option value="a3">A3 - 297mm x 420mm</option>
@@ -70,7 +70,7 @@ include "../include/header.php";
 </div>
 
 <div id="ThumbnailOptions" class="Question">
-<label><?=$lang["columns"]?></label>
+<label><?php echo $lang["columns"]?></label>
 <select class="shrtwidth" name="columns" id="ThumbnailOptions"">
 <option value=2>2</option>
 <option value=3>3</option>
@@ -82,22 +82,22 @@ include "../include/header.php";
 </div>
 
 <div class="Question">
-<label><?=$lang["orientation"]?></label>
+<label><?php echo $lang["orientation"]?></label>
 <select class="shrtwidth" name="orientation" id="orientation">
-<option value="portrait"><?=$lang["portrait"]?></option>
-<option value="landscape"><?=$lang["landscape"]?></option>
+<option value="portrait"><?php echo $lang["portrait"]?></option>
+<option value="landscape"><?php echo $lang["landscape"]?></option>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
 
 </form>
 </div>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

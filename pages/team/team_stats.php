@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -36,21 +36,21 @@ include "../../include/header.php";
 
 if (getval("print","")!="") { # Launch printable page in an iframe
 ?>
-<iframe width=1 height=1 style="visibility:hidden" src="team_stats_print.php?year=<?=$year?>&groupselect=<?=$groupselect?>&groups=<?=join("_",$groups)?>"></iframe>
-<? } ?>
+<iframe width=1 height=1 style="visibility:hidden" src="team_stats_print.php?year=<?php echo $year?>&groupselect=<?php echo $groupselect?>&groups=<?php echo join("_",$groups)?>"></iframe>
+<?php } ?>
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["viewstatistics"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["viewstatistics"]?></h1>
+  <p><?php echo text("introtext")?></p>
   
   <form method="post">
 	<div class="Question">
-<label for="activity_type"><?=$lang["activity"]?></label><select id="activity_type" name="activity_type" class="shrtwidth">
-<? $types=get_stats_activity_types(); 
+<label for="activity_type"><?php echo $lang["activity"]?></label><select id="activity_type" name="activity_type" class="shrtwidth">
+<?php $types=get_stats_activity_types(); 
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option <? if ($activity_type==$types[$n]) { ?>selected<? } ?> value="<?=$types[$n]?>"><?=$lang["stat-" . strtolower(str_replace(" ","",$types[$n]))]?></option><?
+	?><option <?php if ($activity_type==$types[$n]) { ?>selected<?php } ?> value="<?php echo $types[$n]?>"><?php echo $lang["stat-" . strtolower(str_replace(" ","",$types[$n]))]?></option><?php
 	}
 ?>
 </select>
@@ -58,11 +58,11 @@ for ($n=0;$n<count($types);$n++)
 </div>
 
 	<div class="Question">
-<label for="year"><?=$lang["year"]?></label><select id="year" name="year" class="shrtwidth">
-<? $years=get_stats_years(); 
+<label for="year"><?php echo $lang["year"]?></label><select id="year" name="year" class="shrtwidth">
+<?php $years=get_stats_years(); 
 for ($n=0;$n<count($years);$n++)
 	{
-	?><option <? if ($year==$years[$n]) { ?>selected<? } ?>><?=$years[$n]?></option><?
+	?><option <?php if ($year==$years[$n]) { ?>selected<?php } ?>><?php echo $years[$n]?></option><?php
 	}
 ?>
 </select>
@@ -71,24 +71,24 @@ for ($n=0;$n<count($years);$n++)
 
 
 <div class="Question">
-<label for="groupselect"><?=$lang["group"]?></label><select id="groupselect" name="groupselect" class="shrtwidth"
+<label for="groupselect"><?php echo $lang["group"]?></label><select id="groupselect" name="groupselect" class="shrtwidth"
 onchange="if (this.value=='viewall') {document.getElementById('groupselector').style.display='none';}
 else {document.getElementById('groupselector').style.display='block';}">
-<? if (!checkperm("U")) { ?><option <? if ($groupselect=="viewall") { ?>selected<? } ?> value="viewall"><?=$lang["viewall"]?></option><? } ?>
-<option <? if ($groupselect=="select") { ?>selected<? } ?> value="select"><?=$lang["select"]?></option>
+<?php if (!checkperm("U")) { ?><option <?php if ($groupselect=="viewall") { ?>selected<?php } ?> value="viewall"><?php echo $lang["viewall"]?></option><?php } ?>
+<option <?php if ($groupselect=="select") { ?>selected<?php } ?> value="select"><?php echo $lang["select"]?></option>
 </select>
 <div class="clearerleft"> </div>
-	<table id="groupselector" cellpadding=3 cellspacing=3 style="padding-left:150px;<? if ($groupselect=="viewall") { ?>display:none;<? } ?>">
-	<?
+	<table id="groupselector" cellpadding=3 cellspacing=3 style="padding-left:150px;<?php if ($groupselect=="viewall") { ?>display:none;<?php } ?>">
+	<?php
 	$grouplist=get_usergroups(true);
 	for ($n=0;$n<count($grouplist);$n++)
 		{
 		?>
 		<tr>
-		<td valign=middle nowrap><?=htmlspecialchars($grouplist[$n]["name"])?>&nbsp;&nbsp;</td>
-		<td width=10 valign=middle><input type=checkbox name="groups[]" value="<?=$grouplist[$n]["ref"]?>" <? if (in_array($grouplist[$n]["ref"],$groups)) { ?>checked<? } ?>></td>
+		<td valign=middle nowrap><?php echo htmlspecialchars($grouplist[$n]["name"])?>&nbsp;&nbsp;</td>
+		<td width=10 valign=middle><input type=checkbox name="groups[]" value="<?php echo $grouplist[$n]["ref"]?>" <?php if (in_array($grouplist[$n]["ref"],$groups)) { ?>checked<?php } ?>></td>
 		</tr>
-		<?
+		<?php
 		}
 	?></table>
 	<div class="clearerleft"> </div>
@@ -102,25 +102,25 @@ else {document.getElementById('groupselector').style.display='block';}">
 
 
 <div class="Question">
-<label for="print"><?=$lang["printallforyear"]?></label><input type=checkbox name="print" id="print" value="yes">
+<label for="print"><?php echo $lang["printallforyear"]?></label><input type=checkbox name="print" id="print" value="yes">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["viewstatistics"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewstatistics"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 
-	<? if ($activity_type!="") { ?>	
+	<?php if ($activity_type!="") { ?>	
 	<br/>
 	<div class="BasicsBox">
-	<img style="border:1px solid black;" src="../graph.php?activity_type=<?=urlencode($activity_type)?>&year=<?=$year?>&groupselect=<?=$groupselect?>&groups=<?=join("_",$groups)?>" width=700 height=350>
+	<img style="border:1px solid black;" src="../graph.php?activity_type=<?php echo urlencode($activity_type)?>&year=<?php echo $year?>&groupselect=<?php echo $groupselect?>&groups=<?php echo join("_",$groups)?>" width=700 height=350>
 	</div>
-	<? } ?>
+	<?php } ?>
 	
   </div>
 
-<?
+<?php
 include "../../include/footer.php";
 ?>

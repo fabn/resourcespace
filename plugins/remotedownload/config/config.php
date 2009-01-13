@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * Config Information

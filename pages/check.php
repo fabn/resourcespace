@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/general.php";
 include "../include/authenticate.php"; if (!checkperm("a")) {exit("Access denied.");}
@@ -27,19 +27,19 @@ function ResolveKB($value)
 ?>
 
 <div class="BasicsBox"> 
-  <h1><?=$lang["installationcheck"]?></h1>
+  <h1><?php echo $lang["installationcheck"]?></h1>
   
 <table class="InfoTable">
-<?
+<?php
 # Check PHP version
 $phpversion=phpversion();
 if ($phpversion<'4.4') {$result="FAIL: should be 4.4 or greater";} else {$result="OK";}
-?><tr><td>PHP version</td><td><?=$phpversion?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>PHP version</td><td><?php echo $phpversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check MySQL version
 $mysqlversion=mysql_get_server_info();
 if ($mysqlversion<'5') {$result="FAIL: should be 5 or greater";} else {$result="OK";}
-?><tr><td>MySQL version</td><td><?=$mysqlversion?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>MySQL version</td><td><?php echo $mysqlversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
 $gdinfo=gd_info();
@@ -53,29 +53,29 @@ else
 	$version="Not installed.";
 	$result="FAIL";
 	}
-?><tr><td>GD version</td><td><?=$version?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>GD version</td><td><?php echo $version?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check ini values for memory_limit, post_max_size, upload_max_filesize
 $memory_limit=ini_get("memory_limit");
 if (ResolveKB($memory_limit)<(200*1024)) {$result="WARNING: should be 200M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'memory_limit'</td><td><?=$memory_limit?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>PHP.INI value for 'memory_limit'</td><td><?php echo $memory_limit?></td><td><b><?php echo $result?></b></td></tr><?php
 
 $post_max_size=ini_get("post_max_size");
 if (ResolveKB($post_max_size)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'post_max_size'</td><td><?=$post_max_size?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>PHP.INI value for 'post_max_size'</td><td><?php echo $post_max_size?></td><td><b><?php echo $result?></b></td></tr><?php
 
 $upload_max_filesize=ini_get("upload_max_filesize");
 if (ResolveKB($upload_max_filesize)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'upload_max_filesize'</td><td><?=$upload_max_filesize?></td><td><b><?=$result?></b></td></tr><?
+?><tr><td>PHP.INI value for 'upload_max_filesize'</td><td><?php echo $upload_max_filesize?></td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check write access to filestore
 $success=is_writable($storagedir);
 if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result="OK";}
-?><tr><td colspan="2">Write access to 'filestore' directory</td><td><b><?=$result?></b></td></tr>
+?><tr><td colspan="2">Write access to 'filestore' directory</td><td><b><?php echo $result?></b></td></tr>
 
 
-<?
+<?php
 # Check filestore folder browseability
 $output=@file_get_contents($baseurl . "/filestore");
 if (strpos($output,"Index of")===false)
@@ -86,9 +86,9 @@ else
 	{
 	$result="FAIL: filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
 	}
-?><tr><td colspan="2">Blocked browsing of 'filestore' directory</td><td><b><?=$result?></b></td></tr>
+?><tr><td colspan="2">Blocked browsing of 'filestore' directory</td><td><b><?php echo $result?></b></td></tr>
 
-<?
+<?php
 function CheckImagemagick()
 {
  	global $imagemagick_path;
@@ -134,7 +134,7 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">ImageMagick</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">ImageMagick</td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check FFmpeg path
@@ -153,7 +153,7 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">FFmpeg</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">FFmpeg</td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check Ghostscript path
@@ -172,7 +172,7 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">Ghostscript</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">Ghostscript</td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check Exif function
@@ -185,7 +185,7 @@ else
 	$version="Not installed.";
 	$result="FAIL";
 	}
-?><tr><td colspan="2">EXIF extension installed</td><td><b><?=$result?></b></td></tr><?
+?><tr><td colspan="2">EXIF extension installed</td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check Exiftool path
@@ -204,7 +204,7 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">Exiftool</td><td><b><?=$result?></b></td></tr>
+?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr>
 
 
 
@@ -213,6 +213,6 @@ else
 </table>
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

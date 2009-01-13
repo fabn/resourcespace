@@ -1,4 +1,4 @@
-<?
+<?php
 # Japanese
 # Language File for ResourceSpace
 # -------

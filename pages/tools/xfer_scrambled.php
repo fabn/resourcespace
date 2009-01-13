@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";
 include "../../include/general.php";
@@ -15,7 +15,7 @@ exit("You must manually enable this script."); # prevent accidental use!
 ?>
 <html>
 <body>
-<?
+<?php
 
 $resources=sql_query("select ref,file_extension from resource order by ref desc");
 for ($n=0;$n<count($resources);$n++)

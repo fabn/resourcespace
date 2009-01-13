@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
@@ -102,28 +102,28 @@ include "../include/header.php";
 <div class="RecordPanel"> 
 
 <div class="RecordHeader">
-<? if (!hook("renderinnerresourceheader")) { ?>
-<? if ($k=="") { ?>
+<?php if (!hook("renderinnerresourceheader")) { ?>
+<?php if ($k=="") { ?>
 <div class="backtoresults">
-<a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a href="search.php<? if (strpos($search,"!")!==false) {?>?search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?><? } ?>"><?=$lang["viewallresults"]?></a>
+<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
 |
-<a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
-<? } ?>
-<h1><? if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?=$lang["archivedresource"]?>:</span>&nbsp;<? } ?><?=highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?>&nbsp;</h1>
-<? } /* End of renderinnerresourceheader hook */ ?>
+<?php } ?>
+<h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?>&nbsp;</h1>
+<?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
-<? if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?=$lang['resourceistranscoding']?></div><? } ?>
+<?php if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php } ?>
 
-<? hook("renderbeforeresourceview"); ?>
+<?php hook("renderbeforeresourceview"); ?>
 
 <div class="RecordResouce">
-<? if (!hook("renderinnerresourceview")) { ?>
-<? if (!hook("renderinnerresourcepreview")) { ?>
-<?
+<?php if (!hook("renderinnerresourceview")) { ?>
+<?php if (!hook("renderinnerresourcepreview")) { ?>
+<?php
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
 if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
 if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
@@ -152,28 +152,28 @@ elseif ($resource["has_image"]==1)
 		$previewpath=get_resource_path($ref,true,"",false,$resource["preview_extension"]);
 		}
 	
-	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["preview_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>" title="<?=$lang["fullscreenpreview"]?>"><? }
+	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php }
 	if (file_exists($imagepath))
-		{ ?><img src="<?=$imageurl?>" alt="<?=$lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><? } 
-	if (file_exists($previewpath)) { ?></a><? }
+		{ ?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
+	if (file_exists($previewpath)) { ?></a><?php }
 	}
 else
 	{
 	?>
-	<img src="../gfx/type<?=$resource["resource_type"]?>.gif" alt="" class="Picture" style="border:none;" />
-	<?
+	<img src="../gfx/type<?php echo $resource["resource_type"]?>.gif" alt="" class="Picture" style="border:none;" />
+	<?php
 	}
 ?>
-<? } /* End of renderinnerresourcepreview hook */ ?>
+<?php } /* End of renderinnerresourcepreview hook */ ?>
 
-<? hook("renderbeforerecorddownload"); ?>
+<?php hook("renderbeforerecorddownload"); ?>
 
 <div class="RecordDownload" id="RecordDownload">
 <div class="RecordDownloadSpace">
-<? if (!hook("renderinnerresourcedownloadspace")) { ?>
-<h2><?=$lang["resourcetools"]?></h2>
+<?php if (!hook("renderinnerresourcedownloadspace")) { ?>
+<h2><?php echo $lang["resourcetools"]?></h2>
 
-<? 
+<?php 
 # Look for a viewer to handle the right hand panel. If not, display the standard photo download / file download boxes.
 if (file_exists("../viewers/type" . $resource["resource_type"] . ".php"))
 	{
@@ -183,11 +183,11 @@ else
 	{ ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
-<td><?=$lang["fileinformation"]?></td>
-<td><?=$lang["filesize"]?></td>
-<td><?=$lang["options"]?></td>
+<td><?php echo $lang["fileinformation"]?></td>
+<td><?php echo $lang["filesize"]?></td>
+<td><?php echo $lang["options"]?></td>
 </tr>
-<?
+<?php
 $nodownloads=false;$counter=0;
 if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resource["file_extension"])))
 	{
@@ -237,26 +237,26 @@ if (($resource["has_image"]==1) && (preg_match('/^'. $im_formats .'$/i', $resour
 			$counter++;
 			$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 			?>
-			<tr class="DownloadDBlend" id="DownloadBox<?=$n?>">
-			<td><h2><?=$headline?></h2>
-			<p><?=$sizes[$n]["width"]?> x <?=$sizes[$n]["height"]?> <?=$lang["pixels"]?> <? if ($mp>=1) { ?> (<?=$mp?> MP)<? } ?></p>
-			<p><?=$dpi_w?> <?=$dpi_unit?> x <?=$dpi_h?> <?=$dpi_unit?> @ <?=$dpi?> dpi</p></td>
-			<td><?=$sizes[$n]["filesize"]?></td>
-			<!--<td><?=$sizes[$n]["filedown"]?></td>-->
+			<tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
+			<td><h2><?php echo $headline?></h2>
+			<p><?php echo $sizes[$n]["width"]?> x <?php echo $sizes[$n]["height"]?> <?php echo $lang["pixels"]?> <?php if ($mp>=1) { ?> (<?php echo $mp?> MP)<?php } ?></p>
+			<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> dpi</p></td>
+			<td><?php echo $sizes[$n]["filesize"]?></td>
+			<!--<td><?php echo $sizes[$n]["filedown"]?></td>-->
 			<td class="DownloadButton">
-			<a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k)?>"><?=$lang["download"]?></a>
+			<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k)?>"><?php echo $lang["download"]?></a>
 			</td></tr>
-			<?
+			<?php
 			}
 		if ($downloadthissize && $sizes[$n]["allow_preview"]==1)
 			{ 
 		 	# Add an extra line for previewing
 		 	?> 
-			<tr class="DownloadDBlend"><td><h2><?=$lang["preview"]?></h2><p><?=$lang["fullscreenpreview"]?></p></td><td><?=$sizes[$n]["filesize"]?></td><td class="DownloadButton">
-			<a href="preview.php?ref=<?=$ref?>&ext=<?=$resource["file_extension"]?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>"><?=$lang["preview"]?></a>
+			<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td><td class="DownloadButton">
+			<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
 			</td>
 			</tr>
-      		<?
+      		<?php
       		} 
 		}
 	}
@@ -269,11 +269,11 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		{
 		?>
 		<tr class="DownloadDBlend">
-		<td><h2><?=strtoupper($resource["file_extension"])?> <?=$lang["file"]?></h2></td>
-		<td><?=formatfilesize(filesize($path))?></td>
-		<td class="DownloadButton"><a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>">Download</a></td>
+		<td><h2><?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
+		<td><?php echo formatfilesize(filesize($path))?></td>
+		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k)?>">Download</a></td>
 		</tr>
-		<?
+		<?php
 		}
 	} 
 else
@@ -286,11 +286,11 @@ if ($nodownloads || $counter==0)
 	# No file. Link to request form.
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2><?=($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
+	<td><h2><?php echo ($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
 	<td>N/A</td>
-	<td class="DownloadButton"><a href="resource_request.php?ref=<?=$ref?>"><?=$lang["request"]?></a></td>
+	<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
 	</tr>
-	<?
+	<?php
 	}
 	
 # Alternative files listing
@@ -301,53 +301,53 @@ for ($n=0;$n<count($altfiles);$n++)
 		{
 		?>
 		<tr>
-		<td colspan="3"><?=$lang["alternativefiles"]?></td>
+		<td colspan="3"><?php echo $lang["alternativefiles"]?></td>
 		</tr>
-		<?
+		<?php
 		}
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2><?=htmlspecialchars($altfiles[$n]["name"])?></h2>
-	<!--<p><?=strtoupper($altfiles[$n]["file_extension"])?> <?=$lang["file"]?></p>-->
-	<p><?=htmlspecialchars($altfiles[$n]["description"])?></p>
+	<td><h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
+	<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
+	<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 	</td>
-	<td><?=formatfilesize($altfiles[$n]["file_size"])?></td>
-	<td class="DownloadButton"><a href="terms.php?ref=<?=$ref?>&k=<?=$k?>&url=<?=urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"])?>">Download</a></td>
+	<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
+	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"])?>">Download</a></td>
 	</tr>
-	<?	
+	<?php	
 	}
 ?>
 </table>
-<? } ?>
+<?php } ?>
 <br />
 <ul>
-<? hook ("resourceactions") ?>
-<? if ($k=="") { ?>
-<? if (!checkperm("b")) { ?><li><?=add_to_collection_link($ref,$search)?>&gt; <?=$lang["addtocollection"]?></a></li><? } ?>
-<? if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><li><a href="resource_email.php?ref=<?=$ref?>" target="main">&gt; <?=$lang["emailresource"]?></a></li><? } ?>
-<? if ($allow_share) { ?><li><a target="_top" href="<?=$baseurl?>/?r=<?=$ref?>" target="main">&gt; <?=$lang["link"]?></a></li><? } ?>
-<? if (checkperm("e" . $resource["archive"])) { ?><li><a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>">&gt; <?=$lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?=$ref?>">&gt; <?=$lang["delete"]?></a></li><? } ?>
-<? if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?=$ref?>">&gt; <?=$lang["log"]?></a></li><? } ?>
-<? } ?>
-<? } /* End of renderinnerresourcedownloadspace hook */ ?>
+<?php hook ("resourceactions") ?>
+<?php if ($k=="") { ?>
+<?php if (!checkperm("b")) { ?><li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["addtocollection"]?></a></li><?php } ?>
+<?php if ($allow_share && (checkperm("g") || checkperm("v"))) { ?><li><a href="resource_email.php?ref=<?php echo $ref?>" target="main">&gt; <?php echo $lang["emailresource"]?></a></li><?php } ?>
+<?php if ($allow_share) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>" target="main">&gt; <?php echo $lang["link"]?></a></li><?php } ?>
+<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["delete"]?></a></li><?php } ?>
+<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>
+<?php } ?>
+<?php } /* End of renderinnerresourcedownloadspace hook */ ?>
 </ul>
 <div class="clearerleft"> </div>
 
-<?
+<?php
 # Include user rating box, if enabled and the user is not external.
 if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 ?>
 
 
 </div>
-<? } /* End of renderinnerresourceview hook */ ?>
+<?php } /* End of renderinnerresourceview hook */ ?>
 </div>
 
-<? hook("renderbeforeresourcedetails"); ?>
+<?php hook("renderbeforeresourcedetails"); ?>
 
-<div class="Title"><?=$lang["resourcedetails"]?></div>
+<div class="Title"><?php echo $lang["resourcedetails"]?></div>
 
-<?
+<?php
 $extra="";
 $tabname="";
 $tabcount=0;
@@ -355,7 +355,7 @@ $fields=get_resource_field_data($ref);
 if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	{ ?>
 	<div class="TabBar">
-	<?
+	<?php
 	# Draw tabs.
 	$extra="";
 	$tabname="";
@@ -367,7 +367,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 		# draw new tab?
 		if (($tabname!=$fields[$n]["tab_name"]) && ($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
 			{
-			?><div id="tabswitch<?=$tabcount?>" class="Tab<? if ($tabcount==0) { ?> TabSelected<? } ?>"><a href="#" onclick="SelectTab(<?=$tabcount?>);return false;"><?=i18n_get_translated($fields[$n]["tab_name"])?></a></div><?
+			?><div id="tabswitch<?php echo $tabcount?>" class="Tab<?php if ($tabcount==0) { ?> TabSelected<?php } ?>"><a href="#" onclick="SelectTab(<?php echo $tabcount?>);return false;"><?php echo i18n_get_translated($fields[$n]["tab_name"])?></a></div><?php
 			$tabcount++;
 			$tabname=$fields[$n]["tab_name"];
 			}
@@ -378,34 +378,34 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	function SelectTab(tab)
 		{
 		// Deselect all tabs
-		<? for ($n=0;$n<$tabcount;$n++) { ?>
-		document.getElementById("tab<?=$n?>").style.display="none";
-		document.getElementById("tabswitch<?=$n?>").className="Tab";
-		<? } ?>
+		<?php for ($n=0;$n<$tabcount;$n++) { ?>
+		document.getElementById("tab<?php echo $n?>").style.display="none";
+		document.getElementById("tabswitch<?php echo $n?>").className="Tab";
+		<?php } ?>
 		document.getElementById("tab" + tab).style.display="block";
 		document.getElementById("tabswitch" + tab).className="Tab TabSelected";
 		}
 	</script>
-	<?
+	<?php
 	}
 ?>
 
-<div id="tab0" class="TabbedPanel<? if ($tabcount>0) { ?> StyledTabbedPanel<? } ?>">
+<div id="tab0" class="TabbedPanel<?php if ($tabcount>0) { ?> StyledTabbedPanel<?php } ?>">
 <div class="clearerleft"> </div>
-<? 
+<?php 
 # Draw standard fields
 ?>
-<? if ($show_resourceid) { ?><div class="itemNarrow"><h3><?=$lang["resourceid"]?></h3><p><?=$ref?></p></div><? } ?>
-<? if ($show_access_field) { ?><div class="itemNarrow"><h3><?=$lang["access"]?></h3><p><?=@$lang["access" . $resource["access"]]?></p></div><? } ?>
-<? hook("extrafields");?>
-<?
+<?php if ($show_resourceid) { ?><div class="itemNarrow"><h3><?php echo $lang["resourceid"]?></h3><p><?php echo $ref?></p></div><?php } ?>
+<?php if ($show_access_field) { ?><div class="itemNarrow"><h3><?php echo $lang["access"]?></h3><p><?php echo @$lang["access" . $resource["access"]]?></p></div><?php } ?>
+<?php hook("extrafields");?>
+<?php
 # contributed by field
 $udata=get_user($resource["created_by"]);
 if ($udata!==false)
 	{
 	?>
-	<div class="itemNarrow"><h3><?=$lang["contributedby"]?></h3><p><? if (checkperm("u")) { ?><a href="team_user_edit.php?ref=<?=$udata["ref"]?>"><? } ?><?=$udata["fullname"]?><? if (checkperm("u")) { ?></a><? } ?></p></div>
-	<?
+	<div class="itemNarrow"><h3><?php echo $lang["contributedby"]?></h3><p><?php if (checkperm("u")) { ?><a href="team_user_edit.php?ref=<?php echo $udata["ref"]?>"><?php } ?><?php echo $udata["fullname"]?><?php if (checkperm("u")) { ?></a><?php } ?></p></div>
+	<?php
 	}
 
 
@@ -440,7 +440,7 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			$tabcount++;
 			# Also display the custom formatted data $extra at the bottom of this tab panel.
-			?><div class="clearerleft"> </div><?=$extra?></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?=$tabcount?>"><?	
+			?><div class="clearerleft"> </div><?php echo $extra?></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><?php	
 			$extra="";
 			}
 		$tabname=$fields[$n]["tab_name"];
@@ -463,16 +463,16 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			# Draw this field normally.
 			?>
-			<div class="itemNarrow"><h3><?=$title?></h3><p><?=$value?></p></div>
-			<?
+			<div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div>
+			<?php
 			}
 		}
 	}
 ?>
-<? hook("extrafields2");?>
+<?php hook("extrafields2");?>
 <div class="clearerleft"> </div>
 
-<?=$extra?>
+<?php echo $extra?>
 
 </div><!-- end of tabbed panel-->
 
@@ -482,8 +482,8 @@ for ($n=0;$n<count($fields);$n++)
 
 <div class="PanelShadow"></div>
 </div>
-<? hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
-<?
+<?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
+<?php
 # -------- Related Resources (must be able to search for this to work)
 if (checkperm("s") && ($k=="")) {
 $result=do_search("!related" . $ref);
@@ -494,8 +494,8 @@ if (count($result)>0)
 <div class="RecordPanel">  
 
 <div class="RecordResouce">
-<div class="Title"><?=$lang["relatedresources"]?></div>
-<?
+<div class="Title"><?php echo $lang["relatedresources"]?></div>
+<?php
 	# loop and display the results
 	for ($n=0;$n<count($result);$n++)			
 		{
@@ -504,20 +504,20 @@ if (count($result)>0)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 			<table border="0" class="CollectionResourceAlign"><tr><td>
-			<a target="main" href="view.php?ref=<?=$rref?>&search=<?=urlencode("!related" . $ref)?>"><? if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?=get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><? } else { ?><img border=0 width=56 height=75 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"/><? } ?></a></td>
+			<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 width=56 height=75 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"/><?php } ?></a></td>
 			</tr></table>
-			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$rref?>"><?=tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
 		</div>
-		<?		
+		<?php		
 		}
 	?>
 	<div class="clearerleft"> </div>
-		<a href="search.php?search=<?=urlencode("!related" . $ref) ?>"><?=$lang["clicktoviewasresultset"]?></a>
+		<a href="search.php?search=<?php echo urlencode("!related" . $ref) ?>"><?php echo $lang["clicktoviewasresultset"]?></a>
 
 	</div>
 	</div>
 	<div class="PanelShadow"></div>
-	</div><?
+	</div><?php
 	}
 
 
@@ -531,16 +531,16 @@ if (count($result)>0)
 	<div class="RecordPanel">  
 	
 	<div class="RecordResouce BasicsBox">
-	<div class="Title"><?=$lang["collectionsthemes"]?></div>
+	<div class="Title"><?php echo $lang["collectionsthemes"]?></div>
 	<div class="VerticalNav">
 	<ul>
-	<?
+	<?php
 		# loop and display the results
 		for ($n=0;$n<count($result);$n++)			
 			{
 			?>
-			<li><a href="search.php?search=!collection<?=$result[$n]["ref"]?>"><?=(strlen($result[$n]["theme"])>0)?htmlspecialchars(str_replace("*","",$result[$n]["theme"]) . " / "):$lang["public"] . " : " . htmlspecialchars($result[$n]["fullname"] . " / ")?><?=htmlspecialchars($result[$n]["name"])?></a></li>
-			<?		
+			<li><a href="search.php?search=!collection<?php echo $result[$n]["ref"]?>"><?php echo (strlen($result[$n]["theme"])>0)?htmlspecialchars(str_replace("*","",$result[$n]["theme"]) . " / "):$lang["public"] . " : " . htmlspecialchars($result[$n]["fullname"] . " / ")?><?php echo htmlspecialchars($result[$n]["name"])?></a></li>
+			<?php		
 			}
 		?>
 	</ul>
@@ -548,7 +548,7 @@ if (count($result)>0)
 	</div>
 	</div>
 	<div class="PanelShadow"></div>
-	</div><?
+	</div><?php
 	}} 
 ?>
 
@@ -561,15 +561,15 @@ if (count($result)>0)
 
 
 <div class="RecordResouce">
-<div class="Title"><?=$lang["searchforsimilarresources"]?></div>
-<? if ($resource["has_image"]==1) { ?>
+<div class="Title"><?php echo $lang["searchforsimilarresources"]?></div>
+<?php if ($resource["has_image"]==1) { ?>
 
 <!--
-<p>Find resources with a <a href="search.php?search=<?=urlencode("!rgb:" . $resource["image_red"] . "," . $resource["image_green"] . "," . $resource["image_blue"])?>">similar colour theme</a>.</p>
-<p>Find resources with a <a href="search.php?search=<?=urlencode("!colourkey" . $resource["colour_key"]) ?>">similar colour theme (2)</a>.</p>
+<p>Find resources with a <a href="search.php?search=<?php echo urlencode("!rgb:" . $resource["image_red"] . "," . $resource["image_green"] . "," . $resource["image_blue"])?>">similar colour theme</a>.</p>
+<p>Find resources with a <a href="search.php?search=<?php echo urlencode("!colourkey" . $resource["colour_key"]) ?>">similar colour theme (2)</a>.</p>
 -->
 
-<? } ?>
+<?php } ?>
 <script language="Javascript">
 function UpdateResultCount()
 	{
@@ -583,22 +583,22 @@ function UpdateResultCount()
 </script>
 
 <form method="post" action="find_similar.php" id="findsimilar">
-<input type="hidden" name="resource_type" value="<?=$resource["resource_type"]?>">
+<input type="hidden" name="resource_type" value="<?php echo $resource["resource_type"]?>">
 <input type="hidden" name="countonly" id="countonly" value="">
-<?
+<?php
 $keywords=get_resource_top_keywords($ref,30);
 $searchwords=split_keywords($search);
 for ($n=0;$n<count($keywords);$n++)
 	{
 	?>
-	<div class="SearchSimilar"><input type=checkbox name="keyword_<?=urlencode($keywords[$n])?>" value="yes"
-	<? if (in_array($keywords[$n],$searchwords)) {?>checked<?}?> onClick="UpdateResultCount();">&nbsp;<?=$keywords[$n]?></div>
-	<?
+	<div class="SearchSimilar"><input type=checkbox name="keyword_<?php echo urlencode($keywords[$n])?>" value="yes"
+	<?php if (in_array($keywords[$n],$searchwords)) {?>checked<?php } ?> onClick="UpdateResultCount();">&nbsp;<?php echo $keywords[$n]?></div>
+	<?php
 	}
 ?>
 <div class="clearerleft"> </div>
 <br />
-<input name="search" type="submit" value="&nbsp;&nbsp;<?=$lang["search"]?>&nbsp;&nbsp;" id="dosearch"/>
+<input name="search" type="submit" value="&nbsp;&nbsp;<?php echo $lang["search"]?>&nbsp;&nbsp;" id="dosearch"/>
 <iframe frameborder=0 scrolling=no width=1 height=1 style="visibility:hidden;" name="resultcount" id="resultcount"></iframe>
 </form>
 <div class="clearerleft"> </div>
@@ -606,8 +606,8 @@ for ($n=0;$n<count($keywords);$n++)
 </div>
 <div class="PanelShadow"></div>
 </div>
-<? } # end of block that requires search permissions?>
+<?php } # end of block that requires search permissions?>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

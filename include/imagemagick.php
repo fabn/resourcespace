@@ -1,4 +1,4 @@
-<? 
+<?php 
 #
 # This file contains the integration code with ImageMagick
 # It also contains integration code for those types that we need ImageMagick to be able to process

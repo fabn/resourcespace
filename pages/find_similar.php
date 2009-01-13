@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -35,16 +35,16 @@ if (getval("countonly","")!="")
 	?>
 	<html>
 	<script language="Javascript">
-	<? if ($count>0) {# $count--; 	?>
-	parent.document.getElementById("dosearch").value="<?=$lang["view"]?> <?=(($count==$max_results)?number_format($max_results)."+":number_format($count))?> <?=($count==1)?$lang["similarresource"]:$lang["similarresources"]?>";
+	<?php if ($count>0) {# $count--; 	?>
+	parent.document.getElementById("dosearch").value="<?php echo $lang["view"]?> <?php echo (($count==$max_results)?number_format($max_results)."+":number_format($count))?> <?php echo ($count==1)?$lang["similarresource"]:$lang["similarresources"]?>";
 	parent.document.getElementById("dosearch").disabled=false;
-	<? } else { ?>
+	<?php } else { ?>
 	parent.document.getElementById("dosearch").disabled=true;
-	parent.document.getElementById("dosearch").value="<?=$lang["nosimilarresources"]?>";
-	<? } ?>
+	parent.document.getElementById("dosearch").value="<?php echo $lang["nosimilarresources"]?>";
+	<?php } ?>
 	</script>
 	</html>
-	<?
+	<?php
 	}
 else
 	{

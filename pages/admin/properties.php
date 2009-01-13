@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 
@@ -116,10 +116,10 @@ elseif (array_key_exists("submit",$_POST))
    # $fp=fopen($hist_filename,"w");fwrite($fp,join("",$file));fclose($fp); # version control disabled for the moment
     ?>
     <script>
-    top.main.left.EmptyNode(<?=$parent?>);
-    top.main.left.ReloadNode(<?=$parent?>);
+    top.main.left.EmptyNode(<?php echo $parent?>);
+    top.main.left.ReloadNode(<?php echo $parent?>);
     </script>
-    <?
+    <?php
     }
 
 if (array_key_exists("history",$_POST))
@@ -148,18 +148,18 @@ if (array_key_exists("delete",$_POST))
     sql_query($query);
     ?>
     <script>
-    top.main.left.EmptyNode(<?=$parent?>);
-    top.main.left.ReloadNode(<?=$parent?>);
+    top.main.left.EmptyNode(<?php echo $parent?>);
+    top.main.left.ReloadNode(<?php echo $parent?>);
     </script>
-    <?
+    <?php
     }
 
 include "include/header.php";
 ?>
 <body style="margin:15px;padding:0px;background-position:0px -80px;">
-<div class="proptitle"><?=(($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" <!--#" . $ref . "-->") . (($t[2]==$name)?"":" :: " . $name)?></div>
+<div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" <!--#" . $ref . "-->") . (($t[2]==$name)?"":" :: " . $name)?></div>
 <div class="propbox">
-<?
+<?php
 #fetch values
 if (substr($t[7],0,6)=="upload")
     {
@@ -174,26 +174,26 @@ if (substr($t[7],0,6)=="upload")
         $scale=100;
         while ($width>350) {$width=$width/2;$height=$height/2;$scale=$scale/2;}
         ?>
-        <p align=center><a href="<?=$filename?>" target="_blank"><img src="<?=$filename?>?<?=time()?>" width="<?=$width?>" height="<?=$height?>" border=0></a><br>Zoom: <?=floor($scale)?>%</p>
+        <p align=center><a href="<?php echo $filename?>" target="_blank"><img src="<?php echo $filename?>?<?php echo time()?>" width="<?php echo $width?>" height="<?php echo $height?>" border=0></a><br>Zoom: <?php echo floor($scale)?>%</p>
         <p>Leave blank and save to delete the file</p>
-        <?
+        <?php
         }
     #echo "$filename<br>../assets/B1B3A2005B4A09B5A1B6.jpg";
     ?>
     <form enctype="multipart/form-data" method="post">
     <p>
     <input type="hidden" name="MAX_FILE_SIZE" value="200000">
-    <input type="hidden" name="extension" value="<?=$extension?>">
+    <input type="hidden" name="extension" value="<?php echo $extension?>">
     <label for="uploader">Upload file</label>
     <input id="uploader" name="userfile" type="file" size=55>
     </p>
-    <?
+    <?php
     }
 else
     {
     ?>
     <form method="post">
-    <?
+    <?php
     $result=sql_query(str_replace($transfrom,$transto,$t[7]));
     if (count($result)==0) {exit("This item can't be edited.</div></body></html>");}
     $result=$result[0];
@@ -212,9 +212,9 @@ else
             {
             parse_str($file[$historyview],$history);
             ?>
-            <input type="hidden" name="historyview" value="<?=$historyview?>">
-            <p><b style="color:red">Viewing version created by <?=$history["username"]?> on <?=$history["datetime"]?></b></p>
-            <?
+            <input type="hidden" name="historyview" value="<?php echo $historyview?>">
+            <p><b style="color:red">Viewing version created by <?php echo $history["username"]?> on <?php echo $history["datetime"]?></b></p>
+            <?php
             }
 
         }
@@ -239,48 +239,48 @@ else
 			}
         ?>
         <p>
-        <? if (!(is_numeric($key))) { ?><?=$label?><br><? } ?>
-        <?
+        <?php if (!(is_numeric($key))) { ?><?php echo $label?><br><?php } ?>
+        <?php
         switch ($type)
             {
             #-------------------------------------------------------------------------
             case "txt":
             #Normal Text
             ?>
-            <input type="text" style="width:100%" id="<?=$key?>" name="<?=$key?>" value="<?=$value?>">
-            <?
+            <input type="text" style="width:100%" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
+            <?php
             break;
             #-------------------------------------------------------------------------
             case "btx":
             #Big Text
             ?>
-            <textarea style="width:100%" rows="20" id="<?=$key?>" name="<?=$key?>"><?=$value?></textarea>
-            <?
+            <textarea style="width:100%" rows="20" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
+            <?php
             break;
             #-------------------------------------------------------------------------
             case "mtx":
             #Medium Text
             ?>
-            <textarea style="width:100%" rows="8" id="<?=$key?>" name="<?=$key?>"><?=$value?></textarea>
-            <?
+            <textarea style="width:100%" rows="8" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
+            <?php
             break;
             #-------------------------------------------------------------------------
             case "upl":
             #In-line file uploader
             ?>
-			<input type="text" style="width:100%;background-color:#eeeeee" id="<?=$key?>" name="<?=$key?>" value="<?=$value?>">
-            <iframe width="100%" height="70" scrolling="no" src="upload.php?callback=<?=$key?>"></iframe>
-            <?
+			<input type="text" style="width:100%;background-color:#eeeeee" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
+            <iframe width="100%" height="70" scrolling="no" src="upload.php?callback=<?php echo $key?>"></iframe>
+            <?php
             break;
             #-------------------------------------------------------------------------
             case "bit":
             #Yes or no
             ?>
-            <select id="<?=$key?>" name="<?=$key?>" style="width:100%;">
-            <option <?=($value==0)?" selected":""?> value="0">NO</option>
-            <option <?=($value==1)?" selected":""?> value="1">YES</option>
+            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;">
+            <option <?php echo ($value==0)?" selected":""?> value="0">NO</option>
+            <option <?php echo ($value==1)?" selected":""?> value="1">YES</option>
             </select>
-            <?
+            <?php
             break;
             #-------------------------------------------------------------------------
             case "drp":
@@ -292,38 +292,38 @@ else
             $drop=sql_query($query);reset($drop);
             if ($type!="drp") {$key=$type . "_" . $key;}
             ?>
-            <select id="<?=$key?>" name="<?=$key?>" style="width:100%;"><option value="0">Please select:</option>
-            <?
+            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="0">Please select:</option>
+            <?php
             foreach ($drop as $item)
 				{
 				?>
-            	<option <?=($value==$item["ref"])?" selected":""?> value="<?=$item["ref"]?>"><?=$item["name"]?></option>
-            	<?
+            	<option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
+            	<?php
             	}
            	?>
             </select>
-            <?
+            <?php
             break;
             #-------------------------------------------------------------------------
             }
         ?>
         </p>
-        <?
+        <?php
         }
     }
 ?>
 <table width="100%" cellpadding=0 cellspacing=0 style="margin-top:5px;">
 <tr><td align=left>
-<? if ((substr($t[7],0,6)!="upload") && ($t[8]!=""))  { ?>
+<?php if ((substr($t[7],0,6)!="upload") && ($t[8]!=""))  { ?>
 Version
-<input type=submit style="width:30px;" name="history" value="&lt;" <?if (!((($historyview>0) || ($historyview==-1)) && (file_exists($hist_filename)))) {?>disabled="true"<?}?>>
+<input type=submit style="width:30px;" name="history" value="&lt;" <?php if (!((($historyview>0) || ($historyview==-1)) && (file_exists($hist_filename)))) {?>disabled="true"<?php } ?>>
 
-<input type=submit style="width:30px;" name="history" value="&gt;" <?if ($historyview==-1) {?>disabled="true"<?}?>>
-<? } ?>
+<input type=submit style="width:30px;" name="history" value="&gt;" <?php if ($historyview==-1) {?>disabled="true"<?php } ?>>
+<?php } ?>
 </td>
 <td align=right>
-<?if ($t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" onclick="return confirm('Are you sure?');"><?}?>
-<?if (($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?=($historyview==-1)?"save":"revert"?>" style="width:100px;"><?}?>
+<?php if ($t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" onclick="return confirm('Are you sure?');"><?php } ?>
+<?php if (($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?"save":"revert"?>" style="width:100px;"><?php } ?>
 </td></tr>
 </table>
 </form>

@@ -1,4 +1,4 @@
-<?
+<?php
 # Reporting functions
 
 function get_reports()

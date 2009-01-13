@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
@@ -38,11 +38,11 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 ?>
-<? if (!hook("infoboxreplace")) { ?>
+<?php if (!hook("infoboxreplace")) { ?>
 
-<h2><?=htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
+<h2><?php echo htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
 
-<?
+<?php
 # Display fields
 for ($n=0;$n<count($infobox_fields);$n++)
 	{
@@ -55,11 +55,11 @@ for ($n=0;$n<count($infobox_fields);$n++)
 			{
 			$value=nl2br(htmlspecialchars(TidyList(i18n_get_translated($value))));
 			?>
-			<p><?=$value?></p>
-			<?	
+			<p><?php echo $value?></p>
+			<?php	
 			}
 		}
 	}
 ?>
 
-<? } ?>
+<?php } ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 #
 #
 # Script to update the file checksum for existing files.

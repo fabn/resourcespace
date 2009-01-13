@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -33,13 +33,13 @@ include "../include/header.php";
 <div class="RecordPanel">  
 <div class="RecordResouce">
 
-<?
+<?php
 $tags=tag_cloud(-1,$type);
 $max=max($tags);$min=min($tags);$range=$max-$min;if ($range==0) {$range=1;}
 foreach($tags as $tag=>$count)
 	{
 	$fs=10+floor((($count-$min)/$range)*35)
-	?><span style="font-size:<?=$fs?>px;padding:1px;"><a href="search.php?search=<?=urlencode($tag)?>&resetrestypes=1"><?=str_replace(" ","&nbsp;",$tag)?></a></span> <?
+	?><span style="font-size:<?php echo $fs?>px;padding:1px;"><a href="search.php?search=<?php echo urlencode($tag)?>&resetrestypes=1"><?php echo str_replace(" ","&nbsp;",$tag)?></a></span> <?php
 	}
 ?>
 </div>
@@ -47,6 +47,6 @@ foreach($tags as $tag=>$count)
 <div class="PanelShadow"></div>
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

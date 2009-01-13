@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (!checkperm("g") && !checkperm("v")) {exit ("Permission denied.");} # Cannot e-mail if can't see hi-res images. To avoid loophole whereby users could email resources to an external address, and hence download hi-res versions.
 include "../include/general.php";
@@ -28,42 +28,42 @@ if (getval("save","")!="")
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["emailresource"]?></h1>
+<h1><?php echo $lang["emailresource"]?></h1>
 
-<p><?=text("introtext")?></p>
+<p><?php echo text("introtext")?></p>
 
 <form method=post id="resourceform">
-<input type=hidden name=ref value="<?=$ref?>">
+<input type=hidden name=ref value="<?php echo $ref?>">
 
 <div class="Question">
-<label><?=$lang["resourcetitle"]?></label><div class="Fixed"><?=htmlspecialchars(i18n_get_translated($resource["title"]))?></div>
+<label><?php echo $lang["resourcetitle"]?></label><div class="Fixed"><?php echo htmlspecialchars(i18n_get_translated($resource["title"]))?></div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["resourceid"]?></label><div class="Fixed"><?=$resource["ref"]?></div>
+<label><?php echo $lang["resourceid"]?></label><div class="Fixed"><?php echo $resource["ref"]?></div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label for="message"><?=$lang["message"]?></label><textarea class="stdwidth" rows=6 cols=50 name="message" id="message"></textarea>
+<label for="message"><?php echo $lang["message"]?></label><textarea class="stdwidth" rows=6 cols=50 name="message" id="message"></textarea>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label for="users"><?=$lang["emailtousers"]?></label><? include "../include/user_select.php"; ?>
+<label for="users"><?php echo $lang["emailtousers"]?></label><?php include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
-<? if ($errors!="") { ?><div class="FormError">!! <?=$errors?> !!</div><? } ?>
+<?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["emailresource"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["emailresource"]?>&nbsp;&nbsp;" />
 </div>
 
 </form>
 </div>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

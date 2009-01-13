@@ -1,4 +1,4 @@
-<?
+<?php
 # Norwegian
 # Language File for ResourceSpace
 # -------

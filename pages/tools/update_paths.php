@@ -1,4 +1,4 @@
-<?
+<?php
 #
 #
 # Quick 'n' dirty script to update all images paths with new scrambled filenames.
@@ -25,8 +25,8 @@ if (count($resourceinfo)>0)
 		get_resource_path($ref,true,$id,false);
 		}
 	?>
-	<img src="<?=get_resource_path($ref,false,"pre",false)?>">
-	<?
+	<img src="<?php echo get_resource_path($ref,false,"pre",false)?>">
+	<?php
 	}
 else
 	{
@@ -36,14 +36,14 @@ else
 if ($ref<$max && getval("only","")=="")
 	{
 	?>
-	<meta http-equiv="refresh" content="0;url=<?=$baseurl?>/pages/tools/update_paths.php?ref=<?=$ref+1?>"/>
-	<?
+	<meta http-equiv="refresh" content="0;url=<?php echo $baseurl?>/pages/tools/update_paths.php?ref=<?php echo $ref+1?>"/>
+	<?php
 	}
 else
 	{
 	?>
 	Done.	
-	<?
+	<?php
 	}
 ?>
 	

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -23,32 +23,32 @@ include "../include/header.php";
 
 <div class="BasicsBox"> 
 <h2>&nbsp;</h2>
-<h1><?=$lang["uploadpreview"]?></h1>
-<p><?=text("introtext")?></p>
+<h1><?php echo $lang["uploadpreview"]?></h1>
+<p><?php echo text("introtext")?></p>
 
 <form method="post" class="form" enctype="multipart/form-data">
-<input type="hidden" name="MAX_FILE_SIZE" value="<?=$maxsize?>">
+<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxsize?>">
 
 <br/>
-<? if ($status!="") { ?><?=$status?><? } ?>
+<?php if ($status!="") { ?><?php echo $status?><?php } ?>
 </td></tr>
 
 <div class="Question">
-<label for="userfile"><?=$lang["clickbrowsetolocate"]?></label>
+<label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
 <input type=file name=userfile id=userfile>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["fileupload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
-<p><a href="edit.php?ref=<?=$ref?>">&gt; <?=$lang["backtoeditresource"]?></a></p>
+<p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>
 
 </form>
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

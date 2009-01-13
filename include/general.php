@@ -1,4 +1,4 @@
-<?
+<?php
 # General functions, useful across the whole solution
 
 $GLOBALS['get_resource_path_fpcache'] = array();
@@ -1137,10 +1137,10 @@ function pager($break=true)
 	global $curpage,$url,$totalpages,$offset,$per_page,$lang,$jumpcount;
 	$jumpcount++;
     ?>
-	        <span class="HorizontalWhiteNav"><? if ($break) { ?>&nbsp;<br /><? } ?><? if ($curpage>1) { ?><a href="<?=$url?>&offset=<?=$offset-$per_page?>"><? } ?>&lt;&nbsp;<?=$lang["previous"]?><? if ($curpage>1) { ?></a><? } ?>&nbsp;|&nbsp;<a href="#" title="Jump to page" onClick="p=document.getElementById('jumppanel<?=$jumpcount?>');if (p.style.display!='block') {p.style.display='block';document.getElementById('jumpto<?=$jumpcount?>').focus();} else {p.style.display='none';}; return false;"><?=$lang["page"]?>&nbsp;<?=$curpage?>&nbsp;<?=$lang["of"]?>&nbsp;<?=$totalpages?></a>&nbsp;|&nbsp;<? if ($curpage<$totalpages) { ?><a href="<?=$url?>&offset=<?=$offset+$per_page?>"><? } ?><?=$lang["next"]?>&nbsp;&gt;<? if ($curpage<$totalpages) { ?></a><? } ?>
+	        <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } ?><?php if ($curpage>1) { ?><a href="<?php echo $url?>&offset=<?php echo $offset-$per_page?>"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|&nbsp;<a href="#" title="Jump to page" onClick="p=document.getElementById('jumppanel<?php echo $jumpcount?>');if (p.style.display!='block') {p.style.display='block';document.getElementById('jumpto<?php echo $jumpcount?>').focus();} else {p.style.display='none';}; return false;"><?php echo $lang["page"]?>&nbsp;<?php echo $curpage?>&nbsp;<?php echo $lang["of"]?>&nbsp;<?php echo $totalpages?></a>&nbsp;|&nbsp;<?php if ($curpage<$totalpages) { ?><a href="<?php echo $url?>&offset=<?php echo $offset+$per_page?>"><?php } ?><?php echo $lang["next"]?>&nbsp;&gt;<?php if ($curpage<$totalpages) { ?></a><?php } ?>
 	   	   </span>
-	   	   <div id="jumppanel<?=$jumpcount?>" style="display:none;margin-top:5px;"><?=$lang["jumptopage"]?>: <input type="text" size="3" id="jumpto<?=$jumpcount?>">&nbsp;<input type="submit" name="jump" value="<?=$lang["jump"]?>" onClick="var jumpto=document.getElementById('jumpto<?=$jumpcount?>').value;if ((jumpto>0) && (jumpto<=<?=$totalpages?>)) {document.location='<?=$url?>&offset=' + ((jumpto-1) * <?=$per_page?>);}"></div>
-   	<?
+	   	   <div id="jumppanel<?php echo $jumpcount?>" style="display:none;margin-top:5px;"><?php echo $lang["jumptopage"]?>: <input type="text" size="3" id="jumpto<?php echo $jumpcount?>">&nbsp;<input type="submit" name="jump" value="<?php echo $lang["jump"]?>" onClick="var jumpto=document.getElementById('jumpto<?php echo $jumpcount?>').value;if ((jumpto>0) && (jumpto<=<?php echo $totalpages?>)) {document.location='<?php echo $url?>&offset=' + ((jumpto-1) * <?php echo $per_page?>);}"></div>
+   	<?php
 	}
 	
 function get_all_image_sizes($internal=false)

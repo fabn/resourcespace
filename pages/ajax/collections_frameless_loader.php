@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -42,7 +42,7 @@ if ($add!="")
 	hook("preaddtocollection");
 	#add to current collection
 	if (add_resource_to_collection($add,$usercollection)==false)
-		{ ?><script language="Javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
+		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	
    	# Log this
 	daily_stat("Add resource to collection",$add);
@@ -60,14 +60,14 @@ if ($remove!="")
 	hook("preremovefromcollection");
 	#remove from current collection
 	if (remove_resource_from_collection($remove,$usercollection)==false)
-		{ ?><script type="text/javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
+		{ ?><script type="text/javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 
 	if (getval("pagename","")=="search")
 		{
 		# Removing items from the search page - reload the page to refresh the search results.
 		?>
 		<script type="text/javascript">window.location.reload();</script>
-		<?
+		<?php
 		}
 	hook("postremovefromcollection");
 	}
@@ -88,31 +88,31 @@ $feedback=$cinfo["request_feedback"];
 
 ?>
 <!--Collection Dropdown-->	
-<div id="CollectionFramelessDropTitle"><?=$lang["currentcollection"]?>:&nbsp;</div>				
+<div id="CollectionFramelessDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>				
 <div id="CollectionFramelessDrop">
 
 <select id="colselect" name="collection" class="SearchWidth" onchange="ChangeCollection(document.getElementById('colselect').value);">
-<?
+<?php
 $found=false;
 $list=get_user_collections($userref);
 for ($n=0;$n<count($list);$n++)
 	{
 	?>
-	<option value="<?=$list[$n]["ref"]?>" <? if ($usercollection==$list[$n]["ref"]) {?> selected<? $found=true;}?>><?=htmlspecialchars($list[$n]["name"])?></option>
-	<?
+	<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+	<?php
 	}
 if ($found==false)
 	{
 	# Add this one at the end, it can't be found
 	$notfound=get_collection($usercollection);
 	?>
-	<option selected><?=$notfound["name"]?></option>
-	<?
+	<option selected><?php echo $notfound["name"]?></option>
+	<?php
 	}
 ?>
-<option value="-1">(<?=$lang["createnewcollection"]?>)</option>
+<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 </select>
 		
 </div>
 
-<strong><?=count($result)?></strong>&nbsp;<?=$lang["resourcesincollection"]?>
+<strong><?php echo count($result)?></strong>&nbsp;<?php echo $lang["resourcesincollection"]?>

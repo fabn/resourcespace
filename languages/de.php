@@ -1,4 +1,4 @@
-<?
+<?php
 # German
 # Language File for ResourceSpace
 # UTF-8 encoded

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("k")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -28,22 +28,22 @@ else
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["managerelatedkeywords"]?></h1>
+<h1><?php echo $lang["managerelatedkeywords"]?></h1>
 
 <form method=post id="mainform">
-<input type="hidden" name="keyword" value="<?=$keyword?>">
+<input type="hidden" name="keyword" value="<?php echo $keyword?>">
 
-<div class="Question"><label><?=$lang["keyword"]?></label><div class="Fixed"><?=$keyword?></div><div class="clearerleft"> </div></div>
+<div class="Question"><label><?php echo $lang["keyword"]?></label><div class="Fixed"><?php echo $keyword?></div><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?=$lang["relatedkeywords"]?></label><textarea name="related" class="stdwidth" rows=5 cols=50><?=htmlspecialchars($related)?></textarea><div class="clearerleft"></div></div>
+<div class="Question"><label><?php echo $lang["relatedkeywords"]?></label><textarea name="related" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($related)?></textarea><div class="clearerleft"></div></div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["save"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>
 
-<?		
+<?php		
 include "../../include/footer.php";
 ?>

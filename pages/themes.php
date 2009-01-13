@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -22,10 +22,10 @@ include "../include/header.php";
 <form method=get id="themeform">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
-  <h1><?=$lang["themes"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["themes"]?></h1>
+  <p><?php echo text("introtext")?></p>
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
-<?
+<?php
 if ($theme_category_levels>1)
 	{
 	# Display dropdown box for multiple theme selection levels.
@@ -34,26 +34,26 @@ if ($theme_category_levels>1)
 	<div class="RecordPanel">  
 	
 	<div class="Question" style="border-top:none;">
-	<label for="theme1"><?=$lang["themecategory"] . " 1" ?></label>
+	<label for="theme1"><?php echo $lang["themecategory"] . " 1" ?></label>
 	<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
-	<?
+	<?php
 	if ($theme1=="")
 		{
-		?><option value=""><?=$lang["select"]?></option><?
+		?><option value=""><?php echo $lang["select"]?></option><?php
 		}
 	
 	# ----------------- Level 1 headers -------------------------
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=str_replace("*","",$headers[$n])?></option><?
+		?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
 		}
 	?>
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
 	
-	<?
+	<?php
 	# ----------------- Level 2 headers -------------------------
 	if ($theme1!="" && $theme_category_levels>1)
 		{
@@ -62,23 +62,23 @@ if ($theme_category_levels>1)
 			{
 			?>
 			<div class="Question" style="border-top:none;">
-			<label for="theme2"><?=$lang["themecategory"] . " 2" ?></label>
+			<label for="theme2"><?php echo $lang["themecategory"] . " 2" ?></label>
 	
 			<select class="stdwidth" name="theme2" id="theme2" onchange="document.getElementById('lastlevelchange').value='2';document.getElementById('themeform').submit();">
-			<?
+			<?php
 			if ($theme2=="")
 				{
-				?><option value=""><?=$lang["select"]?></option><?
+				?><option value=""><?php echo $lang["select"]?></option><?php
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<? } ?> ><?=str_replace("*","",$headers[$n])?></option><?
+				?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
 				}
 			?>
 			</select>
 			<div class="clearerleft"> </div>
 			</div>
-			<?
+			<?php
 			}
 		}
 	
@@ -90,28 +90,28 @@ if ($theme_category_levels>1)
 			{
 			?>
 			<div class="Question" style="border-top:none;">
-			<label for="theme3"><?=$lang["themecategory"] . " 3" ?></label>
+			<label for="theme3"><?php echo $lang["themecategory"] . " 3" ?></label>
 			<select class="stdwidth" name="theme3" id="theme3" onchange="document.getElementById('lastlevelchange').value='3';document.getElementById('themeform').submit();">
-			<?
+			<?php
 			if ($theme3=="")
 				{
-				?><option value=""><?=$lang["select"]?></option><?
+				?><option value=""><?php echo $lang["select"]?></option><?php
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?=$headers[$n]?>" <? if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<? } ?>><?=str_replace("*","",$headers[$n])?></option><?
+				?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
 				}
 			?>
 			</select>
 			<div class="clearerleft"> </div>
 			</div>
-			<?
+			<?php
 			}
 		}
 	?>
 	</div>
 	</div>
-	<?
+	<?php
 	}
 
 # Display Themes
@@ -135,7 +135,7 @@ elseif ($theme_category_levels==1)
 	}
 ?>
 
-<?
+<?php
 # ------- Smart Themes -------------
 if ($header=="")
 	{
@@ -150,17 +150,17 @@ if ($header=="")
 			<div class="RecordPanel">  
 
 			<div class="RecordHeader">
-			<h1 style="margin-top:5px;"><?=str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
+			<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
 			</div>
 		
 			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
 			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 			<tr class="ListviewBoxedTitleStyle">
-			<td><?=$lang["name"]?></td>
-			<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+			<td><?php echo $lang["name"]?></td>
+			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 			</tr>
 			
-			<?
+			<?php
 			$themes=get_smart_themes($headers[$n]["ref"]);
 			for ($m=0;$m<count($themes);$m++)
 				{
@@ -172,10 +172,10 @@ if ($header=="")
 
 				?>
 				<tr>
-				<td><div class="ListTitle"><?=$indent?><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true"><?=i18n_get_translated($themes[$m]["name"])?></a></div></td>
-				<td><div class="ListTools"><a href="search.php?search=<?=urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?=$lang["action-view"]?></a></div></td>
+				<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
+				<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
 				</tr>
-				<?
+				<?php
 				}
 			?>
 			</table>
@@ -184,7 +184,7 @@ if ($header=="")
 			</div>
 			<div class="PanelShadow"> </div>
 			</div>
-			<?
+			<?php
 			}
 		}
 	}
@@ -206,56 +206,56 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		<div class="RecordPanel">  
 		
 		<div class="RecordHeader">
-		<?
+		<?php
 		$image=get_theme_image($theme1, $theme2, $theme3);
 		if (($image) && ($theme_images))
 			{
-			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?=$image?>" /></div><?
+			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?php echo $image?>" /></div><?php
 			}
 		?>
-		<h1 style="margin-top:12px;float:left;"><?=stripslashes(str_replace("*","",$themename))?></h1>
+		<h1 style="margin-top:12px;float:left;"><?php echo stripslashes(str_replace("*","",$themename))?></h1>
 		</div>
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?=$lang["name"]?></td>
-		<td width="5%"><?=$lang["itemstitle"]?></td>
-		<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+		<td><?php echo $lang["name"]?></td>
+		<td width="5%"><?php echo $lang["itemstitle"]?></td>
+		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		
-		<?
+		<?php
 		for ($m=0;$m<count($themes);$m++)
 			{
 			?>
 			<tr>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?=$themes[$m]["ref"]?>&bc_from=themes"  title="<?=$lang["collectionviewhover"]?>"><?=htmlspecialchars($themes[$m]["name"])?></a>
-			<? if ($flag_new_themes && (time()-strtotime($themes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?=$lang["newflag"]?></div><? } ?>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
+			<?php if ($flag_new_themes && (time()-strtotime($themes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
-			<td width="5%"><?=$themes[$m]["c"]?></td>
+			<td width="5%"><?php echo $themes[$m]["c"]?></td>
 			
-			<td nowrap><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $themes[$m]["ref"])?>" title="<?=$lang["collectionviewhover"]?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
+			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $themes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
 			
-			<? if (!checkperm("b")) { ?>&nbsp;<?=change_collection_link($themes[$m]["ref"])?>&gt;&nbsp;<?=$lang["action-select"]?></a><? } ?>
+			<?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($themes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 		
-			<? if (isset($zipcommand)) { ?>
-			&nbsp;<a href="collection_download.php?collection=<?=$themes[$m]["ref"]?>"
-			>&gt;&nbsp;<?=$lang["action-download"]?></a>
-			<? } ?>
+			<?php if (isset($zipcommand)) { ?>
+			&nbsp;<a href="collection_download.php?collection=<?php echo $themes[$m]["ref"]?>"
+			>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+			<?php } ?>
 			
-			<? if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?c=<?=$themes[$m]["ref"]?>"  title="<?=$lang["collectioncontacthover"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
-			<? } ?>
+			<?php if ($contact_sheet==true) { ?>
+			&nbsp;<a href="contactsheet_settings.php?c=<?php echo $themes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+			<?php } ?>
 		
-			<? if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?=$themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
+			<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 		
-			<? if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?=$themes[$m]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
+			<?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $themes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 		
-			<? hook("addcustomtool"); ?>
+			<?php hook("addcustomtool"); ?>
 			
 			</td>
 			</tr>
-			<?
+			<?php
 			}
 		?>
 		</table>
@@ -264,7 +264,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		</div>
 		<div class="PanelShadow"> </div>
 		</div>
-		<?
+		<?php
 		}
 	}
 ?>
@@ -272,16 +272,16 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 </form>
 </div>
 
-<? if (!checkperm("b") && $enable_public_collections) { ?>
+<?php if (!checkperm("b") && $enable_public_collections) { ?>
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>
-    <h1><?=$lang["findapubliccollection"]?></h1>
-    <p class="tight"><?=text("findpublic")?></p>
-    <p><a href="collection_public.php"><?=$lang["findapubliccollection"]?>&nbsp;&gt;</a></p>
+    <h1><?php echo $lang["findapubliccollection"]?></h1>
+    <p class="tight"><?php echo text("findpublic")?></p>
+    <p><a href="collection_public.php"><?php echo $lang["findapubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
-<? } ?>
+<?php } ?>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

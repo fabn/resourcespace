@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
@@ -25,25 +25,25 @@ include "../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["termsandconditions"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["termsandconditions"]?></h1>
+  <p><?php echo text("introtext")?></p>
   
  	<div class="Question">
-	<label><?=$lang["termsandconditions"]?></label>
-	<textarea readonly class="stdwidth" style="width:70%" rows=20 cols=50><?=text("terms")?></textarea>	
+	<label><?php echo $lang["termsandconditions"]?></label>
+	<textarea readonly class="stdwidth" style="width:70%" rows=20 cols=50><?php echo text("terms")?></textarea>	
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<form method="post">
-	<input type=hidden name="url" value="<?=$url?>">
+	<input type=hidden name="url" value="<?php echo $url?>">
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>		
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["iaccept"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["iaccept"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

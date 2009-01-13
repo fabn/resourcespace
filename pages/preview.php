@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
@@ -70,35 +70,35 @@ else
 include "../include/header.php";
 ?>
 
-<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&k=<?=$k?>">&lt; <?=$lang["backtoview"]?></a>
-<? if ($k=="") { ?>
+<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
+<?php if ($k=="") { ?>
 
-<? if (!checkperm("b")) { ?>
+<?php if (!checkperm("b")) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?=add_to_collection_link($ref,$search)?><?=$lang["addtocollection"]?></a><? } ?>
+<?php echo add_to_collection_link($ref,$search)?><?php echo $lang["addtocollection"]?></a><?php } ?>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="preview.php?from=<?=getval("from","")?>&ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
+<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a href="search.php<? if (strpos($search,"!")!==false) {?>?search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?><? } ?>"><?=$lang["viewallresults"]?></a>
+<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
 |
-<a href="preview.php?from=<?=getval("from","")?>&ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
-<? } ?>
+<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
+<?php } ?>
 
 </p>
 
-<? if (!hook("previewimage")) { ?>
+<?php if (!hook("previewimage")) { ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
-<td valign="middle"><? if ($previouspage!=-1) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$ext?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&page=<?=$previouspage?>" class="PDFnav">&lt;</a><? } 
-elseif ($nextpage!=-1) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><? } ?></td>
-<td><a href="<?=((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&k=<?=$k?>"><img src="<?=$url?>" alt="" <? if ($border) { ?>style="border:1px solid white;"<? } ?> /></a></td>
-<td valign="middle"><? if ($nextpage!=-1) { ?><a href="preview.php?ref=<?=$ref?>&ext=<?=$ext?>&k=<?=$k?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&page=<?=$nextpage?>" class="PDFnav">&gt;</a><? } ?></td>
+<td valign="middle"><?php if ($previouspage!=-1) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
+elseif ($nextpage!=-1) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><?php } ?></td>
+<td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
+<td valign="middle"><?php if ($nextpage!=-1) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
-<? } ?>
+<?php } ?>
 
 <div id="CollectionFramelessCount" style="display:none;"> </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

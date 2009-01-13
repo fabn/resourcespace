@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/general.php";
 
@@ -16,25 +16,25 @@ if (getval("save","")!="")
 include "../include/header.php";
 ?>
 
-    <h1><?=$lang["requestnewpassword"]?></h1>
-    <p><?=text("introtext")?></p>
+    <h1><?php echo $lang["requestnewpassword"]?></h1>
+    <p><?php echo text("introtext")?></p>
 	
 	  
 	<form method="post">  
 	<div class="Question">
-	<label for="email"><?=$lang["youremailaddress"]?></label>
+	<label for="email"><?php echo $lang["youremailaddress"]?></label>
 	<input type=text name="email" id="email" class="stdwidth">
-	<? if (isset($error)) { ?><div class="FormError">!! <?=$lang["emailnotfound"]?> !!</div><? } ?>
+	<?php if (isset($error)) { ?><div class="FormError">!! <?php echo $lang["emailnotfound"]?> !!</div><?php } ?>
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["sendreminder"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["sendreminder"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	
 
-<?
+<?php
 include "../include/footer.php";
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 #
 #
 # Quick 'n' dirty script to update all preview images.
@@ -19,8 +19,8 @@ if (count($resourceinfo)>0)
 	{
 	create_previews($ref,false,$resourceinfo[0]["file_extension"]);
 	?>
-	<img src="<?=get_resource_path($ref,false,"pre",false)?>">
-	<?
+	<img src="<?php echo get_resource_path($ref,false,"pre",false)?>">
+	<?php
 	}
 else
 	{
@@ -30,14 +30,14 @@ else
 if ($ref<$max && getval("only","")=="")
 	{
 	?>
-	<meta http-equiv="refresh" content="1;url=<?=$baseurl?>/pages/tools/update_previews.php?ref=<?=$ref+1?>"/>
-	<?
+	<meta http-equiv="refresh" content="1;url=<?php echo $baseurl?>/pages/tools/update_previews.php?ref=<?php echo $ref+1?>"/>
+	<?php
 	}
 else
 	{
 	?>
 	Done.	
-	<?
+	<?php
 	}
 ?>
 	

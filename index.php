@@ -1,4 +1,4 @@
-<?
+<?php
 include "include/db.php";
 include "include/collections_functions.php";
 
@@ -61,20 +61,20 @@ if (checkperm("b") || $frameless_collections) {redirect($topurl);}
 <html>
 <head>
 <!--
-ResourceSpace version <?=$productversion?>
+ResourceSpace version <?php echo $productversion?>
 
 http://www.montala.net/resourcespace.php
 Copyright Oxfam GB 2006-2008
 -->
-<title><?=htmlspecialchars($applicationname)?></title>
+<title><?php echo htmlspecialchars($applicationname)?></title>
 
-<frameset rows="*<? if ($bottomurl!="") { ?><? if ($collection_resize!=true){?>,3<?}?>,138<? } ?>" id="topframe" framespacing="0" <? if ($collection_resize!=true){?>frameborder="no"<?}?>>
-<frame name="main" id="main" src="<?=$topurl?>" <? if ($collection_resize!=true){?>frameborder="no"<?}?>>
+<frameset rows="*<?php if ($bottomurl!="") { ?><?php if ($collection_resize!=true){?>,3<?php } ?>,138<?php } ?>" id="topframe" framespacing="0" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
+<frame name="main" id="main" src="<?php echo $topurl?>" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
 
-<? if ($bottomurl!="") { ?>
-<? if ($collection_resize!=true){?><frame src="pages/frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" /><?}?>
-<frame name="collections" id="collections" src="<?=$bottomurl?>" frameborder=no>
-<? } ?>
+<?php if ($bottomurl!="") { ?>
+<?php if ($collection_resize!=true){?><frame src="pages/frame-divider.htm" name="DivideFrame" frameborder="no" scrolling="no" noresize="noresize" marginwidth="0" marginheight="0" id="DivideFrame" /><?php } ?>
+<frame name="collections" id="collections" src="<?php echo $bottomurl?>" frameborder=no>
+<?php } ?>
 
 </frameset>
 

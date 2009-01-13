@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -30,11 +30,11 @@ include "../include/header.php";
 ?>
 <div class="BasicsBox">
 <p>
-<a href="edit.php?ref=<?=$ref?>">&lt;&nbsp;<?=$lang["backtoeditresource"]?></a><br / >
-<a href="view.php?ref=<?=$ref?>">&lt;&nbsp;<?=$lang["backtoresourceview"]?></a>
+<a href="edit.php?ref=<?php echo $ref?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $ref?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
 </p>
 
-<h1><?=$lang["managealternativefilestitle"]?></h1>
+<h1><?php echo $lang["managealternativefilestitle"]?></h1>
 </div>
 
 <form method=post id="fileform">
@@ -44,36 +44,36 @@ include "../include/header.php";
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <!--Title row-->	
 <tr class="ListviewTitleStyle">
-<td><?=$lang["name"]?></td>
-<td><?=$lang["description"]?></td>
-<td><?=$lang["filetype"]?></td>
-<td><?=$lang["filesize"]?></td>
-<td><?=$lang["date"]?></td>
-<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+<td><?php echo $lang["name"]?></td>
+<td><?php echo $lang["description"]?></td>
+<td><?php echo $lang["filetype"]?></td>
+<td><?php echo $lang["filesize"]?></td>
+<td><?php echo $lang["date"]?></td>
+<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
-<?
+<?php
 $files=get_alternative_files($ref);
 for ($n=0;$n<count($files);$n++)
 	{
 	?>
 	<!--List Item-->
 	<tr>
-	<td><?=htmlspecialchars($files[$n]["name"])?></td>	
-	<td><?=htmlspecialchars($files[$n]["description"])?>&nbsp;</td>	
-	<td><?=($files[$n]["file_extension"]==""?$lang["notuploaded"]:htmlspecialchars(strtoupper($files[$n]["file_extension"])) . " " . $lang["file"])?></td>	
-	<td><?=formatfilesize($files[$n]["file_size"])?></td>	
-	<td><?=nicedate($files[$n]["creation_date"],true)?></td>
+	<td><?php echo htmlspecialchars($files[$n]["name"])?></td>	
+	<td><?php echo htmlspecialchars($files[$n]["description"])?>&nbsp;</td>	
+	<td><?php echo ($files[$n]["file_extension"]==""?$lang["notuploaded"]:htmlspecialchars(strtoupper($files[$n]["file_extension"])) . " " . $lang["file"])?></td>	
+	<td><?php echo formatfilesize($files[$n]["file_size"])?></td>	
+	<td><?php echo nicedate($files[$n]["creation_date"],true)?></td>
 	<td><div class="ListTools">
 	
-	<a href="#" onclick="if (confirm('<?=$lang["filedeleteconfirm"]?>')) {document.getElementById('filedelete').value='<?=$files[$n]["ref"]?>';document.getElementById('fileform').submit();} return false;">&gt;&nbsp;<?=$lang["action-delete"]?></a>
+	<a href="#" onclick="if (confirm('<?php echo $lang["filedeleteconfirm"]?>')) {document.getElementById('filedelete').value='<?php echo $files[$n]["ref"]?>';document.getElementById('fileform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>
 
-	&nbsp;<a href="alternative_file.php?resource=<?=$ref?>&ref=<?=$files[$n]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a>
+	&nbsp;<a href="alternative_file.php?resource=<?php echo $ref?>&ref=<?php echo $files[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a>
 	
 	</td>
 	
 	</tr>
-	<?
+	<?php
 	}
 ?>
 </table>
@@ -81,13 +81,13 @@ for ($n=0;$n<count($files);$n++)
 
 <!--Create a new file-->
 <div class="BasicsBox">
-    <h1><?=$lang["addalternativefile"]?></h1>
+    <h1><?php echo $lang["addalternativefile"]?></h1>
     <form method="post">
 		<div class="Question">
-			<label for="newcollection"><?=$lang["name"]?></label>
+			<label for="newcollection"><?php echo $lang["name"]?></label>
 			<div class="tickset">
 			 <div class="Inline"><input type=text name="newfile" id="newfile" value="" maxlength="100" class="shrtwidth"></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 			</div>
 		<div class="clearerleft"> </div>
 	    </div>
@@ -97,6 +97,6 @@ for ($n=0;$n<count($files);$n++)
 
 </form>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

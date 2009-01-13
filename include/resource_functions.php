@@ -1,4 +1,4 @@
-<?
+<?php
 # Resource functions
 # Functions to create, edit and index resources
 

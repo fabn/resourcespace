@@ -1,4 +1,4 @@
-<?
+<?php
 # authenticate user based on cookie
 $valid=true;
 
@@ -115,9 +115,9 @@ if (!$valid)
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script>
-	top.location.href="<?=$baseurl?>/login.php?url=<?=urlencode($path)?>";
+	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?>";
 	</script>
-	<?
+	<?php
     exit();
     }
 

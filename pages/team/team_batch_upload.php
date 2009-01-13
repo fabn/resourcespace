@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("c")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -17,29 +17,29 @@ if ($collection!="") {set_user_collection($userref,$collection);}
 
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["uploadresourcebatch"]?></h1>
-<p><?=text("introtext")?></p>
+<h1><?php echo $lang["uploadresourcebatch"]?></h1>
+<p><?php echo text("introtext")?></p>
 </div>
 
 <div class="RecordBox">
 <div class="RecordPanel"> 
 <div class="RecordResouce">
-<div class="Title"><?=$lang["uploadinprogress"]?></div>
-<p id="uploadstatus"><?=$lang["transferringfiles"]?><br/><b><?=$lang["donotmoveaway"]?></b><br/><br/></p>
+<div class="Title"><?php echo $lang["uploadinprogress"]?></div>
+<p id="uploadstatus"><?php echo $lang["transferringfiles"]?><br/><b><?php echo $lang["donotmoveaway"]?></b><br/><br/></p>
 <div class="clearerleft"> </div>
 </div>
 </div>
 <div class="PanelShadow"></div>
 </div>
 
-<?
+<?php
 include "../../include/footer.php";
 flush();
 
 # Download files
 if (!array_key_exists("uploadfiles",$_POST))
 	{
-	?><script>alert("<?=$lang["pleaseselectfiles"]?>");history.go(-1);</script><?
+	?><script>alert("<?php echo $lang["pleaseselectfiles"]?>");history.go(-1);</script><?php
 	exit();
 	}
 $uploadfiles=$_POST["uploadfiles"];
@@ -83,8 +83,8 @@ for ($n=0;$n<count($uploadfiles);$n++)
 	if ($result) 
 		{
 	    # Create image previews for supported image files only.
-    	?><script>document.getElementById('uploadstatus').innerHTML+="<?=$lang["resizingimage"]?> <?=$n+1?> <?=$lang["of"]?> <?=count($uploadfiles)?><br/>";</script>
-    	<?
+    	?><script>document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["resizingimage"]?> <?php echo $n+1?> <?php echo $lang["of"]?> <?php echo count($uploadfiles)?><br/>";</script>
+    	<?php
 		flush();
     	create_previews($ref,false,$extension);
     	
@@ -125,8 +125,8 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		$status=$lang["uploadfailedfor"] . $path;
 		sleep(2);$failed++;
 		}
-	?><script language="Javascript">document.getElementById('uploadstatus').innerHTML+="<?=$status?><br/><br/>";</script>
-	<?
+	?><script language="Javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $status?><br/><br/>";</script>
+	<?php
 	flush();
 	}
 
@@ -135,4 +135,4 @@ if (!$use_local)
 	ftp_close($ftp);
 	}
 ?>
-<script>document.getElementById('uploadstatus').innerHTML+="<?=$lang["uploadcomplete"]?> <?=$done?> <?=$lang["resourcesuploadedok"]?>, <?=$failed?> <?=$lang["failed"]?>. <?=$lang["clickviewnewmaterial"]?>";</script>
+<script>document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["uploadcomplete"]?> <?php echo $done?> <?php echo $lang["resourcesuploadedok"]?>, <?php echo $failed?> <?php echo $lang["failed"]?>. <?php echo $lang["clickviewnewmaterial"]?>";</script>

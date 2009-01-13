@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; 
 include "../include/general.php";
@@ -113,9 +113,9 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 			{
 			?>
 			<script type="text/javascript">
-			alert('<?=$lang["requiredfields"]?>');
+			alert('<?php echo $lang["requiredfields"]?>');
 			</script>
-			<?
+			<?php
 			}
 		}
 	else
@@ -164,102 +164,102 @@ include "../include/header.php";
 
 <form method="post" id="mainform">
 <input type="hidden" name="submitted" value="true">
-<? 
+<?php 
 if ($multiple) { ?>
-<h1><?=$lang["editmultipleresources"]?></h1>
-<p><?=count($items)?> <?=$lang["resourcesselected"]?>. <?=text("multiple")?></p>
+<h1><?php echo $lang["editmultipleresources"]?></h1>
+<p><?php echo count($items)?> <?php echo $lang["resourcesselected"]?>. <?php echo text("multiple")?></p>
 
-<? } elseif ($ref>0) { ?>
-<h1><?=$lang["editresource"]?></h1>
+<?php } elseif ($ref>0) { ?>
+<h1><?php echo $lang["editresource"]?></h1>
 
-<? if (!$multiple) { 
+<?php if (!$multiple) { 
 # Resource next / back browsing.
 ?>
 <div class="TopInpageNav">
-<a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=previous">&lt;&nbsp;<?=$lang["previousresult"]?></a>
+<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a href="search.php<? if (strpos($search,"!")!==false) {?>?search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?><? } ?>"><?=$lang["viewallresults"]?></a>
+<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
 |
-<a href="edit.php?ref=<?=$ref?>&search=<?=urlencode($search)?>&offset=<?=$offset?>&order_by=<?=$order_by?>&archive=<?=$archive?>&go=next"><?=$lang["nextresult"]?>&nbsp;&gt;</a>
+<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
-<? } ?>
+<?php } ?>
 
 
 <div class="Question" style="border-top:none;">
-<label><?=$lang["resourceid"]?></label>
-<div class="Fixed"><?=$ref?></div>
+<label><?php echo $lang["resourceid"]?></label>
+<div class="Fixed"><?php echo $ref?></div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["file"]?></label>
+<label><?php echo $lang["file"]?></label>
 <div class="Fixed">
-<? if ($resource["has_image"]==1) { ?><img align="top" src="<?=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
-<? } 
-if ($resource["file_extension"]!="") { ?><strong><?=strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><? } ?>
+<?php if ($resource["has_image"]==1) { ?><img align="top" src="<?php echo get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
+<?php } 
+if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 
-<a href="upload.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadafile"]?></a>
+<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
 <br />
-<a href="upload_preview.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["uploadpreview"]?></a>
+<a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a>
 <br />
-<a href="alternative_files.php?ref=<?=$ref?>">&gt;&nbsp;<?=$lang["managealternativefiles"]?></a>
+<a href="alternative_files.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a>
 
 </div>
 <div class="clearerleft"> </div>
 </div>
 
-<? if ($resource["has_image"]==1) { ?>
+<?php if ($resource["has_image"]==1) { ?>
 <div class="Question">
-<label><?=$lang["imagecorrection"]?><br/><?=$lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
-<option value=""><?=$lang["select"]?></option>
-<option value="rotateclock"><?=$lang["rotateclockwise"]?></option>
-<option value="rotateanti"><?=$lang["rotateanticlockwise"]?></option>
-<option value="gammaplus"><?=$lang["increasegamma"]?></option>
-<option value="gammaminus"><?=$lang["decreasegamma"]?></option>
-<option value="restore"><?=$lang["restoreoriginal"]?></option>
+<label><?php echo $lang["imagecorrection"]?><br/><?php echo $lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
+<option value=""><?php echo $lang["select"]?></option>
+<option value="rotateclock"><?php echo $lang["rotateclockwise"]?></option>
+<option value="rotateanti"><?php echo $lang["rotateanticlockwise"]?></option>
+<option value="gammaplus"><?php echo $lang["increasegamma"]?></option>
+<option value="gammaminus"><?php echo $lang["decreasegamma"]?></option>
+<option value="restore"><?php echo $lang["restoreoriginal"]?></option>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
-<? } ?>
+<?php } ?>
 
-<? } else { # For batch uploads, specify default content (writes to resource with ID [negative user ref]) ?>
-<h1><?=$lang["specifydefaultcontent"]?></h1>
-<p><?=text("batch")?></p>
+<?php } else { # For batch uploads, specify default content (writes to resource with ID [negative user ref]) ?>
+<h1><?php echo $lang["specifydefaultcontent"]?></h1>
+<p><?php echo text("batch")?></p>
 
-<? if (getval("swf","")!="") { # We need to ask for the resource type here for SWFUploads
+<?php if (getval("swf","")!="") { # We need to ask for the resource type here for SWFUploads
 ?>
 <div class="Question">
-<label for="resourcetype"><?=$lang["resourcetype"]?></label>
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
-<?
+<?php
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option value="<?=$types[$n]["ref"]?>" <? if (getval("resource_type","")==$types[$n]["ref"]) {?>selected<? } ?>><?=$types[$n]["name"]?></option><?
+	?><option value="<?php echo $types[$n]["ref"]?>" <?php if (getval("resource_type","")==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
 	}
 ?></select>
 <div class="clearerleft"> </div>
 </div>
 
-<?
+<?php
 # Batch uploads (SWF) - also ask which collection to add the resource to.
 if ($enable_add_collection_on_upload) 
 	{
 	?>
 	<div class="Question">
-	<label for="collection_add"><?=$lang["addtocollection"]?></label>
+	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
 	<select name="collection_add" id="collection_add" class="stdwidth">
-	<option value=""><?=$lang["batchdonotaddcollection"]?></option>
-	<?
+	<option value=""><?php echo $lang["batchdonotaddcollection"]?></option>
+	<?php
 	$list=get_user_collections($userref);
 	$currentfound=false;
 	for ($n=0;$n<count($list);$n++)
 		{
 		if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
 		?>
-		<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
-		<?
+		<option value="<?php echo $list[$n]["ref"]?>"><?php echo htmlspecialchars($list[$n]["name"])?></option>
+		<?php
 		}
 	if (!$currentfound)
 		{
@@ -268,24 +268,24 @@ if ($enable_add_collection_on_upload)
 		if ($cc!==false)
 			{
 			?>
-			<option value="<?=$usercollection?>"><?=htmlspecialchars($cc["name"])?></option>
-			<?
+			<option value="<?php echo $usercollection?>"><?php echo htmlspecialchars($cc["name"])?></option>
+			<?php
 			}
 		}
 	?>
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
-	<? 
+	<?php 
 }
 ?>
 
 
-<? } ?>
+<?php } ?>
 
-<? } ?>
+<?php } ?>
 
-<?
+<?php
 $lastrt=-1;
 
 # "copy data from" feature
@@ -293,11 +293,11 @@ if ($enable_copy_data_from && !$multiple)
 	{ 
 	?>
 	<div class="Question">
-	<label for="copyfrom"><?=$lang["batchcopyfrom"]?></label>
+	<label for="copyfrom"><?php echo $lang["batchcopyfrom"]?></label>
 	<input class="stdwidth" type="text" name="copyfrom" id="copyfrom" value="" style="width:80px;">
-	<input type="submit" name="copyfromsubmit" value="<?=$lang["copy"]?>">
+	<input type="submit" name="copyfromsubmit" value="<?php echo $lang["copy"]?>">
 	</div>
-	<?
+	<?php
 	}
 
 
@@ -324,56 +324,56 @@ for ($n=0;$n<count($fields);$n++)
 	
 	if (($fields[$n]["resource_type"]!=$lastrt)&& ($lastrt!=-1))
 		{
-		?><br><h1><?=get_resource_type_name($fields[$n]["resource_type"])?> <?=$lang["properties"]?></h1><?
+		?><br><h1><?php echo get_resource_type_name($fields[$n]["resource_type"])?> <?php echo $lang["properties"]?></h1><?php
 		}
 	$lastrt=$fields[$n]["resource_type"];
 	if (getval("resetform","")!="") {$value="";}
 	?>
-	<? if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
-	?><div><input name="editthis_<?=$name?>" id="editthis_<?=$n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?=$n?>');var m=document.getElementById('modeselect_<?=$n?>');var f=document.getElementById('findreplace_<?=$n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?=$n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?=$n?>"><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><? } ?>
+	<?php if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
+	?><div><input name="editthis_<?php echo $name?>" id="editthis_<?php echo $n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?php echo $n?>');var m=document.getElementById('modeselect_<?php echo $n?>');var f=document.getElementById('findreplace_<?php echo $n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?php echo $n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><?php } ?>
 
-	<?
+	<?php
 	if ($multiple)
 		{
 		# When editing multiple, give option to select Replace All Text or Find and Replace
 		?>
-		<div class="Question" id="modeselect_<?=$n?>" style="display:none;padding-bottom:0;margin-bottom:0;">
-		<label><?=$lang["editmode"]?></label>
-		<select id="modeselectinput_<?=$n?>" name="modeselect_<?=$fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?=$n?>');var q=document.getElementById('question_<?=$n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
-		<option value="RT"><?=$lang["replacealltext"]?></option>
-		<? if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5) { 
+		<div class="Question" id="modeselect_<?php echo $n?>" style="display:none;padding-bottom:0;margin-bottom:0;">
+		<label><?php echo $lang["editmode"]?></label>
+		<select id="modeselectinput_<?php echo $n?>" name="modeselect_<?php echo $fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?php echo $n?>');var q=document.getElementById('question_<?php echo $n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
+		<option value="RT"><?php echo $lang["replacealltext"]?></option>
+		<?php if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5) { 
 		# Find and replace and append apply to text boxes only.
 		?>
-		<option value="FR"><?=$lang["findandreplace"]?></option>
-		<option value="AP"><?=$lang["appendtext"]?></option>
-		<? } ?>
+		<option value="FR"><?php echo $lang["findandreplace"]?></option>
+		<option value="AP"><?php echo $lang["appendtext"]?></option>
+		<?php } ?>
 		</select>
 		</div>
 		
-		<div class="Question" id="findreplace_<?=$n?>" style="display:none;border-top:none;">
+		<div class="Question" id="findreplace_<?php echo $n?>" style="display:none;border-top:none;">
 		<label>&nbsp;</label>
-		<?=$lang["find"]?> <input type="text" name="find_<?=$fields[$n]["ref"]?>" class="shrtwidth">
-		<?=$lang["andreplacewith"]?> <input type="text" name="replace_<?=$fields[$n]["ref"]?>" class="shrtwidth">
+		<?php echo $lang["find"]?> <input type="text" name="find_<?php echo $fields[$n]["ref"]?>" class="shrtwidth">
+		<?php echo $lang["andreplacewith"]?> <input type="text" name="replace_<?php echo $fields[$n]["ref"]?>" class="shrtwidth">
 		</div>
-		<?
+		<?php
 		}
 	?>
 
-	<div class="Question" id="question_<?=$n?>" <?if ($multiple) {?>style="display:none;border-top:none;"<? } ?>>
-	<label for="<?=$name?>"><?if (!$multiple) {?><?=htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <? if ($fields[$n]["required"]==1) { ?><sup>*</sup><? } ?><? } ?></label>
-	<?
+	<div class="Question" id="question_<?php echo $n?>" <?php if ($multiple) {?>style="display:none;border-top:none;"<?php } ?>>
+	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <?php if ($fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
+	<?php
 
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Plain text entry
-		?><input class="stdwidth" type=text name="<?=$name?>" id="<?=$name?>" value="<?=htmlspecialchars($value)?>"><?
+		?><input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>"><?php
 		break;
 	
 		case 1: # -------- Text area entry
-		?><textarea class="stdwidth" rows=6 cols=50 name="<?=$name?>" id="<?=$name?>"><?=htmlspecialchars($value)?></textarea><?
+		?><textarea class="stdwidth" rows=6 cols=50 name="<?php echo $name?>" id="<?php echo $name?>"><?php echo htmlspecialchars($value)?></textarea><?php
 		break;
 		
 		case 5: # -------- Larger text area entry
-		?><textarea class="stdwidth" rows=20 cols=80 name="<?=$name?>" id="<?=$name?>"><?=htmlspecialchars($value)?></textarea><?
+		?><textarea class="stdwidth" rows=20 cols=80 name="<?php echo $name?>" id="<?php echo $name?>"><?php echo htmlspecialchars($value)?></textarea><?php
 		break;
 		
 		case 2: # -------- Check box list
@@ -389,28 +389,28 @@ for ($n=0;$n<count($fields);$n++)
 		if ($l>25) {$cols=2;}
 		?>
 		<table cellpadding=2 cellspacing=0><tr>
-		<?
+		<?php
 		for ($m=0;$m<count($options);$m++)
 			{
 			$name=$fields[$n]["ref"] . "_" . $m;
-			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?}
+			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 			?>
-			<td width="1"><input type="checkbox" name="<?=$name?>" value="yes" <?if (in_array($options[$m],$set)) {?>checked<?}?> /></td><td><?=htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
-			<?
+			<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($options[$m],$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+			<?php
 			}
-		?></tr></table><?
+		?></tr></table><?php
 		break;
 
 		case 3: # -------- Drop down list
 		$options=explode(",",$fields[$n]["options"]);
-		?><select class="stdwidth" name="<?=$name?>" id="<?=$name?>"><?
+		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>"><?php
 		for ($m=0;$m<count($options);$m++)
 			{
 			?>
-			<option value="<?=htmlspecialchars(trim($options[$m]))?>" <?if (trim($options[$m])==trim($value)) {?>selected<?}?>><?=htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
-			<?
+			<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (trim($options[$m])==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
+			<?php
 			}
-		?></select><?
+		?></select><?php
 		break;
 		
 		
@@ -431,16 +431,16 @@ for ($n=0;$n<count($fields);$n++)
 	            }
             }
         ?>
-        <select name="<?=$name?>-d"><option value=""><?=$lang["day"]?></option>
-        <?for ($m=1;$m<=31;$m++) {?><option <?if($m==$dd){echo " selected";}?>><?=sprintf("%02d",$m)?></option><?}?>
+        <select name="<?php echo $name?>-d"><option value=""><?php echo $lang["day"]?></option>
+        <?php for ($m=1;$m<=31;$m++) {?><option <?php if($m==$dd){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
         </select>
             
-        <select name="<?=$name?>-m"><option value=""><?=$lang["month"]?></option>
-        <?for ($m=1;$m<=12;$m++) {?><option <?if($m==$dm){echo " selected";}?> value="<?=sprintf("%02d",$m)?>"><?=$lang["months"][$m-1]?></option><?}?>
+        <select name="<?php echo $name?>-m"><option value=""><?php echo $lang["month"]?></option>
+        <?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
         </select>
            
-        <input type=text size=5 name="<?=$name?>-y" value="<?=$dy?>">
-        <?
+        <input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>">
+        <?php
 		break;
 		
 		
@@ -451,13 +451,13 @@ for ($n=0;$n<count($fields);$n++)
 		}
 		?>
 		
-		<?
+		<?php
 		# Display any error messages from previous save
 		if (array_key_exists($fields[$n]["ref"],$errors))
 			{
 			?>
-			<div class="FormError">!! <?=$errors[$fields[$n]["ref"]]?> !!</div>
-			<?
+			<div class="FormError">!! <?php echo $errors[$fields[$n]["ref"]]?> !!</div>
+			<?php
 			}
 
 		# If enabled, include code to produce extra fields to allow multilingual free text to be entered.
@@ -468,56 +468,56 @@ for ($n=0;$n<count($fields);$n++)
 		?>			
 		<div class="clearerleft"> </div>
 		</div>
-		<?
+		<?php
 		}
 	}
 ?>
-<? if ($ref>=0) { ?><br><h1><?=$lang["statusandrelationships"]?></h1><? } ?>
+<?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
 
 	<!-- Archive Status -->
-	<? if ($ref<0) { 
+	<?php if ($ref<0) { 
 		# Hide the dropdown, and set the default status depending on user permissions.
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
 		?>
-		<input type=hidden name="archive" value="<?=$mode?>">
-		<?
+		<input type=hidden name="archive" value="<?php echo $mode?>">
+		<?php
 		}
 	else { ?>
-	<? if ($multiple) { ?><div><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["status"]?></label></div><? } ?>
-	<div class="Question" id="question_status" <? if ($multiple) {?>style="display:none;"<?}?>>
-	<label for="archive"><?=$lang["status"]?></label>
+	<?php if ($multiple) { ?><div><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["status"]?></label></div><?php } ?>
+	<div class="Question" id="question_status" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
+	<label for="archive"><?php echo $lang["status"]?></label>
 	<select class="stdwidth" name="archive" id="archive">
 	
-	<? for ($n=-2;$n<=2;$n++) { ?>
-	<? if (checkperm("e" . $n)) { ?><option value="<?=$n?>" <? if ($resource["archive"]==$n) { ?>selected<? } ?>><?=$lang["status" . $n]?></option><? } ?>
-	<? } ?>
+	<?php for ($n=-2;$n<=2;$n++) { ?>
+	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
+	<?php } ?>
 	</select>
 	<div class="clearerleft"> </div>
 	</div>
-	<? } ?>
+	<?php } ?>
 	
 	<!-- Access -->
-	<? if ($ref<0) { 
+	<?php if ($ref<0) { 
 		# Do not show for user editable templates.
 		?>
-		<input type=hidden name="access" value="<?=$resource["access"]?>">
-		<?
+		<input type=hidden name="access" value="<?php echo $resource["access"]?>">
+		<?php
 		}
 	else { ?>
-	<? if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["access"]?></label></div><? } ?>
-	<div class="Question" id="question_access" <? if ($multiple) {?>style="display:none;"<?}?>>
-	<label for="archive"><?=$lang["access"]?></label>
+	<?php if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["access"]?></label></div><?php } ?>
+	<div class="Question" id="question_access" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
+	<label for="archive"><?php echo $lang["access"]?></label>
 	<select class="stdwidth" name="access" id="access" onChange="var c=document.getElementById('custom_access');if (this.value==3) {c.style.display='block';} else {c.style.display='none';}">
 	
-	<? for ($n=0;$n<=($custom_access?3:2);$n++) { ?>
-	<option value="<?=$n?>" <? if ($resource["access"]==$n) { ?>selected<? } ?>><?=$lang["access" . $n]?></option>
-	<? } ?>
+	<?php for ($n=0;$n<=($custom_access?3:2);$n++) { ?>
+	<option value="<?php echo $n?>" <?php if ($resource["access"]==$n) { ?>selected<?php } ?>><?php echo $lang["access" . $n]?></option>
+	<?php } ?>
 	</select>
 	<div class="clearerleft"> </div>
-	<table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<? if (!$custom_access || $resource["access"]!=3) { ?>display:none;<? } ?>">
-	<?
+	<table id="custom_access" cellpadding=3 cellspacing=3 style="padding-left:150px;<?php if (!$custom_access || $resource["access"]!=3) { ?>display:none;<?php } ?>">
+	<?php
 	$groups=get_resource_custom_access($ref);
 	for ($n=0;$n<count($groups);$n++)
 		{
@@ -527,41 +527,41 @@ for ($n=0;$n<count($fields);$n++)
 		if (in_array("v",$perms)) {$access=0;$editable=false;}
 		?>
 		<tr>
-		<td valign=middle nowrap><?=htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
-		<td width=10 valign=middle><input type=radio name="custom_<?=$groups[$n]["ref"]?>" value="0" <? if (!$editable) { ?>disabled<? } ?> <? if ($access==0) { ?>checked<? } ?>></td>
-		<td align=left valign=middle><?=$lang["access0"]?></td>
-		<td width=10 valign=middle><input type=radio name="custom_<?=$groups[$n]["ref"]?>" value="1" <? if (!$editable) { ?>disabled<? } ?> <? if ($access==1) { ?>checked<? } ?>></td>
-		<td align=left valign=middle><?=$lang["access1"]?></td>
-		<td width=10 valign=middle><input type=radio name="custom_<?=$groups[$n]["ref"]?>" value="2" <? if (!$editable) { ?>disabled<? } ?> <? if ($access==2) { ?>checked<? } ?>></td>
-		<td align=left valign=middle><?=$lang["access2"]?></td>
+		<td valign=middle nowrap><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
+		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked<?php } ?>></td>
+		<td align=left valign=middle><?php echo $lang["access0"]?></td>
+		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked<?php } ?>></td>
+		<td align=left valign=middle><?php echo $lang["access1"]?></td>
+		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked<?php } ?>></td>
+		<td align=left valign=middle><?php echo $lang["access2"]?></td>
 		</tr>
-		<?
+		<?php
 		}
 	?></table>
 	<div class="clearerleft"> </div>
 	</div>
-	<? } ?>
+	<?php } ?>
 
 	<!-- Related Resources -->
-	<? if ($enable_related_resources) { ?>
-	<? if ($multiple) { ?><div><input name="editthis_related" id="editthis_related" value="yes" type="checkbox" onClick="var q=document.getElementById('question_related');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?=$n?>"><?=$lang["relatedresources"]?></label></div><? } ?>
-	<div class="Question" id="question_related" <? if ($multiple) {?>style="display:none;"<?}?>>
-	<label for="related"><?=$lang["relatedresources"]?></label>
-	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"><?=((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
+	<?php if ($enable_related_resources) { ?>
+	<?php if ($multiple) { ?><div><input name="editthis_related" id="editthis_related" value="yes" type="checkbox" onClick="var q=document.getElementById('question_related');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["relatedresources"]?></label></div><?php } ?>
+	<div class="Question" id="question_related" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
+	<label for="related"><?php echo $lang["relatedresources"]?></label>
+	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"><?php echo ((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
-	<? } ?>
+	<?php } ?>
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
-	<input name="resetform" type="submit" value="<?=$lang["clearform"]?>" />&nbsp;
-	<input <? if ($multiple) { ?>onclick="return confirm('<?=$lang["confirmeditall"]?>');"<? } ?> name="save" type="submit" value="&nbsp;&nbsp;<?=($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" />
+	<input name="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />&nbsp;
+	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" />
 	</div>
 </form>
-<p><sup>*</sup> <?=$lang["requiredfield"]?></p>
+<p><sup>*</sup> <?php echo $lang["requiredfield"]?></p>
 </div>
 
-<!--<p><a href="view.php?ref=<?=$ref?>">Back to view</a></p>-->
-<?
+<!--<p><a href="view.php?ref=<?php echo $ref?>">Back to view</a></p>-->
+<?php
 include "../include/footer.php";
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (!checkperm("c") && !checkperm("d")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -20,23 +20,23 @@ include "../include/header.php";
 ?>
 
 <div class="BasicsBox">
-<h1><?=$lang["createnewresource"]?></h1>
+<h1><?php echo $lang["createnewresource"]?></h1>
 
 <form method=post>
-<input type=hidden name="archive" value="<?=$archive?>">
+<input type=hidden name="archive" value="<?php echo $archive?>">
 
 <div class="Question">
-<label for="resourcetype"><?=$lang["resourcetype"]?></label>
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <div class="tickset">
 <div class="Inline"><select name="resource_type" class="shrtwidth">
-<?
+<?php
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option value="<?=$types[$n]["ref"]?>"><?=$types[$n]["name"]?></option><?
+	?><option value="<?php echo $types[$n]["ref"]?>"><?php echo $types[$n]["name"]?></option><?php
 	}
 ?></select></div>
-<div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" /></div>
+<div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>
 </div>
@@ -44,6 +44,6 @@ for ($n=0;$n<count($types);$n++)
 
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

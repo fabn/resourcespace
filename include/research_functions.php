@@ -1,4 +1,4 @@
-<?
+<?php
 # Research functions
 # Functions to accomodate research requests
 

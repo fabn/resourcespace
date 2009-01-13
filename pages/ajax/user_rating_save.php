@@ -1,4 +1,4 @@
-<?
+<?php
 # AJAX ratings save
 
 include "../../include/db.php";

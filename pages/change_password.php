@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (checkperm("p")) {exit("Not allowed.");}
 include "../include/general.php";
@@ -22,36 +22,36 @@ if (getval("save","")!="")
 include "../include/header.php";
 ?>
 
-	<h1><?=$lang["changeyourpassword"]?></h1>
+	<h1><?php echo $lang["changeyourpassword"]?></h1>
 
-    <p><?=text("introtext")?></p>
+    <p><?php echo text("introtext")?></p>
 	
-	<? if (getval("expired","")!="") { ?><div class="FormError">!! <?=$lang["password_expired"]?> !!</div><? } ?>
+	<?php if (getval("expired","")!="") { ?><div class="FormError">!! <?php echo $lang["password_expired"]?> !!</div><?php } ?>
 	    
 	<form method="post">  
-	<input type="hidden" name="expired" value="<?=getval("expired","")?>">
+	<input type="hidden" name="expired" value="<?php echo getval("expired","")?>">
 	<div class="Question">
-	<label for="password"><?=$lang["newpassword"]?></label>
+	<label for="password"><?php echo $lang["newpassword"]?></label>
 	<input type="password" name="password" id="password" class="stdwidth">
-	<? if (isset($error)) { ?><div class="FormError">!! <?=$message?> !!</div><? } ?>
+	<?php if (isset($error)) { ?><div class="FormError">!! <?php echo $message?> !!</div><?php } ?>
 	<div class="clearerleft"> </div>
 	</div>
 
 	<div class="Question">
-	<label for="password2"><?=$lang["newpasswordretype"]?></label>
+	<label for="password2"><?php echo $lang["newpasswordretype"]?></label>
 	<input type="password" name="password2" id="password2" class="stdwidth">
-	<? if (isset($error2)) { ?><div class="FormError">!! <?=$lang["passwordnotmatch"]?> !!</div><? } ?>
+	<?php if (isset($error2)) { ?><div class="FormError">!! <?php echo $lang["passwordnotmatch"]?> !!</div><?php } ?>
 	<div class="clearerleft"> </div>
 	</div>
 
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["save"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	
 
-<?
+<?php
 include "../include/footer.php";
 ?>

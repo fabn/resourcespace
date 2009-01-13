@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -29,11 +29,11 @@ include "../../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["exportdata"]?></h1>
+  <h1><?php echo $lang["exportdata"]?></h1>
   
 <form method="post">
 <div class="Question">
-<label for="type"><?=$lang["exporttype"]?></label>
+<label for="type"><?php echo $lang["exporttype"]?></label>
 <select id="type" name="type" class="stdwidth">
 <option value="sql">mysqldump - SQL</option>
 <option value="xml">mysqldump - XML</option>
@@ -43,12 +43,12 @@ include "../../include/header.php";
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["exportdata"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["exportdata"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 
 </div>
 
-<?
+<?php
 include "../../include/footer.php";
 ?>

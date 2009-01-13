@@ -1,4 +1,4 @@
-<?
+<?php
 # Feeder page for AJAX search auto-completion.
 
 include "../../include/db.php";
@@ -18,16 +18,16 @@ if (strlen($last)>=2) # Activate when last entered keyword >=3 chars long
 	{
 	?>
 	<ul>
-	<?
+	<?php
 	$keywords=get_suggested_keywords($last);
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		?>
-		<li><?=(($otherwords!="")?$otherwords . " ":"") . $keywords[$n]?></li>
-		<?
+		<li><?php echo (($otherwords!="")?$otherwords . " ":"") . $keywords[$n]?></li>
+		<?php
 		}
 	?>
 	</ul>
-	<?
+	<?php
 	}
 ?>

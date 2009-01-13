@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -18,17 +18,17 @@ include "../../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["viewreport"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["viewreport"]?></h1>
+  <p><?php echo text("introtext")?></p>
   
 <form method="post">
 <div class="Question">
-<label for="report"><?=$lang["viewreports"]?><br/><!--* = Does not use date range--></label><select id="report" name="report" class="stdwidth">
-<?
+<label for="report"><?php echo $lang["viewreports"]?><br/><!--* = Does not use date range--></label><select id="report" name="report" class="stdwidth">
+<?php
 $reports=get_reports(); 
 for ($n=0;$n<count($reports);$n++)
 	{
-	?><option value="<?=$reports[$n]["ref"]?>" <? if ($report==$reports[$n]["ref"]) { ?>selected<? } ?>><?=i18n_get_translated($reports[$n]["name"])?></option><?
+	?><option value="<?php echo $reports[$n]["ref"]?>" <?php if ($report==$reports[$n]["ref"]) { ?>selected<?php } ?>><?php echo i18n_get_translated($reports[$n]["name"])?></option><?php
 	}
 ?>
 </select>
@@ -36,49 +36,49 @@ for ($n=0;$n<count($reports);$n++)
 </div>
 
 <div class="Question">
-<label><?=$lang["fromdate"]?><br/><?=$lang["inclusive"]?></label>
-<?
+<label><?php echo $lang["fromdate"]?><br/><?php echo $lang["inclusive"]?></label>
+<?php
 $name="from";
 $dy=getval($name . "-y",2000);
 $dm=getval($name . "-m",1);
 $dd=getval($name . "-d",1);
 ?>
-<select name="<?=$name?>-d">
-<?for ($m=1;$m<=31;$m++) {?><option <?if($m==$dd){echo " selected";}?>><?=sprintf("%02d",$m)?></option><?}?>
+<select name="<?php echo $name?>-d">
+<?php for ($m=1;$m<=31;$m++) {?><option <?php if($m==$dd){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>
-<select name="<?=$name?>-m">
-<?for ($m=1;$m<=12;$m++) {?><option <?if($m==$dm){echo " selected";}?> value="<?=sprintf("%02d",$m)?>"><?=$lang["months"][$m-1]?></option><?}?>
+<select name="<?php echo $name?>-m">
+<?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
 </select>
-<input type=text size=5 name="<?=$name?>-y" value="<?=$dy?>">
+<input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["todate"]?><br/><?=$lang["inclusive"]?></label>
-<?
+<label><?php echo $lang["todate"]?><br/><?php echo $lang["inclusive"]?></label>
+<?php
 $name="to";
 $dy=getval($name . "-y",date("Y"));
 $dm=getval($name . "-m",date("m"));
 $dd=getval($name . "-d",date("d"));
 ?>
-<select name="<?=$name?>-d">
-<?for ($m=1;$m<=31;$m++) {?><option <?if($m==$dd){echo " selected";}?>><?=sprintf("%02d",$m)?></option><?}?>
+<select name="<?php echo $name?>-d">
+<?php for ($m=1;$m<=31;$m++) {?><option <?php if($m==$dd){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>
-<select name="<?=$name?>-m">
-<?for ($m=1;$m<=12;$m++) {?><option <?if($m==$dm){echo " selected";}?> value="<?=sprintf("%02d",$m)?>"><?=$lang["months"][$m-1]?></option><?}?>
+<select name="<?php echo $name?>-m">
+<?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
 </select>
-<input type=text size=5 name="<?=$name?>-y" value="<?=$dy?>">
+<input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["viewreport"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 
 </div>
 
-<?
+<?php
 include "../../include/footer.php";
 ?>

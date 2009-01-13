@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -20,12 +20,12 @@ setcookie("thumbs",$thumbs,0);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?=$applicationname?></title>
+<title><?php echo $applicationname?></title>
 <link href="../css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
-<link href="../css/Col-<?=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
+<link href="../css/Col-<?php echo (isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
 <!--[if lte IE 6]> <link href="../css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="../css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
-<?
+<?php
 $collection=getvalescaped("collection","");
 if ($collection!="")
 	{
@@ -75,7 +75,7 @@ if ($allow_reorder || $infobox)
 		document.location='collections.php?reorder=' + id1 + '-' + id2;
 		}
 	</script>
-	<?
+	<?php
 	
 	# Also check for the parameter and reorder as necessary.
 	$reorder=getvalescaped("reorder","");
@@ -91,8 +91,8 @@ if ($allow_reorder || $infobox)
 ?>
 </head>
 
-<body class="CollectBack" id="collectbody"<? if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<? } ?>>
-<?
+<body class="CollectBack" id="collectbody"<?php if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<?php } ?>>
+<?php
 
 $add=getvalescaped("add","");
 if ($add!="")
@@ -100,7 +100,7 @@ if ($add!="")
 	hook("preaddtocollection");
 	#add to current collection
 	if (add_resource_to_collection($add,$usercollection)==false)
-		{ ?><script language="Javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
+		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	
    	# Log this
 	daily_stat("Add resource to collection",$add);
@@ -117,7 +117,7 @@ if ($remove!="")
 	hook("preremovefromcollection");
 	#remove from current collection
 	if (remove_resource_from_collection($remove,$usercollection)==false)
-		{ ?><script language="Javascript">alert("<?=$lang["cantmodifycollection"]?>");</script><? };
+		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	hook("postremovefromcollection");
 	}
 	
@@ -180,19 +180,19 @@ function ToggleThumbs()
 	{
 	document.getElementById("collectbody").style.paddingTop="400px";
 	
-	<? if ($thumbs=="show") { ?>
+	<?php if ($thumbs=="show") { ?>
 	document.getElementById("CollectionSpace").style.visibility="hidden";
-	top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,33";
-	<? } else { ?>
-	top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,138";
-	<? } ?>
+	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
+	<?php } else { ?>
+	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138";
+	<?php } ?>
 	}
-<? if ($thumbs=="hide") { ?>
-top.document.getElementById("topframe").rows="*<? if ($collection_resize!=true) {?>,3<?}?>,33";
-<? } ?>
+<?php if ($thumbs=="hide") { ?>
+top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
+<?php } ?>
 </script>
 
-<? 
+<?php 
 $searches=get_saved_searches($usercollection);
 $result=do_search("!collection" . $usercollection);
 $cinfo=get_collection($usercollection);
@@ -205,10 +205,10 @@ if (count($result)>$max_collection_thumbs && $k=="")
 	{
 	?>
 	<script type="text/javascript">
-	alert("<?=$lang["maxcollectionthumbsreached"]?>");
+	alert("<?php echo $lang["maxcollectionthumbsreached"]?>");
 	window.setTimeout("ToggleThumbs();document.location='collections.php?thumbs=hide';",1000);
 	</script>
-	<?
+	<?php
 	$result=array(); # Empty the result set so nothing is drawn; the window will be resized shortly anyway.
 	}
 
@@ -219,88 +219,88 @@ if ($k!="")
 	$tempcol=get_collection($usercollection);
 	?>
 <div id="CollectionMenu">
-  <h2><?=$tempcol["name"]?></h2>
+  <h2><?php echo $tempcol["name"]?></h2>
 	<br />
-	<?=$lang["created"] . " " . nicedate($tempcol["created"])?><br />
-  	<?=count($result) . " " . $lang["youfoundresources"]?><br />
-  	<? if (isset($zipcommand)) { ?>
-	<a href="collection_download.php?collection=<?=$usercollection?>&k=<?=$k?>" target="main">&gt;&nbsp;<?=$lang["action-download"]?></a>
-	<? } ?>
-    <? if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a><? } ?>
+	<?php echo $lang["created"] . " " . nicedate($tempcol["created"])?><br />
+  	<?php echo count($result) . " " . $lang["youfoundresources"]?><br />
+  	<?php if (isset($zipcommand)) { ?>
+	<a href="collection_download.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+	<?php } ?>
+    <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
 </div>
-<?
+<?php
 } else {
 ?>
 <div id="CollectionMenu">
-<? if (!hook("thumbsmenu")) { ?>
-  <h2><?=$lang["mycollections"]?></h2>
+<?php if (!hook("thumbsmenu")) { ?>
+  <h2><?php echo $lang["mycollections"]?></h2>
   <form method="get" id="colselect">
-		<div class="SearchItem" style="padding:0;margin:0;"><?=$lang["currentcollection"]?>:
+		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>:
 		<select name="collection" onchange="document.getElementById('colselect').submit();" class="SearchWidth">
-		<?
+		<?php
 		$list=get_user_collections($userref);
 		$found=false;
 		for ($n=0;$n<count($list);$n++)
 			{
 			?>
-			<option value="<?=$list[$n]["ref"]?>" <? if ($usercollection==$list[$n]["ref"]) {?> 	selected<? $found=true;} ?>><?=htmlspecialchars($list[$n]["name"])?></option>
-			<?
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			<?php
 			}
 		if ($found==false)
 			{
 			# Add this one at the end, it can't be found
 			$notfound=get_collection($usercollection);
 			?>
-			<option selected><?=$notfound["name"]?></option>
-			<?
+			<option selected><?php echo $notfound["name"]?></option>
+			<?php
 			}
 		?>
-		<option value="-1">(<?=$lang["createnewcollection"]?>)</option>
+		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
 		</div>				
   </form>
 
   <ul>
-  	<? if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-    		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?=$lang["managemycollections"]?></a></li>
-    <? if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?=$usercollection?>" target="main">&gt; <?=$lang["share"]?></a></li><? } ?>
+  	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+    		<?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li>
+    <?php if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     
-    <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?=$usercollection?>">&gt;&nbsp;<?=$allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><? } ?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
 
-    <? if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?=$usercollection?>&k=<?=$k?>">&gt;&nbsp;<?=$lang["sendfeedback"]?></a></li><? } ?>
+    <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
     
-    <? } ?>
-    <? } else {
+    <?php } ?>
+    <?php } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
-    <li><a href="team_research_edit.php?ref=<?=$research?>" target="main">&gt;<?=$lang["editresearchrequests"]?></a></li>    
-    <li><a href="team_research.php" target="main">&gt; <?=$lang["manageresearchrequests"]?></a></li>    
-    <? } ?>
+    <li><a href="team_research_edit.php?ref=<?php echo $research?>" target="main">&gt;<?php echo $lang["editresearchrequests"]?></a></li>    
+    <li><a href="team_research.php" target="main">&gt; <?php echo $lang["manageresearchrequests"]?></a></li>    
+    <?php } ?>
     
-    <? 
+    <?php 
     # If this collection is (fully) editable, then display an extra edit all link
     if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
-    <li class="clearerleft"><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
-    <li><a href="edit.php?collection=<?=$usercollection?>" target="main">&gt; <?=$lang["editall"]?></a></li>
+    <li class="clearerleft"><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
+    <li><a href="edit.php?collection=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["editall"]?></a></li>
 
-    <? } else { ?>
-    <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main">&gt; <?=$lang["viewall"]?></a></li>
-    <? } ?>
+    <?php } else { ?>
+    <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
+    <?php } ?>
     
-   	<? if (isset($zipcommand)) { ?>
-    <li><a target="main" href="collection_download.php?collection=<?=$usercollection?>">&gt; <?=$lang["zipall"]?></a></li>
-	<? } ?>
-    <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?=$lang["hidethumbnails"]?></a></li>
+   	<?php if (isset($zipcommand)) { ?>
+    <li><a target="main" href="collection_download.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["zipall"]?></a></li>
+	<?php } ?>
+    <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a></li>
   </ul>
-<? } ?>
+<?php } ?>
 </div>
 
-<? } ?>
+<?php } ?>
 
 <!--Resource panels-->
 <div id="CollectionSpace">
 
-<?
+<?php
 # Loop through saved searches
 for ($n=0;$n<count($searches);$n++)			
 		{
@@ -310,13 +310,13 @@ for ($n=0;$n<count($searches);$n++)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a target="main" href="<?=$url?>"><img border=0 width=56 height=75 src="../gfx/images/save-search.gif"/></a></td>
+		<a target="main" href="<?php echo $url?>"><img border=0 width=56 height=75 src="../gfx/images/save-search.gif"/></a></td>
 		</tr></table>
-		<div class="CollectionPanelInfo"><a target="main" href="<?=$url?>"><?=$lang["savedsearch"]?> <?=$n+1?></a>&nbsp;</div>
-		<div class="CollectionPanelInfo"><a href="collections.php?removesearch=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?>
+		<div class="CollectionPanelInfo"><a target="main" href="<?php echo $url?>"><?php echo $lang["savedsearch"]?> <?php echo $n+1?></a>&nbsp;</div>
+		<div class="CollectionPanelInfo"><a href="collections.php?removesearch=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?>
 </a></div>				
 		</div>
-		<?		
+		<?php		
 		}
 
 # Loop through thumbnails
@@ -327,55 +327,55 @@ if (count($result)>0)
 		{
 		$ref=$result[$n]["ref"];
 		?>
-<? if (!hook("resourceview")) { ?>
+<?php if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
-		<div class="CollectionPanelShell" id="ResourceShell<?=$ref?>">
+		<div class="CollectionPanelShell" id="ResourceShell<?php echo $ref?>">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><? if ($result[$n]["has_image"]==1) { 
+		<a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php if ($result[$n]["has_image"]==1) { 
 		
 		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])
 		?>
-		<img border=0 src="<?=$colimgpath?>" class="CollectImageBorder"
-		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
+		<img border=0 src="<?php echo $colimgpath?>" class="CollectImageBorder"
+		<?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?>
 		/>
-			<?
+			<?php
 		
-		} else { ?><img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>_col.gif"
-		<? if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?=$ref?>);" onMouseOut="InfoBoxSetResource(0);"<? } ?>
-		/><? } ?></a></td>
+		} else { ?><img border=0 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"
+		<?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?>
+		/><?php } ?></a></td>
 		</tr></table>
-		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?=$ref?>&search=<?=urlencode("!collection" . $usercollection)?>&k=<?=$k?>"><?=tidy_trim(i18n_get_translated($result[$n]["title"]),14)?></a>&nbsp;</div>
+		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),14)?></a>&nbsp;</div>
 	
-		<? if ($k!="" && $feedback) { # Allow feedback for external access key users
+		<?php if ($k!="" && $feedback) { # Allow feedback for external access key users
 		?>
 		<div class="CollectionPanelInfo">
-		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>&k=<?=$k?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
+		<span class="IconComment <?php if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<?php } ?>"><a target="main" href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo $usercollection?>&k=<?php echo $k?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
 		</div>
-		<? } ?>
+		<?php } ?>
 	
-		<? if ($k=="") { ?><div class="CollectionPanelInfo">
-		<? if (($feedback) || ($collection_reorder_caption && $allow_reorder)) { ?>
-		<span class="IconComment <? if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<? } ?>"><a target="main" href="collection_comment.php?ref=<?=$ref?>&collection=<?=$usercollection?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
-		<? } ?>
+		<?php if ($k=="") { ?><div class="CollectionPanelInfo">
+		<?php if (($feedback) || ($collection_reorder_caption && $allow_reorder)) { ?>
+		<span class="IconComment <?php if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<?php } ?>"><a target="main" href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo $usercollection?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
+		<?php } ?>
 		
-		<? if ($collection_reorder_caption && $allow_reorder) { ?>
+		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
-		<span class="IconRemove"><a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
-		<? } else { ?>
-		<a href="collections.php?remove=<?=$ref?>&nc=<?=time()?>">x <?=$lang["action-remove"]?></a>
-		<? } ?>
-		</div><? } ?>			
+		<span class="IconRemove"><a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
+		<?php } else { ?>
+		<a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?></a>
+		<?php } ?>
+		</div><?php } ?>			
 		</div>
-		<? if ($collection_reorder_caption && $allow_reorder) { 
+		<?php if ($collection_reorder_caption && $allow_reorder) { 
 		# Javascript drag/drop enabling.
 		?>
 		<script type="text/javascript">
-		new Draggable('ResourceShell<?=$ref?>',{handle: 'IconReorder', revert: true});
-		Droppables.add('ResourceShell<?=$ref?>',{accept: 'CollectionPanelShell', onDrop: function(element) {ReorderResources(element.id,<?=$ref?>);}, hoverclass: 'ReorderHover'});
+		new Draggable('ResourceShell<?php echo $ref?>',{handle: 'IconReorder', revert: true});
+		Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'CollectionPanelShell', onDrop: function(element) {ReorderResources(element.id,<?php echo $ref?>);}, hoverclass: 'ReorderHover'});
 		</script>
-		<? } ?>
-<? } ?>		
-		<?		
+		<?php } ?>
+<?php } ?>		
+		<?php		
 		}
 	}
 
@@ -383,85 +383,85 @@ if (count($result)>0)
 	if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
 	?>
 	</div>
-	<?
+	<?php
 
 # Add the infobox.
 ?>
 <div id="InfoBoxCollection"><div id="InfoBoxCollectionInner"> </div></div>
-<?
+<?php
 }
 else
 {
 # ------------------------- Minimised view
 ?>
 <!--Title-->	
-<? if (!hook("nothumbs")) { ?>
-<div id="CollectionMinTitle"><h2><?=$lang["mycollections"]?></h2></div>
+<?php if (!hook("nothumbs")) { ?>
+<div id="CollectionMinTitle"><h2><?php echo $lang["mycollections"]?></h2></div>
 
 <!--Menu-->	
 <div id="CollectionMinRightNav">
   <ul>
-  	<? if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-    		<? if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main"><?=$lang["managemycollections"]?></a></li>
-    <li><a href="collection_share.php?ref=<?=$usercollection?>" target="main"><?=$lang["share"]?></a></li><? } ?>
-        <? if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?=$usercollection?>"><?=$lang["edit"]?></a></li><? } ?>
-    <? } else {
+  	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+    		<?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main"><?php echo $lang["managemycollections"]?></a></li>
+    <li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
+        <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>"><?php echo $lang["edit"]?></a></li><?php } ?>
+    <?php } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
-    <li><a href="team_research_edit.php?ref=<?=$research?>" target="main"><?=$lang["editresearchrequests"]?></a></li>    
-    <li><a href="team_research.php" target="main"><?=$lang["manageresearchrequests"]?></a></li>    
-    <? } ?>
-    <? 
+    <li><a href="team_research_edit.php?ref=<?php echo $research?>" target="main"><?php echo $lang["editresearchrequests"]?></a></li>    
+    <li><a href="team_research.php" target="main"><?php echo $lang["manageresearchrequests"]?></a></li>    
+    <?php } ?>
+    <?php 
     # If this collection is (fully) editable, then display an extra edit all link
     if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
-    <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main"><?=$lang["viewall"]?></a></li>
-    <li><a href="edit.php?collection=<?=$usercollection?>" target="main"><?=$lang["editall"]?></a></li>    
-    <? } else { ?>
-    <li><a href="search.php?search=<?=urlencode("!collection" . $usercollection)?>" target="main"><?=$lang["viewall"]?></a></li>
-    <? } ?>
-   	<? if (isset($zipcommand)) { ?>
-    <li><a target="main" href="collection_download.php?collection=<?=$usercollection?>"><?=$lang["zipall"]?></a></li>
-	<? } ?>
+    <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
+    <li><a href="edit.php?collection=<?php echo $usercollection?>" target="main"><?php echo $lang["editall"]?></a></li>    
+    <?php } else { ?>
+    <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
+    <?php } ?>
+   	<?php if (isset($zipcommand)) { ?>
+    <li><a target="main" href="collection_download.php?collection=<?php echo $usercollection?>"><?php echo $lang["zipall"]?></a></li>
+	<?php } ?>
     
-    <? if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?=$lang["showthumbnails"]?></a></li><? } ?>
+    <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
   </ul>
 </div>
 
 <!--Collection Dropdown-->	
-<div id="CollectionMinDropTitle"><?=$lang["currentcollection"]?>:&nbsp;</div>				
+<div id="CollectionMinDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>				
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
 		<select name="collection" class="SearchWidth" onchange="document.getElementById('colselect').submit();">
-		<?
+		<?php
 		$found=false;
 		$list=get_user_collections($userref);
 		for ($n=0;$n<count($list);$n++)
 			{
 			?>
-			<option value="<?=$list[$n]["ref"]?>" <? if ($usercollection==$list[$n]["ref"]) {?> selected<? $found=true;}?>><?=htmlspecialchars($list[$n]["name"])?></option>
-			<?
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			<?php
 			}
 		if ($found==false)
 			{
 			# Add this one at the end, it can't be found
 			$notfound=get_collection($usercollection);
 			?>
-			<option selected><?=$notfound["name"]?></option>
-			<?
+			<option selected><?php echo $notfound["name"]?></option>
+			<?php
 			}
 		?>
-		<option value="-1">(<?=$lang["createnewcollection"]?>)</option>
+		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
 		
 		</div>				
   </form>
 </div>
-<? } ?>
+<?php } ?>
 <!--Collection Count-->	
-<div id="CollectionMinitems"><strong><?=count($result)?></strong>&nbsp;<?=$lang["items"]?></div>		
-<? } ?>
+<div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php echo $lang["items"]?></div>		
+<?php } ?>
 
 
 

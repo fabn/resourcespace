@@ -1,4 +1,4 @@
-<?
+<?php
 
 function HookRefineresultsSearchBeforesearchresults()
 	{
@@ -17,27 +17,27 @@ function HookRefineresultsSearchBeforesearchresults()
 		Effect.SlideUp('RefineResults',{duration:0.5});
 		$('RefinePlus').innerHTML='+';
 		}
-	"><span id='RefinePlus'>+</span> <?=$lang["refineresults"]?></a></p>
+	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></p>
 	<div class="RecordBox" id="RefineResults" style="display:none;">
 	<div class="RecordPanel">  
 	
 	<form method="post">
 	<div class="Question" id="question_related" >
-	<label for="related"><?=$lang["additionalkeywords"]?></label>
+	<label for="related"><?php echo $lang["additionalkeywords"]?></label>
 	<input class="stdwidth" type=text name="refine_keywords" value="">
 	<div class="clearerleft"> </div>
 	</div>
 
 	<div class="QuestionSubmit" style="padding-top:0;margin-top:0;margin-bottom:0;padding-bottom:0;">
 	<label for="buttons"> </label>
-	<input  name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["refine"]?>&nbsp;&nbsp;" />
+	<input  name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["refine"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	
 	</div>
 	<div class="PanelShadow"></div>
 	</div>
-	<?
+	<?php
 	
 	return true;
 	}

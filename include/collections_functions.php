@@ -1,4 +1,4 @@
-<?
+<?php
 # Collections functions
 # Functions to manipulate collections
 

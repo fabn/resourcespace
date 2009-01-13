@@ -1,4 +1,4 @@
-<?
+<?php
 # Portugues
 # Language File for ResourceSpace
 # -------

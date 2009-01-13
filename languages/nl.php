@@ -1,4 +1,4 @@
-<?
+<?php
 # Nederlands
 # Language File for ResourceSpace
 # -------

@@ -1,12 +1,12 @@
 <div class="Fixed">
 <div id="statusbox" class="CategoryBox"></div>
 
-<div><a href="#" onclick="if (document.getElementById('tree').style.display!='block') {document.getElementById('tree').style.display='block';} else {document.getElementById('tree').style.display='none';} return false;">&gt; <?=$lang["showhidetree"]?></a>
+<div><a href="#" onclick="if (document.getElementById('tree').style.display!='block') {document.getElementById('tree').style.display='block';} else {document.getElementById('tree').style.display='none';} return false;">&gt; <?php echo $lang["showhidetree"]?></a>
 &nbsp;
-<a href="#" onclick="if (confirm('<?=$lang["clearcategoriesareyousure"]?>')) {DeselectAll();} return false;">&gt; <?=$lang["clearall"]?></a>
+<a href="#" onclick="if (confirm('<?php echo $lang["clearcategoriesareyousure"]?>')) {DeselectAll();} return false;">&gt; <?php echo $lang["clearall"]?></a>
 </div>
 
-<div id="tree" class="CategoryTree" <? if ($category_tree_open) { ?>style="display:block;"<? } ?>>&nbsp;</div>
+<div id="tree" class="CategoryTree" <?php if ($category_tree_open) { ?>style="display:block;"<?php } ?>>&nbsp;</div>
 <script language="JavaScript">
 
 var TreeParents=new Array();
@@ -99,7 +99,7 @@ function UpdateStatusBox()
 			}	
 		}
 	if (nodes=="")
-		{document.getElementById("statusbox").innerHTML="<b> <?=$lang["nocategoriesselected"]?> </b>";}
+		{document.getElementById("statusbox").innerHTML="<b> <?php echo $lang["nocategoriesselected"]?> </b>";}
 	else
 		{
 		document.getElementById("statusbox").innerHTML=nodes;
@@ -253,7 +253,7 @@ function UpdateHiddenField()
 	document.getElementById("category").value=f;
 	if (UpdateResultCount) {UpdateResultCount();}
 	}
-<?
+<?php
 # Load the tree
 $checked=explode(",",$value);
 $class=explode("\n",$options);
@@ -267,8 +267,8 @@ for ($t=0;$t<count($class);$t++)
 		$nodechecked=0;if (in_array(trim($s[2]),$checked)) {$nodechecked=1;}
 		$nodeexpand=0;if (($nodefolder==1) && ($nodechecked==1)) {$nodeexpand=1;}
 		?>
-		AddNode(<?=$s[1]-1?>,<?=$t?>,"<?=str_replace("\"","\\\"",trim($s[2]))?>",1,<?=$nodechecked?>,<?=$nodeexpand?>);	
-		<?
+		AddNode(<?php echo $s[1]-1?>,<?php echo $t?>,"<?php echo str_replace("\"","\\\"",trim($s[2]))?>",1,<?php echo $nodechecked?>,<?php echo $nodeexpand?>);	
+		<?php
 		}
 	}
 ?>
@@ -278,5 +278,5 @@ UpdateStatusBox();
 
 </script>
 
-<input type=hidden name="<?=$name?>" id="category" value="<?=$value?>">
+<input type=hidden name="<?php echo $name?>" id="category" value="<?php echo $value?>">
 </div>

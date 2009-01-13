@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -32,10 +32,10 @@ if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1)
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["deleteresource"]?></h1>
-  <p class="FormIncorrect"><?=$lang["cantdeletewhiletranscoding"]?></p>
+  <h1><?php echo $lang["deleteresource"]?></h1>
+  <p class="FormIncorrect"><?php echo $lang["cantdeletewhiletranscoding"]?></p>
 </div>
-<?	
+<?php	
 	}
 else
 	{
@@ -43,34 +43,34 @@ else
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["deleteresource"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["deleteresource"]?></h1>
+  <p><?php echo text("introtext")?></p>
   
 	<form method="post">  
-	<input type=hidden name=ref value="<?=$ref?>">
+	<input type=hidden name=ref value="<?php echo $ref?>">
 	
 	<div class="Question">
-	<label><?=$lang["resourceid"]?></label>
-	<div class="Fixed"><?=$ref?></div>
+	<label><?php echo $lang["resourceid"]?></label>
+	<div class="Fixed"><?php echo $ref?></div>
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
-	<label for="password"><?=$lang["yourpassword"]?></label>
+	<label for="password"><?php echo $lang["yourpassword"]?></label>
 	<input type=password class="shrtwidth" name="password" id="password" />
 	<div class="clearerleft"> </div>
-	<? if ($error!="") { ?><div class="FormError">!! <?=$error?> !!</div><? } ?>
+	<?php if ($error!="") { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>
 	</div>
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["deleteresource"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["deleteresource"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	
 </div>
 
-<?
+<?php
 	}
 	
 include "../include/footer.php";

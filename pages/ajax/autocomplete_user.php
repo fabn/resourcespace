@@ -1,4 +1,4 @@
-<?
+<?php
 # Feeder page for AJAX user/group search for the user selection include file.
 
 include "../../include/db.php";
@@ -9,7 +9,7 @@ $find=getvalescaped("autocomplete_parameter","");
 
 ?>
 <ul>
-<?
+<?php
 $users=get_users(0,$find);
 for ($n=0;$n<count($users) && $n<=20;$n++)
 	{
@@ -17,12 +17,12 @@ for ($n=0;$n<count($users) && $n<=20;$n++)
 	if (checkperm("E") && ($users[$n]["groupref"]!=$usergroup) && ($users[$n]["groupparent"]!=$usergroup) && ($users[$n]["groupref"]!=$usergroupparent)) {$show=false;}
 	if ($show)
 		{
-		?><li><?=$users[$n]["username"]?><span class="informal"> (<?=$users[$n]["fullname"]?>)</span></li>
-		<?
+		?><li><?php echo $users[$n]["username"]?><span class="informal"> (<?php echo $users[$n]["fullname"]?>)</span></li>
+		<?php
 		}
 	}
 ?>
-<?
+<?php
 $groups=get_usergroups(true,$find);
 for ($n=0;$n<count($groups) && $n<=20;$n++)
 	{
@@ -36,7 +36,7 @@ for ($n=0;$n<count($groups) && $n<=20;$n++)
 		for ($m=0;$m<count($users);$m++) {if ($ulist!="") {$ulist.=", ";};$ulist.=$users[$m]["username"];}
 		if ($ulist!="")
 			{
-			?><li><?=$lang["group"]?>: <?=$groups[$n]["name"]?></option><?
+			?><li><?php echo $lang["group"]?>: <?php echo $groups[$n]["name"]?></option><?php
 			}
 		}
 	}

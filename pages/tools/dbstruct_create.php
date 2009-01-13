@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 
 # Use the below to set which tables we will extract data for.
@@ -52,6 +52,6 @@ else
 	<form method="post">
 	<input type="submit" name="execute" value="Execute">
 	</form>
-	<?
+	<?php
 	}
 ?>

@@ -7,8 +7,6 @@
 
   <p>[value]</p>
 
-<!--  <p><a href=""story_print.php?ref=<?=$ref?>"" target=""_new"">Print Story Text</a></p>-->
-
 </div>",,0,,,1
 10,credit,Credit,0,,300,1,0,,1,1,2#080,,,0,,"Source,Creator,Credit,By-line",1
 11,,Rating,3,"0,1,2,3,4,5",150,0,0,rating,0,1,,,,0,,Rating,1

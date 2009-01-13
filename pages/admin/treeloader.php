@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/general.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
@@ -28,7 +28,7 @@ for ($n=0;$n<count($ids);$n++)
 #echo "'$id' cur='$curid'";
 ?>
 <script language="Javascript">
-<?
+<?php
 $debug="<li>curid=" . $curid;
 for ($n=1;$n<count($tree);$n++)
     {
@@ -55,29 +55,29 @@ for ($n=1;$n<count($tree);$n++)
            	# Query
            	$debug.="<li>query=" . $query;
             ?>
-            //alert("query=<?=str_replace($transfrom,$transto,$query)?>");
-            <?
+            //alert("query=<?php echo str_replace($transfrom,$transto,$query)?>");
+            <?php
             $result=sql_query(str_replace($transfrom,$transto,$query));
   	         for ($m=0;$m<count($result);$m++)
              	{
              	?>
-             	parent.AddNode(<?=$node?>,"<?=$id."-".$n . ":" . 	$result[$m]["ref"]?>","<?=str_replace(array("\n","\r")," ",($result[$m]["name"]=="")?'(no name)':i18n_get_translated($result[$m]["name"]))?>",<?=$s[3]?>,<?=$s[4]?>,"<?=$s[5]?>");
-              	<?
+             	parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n . ":" . 	$result[$m]["ref"]?>","<?php echo str_replace(array("\n","\r")," ",($result[$m]["name"]=="")?'(no name)':i18n_get_translated($result[$m]["name"]))?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>");
+              	<?php
                	}
             }
         else
             {
             $debug.="<li>no query";
             ?>
-            parent.AddNode(<?=$node?>,"<?=$id."-".$n?>","<?=(trim($s[2])=="")?"?":$s[2]?>",<?=$s[3]?>,<?=$s[4]?>,"<?=$s[5]?>");
-            <?
+            parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","<?php echo (trim($s[2])=="")?"?":$s[2]?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>");
+            <?php
             }
         }
     }
 ?>
-parent.UpdateNode(<?=$node?>);
+parent.UpdateNode(<?php echo $node?>);
 </script>
-<?
+<?php
 #echo $debug;
 
 

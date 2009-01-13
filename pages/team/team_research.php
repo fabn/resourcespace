@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("r")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -21,10 +21,10 @@ include "../../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?=$lang["manageresearchrequests"]?></h1>
-  <p><?=text("introtext")?></p>
+  <h1><?php echo $lang["manageresearchrequests"]?></h1>
+  <p><?php echo text("introtext")?></p>
  
-<? 
+<?php 
 $requests=get_research_requests($find);
 
 # pager
@@ -35,51 +35,51 @@ $curpage=floor($offset/$per_page)+1;
 $url="team_research.php?find=" . urlencode($find);
 $jumpcount=1;
 
-?><div class="TopInpageNav"><? pager();	?></div>
+?><div class="TopInpageNav"><?php pager();	?></div>
 
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><?=$lang["researchid"]?></td>
-<td><?=$lang["nameofproject"]?></td>
-<td><?=$lang["date"]?></td>
-<td><?=$lang["status"]?></td>
-<td><?=$lang["assignedto"]?></td>
-<td><?=$lang["collectionid"]?></td>
-<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+<td><?php echo $lang["researchid"]?></td>
+<td><?php echo $lang["nameofproject"]?></td>
+<td><?php echo $lang["date"]?></td>
+<td><?php echo $lang["status"]?></td>
+<td><?php echo $lang["assignedto"]?></td>
+<td><?php echo $lang["collectionid"]?></td>
+<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
-<?
+<?php
 $statusname=array("Unassigned","In progress","Complete");
 for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	{
 	?>
 	<tr>
-	<td><?=$requests[$n]["ref"]?></td>
-	<td><div class="ListTitle"><a href="team_research_edit.php?ref=<?=$requests[$n]["ref"]?>"><?=$requests[$n]["name"]?></a>&nbsp;</div></td>
-	<td><?=nicedate($requests[$n]["created"],false,true)?></td>
-	<td><?=$statusname[$requests[$n]["status"]]?></td>
-	<td><?=(strlen($requests[$n]["assigned_username"])==0)?"-":$requests[$n]["assigned_username"]?></td>
-	<td><?=(strlen($requests[$n]["collection"])==0)?"-":$requests[$n]["collection"]?></td>
-	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?=$requests[$n]["ref"]?>">&gt;&nbsp;<?=$lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?=$requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["editcollection"]?></a></div></td>
+	<td><?php echo $requests[$n]["ref"]?></td>
+	<td><div class="ListTitle"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>"><?php echo $requests[$n]["name"]?></a>&nbsp;</div></td>
+	<td><?php echo nicedate($requests[$n]["created"],false,true)?></td>
+	<td><?php echo $statusname[$requests[$n]["status"]]?></td>
+	<td><?php echo (strlen($requests[$n]["assigned_username"])==0)?"-":$requests[$n]["assigned_username"]?></td>
+	<td><?php echo (strlen($requests[$n]["collection"])==0)?"-":$requests[$n]["collection"]?></td>
+	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?php echo $requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["editcollection"]?></a></div></td>
 	</tr>
-	<?
+	<?php
 	}
 ?>
 
 </table>
 </div>
-<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="../research_request.php?assign=true">&gt;&nbsp;<?=$lang["createresearchforuser"]?></a></div><? pager(false); ?></div>
+<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="../research_request.php?assign=true">&gt;&nbsp;<?php echo $lang["createresearchforuser"]?></a></div><?php pager(false); ?></div>
 </div>
 
 
 <div class="BasicsBox">
     <form method="post">
 		<div class="Question">
-			<label for="findpublic"><?=$lang["searchresearchrequests"]?></label>
+			<label for="findpublic"><?php echo $lang["searchresearchrequests"]?></label>
 			<div class="tickset">
-			 <div class="Inline"><input type=text name="find" id="find" value="<?=$find?>" maxlength="100" class="shrtwidth" /></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["search"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo $find?>" maxlength="100" class="shrtwidth" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["search"]?>&nbsp;&nbsp;" /></div>
 			</div>
 			<div class="clearerleft"> </div>
 		</div>
@@ -87,6 +87,6 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 
-<?
+<?php
 include "../../include/footer.php";
 ?>

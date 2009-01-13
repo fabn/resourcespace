@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -27,21 +27,21 @@ include "../include/header.php";
 ?>
   <div class="BasicsBox">
     <h2>&nbsp;</h2>
-    <h1><?=$lang["findpubliccollection"]?></h1>
-    <p class="tight"><?=text("introtext")?></p>
+    <h1><?php echo $lang["findpubliccollection"]?></h1>
+    <p class="tight"><?php echo text("introtext")?></p>
 <div class="BasicsBox">
     <form method="post">
 		<div class="Question">
-			<label for="find"><?=$lang["searchpubliccollections"]?></label>
+			<label for="find"><?php echo $lang["searchpubliccollections"]?></label>
 			<div class="tickset">
-			 <div class="Inline"><input type=text name="find" id="find" value="<?=$find?>" maxlength="100" class="shrtwidth" /></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["search"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo $find?>" maxlength="100" class="shrtwidth" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["search"]?>&nbsp;&nbsp;" /></div>
 			</div>
 			<div class="clearerleft"> </div>
 		</div>
 	</form>
 </div>
-<?
+<?php
 $collections=search_public_collections($find,$order_by,$sort);
 
 # pager
@@ -67,7 +67,7 @@ for ($n=ord("A");$n<=ord("Z");$n++)
 $atoz.="</div>";
 
 $url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
-?><div class="TopInpageNav"><?=$atoz?><? pager(false); ?></div>
+?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div>
 
 <form method=post id="collectionform">
 <input type=hidden name="add" id="collectionadd" value="">
@@ -75,43 +75,43 @@ $url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><a href="collection_public.php?offset=0&order_by=name&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["collectionname"]?></a></td>
-<td><a href="collection_public.php?offset=0&order_by=user&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["owner"]?></a></td>
-<td><a href="collection_public.php?offset=0&order_by=ref&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["id"]?></a></td>
-<td><a href="collection_public.php?offset=0&order_by=created&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["created"]?></a></td>
-<td><a href="collection_public.php?offset=0&order_by=public&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["access"]?></a></td>
-<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+<td><a href="collection_public.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a></td>
+<td><a href="collection_public.php?offset=0&order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a></td>
+<td><a href="collection_public.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a></td>
+<td><a href="collection_public.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a></td>
+<td><a href="collection_public.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a></td>
+<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
-<?
+<?php
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?>
 	<td><div class="ListTitle">
-	<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
+	<a href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
-	<td><?=highlightkeywords($collections[$n]["username"],$find)?></td>
-	<td><?=highlightkeywords($collections[$n]["ref"],$find)?></td>
-	<td><?=nicedate($collections[$n]["created"],true)?></td>
-	<td><?=($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
-	<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
-	<? if ($contact_sheet==true) { ?>
-   &nbsp;<a href="contactsheet_settings.php?c=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
-	<? } ?>
-	<? if (!checkperm("b")) { ?>
-	&nbsp;<a href="#" onclick="document.getElementById('collectionadd').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?=$lang["addtomycollections"]?></a><? } ?>
+	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
+	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
+	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
+	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
+	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
+	<?php if ($contact_sheet==true) { ?>
+   &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+	<?php } ?>
+	<?php if (!checkperm("b")) { ?>
+	&nbsp;<a href="#" onclick="document.getElementById('collectionadd').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?php echo $lang["addtomycollections"]?></a><?php } ?>
 	</div></td>
 	</tr>
-	<?
+	<?php
 	}
 ?>
 </table>
 </div>
 
 </form>
-<div class="BottomInpageNav"><? pager(false); ?></div>
+<div class="BottomInpageNav"><?php pager(false); ?></div>
 </div>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -66,8 +66,8 @@ if (array_key_exists("Filedata",$_FILES))
     }
     
 $headerinsert="
-<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?<?=$css_reload_key?>\"></script>
-<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?<?=$css_reload_key?>\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?<?php echo $css_reload_key?>\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?<?php echo $css_reload_key?>\"></script>
 ";
 
 include "../include/header.php";
@@ -170,8 +170,8 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?=$baseurl?>/pages/upload_swf.php?replace=<?=getval("replace","")?>&collection_add=<?=$collection_add?>&user=<?=urlencode($_COOKIE["user"])?>",
-		flash_url : "<?=$baseurl?>/lib/swfupload/swfupload.swf",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>",
+		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 
 				// File Upload Settings
@@ -190,10 +190,10 @@ window.onload =  function()
 				upload_complete_handler : uploadComplete,
 				
 				button_placeholder_id : "btnBrowse",
-				button_image_url : "<?=$baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
+				button_image_url : "<?php echo $baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
 				button_width : 160,
 				button_height : 22,
-				button_text : "<span class=\"button\"><?=$lang["selectfiles"]?></span>",
+				button_text : "<span class=\"button\"><?php echo $lang["selectfiles"]?></span>",
 				button_text_style : ".button { margin: auto; text-align: center; font-weight: bold; font-family: Helvetica, Arial, sans-serif; font-size: 12px; }",
 				button_text_top_padding : 1,
 
@@ -215,11 +215,11 @@ window.onload =  function()
 
 <div class="BasicsBox" id="uploadbox"> 
 <h2>&nbsp;</h2>
-<h1><?=(getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
-<p><?=text("introtext")?></p>
+<h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
+<p><?php echo text("introtext")?></p>
 
 <br/>
-<? if ($status!="") { ?><?=$status?><? } ?>
+<?php if ($status!="") { ?><?php echo $status?><?php } ?>
 </td></tr>
 
 
@@ -235,6 +235,6 @@ window.onload =  function()
 
 </div>
 
-<?
+<?php
 include "../include/footer.php";
 ?>

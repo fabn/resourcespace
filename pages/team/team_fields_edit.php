@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("o")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -26,39 +26,39 @@ include "../../include/header.php";
 
 <div class="BasicsBox"> 
 <p>
-<a href="team_fields.php">&lt;&nbsp;<?=$lang["backtofieldlist"]?></a>
+<a href="team_fields.php">&lt;&nbsp;<?php echo $lang["backtofieldlist"]?></a>
 </p>
-<h1><?=$lang["managefieldoptions"] . " - " . $fieldinfo["title"]?></h1>
+<h1><?php echo $lang["managefieldoptions"] . " - " . $fieldinfo["title"]?></h1>
   
-<? if ($show_all_languages)
+<?php if ($show_all_languages)
 	{
   	?>
-  	<p>&gt;&nbsp;<a href="team_fields_edit.php?field=<?=$field?>&show_all_languages="><?=$lang["hidealllanguages"]?></a></p>
-	<?
+  	<p>&gt;&nbsp;<a href="team_fields_edit.php?field=<?php echo $field?>&show_all_languages="><?php echo $lang["hidealllanguages"]?></a></p>
+	<?php
   	}
   else
   	{
 	?>
-  	<p>&gt;&nbsp;<a href="team_fields_edit.php?field=<?=$field?>&show_all_languages=true"><?=$lang["showalllanguages"]?></a></p>
-  	<?
+  	<p>&gt;&nbsp;<a href="team_fields_edit.php?field=<?php echo $field?>&show_all_languages=true"><?php echo $lang["showalllanguages"]?></a></p>
+  	<?php
   	}
 ?>
   
 </div>
 
 <form method=post>
-<input type=hidden name="show_all_languages" value="<?=$show_all_languages?"true":""?>">
+<input type=hidden name="show_all_languages" value="<?php echo $show_all_languages?"true":""?>">
 <input type=hidden name="save" value="true">
 
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><?=$lang["keyword"]?></td>
-<td><?=$lang["matchingresourcesheading"]?></td>
-<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+<td><?php echo $lang["keyword"]?></td>
+<td><?php echo $lang["matchingresourcesheading"]?></td>
+<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
-<?
+<?php
 for ($n=0;$n<count($options);$n++)
 	{
 	$trans=i18n_get_translations($options[$n]["rawoption"]);
@@ -69,16 +69,16 @@ for ($n=0;$n<count($options);$n++)
 	?>
 	<tr>
 	<td><div class="ListTitle">
-	<? if ($show_all_languages) { ?><h2><?=$var?></h2><? } ?>
+	<?php if ($show_all_languages) { ?><h2><?php echo $var?></h2><?php } ?>
 	<table border="0" cellspacing="0" cellpadding="0" class="ListViewSubTable">
-	<?
+	<?php
 	# Show the default language
 	?>
 	<tr>
-	<td><?=$languages[$defaultlanguage]?></td>
-	<td><input type="text" name="field_<?=$defaultlanguage?>_<?=$n?>" class="medwidth" value="<?=$var?>" /></td>
+	<td><?php echo $languages[$defaultlanguage]?></td>
+	<td><input type="text" name="field_<?php echo $defaultlanguage?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" /></td>
 	</tr>
-	<?
+	<?php
 	# Also list all other languages
 	foreach ($languages as $langcode=>$langname)
 		{
@@ -91,31 +91,31 @@ for ($n=0;$n<count($options);$n++)
 				{
 				?>
 				<tr>
-				<td><?=$langname?></td>
-				<td width="20%"><input type="text" name="field_<?=$langcode?>_<?=$n?>" class="medwidth" value="<?=$var?>" /></td>
+				<td><?php echo $langname?></td>
+				<td width="20%"><input type="text" name="field_<?php echo $langcode?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" /></td>
 				</tr>
-				<?
+				<?php
 				}
 			else
 				{
 				# Not showing other languages - hide this field.
 				?>
-				<input type="hidden" name="field_<?=$langcode?>_<?=$n?>" value="<?=$var?>" />
-				<?
+				<input type="hidden" name="field_<?php echo $langcode?>_<?php echo $n?>" value="<?php echo $var?>" />
+				<?php
 				}
 			}
 		}
 	?>
 	</table>
-	<? if ($show_all_languages) { ?><br /><? } ?>
+	<?php if ($show_all_languages) { ?><br /><?php } ?>
 	</div></td>
-	<td align="right" valign="top"><?=$options[$n]["count"]?></td>
+	<td align="right" valign="top"><?php echo $options[$n]["count"]?></td>
 	<td align="right" valign="top"><div class="ListTools">
-	<input type="submit" name="submit_field_<?=$n?>" value="<?=$lang["save"]?>" />
-	<input type="submit" name="delete_field_<?=$n?>" value="<?=$lang["delete"]?>" />
+	<input type="submit" name="submit_field_<?php echo $n?>" value="<?php echo $lang["save"]?>" />
+	<input type="submit" name="delete_field_<?php echo $n?>" value="<?php echo $lang["delete"]?>" />
 	</div></td>
 	</tr>
-	<?
+	<?php
 	}
 ?>
 
@@ -126,16 +126,16 @@ for ($n=0;$n<count($options);$n++)
 <div class="BasicsBox">
     <form method="post">
 		<div class="Question">
-			<label for="newkeyword"><?=$lang["addkeyword"]?></label>
+			<label for="newkeyword"><?php echo $lang["addkeyword"]?></label>
 			<div class="tickset">
 			 <div class="Inline"><input type=text name="newkeyword" id="newkeyword" maxlength="100" class="shrtwidth" /></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 			</div>
 			<div class="clearerleft"> </div>
 		</div>
 	</form>
 </div>
 
-<?		
+<?php		
 include "../../include/footer.php";
 ?>

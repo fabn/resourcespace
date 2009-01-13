@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
@@ -15,14 +15,14 @@ $lower=getvalescaped("lower","");
 if (($ref=="") && ($lower==""))
 	{
 	# Index page
-	?><html><head><title>Spider Index</title></head><body><h1>Spider Index</h1><?
+	?><html><head><title>Spider Index</title></head><body><h1>Spider Index</h1><?php
 	$max=get_max_resource_ref();
 	for ($n=1;$n<=$max;$n+=1000)
 		{
 		$upper=$n+999;if ($upper>$max) {$upper=$max;}
-		?><p><a href="spider.php?password=<?=$password?>&lower=<?=$n?>&higher=<?=$upper?>"><?=$n?> to <?=$upper?></a></p><?
+		?><p><a href="spider.php?password=<?php echo $password?>&lower=<?php echo $n?>&higher=<?php echo $upper?>"><?php echo $n?> to <?php echo $upper?></a></p><?php
 		}
-	?></body></html><?
+	?></body></html><?php
 	}
 
 
@@ -31,15 +31,15 @@ if ($lower!="")
 	# Resource list
 	?><html><head><title>Spider Index</title></head><body><h1>Spider Index</h1>
 	<p>
-	<?
+	<?php
 	$list=get_resource_ref_range($lower,$higher);
 	for ($n=1;$n<count($list);$n++)
 		{
 		?>
-		<a href="spider.php?password=<?=$password?>&ref=<?=$list[$n]?>"><?=$list[$n]?></a>
-		<?
+		<a href="spider.php?password=<?php echo $password?>&ref=<?php echo $list[$n]?>"><?php echo $list[$n]?></a>
+		<?php
 		}
-	?></p></body></html><?
+	?></p></body></html><?php
 	}
 	
 if ($ref!="")
@@ -57,11 +57,11 @@ if ($ref!="")
 		$thumbnail=$baseurl."/gfx/type" . $resource["resource_type"] . "_col.gif";
 		}
 	?><html><head>
-	<meta name="country" content="<?=TidyList($resource["country"])?>">
-	<meta name="date" content="<?=$resource["creation_date"]?>">
-	<meta name="thumbnail" content="<?=$thumbnail?>">
-	<meta name="target" content="<?=$baseurl?>/pages/view.php?ref=<?=$ref?>">
-	<?
+	<meta name="country" content="<?php echo TidyList($resource["country"])?>">
+	<meta name="date" content="<?php echo $resource["creation_date"]?>">
+	<meta name="thumbnail" content="<?php echo $thumbnail?>">
+	<meta name="target" content="<?php echo $baseurl?>/pages/view.php?ref=<?php echo $ref?>">
+	<?php
 	$textblock="";
 	for ($n=0;$n<count($resourcedata);$n++)
 		{
@@ -73,25 +73,25 @@ if ($ref!="")
 			}
 		if (($resourcedata[$n]["name"]=="caption") || ($resourcedata[$n]["name"]=="extract"))
 			{
-			?><meta name="description" content="<?=str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
-			<?
+			?><meta name="description" content="<?php echo str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
+			<?php
 			}
 		if (($resourcedata[$n]["name"]=="project"))
 			{
-			?><meta name="projectid" content="<?=str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
-			<?
+			?><meta name="projectid" content="<?php echo str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
+			<?php
 			}
 		if (($resourcedata[$n]["name"]=="videoid"))
 			{
-			?><meta name="videoid" content="<?=str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
-			<?
+			?><meta name="videoid" content="<?php echo str_replace("\"","",trim($resourcedata[$n]["value"]))?>">
+			<?php
 			}
 		}
 	?>
-	<title><?=trim($resource["title"])?></title></head>
-	<body><h1><?=trim($resource["title"])?></h1>
-	<?=$textblock?>
-	</body></html><?
+	<title><?php echo trim($resource["title"])?></title></head>
+	<body><h1><?php echo trim($resource["title"])?></h1>
+	<?php echo $textblock?>
+	</body></html><?php
 	}
 	
 	

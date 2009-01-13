@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("c")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -38,59 +38,59 @@ else
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["selectfiles"]?></h1>
-<p><?=text("introtext")?></p>
+<h1><?php echo $lang["selectfiles"]?></h1>
+<p><?php echo text("introtext")?></p>
 
 <form method=post action="team_batch_upload.php">
-<input type=hidden name="ftp_server" value="<?=getval("ftp_server","")?>">
-<input type=hidden name="ftp_username" value="<?=getval("ftp_username","")?>">
-<input type=hidden name="ftp_password" value="<?=getval("ftp_password","")?>">
-<input type=hidden name="ftp_folder" value="<?=getval("ftp_folder","")?>">
-<input type=hidden name="use_local" value="<?=getval("use_local","")?>">
+<input type=hidden name="ftp_server" value="<?php echo getval("ftp_server","")?>">
+<input type=hidden name="ftp_username" value="<?php echo getval("ftp_username","")?>">
+<input type=hidden name="ftp_password" value="<?php echo getval("ftp_password","")?>">
+<input type=hidden name="ftp_folder" value="<?php echo getval("ftp_folder","")?>">
+<input type=hidden name="use_local" value="<?php echo getval("use_local","")?>">
 
 <div class="Question">
-<label for="resourcetype"><?=$lang["resourcetype"]?></label>
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="shrtwidth">
-<?
+<?php
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option value="<?=$types[$n]["ref"]?>"><?=$types[$n]["name"]?></option><?
+	?><option value="<?php echo $types[$n]["ref"]?>"><?php echo $types[$n]["name"]?></option><?php
 	}
 ?></select>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label for="collection"><?=$lang["addtocollection"]?></label>
+<label for="collection"><?php echo $lang["addtocollection"]?></label>
 <select name="collection" id="collection" class="shrtwidth">
-<option value=""><?=$lang["batchdonotaddcollection"]?></option>
-<?
+<option value=""><?php echo $lang["batchdonotaddcollection"]?></option>
+<?php
 $list=get_user_collections($userref);
 for ($n=0;$n<count($list);$n++)
 	{
 	?>
-	<option value="<?=$list[$n]["ref"]?>"><?=htmlspecialchars($list[$n]["name"])?></option>
-	<?
+	<option value="<?php echo $list[$n]["ref"]?>"><?php echo htmlspecialchars($list[$n]["name"])?></option>
+	<?php
 	}?></select>
 <div class="clearerleft"> </div>
 </div>
 
 
-<div class="Question"><label><?=$lang["selectfiles"]?></label>
+<div class="Question"><label><?php echo $lang["selectfiles"]?></label>
 <!--<div class="tickset">-->
 <select name="uploadfiles[]" multiple size=20>
-<? for ($n=0;$n<count($files);$n++)
+<?php for ($n=0;$n<count($files);$n++)
 	{
 	if ($use_local) {$fn=$files[$n];} else {$fs=explode(" ",$files[$n]);$fn=$fs[count($fs)-1];}
 	$show=true;
 	if (($fn=="..") || ($fn==".")) {$show=false;}
 	if (strpos($fn,".")===false) {$show=false;}
 	if ($fn=="pspbrwse.jbf") {$show=false;} # Ignore PSP browse files (often imported by mistake)
-	/* if ($show) { ?><div class="tick"><input type="checkbox" name="uploadfiles[]" value="<?=$fn?>" checked /><?=$fn?></div><? } ?>
+	/* if ($show) { ?><div class="tick"><input type="checkbox" name="uploadfiles[]" value="<?php echo $fn?>" checked /><?php echo $fn?></div><?php } ?>
 	*/
-	if ($show) { ?><option value="<?=$fn?>" selected><?=$fn?></option><? } ?>
-	<?
+	if ($show) { ?><option value="<?php echo $fn?>" selected><?php echo $fn?></option><?php } ?>
+	<?php
 	}
 ?>
 <!--</div>-->
@@ -100,11 +100,11 @@ for ($n=0;$n<count($list);$n++)
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["upload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["upload"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>
 
-<?		
+<?php		
 include "../../include/footer.php";
 ?>

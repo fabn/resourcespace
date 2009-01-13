@@ -1,4 +1,4 @@
-<?
+<?php
 include "include/db.php";
 include "include/general.php";
 include "include/resource_functions.php";
@@ -150,50 +150,50 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
 include "include/header.php";
 ?>
 
-  <h1><?=text("welcomelogin")?></h1>
-  <p><? if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?=$lang["nopassword"]?> </a><br/><? } ?>
-  <a href="pages/user_password.php">&gt; <?=$lang["forgottenpassword"]?></a></p>
-  <? if ($error!="") { ?><div class="FormIncorrect"><?=$error?></div><? } ?>
-  <form id="form1" method="post" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?>>
-  <input type=hidden name=url value="<?=htmlspecialchars($url)?>">
+  <h1><?php echo text("welcomelogin")?></h1>
+  <p><?php if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?php echo $lang["nopassword"]?> </a><br/><?php } ?>
+  <a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
+  <?php if ($error!="") { ?><div class="FormIncorrect"><?php echo $error?></div><?php } ?>
+  <form id="form1" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
+  <input type=hidden name=url value="<?php echo htmlspecialchars($url)?>">
 		<div class="Question">
-			<label for="name"><?=$lang["username"]?> </label>
-			<input type="text" name="username" id="name" class="stdwidth" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?> />
+			<label for="name"><?php echo $lang["username"]?> </label>
+			<input type="text" name="username" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
 			<div class="clearerleft"> </div>
 		</div>
 		
 		<div class="Question">
-			<label for="pass"><?=$lang["password"]?> </label>
-			<input type="password" name="password" id="name" class="stdwidth" <? if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<? } ?> />
+			<label for="pass"><?php echo $lang["password"]?> </label>
+			<input type="password" name="password" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
 			<div class="clearerleft"> </div>
 		</div>
-<? if ($disable_languages==false) { ?>	
+<?php if ($disable_languages==false) { ?>	
 		<div class="Question">
-			<label for="pass"><?=$lang["language"]?> </label>
+			<label for="pass"><?php echo $lang["language"]?> </label>
 			<select class="stdwidth" name="language">
-			<? reset ($languages); foreach ($languages as $key=>$value) { ?>
-			<option value="<?=$key?>" <? if ($language==$key) { ?>selected<? } ?>><?=$value?></option>
-			<? } ?>
+			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
+			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
+			<?php } ?>
 			</select>
 			<div class="clearerleft"> </div>
 		</div> 
-<? } ?>
+<?php } ?>
 	
-		<? if ($allow_keep_logged_in) { ?>
+		<?php if ($allow_keep_logged_in) { ?>
 		<div class="Question">
-			<label for="remember"><?=$lang["keepmeloggedin"]?></label>
+			<label for="remember"><?php echo $lang["keepmeloggedin"]?></label>
 			<input valign=bottom name="remember" id="remember" type="checkbox" value="yes" checked>
 			<div class="clearerleft"> </div>
 		</div>
-		<? } ?>
+		<?php } ?>
 		
 		<div class="QuestionSubmit">
 			<label for="buttons"> </label>			
-			<input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["login"]?>&nbsp;&nbsp;" />
+			<input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["login"]?>&nbsp;&nbsp;" />
 		</div>
 	</form>
   <p>&nbsp;</p>
 
-<?
+<?php
 include "include/footer.php";
 ?>

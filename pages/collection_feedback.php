@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -38,16 +38,16 @@ $headerinsert.="<script src=\"../lib/js/lightbox.js\" type=\"text/javascript\"><
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["sendfeedback"]?></h1>
-<? if ($done) { ?><p><?=$lang["feedbacksent"]?></p><? } else { ?>
+<h1><?php echo $lang["sendfeedback"]?></h1>
+<?php if ($done) { ?><p><?php echo $lang["feedbacksent"]?></p><?php } else { ?>
 
 <form method="post">
-<input type="hidden" name="k" value="<?=$k?>">
-<input type="hidden" name="collection" value="<?=$collection?>">
+<input type="hidden" name="k" value="<?php echo $k?>">
+<input type="hidden" name="collection" value="<?php echo $collection?>">
 
-<? if ($feedback_resource_select)
+<?php if ($feedback_resource_select)
 	{
-	?><h2><?=$lang["selectedresources"]?>:</h2><?
+	?><h2><?php echo $lang["selectedresources"]?>:</h2><?php
 	# Show thumbnails and allow the user to select resources.
 	$result=do_search("!collection" . $collection);
 	for ($n=0;$n<count($result);$n++)
@@ -57,12 +57,12 @@ include "../include/header.php";
 		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),60));
 		?>	
 		<!--Resource Panel-->
-		<div class="ResourcePanelShell" id="ResourceShell<?=$ref?>">
+		<div class="ResourcePanelShell" id="ResourceShell<?php echo $ref?>">
 		<div class="ResourcePanel">
 		
-		<table border="0" class="ResourceAlign<? if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<? } ?>"><tr><td>
+		<table border="0" class="ResourceAlign<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>"><tr><td>
 		
-		<? if ($result[$n]["has_image"]==1) {
+		<?php if ($result[$n]["has_image"]==1) {
 			$path=get_resource_path($ref,true,"scr",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
 			if (file_exists($path))
 				{
@@ -75,57 +75,57 @@ include "../include/header.php";
 				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"]);
 				}
 		
-		?><a rel="lightbox[feedback]" href="<?=$path?>" title="<?=$title?>"><img width="<?=$result[$n]["thumb_width"]?>" height="<?=$result[$n]["thumb_height"]?>" src="<?=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
-		<? } else { ?>		<img border=0 src="../gfx/type<?=$result[$n]["resource_type"]?>.gif" /><? } ?>
+		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		<?php } else { ?>		<img border=0 src="../gfx/type<?php echo $result[$n]["resource_type"]?>.gif" /><?php } ?>
 
 		
 		</td>
 		</tr></table>
-		<span class="ResourceSelect"><input type="checkbox" name="select_<?=$ref?>" value="yes"></span>
+		<span class="ResourceSelect"><input type="checkbox" name="select_<?php echo $ref?>" value="yes"></span>
 
-		<div class="ResourcePanelInfo"><?=$title?>&nbsp;</div>
+		<div class="ResourcePanelInfo"><?php echo $title?>&nbsp;</div>
 			
 		<div class="clearer"> </div>
 		</div>
 		<div class="PanelShadow"></div>
 		</div>
 		
-		<?
+		<?php
 		}
-	?><div class="clearer"> </div> <?
+	?><div class="clearer"> </div> <?php
 	}
 ?>
 
 <div class="Question">
-<? if ($errors!="") { ?><div class="FormError">!! <?=$errors?> !!</div><? } ?>
-<label for="comment"><?=$lang["message"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"></textarea>
+<?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
+<label for="comment"><?php echo $lang["message"]?></label><textarea class="stdwidth" style="width:450px;" rows=20 cols=80 name="comment" id="comment"></textarea>
 <div class="clearerleft"> </div>
 </div>
 
-<? if (!isset($userfullname))
+<?php if (!isset($userfullname))
 	{
 	# For external users, ask for their name/e-mail in case this has been passed to several users.
 	?>
 	<div class="Question">
-	<label for="name"><?=$lang["yourname"]?></label><input type="text" class="stdwidth" name="name" id="name"></textarea>
+	<label for="name"><?php echo $lang["yourname"]?></label><input type="text" class="stdwidth" name="name" id="name"></textarea>
 	<div class="clearerleft"> </div>
 	</div>
 	<div class="Question">
-	<label for="email"><?=$lang["youremailaddress"]?></label><input type="text" class="stdwidth" name="email" id="email"></textarea>
+	<label for="email"><?php echo $lang["youremailaddress"]?></label><input type="text" class="stdwidth" name="email" id="email"></textarea>
 	<div class="clearerleft"> </div>
 	</div>
-	<?
+	<?php
 	}
 ?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?=$lang["send"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["send"]?>&nbsp;&nbsp;" />
 </div>
 </form>
-<? } ?>
+<?php } ?>
 </div>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

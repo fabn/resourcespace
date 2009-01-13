@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -64,20 +64,20 @@ include "../include/header.php";
 ?>
   <div class="BasicsBox">
     <h2>&nbsp;</h2>
-    <h1><?=$lang["managemycollections"]?></h1>
-    <p class="tight"><?=text("introtext")?></p><br>
+    <h1><?php echo $lang["managemycollections"]?></h1>
+    <p class="tight"><?php echo text("introtext")?></p><br>
 <div class="BasicsBox">
     <form method="post">
 		<div class="Question">
 			<div class="tickset">
-			 <div class="Inline"><input type=text name="find" id="find" value="<?=$find?>" maxlength="100" class="shrtwidth" /></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["search"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo $find?>" maxlength="100" class="shrtwidth" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["search"]?>&nbsp;&nbsp;" /></div>
 			</div>
 			<div class="clearerleft"> </div>
 		</div>
 	</form>
 </div>
-<?
+<?php
 
 $collections=get_user_collections($userref,$find,$order_by,$sort);
 # pager
@@ -104,7 +104,7 @@ $atoz.="</div>";
 
 $url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
 
-	?><div class="TopInpageNav"><?=$atoz?><? pager(false); ?></div><?	
+	?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div><?php	
 ?>
 
 <form method=post id="collectionform">
@@ -115,70 +115,70 @@ $url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><a href="collection_manage.php?offset=0&order_by=name&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["collectionname"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=user&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["owner"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=ref&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["id"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=created&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["created"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=count&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["itemstitle"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=public&sort=<?=$revsort?>&find=<?=urlencode($find)?>"><?=$lang["access"]?></a></td>
-<td><div class="ListTools"><?=$lang["tools"]?></div></td>
+<td><a href="collection_manage.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a></td>
+<td><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a></td>
+<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
-<?
+<?php
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?><tr>
 	<td><div class="ListTitle">
-	<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections"><?=highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
+	<a href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
-	<td><?=highlightkeywords($collections[$n]["username"],$find)?></td>
-	<td><?=highlightkeywords($collections[$n]["ref"],$find)?></td>
-	<td><?=nicedate($collections[$n]["created"],true)?></td>
-	<td><?=$collections[$n]["count"]?></td>
-	<td><?=($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
+	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
+	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
+	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
+	<td><?php echo $collections[$n]["count"]?></td>
+	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	
-	<td><div class="ListTools"><a href="search.php?search=<?=urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?=$lang["action-view"]?></a>
-	&nbsp;<a href="collections.php?collection=<?=$collections[$n]["ref"]?>" target="collections">&gt;&nbsp;<?=$lang["action-select"]?></a>
-	<? if (isset($zipcommand)) { ?>
-	&nbsp;<a href="collection_download.php?collection=<?=$collections[$n]["ref"]?>"
-	>&gt;&nbsp;<?=$lang["action-download"]?></a>
-	<? } ?>
+	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
+	&nbsp;<a href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
+	<?php if (isset($zipcommand)) { ?>
+	&nbsp;<a href="collection_download.php?collection=<?php echo $collections[$n]["ref"]?>"
+	>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+	<?php } ?>
 	
-	<? if ($contact_sheet==true) { ?>
-    &nbsp;<a href="contactsheet_settings.php?c=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=$lang["contactsheet"]?></a>
-	<? } ?>
+	<?php if ($contact_sheet==true) { ?>
+    &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+	<?php } ?>
 
-	<? if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?=$collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?=$lang["share"]?></a><?}?>
+	<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 	
-	<? if ($username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-remove"]?></a><?}?>
+	<?php if ($username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
 
-	<? if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?=$lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?=$collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?=$lang["action-delete"]?></a><?} ?>
+	<?php if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
 
-	<? if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?=$collections[$n]["ref"]?>">&gt;&nbsp;<?=$lang["action-edit"]?></a><?}?>
+	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 
-	<? hook("addcustomtool"); ?>
+	<?php hook("addcustomtool"); ?>
 	
 	</td>
-	</tr><?
+	</tr><?php
 	}
 ?>
 </table>
 </div>
 
 </form>
-<div class="BottomInpageNav"><? pager(false); ?></div>
+<div class="BottomInpageNav"><?php pager(false); ?></div>
 </div>
 
 <!--Create a collection-->
 <div class="BasicsBox">
-    <h1><?=$lang["createnewcollection"]?></h1>
-    <p class="tight"><?=text("newcollection")?></p>
+    <h1><?php echo $lang["createnewcollection"]?></h1>
+    <p class="tight"><?php echo text("newcollection")?></p>
     <form method="post">
 		<div class="Question">
-			<label for="newcollection"><?=$lang["collectionname"]?></label>
+			<label for="newcollection"><?php echo $lang["collectionname"]?></label>
 			<div class="tickset">
 			 <div class="Inline"><input type=text name="name" id="newcollection" value="" maxlength="100" class="shrtwidth"></div>
-			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?=$lang["create"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 			</div>
 		<div class="clearerleft"> </div>
 	    </div>
@@ -186,14 +186,14 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 <!--Find a collection-->
-<?if($enable_public_collections){?>
+<?php if($enable_public_collections){?>
 <div class="BasicsBox">
-    <h1><?=$lang["findpubliccollection"]?></h1>
-    <p class="tight"><?=text("findpublic")?></p>
-    <p><a href="collection_public.php"><?=$lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
+    <h1><?php echo $lang["findpubliccollection"]?></h1>
+    <p class="tight"><?php echo text("findpublic")?></p>
+    <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
-<?}?>
+<?php } ?>
 
-<?		
+<?php		
 include "../include/footer.php";
 ?>

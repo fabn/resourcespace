@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/authenticate.php"; if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
@@ -128,17 +128,17 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		?>
 		<html>
 		<script language="Javascript">
-		<? if ($count==0) { ?>
+		<?php if ($count==0) { ?>
 		parent.document.getElementById("dosearch").disabled=true;
-		parent.document.getElementById("dosearch").value="<?=$lang["nomatchingresources"]?>";
-		<? } else { ?>
-		parent.document.getElementById("dosearch").value="<?=$lang["view"]?> <?=number_format($count)?> <?=$lang["matchingresources"]?>";
+		parent.document.getElementById("dosearch").value="<?php echo $lang["nomatchingresources"]?>";
+		<?php } else { ?>
+		parent.document.getElementById("dosearch").value="<?php echo $lang["view"]?> <?php echo number_format($count)?> <?php echo $lang["matchingresources"]?>";
 		parent.document.getElementById("dosearch").disabled=false;
-		<? } ?>
+		<?php } ?>
 
 		</script>
 		</html>
-		<?
+		<?php
 		exit();
 		}
 	else
@@ -179,11 +179,11 @@ if (getval("resetform","")!="") {$found_year="";$found_month="";$found_day="";$a
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=($archive==0)?$lang["advancedsearch"]:$lang["archiveonlysearch"]?> </h1>
-<p class="tight"><?=text("introtext")?></p>
+<h1><?php echo ($archive==0)?$lang["advancedsearch"]:$lang["archiveonlysearch"]?> </h1>
+<p class="tight"><?php echo text("introtext")?></p>
 <form method="post" id="advancedform">
 <input type="hidden" name="countonly" id="countonly" value="">
-<input type="hidden" name="archive" value="<?=$archive?>">
+<input type="hidden" name="archive" value="<?php echo $archive?>">
 
 <script language="Javascript">
 var updating=false;
@@ -201,67 +201,67 @@ function UpdateResultCount()
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="resetform" id="resetform2" type="submit" value="&nbsp;&nbsp;<?=$lang["clearform"]?>&nbsp;&nbsp;" />&nbsp;
+<input name="resetform" id="resetform2" type="submit" value="&nbsp;&nbsp;<?php echo $lang["clearform"]?>&nbsp;&nbsp;" />&nbsp;
 
 </div>
 
 <!-- Search across all fields -->
 <div class="Question">
-<label for="allfields"><?=$lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?=$allwords?>" onChange="UpdateResultCount();">
+<label for="allfields"><?php echo $lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?php echo $allwords?>" onChange="UpdateResultCount();">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?=$lang["resourcetypes"]?></label><?
+<label><?php echo $lang["resourcetypes"]?></label><?php
 $rt=explode(",",getvalescaped("restypes",""));
 $types=get_resource_types();
 $wrap=0;
-?><table><tr><?
+?><table><tr><?php
 for ($n=0;$n<count($types);$n++)
 	{
-	$wrap++;if ($wrap>3) {$wrap=1;?></tr><tr><?}
-	?><td valign=top><input type=checkbox name="resource<?=$types[$n]["ref"]?>" value="yes" <? if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?}?> onChange="UpdateResultCount();"></td><td width="32%" valign=top><?=$types[$n]["name"]?></td><?	
+	$wrap++;if ($wrap>3) {$wrap=1;?></tr><tr><?php }
+	?><td valign=top><input type=checkbox name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?php } ?> onChange="UpdateResultCount();"></td><td width="32%" valign=top><?php echo $types[$n]["name"]?></td><?php	
 	}
 ?>
 </tr></table>
 <div class="clearerleft"> </div>
 </div>
 
-<div class="Question"><label><?=$lang["bydate"]?></label>
+<div class="Question"><label><?php echo $lang["bydate"]?></label>
 <select name="year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?=$lang["anyyear"]?></option>
-  <?
+  <option selected="selected" value=""><?php echo $lang["anyyear"]?></option>
+  <?php
   $y=date("Y");
   for ($n=$minyear;$n<=$y;$n++)
 	{
-	?><option <? if ($n==$found_year) { ?>selected<? } ?>><?=$n?></option><?
+	?><option <?php if ($n==$found_year) { ?>selected<?php } ?>><?php echo $n?></option><?php
 	}
   ?>
 </select>
 <select name="month" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?=$lang["anymonth"]?></option>
-  <?
+  <option selected="selected" value=""><?php echo $lang["anymonth"]?></option>
+  <?php
   for ($n=1;$n<=12;$n++)
 	{
 	$m=str_pad($n,2,"0",STR_PAD_LEFT);
-	?><option <? if ($n==$found_month) { ?>selected<? } ?> value="<?=$m?>"><?=date("F",mktime(0,0,0,$n,1,2000))?></option><?
+	?><option <?php if ($n==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo date("F",mktime(0,0,0,$n,1,2000))?></option><?php
 	}
   ?>
 </select>
 <select name="day" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?=$lang["anyday"]?></option>
-  <?
+  <option selected="selected" value=""><?php echo $lang["anyday"]?></option>
+  <?php
   for ($n=1;$n<=31;$n++)
 	{
 	$m=str_pad($n,2,"0",STR_PAD_LEFT);
-	?><option <? if ($n==$found_day) { ?>selected<? } ?> value="<?=$m?>"><?=$m?></option><?
+	?><option <?php if ($n==$found_day) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
 	}
   ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
-<?
+<?php
 $fields=get_advanced_search_fields($archive>0);
 $showndivide=false;
 for ($n=0;$n<count($fields);$n++)
@@ -271,20 +271,20 @@ for ($n=0;$n<count($fields);$n++)
 		{
 		$showndivide=true;
 		?>
-		<h1><?=$lang["typespecific"]?></h1>
-		<?
+		<h1><?php echo $lang["typespecific"]?></h1>
+		<?php
 		}
 	?>
 	<div class="Question">
-	<label><?=i18n_get_translated($fields[$n]["title"])?></label>
-	<?
+	<label><?php echo i18n_get_translated($fields[$n]["title"])?></label>
+	<?php
 	if (array_key_exists($fields[$n]["name"],$values)) {$value=$values[$fields[$n]["name"]];} else {$value="";}
 	if (getval("resetform","")!="") {$value="";}
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Text boxes
 		case 1:
 		case 5:
-		?><input class="stdwidth" type=text name="field_<?=$fields[$n]["ref"]?>" value="<?=htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?
+		?><input class="stdwidth" type=text name="field_<?php echo $fields[$n]["ref"]?>" value="<?php echo htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?php
 		break;
 	
 		case 2: # -------- Show a check list for both dropdowns and check lists
@@ -298,19 +298,19 @@ for ($n=0;$n<count($fields);$n++)
 		if ($l>10) {$cols=4;}
 		if ($l>15) {$cols=3;}
 		if ($l>25) {$cols=2;}
-		?><table cellpadding=2 cellspacing=0><tr><?
+		?><table cellpadding=2 cellspacing=0><tr><?php
 		for ($m=0;$m<count($options);$m++)
 			{
-			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?}
+			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 			$name=$fields[$n]["ref"] . "_" . $m;
 			if ($options[$m]!="")
 				{
 				?>
-				<td valign=middle><input type=checkbox id="<?=$name?>" name="<?=$name?>" value="yes" <? if (in_array(strtolower(i18n_get_translated($options[$m])),$set)) {?>checked<?}?> onClick="UpdateResultCount();"></td><td valign=middle><?=htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
-				<?
+				<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(strtolower(i18n_get_translated($options[$m])),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+				<?php
 				}
 			}
-		?></tr></table><?
+		?></tr></table><?php
 		break;
 		
 		case 7: # ----- Category Tree
@@ -321,18 +321,18 @@ for ($n=0;$n<count($fields);$n++)
 	?>
 	<div class="clearerleft"> </div>
 	</div>
-	<?
+	<?php
 	}
 ?>
 <iframe name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="dosearch" id="dosearch" type="submit" value="<?=$lang["viewmatchingresources"]?>" />
+<input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["viewmatchingresources"]?>" />
 &nbsp;
-<input name="resetform" id="resetform" type="submit" value="<?=$lang["clearform"]?>" />
+<input name="resetform" id="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />
 </div>
 </form>
 </div>
-<?
+<?php
 include "../include/footer.php";
 ?>

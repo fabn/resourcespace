@@ -1,4 +1,4 @@
-<?
+<?php
 
 define("RUNNING_ASYNC", !isset($ffmpeg_preview));
 

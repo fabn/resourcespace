@@ -1,4 +1,4 @@
-<?
+<?php
 include "../include/db.php";
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -161,43 +161,43 @@ if ($submitted != "")
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?=$lang["downloadzip"]?></h1>
+<h1><?php echo $lang["downloadzip"]?></h1>
 
 <form method=post>
-<input type=hidden name="collection" value="<?=$collection?>">
+<input type=hidden name="collection" value="<?php echo $collection?>">
 
 <div class="Question">
-<label for="downloadsize"><?=$lang["downloadsize"]?></label>
+<label for="downloadsize"><?php echo $lang["downloadsize"]?></label>
 <div class="tickset">
 <select name="size" class="shrtwidth" id="downloadsize">
-<?
+<?php
 $sizes=get_all_image_sizes();
 $sizes[]=array("id" => "", "name" => $lang["collection_download_original"]);
 for ($n=0;$n<count($sizes);$n++)
 	{
-	?><option value="<?=$sizes[$n]["id"]?>"><?=i18n_get_translated($sizes[$n]["name"])?></option><?
+	?><option value="<?php echo $sizes[$n]["id"]?>"><?php echo i18n_get_translated($sizes[$n]["name"])?></option><?php
 	}
 ?></select>
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
 
-<? if ($zipped_collection_textfile=="true") { ?>
+<?php if ($zipped_collection_textfile=="true") { ?>
 <div class="Question">
-<label for="text"><?=$lang["zippedcollectiontextfile"]?></label>
+<label for="text"><?php echo $lang["zippedcollectiontextfile"]?></label>
 <select name="text" class="shrtwidth" id="text">
-<option value="true"><?=$lang["yes"]?></option>
-<option value="false"><?=$lang["no"]?></option>
+<option value="true"><?php echo $lang["yes"]?></option>
+<option value="false"><?php echo $lang["no"]?></option>
 </select>
 <div class="clearerleft"> </div><br>
-<? } ?>
-<div class="Inline"><input name="submitted" type="submit" value="&nbsp;&nbsp;<?=$lang["download"]?>&nbsp;&nbsp;" /></div>
+<?php } ?>
+<div class="Inline"><input name="submitted" type="submit" value="&nbsp;&nbsp;<?php echo $lang["download"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>
 </div>
 </form>
 
 </div>
-<?
+<?php
 include "../include/footer.php";
 ?>
 
