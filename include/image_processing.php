@@ -817,6 +817,23 @@ function extract_text($ref,$extension)
 		$text=shell_exec($command . " \"" . $path . "\"");
 		}
 	
+	# Microsoft Word (docx) extraction
+	# This is not perfect and needs some work, but does at least extract indexable content.
+	if ($extension=="docx")
+		{	
+		$path=escapeshellarg($path);
+		
+		# DOCX files are zip files and the content is in word/document.xml.
+		# We extract this then remove tags.
+		$text=shell_exec("unzip -p $path \"word/document.xml\"");
+
+		# Remove tags, but add newlines as appropriate (without this, separate text blocks are joined together with no spaces).
+		$text=str_replace("<","\n<",$text);
+		$text=trim(strip_tags($text));
+		while (strpos($text,"\n\n")!==false) {$text=str_replace("\n\n","\n",$text);} # condense multiple line breaks
+		}
+
+	
 	# PDF extraction using pdftotext (part of the XPDF project)
 	if ($extension=="pdf" && isset($pdftotext_path))
 		{

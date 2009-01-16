@@ -477,6 +477,7 @@ for ($n=0;$n<count($fields);$n++)
 	<!-- Archive Status -->
 	<?php if ($ref<0) { 
 		# Hide the dropdown, and set the default status depending on user permissions.
+		$mode=0;
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
