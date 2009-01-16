@@ -63,7 +63,7 @@ if ($extension=="indd")
 if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth"))
 
 	{
-shell_exec("/sw/bin/unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
+shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
 $odcommand=$command . " \"$target\"[0]  \"$target\""; 
 				$output=shell_exec($odcommand); $newfile = $target;
 	}
