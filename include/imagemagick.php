@@ -46,20 +46,11 @@ hook("metadata");
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
 if ($extension=="indd")
 	{
-#This is how to use exiftool to extract InDesign thumbnails:
-	global $exiftool_path;
-	if (isset($exiftool_path))
-	{
-	shell_exec($exiftool_path.'/exiftool -ScanforXMP -f -ThumbnailsImage -b '.$file.' > '.$target);
-	}
-#Or the old way:	
- 	else {
 	$indd_thumb = extract_indd_thumb ($file);
 	if ($indd_thumb!="no")
 		{
 		base64_to_jpeg( $indd_thumb, $target);
 		if (file_exists($target)){$newfile = $target;}
-		}
 		}
 		
 	hook("indesign");	
@@ -72,9 +63,9 @@ if ($extension=="indd")
 if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth"))
 
 	{
-shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
+shell_exec("/sw/bin/unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
 $odcommand=$command . " \"$target\"[0]  \"$target\""; 
-				$output=shell_exec($odcommand); 
+				$output=shell_exec($odcommand); $newfile = $target;
 	}
 
 

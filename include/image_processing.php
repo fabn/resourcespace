@@ -817,16 +817,24 @@ function extract_text($ref,$extension)
 		$text=shell_exec($command . " \"" . $path . "\"");
 		}
 	
-	# Microsoft Word (docx) extraction
-	# This is not perfect and needs some work, but does at least extract indexable content.
-	if ($extension=="docx")
+       # Microsoft OfficeOpen (docx,xlsx) extraction
+       # This is not perfect and needs some work, but does at least extract indexable content.
+       if ($extension=="docx"||$extension=="xlsx")
 		{	
 		$path=escapeshellarg($path);
 		
-		# DOCX files are zip files and the content is in word/document.xml.
-		# We extract this then remove tags.
-		$text=shell_exec("unzip -p $path \"word/document.xml\"");
+		 # DOCX files are zip files and the content is in word/document.xml.
+               # We extract this then remove tags.
+               switch($extension){
+               case "xlsx":
+               $text=shell_exec("unzip -p $path \"xl/sharedStrings.xml\"");
+               break;
 
+               case "docx":
+               $text=shell_exec("unzip -p $path \"word/document.xml\"");
+               break;
+               }
+               
 		# Remove tags, but add newlines as appropriate (without this, separate text blocks are joined together with no spaces).
 		$text=str_replace("<","\n<",$text);
 		$text=trim(strip_tags($text));
@@ -834,7 +842,7 @@ function extract_text($ref,$extension)
 		}
 
 	# OpenOffice Text (ODT)
-	if ($extension=="odt")
+	if ($extension=="odt"||$extension=="ods"||$extension=="odp")
 		{	
 		$path=escapeshellarg($path);
 		
