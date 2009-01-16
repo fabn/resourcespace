@@ -833,6 +833,20 @@ function extract_text($ref,$extension)
 		while (strpos($text,"\n\n")!==false) {$text=str_replace("\n\n","\n",$text);} # condense multiple line breaks
 		}
 
+	# OpenOffice Text (ODT)
+	if ($extension=="odt")
+		{	
+		$path=escapeshellarg($path);
+		
+		# ODT files are zip files and the content is in content.xml.
+		# We extract this then remove tags.
+		$text=shell_exec("unzip -p $path \"content.xml\"");
+
+		# Remove tags, but add newlines as appropriate (without this, separate text blocks are joined together with no spaces).
+		$text=str_replace("<","\n<",$text);
+		$text=trim(strip_tags($text));
+		while (strpos($text,"\n\n")!==false) {$text=str_replace("\n\n","\n",$text);} # condense multiple line breaks
+		}
 	
 	# PDF extraction using pdftotext (part of the XPDF project)
 	if ($extension=="pdf" && isset($pdftotext_path))
