@@ -475,7 +475,7 @@ for ($n=0;$n<count($fields);$n++)
 <?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
 
 	<!-- Archive Status -->
-	<?php if ($ref<0) { 
+	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
 		# Hide the dropdown, and set the default status depending on user permissions.
 		$mode=0;
 		if (checkperm("e-2")) {$mode=-2;}
@@ -500,7 +500,7 @@ for ($n=0;$n<count($fields);$n++)
 	<?php } ?>
 	
 	<!-- Access -->
-	<?php if ($ref<0) { 
+	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
 		# Do not show for user editable templates.
 		?>
 		<input type=hidden name="access" value="<?php echo $resource["access"]?>">
