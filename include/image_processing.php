@@ -166,7 +166,7 @@ elseif (isset($exif_comment))
 			global $exif_date;
 			$date=$data["DateTimeOriginal"];
 			# Reformat date to ISO standard
-			$date=substr($date,0,4) . "-" . substr($date,5,2) . "-" . substr($date,8);
+			$date=substr($date,0,4) . "-" . substr($date,5,2) . "-" . substr($date,8,11);
 			update_field($ref,$exif_date,$date);
 			}
 		}
@@ -247,6 +247,9 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	if (!$previewonly)
 		{
 		$file=get_resource_path($ref,true,"",false,$extension);	
+		
+		# Delete any existing resource dimensions.
+		sql_query("delete from resource_dimensions where resource='$ref'");
 		}
 	else
 		{

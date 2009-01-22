@@ -6,7 +6,8 @@
 <table cellpadding="0" cellspacing="0" width="300">
 <tr><td><input type="text" class="stdwidth" style="width:245px;" value="<?php echo $lang["starttypingusername"]?>" id="autocomplete" name="autocomplete_parameter" onClick="this.value='';" /></td>
 <td><input type=button value="+" style="width:48px;" onClick="addUser();" /></td></tr>
-<tr><td colspan="2" align="left"><textarea rows=6 class="stdwidth" style="width:300px;" name="users" id="users"><?php if (isset($userstring)) {echo $userstring;} ?></textarea></td></tr>
+<tr><td colspan="2" align="left"><textarea rows=6 class="stdwidth" style="width:300px;" name="users" id="users"
+onChange="this.value=this.value.replace(/[^,] /g,', ');"><?php if (isset($userstring)) {echo $userstring;} ?></textarea></td></tr>
 </table>
 
 
