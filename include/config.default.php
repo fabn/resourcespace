@@ -553,6 +553,22 @@ $banned_extensions=array("php","cgi","pl","exe","asp","jsp");
 # When uploading batch resources, on the edit 'template' by default the status and access fields are hidden. Set the below option to 'true' to enable these options during this process.
 $show_status_and_access_on_upload=false;
 
+# Mime types by extensions.
+# used by pages/download.php to detect the mime type of the file proposed to download.
+$mime_type_by_extension = array(
+    'mov'   => 'video/quicktime',
+    '3gp'   => 'video/3gpp',
+    'mpg'   => 'video/mpeg',
+    'mp4'   => 'video/mp4',
+    'avi'   => 'video/msvideo',
+    'mp3'   => 'audio/mpeg',
+    'wav'   => 'audio/x-wav',
+    'jpg'   => 'image/jpeg',
+    'jpeg'  => 'image/jpeg',
+    'gif'   => 'image/gif',
+    'png'   => 'image/png',
+  );
+
 
 #
 # ------------------------- Development Items -------------------------

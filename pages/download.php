@@ -11,6 +11,43 @@ $size=getvalescaped("size","");
 $ext=getvalescaped("ext","");
 $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
+
+/**
+ * Returns filename component of path
+ * This version is UTF-8 proof.
+ * Thanks to nasretdinov at gmail dot com
+ * http://fr2.php.net/manual/en/function.basename.php#85369
+ * 
+ * @param string $file A path.
+ * @access public
+ * @return string Returns the base name of the given path.
+ */
+function mb_basename($file)
+	{
+	$exploded_path = explode('/',$file);
+	return end($exploded_path);
+	} // mb_basename()
+
+/**
+ * Remove the extension part of a filename.
+ * Thanks to phparadise
+ * http://fundisom.com/phparadise/php/file_handling/strip_file_extension
+ * 
+ * @param string $name A file name.
+ * @access public
+ * @return string Return the file name without the extension part.
+ */
+function strip_extension($name)
+	{
+	$ext = strrchr($name, '.');
+	if($ext !== false)
+		{
+		$name = substr($name, 0, -strlen($ext));
+		}
+	return $name;
+	} // strip_extension()
+
+# If no extension was provided, we fallback to JPG.
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
@@ -41,10 +78,8 @@ if ($noattach=="")
 	{
 	daily_stat("Resource download",$ref);
 	resource_log($ref,'d',0);
-	}
-
-if ($noattach=="") 
-	{
+	
+	# We compute a file name for the download.
 	$filename=$ref . $size . ($alternative>0?"_" . $alternative:"") . "." . $ext;
 	
 	if ($original_filenames_when_downloading)
@@ -64,40 +99,32 @@ if ($noattach=="")
 			{
 			# Use the original filename if one has been set.
 			# Strip any path information (e.g. if the staticsync.php is used).
-			$fs=explode("/",$origfile);$filename=$fs[count($fs)-1];
-			if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
+			$filename = sprintf('%s.%s', strip_extension(mb_basename($origfile)), $ext);
+			if ($prefix_resource_id_to_filename) { $filename = $prefix_filename_string . $ref . "_" . $filename; }
 			}
 		}
-		
-	header("Content-Disposition: attachment; filename=" . $filename);
-	header("Content-Type: application/octet-stream");
+	
+	# We use quotes around the filename to handle filenames with spaces.
+	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
 	}
-else
+
+# We assign a default mime-type, in case we can find the one associated to the file extension.
+$mime="application/octet-stream";
+
+# For online previews, set the mime type.
+# We only need to add the types we'll be using for previews here, not all supported file types.
+# Mime types are defined in configuration. This allow to easily add new mime types when needed.
+#
+# Note : Videos... we should re-encode to a single type for video previews at some point (flash file?)
+# For now, support the basic types as direct in-browser previews of the source file. DH 20071117
+if (isset($mime_type_by_extension[$ext]))
 	{
-	$mime="application/octet-stream";
-	
-	# For online previews, set the mime type.
-	# We only need to add the types we'll be using for previews here, not all supported file types.
-
-	# Videos... we should re-encode to a single type for video previews at some point (flash file?)
-	# For now, support the basic types as direct in-browser previews of the source file. DH 20071117
-	if ($ext=="mov") {$mime="video/quicktime";}
-	if ($ext=="3gp") {$mime="video/3gpp";}
-	if ($ext=="mpg") {$mime="video/mpeg";}
-	if ($ext=="mp4") {$mime="video/mp4";}
-	if ($ext=="avi") {$mime="video/msvideo";}
-	
-	# Audio files
-	if ($ext=="mp3") {$mime="audio/mpeg";}
-	if ($ext=="wav") {$mime="audio/x-wav";}
-	
-	
-	if (($ext=="jpg") || ($ext=="jpeg")) {$mime="image/jpeg";}
-	if ($ext=="gif") {$mime="image/gif";}
-	if ($ext=="png") {$mime="image/png";}	
-
-	header("Content-Type: $mime");
+	$mime = $mime_type_by_extension[$ext];
 	}
+
+# We declare the downloaded content mime type.
+header("Content-Type: $mime");
+
 set_time_limit(0);
 
 #echo file_get_contents($path);
@@ -113,4 +140,3 @@ if ($noattach=="") # Only for downloads (not previews)
 
 exit();
 
-?>
