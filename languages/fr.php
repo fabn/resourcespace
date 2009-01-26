@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 # French
 # Language File for ResourceSpace
 # -------
@@ -616,4 +616,4 @@ $lang["hidealllanguages"]="Masquer toutes les langues";
 $lang["clicktologinasthisuser"]="Cliquer pour s'identifier avec cet utilisateur";
 $lang["addkeyword"]="Ajouter un mot clé";
 $lang["selectedresources"]="Documents sélectionnés";
-?>
+
