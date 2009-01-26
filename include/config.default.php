@@ -12,6 +12,7 @@ $mysql_server="localhost";	# Use 'localhost' if MySQL is installed on the same s
 $mysql_username="root";		# MySQL username
 $mysql_password="";			# MySQL password
 $mysql_db="resourcespace";			# MySQL database name
+$mysql_charset="utf8"; # MySQL database connection charset
 
 # The path to the MySQL client binaries - e.g. mysqldump
 # (only needed if you plan to use the export tool)
@@ -569,5 +570,3 @@ $multilingual_text_fields=false;
 
 
 
-
-?>

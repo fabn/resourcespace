@@ -16,6 +16,13 @@ header("Cache-Control: max-age=0, no-cache, must-revalidate");  // HTTP/1.1
 header("Pragma: no-cache");   
 
 
+if (!function_exists('mysql_set_charset')) {
+  function mysql_set_charset($charset)
+  {
+    return sql_query(sprintf("SET NAMES '%s'", $charset));
+  }
+}
+
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
 	{
@@ -56,6 +63,7 @@ if (!isset($storageurl)) {$storageurl=$baseurl."/filestore";}
 # *** CONNECT TO DATABASE ***
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
+mysql_set_charset($mysql_charset);
 set_magic_quotes_runtime(0);
 
 # statistics
@@ -623,4 +631,3 @@ function get_ip()
 	}
 
 
-?>

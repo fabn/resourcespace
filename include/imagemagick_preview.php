@@ -83,6 +83,7 @@ if (!mysql_ping())
 	{
 	mysql_connect($mysql_server,$mysql_username,$mysql_password,true);
 	mysql_select_db($mysql_db);
+	mysql_set_charset($mysql_charset);
 	}
 
 if (RUNNING_ASYNC)
@@ -94,5 +95,4 @@ if (RUNNING_ASYNC)
 		unlink($file);
 		}
 	}
-    
-?>
+
