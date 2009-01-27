@@ -171,6 +171,14 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile))
         {
         $ffmpeg_path=escapeshellarg($ffmpeg_path);
         	
+        # A work-around for Windows systems. Prefixing the command prevents a problem
+        # with double quotes.
+        global $config_windows;
+        if ($config_windows)
+        	{
+		    $ffmpeg_path = "cd & " . $ffmpeg_path;
+        	}
+        
         $snapshottime = 1;
         $out = shell_exec($ffmpeg_path." -i " . escapeshellarg($file) . " 2>&1");
         if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))

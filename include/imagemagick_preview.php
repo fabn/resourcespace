@@ -25,6 +25,14 @@ if (RUNNING_ASYNC)
 	if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
 	$ffmpeg_path=escapeshellarg($ffmpeg_path);
 	
+	# A work-around for Windows systems. Prefixing the command prevents a problem
+	# with double quotes.
+    global $config_windows;
+    if ($config_windows)
+       	{
+	    $ffmpeg_path = "cd & " . $ffmpeg_path;
+       	}
+	
 	sql_query("UPDATE resource SET is_transcoding = 1 WHERE ref = '".escape_check($ref)."'");
 	}
 else 

@@ -38,6 +38,9 @@ $scramble_key="abcdef123";
 # global number of installations, users and resources.
 $send_statistics=true;
 
+# Enable work-arounds required when installed on Microsoft Windows systems
+$config_windows=false;
+
 # ---- Paths to various external utilities ----
 
 # If using ImageMagick, uncomment and set next 2 lines
