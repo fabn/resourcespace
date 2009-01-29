@@ -18,7 +18,7 @@ if (isset($disksize))
 	# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
 	# Unix only due to reliance on 'du' command
 	$avail=$disksize*(1024*1024*1024);
-	$used=explode("\n",shell_exec("du -Lc ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
+	$used=explode("\n",shell_exec("du -Lc --summarize ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
 	$used=$used*1024;
 	
 	$free=$avail-$used;
