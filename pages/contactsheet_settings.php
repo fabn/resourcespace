@@ -92,7 +92,7 @@ include "../include/header.php";
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>	
-<input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["preview"]?>&nbsp;&nbsp;"  <?php if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?php } ?>/>
+<?php if ($contact_sheet_previews==true){?> <input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["preview"]?>&nbsp;&nbsp;" onClick="previewContactSheet();"/><?php } ?>
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
 </form>
