@@ -7,11 +7,11 @@
 #
 #
 #
-include "../include/db.php";
-include "../include/authenticate.php";
-include "../include/general.php";
-include "../include/image_processing.php";
-include "../include/resource_functions.php";
+include "../../include/db.php";
+include "../../include/authenticate.php";
+include "../../include/general.php";
+include "../../include/image_processing.php";
+include "../../include/resource_functions.php";
 
 $resources=sql_query("select ref,file_extension from resource where length(file_extension)>0");
 for ($n=0;$n<count($resources);$n++)
