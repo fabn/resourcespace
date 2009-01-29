@@ -31,7 +31,7 @@ include "../include/header.php";
  contactsheet.php makes just the first page of the pdf (with col size images) 
  and then thumbnails it for the ajax request. This creates a very small but helpful 
  preview image that can be judged before initiating a download of sometimes several MB.-->
-<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" <?php if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?php } ?> >
+<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" >
 <input type=hidden name="c" value="<?php echo $collection?>">
 
 <div class="Question">
@@ -91,10 +91,10 @@ include "../include/header.php";
 </div>
 
 <div class="QuestionSubmit">
-<label for="buttons"> </label>			
+<label for="buttons"> </label>	
+<input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["preview"]?>&nbsp;&nbsp;"  <?php if ($contact_sheet_previews==true){?> onClick="previewContactSheet();" <?php } ?>/>
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
-
 </form>
 </div>
 
