@@ -267,6 +267,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 		# Extract the number of records to produce
 		$last=explode(" ",$search);$last=str_replace("!last","",$last[0]);
+		
+		# Fix the order by for this query (special case due to inner query)
+		$order_by=str_replace("r.rating","rating",$order_by);
 
 		return sql_query("select distinct *,r2.hit_count score from (select r.* from resource r $sql_join where $sql_filter order by ref desc limit $last ) r2 order by $order_by",false,$fetchrows);
 		}

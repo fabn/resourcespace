@@ -596,7 +596,7 @@ $lang["maxcollectionthumbsreached"]="There are too many resources in this collec
 $lang["ratethisresource"]="How do you rate this resource?";
 $lang["ratingthankyou"]="Thank you for your rating.";
 $lang["ratings"]="ratings";
-$lang["rating"]="rating";
+$lang["rating_lowercase"]="rating";
 $lang["cannotemailpassword"]="You cannot e-mail the user their existing password as it is not stored (a cryptographic hash is stored instead).<br /><br />You must use the 'Suggest' button above which will generate a new password and enable the e-mail function.";
 
 $lang["userrequestnotification1"]="The User Login Request form has been completed with the following details:";

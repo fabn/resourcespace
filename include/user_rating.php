@@ -57,7 +57,7 @@ function UserRatingSet(rating)
 	}
 ?>
 
-<div class="RatingCount" id="RatingCount"><?php echo $rating_count?> <?php echo ($rating_count==1?$lang["rating"]:$lang["ratings"])?></div>
+<div class="RatingCount" id="RatingCount"><?php echo $rating_count?> <?php echo ($rating_count==1?$lang["rating_lowercase"]:$lang["ratings"])?></div>
 </td>
 </tr>
 </table>
