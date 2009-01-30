@@ -53,7 +53,7 @@ $infobox=true;
 # Load the default config first, if it exists, so any new settings are present even if missing from config.php
 if (file_exists(dirname(__FILE__)."/config.default.php")) {include "config.default.php";}
 # Load the real config
-if (!file_exists(dirname(__FILE__)."/config.php")) {exit("You must copy 'config.default.php' to 'config.php' in the include directory, and edit the file to alter the settings as appropriate.");}
+if (!file_exists(dirname(__FILE__)."/config.php")) {header ("Location: pages/setup.php" );die(0);}
 include "config.php";
 
 # Set the storage directory and URL if not already set.
