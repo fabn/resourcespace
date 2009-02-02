@@ -616,4 +616,16 @@ $lang["hidealllanguages"]="Hide all languages";
 $lang["clicktologinasthisuser"]="Click to log in as this user";
 $lang["addkeyword"]="Add keyword";
 $lang["selectedresources"]="Selected resources";
+
+$lang["internalusersharing"]="Internal User Sharing";
+$lang["externalusersharing"]="External User Sharing";
+$lang["accesskey"]="Access Key";
+$lang["sharedby"]="Shared By";
+$lang["sharedwith"]="Shared With";
+$lang["lastupdated"]="Last Updated";
+$lang["lastused"]="Last Used";
+$lang["noattachedusers"]="No attached users.";
+$lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this collection.";
+$lang["noexternalsharing"]="No external sharing.";
+$lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
 ?>

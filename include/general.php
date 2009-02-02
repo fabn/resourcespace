@@ -1335,5 +1335,11 @@ function send_statistics()
 	sql_query("insert into sysvars(name,value) values ('last_sent_stats',now())");
 	}
 
+function resolve_users($users)
+	{
+	# For a given comma-separated list of user refs (e.g. returned from a group_concat()), return a string of matching usernames.
+	$resolved=sql_array("select concat(fullname,' (',username,')') value from user where ref in ($users)");
+	return join(", ",$resolved);
+	}
 
 ?>

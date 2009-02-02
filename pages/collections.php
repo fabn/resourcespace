@@ -105,10 +105,16 @@ if ($add!="")
    	# Log this
 	daily_stat("Add resource to collection",$add);
 	
-	# update resource/keyword kit count
+	# Update resource/keyword kit count
 	$search=getvalescaped("search","");
 	if ((strpos($search,"!")===false) && ($search!="")) {update_resource_keyword_hitcount($add,$search);}
 	hook("postaddtocollection");
+	
+	# Show warning?
+	if (isset($collection_share_warning) && $collection_share_warning)
+		{
+		?><script language="Javascript">alert("<?php echo $lang["sharedcollectionaddwarning"]?>");</script><?php
+		}
 	}
 
 $remove=getvalescaped("remove","");

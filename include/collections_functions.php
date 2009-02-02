@@ -24,6 +24,7 @@ function get_collection($ref)
 	if (count($return)==0) {return false;} else 
 		{
 		$return=$return[0];
+		$return["users"]="";
 		if ($return["public"]==0)
 			{
 			# If private, also return a list of users with access to this collection
@@ -40,7 +41,7 @@ function get_collection($ref)
 		if ($k!="")
 			{
 			# If this is an external user (i.e. access key based) then fetch the 'request_feedback' value from the access keys table
-			$request_feedback=sql_value("select request_feedback value from external_access_keys where access_key='$k'",0);
+			$request_feedback=sql_value("select request_feedback value from external_access_keys where access_key='$k' and request_feedback=1",0);
 			}
 		
 		$return["request_feedback"]=$request_feedback;
@@ -56,12 +57,28 @@ function get_collection_resources($collection)
 	
 function add_resource_to_collection($resource,$collection)
 	{
-	$collectiondata=get_collection($collection);
-	global $userref;
-	if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+	if (collection_writeable($collection))
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
+		
+		# Check if this collection has already been shared externally. If it has, we must add a further entry
+		# for this specific resource, and warn the user that this has happened.
+		$keys=get_collection_external_access($collection);
+		if (count($keys)>0)
+			{
+			# Set the flag so a warning appears.
+			global $collection_share_warning;
+			$collection_share_warning=true;
+			
+			for ($n=0;$n<count($keys);$n++)
+				{
+				# Insert a new access key entry for this resource/collection.
+				global $userref;
+				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
+				}
+			}
+
 		return true;
 		}
 	else
@@ -72,17 +89,24 @@ function add_resource_to_collection($resource,$collection)
 
 function remove_resource_from_collection($resource,$collection)
 	{
-	$collectiondata=get_collection($collection);
-	global $userref;
-	if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+	if (collection_writeable($collection))
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
+		sql_query("delete from external_access_keys where resource='$resource' and collection='$collection'");
 		return true;
 		}
 	else
 		{
 		return false;
 		}
+	}
+	
+function collection_writeable($collection)
+	{
+	# Returns true if the current user has write access to the given collection.
+	$collectiondata=get_collection($collection);
+	global $userref;
+	return $userref==$collectiondata["user"] || $collectiondata["allow_changes"]==1 || checkperm("h");
 	}
 	
 function set_user_collection($user,$collection)
@@ -410,7 +434,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 		# Do we need to add an external access key for this user (e-mail specified rather than username)?
 		if ($key_required[$n])
 			{
-			$k=generate_collection_access_key($collection,$feedback);
+			$k=generate_collection_access_key($collection,$feedback,$emails[$n]);
 			$key="&k=". $k;
 			}
 		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $baseurl . 	"/?c=" . $collection . $key;
@@ -421,7 +445,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	return "";
 	}
 
-function generate_collection_access_key($collection,$feedback=0)
+function generate_collection_access_key($collection,$feedback=0,$email="")
 	{
 	# For each resource in the collection, create an access key so an external user can access each resource.
 	global $userref;
@@ -430,7 +454,7 @@ function generate_collection_access_key($collection,$feedback=0)
 	for ($m=0;$m<count($r);$m++)
 		{
 		# Add the key to each resource in the collection
-		sql_query("insert into external_access_keys(resource,access_key,user,request_feedback) values ('" . $r[$m] . "','$k','$userref','$feedback');");
+		sql_query("insert into external_access_keys(resource,access_key,collection,user,request_feedback,email,date) values ('" . $r[$m] . "','$k','$collection','$userref','$feedback','" . escape_check($email) . "',now());");
 		}
 	return $k;
 	}
@@ -694,5 +718,18 @@ function change_collection_link($collection)
 		{
 		return "<a href=\"collections.php?collection=" . $collection. "\" target=\"collections\">";
 		}
+	}
+	
+function get_collection_external_access($collection)
+	{
+	# Return all external access given to a collection.
+	# Users, emails and dates could be multiple for a given access key, an in this case they are returned comma-separated.
+	return sql_query("select access_key,group_concat(DISTINCT user ORDER BY user SEPARATOR ', ') users,group_concat(DISTINCT email ORDER BY email SEPARATOR ', ') emails,max(date) maxdate,max(lastused) lastused from external_access_keys where collection='$collection' group by access_key order by date");
+	}
+	
+function delete_collection_access_key($collection,$access_key)
+	{
+	# Deletes the given access key.
+	sql_query("delete from external_access_keys where access_key='$access_key' and collection='$collection'");
 	}
 ?>

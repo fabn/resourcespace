@@ -595,6 +595,10 @@ function check_access_key($resource,$key)
 			$usergroup=$userinfo[0]["usergroup"];
 			$userpermissions=split(",",$userinfo[0]["permissions"]);
 			}
+		
+		# Set the 'last used' date for this key
+		sql_query("update external_access_keys set lastused=now() where resource='$resource' and access_key='$key'");
+		
 		return true;
 		}
 	}
@@ -608,6 +612,9 @@ function check_access_key_collection($collection,$key)
 		$c=sql_value("select count(*) value from external_access_keys where resource='" . $r[$n] . "' and access_key='$key'",0);
 		if ($c==0) {return false;}
 		}	
+
+	# Set the 'last used' date for this key
+	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
 	return true;
 	}
 
