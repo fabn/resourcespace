@@ -1338,6 +1338,7 @@ function send_statistics()
 function resolve_users($users)
 	{
 	# For a given comma-separated list of user refs (e.g. returned from a group_concat()), return a string of matching usernames.
+	if (trim($users)=="") {return "";}
 	$resolved=sql_array("select concat(fullname,' (',username,')') value from user where ref in ($users)");
 	return join(", ",$resolved);
 	}
