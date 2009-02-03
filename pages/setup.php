@@ -1,14 +1,13 @@
 <?php
 //Development Mode:  Uncomment to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
-#$develmode = true;
+$develmode = true;
 if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
 	$outputfile = '../include/config.php';
 	
 if (file_exists("../include/config.default.php")) {include "../include/config.default.php";}
-//Disable warnings (specifically so we can display our own error for a mySQL failure.)
-error_reporting(1);
+
 
 ?>
 <html>
@@ -29,7 +28,6 @@ $(document).ready(function(){
 // });
 
 $('p.iteminfo').hide();
-$('.ajaxload').hide();
 // $('.advsection').hide();
 $('.starthidden').hide();
 $('.advlink').click(function(){
@@ -157,27 +155,28 @@ $('#testconn').click(function(){
 <style type="text/css"> 
  
 <!--
- #intro{  margin:0 auto; width:600px; margin-bottom: 40px; font-size:100%; background: #333333; text-align: left; padding: 40px; }
+#wrapper{ margin:0 auto;width:600px; }
+ #intro {  margin-bottom: 40px; font-size:100%; background: #333333; text-align: left; padding: 40px; }
 #intro a{ color: #fff; }
-#introbottom{ padding: 10px; clear: both; text-align:center;}
- #preconfig{  float:right; background: #555555; padding: 25px;}
+#introbottom { padding: 10px; clear: both; text-align:center;}
+#preconfig {  float:right; background: #555555; padding: 25px;}
 #preconfig h2 { border-bottom: 1px solid #ccc;	width: 100%;}
-#preconfig p { font-size:120%; padding:0; margin:0; margin-top: 5px;}
+#preconfig p { font-size:110%; padding:0; margin:0; margin-top: 5px;}
 #preconfig p.failure{ color: #f00; font-weight: bold; }
 
-#tabs { font-size: 90%; margin: 0 auto; width:600px; }
+#tabs { font-size: 100%;}
 #tabs > ul { float: right; width: 600px; margin:0; padding:0; border-bottom:5px solid #333333; }
 #tabs > ul >li { margin: 0; padding:0; margin-left: 8px; list-style: none; background: #777777; }
 * html #tabs li { display: inline; /* ie6 double float margin bug */ }
 #tabs > ul > li, #tabs  > ul > li a { float: left; }
-#tabs > ul > li a { text-decoration: none; padding: 8px; color: #CCCCCCC; font-weight: bold; }
+#tabs > ul > li a { text-decoration: none; padding: 8px; color: #CCCCCC; font-weight: bold; }
 #tabs > ul > li.active { background: #CEE1EF; }
 #tabs > ul > li.active a { color: #333333; }
 #tabs div.tabs { background: #333; clear: both; padding: 20px; text-align: left; }
 #tabs div h1 { text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
 
 p.iteminfo{ background: #e3fefa; width: 60%; color: #000; padding: 4px; margin: 10px; clear:both; }
-b,strong { padding:0 5px; color: #F00; font-weight: bold; }
+strong { padding:0 5px; color: #F00; font-weight: bold; }
 a.iflink { color: #F00; padding: 2px; border: 1px solid #444; margin-left: 4px; } 
 
 input { margin-left: 10px; border: 1px solid #000; }
@@ -192,10 +191,10 @@ label { padding-right: 10px; width: 30%; font-weight: bold; }
 div.advsection{ margin-bottom: 20px; }
 .ajaxload{ padding-left:4px; }
 a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
-.erroritem{ background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; margin-top: 20px; margin-bottom: 7px; font-weight:bold;}
-.erroritem ul{ margin:0; margin-left: 1em; padding:0; }
-#errorheader { font-size:110%; margin: 0 auto; margin-bottom: 20px; width:600px; background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; font-weight:bold; }
-#configoutput { font-size: 90%; margin: 0 auto; width:560px; background: #777; color: #fff; text-align: left; padding: 20px; }
+.erroritem{ background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
+.erroritem.p { margin: 0; padding:0px;padding-bottom: 5px;}
+#errorheader { font-size: 110%; margin-bottom: 20px; background: #fcc; border: 1px solid #f00; color: #000; padding: 10px; font-weight: bold; }
+#configoutput { background: #777; color: #fff; text-align: left; padding: 20px; }
 --> 
  
 </style> 
@@ -206,7 +205,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 <div id="HeaderNav1" class="HorizontalNav ">&nbsp;</div>
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">&nbsp;</div>
 </div>
-
+<div id="wrapper">
 <?php
 	function ResolveKB($value)
 		{
@@ -306,8 +305,8 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$config_output .= "## ResourceSpace\r\n";
 		$config_output .= "## Local Configuration Script\r\n";
 		$config_output .= "###############################\r\n\r\n";
-		$config_output .= "#All custom settings should be entered in this file.\r\n";  
-		$config_output .= "#Options may be copied from config.default.php and configured here.\r\n\r\n";
+		$config_output .= "# All custom settings should be entered in this file.\r\n";  
+		$config_output .= "# Options may be copied from config.default.php and configured here.\r\n\r\n";
 			
 		//Check mySQL settings
 		$mysql_server = get_post('mysql_server');
@@ -315,14 +314,21 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$mysql_password = get_post('mysql_password');
 		$mysql_db = get_post('mysql_db');
 		//Make a connection to the database using the supplied credentials and see if we can create and drop a table
-		if (mysql_connect($mysql_server, $mysql_username, $mysql_password)){
-			if (mysql_select_db($mysql_db)){
-				if (mysql_query("CREATE table configtest(test varchar(30))")){
-					mysql_query("DROP table configtest");
-				}
-				else {$errors['databaseperms'] = true;}
+		if (@mysql_connect($mysql_server, $mysql_username, $mysql_password)){
+			$mysqlversion=mysql_get_server_info();
+			echo $mysqlversion;
+			if ($mysqlversion<'5') {
+				$errors['databaseversion'] = true;
 			}
-			else {$errors['databasedb'] = true;}
+			else {
+				if (@mysql_select_db($mysql_db)){
+					if (@mysql_query("CREATE table configtest(test varchar(30))")){
+						@mysql_query("DROP table configtest");
+					}
+					else {$errors['databaseperms'] = true;}
+				}
+				else {$errors['databasedb'] = true;}
+			}
 		}
 		else {
 			switch (mysql_errno()){
@@ -522,10 +528,6 @@ else{
 				$phpversion=phpversion();
 				if ($phpversion<'4.4') {$result="FAIL: should be 4.4 or greater";$continue=false;} else {$result="OK";}?>
 				<p class="<?php echo ($result=='OK'?'':'failure');?>">PHP version: <?php echo $phpversion;?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
-				<?php 
-					$mysqlversion=mysql_get_server_info();
-					if ($mysqlversion<'5') {$result="FAIL: should be 5 or greater";$continue=false;} else {$result="OK";} ?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">MySQL version: <?php echo $mysqlversion;?> <?php echo($result!='OK'?'<br>':'');?>(<?=$result?>)</p>
 				<?php
 					$gdinfo=gd_info();
 					if (is_array($gdinfo))
@@ -601,19 +603,20 @@ else{
 			<h1>Basic Settings</h1>
 			<p>These settings provide the basic setup for your ResourceSpace installation.  Required items are marked with a <strong>*</strong></p>
 			<p class="configsection">
-				<h2>Database Configuration<img class="ajaxload" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
+				<h2>Database Configuration<img class="ajaxload" class="starthidden" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
 				<?php if(isset($errors['database'])){?>
-					<div class="erroritem">There was an error with your MySQL settings:
-						<ul>
+					<div class="erroritem">There was an error with your MySQL settings: 
+						<?php if(isset($errors['databaseversion'])){ ?>
+						MySQL version should be 5 or greater. <?php } ?>
 						<?php if(isset($errors['databaseserver'])){?>
-						<li>Unable to reach server.</li> <?php }?>
+						Unable to reach server. <?php }?>
 						<?php if(isset($errors['databaselogin'])){?>
-						<li>Login failed</li><?php }?>
+						Login failed<?php }?>
 						<?php if(isset($errors['databasedb'])){?>
-						<li>Unable to access database.</li><?php } ?>
+						Unable to access database.<?php } ?>
 						<?php if(isset($errors['databaseperms'])){?>
-						<li>Check user permissions.  Unable to create tables</li><?php }?>
-						</ul>
+						Check user permissions.  Unable to create tables.<?php }?>
+						
 						<p><?php echo $errors['database'];?></p>
 					</div>
 				<?php } ?>
@@ -624,7 +627,7 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="mysqlusername">MySQL Username:</label><input class="mysqlconn" type="text" id="mysqlusername" name="mysql_username" value="<?php echo $mysql_username;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-username">?</a>
-					<p class="iteminfo" id="if-mysql-username">The username used to connect to your MySQL server.  This user must have rights to create the RS databases</p>		
+					<p class="iteminfo" id="if-mysql-username">The username used to connect to your MySQL server.  This user must have rights to create tables in the database named below.</p>		
 				</div>
 				<div class="configitem">
 					<label for="mysqlpassword">MySQL Password:</label><input class="mysqlconn" type="password" id="mysqlpassword" name="mysql_password" value="<?php echo $mysql_password;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-password">?</a>
@@ -632,7 +635,7 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="mysqldb">MySQL Database:</label><input id="mysqldb" class="mysqlconn" type="text" name="mysql_db" value="<?php echo $mysql_db;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-db">?</a>
-					<p class="iteminfo" id="if-mysql-db">The Name of the MySQL database RS will use. (This database must exist?)</p>
+					<p class="iteminfo" id="if-mysql-db">The Name of the MySQL database RS will use. (This database must exist.)</p>
 				</div>
 				
 				<div class="configitem">
@@ -674,14 +677,14 @@ else{
 						<div class="erroritem">The spider password is a required field.</div>
 					<?php } ?>
 					<label for="spiderpassword">Spider Password:</label><input id="spiderpassword" type="text" name="spider_password" value="<?php echo $spider_password;?>"/><strong>*</strong><a class="iflink" href="#if-spiderpassword">?</a>
-					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.</p>
+					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomized for you, but you can change it to match an existing installtion, if nessecary.</p>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['scramble_key'])){?>
 						<div class="erroritem">The scramble key is a required field.</div>
 					<?php } ?>
 					<label for="scramblekey">Scramble Key:</label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><strong>*</strong><a class="iflink" href="#if-scramblekey">?</a>
-					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable</p>
+					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable  This field has already been randomized for you, but you can change it to match an existing installation, if nessecary.</p>
 				</div>
 				<div class="configitem">
 					<label for="secure">Secure (https) mode:</label><input id="secure" type="checkbox" name="secure" value="true" <?php echo ($secure==true?'checked="checked"':'');?>/><a class="iflink" href="#if-secure">?</a>
@@ -842,7 +845,9 @@ else{
 			<pre><?php echo $config_output; ?></pre>
 		</div>
 	<?php } ?>	
-</body>
+</div>
+	</body>
+
 </html>	
 
 
