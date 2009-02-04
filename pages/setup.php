@@ -258,9 +258,10 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 
 	function url_exists($url)
 	{
-		$host = parse_url($url, PHP_URL_HOST);
-		$path = parse_url($url, PHP_URL_PATH);
-		$port = parse_url($url, PHP_URL_PORT);
+		$parsed_url = parse_url($url);
+		$host = $parsed_url['host'];
+		$path = $parsed_url['path'];
+		$port = $parsed_url['port'];
 		if (empty($path)) $path = "/";
 		if ($port==0) $port=80;
 		// Build HTTP 1.0 request header. Defined in RFC 1945 
@@ -319,8 +320,11 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 	}
 	if (!(isset($_REQUEST['submit']))){ //No Form Submission, lets setup some defaults
 		if (!isset($storagedir)) {$storagedir=dirname(__FILE__)."/../filestore";}
-		$baseurl = 'http://'.php_uname('n'); //Set the baseurl to the machine hostname. 
-		
+		if (isset($_SERVER['HTTP_HOST']))
+			$baseurl = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['PHP_SELF'],0,strlen($_SERVER['PHP_SELF'])-16);
+		else
+			$baseurl = 'http://'.php_uname('n'); //Set the baseurl to the machine hostname. 
+
 		//Generate default random keys
 		$scramble_key = generatePassword();
 		$spider_password = generatePassword();
