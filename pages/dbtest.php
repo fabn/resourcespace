@@ -31,7 +31,7 @@ if ((isset($_REQUEST['mysqlserver']))&&(isset($_REQUEST['mysqlusername']))&&(iss
 		}
 	}
 	else{
-		if(mysql_select_db(filter_var($_REQUEST['mysqldb']))){
+		if(mysql_select_db(filter_var($_REQUEST['mysqldb'],FILTER_SANITIZE_STRING))){
 			echo '200';
 		}
 		else {
