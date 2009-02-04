@@ -1,6 +1,6 @@
 <?php
 //Development Mode:  Uncomment to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
-$develmode = true;
+#$develmode = true;
 if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
@@ -79,75 +79,72 @@ $('#ldapenable').click(function(){
 $('p.iteminfo').click(function(){
 	$('p.iteminfo').hide("slow");
 	});
-$('.mysqlconn').keydown(function(){
-	$('#al-testconn').fadeIn("slow");
-	$('#testconn').attr("disabled", true);
-	$.ajax({
-		url: "dbtest.php",
-		async: true,
-		dataType: "text",
-		data: { mysqlserver: $('#mysqlserver').val(), mysqlusername: $('#mysqlusername').val(), mysqlpassword: $('#mysqlpassword').val(),mysqldb: $('#mysqldb').val() },
-		success: function(data,type){
-			if (data==200) {
-				$('#mysqlserver').removeClass('warn');
-				$('#mysqlusername').removeClass('warn');
-				$('#mysqlpassword').removeClass('warn');
-				$('#mysqldb').addClass('ok');
-				$('#mysqlserver').addClass('ok');
-				$('#mysqlusername').addClass('ok');
-				$('#mysqlpassword').addClass('ok');
-				$('#mysqldb').removeClass('warn');
-			}
-			else if (data==201) {
-				$('#mysqlserver').removeClass('warn');
-				$('#mysqlusername').removeClass('ok');
-				$('#mysqlpassword').removeClass('ok');
-				$('#mysqldb').removeClass('ok');
-				$('#mysqldb').removeClass('warn');
-				$('#mysqlserver').addClass('ok');
+$('.mysqlconn').keyup(function(){
+	$('#al-testconn').fadeIn("fast",function(){
+		$.ajax({
+			url: "dbtest.php",
+			async: true,
+			dataType: "text",
+			data: { mysqlserver: $('#mysqlserver').val(), mysqlusername: $('#mysqlusername').val(), mysqlpassword: $('#mysqlpassword').val(),mysqldb: $('#mysqldb').val() },
+			success: function(data,type){
+				if (data==200) {
+					$('#mysqlserver').removeClass('warn');
+					$('#mysqlusername').removeClass('warn');
+					$('#mysqlpassword').removeClass('warn');
+					$('#mysqldb').addClass('ok');
+					$('#mysqlserver').addClass('ok');
+					$('#mysqlusername').addClass('ok');
+					$('#mysqlpassword').addClass('ok');
+					$('#mysqldb').removeClass('warn');
+				}
+				else if (data==201) {
+					$('#mysqlserver').removeClass('warn');
+					$('#mysqlusername').removeClass('ok');
+					$('#mysqlpassword').removeClass('ok');
+					$('#mysqldb').removeClass('ok');
+					$('#mysqldb').removeClass('warn');
+					$('#mysqlserver').addClass('ok');
+					$('#mysqlusername').addClass('warn');
+					$('#mysqlpassword').addClass('warn');
+				}
+				else if (data==203) {
+					$('#mysqlserver').removeClass('warn');
+					$('#mysqlusername').removeClass('warn');
+					$('#mysqlpassword').removeClass('warn');
+					$('#mysqldb').removeClass('ok');
+					$('#mysqldb').addClass('warn');
+					$('#mysqlserver').addClass('ok');
+					$('#mysqlusername').addClass('ok');
+					$('#mysqlpassword').addClass('ok');
+				}
+				else{
+					$('#mysqlserver').removeClass('ok');
+					$('#mysqlusername').removeClass('ok');
+					$('#mysqlpassword').removeClass('ok');
+					$('#mysqldb').removeClass('ok');
+					$('#mysqldb').removeClass('warn');
+					$('#mysqlserver').addClass('warn');
+					$('#mysqlusername').removeClass('warn');
+					$('#mysqlpassword').removeClass('warn');
+				}
+				$('#al-testconn').hide();
+			},
+			error: function(){
+				alert("Test failed (unable to verify MySQL)");
+				$('#mysqlserver').addClass('warn');
 				$('#mysqlusername').addClass('warn');
 				$('#mysqlpassword').addClass('warn');
-			}
-			else if (data==203) {
-				$('#mysqlserver').removeClass('warn');
-				$('#mysqlusername').removeClass('warn');
-				$('#mysqlpassword').removeClass('warn');
-				$('#mysqldb').removeClass('ok');
-				$('#mysqldb').addClass('warn');
-				$('#mysqlserver').addClass('ok');
-				$('#mysqlusername').addClass('ok');
-				$('#mysqlpassword').addClass('ok');
-			}
-			else{
-				$('#mysqlserver').removeClass('ok');
-				$('#mysqlusername').removeClass('ok');
-				$('#mysqlpassword').removeClass('ok');
-				$('#mysqldb').removeClass('ok');
-				$('#mysqldb').removeClass('warn');
-				$('#mysqlserver').addClass('warn');
-				$('#mysqlusername').removeClass('warn');
-				$('#mysqlpassword').removeClass('warn');
-			}
-			$('#al-testconn').hide();
-		},
-		error: function(){
-			alert("Test failed (unable to verify MySQL)");
-			$('#mysqlserver').addClass('warn');
-			$('#mysqlusername').addClass('warn');
-			$('#mysqlpassword').addClass('warn');
-			$('#al-testconn').hide();
+				$('#al-testconn').hide();
 		}});
 	});
+});
 $('a.iflink	').click(function(){
 	$('p.iteminfo').hide("slow");
 	var currentItemInfo = $(this).attr('href');
 	$(currentItemInfo).show("fast");
 	return false;
 });
-$('#testconn').click(function(){
-	
-	return false;
-});
+$('#mysqlserver').keyup();
 
 });
 </script> 
@@ -189,7 +186,8 @@ div.configitem { padding-top:10px; padding-left:40px; padding-bottom: 5px; borde
 
 label { padding-right: 10px; width: 30%; font-weight: bold; }
 div.advsection{ margin-bottom: 20px; }
-.ajaxload{ padding-left:4px; }
+.ajloadicon { padding-left:4px; }
+h2#dbaseconfig{  min-height: 32px;}
 a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 .erroritem{ background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
 .erroritem.p { margin: 0; padding:0px;padding-bottom: 5px;}
@@ -207,6 +205,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 </div>
 <div id="wrapper">
 <?php
+
 	function ResolveKB($value)
 		{
 		$value=trim(strtoupper($value));
@@ -224,6 +223,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 			}
 		return $value;
 	}
+
 	function generatePassword($length=12) {
 	    $vowels = 'aeuyAEUY';
 	    $consonants = 'bdghjmnpqrstvzBDGHJLMNPQRSTVWXZ23456789';
@@ -255,10 +255,60 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$stripped = rtrim($data, '/');
 		return $stripped;
 	}	
-	function url_exists($url) { 
-	    $hdrs = @get_headers($url); 
-	    return is_array($hdrs) ? preg_match('/^HTTP\\/\\d+\\.\\d+\\s+2\\d\\d\\s+.*$/',$hdrs[0]) : false; 
-	} 
+
+	function url_exists($url)
+	{
+		$host = parse_url($url, PHP_URL_HOST);
+		$path = parse_url($url, PHP_URL_PATH);
+		$port = parse_url($url, PHP_URL_PORT);
+		if (empty($path)) $path = "/";
+		if ($port==0) $port=80;
+		// Build HTTP 1.0 request header. Defined in RFC 1945 
+
+		$headers = 	"GET $path HTTP/1.0\r\n" .
+					"User-Agent: RS-Installation/1.0\r\n\r\n";
+
+		$fp = @fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Pretty quick, but we assume that if we can't open the socket connection rather quickly the host or port are probably wrong.
+		if (!$fp) {
+			return false;
+		}
+		fwrite($fp, $headers);
+
+		while(!feof($fp)) {
+			$resp = fgets($fp, 4096);
+			if (strstr($resp, '200 OK')){
+				fclose($fp);
+				return true;
+			}
+		}
+		fclose($fp);
+		return false;
+	}	
+	
+	if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
+		define(FILTER_SANITIZE_STRING, 1);
+		define(FILTER_SANITIZE_EMAIL, 2);
+		define(FILTER_VALIDATE_EMAIL, 3);
+		define(FILTER_VALIDATE_URL, 4);
+		function filter_var($data, $filter){
+			switch ($filter){
+			case FILTER_VALIDATE_EMAIL:
+				if(preg_match('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/',$data, $output)>0)
+					return true;
+				else return false;
+				break;
+			case FILTER_SANITIZE_STRING:
+				//Just do an escape quotes.  We're not doing anything too dangerous here after all
+				return addslashes($data);
+				break;
+			case FILTER_VALIDATE_URL:		
+			//Rely on checking the license.txt file to validate URL.  This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
+				return true;
+				break;
+			}
+		}
+	}
+			
 	if (file_exists($outputfile)){
 ?>
 	<div id="errorheader">Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.</div> 
@@ -280,6 +330,9 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 			$search_paths[]='/usr/share/bin';
 			$search_paths[]='/usr/local/bin/';
 		}
+		elseif(stristr(php_uname('s'),'windows')){
+			$config_windows = true;
+		}
 		if (isset($search_paths)){
 			foreach($search_paths as $path){
 				if (file_exists($path.'/convert'))
@@ -300,7 +353,8 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 	}
 	else { //Form was submitted, lets do it!
 		//Config File Header
-		$config_output .= "<?php\r\n";
+		$config_windows = get_post_bool('config_windows');
+		$exe_ext = $config_windows==true?'.exe':'';
 		$config_output .= "###############################\r\n";
 		$config_output .= "## ResourceSpace\r\n";
 		$config_output .= "## Local Configuration Script\r\n";
@@ -316,7 +370,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		//Make a connection to the database using the supplied credentials and see if we can create and drop a table
 		if (@mysql_connect($mysql_server, $mysql_username, $mysql_password)){
 			$mysqlversion=mysql_get_server_info();
-			echo $mysqlversion;
+		
 			if ($mysqlversion<'5') {
 				$errors['databaseversion'] = true;
 			}
@@ -358,10 +412,11 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		//Check mySQL bin path (not required)
 		$mysql_bin_path = sslash(get_post('mysql_bin_path'));
 		if ((isset($mysql_bin_path)) && ($mysql_bin_path!='')){
-			if (!file_exists($mysql_bin_path.'/mysqldump'))
+			if (!file_exists($mysql_bin_path.'/mysqldump'.$exe_ext))
 				$errors['mysqlbinpath'] = true;
 			else $config_output .="\$mysql_bin_path = '$mysql_bin_path';\r\n\r\n";
 		}
+
 		//Check base url (required)
 		$baseurl = sslash(get_post('baseurl'));
 		if ((isset($baseurl)) && ($baseurl!='') && ($baseurl!='http://my.site/resourcespace') && (filter_var($baseurl, FILTER_VALIDATE_URL))){
@@ -381,7 +436,6 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		//Verify email addresses (currently just verify that they validate as email addresses)
 		$config_output .= "# Email settings\r\n";
 		$email_from = get_post('email_from');
-		$email_from = filter_var($email_from, FILTER_SANITIZE_EMAIL);
 		if ($email_from != ''){
 			if (filter_var($email_from, FILTER_VALIDATE_EMAIL) && ($email_from!='resourcespace@my.site'))
 				$config_output .= "\$email_from = '$email_from';\r\n";
@@ -389,7 +443,6 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 				$errors['email_from']=true;
 		}
 		$email_notify = get_post('email_notify');
-		$email_notify = filter_var($email_notify, FILTER_SANITIZE_EMAIL);
 		if ($email_notify !=''){
 			if (filter_var($email_notify, FILTER_VALIDATE_EMAIL) && ($email_notify!='resourcespace@my.site'))
 				$config_output .= "\$email_notify = '$email_notify';\r\n\r\n";
@@ -417,46 +470,46 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$exiftool_path = sslash(get_post('exiftool_path'));
 		$antiword_path = sslash(get_post('antiword_path'));
 		$pdftotext_path = sslash(get_post('pdftotext_path'));
-		
 		if ($imagemagick_path!='')
-			if (!file_exists($imagemagick_path.'/convert'))
+			if (!file_exists($imagemagick_path.'/convert'.$exe_ext))
 				$errors['imagemagick_path'] = true;
 			else $config_output .= "\$imagemagick_path = '$imagemagick_path';\r\n";
 		if ($ghostscript_path!='')
-			if (!file_exists($ghostscript_path.'/gs'))
+			if (!file_exists($ghostscript_path.'/gs'.$exe_ext))
 				$errors['ghostscript_path'] = true;
 			else $config_output .= "\$ghostscript_path = '$ghostscript_path';\r\n";
 		if ($ffmpeg_path!='')
-			if (!file_exists($ffmpeg_path.'/ffmpeg'))
+			if (!file_exists($ffmpeg_path.'/ffmpeg'.$exe_ext))
 				$errors['ffmpeg_path'] = true;
 			else $config_output .= "\$ffmpeg_path = '$ffmpeg_path';\r\n";
 		if ($exiftool_path!='')
-			if (!file_exists($exiftool_path.'/exiftool'))
+			if (!file_exists($exiftool_path.'/exiftool'.$exe_ext))
 				$errors['exiftool_path'] = true;
 			else $config_output .= "\$exiftool_path = '$exiftool_path';\r\n";
 		if ($antiword_path!='')
-			if (!file_exists($exiftool_path.'/antiword'))
+			if (!file_exists($exiftool_path.'/antiword'.$exe_ext))
 				$errors['antiword_path'] = true;
 			else $config_output .= "\$antiword_path = '$antiword_path';\r\n";
 		if ($pdftotext_path!='')
-			if (!file_exists($pdftotext_path.'/pdftotext'))
+			if (!file_exists($pdftotext_path.'/pdftotext'.$exe_ext))
 				$errors['pdftotext_path'] = true;
 			else $config_output .= "\$pdftotext_path = '$pdftotext_path';\r\n\r\n";
 		
 		//Deal with some checkboxes
 		if ($secure = get_post_bool('secure'))
-			$config_output .= "\$secure = 'true';\r\n";
+			$config_output .= "\$secure = true;\r\n";
 		if (!$allow_account_request = get_post_bool('allow_account_request'))
-			$config_output .= "\$allow_account_request = 'false';\r\n";
+			$config_output .= "\$allow_account_request = false;\r\n";
 		if (!$allow_password_change = get_post_bool('allow_password_change'))
-			$config_output .= "\$allow_password_change = 'false';\r\n";
+			$config_output .= "\$allow_password_change = false;\r\n";
 		if (!$research_request = get_post_bool('research_request'))
-			$config_output .= "\$research_request = 'false';\r\n";
+			$config_output .= "\$research_request = false;\r\n";
 		if ($use_theme_as_home = get_post_bool('use_theme_as_home'))
-			$config_output .= "\$use_theme_as_home = 'true';\r\n";
+			$config_output .= "\$use_theme_as_home = true;\r\n";
 		if ($disable_languages = get_post_bool('disable_languages'))
-			$config_output .= "\$disable_languages = 'true';\r\n";
-		
+			$config_output .= "\$disable_languages = true;\r\n";
+		if ($config_windows)
+			$config_output .= "\$config_windows = true;\r\n";
 		if (($defaultlanguage = get_post('defaultlanguage'))!='en')
 			$config_output .= "\$defaultlanguage = '$defaultlanguage';\r\n";
 		
@@ -496,7 +549,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 	//Form submission was a success.  Output the config file and refrain from redisplaying the form.
 	$fhandle = fopen($outputfile, 'w') or die ("Error opening output file.  (This should never happen, we should have caught this before we got here)");
-	fwrite($fhandle, $config_output);
+	fwrite($fhandle, "<?php\r\n".$config_output);
 	fclose($fhandle);
 	
 	?>
@@ -520,6 +573,7 @@ if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 else{
 ?>
 <form action="setup.php" method="POST">
+<?php echo $config_windows==true?'<input type="hidden" name="config_windows" value="true"/>':'' ?>
 	<div id="intro">
 			<div id="preconfig">
 				<h2>Preconfiguration Check</h2>
@@ -589,7 +643,7 @@ else{
 			</script>
 			<?php } ?>
 			</div>
-		</div>
+	</div>
 	<?php if (isset($errors)){ ?>	
 		<div id="errorheader">There were errors detected in your configuration.  See below for detailed error messages.</div>
 	<?php } ?>	
@@ -603,7 +657,7 @@ else{
 			<h1>Basic Settings</h1>
 			<p>These settings provide the basic setup for your ResourceSpace installation.  Required items are marked with a <strong>*</strong></p>
 			<p class="configsection">
-				<h2>Database Configuration<img class="ajaxload" class="starthidden" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
+				<h2 id="dbaseconfig">Database Configuration<img class="starthidden ajloadicon" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
 				<?php if(isset($errors['database'])){?>
 					<div class="erroritem">There was an error with your MySQL settings: 
 						<?php if(isset($errors['databaseversion'])){ ?>
@@ -839,7 +893,7 @@ else{
 
 </form>
 <?php } ?>
-<?php if (($develmode) && isset($config_output)){?>
+<?php if (($develmode)&& isset($config_output)){?>
 		<div id="configoutput">
 			<h1>Configuration File Ouput:</h1>
 			<pre><?php echo $config_output; ?></pre>

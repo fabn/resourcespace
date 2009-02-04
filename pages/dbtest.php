@@ -1,5 +1,16 @@
 <?php
 error_reporting(1);
+if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
+		define(FILTER_SANITIZE_STRING, 1);
+		function filter_var($data, $filter){
+			switch ($filter){
+			case FILTER_SANITIZE_STRING:
+				//Just do an escape quotes.  We're not doing anything too dangerous here after all
+				return addslashes($data);
+				break;
+		}
+	}
+}
 if (file_exists("../config.php"))
 	die(1);
 if ($_REQUEST['mysqlserver']==''){
