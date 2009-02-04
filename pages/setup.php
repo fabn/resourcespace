@@ -328,7 +328,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		if(php_uname('s')=='Linux'){
 			$search_paths[]='/usr/bin';
 			$search_paths[]='/usr/share/bin';
-			$search_paths[]='/usr/local/bin/';
+			$search_paths[]='/usr/local/bin';
 		}
 		elseif(stristr(php_uname('s'),'windows')){
 			$config_windows = true;
@@ -731,14 +731,14 @@ else{
 						<div class="erroritem">The spider password is a required field.</div>
 					<?php } ?>
 					<label for="spiderpassword">Spider Password:</label><input id="spiderpassword" type="text" name="spider_password" value="<?php echo $spider_password;?>"/><strong>*</strong><a class="iflink" href="#if-spiderpassword">?</a>
-					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomized for you, but you can change it to match an existing installtion, if nessecary.</p>
+					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['scramble_key'])){?>
 						<div class="erroritem">The scramble key is a required field.</div>
 					<?php } ?>
 					<label for="scramblekey">Scramble Key:</label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><strong>*</strong><a class="iflink" href="#if-scramblekey">?</a>
-					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable  This field has already been randomized for you, but you can change it to match an existing installation, if nessecary.</p>
+					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable resource path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
 				</div>
 				<div class="configitem">
 					<label for="secure">Secure (https) mode:</label><input id="secure" type="checkbox" name="secure" value="true" <?php echo ($secure==true?'checked="checked"':'');?>/><a class="iflink" href="#if-secure">?</a>
