@@ -191,8 +191,12 @@ h2#dbaseconfig{  min-height: 32px;}
 a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 .erroritem{ background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
 .erroritem.p { margin: 0; padding:0px;padding-bottom: 5px;}
+.warnitem{ background: #FFFFB3; border: 2px solid #FFFF33; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
+.warnitem.p { margin: 0; padding:0px;padding-bottom: 5px;}
 #errorheader { font-size: 110%; margin-bottom: 20px; background: #fcc; border: 1px solid #f00; color: #000; padding: 10px; font-weight: bold; }
 #configoutput { background: #777; color: #fff; text-align: left; padding: 20px; }
+#warnheader { font-size: 110%; margin-bottom: 20px; background: #FFFFB3; border: 1px solid #FFFF33; color: #000; padding: 10px; font-weight: bold; }
+
 --> 
  
 </style> 
@@ -256,8 +260,9 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		return $stripped;
 	}	
 
-	function url_exists($url)
+	function url_exists($url) //Open a HTTP request to a host to see if an url reachable.  This script will
 	{
+		
 		$parsed_url = parse_url($url);
 		$host = $parsed_url['host'];
 		$path = $parsed_url['path'];
@@ -266,7 +271,8 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		if ($port==0) $port=80;
 		// Build HTTP 1.0 request header. Defined in RFC 1945 
 
-		$headers = 	"GET $path HTTP/1.0\r\n" .
+		$headers = 	"GET $path HTTP/1.1\r\n" .
+					"Host: $host\r\n" .
 					"User-Agent: RS-Installation/1.0\r\n\r\n";
 
 		$fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Pretty quick, but we assume that if we can't open the socket connection rather quickly the host or port are probably wrong.
@@ -277,9 +283,14 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 
 		while(!feof($fp)) {
 			$resp = fgets($fp, 4096);
-			if (strstr($resp, '200 OK')){
+			if(strstr($resp, 'HTTP/1.')){
 				fclose($fp);
-				return true;
+				$tmp = explode(' ',$resp);
+				$response_code = $tmp[1];
+				if ($response_code == 200)
+					return true;
+				else
+					return false;
 			}
 		}
 		fclose($fp);
@@ -430,7 +441,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 				$config_output .= "\$baseurl = '$baseurl';\r\n\r\n";
 			}
 			else {
-				$errors['baseurlverify']= true;
+				$warnings['baseurlverify']= true;
 			}
 		}
 		else {
@@ -651,6 +662,9 @@ else{
 	<?php if (isset($errors)){ ?>	
 		<div id="errorheader">There were errors detected in your configuration.  See below for detailed error messages.</div>
 	<?php } ?>	
+	<?php if (isset($warnings)){ ?>	
+		<div id="warnheader">Some of your settings generated warning messages.  See below for details.  This doesn't necessarily mean there is a problem with your configuration.</div>
+	<?php } ?>	
 	<div id="tabs" class="starthidden">
 		<ul>
 			<li><a href="#tab-1">Basic Settings</a></li>
@@ -710,8 +724,8 @@ else{
 					<?php if(isset($errors['baseurl'])){?>
 						<div class="erroritem">Base URL is a required field.</div>
 					<?php } ?>
-					<?php if(isset($errors['baseurlverify'])){?>
-						<div class="erroritem">Base URL does not seem to be correct (could not load license.txt).</div>
+					<?php if(isset($warnings['baseurlverify'])){?>
+						<div class="warnitem">Base URL does not seem to be correct (could not load license.txt).</div>
 					<?php } ?>
 					<label for="baseurl">Base URL:</label><input id="baseurl" type="text" name="baseurl" value="<?php echo $baseurl;?>"/><strong>*</strong><a class="iflink" href="#if-baseurl">?</a>
 					<p class="iteminfo" id="if-baseurl">The 'base' web address for this installation.  NOTE: No trailing slash.</p>
