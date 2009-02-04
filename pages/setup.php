@@ -269,7 +269,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$headers = 	"GET $path HTTP/1.0\r\n" .
 					"User-Agent: RS-Installation/1.0\r\n\r\n";
 
-		$fp = @fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Pretty quick, but we assume that if we can't open the socket connection rather quickly the host or port are probably wrong.
+		$fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Pretty quick, but we assume that if we can't open the socket connection rather quickly the host or port are probably wrong.
 		if (!$fp) {
 			return false;
 		}
