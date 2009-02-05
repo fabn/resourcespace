@@ -574,7 +574,7 @@ if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 		<p>Next steps:</p>
 		<ul>
 			<li>You can now remove write access to 'include/'.</li>
-			<li>Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation</li>
+			<li>Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customising your installation</li>
 			<li><a href="<?php echo $baseurl;?>/login.php">Login to <?php echo $applicationname;?></a>
 				<ul>
 					<li>Username: admin</li>
@@ -816,7 +816,7 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="allow_password_change">Allow password change? </label><input id="allow_password_change" type="checkbox" name="allow_password_change" <?php echo ($allow_password_change==true?'checked':'');?>/><a class="iflink" href="#if-allow_password_change">?</a>
-					<p class="iteminfo" id="if-allow_password_change">Allow end users to change their passwods</p>
+					<p class="iteminfo" id="if-allow_password_change">Allow end users to change their passwords</p>
 				</div>
 				<div class="configitem">
 					<label for="allow_account_request">Allow users to request accounts? </label><input id="allow_account_request" type="checkbox" name="allow_account_request" <?php echo ($allow_account_request==true?'checked':'');?>/>
