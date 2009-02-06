@@ -20,21 +20,8 @@ if (file_exists("../include/config.default.php")) {include "../include/config.de
 <script type="text/javascript"> 
  
 $(document).ready(function(){
-
-
-// $('#showall').click(function(){
-	// $('.advsection').slideDown("slow");
-	// return false;
-// });
-
 $('p.iteminfo').hide();
-// $('.advsection').hide();
 $('.starthidden').hide();
-$('.advlink').click(function(){
-	// var currentAdvSection = $(this).attr('href');
-	// $(currentAdvSection).slideToggle("slow");
-	return false;
-});
 $('#tabs div.tabs').hide();
 $('#tabs div:first').show();
 $('#tabs ul li:first').addClass('active');
@@ -66,14 +53,6 @@ $('#configstoragelocations').click(function(){
 		$('#storageurl').attr("disabled",true);
 		$('#storagedir').attr("disabled",true);
 		$('#remstorageoptions').slideUp("slow");
-	}
-});
-$('#ldapenable').click(function(){
-	if (this.checked == true) {
-		$('#ldapoptions').slideDown("slow");
-	}
-	else{
-		$('#ldapoptions').slideUp("slow");
 	}
 });
 $('p.iteminfo').click(function(){
@@ -188,7 +167,7 @@ label { padding-right: 10px; width: 30%; font-weight: bold; }
 div.advsection{ margin-bottom: 20px; }
 .ajloadicon { padding-left:4px; }
 h2#dbaseconfig{  min-height: 32px;}
-a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
+
 .erroritem{ background: #fcc; border: 2px solid #f00; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
 .erroritem.p { margin: 0; padding:0px;padding-bottom: 5px;}
 .warnitem{ background: #FFFFB3; border: 2px solid #FFFF33; color: #000; padding: 10px; margin: 7px; font-weight:bold;}
@@ -203,15 +182,13 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 </head>
 <body>
 <div id="Header">
-
-<div id="HeaderNav1" class="HorizontalNav ">&nbsp;</div>
-<div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">&nbsp;</div>
+	<div id="HeaderNav1" class="HorizontalNav ">&nbsp;</div>
+	<div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">&nbsp;</div>
 </div>
 <div id="wrapper">
 <?php
 
-	function ResolveKB($value)
-		{
+	function ResolveKB($value) { //Copied from includes/db.php
 		$value=trim(strtoupper($value));
 		if (substr($value,-1,1)=="K")
 			{
@@ -228,7 +205,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		return $value;
 	}
 
-	function generatePassword($length=12) {
+	function generatePassword($length=12) { //Generate a random string for scramble_key and spider_password
 	    $vowels = 'aeuyAEUY';
 	    $consonants = 'bdghjmnpqrstvzBDGHJLMNPQRSTVWXZ23456789';
 	    $password = '';
@@ -244,43 +221,41 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 	    }
 		return $password;
 	}
+
 	function get_post($key){ //Return santizied input for a given $_REQUEST key
 		return filter_var($_REQUEST[$key], FILTER_SANITIZE_STRING);
 	}
-	function get_post_bool($key){ // Return true or false
+
+	function get_post_bool($key){ // Return true or false for a given $_REQUEST key
 		if (isset($_REQUEST[$key]))
 			return true;
 		else
 			return false;
 	}
 	
-	function sslash($data){
+	function sslash($data){ //Trim whitespace and trailing slash from a string.
 		$stripped = rtrim($data);
 		$stripped = rtrim($data, '/');
 		return $stripped;
 	}	
 
-	function url_exists($url) //Open a HTTP request to a host to see if an url reachable.  This script will
+	function url_exists($url) //Open a HTTP request to a host to see if an is url reachable.
 	{
-		
 		$parsed_url = parse_url($url);
 		$host = $parsed_url['host'];
 		$path = $parsed_url['path'];
 		$port = $parsed_url['port'];
 		if (empty($path)) $path = "/";
 		if ($port==0) $port=80;
-		// Build HTTP 1.0 request header. Defined in RFC 1945 
-
+		// Build HTTP 1.1 request header.
 		$headers = 	"GET $path HTTP/1.1\r\n" .
 					"Host: $host\r\n" .
 					"User-Agent: RS-Installation/1.0\r\n\r\n";
-
-		$fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Pretty quick, but we assume that if we can't open the socket connection rather quickly the host or port are probably wrong.
+		$fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Assume that if we can't open the socket connection quickly the host or port are probably wrong.
 		if (!$fp) {
 			return false;
 		}
 		fwrite($fp, $headers);
-
 		while(!feof($fp)) {
 			$resp = fgets($fp, 4096);
 			if(strstr($resp, 'HTTP/1.')){
@@ -296,7 +271,6 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		fclose($fp);
 		return false;
 	}	
-	
 	if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
 		define(FILTER_SANITIZE_STRING, 1);
 		define(FILTER_SANITIZE_EMAIL, 2);
@@ -310,23 +284,23 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 				else return false;
 				break;
 			case FILTER_SANITIZE_STRING:
-				//Just do an escape quotes.  We're not doing anything too dangerous here after all
-				return addslashes($data);
+				return addslashes($data); //Just do an escape quotes.  We're not doing anything too dangerous here after all
 				break;
 			case FILTER_VALIDATE_URL:		
-			//Rely on checking the license.txt file to validate URL.  This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
+				//Rely on checking the license.txt file to validate URL.  
+				//This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
 				return true;
 				break;
 			}
 		}
 	}
-			
+	//Check if config file already exists and die with an error if it does.
 	if (file_exists($outputfile)){
 ?>
 	<div id="errorheader">Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.</div> 
-	</body>
-	</html>
-	<?php
+</body>
+</html>
+<?php
 	die(0);
 	}
 	if (!(isset($_REQUEST['submit']))){ //No Form Submission, lets setup some defaults
@@ -336,7 +310,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		else
 			$baseurl = 'http://'.php_uname('n'); //Set the baseurl to the machine hostname. 
 
-		//Generate default random keys
+		//Generate default random keys.
 		$scramble_key = generatePassword();
 		$spider_password = generatePassword();
 		//Setup search paths (Currently only Linux)
@@ -345,6 +319,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 			$search_paths[]='/usr/share/bin';
 			$search_paths[]='/usr/local/bin';
 		}
+		//Check if we're on windows and set config_windows if we are.
 		elseif(stristr(php_uname('s'),'windows')){
 			$config_windows = true;
 		}
@@ -367,7 +342,9 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 
 	}
 	else { //Form was submitted, lets do it!
-		//Config File Header
+		//Generate config.php Header
+		//Note: The opening php tag is missing and is added when the file is written.
+		//This allows the config to be displayed in the bottom div when in development mode.
 		$config_windows = get_post_bool('config_windows');
 		$exe_ext = $config_windows==true?'.exe':'';
 		$config_output .= "###############################\r\n";
@@ -377,12 +354,12 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$config_output .= "# All custom settings should be entered in this file.\r\n";  
 		$config_output .= "# Options may be copied from config.default.php and configured here.\r\n\r\n";
 			
-		//Check mySQL settings
+		//Grab MySQL settings
 		$mysql_server = get_post('mysql_server');
 		$mysql_username = get_post('mysql_username');
 		$mysql_password = get_post('mysql_password');
 		$mysql_db = get_post('mysql_db');
-		//Make a connection to the database using the supplied credentials and see if we can create and drop a table
+		//Make a connection to the database using the supplied credentials and see if we can create and drop a table.
 		if (@mysql_connect($mysql_server, $mysql_username, $mysql_password)){
 			$mysqlversion=mysql_get_server_info();
 		
@@ -401,21 +378,19 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		}
 		else {
 			switch (mysql_errno()){
-				case 1045:
+				case 1045:  //User login failure error.
 					$errors['databaselogin'] = true;
 					break;
-				default:
+				default: //Must be a server problem
 					$errors['databaseserver'] = true;
 					break;
 			}
 		}
 		if (isset($errors)){
 			$errors['database'] = mysql_error();
-			
 		}
 		else {
-			
-			//Test passed: Output mySQL config section
+			//Test passed: Output MySQL config section
 			$config_output .= "# MySQL database settings\r\n";
 			$config_output .= "\$mysql_server = '$mysql_server';\r\n";
 			$config_output .= "\$mysql_username = '$mysql_username';\r\n";
@@ -424,23 +399,22 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 			$config_output .= "\r\n";
 		}
 		
-		//Check mySQL bin path (not required)
+		//Check MySQL bin path (not required)
 		$mysql_bin_path = sslash(get_post('mysql_bin_path'));
 		if ((isset($mysql_bin_path)) && ($mysql_bin_path!='')){
 			if (!file_exists($mysql_bin_path.'/mysqldump'.$exe_ext))
 				$errors['mysqlbinpath'] = true;
 			else $config_output .="\$mysql_bin_path = '$mysql_bin_path';\r\n\r\n";
 		}
-
-		//Check base url (required)
+		//Check baseurl (required)
 		$baseurl = sslash(get_post('baseurl'));
 		if ((isset($baseurl)) && ($baseurl!='') && ($baseurl!='http://my.site/resourcespace') && (filter_var($baseurl, FILTER_VALIDATE_URL))){
-			//Check that the base url is correct by attempting to fetch the license file:
+			//Check that the base url seems correct by attempting to fetch the license file
 			if (url_exists($baseurl.'/license.txt')){
 				$config_output .= "# Base URL of the installation\r\n";
 				$config_output .= "\$baseurl = '$baseurl';\r\n\r\n";
 			}
-			else {
+			else { //Under certain circumstances this test may fail, but the URL is still correct, so warn the user.
 				$warnings['baseurlverify']= true;
 			}
 		}
@@ -448,7 +422,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 			$errors['baseurl'] = true;
 		}
 		
-		//Verify email addresses (currently just verify that they validate as email addresses)
+		//Verify email addresses are valid
 		$config_output .= "# Email settings\r\n";
 		$email_from = get_post('email_from');
 		if ($email_from != ''){
@@ -465,7 +439,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 				$errors['email_notify']=true;
 		}
 		
-		//Check the spider_password and scramble_key (required)
+		//Check the spider_password (required) and scramble_key (optional)
 		$spider_password = get_post('spider_password');
 		if ($spider_password!='')
 			$config_output .= "\$spider_password = '$spider_password';\r\n";
@@ -475,7 +449,7 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		if ($scramble_key!='')
 			$config_output .= "\$scramble_key = '$scramble_key';\r\n\r\n";
 		else
-			$errors['scramble_key']=true;
+			$warnings['scramble_key']=true;
 			
 		$config_output .= "# Paths\r\n";
 		//Verify paths actually point to a useable binary
@@ -528,9 +502,6 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		if (($defaultlanguage = get_post('defaultlanguage'))!='en')
 			$config_output .= "\$defaultlanguage = '$defaultlanguage';\r\n";
 		
-		
-			
-		
 		//Advanced Settings
 		if ($_REQUEST['applicationname']!=$applicationname){
 			$applicationname = get_post('applicationname');
@@ -555,16 +526,13 @@ a#showall { font-size: 70%; text-transform: none; padding-left: 20px; }
 		$config_output .= "\$ftp_password = '$ftp_password';\r\n";
 		$config_output .= "\$ftp_defaultfolder = '$ftp_defaultfolder';\r\n";
 	}
-		
-	
-	
 ?>
 <?php //Output Section
 
 if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 	//Form submission was a success.  Output the config file and refrain from redisplaying the form.
 	$fhandle = fopen($outputfile, 'w') or die ("Error opening output file.  (This should never happen, we should have caught this before we got here)");
-	fwrite($fhandle, "<?php\r\n".$config_output);
+	fwrite($fhandle, "<?php\r\n".$config_output); //NOTE: php opening tag is prepended to the output.
 	fclose($fhandle);
 	
 	?>
@@ -669,7 +637,6 @@ else{
 		<ul>
 			<li><a href="#tab-1">Basic Settings</a></li>
 			<li><a href="#tab-2">Advanced Settings</a></li>
- <?php 			//<li><a href="#tab-3">Development Settings</a></li> ?>
 		</ul>
 		<div class="tabs" id="tab-1">
 			<h1>Basic Settings</h1>
@@ -752,10 +719,10 @@ else{
 					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
 				</div>
 				<div class="configitem">
-					<?php if(isset($errors['scramble_key'])){?>
-						<div class="erroritem">The scramble key is a required field.</div>
+					<?php if(isset($warnings['scramble_key'])){?>
+						<div class="warnitem">If this is a public installation, setting the scramble key is recommended.</div>
 					<?php } ?>
-					<label for="scramblekey">Scramble Key:</label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><strong>*</strong><a class="iflink" href="#if-scramblekey">?</a>
+					<label for="scramblekey">Scramble Key:</label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><a class="iflink" href="#if-scramblekey">?</a>
 					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable resource path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
 				</div>
 				<div class="configitem">
@@ -808,7 +775,7 @@ else{
 		</div>
 		<div class="tabs" id="tab-2">
 			<h1>Advanced Settings</h2>
-			<h2><a class="advlink" href="#generaloptions">&gt; General Options</a></h2>
+			<h2>General Options</h2>
 			<div class="advsection" id="generaloptions">
 				<div class="configitem">
 					<label for="applicationname">Application Name: </label><input id="applicationname" type="text" name="applicationname" value="<?php echo $applicationname;?>"/><a class="iflink" href="#if-applicationname">?</a>
@@ -830,7 +797,7 @@ else{
 				</div>
 				
 			</div>	
-			<h2><a class="advlink" href="#storagelocations">> Remote Storage Locations</a></h2>
+			<h2>Remote Storage Locations</h2>
 			<div class="advsection" id="storagelocations">
 				<div class="configitem">
 					<label for="configstoragelocations">Use remote storage?</label><input id="configstoragelocations" type="checkbox" name="configstoragelocations" value="true" <?php echo ($configstoragelocations==true?'checked':'');?>/><a class="iflink" href="#if-remstorage">?</a>
@@ -847,7 +814,7 @@ else{
 					</div>
 				</div>
 			</div>
-			<h2><a class="advlink" href="#languages">&gt; Language Support</a></h2>
+			<h2>Language Support</h2>
 			<div class="advsection" id="languages">
 				<div class="configitem">
 					<label for="defaultlanguage">Default Language:</label><select id="defaultlanguage" name="defaultlanguage">
@@ -865,7 +832,7 @@ else{
 					<label for="disable_languages">Disable language selection?</label><input id="disable_languages" name="disable_languages" type="checkbox"/>
 				</div>
 			</div>
-			<h2><a class="advlink" href="#ftpsettings">&gt; FTP Settings</a></h2>
+			<h2>FTP Settings</h2>
 			<div class="advsection" id="ftpsettings">
 				<div class="configitem">
 					<label for="ftp_server">FTP Server</label><input id="ftp_server" name="ftp_server" type="text" value="<?php echo $ftp_server;?>"/><a class="iflink" href="#if-ftpserver">?</a>
@@ -874,41 +841,16 @@ else{
 				<div class="configitem">
 					<label for="ftp_username">FTP Username</label><input id="ftp_username" name="ftp_username" type="text" value="<?php echo $ftp_username;?>"/>
 				</div>
-								<div class="configitem">
+				<div class="configitem">
 					<label for="ftp_password">FTP Password</label><input id="ftp_password" name="ftp_password" type="text" value="<?php echo $ftp_password;?>"/>
 				</div>
 				<div class="configitem">
 					<label for="ftp_defaultfolder">FTP Default Folder</label><input id="ftp_defaultfolder" name="ftp_defaultfolder" type="text" value="<?php echo $ftp_defaultfolder;?>"/>
 				</div>
 			</div>
-
 		</div>
-		<?php
-		// <div class="tabs" id="tab-3">
-			// <h1>Development Settings</h2>
-			// <h2><a class="advlink" href="#ldapauth">&gt; Active Directory / LDAP Authentication</a></h2>
-			// <div class="advsection" id="ldapauth">
-				// <div class="configitem">
-					// <label for="ldapenable">Enable AD/LDAP Authentication?</label><input name="ldapenable" type="checkbox" id="ldapenable"/><a class="iflink" href="#if-ldapauth">?</a>
-					// <p class="iteminfo" id="if-ldapauth">Active Directory / LDAP Authentication allows for RS users to login with their AD/LDAP credentials.  This is an advanced setup process, and is currently still in development.  <strong>Use at your own risk. This may not be completely secure.</strong></p>
-				// </div>
-				// <div id="ldapoptions" class="starthidden">
-					// <div class="configitem">
-						// <label for="ldaptype">LDAP Type: </label>
-						// <select id="ldaptype"name="ldaptype">
-							// <option value="AD">Active Directory</option>
-							// <option value="genldap">Generic LDAP</option>
-							// <option value="openldap">OpenLDAP</option>
-						// </select>
-					// </div>
-				// </div>
-						
-			// </div>
-		// </div>
-		?>
 		<input type="submit" id="submit" name="submit" value="Begin Installation!"/>
 	</div>
-
 </form>
 <?php } ?>
 <?php if (($develmode)&& isset($config_output)){?>
@@ -918,10 +860,5 @@ else{
 		</div>
 	<?php } ?>	
 </div>
-	</body>
-
+</body>
 </html>	
-
-
-			
-	
