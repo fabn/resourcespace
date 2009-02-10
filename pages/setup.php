@@ -7,8 +7,21 @@ else
 	$outputfile = '../include/config.php';
 	
 if (file_exists("../include/config.default.php")) {include "../include/config.default.php";}
-
-
+if (file_exists("../languages/en.php")) {include "../languages/en.php";}
+$defaultlanguage = get_post('defaultlanguage');
+if ($defaultlanguage==''){ 
+	//See if we can auto-detect the most likely language.  The user can override this.
+	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
+		$httplanguage = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		if(array_key_exists($httplanguage[0],$languages))
+			$defaultlanguage=$httplanguage[0];
+	}
+}
+if ($defaultlanguage!='en'){
+	if (file_exists("../languages/".$defaultlanguage.".php")){
+		include "../languages/".$defaultlanguage.".php";
+	}
+}
 ?>
 <html>
 <head>
@@ -175,6 +188,7 @@ h2#dbaseconfig{  min-height: 32px;}
 #errorheader { font-size: 110%; margin-bottom: 20px; background: #fcc; border: 1px solid #f00; color: #000; padding: 10px; font-weight: bold; }
 #configoutput { background: #777; color: #fff; text-align: left; padding: 20px; }
 #warnheader { font-size: 110%; margin-bottom: 20px; background: #FFFFB3; border: 1px solid #FFFF33; color: #000; padding: 10px; font-weight: bold; }
+.language {clear:both; text-align:center; padding:20px;}
 
 --> 
  
@@ -297,7 +311,7 @@ h2#dbaseconfig{  min-height: 32px;}
 	//Check if config file already exists and die with an error if it does.
 	if (file_exists($outputfile)){
 ?>
-	<div id="errorheader">Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.</div> 
+	<div id="errorheader"><?php echo $lang["setup-alreadyconfigured"];?></div> 
 </body>
 </html>
 <?php
@@ -378,10 +392,10 @@ h2#dbaseconfig{  min-height: 32px;}
 		}
 		else {
 			switch (mysql_errno()){
-				case 1045:  //User login failure error.
+				case 1045:  //User login failure.
 					$errors['databaselogin'] = true;
 					break;
-				default: //Must be a server problem
+				default: //Must be a server problem.
 					$errors['databaseserver'] = true;
 					break;
 			}
@@ -499,7 +513,7 @@ h2#dbaseconfig{  min-height: 32px;}
 			$config_output .= "\$disable_languages = true;\r\n";
 		if ($config_windows)
 			$config_output .= "\$config_windows = true;\r\n";
-		if (($defaultlanguage = get_post('defaultlanguage'))!='en')
+		if ($defaultlanguage!='en')
 			$config_output .= "\$defaultlanguage = '$defaultlanguage';\r\n";
 		
 		//Advanced Settings
@@ -537,12 +551,12 @@ if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 	
 	?>
 	<div id="intro">
-		<h1>Congratulations!</h1>
-		<p>Your initial ResourceSpace setup is complete.  Be sure to check out 'include/default.config.php' for more configuration options.</p>
-		<p>Next steps:</p>
+		<h1><?php echo $lang["setup-successheader"]; ?></h1>
+		<p><?php echo $lang["setup-successdetails"]; ?></p>
+		<p><?php echo $lang["setup-successnextsteps"]; ?></p>
 		<ul>
-			<li>You can now remove write access to 'include/'.</li>
-			<li>Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customising your installation</li>
+			<li><?php echo $lang["setup-successremovewrite"]; ?></li>
+			<li><?php echo $lang["setup-successvisitwiki"]; ?></li>
 			<li><a href="<?php echo $baseurl;?>/login.php">Login to <?php echo $applicationname;?></a>
 				<ul>
 					<li>Username: admin</li>
@@ -559,7 +573,7 @@ else{
 <?php echo $config_windows==true?'<input type="hidden" name="config_windows" value="true"/>':'' ?>
 	<div id="intro">
 			<div id="preconfig">
-				<h2>Preconfiguration Check</h2>
+				<h2><?php echo $lang["installationcheck"]; ?></h2>
 				<?php 
 				$continue=true;
 				$phpversion=phpversion();
@@ -605,21 +619,34 @@ else{
 						$result="OK";
 					}
 				?>
-					<p class="<?php echo ($result=='OK'?'':'failure');?>">Write access to config directory: <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+					<p class="<?php echo ($result=='OK'?'':'failure');?>"><?php echo $lang["setup-checkconfigwrite"];?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
 				<?php
 					$success=is_writable($storagedir);
 					if ($success===false) {$result="WARN: '$storagedir' not writable. <br/> (Override location in 'Advanced Settings'.)";} else {$result="OK";}
 				?>
-					<p class="<?php echo ($result=='OK'?'':'failure');?>">Write access to storage directory: <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+					<p class="<?php echo ($result=='OK'?'':'failure');?>"><?php echo $lang["setup-checkstoragewrite"];?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
 			</div>
-			<h1>Welcome to ResourceSpace. </h1>
-			<p>Thanks for choosing ResourceSpace.  This configuration script will help you setup ResourceSpace.  This process only needs to be completed once.<p>
-			<p>For more information about ResourceSpace visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a>.
+			<h1><?php echo $lang["setup-welcome"];?></h1>
+			<p><?php echo $lang["setup-introtext"];?><p>
+			<p><?php echo $lang["setup-visitwiki"];?></p>
+			<div class="language">
+					<label for="defaultlanguage"><?php echo $lang["language"];?>:</label><select id="defaultlanguage" name="defaultlanguage">
+						<?php
+							foreach($languages as $code => $text){
+								echo "<option value=\"$code\"";
+								if ($code == $defaultlanguage)
+									echo ' selected';
+								echo ">$text</option>";
+							}
+						?>
+					</select>
+					<input type="submit" id="changelanguage" name="changelanguage" value="Change Language"/>
+				</div>
 			<div id="introbottom">
 			<?php if ($continue===false) { ?>
-			<strong>Pre-configuration errors were detected.<br />  Please resolve these errors and return to this page to continue.</strong>
+			<strong><?php echo $lang["setup-checkerrors"];?></strong>
 			<?php } else { ?>
-			<script type="text/javascript"> 
+			<script type="text/javascript">
 			$(document).ready(function(){
 				$('#tabs').show();
 			});
@@ -628,162 +655,162 @@ else{
 			</div>
 	</div>
 	<?php if (isset($errors)){ ?>	
-		<div id="errorheader">There were errors detected in your configuration.  See below for detailed error messages.</div>
+		<div id="errorheader"><?php echo $lang["setup-errorheader"];?></div>
 	<?php } ?>	
 	<?php if (isset($warnings)){ ?>	
-		<div id="warnheader">Some of your settings generated warning messages.  See below for details.  This doesn't necessarily mean there is a problem with your configuration.</div>
+		<div id="warnheader"><?php echo $lang["setup-warnheader"];?></div>
 	<?php } ?>	
 	<div id="tabs" class="starthidden">
 		<ul>
-			<li><a href="#tab-1">Basic Settings</a></li>
+			<li><a href="#tab-1"><?php echo $lang["setup-basicsettings"];?></a></li>
 			<li><a href="#tab-2">Advanced Settings</a></li>
 		</ul>
 		<div class="tabs" id="tab-1">
-			<h1>Basic Settings</h1>
-			<p>These settings provide the basic setup for your ResourceSpace installation.  Required items are marked with a <strong>*</strong></p>
+			<h1><?php echo $lang["setup-basicsettings"];?></h1>
+			<p><?php echo $lang["setup-basicsettingsdetails"];?></p>
 			<p class="configsection">
-				<h2 id="dbaseconfig">Database Configuration<img class="starthidden ajloadicon" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
+				<h2 id="dbaseconfig"><?php echo $lang["setup-dbaseconfig"];?><img class="starthidden ajloadicon" id="al-testconn" src="../gfx/ajax-loader.gif"/></h2>
 				<?php if(isset($errors['database'])){?>
-					<div class="erroritem">There was an error with your MySQL settings: 
-						<?php if(isset($errors['databaseversion'])){ ?>
-						MySQL version should be 5 or greater. <?php } ?>
-						<?php if(isset($errors['databaseserver'])){?>
-						Unable to reach server. <?php }?>
-						<?php if(isset($errors['databaselogin'])){?>
-						Login failed<?php }?>
-						<?php if(isset($errors['databasedb'])){?>
-						Unable to access database.<?php } ?>
-						<?php if(isset($errors['databaseperms'])){?>
-						Check user permissions.  Unable to create tables.<?php }?>
+					<div class="erroritem"><?php echo $lang["setup-mysqlerror"];?>
+						<?php if(isset($errors['databaseversion'])) 
+							echo $lang["setup-mysqlerrorversion"]; 
+						if(isset($errors['databaseserver']))
+							echo $lang["setup-mysqlerrorserver"]; 
+						if(isset($errors['databaselogin']))
+							echo $lang["setup-mysqlerrorlogin"];
+						if(isset($errors['databasedb']))
+							echo $lang["setup-mysqlerrordbase"];
+						if(isset($errors['databaseperms']))
+							echo $lang["setup-mysqlerrorperms"]; ?>
 						
 						<p><?php echo $errors['database'];?></p>
 					</div>
 				<?php } ?>
 						
 				<div class="configitem">
-					<label for="mysqlserver">MySQL Server:</label><input class="mysqlconn" type="text" id="mysqlserver" name="mysql_server" value="<?php echo $mysql_server;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-server">?</a>
-					<p class="iteminfo" id="if-mysql-server">The IP address or <abbr title="Fully Qualified Domain Name">FQDN</abbr> of your MySQL server installation.  If MySql is installed on the same server as your web server, use 'localhost'.</p>
+					<label for="mysqlserver"><?php echo $lang["setup-mysqlserver"];?></label><input class="mysqlconn" type="text" id="mysqlserver" name="mysql_server" value="<?php echo $mysql_server;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-server">?</a>
+					<p class="iteminfo" id="if-mysql-server">;<?php echo $lang["setup-if_mysqlserver"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="mysqlusername">MySQL Username:</label><input class="mysqlconn" type="text" id="mysqlusername" name="mysql_username" value="<?php echo $mysql_username;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-username">?</a>
-					<p class="iteminfo" id="if-mysql-username">The username used to connect to your MySQL server.  This user must have rights to create tables in the database named below.</p>		
+					<label for="mysqlusername"><?php echo $lang["setup-mysqlusername"];?></label><input class="mysqlconn" type="text" id="mysqlusername" name="mysql_username" value="<?php echo $mysql_username;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-username">?</a>
+					<p class="iteminfo" id="if-mysql-username"><?php echo $lang["setup-if_mysqlusername"];?></p>		
 				</div>
 				<div class="configitem">
-					<label for="mysqlpassword">MySQL Password:</label><input class="mysqlconn" type="password" id="mysqlpassword" name="mysql_password" value="<?php echo $mysql_password;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-password">?</a>
-					<p class="iteminfo" id="if-mysql-password">The password for the MySQL username entered above</p>
+					<label for="mysqlpassword"><?php echo $lang["setup-mysqlpassword"];?></label><input class="mysqlconn" type="password" id="mysqlpassword" name="mysql_password" value="<?php echo $mysql_password;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-password">?</a>
+					<p class="iteminfo" id="if-mysql-password"><?php echo $lang["setup-if_mysqlpassword"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="mysqldb">MySQL Database:</label><input id="mysqldb" class="mysqlconn" type="text" name="mysql_db" value="<?php echo $mysql_db;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-db">?</a>
-					<p class="iteminfo" id="if-mysql-db">The Name of the MySQL database RS will use. (This database must exist.)</p>
+					<label for="mysqldb"><?php echo $lang["setup-mysqldb"];?></label><input id="mysqldb" class="mysqlconn" type="text" name="mysql_db" value="<?php echo $mysql_db;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-db">?</a>
+					<p class="iteminfo" id="if-mysql-db">;<?php echo $lang["setup-if_mysqldb"];?></p>
 				</div>
 				
 				<div class="configitem">
 					<?php if(isset($errors['mysqlbinpath'])){?>
-						<div class="erroritem">Unable to verify path.  Leave blank to disable</div>
+						<div class="erroritem"><?php echo $lang["setup-err_mysqlbinpath"];?></div>
 					<?php } ?>
-					<label for="mysqlbinpath">MySQL Binary Path:</label><input id="mysqlbinpath" type="text" name="mysql_bin_path" value="<?php echo $mysql_bin_path;?>"/><a class="iflink" href="#if-mysql-bin-path">?</a>
-					<p class="iteminfo" id="if-mysql-bin-path">The path to the MySQL client binaries - e.g. mysqldump. NOTE: This is only needed if you plan to use the export tool.</p>
+					<label for="mysqlbinpath"><?php echo $lang["setup-mysqlbinpath"];?></label><input id="mysqlbinpath" type="text" name="mysql_bin_path" value="<?php echo $mysql_bin_path;?>"/><a class="iflink" href="#if-mysql-bin-path">?</a>
+					<p class="iteminfo" id="if-mysql-bin-path"><?php echo $lang["setup-if_mysqlbinpath"];?></p>
 				</div>
 			</p>
 			<p class="configsection">
-				<h2>General Settings</h2>
+				<h2><?php echo $lang["setup-generalsettings"];?></h2>
+				<div class="configitem">
+					<label for="applicationname"><?php echo $lang["setup-applicationname"];?></label><input id="applicationname" type="text" name="applicationname" value="<?php echo $applicationname;?>"/><a class="iflink" href="#if-applicationname">?</a>
+					<p class="iteminfo" id="if-applicationname"><?php echo $lang["setup-if_applicationname"];?></p>
+				</div>
 				<div class="configitem">
 					<?php if(isset($errors['baseurl'])){?>
-						<div class="erroritem">Base URL is a required field.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_baseurl"];?></div>
 					<?php } ?>
 					<?php if(isset($warnings['baseurlverify'])){?>
-						<div class="warnitem">Base URL does not seem to be correct (could not load license.txt).</div>
+						<div class="warnitem"><?php echo $lang["setup-err_baseurlverify"];?></div>
 					<?php } ?>
-					<label for="baseurl">Base URL:</label><input id="baseurl" type="text" name="baseurl" value="<?php echo $baseurl;?>"/><strong>*</strong><a class="iflink" href="#if-baseurl">?</a>
-					<p class="iteminfo" id="if-baseurl">The 'base' web address for this installation.  NOTE: No trailing slash.</p>
+					<label for="baseurl"><?php echo $lang["setup-baseurl"];?></label><input id="baseurl" type="text" name="baseurl" value="<?php echo $baseurl;?>"/><strong>*</strong><a class="iflink" href="#if-baseurl">?</a>
+					<p class="iteminfo" id="if-baseurl"><?php echo $lang["setup-if_baseurl"];?></p>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['email_from'])){?>
-						<div class="erroritem">Not a valid email address.</div>
+						<div class="erroritem"><?php echo $lang["setup-emailerr"];?></div>
 					<?php } ?>
-					<label for="emailfrom">Email From Address:</label><input id="emailfrom" type="text" name="email_from" value="<?php echo $email_from;?>"/><a class="iflink" href="#if-emailfrom">?</a>
-					<p id="if-emailfrom" class="iteminfo">The address that emails from RS appear to come from</p>
+					<label for="emailfrom"><?php echo $lang["setup-emailfrom"];?></label><input id="emailfrom" type="text" name="email_from" value="<?php echo $email_from;?>"/><a class="iflink" href="#if-emailfrom">?</a>
+					<p id="if-emailfrom" class="iteminfo"><?php echo $lang["setup-if_emailfrom"];?></p>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['email_notify'])){?>
-						<div class="erroritem">Not a valid email address.</div>
+						<div class="erroritem"><?php echo $lang["setup-emailerr"];?></div>
 					<?php } ?>
-					<label for="emailnotify">Email Notify:</label><input id="emailnotify" type="text" name="email_notify" value="<?php echo $email_notify;?>"/><a class="iflink" href="#if-emailnotify">?</a>
-					<p id="if-emailnotify" class="iteminfo">The email address to which resource/user/research requests are sent.</p>
+					<label for="emailnotify"><?php echo $lang["setup-emailnotify"];?></label><input id="emailnotify" type="text" name="email_notify" value="<?php echo $email_notify;?>"/><a class="iflink" href="#if-emailnotify">?</a>
+					<p id="if-emailnotify" class="iteminfo"><?php echo $lang["setup-if_emailnotify"];?></p>
 				</div>
 				<div class="configitem">
 				<?php if(isset($errors['spider_password'])){?>
-						<div class="erroritem">The spider password is a required field.</div>
+						<div class="erroritem"><?php echo $lang["setup-if_spiderpassword"];?></div>
 					<?php } ?>
-					<label for="spiderpassword">Spider Password:</label><input id="spiderpassword" type="text" name="spider_password" value="<?php echo $spider_password;?>"/><strong>*</strong><a class="iflink" href="#if-spiderpassword">?</a>
-					<p id="if-spiderpassword" class="iteminfo">The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
+					<label for="spiderpassword"><?php echo $lang["setup-spiderpassword"];?></label><input id="spiderpassword" type="text" name="spider_password" value="<?php echo $spider_password;?>"/><strong>*</strong><a class="iflink" href="#if-spiderpassword">?</a>
+					<p id="if-spiderpassword" class="iteminfo"><?php echo $lang["setup-err_spiderpassword"];?></p>
 				</div>
 				<div class="configitem">
 					<?php if(isset($warnings['scramble_key'])){?>
-						<div class="warnitem">If this is a public installation, setting the scramble key is recommended.</div>
+						<div class="warnitem"><?php echo $lang["setup-err_scramblekey"];?></div>
 					<?php } ?>
-					<label for="scramblekey">Scramble Key:</label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><a class="iflink" href="#if-scramblekey">?</a>
-					<p id="if-scramblekey" class="iteminfo">To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable resource path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.</p>
+					<label for="scramblekey"><?php echo $lang["setup-scramblekey"];?></label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><a class="iflink" href="#if-scramblekey">?</a>
+					<p id="if-scramblekey" class="iteminfo"><?php echo $lang["setup-if_scramblekey"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="secure">Secure (https) mode:</label><input id="secure" type="checkbox" name="secure" value="true" <?php echo ($secure==true?'checked="checked"':'');?>/><a class="iflink" href="#if-secure">?</a>
-					<p id="if-secure" class="iteminfo">If checked, RS will use https.</p>
+					<label for="secure"><?php echo $lang["setup-secure"];?></label><input id="secure" type="checkbox" name="secure" value="true" <?php echo ($secure==true?'checked="checked"':'');?>/><a class="iflink" href="#if-secure">?</a>
+					<p id="if-secure" class="iteminfo"><?php echo $lang["setup-if_secure"];?></p>
 				</div>
 			</p>
 			<p class="configsection">
-				<h2>Paths</h2>
-				<p>For each path, enter the path without a trailing slash to each binary.  To disable a binary, leave the path blank.  Any auto-detected paths have already been filled in.</p>
+				<h2><?php echo $lang["setup-paths"];?></h2>
+				<p><?php echo $lang["setup-pathsdetail"];?></p>
 				<div class="configitem">
 					<?php if(isset($errors['imagemagick_path'])){?>
-						<div class="erroritem">Unable to verify location of 'convert'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'convert'.</div>
 					<?php } ?>
 					<label for="imagemagickpath">Imagemagick Path:</label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo $imagemagick_path ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ghostscript_path'])){?>
-						<div class="erroritem">Unable to verify location of 'gs'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'gs'.</div>
 					<?php } ?>
 					<label for="ghostscriptpath">Ghostscript Path:</label><input id="ghostscriptpath" type="text" name="ghostscript_path" value="<?php echo $ghostscript_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ffmpeg_path'])){?>
-						<div class="erroritem">Unable to verify location of 'ffmpeg'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'ffmpeg'.</div>
 					<?php } ?>
 					<label for="ffmpegpath">FFMpeg Path:</label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo $ffmpeg_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['exiftool_path'])){?>
-						<div class="erroritem">Unable to verify location of 'exiftool'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'exiftool'.</div>
 					<?php } ?>
 					<label for="exiftoolpath">Exiftool Path:</label><input id="exiftoolpath" type="text" name="exiftool_path" value="<?php echo $exiftool_path; ?>"/>
 				</div>
 				<div class="configitem">
 				<?php if(isset($errors['antiword_path'])){?>
-						<div class="erroritem">Unable to verify location of 'AntiWord'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'AntiWord'.</div>
 					<?php } ?>
 					<label for="antiwordpath">AntiWord Path:</label><input id="antiwordpath" type="text" name="antiword_path" value="<?php echo $antiword_path; ?>"/>
 				</div>
 				
 				<div class="configitem">
 					<?php if(isset($errors['pdftotext_path'])){?>
-						<div class="erroritem">Unable to verify location of 'pdftotext'.</div>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'pdftotext'.</div>
 					<?php } ?>
 					<label for="pdftotextpath">PDFtotext Path:</label><input id="pdftotextpath" type="text" name="pdftotext_path" value="<?php echo $pdftotext_path; ?>"/>
 				</div>
 			</p>
-			<p>NOTE: The only <strong>required</strong> settings are on this page.  If you're not interested in checking out the advanced options, you may click below to begin the installation process</p>
+			<p><?php echo $lang["setup-basicsettingsfooter"];?></p>
 		</div>
 		<div class="tabs" id="tab-2">
 			<h1>Advanced Settings</h2>
 			<h2>General Options</h2>
 			<div class="advsection" id="generaloptions">
 				<div class="configitem">
-					<label for="applicationname">Application Name: </label><input id="applicationname" type="text" name="applicationname" value="<?php echo $applicationname;?>"/><a class="iflink" href="#if-applicationname">?</a>
-					<p class="iteminfo" id="if-applicationname">The name of your implementation / installation (e.g. 'MyCompany Resource System')</p>
-				</div>
-				<div class="configitem">
 					<label for="allow_password_change">Allow password change? </label><input id="allow_password_change" type="checkbox" name="allow_password_change" <?php echo ($allow_password_change==true?'checked':'');?>/><a class="iflink" href="#if-allow_password_change">?</a>
-					<p class="iteminfo" id="if-allow_password_change">Allow end users to change their passwords</p>
+					<p class="iteminfo" id="if-allow_password_change">Allow end users to change their passwods</p>
 				</div>
 				<div class="configitem">
 					<label for="allow_account_request">Allow users to request accounts? </label><input id="allow_account_request" type="checkbox" name="allow_account_request" <?php echo ($allow_account_request==true?'checked':'');?>/>
@@ -814,24 +841,7 @@ else{
 					</div>
 				</div>
 			</div>
-			<h2>Language Support</h2>
-			<div class="advsection" id="languages">
-				<div class="configitem">
-					<label for="defaultlanguage">Default Language:</label><select id="defaultlanguage" name="defaultlanguage">
-						<?php
-							foreach($languages as $code => $text){
-								echo "<option value=\"$code\"";
-								if ($code == $defaultlanguage)
-									echo ' selected';
-								echo ">$text</option>";
-							}
-						?>
-					</select>
-				</div>
-				<div class="configitem">
-					<label for="disable_languages">Disable language selection?</label><input id="disable_languages" name="disable_languages" type="checkbox"/>
-				</div>
-			</div>
+			
 			<h2>FTP Settings</h2>
 			<div class="advsection" id="ftpsettings">
 				<div class="configitem">
