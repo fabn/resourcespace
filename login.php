@@ -155,7 +155,7 @@ include "include/header.php";
   <a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
   <?php if ($error!="") { ?><div class="FormIncorrect"><?php echo $error?></div><?php } ?>
   <form id="form1" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
-  <input type=hidden name=url value="<?php echo htmlspecialchars($url)?>">
+  <input type="hidden" name="url" value="<?php echo htmlspecialchars($url)?>">
 		<div class="Question">
 			<label for="name"><?php echo $lang["username"]?> </label>
 			<input type="text" name="username" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
@@ -164,7 +164,7 @@ include "include/header.php";
 		
 		<div class="Question">
 			<label for="pass"><?php echo $lang["password"]?> </label>
-			<input type="password" name="password" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
+			<input type="password" name="password" id="password" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
 			<div class="clearerleft"> </div>
 		</div>
 <?php if ($disable_languages==false) { ?>	
@@ -182,7 +182,7 @@ include "include/header.php";
 		<?php if ($allow_keep_logged_in) { ?>
 		<div class="Question">
 			<label for="remember"><?php echo $lang["keepmeloggedin"]?></label>
-			<input valign=bottom name="remember" id="remember" type="checkbox" value="yes" checked>
+			<input name="remember" id="remember" type="checkbox" value="yes" checked="checked">
 			<div class="clearerleft"> </div>
 		</div>
 		<?php } ?>
