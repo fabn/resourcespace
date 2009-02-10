@@ -182,7 +182,7 @@ include "include/header.php";
 		<?php if ($allow_keep_logged_in) { ?>
 		<div class="Question">
 			<label for="remember"><?php echo $lang["keepmeloggedin"]?></label>
-			<input name="remember" id="remember" type="checkbox" value="yes" checked="checked">
+			<input style="margin-top: 0.5em;" name="remember" id="remember" type="checkbox" value="yes" checked="checked">
 			<div class="clearerleft"> </div>
 		</div>
 		<?php } ?>
