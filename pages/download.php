@@ -105,7 +105,8 @@ if ($noattach=="")
 		}
 	
 	# We use quotes around the filename to handle filenames with spaces.
-	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
+	#header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
+	header('Content-Disposition: attachment; filename=' . $filename);
 	}
 
 # We assign a default mime-type, in case we can find the one associated to the file extension.
@@ -117,9 +118,12 @@ $mime="application/octet-stream";
 #
 # Note : Videos... we should re-encode to a single type for video previews at some point (flash file?)
 # For now, support the basic types as direct in-browser previews of the source file. DH 20071117
-if (isset($mime_type_by_extension[$ext]))
+if ($noattach!="")
 	{
-	$mime = $mime_type_by_extension[$ext];
+	if (isset($mime_type_by_extension[$ext]))
+		{
+		$mime = $mime_type_by_extension[$ext];
+		}
 	}
 
 # We declare the downloaded content mime type.
