@@ -8,8 +8,6 @@ $ref=getvalescaped("ref","");
 $status="";
 
 $maxsize="200000000"; #200MB
-#ini_set("upload_max_filesize","200M");
-#echo "Max size = " . ini_get("upload_max_filesize");
 
 #handle posts
 if (array_key_exists("userfile",$_FILES))

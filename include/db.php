@@ -5,9 +5,6 @@
 #
 # Dan Huby (dan@montala.net) for Oxfam, April 2006
 
-# Set larger time limit
-set_time_limit(120);
-
 # ensure no caching (dynamic site)
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
@@ -55,6 +52,9 @@ if (file_exists(dirname(__FILE__)."/config.default.php")) {include "config.defau
 # Load the real config
 if (!file_exists(dirname(__FILE__)."/config.php")) {header ("Location: pages/setup.php" );die(0);}
 include "config.php";
+
+# Set time limit
+set_time_limit($php_time_limit);
 
 # Set the storage directory and URL if not already set.
 if (!isset($storagedir)) {$storagedir=dirname(__FILE__)."/../filestore";}

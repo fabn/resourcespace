@@ -572,6 +572,10 @@ $mime_type_by_extension = array(
     'png'   => 'image/png',
   );
 
+# PHP execution time limit
+# Default is 5 minutes.
+$php_time_limit=300;
+
 
 #
 # ------------------------- Development Items -------------------------
