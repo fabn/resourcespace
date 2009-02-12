@@ -695,17 +695,31 @@ function email_user_request()
 	if (isset($custom_registration_fields))
 		{
 		$custom=explode(",",$custom_registration_fields);
+	
+		# Required fields?
+		if (isset($custom_registration_required)) {$required=explode(",",$custom_registration_required);}
+	
 		for ($n=0;$n<count($custom);$n++)
 			{
+			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
+				{
+				return false; # Required field was not set.
+				}
+			
 			$c.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
 			}
 		}
 
+	# Required fields (name, email) not set?
+	if (getval("name","")=="") {return false;}
+	if (getval("email","")=="") {return false;}
+	
 	# Build a message
 	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification2"] . "\n$baseurl";
 	
 	
 	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message);
+	return true;
 	}
 
 function get_active_users()

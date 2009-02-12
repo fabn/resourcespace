@@ -2,10 +2,17 @@
 include "../include/db.php";
 include "../include/general.php";
 
-if ((getval("save","")!="") && (getval("name","")!=""))
+$errors=false;
+if (getval("save","")!="")
 	{
-	email_user_request();
-	redirect("pages/done.php?text=user_request");
+	if (email_user_request())
+		{
+		redirect("pages/done.php?text=user_request");
+		}
+	else
+		{
+		$errors=true;
+		}
 	}
 include "../include/header.php";
 ?>
@@ -16,13 +23,13 @@ include "../include/header.php";
 <form method="post">  
 <div class="Question">
 <label for="name"><?php echo $lang["yourname"]?></label>
-<input type=text name="name" id="name" class="stdwidth">
+<input type=text name="name" id="name" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("name",""))?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
 <label for="email"><?php echo $lang["youremailaddress"]?></label>
-<input type=text name="email" id="email" class="stdwidth">
+<input type=text name="email" id="email" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("email",""))?>">
 <div class="clearerleft"> </div>
 </div>
 
@@ -35,7 +42,7 @@ if (isset($custom_registration_fields))
 		?>
 		<div class="Question">
 		<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?></label>
-		<input type=text name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth">
+		<input type=text name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?>">
 		<div class="clearerleft"> </div>
 		</div>
 		<?php
@@ -46,11 +53,12 @@ if (isset($custom_registration_fields))
 
 <div class="Question">
 <label for="email"><?php echo $lang["userrequestcomment"]?></label>
-<textarea name="userrequestcomment" id="userrequestcomment" class="stdwidth"></textarea>
+<textarea name="userrequestcomment" id="userrequestcomment" class="stdwidth"><?php echo htmlspecialchars(getvalescaped("userrequestcomment",""))?></textarea>
 <div class="clearerleft"> </div>
 </div>	
 
 <div class="QuestionSubmit">
+<?php if ($errors) { ?><div class="FormError">!! <?php echo $lang["requiredfields"] ?> !!</div><?php } ?>
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
