@@ -62,7 +62,7 @@ if (!isset($storageurl)) {$storageurl=$baseurl."/filestore";}
 # *** CONNECT TO DATABASE ***
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
-mysql_set_charset($mysql_charset);
+#mysql_set_charset($mysql_charset);
 set_magic_quotes_runtime(0);
 
 # statistics
