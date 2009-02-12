@@ -32,9 +32,13 @@ if ($submitted != "")
 		$ref=$result[$n]["ref"];
 		# Load access level
 		$access=$result[$n]["access"];
-		if (checkperm("v") || ($k!=""))
+		if (checkperm("v"))
 			{
 			$access=0; # Permission to access all resources
+			}
+		elseif (!checkperm("g"))
+			{
+			$access=1;
 			}
 		else
 			{
@@ -46,16 +50,21 @@ if ($submitted != "")
 			}
 			
 		# Only download resources with proper access level
-		if ($access==0)
+		if ($access==0 || $access=1)
 			{
+			if ($access==1) {$size="scr";}
 			$pextension = $size == '' ? $result[$n]["file_extension"] : 'jpg';
 			$p=get_resource_path($ref,true,$size,false,$pextension);
+			$usesize=$size;
 			if (!file_exists($p))
 				{
 				# If the file doesn't exist for this size, then the original file must be in the requested size.
 				# Try again with the size omitted to get the original.
 				$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
+				$usesize="";
 				}
+		
+			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if (file_exists($p))
 				{
 				# when writing metadata, we take an extra security measure by copying the files to tmp
@@ -169,10 +178,39 @@ include "../include/header.php";
 <div class="Question">
 <label for="downloadsize"><?php echo $lang["downloadsize"]?></label>
 <div class="tickset">
-<select name="size" class="shrtwidth" id="downloadsize">
 <?php
-$sizes=get_all_image_sizes();
-$sizes[]=array("id" => "", "name" => $lang["collection_download_original"]);
+
+# Work out the maximum access level the user has to the resources in the collection
+# If this is 'restricted' then we must restrict the download sizes available.
+$result=do_search("!collection" . $collection);
+$maxaccess=2;
+for ($n=0;$n<count($result);$n++)
+	{
+	$ref=$result[$n]["ref"];
+	# Load access level
+	$access=$result[$n]["access"];
+	if (checkperm("v"))
+		{
+		$access=0; # Permission to access all resources
+		}
+	elseif (!checkperm("g"))
+		{
+		$access=1;
+		}
+	else
+		{
+		if ($access==3)
+			{
+			# Load custom access level
+			$access=get_custom_access($ref,$usergroup);
+			}
+		}
+	if ($access<$maxaccess) {$maxaccess=$access;}
+	}
+
+$sizes=get_all_image_sizes(false,$maxaccess>=1);
+?><select name="size" class="shrtwidth" id="downloadsize">
+<?php
 for ($n=0;$n<count($sizes);$n++)
 	{
 	?><option value="<?php echo $sizes[$n]["id"]?>"><?php echo i18n_get_translated($sizes[$n]["name"])?></option><?php

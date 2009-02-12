@@ -230,7 +230,7 @@ if ($k!="")
 	<?php echo $lang["created"] . " " . nicedate($tempcol["created"])?><br />
   	<?php echo count($result) . " " . $lang["youfoundresources"]?><br />
   	<?php if (isset($zipcommand)) { ?>
-	<a href="collection_download.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+	<a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
 </div>
@@ -294,7 +294,7 @@ if ($k!="")
     <?php } ?>
     
    	<?php if (isset($zipcommand)) { ?>
-    <li><a target="main" href="collection_download.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["zipall"]?></a></li>
+    <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["zipall"]?></a></li>
 	<?php } ?>
     <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a></li>
   </ul>
@@ -426,7 +426,7 @@ else
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
     <?php } ?>
    	<?php if (isset($zipcommand)) { ?>
-    <li><a target="main" href="collection_download.php?collection=<?php echo $usercollection?>"><?php echo $lang["zipall"]?></a></li>
+    <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["zipall"]?></a></li>
 	<?php } ?>
     
     <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>

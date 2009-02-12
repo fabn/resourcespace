@@ -1157,10 +1157,16 @@ function pager($break=true)
    	<?php
 	}
 	
-function get_all_image_sizes($internal=false)
+function get_all_image_sizes($internal=false,$restricted=false)
 	{
 	# Returns all image sizes available.
-	return sql_query("select * from preview_size " . (($internal)?"":"where internal!=1") . " order by width asc");
+	return sql_query("select * from preview_size " . (($internal)?"":"where internal!=1") . (($restricted)?" and allow_restricted=1":"") . " order by width asc");
+	}
+	
+function image_size_restricted_access($id)
+	{
+	# Returns true if the indicated size is allowed for a restricted user.
+	return sql_value("select allow_restricted value from preview_size where id='$id'",false);
 	}
 	
 function get_user_log($user)
