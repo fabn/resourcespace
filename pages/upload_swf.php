@@ -9,6 +9,15 @@ $status="";
 
 $collection_add=getvalescaped("collection_add","");
 
+# Create a new collection?
+if ($collection_add==-1)
+	{
+	# The user has chosen Create New Collection from the dropdown.
+	$collection_add=create_collection($userref,$lang["upload"] . " " . date("ymdHis"));
+	set_user_collection($userref,$collection_add);
+	refresh_collection_frame($collection_add);
+	}
+
 #handle posts
 if (array_key_exists("Filedata",$_FILES))
     {
@@ -65,9 +74,9 @@ if (array_key_exists("Filedata",$_FILES))
 		}
     }
     
-$headerinsert="
-<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?<?php echo $css_reload_key?>\"></script>
-<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?<?php echo $css_reload_key?>\"></script>
+$headerinsert.="
+<script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?" . $css_reload_key . "\"></script>
+<script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?" . $css_reload_key . "\"></script>
 ";
 
 include "../include/header.php";
@@ -186,7 +195,7 @@ window.onload =  function()
 				file_dialog_complete_handler : fileDialogComplete,
 				upload_progress_handler : uploadProgress,
 				upload_error_handler : uploadError,
-				upload_success_handler : uploadSuccess,
+				upload_success_handler : uploadSuccessWrapper,
 				upload_complete_handler : uploadComplete,
 				
 				button_placeholder_id : "btnBrowse",
@@ -210,6 +219,18 @@ window.onload =  function()
 
 
 	};
+
+function uploadSuccessWrapper(file,server)
+	{
+	<?php if ($usercollection==$collection_add) { ?>
+	top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?nc=<?php echo time() ?>";
+	<?php } ?>
+	uploadSuccess(file,server);
+	}
+function debug()
+	{
+	// SWF needs this here for some reason.
+	}
 
 </script>
 

@@ -270,6 +270,7 @@ if ($enable_add_collection_on_upload)
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
 	<select name="collection_add" id="collection_add" class="stdwidth">
 	<option value=""><?php echo $lang["batchdonotaddcollection"]?></option>
+	<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 	<?php
 	$list=get_user_collections($userref);
 	$currentfound=false;
