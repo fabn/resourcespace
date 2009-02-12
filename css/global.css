@@ -352,6 +352,8 @@ div.autocomplete ul li {
 
 #overlay{ position: absolute; top: 0; left: 0; z-index: 90; width: 100%; height: 500px; background-color: #000; }
 
+.FormHelp{margin: 0px 0px 10px 150px;padding: 0;}
+.FormHelpInner{background-color:#ffffff;border:1px solid #000000;    border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;width:360px;padding:5px;margin:10px 0 0 0;color:black;}
 
 
 

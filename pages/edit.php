@@ -160,6 +160,25 @@ if (getval("refreshcollectionframe","")!="")
 
 include "../include/header.php";
 ?>
+<script type="text/javascript">
+function ShowHelp(field)
+	{
+	// Show the help box if available.
+	if (document.getElementById('help_' + field))
+		{
+		Effect.Appear('help_' + field, { duration: 0.5 });
+		}
+	}
+function HideHelp(field)
+	{
+	// Hide the help box if available.
+	if (document.getElementById('help_' + field))
+		{
+		document.getElementById('help_' + field).style.display='none';
+		}
+	}
+</script>
+
 <div class="BasicsBox"> 
 
 <form method="post" id="mainform">
@@ -363,17 +382,20 @@ for ($n=0;$n<count($fields);$n++)
 	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <?php if ($fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
 	<?php
 
+	# Define some Javascript for help actions (applies to all fields)
+	$help_js="onBlur=\"HideHelp(" . $fields[$n]["ref"] . ");return false;\" onFocus=\"ShowHelp(" . $fields[$n]["ref"] . ");return false;\"";
+
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Plain text entry
-		?><input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>"><?php
+		?><input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>" <?php echo $help_js; ?>><?php
 		break;
 	
 		case 1: # -------- Text area entry
-		?><textarea class="stdwidth" rows=6 cols=50 name="<?php echo $name?>" id="<?php echo $name?>"><?php echo htmlspecialchars($value)?></textarea><?php
+		?><textarea class="stdwidth" rows=6 cols=50 name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php echo htmlspecialchars($value)?></textarea><?php
 		break;
 		
 		case 5: # -------- Larger text area entry
-		?><textarea class="stdwidth" rows=20 cols=80 name="<?php echo $name?>" id="<?php echo $name?>"><?php echo htmlspecialchars($value)?></textarea><?php
+		?><textarea class="stdwidth" rows=20 cols=80 name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php echo htmlspecialchars($value)?></textarea><?php
 		break;
 		
 		case 2: # -------- Check box list
@@ -403,7 +425,7 @@ for ($n=0;$n<count($fields);$n++)
 
 		case 3: # -------- Drop down list
 		$options=explode(",",$fields[$n]["options"]);
-		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>"><?php
+		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php
 		for ($m=0;$m<count($options);$m++)
 			{
 			?>
@@ -457,6 +479,15 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			?>
 			<div class="FormError">!! <?php echo $errors[$fields[$n]["ref"]]?> !!</div>
+			<?php
+			}
+
+		if (trim($fields[$n]["help_text"]!=""))
+			{
+			# Show inline help for this field.
+			# For certain field types that have no obvious focus, the help always appears.
+			?>
+			<div class="FormHelp" style="padding:0;<?php if (!in_array($fields[$n]["type"],array(2,6,7))) { ?> display:none;<?php } ?>" id="help_<?php echo $fields[$n]["ref"]?>"><div class="FormHelpInner"><?php echo nl2br(trim(htmlspecialchars(i18n_get_translated($fields[$n]["help_text"]))))?></div></div>
 			<?php
 			}
 

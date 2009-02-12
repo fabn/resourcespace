@@ -153,7 +153,7 @@ function get_resource_field_data($ref,$multi=false)
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
 	$return=array();
-	$fields=sql_query("select *,f.required frequired,f.ref fref from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.resource_type,f.order_by,f.ref");
+	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.resource_type,f.order_by,f.ref");
 	
 	# Build an array of valid types and only return fields of this type.
 	$validtypes=sql_array("select ref value from resource_type");
