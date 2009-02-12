@@ -134,6 +134,9 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	{
 	# Include the Flash player if an FLV file exists for this resource.
 	include "flv_play.php";
+	
+	# If configured, and if the resource itself is not an FLV file (in which case the FLV can already be downloaded), then allow the FLV file to be downloaded.
+	if ($flv_preview_downloadable && $resource["file_extension"]!="flv") {$flv_download=true;}
 	}
 elseif ($resource["has_image"]==1)
 	{
@@ -289,6 +292,18 @@ if ($nodownloads || $counter==0)
 	<td><h2><?php echo ($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
 	<td>N/A</td>
 	<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+	</tr>
+	<?php
+	}
+	
+if (isset($flv_download) && $flv_download)
+	{
+	# Allow the FLV preview to be downloaded. $flv_download is set when showing the FLV preview video above.
+	?>
+	<tr class="DownloadDBlend">
+	<td><h2>FLV <?php echo $lang["file"]?></h2></td>
+	<td><?php echo formatfilesize(filesize($flvfile))?></td>
+	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=flv&size=pre&k=" . $k)?>">Download</a></td>
 	</tr>
 	<?php
 	}

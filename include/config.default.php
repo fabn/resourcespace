@@ -576,6 +576,8 @@ $mime_type_by_extension = array(
 # Default is 5 minutes.
 $php_time_limit=300;
 
+# Should the automatically produced FLV file be available as a separate download?
+$flv_preview_downloadable=false;
 
 #
 # ------------------------- Development Items -------------------------
