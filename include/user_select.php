@@ -2,12 +2,16 @@
 
 # AJAX user selection.
 
+global $default_user_select;
+if (!isset($userstring)) {$userstring="";}
+if ($userstring=="") {$userstring=$default_user_select;}
+
 ?>
 <table cellpadding="0" cellspacing="0" width="300">
 <tr><td><input type="text" class="stdwidth" style="width:245px;" value="<?php echo $lang["starttypingusername"]?>" id="autocomplete" name="autocomplete_parameter" onClick="this.value='';" /></td>
 <td><input type=button value="+" style="width:48px;" onClick="addUser();" /></td></tr>
 <tr><td colspan="2" align="left"><textarea rows=6 class="stdwidth" style="width:300px;" name="users" id="users"
-onChange="this.value=this.value.replace(/[^,] /g,function replacespaces(str) {return str.substring(0,1) + ', ';});"><?php if (isset($userstring)) {echo $userstring;} ?></textarea></td></tr>
+onChange="this.value=this.value.replace(/[^,] /g,function replacespaces(str) {return str.substring(0,1) + ', ';});"><?php echo $userstring; ?></textarea></td></tr>
 </table>
 
 

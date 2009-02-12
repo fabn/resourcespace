@@ -581,6 +581,9 @@ $php_time_limit=300;
 # Should the automatically produced FLV file be available as a separate download?
 $flv_preview_downloadable=false;
 
+# What is the default value for the user select box, for example when e-mailing resources?
+$default_user_select="";
+
 #
 # ------------------------- Development Items -------------------------
 #
