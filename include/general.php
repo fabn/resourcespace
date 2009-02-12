@@ -688,7 +688,7 @@ function newlines($text)
 function email_user_request()
 	{
 	# E-mails the submitted user request form to the team.
-	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields;
+	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required;
 	
 	# Add custom fields
 	$c="";
