@@ -12,12 +12,13 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");  // always modifi
 header("Cache-Control: max-age=0");  // HTTP/1.1
 
 
-if (!function_exists('mysql_set_charset')) {
-  function mysql_set_charset($charset)
-  {
-    return sql_query(sprintf("SET NAMES '%s'", $charset));
-  }
-}
+if (!function_exists('mysql_set_charset'))
+	{
+	function mysql_set_charset($charset)
+		{
+		return sql_query(sprintf("SET NAMES '%s'", $charset));
+		}
+	}
 
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
@@ -62,7 +63,17 @@ if (!isset($storageurl)) {$storageurl=$baseurl."/filestore";}
 # *** CONNECT TO DATABASE ***
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
-#mysql_set_charset($mysql_charset);
+
+// If $mysql_charset is defined, we use it
+// else, we use the default charset for mysql connection.
+if(isset($mysql_charset))
+	{
+	if($mysql_charset)
+		{
+		mysql_set_charset($mysql_charset);
+		}
+	}
+
 set_magic_quotes_runtime(0);
 
 # statistics

@@ -91,7 +91,15 @@ if (!mysql_ping())
 	{
 	mysql_connect($mysql_server,$mysql_username,$mysql_password,true);
 	mysql_select_db($mysql_db);
-	mysql_set_charset($mysql_charset);
+	// If $mysql_charset is defined, we use it
+	// else, we use the default charset for mysql connection.
+	if(isset($mysql_charset))
+		{
+		if($mysql_charset)
+			{
+			mysql_set_charset($mysql_charset);
+			}
+		}
 	}
 
 if (RUNNING_ASYNC)
