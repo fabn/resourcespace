@@ -59,12 +59,12 @@ include "../../include/header.php";
 <h1><?php echo $lang["selectfiles"]?></h1>
 <p><?php echo text("introtext")?></p>
 
-<form method=post action="team_batch_upload.php">
-<input type=hidden name="ftp_server" value="<?php echo getval("ftp_server","")?>">
-<input type=hidden name="ftp_username" value="<?php echo getval("ftp_username","")?>">
-<input type=hidden name="ftp_password" value="<?php echo getval("ftp_password","")?>">
-<input type=hidden name="ftp_folder" value="<?php echo getval("ftp_folder","")?>">
-<input type=hidden name="use_local" value="<?php echo getval("use_local","")?>">
+<form method="post" action="team_batch_upload.php">
+<input type="hidden" name="ftp_server" value="<?php echo getval("ftp_server","")?>">
+<input type="hidden" name="ftp_username" value="<?php echo getval("ftp_username","")?>">
+<input type="hidden" name="ftp_password" value="<?php echo getval("ftp_password","")?>">
+<input type="hidden" name="ftp_folder" value="<?php echo getval("ftp_folder","")?>">
+<input type="hidden" name="use_local" value="<?php echo getval("use_local","")?>">
 
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
