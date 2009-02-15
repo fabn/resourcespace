@@ -4,14 +4,32 @@ include "../../include/authenticate.php"; if (!checkperm("c")) {exit ("Permissio
 include "../../include/general.php";
 include "../../include/collections_functions.php";
 
-$use_local=getvalescaped("use_local","");if ($use_local!="") {$use_local=true;} else {$use_local=false;}
+$use_local = getvalescaped('use_local', '') !== '';
 
 if ($use_local)
 	{
 	# File list from local upload directory.
-	$folder=dirname(__FILE__)."/../../upload";
-	if ($groupuploadfolders) {$folder.="/" . $usergroup;}
-	if (!file_exists($folder)) {mkdir($folder,0777);}
+
+	# We compute the folder name from the upload folder option.
+	if(preg_match('/^(\/|[a-zA-Z]:[\\/]{1})/', $local_ftp_upload_folder)) // If the upload folder path start by a '/' or 'c:\', it is an absolute path.
+		{
+		$folder = $local_ftp_upload_folder;
+		}
+	else // It is a relative path.
+		{
+		$folder = sprintf('%s%s..%s..%s%s', dirname(__FILE__), DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $local_ftp_upload_folder);
+		}
+
+	if ($groupuploadfolders) // Test if we are using sub folders assigned to groups.
+		{
+		$folder.= DIRECTORY_SEPARATOR . $usergroup;
+		}
+
+	if (!file_exists($folder)) // If the upload folder does not exists, we try to create it.
+		{
+		mkdir($folder,0777);
+		}
+
 	$dh=opendir($folder);
 	$files=array();
 	while (($file = readdir($dh)) !== false)

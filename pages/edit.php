@@ -97,10 +97,15 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				}
 			else
 				{
-				if (getval("swf","")!="")
+				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
 					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add",""));}
+					}
+				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
+					{
+					# Save button pressed? Move to next step.
+					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes");}
 					}
 				else
 					{

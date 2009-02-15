@@ -598,5 +598,20 @@ $breadcrumbs=false;
 # the options. However, setting the below to true means that free text fields can also be multi-lingual. Several text boxes appear when entering data so that translations can be entered.
 $multilingual_text_fields=false;
 
+# Allow to selectively disable upload methods.
+# Controls are :
+# - single_upload            : Enable / disable "Add Single Resource".
+# - in_browser_upload        : Enable / disable "Add Resource Batch - In Browser".
+# - fetch_from_ftp           : Enable / disable "Add Resource Batch - Fetch from FTP server".
+# - fetch_from_local_folder  : Enable / disable "Add Resource Batch - Local upload".
+$upload_methods = array(
+		'single_upload' => true,
+		'in_browser_upload' => true,
+		'fetch_from_ftp' => true,
+		'fetch_from_local_folder' => true,
+	);
 
+# Allow to change the location of the upload folder, so that it is not in the
+# web visible path. Relative and abolute paths are allowed.
+$local_ftp_upload_folder = 'upload/';
 

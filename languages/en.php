@@ -493,7 +493,7 @@ $lang["warningexpiredtext"]="Warning! This resource has exceeded the expiry date
 $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
 $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (recommended)";
-$lang["addresourcebatchftp"]="Add Resource Batch - FTP";
+$lang["addresourcebatchftp"]="Add Resource Batch - Fetch from FTP server";
 $lang["replaceresourcebatch"]="Replace Resource Batch";
 $lang["editmode"]="Edit Mode";
 $lang["replacealltext"]="Replace All Text";
@@ -628,6 +628,7 @@ $lang["noattachedusers"]="No attached users.";
 $lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this collection.";
 $lang["noexternalsharing"]="No external sharing.";
 $lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
+$lang["addresourcebatchlocalfolder"]="Add Resource Batch - Fetch from local upload folder";
 # Setup Script
 $lang["setup-alreadyconfigured"]="Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
 $lang["setup-successheader"]="Congratulations!";
