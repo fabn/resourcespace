@@ -142,8 +142,11 @@ function get_resource_data($ref,$cache=true)
 			$resource=sql_query("select * from resource where ref='$ref'");
 			}
 		}
+
 	# update hit count
-	sql_query("update resource set hit_count=hit_count+1 where ref='$ref'");
+
+	# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
+	sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
 	$get_resource_data_cache[$ref]=$resource[0];
 	return $resource[0];
 	}
@@ -322,6 +325,10 @@ function copy_hitcount_to_live()
 	# Copy the temporary hit count used for relevance matching to the live column so it's activated (see comment for
 	# update_resource_keyword_hitcount())
 	sql_query("update resource_keyword set hit_count=new_hit_count");
+	
+	# Also update the resource table
+	# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability)
+	sql_query("update resource set hit_count=greatest(hit_count,new_hit_count)");
 	}
 	
 function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=true)
