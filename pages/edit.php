@@ -118,7 +118,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 			{
 			?>
 			<script type="text/javascript">
-			alert('<?php echo $lang["requiredfields"]?>');
+			alert('<?php echo addslashes($lang["requiredfields"]) ?>');
 			</script>
 			<?php
 			}
