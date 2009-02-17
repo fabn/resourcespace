@@ -61,7 +61,10 @@ function add_resource_to_collection($resource,$collection)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
+		
+		#log this
 		collection_log($collection,"a",$resource);
+		
 		# Check if this collection has already been shared externally. If it has, we must add a further entry
 		# for this specific resource, and warn the user that this has happened.
 		$keys=get_collection_external_access($collection);
@@ -93,6 +96,9 @@ function remove_resource_from_collection($resource,$collection)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("delete from external_access_keys where resource='$resource' and collection='$collection'");
+		
+		#log this
+		collection_log($collection,"r",$resource);
 		return true;
 		}
 	else
