@@ -19,6 +19,7 @@ include "../include/header.php";
 <td><?php echo $lang["date"]?></td>
 <td><?php echo $lang["user"]?></td>
 <td><?php echo $lang["action"]?></td>
+<td><?php echo $lang["resourceid"]?></td>
 <td><?php echo $lang["resourcetitle"]?></td>
 </tr>
 
@@ -32,6 +33,7 @@ for ($n=0;$n<count($log);$n++)
 	<td><?php echo $log[$n]["date"]?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
 	<td><?php echo $lang["collectionlog-" . $log[$n]["type"]]?></td>
+	<td><?php echo $log[$n]["resource"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
 	</tr>
 	<?php

@@ -691,6 +691,8 @@ $lang["setup-emailerr"]="Not a valid email address.";
 # Collection log - actions
 $lang["collectionlog"]="Collection Log";
 $lang["collectionlog-r"]="Removed resource";
+$lang["collectionlog-R"]="Removed all resources";
+$lang["collectionlog-D"]="Deleted all resources";
 $lang["collectionlog-a"]="Added resource";
-
+$lang["collectionlog-c"]="Added resource (copied)";
 ?>

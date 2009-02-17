@@ -241,6 +241,7 @@ function save_collection($ref)
 	if (getval("removeall","")!="")
 		{
 		sql_query("delete from collection_resource where collection='$ref'");
+		collection_log($ref,"R",0);
 		}
 		
 	# Delete all resources?
@@ -252,6 +253,7 @@ function save_collection($ref)
 			if (checkperm("e" . $resources[$n]["archive"]))
 				{
 				delete_resource($resources[$n]["ref"]);	
+				collection_log($ref,"D",$resources[$n]["ref"]);
 				}
 			}
 		}
@@ -657,6 +659,7 @@ function copy_collection($copied,$current,$remove_existing=false)
 		{
 		#delete all existing data in the current collection
 		sql_query("delete from collection_resource where collection='$current'");
+		collection_log($current,"R",0);
 		}
 	
 	#put all the copied collection records in
@@ -668,6 +671,7 @@ function copy_collection($copied,$current,$remove_existing=false)
 			{
 			sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
 			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','". escape_check($col_resource['comment'])."'," . (($col_resource['rating']!="")?"'".$col_resource['rating']."'":"null") . ")");
+			collection_log($current,"c",$col_resource['resource']);
 			}
 		}
 	}
@@ -741,6 +745,6 @@ function collection_log($collection,$type,$resource)
 
 function get_collection_log($collection)
 	{
-	return sql_query("select c.date,u.username,u.fullname,c.type,r.title from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
+	return sql_query("select c.date,u.username,u.fullname,c.type,r.title,c.resource from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
 	}
 ?>
