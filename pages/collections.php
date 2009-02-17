@@ -126,6 +126,8 @@ if ($remove!="")
 	if (remove_resource_from_collection($remove,$usercollection)==false)
 		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	hook("postremovefromcollection");
+	
+	#log this
 	collection_log($usercollection,"r",$remove);
 	}
 	

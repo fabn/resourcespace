@@ -61,7 +61,7 @@ function add_resource_to_collection($resource,$collection)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
-		
+		collection_log($collection,"a",$resource);
 		# Check if this collection has already been shared externally. If it has, we must add a further entry
 		# for this specific resource, and warn the user that this has happened.
 		$keys=get_collection_external_access($collection);
