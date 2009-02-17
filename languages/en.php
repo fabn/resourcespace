@@ -689,9 +689,8 @@ $lang["setup-err_path"]="Unable to verify location of";
 $lang["setup-emailerr"]="Not a valid email address.";
 
 # Collection log - actions
-$lang["collection"]="Collection";
 $lang["collectionlog"]="Collection Log";
-$lang["collectionlog-r"]="Removed Resource";
+$lang["collectionlog-r"]="Removed resource";
 $lang["collectionlog-a"]="Added resource";
 
 ?>
