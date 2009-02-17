@@ -1,0 +1,5 @@
+date,datetime,YES,,,
+user,int(11),YES,,,
+collection,int(11),YES,,,
+type,char(1),YES,,,
+resource,int(11),YES,,,
