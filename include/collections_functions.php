@@ -732,4 +732,15 @@ function delete_collection_access_key($collection,$access_key)
 	# Deletes the given access key.
 	sql_query("delete from external_access_keys where access_key='$access_key' and collection='$collection'");
 	}
+	
+function collection_log($collection,$type,$resource)
+	{
+	global $userref;
+	sql_query("insert into collection_log(date,user,collection,type,resource) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$collection','$type','$resource')");
+	}
+
+function get_collection_log($collection)
+	{
+	return sql_query("select c.date,u.username,u.fullname,c.type,r.title from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
+	}
 ?>

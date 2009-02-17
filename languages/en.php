@@ -687,4 +687,11 @@ $lang["setup-err_spiderpassword"]="The password required for spider.php.  IMPORT
 $lang["setup-err_scramblekey"]="If this is a public installation, setting the scramble key is recommended.";
 $lang["setup-err_path"]="Unable to verify location of";
 $lang["setup-emailerr"]="Not a valid email address.";
+
+# Collection log - actions
+$lang["collection"]="Collection";
+$lang["collectionlog"]="Collection Log";
+$lang["collectionlog-r"]="Removed Resource";
+$lang["collectionlog-a"]="Added resource";
+
 ?>

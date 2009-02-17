@@ -42,6 +42,13 @@ include "../include/header.php";
 	</div>
 
 	<div class="Question">
+	<label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
+	<input name="gree" class="stdwidth">
+	<input type="hidden" name="gree_label" value="<?php echo $lang["finaluse"]?>">
+	<div class="clearerleft"> </div>
+	</div>
+
+	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
 	<input name="fullname" class="stdwidth" value="<?php echo $userfullname?>">
