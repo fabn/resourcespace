@@ -33,13 +33,6 @@ include "../include/header.php";
 	<input type="hidden" name="contact_label" value="<?php echo $lang["contacttelephone"]?>">
 	<div class="clearerleft"> </div>
 	</div>
-	
-	<div class="Question">
-	<label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
-	<input name="finaluse" class="stdwidth">
-	<input type="hidden" name="finaluse_label" value="<?php echo $lang["finaluse"]?>">
-	<div class="clearerleft"> </div>
-	</div>
 
 	<div class="Question">
 	<label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
