@@ -688,3 +688,11 @@ $lang["setup-err_scramblekey"]="S'il s'agit d'une installation publique, il est 
 $lang["setup-err_path"]="Impossible de vérifier l'emplacement de";
 $lang["setup-emailerr"]="Adresse électronique invalide.";
 
+# Collection log - actions
+$lang["collectionlog"]="Journal de la collection";
+$lang["collectionlog-r"]="Retrait d'un document";
+$lang["collectionlog-R"]="Retrait de tous les documents";
+$lang["collectionlog-D"]="Suppression tous les documents";
+$lang["collectionlog-a"]="Ajout d'un document";
+$lang["collectionlog-c"]="Ajout d'un document (avec copie)";
+
