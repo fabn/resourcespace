@@ -208,6 +208,14 @@ if ($enable_collection_copy)
 </div>
 <?php } ?>
 
+<div class="Question">
+<label for="archive"><?php echo $lang["collectionlog"]?></label>
+<div class="Fixed">
+<a href="collection_log.php?ref=<?php echo $ref?>"><?php echo $lang["log"]?> &gt;</a>
+</div>
+<div class="clearerleft"> </div>
+</div>
+
 <?php if (file_exists("plugins/collection_edit.php")) { include "plugins/collection_edit.php"; } ?>
 
 <div class="QuestionSubmit">

@@ -560,7 +560,13 @@ function get_collection_resource_comment($resource,$collection)
 	
 function save_collection_resource_comment($resource,$collection,$comment,$rating)
 	{
+	# get data before update so that changes can be logged.	
+	$data=sql_query("select comment,rating from collection_resource where resource='$resource' and collection='$collection'");
 	sql_query("update collection_resource set comment='" . escape_check($comment) . "',rating=" . (($rating!="")?"'$rating'":"null") . " where resource='$resource' and collection='$collection'");
+	
+	# log changes
+	if ($comment!=$data[0]['comment']){collection_log($collection,"m",$resource);}
+	if ($rating!=$data[0]['rating']){collection_log($collection,"*",$resource);}
 	return true;
 	}
 
