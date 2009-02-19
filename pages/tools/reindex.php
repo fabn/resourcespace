@@ -12,10 +12,13 @@ include "../../include/general.php";
 include "../../include/resource_functions.php";
 include "../../include/image_processing.php";
 
+$sql="";
+if (getval("ref","")!="") {$sql="where ref='" . getvalescaped("ref","") . "'";}
+
 set_time_limit(60*60*5);
 echo "<pre>";
 
-$resources=sql_query("select ref from resource order by ref");
+$resources=sql_query("select ref from resource $sql order by ref");
 for ($n=0;$n<count($resources);$n++)
 	{
 	$ref=$resources[$n]["ref"];
@@ -29,8 +32,14 @@ for ($n=0;$n<count($resources);$n++)
 		{
 		if ($data[$m]["keywords_index"]==1)
 			{
-			echo $data[$m]["value"];
-			add_keyword_mappings($ref,i18n_get_indexable($data[$m]["value"]),$data[$m]["ref"]);		
+			#echo $data[$m]["value"];
+			$value=$data[$m]["value"];
+			if ($data[$m]["type"]==3)
+				{
+				# Prepend a comma when indexing dropdowns
+				$value="," . $value;
+				}
+			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"]);		
 			}
 		}
 		

@@ -126,25 +126,28 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						
 						# work through all options in an OR approach for multiple selects on the same field
 						# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
-						$sql_join.=" and (";
+
+						$keyjoin="";
 						for ($m=0;$m<count($ckeywords);$m++)
 							{
 							$keyref=resolve_keyword($ckeywords[$m]);
-							if ($m!=0) {$t.=" or ";}
-							$sql_join.="k" . $c. ".keyword='$keyref'";
-							
-							# Log this
-							daily_stat("Keyword usage",$keyref);
-			
-							# Also add related.
-							$related=get_related_keywords($keyref);
-							for ($m=0;$m<count($related);$m++)
+							if (!$keyref!==false)
 								{
-								$sql_join.=" or k" . $c . ".keyword='" . $related[$m] . "'";
-								}
-		
+								if ($m!=0) {$keyjoin.=" or ";}
+								$keyjoin.="k" . $c. ".keyword='$keyref'";
+								
+								# Log this
+								daily_stat("Keyword usage",$keyref);
+				
+								# Also add related.
+								$related=get_related_keywords($keyref);
+								for ($m=0;$m<count($related);$m++)
+									{
+									$keyjoin.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+									}
+								}		
 							}
-						$sql_join.=")";
+						if ($keyjoin!="") {$sql_join.=" and (" . $keyjoin . ")";}
 						}
 					}
 				else

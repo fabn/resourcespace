@@ -223,7 +223,7 @@ function get_resource_top_keywords($resource,$count)
 function split_keywords($search,$index=false)
 	{
 	# Takes $search and returns an array of individual keywords.
-	
+
 	# Remove any real / unescaped lf/cr
 	$search=str_replace("\r"," ",$search);
 	$search=str_replace("\n"," ",$search);
