@@ -8,8 +8,11 @@ $ref=getvalescaped("ref","");
 
 include "../include/header.php";
 ?>
+
+<? $colname=sql_query("select name from collection where ref = '$ref'",""); $colname=$colname[0]['name'];?>
+
 <div class="BasicsBox">
-<h1><?php echo $lang["collectionlog"]?></h1>
+<h1><?php echo $lang["collectionlog"];?> - <a href="<?php echo $baseurl;?>/pages/collections.php?collection=<?php echo $ref?>" target="collections"><?php echo $colname;?></a></h1>
 </div>
 
 <div class="Listview">
