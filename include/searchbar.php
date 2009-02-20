@@ -134,6 +134,7 @@ if (!$basic_simple_search)
 	if (!$basic_simple_search) {
 	
 	// Include simple search items (if any)
+	$optionfields=array();
 	for ($n=0;$n<count($fields);$n++)
 		{
 		?>
@@ -155,8 +156,9 @@ if (!$basic_simple_search)
 			case 3:
 			// Dropdown and checkbox types - display a list for each
 			$options=get_field_options($fields[$n]["ref"]);
+			$optionfields[]=$fields[$n]["name"]; # Append to the option fields array, used by the AJAX dropdown filtering
 			?>
-			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_<?php echo $fields[$n]["name"]?>" class="SearchWidth">
+			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions();">
 			  <option selected="selected" value="">&nbsp;</option>
 			  <?php
 			  for ($m=0;$m<count($options);$m++)
@@ -171,10 +173,29 @@ if (!$basic_simple_search)
 			
 			}
 		?>
-		</div>
-		<?php
+		</div>	
+		<?php		
 		}
 	?>
+	<script type="text/javascript">
+	function FilterBasicSearchOptions()
+		{
+		<?php
+		// When using more than one dropdown field, automatically filter field options using AJAX
+		// in a attempt to avoid blank results sets through excessive selection of filters.
+		if (count($optionfields)>1) { ?>
+		var Filter="";
+		<?php for ($n=0;$n<count($optionfields);$n++)
+			{
+			?>
+			Filter += "<?php if ($n>0) {echo ";";} ?><?php echo $optionfields[$n]?>:" + $('field_<?php echo $optionfields[$n]?>').value;
+			<?php
+			} ?>
+		// Send AJAX post request.
+		new Ajax.Request('<?php echo $baseurl_short?>pages/ajax/filter_basic_search_options.php?filter=' + encodeURIComponent(Filter), { method: 'post',onSuccess: function(transport) {eval(transport.responseText);} });
+		<?php } ?>
+		}
+	</script>
 		
 	<div class="SearchItem"><?php echo $lang["bydate"]?><br />
 	<select id="basicyear" name="year" class="SearchWidth" <?php if (!$searchbyday) { ?>style="width:70px;"<?php } ?>>
