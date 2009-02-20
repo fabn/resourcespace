@@ -291,7 +291,7 @@ for ($n=0;$n<count($fields);$n++)
 		case 3:
 		$options=trim_array(explode(",",$fields[$n]["options"]));
 		if ($auto_order_checkbox) {sort($options);}
-		$set=trim_array(explode(";",$value));
+		$set=trim_array(explode(";",cleanse_string($value,true)));
 		$wrap=0;
 		$l=average_length($options);
 		$cols=5;
@@ -306,7 +306,7 @@ for ($n=0;$n<count($fields);$n++)
 			if ($options[$m]!="")
 				{
 				?>
-				<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(strtolower(i18n_get_translated($options[$m])),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+				<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
 				<?php
 				}
 			}

@@ -131,21 +131,20 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						for ($m=0;$m<count($ckeywords);$m++)
 							{
 							$keyref=resolve_keyword($ckeywords[$m]);
-							if (!$keyref!==false)
+							if ($keyref===false) {$keyref=-1;}
+							
+							if ($m!=0) {$keyjoin.=" or ";}
+							$keyjoin.="k" . $c. ".keyword='$keyref'";
+							
+							# Log this
+							daily_stat("Keyword usage",$keyref);
+			
+							# Also add related.
+							$related=get_related_keywords($keyref);
+							for ($o=0;$o<count($related);$o++)
 								{
-								if ($m!=0) {$keyjoin.=" or ";}
-								$keyjoin.="k" . $c. ".keyword='$keyref'";
-								
-								# Log this
-								daily_stat("Keyword usage",$keyref);
-				
-								# Also add related.
-								$related=get_related_keywords($keyref);
-								for ($m=0;$m<count($related);$m++)
-									{
-									$keyjoin.=" or k" . $c . ".keyword='" . $related[$m] . "'";
-									}
-								}		
+								$keyjoin.=" or k" . $c . ".keyword='" . $related[$o] . "'";
+								}
 							}
 						if ($keyjoin!="") {$sql_join.=" and (" . $keyjoin . ")";}
 						}
@@ -156,7 +155,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
 						{
 						$keyref=resolve_keyword($keyword);
-						if ($keyref==false)
+						if ($keyref===false)
 							{
 							$fullmatch=false;
 							$soundex=resolve_soundex($keyword);

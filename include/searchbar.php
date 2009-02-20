@@ -3,25 +3,45 @@
 if (!isset($restypes)) {$restypes=@$_COOKIE["restypes"];}
 if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=@$_COOKIE["search"];} else {$quicksearch=$search;}
 
-$setcountry="";
-# Attempt to resolve a comma separated, country appended format back to the user's original quick search.
-# This is purely a visual aid so the side bar stays the same rather than displaying the expanded query.
-$count_special=0;# Keep track of how many other 'specials' we find
+# Load the basic search fields, so we know which to strip from the search string
+$fields=get_simple_search_fields();
+$simple_fields=array();
+for ($n=0;$n<count($fields);$n++)
+	{
+	$simple_fields[]=$fields[$n]["name"];
+	}
+# Also strip date related fields.
+$simple_fields[]="year";$simple_fields[]="month";$simple_fields[]="day";
+
+# Process all keywords, putting set fieldname/value pairs into an associative array ready for setting later.
+# Also build a quicksearch string.
 $keywords=split_keywords($quicksearch);
+$set_fields=array();
 $simple=array();
-$found_country="";$found_year="";$found_month="";$found_day="";
 for ($n=0;$n<count($keywords);$n++)
 	{
 	if (trim($keywords[$n])!="")
 		{
-		if (strpos($keywords[$n],":")!==false) {$count_special++;} else {$simple[]=trim($keywords[$n]);}
-		if (substr($keywords[$n],0,8)=="country:") {$count_special--;$found_country=substr($keywords[$n],8);}
-		if (substr($keywords[$n],0,5)=="year:") {$count_special--;$found_year=substr($keywords[$n],5);}
-		if (substr($keywords[$n],0,6)=="month:") {$count_special--;$found_month=substr($keywords[$n],6);}
-		if (substr($keywords[$n],0,4)=="day:") {$count_special--;$found_day=substr($keywords[$n],4);}
+		if (strpos($keywords[$n],":")!==false)
+			{
+			$s=explode(":",$keywords[$n]);
+			$set_fields[$s[0]]=$s[1];
+			if (!in_array($s[0],$simple_fields)) {$simple[]=trim($keywords[$n]);}
+			}
+		else
+			{
+			# Plain text (non field) search.
+			$simple[]=trim($keywords[$n]);
+			}
 		}
 	}
-if (($count_special==0) && (($found_country!="") || ($found_year!="") || ($found_month!="") || ($found_day!=""))) {$setcountry=$found_country;$quicksearch=join(" ",trim_array($simple));}
+# Set the text search box to the stripped value.
+$quicksearch=join(" ",trim_array($simple));
+
+# Set the predefined date fields
+$found_year="";if (isset($set_fields["year"])) {$found_year=$set_fields["year"];}
+$found_month="";if (isset($set_fields["month"])) {$found_month=$set_fields["month"];}
+$found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 
 ?>
 <div id="SearchBox">
@@ -113,27 +133,51 @@ if (!$basic_simple_search)
 	<?php
 	if (!$basic_simple_search) {
 	
-	if ($country_search) { ?>
-	<div class="SearchItem"><?php echo $lang["bycountry"]?><br />
-	<?php
-	$options=get_field_options(3);
-	?>
-	<select id="basiccountry" name="country" class="SearchWidth">
-	  <option selected="selected" value=""><?php echo $lang["anycountry"]?></option>
-	  <?php
-	  for ($n=0;$n<count($options);$n++)
+	// Include simple search items (if any)
+	for ($n=0;$n<count($fields);$n++)
 		{
-		$c=i18n_get_translated($options[$n]);
-		?><option <?php if (strtolower(str_replace(".","",$c))==$setcountry) { ?>selected<?php } ?>><?php echo $c?></option><?php
+		?>
+		<div class="SearchItem"><?php echo i18n_get_translated($fields[$n]["title"])?><br />
+		<?php
+		
+		$value=""; # to do, fetch set value.
+		if (isset($set_fields[$fields[$n]["name"]])) {$value=$set_fields[$fields[$n]["name"]];}
+		
+		switch ($fields[$n]["type"])
+			{
+			case 0: # -------- Text boxes
+			case 1:
+			case 5:
+			?><input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
+			break;
+		
+			case 2:
+			case 3:
+			// Dropdown and checkbox types - display a list for each
+			$options=get_field_options($fields[$n]["ref"]);
+			?>
+			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_<?php echo $fields[$n]["name"]?>" class="SearchWidth">
+			  <option selected="selected" value="">&nbsp;</option>
+			  <?php
+			  for ($m=0;$m<count($options);$m++)
+				{
+				$c=i18n_get_translated($options[$m]);
+				?><option <?php if (cleanse_string($c,false)==$value) { ?>selected<?php } ?>><?php echo $c?></option><?php
+				}
+			  ?>
+	  		</select>
+			<?php
+			break;
+			
+			}
+		?>
+		</div>
+		<?php
 		}
-	  ?>
-
-	</select>
-	</div>
-	<?php } ?>
-	
+	?>
+		
 	<div class="SearchItem"><?php echo $lang["bydate"]?><br />
-	<select id="basicyear" name="year" class="SearchWidth" style="width:70px;">
+	<select id="basicyear" name="year" class="SearchWidth" <?php if (!$searchbyday) { ?>style="width:70px;"<?php } ?>>
 	  <option selected="selected" value=""><?php echo $lang["anyyear"]?></option>
 	  <?php
 	  $y=date("Y");

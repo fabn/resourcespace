@@ -1,45 +1,45 @@
-1,keywords,Keywords,1,,50,1,0,,1,1,2#025,,,0,,"Keywords,Subject",1,
-3,country,Country,2,"Argentina, Barbados, Grenada, Guatemala, Guyana, Haiti, Honduras, Jamaica, Nicaragua, Cambodia, Indonesia, Philippines, Viet Nam, Democratic Republic Of Congo, Eritrea, Ethiopia, Kenya, Rwanda, Somalia, Sudan, Tanzania, Uganda, Albania, Armenia, Azerbaijan, Egypt, Iraq, Tajikistan, Yemen, Brazil, Chile, Colombia, Peru, Afghanistan, Andaman Islands, Bangladesh, India, Maldives, Nepal, Pakistan, Sri Lanka, Angola, Malawi, Mozambique, South Africa, Zambia, Zimbabwe, United States, Burkina Faso, Chad, Ghana, Liberia, Mali, Mauritania, Niger, Senegal, Sierra Leone, England, Georgia, Scotland, Wales, Ireland, Northern Ireland, Lebanon, Mexico, Bolivia, Thailand, Czech Republic, Windward Islands, Russia, Israel and Palestinian Territories, Germany, Somaliland, Papua New Guinea, Australia, Bosnia, Macedonia, Ecuador, Bali",57,1,0,country,1,1,2#101,,,0,,"category,country",1,
-8,title,Title,0,,5,1,0,title,0,1,2#005,,,1,,Title,1,
+1,keywords,Keywords,1,,50,1,0,,1,1,2#025,,,0,,"Keywords,Subject",1,0,
+3,country,Country,2,"Argentina, Barbados, Grenada, Guatemala, Guyana, Haiti, Honduras, Jamaica, Nicaragua, Cambodia, Indonesia, Philippines, Viet Nam, Democratic Republic Of Congo, Eritrea, Ethiopia, Kenya, Rwanda, Somalia, Sudan, Tanzania, Uganda, Albania, Armenia, Azerbaijan, Egypt, Iraq, Tajikistan, Yemen, Brazil, Chile, Colombia, Peru, Afghanistan, Andaman Islands, Bangladesh, India, Maldives, Nepal, Pakistan, Sri Lanka, Angola, Malawi, Mozambique, South Africa, Zambia, Zimbabwe, United States, Burkina Faso, Chad, Ghana, Liberia, Mali, Mauritania, Niger, Senegal, Sierra Leone, England, Georgia, Scotland, Wales, Ireland, Northern Ireland, Lebanon, Mexico, Bolivia, Thailand, Czech Republic, Windward Islands, Russia, Israel and Palestinian Territories, Germany, Somaliland, Papua New Guinea, Australia, Bosnia, Macedonia, Ecuador, Bali",57,1,0,country,1,1,2#101,,,0,,"category,country",1,0,
+8,title,Title,0,,5,1,0,title,0,1,2#005,,,1,,Title,1,0,
 9,extract,"Story Extract",1,,7,0,2,,1,0,,"<div class=""RecordStory"">
 
   <h1>[title]</h1>
 
   <p>[value]</p>
 
-</div>",,0,,,1,
-10,credit,Credit,0,,300,1,0,,1,1,2#080,,,0,,"Source,Creator,Credit,By-line",1,
-11,,Rating,3,"0,1,2,3,4,5",150,0,0,rating,0,1,,,,0,,Rating,1,
-12,,Date,4,,160,1,0,creation_date,1,1,2#055,,,0,,,1,
-13,,"Expiry Date",6,,400,1,0,,1,1,,,,0,,,1,
+</div>",,0,,,1,0,
+10,credit,Credit,0,,300,1,0,,1,1,2#080,,,0,,"Source,Creator,Credit,By-line",1,0,
+11,,Rating,3,"0,1,2,3,4,5",150,0,0,rating,0,1,,,,0,,Rating,1,0,
+12,,Date,4,,160,1,0,creation_date,1,1,2#055,,,0,,,1,0,
+13,,"Expiry Date",6,,400,1,0,,1,1,,,,0,,,1,0,
 18,caption,Caption,5,,55,1,0,,1,0,2#120,"<div class=""item""><h3>[title]</h3><p>[value]</p></div>
 
-<div class=""clearerleft""> </div>",,0,,"Caption-Abstract,Description,ImageDescription",1,
+<div class=""clearerleft""> </div>",,0,,"Caption-Abstract,Description,ImageDescription",1,0,
 25,,Notes,1,,1500,0,0,,1,0,2#103,"<div class=""RecordStory"">
 
   <h1>[title]</h1>
 
   <p>[value]</p>
 
-</div>",,0,,JobID,1,
-29,person,"Named Person(s)",0,,60,1,0,,1,1,,,,0,,People,1,
-52,camera,"Camera Make / Model",0,,1600,0,1,,1,0,,,,0,,Model,1,
-51,original_filename,"Original Filename",0,,6,1,0,file_path,0,1,,,,0,,,1,
-53,vidcontents,"Video Contents List",1,,9999,1,3,,1,1,,,,0,,,1,
-54,source,Source,3,",Digital Camera, Scanned Negative, Scanned Photo",1601,0,1,,1,1,,,,0,,,1,
-55,,Website,0,,1501,0,0,,1,1,,,,0,,WebStatement,1,
-56,,Artist,0,,5000,1,4,,1,1,,,,0,,artist,1,
-57,,Album,0,,5001,1,4,,1,1,,,,0,,album,1,
-58,,Track,0,,5002,0,4,,1,1,,,,0,,track,1,
-61,,Year,0,,5005,0,4,,1,1,,,,0,,year,1,
-60,,Genre,0,,5003,1,4,,1,1,,,,0,,genre,1,
-62,,Duration,0,,5004,0,4,,1,1,,,,0,,duration,1,
-63,,"Channel Mode",0,,5005,0,4,,1,1,,,,0,,channelmode,1,
-64,,"sample Rate",0,,5006,0,4,,1,1,,,,0,,samplerate,1,
-65,,"Audio Bitrate",0,,5007,0,4,,1,1,,,,0,,audiobitrate,1,
-66,,"Frame Rate",0,,6000,0,3,,1,1,,,,0,,framerate,1,
-67,,"Video Bitrate",0,,6001,0,3,,1,1,,,,0,,videobitrate,1,
-68,,"Aspect Ratio",0,,6002,0,3,,1,1,,,,0,,aspectratio,1,
-69,,"Video Size",0,,6003,0,3,,1,1,,,,0,,imagesize,1,
-71,,"Image Size",0,,1602,0,1,,1,1,,,,0,,imagesize,1,
-72,text,"Extracted Text",5,,56,1,0,,0,0,,"<div class=""item""><h3>[title]</h3><p>[value]</p></div><div class=""clearerleft""> </div>",,0,,,1,
+</div>",,0,,JobID,1,0,
+29,person,"Named Person(s)",0,,60,1,0,,1,1,,,,0,,People,1,0,
+52,camera,"Camera Make / Model",0,,1600,0,1,,1,0,,,,0,,Model,1,0,
+51,original_filename,"Original Filename",0,,6,1,0,file_path,0,1,,,,0,,,1,0,
+53,vidcontents,"Video Contents List",1,,9999,1,3,,1,1,,,,0,,,1,0,
+54,source,Source,3,",Digital Camera, Scanned Negative, Scanned Photo",1601,0,1,,1,1,,,,0,,,1,0,
+55,,Website,0,,1501,0,0,,1,1,,,,0,,WebStatement,1,0,
+56,,Artist,0,,5000,1,4,,1,1,,,,0,,artist,1,0,
+57,,Album,0,,5001,1,4,,1,1,,,,0,,album,1,0,
+58,,Track,0,,5002,0,4,,1,1,,,,0,,track,1,0,
+61,,Year,0,,5005,0,4,,1,1,,,,0,,year,1,0,
+60,,Genre,0,,5003,1,4,,1,1,,,,0,,genre,1,0,
+62,,Duration,0,,5004,0,4,,1,1,,,,0,,duration,1,0,
+63,,"Channel Mode",0,,5005,0,4,,1,1,,,,0,,channelmode,1,0,
+64,,"sample Rate",0,,5006,0,4,,1,1,,,,0,,samplerate,1,0,
+65,,"Audio Bitrate",0,,5007,0,4,,1,1,,,,0,,audiobitrate,1,0,
+66,,"Frame Rate",0,,6000,0,3,,1,1,,,,0,,framerate,1,0,
+67,,"Video Bitrate",0,,6001,0,3,,1,1,,,,0,,videobitrate,1,0,
+68,,"Aspect Ratio",0,,6002,0,3,,1,1,,,,0,,aspectratio,1,0,
+69,,"Video Size",0,,6003,0,3,,1,1,,,,0,,imagesize,1,0,
+71,,"Image Size",0,,1602,0,1,,1,1,,,,0,,imagesize,1,0,
+72,text,"Extracted Text",5,,56,1,0,,0,0,,"<div class=""item""><h3>[title]</h3><p>[value]</p></div><div class=""clearerleft""> </div>",,0,,,1,0,

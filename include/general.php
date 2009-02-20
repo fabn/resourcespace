@@ -234,9 +234,8 @@ function split_keywords($search,$index=false)
 	if ((substr($ns,0,1)==",") ||  ($index==false && strpos($ns,":")!==false)) # special 'constructed' query type, split using comma so
 	# we support keywords with spaces.
 		{
-		$ns=str_replace(array("/","_",".","; ","-","(",")","'","\"","\\")," ",$ns);
-		$ns=trim_spaces($ns);
-		$return=explode(",",strtolower($ns));
+		$ns=cleanse_string($ns,true);
+		$return=explode(",",$ns);
 		# If we are indexing, append any values that contain spaces.
 					
 		# Important! Solves the searching for keywords with spaces issue.
@@ -267,18 +266,31 @@ function split_keywords($search,$index=false)
 	else
 		{
 		# split using spaces and similar chars
-		$ns=str_replace(array(";",",","_",":","/",".","; ","-","(",")","'","\"","\\")," ",$ns);
-		$ns=trim_spaces($ns);
-		return trim_array(explode(" ",strtolower($ns)));
+		$ns=cleanse_string($ns,false);
+		return trim_array(explode(" ",$ns));
 		}
 
+	}
+
+function cleanse_string($string,$preserve_separators)
+	{
+	# Removes characters from a string prior to keyword splitting, for example full stops
+	# Also makes the string lower case ready for indexing.
+	if ($preserve_separators)
+		{
+		return strtolower(trim_spaces(str_replace(array("/","_",".","; ","-","(",")","'","\"","\\")," ",$string)));
+		}
+	else
+		{
+		return strtolower(trim_spaces(str_replace(array(";",",","_",":","/",".","; ","-","(",")","'","\"","\\")," ",$string)));
+		}
 	}
 
 function resolve_keyword($keyword,$create=false)
 	{
 	# Returns the keyword reference for $keyword, or false if no such keyword exists.
 	$return=sql_value("select ref value from keyword where keyword='" . trim(escape_check($keyword)) . "'",false);
-	if ($return==false && $create)
+	if ($return===false && $create)
 		{
 		# Create a new keyword.
 		sql_query("insert into keyword (keyword,soundex,hit_count) values ('" . escape_check($keyword) . "',soundex('" . escape_check($keyword) . "'),0)");
@@ -1368,6 +1380,35 @@ function resolve_users($users)
 	if (trim($users)=="") {return "";}
 	$resolved=sql_array("select concat(fullname,' (',username,')') value from user where ref in ($users)");
 	return join(", ",$resolved);
+	}
+
+function get_simple_search_fields()
+	{
+	# Returns a list of fields suitable for the simple search box.	
+	$return=array();
+	$sql="";
+	
+	# Include the country field even if not selected?
+	# This is to provide compatibility for older systems on which the simple search box was not configurable
+	# and had a simpler 'country search' option.
+	global $country_search;
+	if (isset($country_search) && $country_search)
+		{
+		$sql=" or ref=3";
+		}
+		
+	# Return all appropriate fields.
+	$fields=sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by resource_type,order_by");
+	for ($n=0;$n<count($fields);$n++)
+		{
+		# Check permissions
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+		&& !checkperm("f-" . $fields[$n]["ref"]))
+			{
+			$return[]=$fields[$n];
+			}
+		}
+	return $return;
 	}
 
 ?>

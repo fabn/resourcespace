@@ -14,8 +14,17 @@ $search=getvalescaped("search","");
 # Append extra search parameters from the quick search.
 if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typicall expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
-	$country=getvalescaped("country","");
-	if ($country!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "country:" . $country;}
+	// For the simple search fields, collect from the GET request and assemble into the search string.
+	reset ($_GET);
+	foreach ($_GET as $key=>$value)
+		{
+		$value=trim($value);
+		if ($value!="")
+			{
+			if (substr($key,0,6)=="field_") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;}
+			}
+		}
+	
 	$year=getvalescaped("year","");
 	if ($year!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "year:" . $year;}
 	$month=getvalescaped("month","");
