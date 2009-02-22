@@ -112,7 +112,7 @@ $lang["uselocalupload"]="OU: Utilisez un dossier local au lieu d'un serveur FTP 
 $lang["contributenewresource"]="Ajouter un nouveau document";
 $lang["viewcontributedps"]="Voir mes contributions - Soumissions en attente";
 $lang["viewcontributedpr"]="Voir mes contributions - Révision des soumissions en attente par l'équipe de révision";
-$lang["viewcontributedsubittedl"]="Voir mes contributions - Live";
+$lang["viewcontributedsubittedl"]="Voir mes contributions - En ligne";
 
 # Collections
 $lang["editcollection"]="Modifier une collection";
@@ -147,7 +147,7 @@ $lang["viewall"]="Voir tout";
 $lang["editall"]="Modifier tout";
 $lang["hidethumbnails"]="Cacher les vignettes";
 $lang["showthumbnails"]="Montrer les vignettes";
-$lang["contactsheet"]="Fiche de contact";
+$lang["contactsheet"]="Planche contact";
 $lang["mycollection"]="Ma collection";
 $lang["editresearchrequests"]="Modifier les demandes de recherche";
 $lang["savedsearch"]="Recherche enregistrée";
@@ -242,9 +242,9 @@ $lang["searchforsimilarresources"]="Rechercher des documents similaires";
 $lang["clicktoviewasresultset"]="Cliquez pour voir ces documents comme un ensemble de résultats";
 $lang["searchnomatches"]="Votre recherche ne retourne aucun résultat.";
 $lang["try"]="Essayer";
-$lang["tryselectingallcountries"]="Essayez de sélectionner <strong>peu importe</strong> dans la boîte du pays, ou";
-$lang["tryselectinganyyear"]="Essayez de sélectionner <strong>peu importe</strong> dans la boîte de l'année, ou";
-$lang["tryselectinganymonth"]="Essayez de sélectionner <strong>peu importe</strong> dans la boîte du mois, or";
+$lang["tryselectingallcountries"]="Essayez de sélectionner <b>peu importe</b> dans la boîte du pays, ou";
+$lang["tryselectinganyyear"]="Essayez de sélectionner <b>peu importe</b> dans la boîte de l'année, ou";
+$lang["tryselectinganymonth"]="Essayez de sélectionner <b>peu importe</b> dans la boîte du mois, or";
 $lang["trybeinglessspecific"]="Essayez d'être moins spécifique en";
 $lang["enteringfewerkeywords"]="entrant moins de mots-clés."; # Suffixed to any of the above 4 items e.g. "Try being less specific by entering fewer search keywords"
 $lang["match"]="correspondance";
@@ -278,7 +278,7 @@ $lang["status2"]="Archivé";
 
 # Charts
 $lang["activity"]="Activité";
-$lang["summary"]="Résumé";
+$lang["summary"]="résumé";
 $lang["mostinaday"]="Maximum en une journée";
 $lang["totalfortheyear"]="Total pour l'année";
 $lang["dailyaverage"]="Moyenne quotidienne pour les journées actives";
@@ -506,9 +506,9 @@ $lang["country"]="Pays";
 
 # New for 1.5
 $lang["columns"]="Colonnes";
-$lang["contactsheetconfiguration"]="Configuration de la fiche de contact";
+$lang["contactsheetconfiguration"]="Configuration de la planche contact";
 $lang["thumbnails"]="Vignettes";
-$lang["contactsheetintrotext"]="Merci de sélectionner la taille d'impression et le nombre de colonnes de votre fiche de contact.";
+$lang["contactsheetintrotext"]="Merci de sélectionner la taille d'impression et le nombre de colonnes de votre planche contact.";
 $lang["size"]="Taille";
 $lang["orientation"]="Orientation";
 $lang["requiredfield"]="Ceci est une champ obligatoire";
@@ -540,7 +540,7 @@ $lang["share"]="Partager";
 $lang["sharecollection"]="Partager la collection";
 $lang["generateurl"]="Générer une URL";
 $lang["generateurlinternal"]="L'URL suivante ne fonctionnera que pour des utilisateurs existants.";
-$lang["generateurlexternal"]="L'URL suivante fonctionnera pour tout le monde et ne nécessitera pas d'identification. <strong>Sachez que si des documents supplémentaires sont ajoutés à cette collection , alors cette URL sera désactivée pour des raisons de sécurité et une nouvelle URL devra être générée.</strong>";
+$lang["generateurlexternal"]="L'URL suivante fonctionnera pour tout le monde et ne nécessitera pas d'identification. <b>Sachez que si des documents supplémentaires sont ajoutés à cette collection , alors cette URL sera désactivée pour des raisons de sécurité et une nouvelle URL devra être générée.</b>";
 $lang["archive"]="Archive";
 $lang["collectionviewhover"]="Cliquer ici pour visualiser les documents de cette collection";
 $lang["collectioncontacthover"]="Créer une planche contact avec les documents de cette collection";
@@ -595,7 +595,7 @@ $lang["maxcollectionthumbsreached"]="Il y a trop de documents dans cette collect
 
 $lang["ratethisresource"]="Quelle note donnez-vous à ce document ?";
 $lang["ratingthankyou"]="Merci pour cette évaluation.";
-$lang["ratings"]="Évaluations";
+$lang["ratings"]="évaluations";
 $lang["rating"]="évaluation";
 $lang["cannotemailpassword"]="Vous ne pouvez pas envoyer aux utilisateurs leur mot de passe actuel par mél car il n'est pas enregistré (un hachage cryptographique est enregistré à la place).<br/><br/> Vous devez utiliser le bouton 'Suggérer' ci-dessus pour générer un nouveau mot de passe et activer la fonction d'envoi par mél.";
 
@@ -625,9 +625,9 @@ $lang["sharedwith"]="Partagé avec";
 $lang["lastupdated"]="Dernière mise à jour";
 $lang["lastused"]="Dernière utilisation";
 $lang["noattachedusers"]="N'est partagé avec aucun utilisateur.";
-$lang["confirmdeleteaccess"]="Voulez-vous vraiment supprimer cette clé d'accès ? Les utilisateurs qui se sont vus donner l'accès via cette clé se seront plus capable d'accéder à cette collection.";
+$lang["confirmdeleteaccess"]="Voulez-vous vraiment supprimer cette clé d'accès ? Les utilisateurs qui se sont vu donner l'accès via cette clé se seront plus capable d'accéder à cette collection.";
 $lang["noexternalsharing"]="Aucun partage défini avec des intervenants extérieurs.";
-$lang["sharedcollectionaddwarning"]="Attention : Cette collection a été partagée avec des intervenants extérieurs. Le document que vous avez ajouté est maintenant disponible pour ces personnes. Cliquez sur 'Partager' pour gérer les droits d'accès à cette collection des intervenants extérieurs .";
+$lang["sharedcollectionaddwarning"]="Attention : Cette collection a été partagée avec des intervenants extérieurs. Le document que vous avez ajouté est maintenant disponible pour ces personnes. Cliquez sur 'Partager' pour gérer les droits d'accès à cette collection des intervenants extérieurs.";
 $lang["addresourcebatchlocalfolder"]="Ajouter un lot de documents - récupérés dans le dossier 'upload' local";
 # Setup Script
 $lang["setup-alreadyconfigured"]="Votre installation ResourceSpace est déjà configurée. Pour reconfigurer, vous devez supprimer <pre>include/config.php</pre> et revenir sur cette page.";
@@ -643,7 +643,7 @@ $lang["setup-introtext"]="Merci d'avoir choisi ResourceSpace. Ce script de confi
 $lang["setup-checkerrors"]="Des erreurs de pre-configuration ont été détectées.<br />  Veuillez résoudre ces erreurs et recharger cette page pour continuer.";
 $lang["setup-errorheader"]="Des erreurs ont été détectées dans votre configuration. Le détail des problèmes est disponible ci-après.";
 $lang["setup-warnheader"]="Certains de vos réglages ont généré des avertissements. Le détail des problèmes est disponible ci-après. Ceci ne signifie pas forcément qu'il y a un problème avec votre configuration.";
-$lang["setup-basicsettings"]="Réglages basiques";
+$lang["setup-basicsettings"]="Réglages de base";
 $lang["setup-basicsettingsdetails"]="Ces réglages constituent la configuration minimale pour votre installation de ResourceSpace. Les champs obligatoires sont marqués par un <strong>*</strong>";
 $lang["setup-dbaseconfig"]="Configuration de la base de données";
 $lang["setup-mysqlerror"]="Il y a une erreur dans vos paramètres de connexion à MySQL:";
@@ -695,4 +695,6 @@ $lang["collectionlog-R"]="Retrait de tous les documents";
 $lang["collectionlog-D"]="Suppression tous les documents";
 $lang["collectionlog-a"]="Ajout d'un document";
 $lang["collectionlog-c"]="Ajout d'un document (avec copie)";
+$lang["collectionlog-m"]="Commentaire d'un document";
+$lang["collectionlog-*"]="Évaluation d'un document";
 
