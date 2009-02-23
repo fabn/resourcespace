@@ -1,6 +1,6 @@
 <?php
-//Development Mode:  Uncomment to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
-#$develmode = true;
+//Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
+$develmode = false;
 if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
@@ -237,7 +237,7 @@ h2#dbaseconfig{  min-height: 32px;}
 	}
 
 	function get_post($key){ //Return santizied input for a given $_REQUEST key
-		return filter_var($_REQUEST[$key], FILTER_SANITIZE_STRING);
+		return filter_var(@$_REQUEST[$key], FILTER_SANITIZE_STRING);
 	}
 
 	function get_post_bool($key){ // Return true or false for a given $_REQUEST key
