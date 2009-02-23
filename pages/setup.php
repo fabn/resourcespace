@@ -260,7 +260,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		$path = $parsed_url['path'];
 		$port = $parsed_url['port'];
 		if (empty($path)) $path = "/";
-		if ($port==0) $port=80;
+		if (@$port==0) $port=80;
 		// Build HTTP 1.1 request header.
 		$headers = 	"GET $path HTTP/1.1\r\n" .
 					"Host: $host\r\n" .
@@ -363,6 +363,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		//This allows the config to be displayed in the bottom div when in development mode.
 		$config_windows = get_post_bool('config_windows');
 		$exe_ext = $config_windows==true?'.exe':'';
+		$config_output="";
 		$config_output .= "###############################\r\n";
 		$config_output .= "## ResourceSpace\r\n";
 		$config_output .= "## Local Configuration Script\r\n";
