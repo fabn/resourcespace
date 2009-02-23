@@ -256,11 +256,12 @@ h2#dbaseconfig{  min-height: 32px;}
 	function url_exists($url) //Open a HTTP request to a host to see if an is url reachable.
 	{
 		$parsed_url = parse_url($url);
-		$host = $parsed_url['host'];
-		$path = $parsed_url['path'];
-		$port = $parsed_url['port'];
+		$host = @$parsed_url['host'];
+		$path = @$parsed_url['path'];
+		$port = @$parsed_url['port'];
 		if (empty($path)) $path = "/";
-		if (@$port==0) $port=80;
+		if (!isset($port)) {$port=0;}
+		if ($port==0) {$port=80;}
 		// Build HTTP 1.1 request header.
 		$headers = 	"GET $path HTTP/1.1\r\n" .
 					"Host: $host\r\n" .
@@ -493,7 +494,7 @@ h2#dbaseconfig{  min-height: 32px;}
 				$errors['exiftool_path'] = true;
 			else $config_output .= "\$exiftool_path = '$exiftool_path';\r\n";
 		if ($antiword_path!='')
-			if (!file_exists($exiftool_path.'/antiword'.$exe_ext))
+			if (!file_exists($antiword_path.'/antiword'.$exe_ext))
 				$errors['antiword_path'] = true;
 			else $config_output .= "\$antiword_path = '$antiword_path';\r\n";
 		if ($pdftotext_path!='')
