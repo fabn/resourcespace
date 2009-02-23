@@ -327,14 +327,16 @@ h2#dbaseconfig{  min-height: 32px;}
 		//Generate default random keys.
 		$scramble_key = generatePassword();
 		$spider_password = generatePassword();
-		//Setup search paths (Currently only Linux)
-		if(php_uname('s')=='Linux'){
+		//Setup search paths (Currently only Linux/Mac OS X)
+		$os=php_uname('s');
+		if($os=='Linux' || $os=="Darwin"){
 			$search_paths[]='/usr/bin';
+			$search_paths[]='/sw/bin';
 			$search_paths[]='/usr/share/bin';
 			$search_paths[]='/usr/local/bin';
 		}
 		//Check if we're on windows and set config_windows if we are.
-		elseif(stristr(php_uname('s'),'windows')){
+		elseif(stristr($os,'windows')){
 			$config_windows = true;
 		}
 		if (isset($search_paths)){
@@ -768,38 +770,38 @@ else{
 					<?php if(isset($errors['imagemagick_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'convert'.</div>
 					<?php } ?>
-					<label for="imagemagickpath">Imagemagick Path:</label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo $imagemagick_path ?>"/>
+					<label for="imagemagickpath">Imagemagick Path:</label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo @$imagemagick_path ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ghostscript_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'gs'.</div>
 					<?php } ?>
-					<label for="ghostscriptpath">Ghostscript Path:</label><input id="ghostscriptpath" type="text" name="ghostscript_path" value="<?php echo $ghostscript_path; ?>"/>
+					<label for="ghostscriptpath">Ghostscript Path:</label><input id="ghostscriptpath" type="text" name="ghostscript_path" value="<?php echo @$ghostscript_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ffmpeg_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'ffmpeg'.</div>
 					<?php } ?>
-					<label for="ffmpegpath">FFMpeg Path:</label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo $ffmpeg_path; ?>"/>
+					<label for="ffmpegpath">FFMpeg Path:</label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['exiftool_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'exiftool'.</div>
 					<?php } ?>
-					<label for="exiftoolpath">Exiftool Path:</label><input id="exiftoolpath" type="text" name="exiftool_path" value="<?php echo $exiftool_path; ?>"/>
+					<label for="exiftoolpath">Exiftool Path:</label><input id="exiftoolpath" type="text" name="exiftool_path" value="<?php echo @$exiftool_path; ?>"/>
 				</div>
 				<div class="configitem">
 				<?php if(isset($errors['antiword_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'AntiWord'.</div>
 					<?php } ?>
-					<label for="antiwordpath">AntiWord Path:</label><input id="antiwordpath" type="text" name="antiword_path" value="<?php echo $antiword_path; ?>"/>
+					<label for="antiwordpath">AntiWord Path:</label><input id="antiwordpath" type="text" name="antiword_path" value="<?php echo @$antiword_path; ?>"/>
 				</div>
 				
 				<div class="configitem">
 					<?php if(isset($errors['pdftotext_path'])){?>
-						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'pdftotext'.</div>
+						<div class="erroritem"><?php echo @$lang["setup-err_path"];?> 'pdftotext'.</div>
 					<?php } ?>
-					<label for="pdftotextpath">PDFtotext Path:</label><input id="pdftotextpath" type="text" name="pdftotext_path" value="<?php echo $pdftotext_path; ?>"/>
+					<label for="pdftotextpath">PDFtotext Path:</label><input id="pdftotextpath" type="text" name="pdftotext_path" value="<?php echo @$pdftotext_path; ?>"/>
 				</div>
 			</p>
 			<p><?php echo $lang["setup-basicsettingsfooter"];?></p>
