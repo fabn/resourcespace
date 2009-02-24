@@ -2,12 +2,14 @@
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
+include "../include/collections_functions.php";
 
 $ref=getval("ref","");
+$cinfo=get_collection($ref);
 
 if (getval("save","")!="")
 	{
-	email_resource_request($ref,getvalescaped("request",""));
+	email_collection_request($ref,getvalescaped("request",""));
 	redirect("pages/done.php?text=resource_request");
 	}
 include "../include/header.php";
@@ -15,18 +17,18 @@ include "../include/header.php";
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?php echo $lang["requestresource"]?></h1>
+  <h1><?php echo $lang["requestcollection"]?></h1>
   <p><?php echo text("introtext")?></p>
   
 	<form method="post">  
 	<input type=hidden name=ref value="<?php echo $ref?>">
 	
 	<div class="Question">
-	<label><?php echo $lang["resourceid"]?></label>
-	<div class="Fixed"><?php echo $ref?></div>
+	<label><?php echo $lang["collectionname"]?></label>
+	<div class="Fixed"><?php echo $cinfo["name"]?></div>
 	<div class="clearerleft"> </div>
 	</div>
-	
+
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
@@ -71,7 +73,7 @@ include "../include/header.php";
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
 	<input name="cancel" type="button" value="&nbsp;&nbsp;<?php echo $lang["cancel"]?>&nbsp;&nbsp;" onclick="document.location='view.php?ref=<?php echo $ref?>';"/>&nbsp;
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestresource"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestcollection"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	

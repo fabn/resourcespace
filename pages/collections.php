@@ -293,6 +293,12 @@ if ($k!="")
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
     <?php } ?>
     
+    <?php if (count($result)>0 $k=="" && !checkperm("g")) { 
+    # Ability to request a whole collection (only for 'restricted' users)
+    ?>
+    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>">&gt; <?php echo $lang["request"]?></a></li>
+    <?php } ?>
+    
    	<?php if (isset($zipcommand)) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["zipall"]?></a></li>
 	<?php } ?>

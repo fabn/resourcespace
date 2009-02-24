@@ -690,7 +690,31 @@ function email_resource_request($ref,$details)
 		
 	if (trim($details)!="") {$message.=$lang["message"] . ":\n" . newlines($details) . "\n\n";}
 	$message.=$lang["clicktoviewresource"] . "\n$baseurl/?r=$ref";
-	send_mail($email_notify,$applicationname . ": " . $lang["researchrequest"] . " - $ref",$message,$useremail);
+	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail);
+	
+	# Increment the request counter
+	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
+	}
+
+function email_collection_request($ref,$details)
+	{
+	# E-mails a collection request (posted) to the team
+	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
+	$message=$lang["username"] . ": " . $username . "\n";
+	
+	reset ($_POST);
+	foreach ($_POST as $key=>$value)
+		{
+		if (strpos($key,"_label")!==false)
+			{
+			# Add custom field
+			$message.=$value . ": " . $_POST[str_replace("_label","",$key)] . "\n";
+			}
+		}
+		
+	if (trim($details)!="") {$message.=$lang["message"] . ":\n" . newlines($details) . "\n\n";}
+	$message.=$lang["viewcollection"] . ":\n$baseurl/?c=$ref";
+	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
