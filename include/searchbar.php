@@ -183,7 +183,7 @@ if (!$basic_simple_search)
 		<?php
 		// When using more than one dropdown field, automatically filter field options using AJAX
 		// in a attempt to avoid blank results sets through excessive selection of filters.
-		if (count($optionfields)>1) { ?>
+		if ($simple_search_dropdown_filtering && count($optionfields)>1) { ?>
 		var Filter="";
 		<?php for ($n=0;$n<count($optionfields);$n++)
 			{
