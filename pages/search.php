@@ -363,11 +363,7 @@ if (true) #search condition
 			<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<?php } ?>
 			<?php } ?>
-			
-			
-			<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
-			<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
-			<?php } ?>
+		
 			</div>
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
