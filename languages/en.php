@@ -139,6 +139,7 @@ $lang["findpubliccollection"]="Find a Public Collection";
 $lang["searchpubliccollections"]="Search Public Collections";
 $lang["addtomycollections"]="add to my collections";
 $lang["action-addtocollection"]="Add to collection";
+$lang["action-removefromcollection"]="Remove from collection";
 $lang["addtocollection"]="Add to collection";
 $lang["cantmodifycollection"]="You can't modify this collection.";
 $lang["currentcollection"]="Current Collection";

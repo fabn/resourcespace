@@ -138,7 +138,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	
 	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
-	&nbsp;<a href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
+	&nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a>
 	<?php if (isset($zipcommand)) { ?>
 	&nbsp;<a href="collection_download.php?collection=<?php echo $collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?php echo $lang["action-download"]?></a>

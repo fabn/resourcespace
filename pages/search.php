@@ -6,8 +6,12 @@ include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(str_replace("!collection","",getvalescaped("search","")),$k))) {include "../include/authenticate.php";}
 
-# Disable info box for external users.
+ # Disable info box for external users.
 if ($k!="") {$infobox=false;}
+else {
+       #note current user collection for add/remove links
+       $user=get_user($userref);$usercollection=$user['current_collection'];
+}
 
 $search=getvalescaped("search","");
 
@@ -148,10 +152,10 @@ if (true) #search condition
 		<div class="TopInpageNav TopInpageNav">
 		<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(count($result))?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
 		<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
-		<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
+		<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
 			<?php if ($smallthumbs==true) { ?>		
-		<?php if ($display=="smallthumbs") { ?><span class="Selected"><?php echo $lang["smallthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=smallthumbs"><?php echo $lang["smallthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
-		<?php if ($display=="list") { ?><span class="Selected"><?php echo $lang["list"]?></span><?php } else { ?><a href="<?php echo $url?>&display=list"><?php echo $lang["list"]?></a><?php } ?> <?php hook("adddisplaymode"); ?> </div>
+		<?php if ($display=="smallthumbs") { ?><span class="Selected"><?php echo $lang["smallthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
+		<?php if ($display=="list") { ?><span class="Selected"><?php echo $lang["list"]?></span><?php } else { ?><a href="<?php echo $url?>&display=list&k=<?php echo $k?>"><?php echo $lang["list"]?></a><?php } ?> <?php hook("adddisplaymode"); ?> </div>
 		<?php
 		
 		# order by
@@ -298,10 +302,18 @@ if (true) #search condition
 			
 			<div class="ResourcePanelCountry"><?php if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><?php } ?>&nbsp;</div>				
 			<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
-			<?php if (!checkperm("b") && $k=="") { ?><span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><?php } ?>
-			<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
-			<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			
+			<?php if (!checkperm("b") && $k=="") { ?>
+            <?php if ($search!="!collection".$usercollection){?>
+            <span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12"/></a></span>
 			<?php } ?>
+            <?php } ?>
+
+            <?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
+            <?php if ($search=="!collection".$usercollection){?><span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+            <?php } ?>
+			<?php } ?>
+			
 			<?php if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="resource_email.php?ref=<?php echo $ref?>" title="<?php echo $lang["emailresource"]?>"><img src="../gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><?php } ?>
 			<?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><?php } ?>
 			<?php if ($collection_reorder_caption && $allow_reorder) { ?>
@@ -336,8 +348,24 @@ if (true) #search condition
 			/><?php } ?></a>
 			</td>
 			</tr></table>
-			<div class="ResourcePanelCountry"><span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><?php if (!checkperm("b")) { ?><span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span><?php } ?>
-			<?php if (!checkperm("b") && substr($search,0,11)=="!collection") { ?>
+			<div class="ResourcePanelCountry">
+			<span class="IconPreview">
+			<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+			
+			<?php if (!checkperm("b") && $k=="") { ?>
+			<?php if ($search!="!collection".$usercollection){?>
+			<span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<?php } ?>
+			<?php } ?>
+	
+			<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
+			<?php if ($search=="!collection".$usercollection){?>
+			<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+			<?php } ?>
+			<?php } ?>
+			
+			
+			<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
 			<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 			<?php } ?>
 			</div>
@@ -358,7 +386,23 @@ if (true) #search condition
 			<td><?php echo $result[$n]["ref"]?></td>
 			<td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td>
 			<td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td>
-			<td><div class="ListTools"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php if (!checkperm("b")) { ?><?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a> &nbsp;<?php } ?><a href="resource_email.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a></div></td>
+			<td><div class="ListTools"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);"onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
+
+            if (!checkperm("b")&& $k=="") { ?>
+            <?php if ($search!="!collection".$usercollection){?>
+			<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a> &nbsp;
+            <?php } ?>
+            <?php } ?>
+
+            <?php if (!checkperm("b") && substr($search,0,11)=="!collection"&& $k=="") { ?>
+            <?php if ($search=="!collection".$usercollection){?>
+            <?php echo remove_from_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-removefromcollection"]?></a> &nbsp;
+            <?php } ?>
+            <?php } ?>
+
+            <?php if ($allow_share && $k=="") { ?><a href="resource_email.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
+			
+			
 			</tr>
 			<?php
 			}

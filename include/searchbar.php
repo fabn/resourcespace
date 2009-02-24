@@ -277,15 +277,13 @@ if (!$basic_simple_search)
 	
 	<?php } ?> <!-- END of Searchbarreplace hook -->
 	</div>
-<?php } ?>
-
 	<div class="PanelShadow"></div>
-	
+<?php } ?>	
 	
 	<?php if (($research_request) && (checkperm("q"))) { ?>
 	<div id="ResearchBoxPanel">
-  <div class="SearchSpace">
-  <h2><?php echo $lang["researchrequest"]?></h2>
+  	<div class="SearchSpace">
+  	<h2><?php echo $lang["researchrequest"]?></h2>
 	<p><?php echo text("researchrequest")?></p>
 	<div class="HorizontalWhiteNav"><a href="<?php echo $baseurl?>/pages/research_request.php">&gt; <?php echo $lang["researchrequestservice"]?></a></div>
 	</div><br />
@@ -309,62 +307,11 @@ if (!$basic_simple_search)
 		$feedback=$cinfo["request_feedback"];
 		?>
 		<div id="ResearchBoxPanel">
-		  <div class="SearchSpace">
-		  <h2><?php echo $lang["mycollections"]?></h2>
-	
-		<div id="CollectionFramelessCount">
+		<div class="SearchSpace">
+        <h2><?php echo $lang["mycollections"]?></h2>
 		
-		<!--Collection Dropdown (Empty placeholder - this content is replaced by an AJAX call -->	
-		<div id="CollectionFramelessDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>				
-		<div id="CollectionFramelessDrop">
-		<select id="colselect" name="collection" class="SearchWidth">
-		</select>
-		</div>
-		<strong>?</strong>&nbsp;<?php echo $lang["resourcesincollection"]?>
-		<!-- End of empty copy -->
-		
-		</div>
-		
-		<!--Menu-->	
-		<div id="CollectionFramelessNav">
-		  <ul>
-		  	<?php 
-			# If this collection is (fully) editable, then display an extra edit all link
-			if (allow_multi_edit($usercollection)) { ?>
-			<li class="clearerleft"><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo isset($k)?$k:""?>">&gt; <?php echo $lang["viewall"]?></a></li>
-			<li><a href="<?php echo $baseurl_short?>pages/edit.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["editall"]?></a></li>
-			</li>    
-			<?php } else { ?>
-			<li><a href="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo isset($k)?$k:""?>">&gt; <?php echo $lang["viewall"]?></a></li>
-			<?php } ?>
-			
-			<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-			<?php if (checkperm("s")) { ?>
-			<?php if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="<?php echo $baseurl_short?>pages/collection_share.php?ref=<?php echo $usercollection?>">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
-			
-			<?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a href="<?php echo $baseurl_short?>pages/collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
-			<?php } ?>
-		
-			<?php if ($feedback) {?><li><a  href="<?php echo $baseurl_short?>pages/collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
-			
-			<?php } else {
-			$research=sql_value("select ref value from research_request where collection='$usercollection'",0);
-			?>
-			<li><a href="<?php echo $baseurl_short?>pages/team_research_edit.php?ref=<?php echo $research?>">&gt;<?php echo $lang["editresearchrequests"]?></a></li>    
-			<li><a href="<?php echo $baseurl_short?>pages/team_research.php">&gt; <?php echo $lang["manageresearchrequests"]?></a></li>    
-			<?php } ?>
-			
-			<?php if (isset($zipcommand)) { ?>
-			<li><a href="<?php echo $baseurl_short?>pages/collection_download.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["zipall"]?></a></li>
-			
-			<li><a href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"]?></a></li>
-			<?php } ?>
-		  </ul>
-		</div>
-
-		<div class="clearer"> </div>
-	  
-
+		<div id="CollectionFrameless"></div>
+			<div class="clearer"> </div>
 		</div>
 		</div>
 		<div class="PanelShadow"></div>
