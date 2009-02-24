@@ -125,7 +125,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				$field=explode(",",$read_from[$i]['exiftool_field']);
 				foreach ($field as $subfield){
 					$subfield = strtoupper($subfield); // convert to upper case for easier comparision
-                    if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-")
+                    if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-" && trim($metadata[$subfield])!="")
                     {
                         update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));
                     }
