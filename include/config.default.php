@@ -579,6 +579,11 @@ $flv_preview_downloadable=false;
 # What is the default value for the user select box, for example when e-mailing resources?
 $default_user_select="";
 
+# When multiple dropdowns are used on the simple search box, should selecting something from one or more dropdowns
+# limit the options available in the other dropdowns automatically? This adds a performance penalty so is off by default.
+$simple_search_dropdown_filtering=false;
+
+
 #
 # ------------------------- Development Items -------------------------
 #
