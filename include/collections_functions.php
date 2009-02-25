@@ -109,9 +109,6 @@ function remove_resource_from_collection($resource,$collection)
 	
 function collection_writeable($collection)
 	{
-	#if the collection doesn't exist, it isn't writeable.
-	if (empty($collectiondata)){return false;}
-	
 	# Returns true if the current user has write access to the given collection.
 	$collectiondata=get_collection($collection);
 	global $userref;
