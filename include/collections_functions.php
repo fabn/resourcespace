@@ -133,6 +133,7 @@ function delete_collection($ref)
 	{
 	# Deletes the collection with reference $ref
 	sql_query("delete from collection where ref='$ref'");
+	sql_query("delete from collection_resource where collection='$ref'");
 	}
 	
 function refresh_collection_frame()

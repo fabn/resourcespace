@@ -364,8 +364,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# Search for resources with images
 	if ($search=="!images") return sql_query("select distinct r.*,r.hit_count score from resource r $sql_join where has_image=1 group by r.ref order by $order_by",false,$fetchrows);
-	
 
+	# Search for resources not used in Collections
+	if (substr($search,0,7)=="!unused") 
+		{
+		
+		return sql_query("SELECT r.* FROM resource r $sql_join where r.ref>0 and r.ref not in (select c.resource from collection_resource c) and $sql_filter",false,$fetchrows);
+		}	
 
 
 

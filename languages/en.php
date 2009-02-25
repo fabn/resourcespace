@@ -699,6 +699,8 @@ $lang["collectionlog-c"]="Added resource (copied)";
 $lang["collectionlog-m"]="Added resource comment";
 $lang["collectionlog-*"]="Added resource rating";
 
+$lang["viewuncollectedresources"]="View Resources Not Used in Collections";
+
 # Collection requesting
 $lang["requestcollection"]="Request Collection";
 ?>
