@@ -478,10 +478,13 @@ for ($n=0;$n<count($fields);$n++)
 			}
 		else
 			{
-			# Draw this field normally.
-			?>
-			<div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div>
-			<?php
+			#There is a value in this field, but we also need to check again for a current-language value after the i18n_get_translated() function was called, to avoid drawing empty fields
+			if ($value!=""){
+				# Draw this field normally.
+				?>
+				<div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div>
+				<?php
+				}
 			}
 		}
 	}
