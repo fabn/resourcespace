@@ -7,14 +7,14 @@
 # This is a really nice line... It takes the serialized array from the form and 
 # automakes the variables 
 foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
-include('../lib/fpdf/fpdf.php');
-include('../include/general.php');
-include('../include/db.php');
-include('../include/authenticate.php');
-include('../include/search_functions.php');
-include('../include/resource_functions.php');
-include('../include/collections_functions.php');
-include('../include/image_processing.php');
+include('../../lib/fpdf/fpdf.php');
+include('../../include/general.php');
+include('../../include/db.php');
+include('../../include/authenticate.php');
+include('../../include/search_functions.php');
+include('../../include/resource_functions.php');
+include('../../include/collections_functions.php');
+include('../../include/image_processing.php');
 
 # Still making variables manually when not using Prototype: 
 $collection=getval("c","");
@@ -103,7 +103,7 @@ for ($n=0;$n<count($result);$n++)
 			
 			if (!file_exists($imgpath)){
 			$resource=get_resource_data($ref);
-				$imgpath="../gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
+				$imgpath="../../gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
 				
 			if (file_exists($imgpath))
 			{
@@ -210,7 +210,7 @@ relate_to_collection($newresource,$collection);
 	
 	#Create thumbnails and redirect browser to the new contact sheet resource
 	create_previews($newresource,true,"pdf");
-	redirect("pages/view.php?ref=" .$newresource);
+	redirect("../pages/view.php?ref=" .$newresource);
 	}
 
 else

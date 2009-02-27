@@ -31,7 +31,7 @@ include "../include/header.php";
  contactsheet.php makes just the first page of the pdf (with col size images) 
  and then thumbnails it for the ajax request. This creates a very small but helpful 
  preview image that can be judged before initiating a download of sometimes several MB.-->
-<form method=post name="contactsheetform" id="contactsheetform" action="contactsheet.php" >
+<form method=post name="contactsheetform" id="contactsheetform" action="ajax/contactsheet.php" >
 <input type=hidden name="c" value="<?php echo $collection?>">
 
 <div class="Question">
