@@ -52,7 +52,7 @@ $config_windows=false;
 
 # Install Exiftool and set this path to enable metadata-writing when resources are downloaded
 # $exiftool_path="/usr/local/bin";
-	#if exiftool is installed, you can optionally disable the metadata report available on the View page.  
+	#if exiftool is installed, you can optionally enable the metadata report available on the View page.  
 	$metadata_report=false;
 
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
