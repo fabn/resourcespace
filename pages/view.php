@@ -503,7 +503,7 @@ for ($n=0;$n<count($fields);$n++)
 </div><!-- end of tabbed panel-->
 </div></div>
 <div class="PanelShadow"></div>
-</div></div>
+</div>
 
 
 <?php 
@@ -642,7 +642,7 @@ for ($n=0;$n<count($keywords);$n++)
 </div>
 </div>
 <div class="PanelShadow"></div>
-</div>
+</div></div>
 <?php } # end of block that requires search permissions?>
 
 <?php
