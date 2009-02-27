@@ -703,4 +703,7 @@ $lang["viewuncollectedresources"]="View Resources Not Used in Collections";
 
 # Collection requesting
 $lang["requestcollection"]="Request Collection";
+
+# Metadata report
+$lang["metadata-report"]="Metadata Report";
 ?>

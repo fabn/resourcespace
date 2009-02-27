@@ -13,8 +13,6 @@ global $exiftool_path;
 			{
             $command=$exiftool_path."/exiftool -h " . escapeshellarg($image);
             $report= shell_exec($command);?>
-				
-				All metadata in the Original <?php echo strtoupper($ext)?> File.<br><br>
 				<?php echo $report;               
          }
          
