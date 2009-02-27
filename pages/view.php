@@ -93,7 +93,13 @@ if ((strpos($usearch,"!")===false) && ($usearch!="")) {update_resource_keyword_h
 daily_stat("Resource view",$ref);
 if ($log_resource_views) {resource_log($ref,'v',0);}
 
-
+if ($metadata_report && isset($exiftool_path)){
+	# Include the metadata report function
+	$headerinsert.="
+	<script src=\"../lib/js/metadata_report.js\" type=\"text/javascript\"></script>
+	";
+	}
+	
 include "../include/header.php";
 ?>
 
@@ -495,13 +501,23 @@ for ($n=0;$n<count($fields);$n++)
 <?php echo $extra?>
 
 </div><!-- end of tabbed panel-->
-
 </div>
 </div>
-
-
 <div class="PanelShadow"></div>
 </div>
+
+<?php 
+// include optional ajax metadata report
+if ($metadata_report && isset($exiftool_path)){?>
+<div class="RecordBox">
+<div class="RecordPanel">  
+<?php $file_ext=$resource['file_extension'];?>
+<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>,'<?php echo $file_ext?>');" class="itemNarrow">View Original File Metadata</a></div>
+</div>
+<div class="PanelShadow"></div>
+</div>
+<?php } ?>
+
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
 <?php
 # -------- Related Resources (must be able to search for this to work)
