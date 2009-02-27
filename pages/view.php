@@ -500,11 +500,11 @@ for ($n=0;$n<count($fields);$n++)
 
 <?php echo $extra?>
 
-</div><!-- end of tabbed panel-->
-</div>
-</div>
+</div><!-- end of tabbed panel--><div class="PanelShadow"></div>
+</div></div>
 <div class="PanelShadow"></div>
-</div>
+</div></div>
+
 
 <?php 
 // include optional ajax metadata report
@@ -513,8 +513,8 @@ if ($metadata_report && isset($exiftool_path)){?>
 <div class="RecordPanel">  
 <div class="Title"><?php echo $lang['metadata-report']?></div>
 <?php $file_ext=$resource['file_extension'];?>
-<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>,'<?php echo $file_ext?>');" class="itemNarrow"><?php echo $lang['viewreport'];?></a><br></div>
-</div>
+<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>,'<?php echo $file_ext?>');" class="itemNarrow"><?php echo $lang['viewreport'];?></a><br>
+</div></div>
 <div class="PanelShadow"></div>
 </div>
 <?php } ?>
