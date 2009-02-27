@@ -500,7 +500,7 @@ for ($n=0;$n<count($fields);$n++)
 
 <?php echo $extra?>
 
-</div><!-- end of tabbed panel--><div class="PanelShadow"></div>
+</div><!-- end of tabbed panel-->
 </div></div>
 <div class="PanelShadow"></div>
 </div></div>
