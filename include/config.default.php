@@ -170,6 +170,11 @@ $filename_field=51;
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
+# Photoshop files can take a long time to preview, and results are not always great. 
+# If this is a problem, set this to true, so RS can handle PSDs almost instantaneously by grabbing the small thumbnail from the file if it exists 
+# (Files must be saved with Previews). If a preview image can't be extracted, RS will revert to ImageMagick.
+$photoshop_thumb_extract=true;
+
 # Attempt to resolve a height and width of the ImageMagick file formats at view time
 # (enabling may cause a slowdown on viewing resources when large files are used)
 $imagemagick_calculate_sizes=false;

@@ -55,6 +55,30 @@ if ($extension=="indd")
 		
 	hook("indesign");	
 	}
+	
+	
+/* ----------------------------------------
+	Try PhotoshopThumbnail
+   ----------------------------------------
+*/
+# Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+if ($extension=="psd")
+	{
+	global $photoshop_thumb_extract;
+	if ($photoshop_thumb_extract)
+		{
+		global $exiftool_path;
+		if (isset($exiftool_path))
+			{
+			shell_exec($exiftool_path.'/exiftool -b -PhotoshopThumbnail '.$file.' > '.$target);
+			}
+		if (file_exists($target))
+			{
+			if (filesize($target)>0){$newfile = $target;}
+			}
+		}
+	}
+	
 
 /* ----------------------------------------
 	Try OpenDocument Format
