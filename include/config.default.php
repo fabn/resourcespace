@@ -52,8 +52,6 @@ $config_windows=false;
 
 # Install Exiftool and set this path to enable metadata-writing when resources are downloaded
 # $exiftool_path="/usr/local/bin";
-	#if exiftool is installed, you can optionally enable the metadata report available on the View page.  
-	$metadata_report=false;
 
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
 # $antiword_path="/usr/bin";
@@ -151,6 +149,9 @@ $iptc_expectedchars="æøåÆØÅ";
 $exif_comment=18;
 $exif_model=52;
 $exif_date=12;
+
+#if exiftool is installed, you can optionally enable the metadata report available on the View page.  
+$metadata_report=false;
 
 # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources using exiftool.
 $exiftool_remove_existing=false; 
@@ -623,3 +624,7 @@ $upload_methods = array(
 # web visible path. Relative and abolute paths are allowed.
 $local_ftp_upload_folder = 'upload/';
 
+# Uncomment to set a point in time where collections are considered 'active' and appear in the drop-down. 
+# This is based on creation date for now. Older collections are effectively 'archived', but accessible through Manage My Collections.
+# You can use any English-language strings supported by php's strtotime() function.
+# $active_collections="-3 months";

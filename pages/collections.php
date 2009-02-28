@@ -234,8 +234,8 @@ if ($k!="")
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
 </div>
-<?php
-} else {
+<?php 
+} else { 
 ?>
 <div id="CollectionMenu">
 <?php if (!hook("thumbsmenu")) { ?>
@@ -248,9 +248,11 @@ if ($k!="")
 		$found=false;
 		for ($n=0;$n<count($list);$n++)
 			{
-			?>
-			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
-			<?php
+			#show only active collections if a start date is set for $active_collections 
+			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
+					{ ?>
+				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			<?php }
 			}
 		if ($found==false)
 			{
