@@ -624,6 +624,9 @@ $upload_methods = array(
 # web visible path. Relative and abolute paths are allowed.
 $local_ftp_upload_folder = 'upload/';
 
+# Set path to Unoconv (a python-based bridge to OpenOffice) to allow document conversion to PDF.
+# $unoconv_path="/usr/bin";
+
 # Uncomment to set a point in time where collections are considered 'active' and appear in the drop-down. 
 # This is based on creation date for now. Older collections are effectively 'archived', but accessible through Manage My Collections.
 # You can use any English-language strings supported by php's strtotime() function.

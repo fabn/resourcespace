@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path;
 
 if (!$previewonly)
 	{
@@ -79,6 +79,28 @@ if ($extension=="psd")
 		}
 	}
 	
+/* ----------------------------------------
+	Unoconv is a python-based utility to run files through OpenOffice. It is available in Ubuntu.
+	This adds conversion of office docs to PDF format and adds them as alternative files
+	One could also see the potential to base previews on the PDFs for paging and better quality for most of these formats.
+   ----------------------------------------
+*/
+if (($extension=="doc"||$extension=="docx"||$extension=="odt"||$extension=="odp"||$extension=="html"||$extension=="rtf"||$extension=="txt"||$extension=="ppt") && isset($unoconv_path))
+	{
+	$command=$unoconv_path . "/unoconv";
+	if (!file_exists($command)) {exit("Unoconv executable not found at '$unoconv_path'");}
+
+	shell_exec($command . " --format=pdf \"" . $file . "\"");
+	$path_parts=pathinfo($file);
+	$pdffile=$path_parts['dirname']."/".$path_parts['filename'].".pdf";
+	if (file_exists($pdffile))
+		{
+		$alt_ref=add_alternative_file($ref,"PDF version");
+		$alt_path=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);	
+	    copy($pdffile,$alt_path);unlink($pdffile);
+	    sql_query("update resource_alt_files set file_name='$ref-converted',description='PDF version',file_extension='pdf',file_size='".filesize($alt_path)."' where resource=$ref and ref=$alt_ref");
+		}
+	}	
 
 /* ----------------------------------------
 	Try OpenDocument Format
@@ -89,9 +111,8 @@ if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($exten
 	{
 shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
 $odcommand=$command . " \"$target\"[0]  \"$target\""; 
-				$output=shell_exec($odcommand); $newfile = $target;
+				$output=shell_exec($odcommand); if(file_exists($target)){$newfile = $target;}
 	}
-
 
 
 /* ----------------------------------------
@@ -160,7 +181,6 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
 			}
 		}
 	}
-
 
 
 /* ----------------------------------------
