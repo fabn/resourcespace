@@ -9,10 +9,15 @@ $ref=getvalescaped("ref","");
 include "../include/header.php";
 ?>
 
-<? $colname=sql_query("select name from collection where ref = '$ref'",""); $colname=$colname[0]['name'];?>
+<?php
+# Fetch collection name
+$colinfo=get_collection($ref);
+$colname=$colinfo["name"];
+?>
+
 
 <div class="BasicsBox">
-<h1><?php echo $lang["collectionlog"];?> - <a <a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $ref;?>);"<?php } else {?>href="collections.php?collection=<?php echo $ref;?>" target="collections"<?php }?>><?php echo $colname;?></a></h1>
+<h1><?php echo $lang["collectionlog"];?> - <a <a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $ref;?>);"<?php } else {?>href="collections.php?collection=<?php echo $ref;?>" target="collections"<?php }?>><?php echo @$colname;?></a></h1>
 </div>
 
 <div class="Listview">
