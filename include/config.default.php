@@ -610,12 +610,14 @@ $multilingual_text_fields=false;
 # Allow to selectively disable upload methods.
 # Controls are :
 # - single_upload            : Enable / disable "Add Single Resource".
-# - in_browser_upload        : Enable / disable "Add Resource Batch - In Browser".
+# - in_browser_upload        : Enable / disable "Add Resource Batch - In Browser (Flash)".
+# - in_browser_upload_java   : Enable / disable "Add Resource Batch - In Browser (Java)".
 # - fetch_from_ftp           : Enable / disable "Add Resource Batch - Fetch from FTP server".
 # - fetch_from_local_folder  : Enable / disable "Add Resource Batch - Local upload".
 $upload_methods = array(
 		'single_upload' => true,
 		'in_browser_upload' => true,
+		'in_browser_upload_java' => true,
 		'fetch_from_ftp' => true,
 		'fetch_from_local_folder' => true,
 	);

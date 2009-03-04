@@ -79,7 +79,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		{
 
 		# Batch upload - change resource type
-		if (getval("swf","")!="")
+		if (getval("swf","")!="" || getval("java","")!="")
 			{
 			$resource_type=getvalescaped("resource_type","");
 			update_resource_type($ref,$resource_type);
@@ -101,6 +101,11 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 					{
 					# Save button pressed? Move to next step.
 					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add",""));}
+					}
+				elseif (getval("java","")!="") // Test if in browser java upload
+					{
+					# Save button pressed? Move to next step.
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add",""));}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
@@ -251,7 +256,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 <h1><?php echo $lang["specifydefaultcontent"]?></h1>
 <p><?php echo text("batch")?></p>
 
-<?php if (getval("swf","")!="") { # We need to ask for the resource type here for SWFUploads
+<?php if (getval("swf","")!="" || getval("java","")!="") { # We need to ask for the resource type here for SWFUploads/Java
 ?>
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
@@ -267,7 +272,7 @@ for ($n=0;$n<count($types);$n++)
 </div>
 
 <?php
-# Batch uploads (SWF) - also ask which collection to add the resource to.
+# Batch uploads (SWF/Java) - also ask which collection to add the resource to.
 if ($enable_add_collection_on_upload) 
 	{
 	?>

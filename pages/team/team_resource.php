@@ -25,6 +25,10 @@ include "../../include/header.php";
 			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;swf=true"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
+		<?php if($upload_methods['in_browser_upload_java']): // Test if in browser is allowed. ?>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;java=true"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
+		<?php endif // Test if in browser upload is allowed. ?>
+
 		<?php if($upload_methods['fetch_from_ftp']): // Test if fetching resources from FTP is allowed. ?>
 			<li><a href="../edit.php?ref=-<?php echo $userref?>"><?php echo $lang["addresourcebatchftp"]?></a></li>
 		<?php endif // Test if fetching resources from FTP is allowed. ?>
