@@ -87,10 +87,10 @@ if ($extension=="psd")
 */
 if (($extension=="doc"||$extension=="docx"||$extension=="odt"||$extension=="odp"||$extension=="html"||$extension=="rtf"||$extension=="txt"||$extension=="ppt") && isset($unoconv_path))
 	{
-	$command=$unoconv_path . "/unoconv";
-	if (!file_exists($command)) {exit("Unoconv executable not found at '$unoconv_path'");}
+	$unocommand=$unoconv_path . "/unoconv";
+	if (!file_exists($unocommand)) {exit("Unoconv executable not found at '$unoconv_path'");}
 
-	shell_exec($command . " --format=pdf \"" . $file . "\"");
+	shell_exec($unocommand . " --format=pdf \"" . $file . "\"");
 	$path_parts=pathinfo($file);
 	$pdffile=$path_parts['dirname']."/".$path_parts['filename'].".pdf";
 	if (file_exists($pdffile))
