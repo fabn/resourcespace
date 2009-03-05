@@ -604,6 +604,9 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 
 	# Use the screen resolution version for processing
 	$file=get_resource_path($ref,true,"scr",false,$extension);
+	if (!file_exists($file)) {
+	# Some images may be too small to have a scr.  Try pre:
+	$file=get_resource_path($ref,true,"pre",false,$extension);}
 	if (!file_exists($file)) {return false;}
 	
 	if ($extension=="png")
