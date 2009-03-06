@@ -127,20 +127,30 @@ $ip_restrict=$ip_restrict_group;
 if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
 if ($ip_restrict!="")
 	{
-	# Match against the IP restriction.
-	$wildcard=strpos($ip_restrict,"*");
-	$allow=true;
-	if ($wildcard!==false)
+	# Allow multiple IP addresses to be entered, comma separated.
+	$i=explode(",",$ip_restrict);
+	$allow=false;
+
+	# Loop through all provided ranges
+	for ($n=0;$n<count($i);$n++)
 		{
-		# Wildcard
-		if (substr($ip,0,$wildcard)!=substr($ip_restrict,0,$wildcard)) {$allow=false;}
-		}
-	else
-		{
-		# No wildcard, straight match
-		if ($ip!=$ip_restrict) {$allow=false;}
-		}
+		$ip_restrict=trim($i[$n]);
 		
+		# Match against the IP restriction.
+		$wildcard=strpos($ip_restrict,"*");
+
+		if ($wildcard!==false)
+			{
+			# Wildcard
+			if (substr($ip,0,$wildcard)==substr($ip_restrict,0,$wildcard)) {$allow=true;}
+			}
+		else
+			{
+			# No wildcard, straight match
+			if ($ip==$ip_restrict) {$allow=true;}
+			}
+		}
+
 	if (!$allow)
 		{
 		header("HTTP/1.0 403 Access Denied");
