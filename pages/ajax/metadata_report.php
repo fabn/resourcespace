@@ -57,7 +57,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	# build report:
 			 
 	echo "<table>";
-	echo "<tr><td width=\"150\">MAP to RS Field</td><td width=\"150\">FIELD</td><td>VALUE</td><td width=\"40%\">DIFF</td></tr>";
+	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">DIFF RESOURCESPACE VALUE</td></tr>";
 	echo "<tr><td></td><td></td><td></td><td></td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
