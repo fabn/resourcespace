@@ -55,7 +55,9 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 		} 
 		
 	# build report:		 
-	($exiftool_write)?$write_status="On":$write_status="Off";
+	($exiftool_write)?$write_status="On":$write_status="Off";?>
+	Exiftool writability does not apply to all filetypes. See <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/#supported">Supported File Types</a>.<br><br>
+	<?php
 	echo "<table>";
 	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">CURRENT DIFF (Exiftool Write: $write_status)</td></tr>";
 	echo "<tr><td></td><td></td><td></td><td></td></tr>";
