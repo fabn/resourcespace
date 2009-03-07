@@ -54,10 +54,10 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			}
 		} 
 		
-	# build report:
-			 
+	# build report:		 
+	($exiftool_write)?$write_status="On":$write_status="Off";
 	echo "<table>";
-	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">DIFF RESOURCESPACE VALUE</td></tr>";
+	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">CURRENT DIFF (Exiftool Write: $write_status)</td></tr>";
 	echo "<tr><td></td><td></td><td></td><td></td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
@@ -91,7 +91,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			#add diff arrow to fields that will likely change
 			if(isset($simcommands[$tag]['value']))
 				{
-				if ($value!=$simcommands[$tag]['value']&& $exiftool_write)
+				if ($value!=$simcommands[$tag]['value'])
 					{
 					echo "<td>".$value."</td><td>--> ".$simcommands[$tag]['value']."</td>";
 					}
