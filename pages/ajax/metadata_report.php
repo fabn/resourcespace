@@ -25,13 +25,13 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	#build array of supported tags
 	$command=$exiftool_path."/exiftool -list";
 	$supported_tags=shell_exec($command);
-	$supported_tags=strtolower($supported_tags);
+	$supported_tags=strtolower(str_replace("\n","",$supported_tags));
 	$supported_tags_array=explode(" ",$supported_tags);
 	
 	#build array of writable tags
-	$command=$exiftool_path."/exiftool -list";
+	$command=$exiftool_path."/exiftool -listw";
 	$writable_tags=shell_exec($command);
-	$writable_tags=strtolower($writable_tags);
+	$writable_tags=strtolower(str_replace("\n","",$writable_tags));
 	$writable_tags_array=explode(" ",$writable_tags);
 	
 	$command=$exiftool_path."/exiftool -s -t --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
