@@ -34,10 +34,15 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$writable_tags=strtolower(str_replace("\n","",$writable_tags));
 	$writable_tags_array=explode(" ",$writable_tags);
 	
+	#build array of writable formats
+	$command=$exiftool_path."/exiftool -listwf";
+	$writable_formats=shell_exec($command);
+	$writable_formats_array=explode(" ",$writable_formats);
+	
 	$command=$exiftool_path."/exiftool -s -t --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= shell_exec($command);
 		          
-	# get command that would be run on download:      
+	# get commands that would be run on download:      
 
 	# I'm commenting out the following line because I'm not sure why it would be used or how to handle it   
 	# if ($exiftool_remove_existing) {$command="-EXIF:all -XMP:all= -IPTC:all= ";}
@@ -53,10 +58,12 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			$simcommands[$field]['ref']=$write_to[$i]['ref'];
 			}
 		} 
-		
+	
+	# see if file is writable
+	$file_writability=in_array($ext,$writable_formats_array);	
 	# build report:		 
 	($exiftool_write)?$write_status="On":$write_status="Off";?>
-	Exiftool writability does not apply to all filetypes. See <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/#supported">Supported File Types</a>.<br><br>
+	
 	<?php
 	echo "<table>";
 	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">CURRENT DIFF (Exiftool Write: $write_status)</td></tr>";
@@ -73,7 +80,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			$tag=trim(strtolower($tag));
 			$tagprops="";
 			if(in_array($tag,$supported_tags_array)){$tagprops.="r";}
-			if(in_array($tag,$writable_tags_array)){$tagprops.="w";}
+			if(in_array($tag,$writable_tags_array)&&$file_writability){$tagprops.="w";}
 			if ($tagprops!="")$tagprops="($tagprops)";
 					
 			if(isset($simcommands[$tag]['value']))
