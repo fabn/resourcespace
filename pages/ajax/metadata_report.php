@@ -73,7 +73,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	
 	<?php
 	echo "<table class=\"InfoTable\">";
-	echo "<tr><td>Resource Type: ".$type_name."</td></tr>";
+	echo "<tr><td colspan=\"4\">Resource Type: ".$type_name."</td></tr>";
 	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">$write_status</td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
