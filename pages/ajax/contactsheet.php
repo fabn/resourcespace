@@ -151,8 +151,11 @@ for ($n=0;$n<count($result);$n++)
 							if ($j > $rowsperpage){
 						    $page = $page+1;
 							$j=0; 
-							if (($preview==true) && ($page>1)){break;} else{							
-							$pdf->AddPage();}
+							if (($preview==true) && ($page>1)){break;} else{
+							if ($n<count($result)-1){							
+								$pdf->AddPage();
+								}
+							}
 							
 							#When moving to a new page, get current coordinates, place a new page header.
 							$pagestartx=$pdf->GetX();
