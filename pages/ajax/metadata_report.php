@@ -35,12 +35,17 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$writable_tags=strtolower(str_replace("\n","",$writable_tags));
 	$writable_tags_array=explode(" ",$writable_tags);
 	
+	$command=$exiftool_path."/exiftool -ver";
+	$exiftool_version=shell_exec($command);
+	
+	if($exiftool_version>=7.4){
 	#build array of writable formats
 	$command=$exiftool_path."/exiftool -listwf";
 	$writable_formats=shell_exec($command);
 	$writable_formats=str_replace("\n","",$writable_formats);
 	$writable_formats_array=explode(" ",$writable_formats);
-	$file_writability=in_array($ext,$writable_formats_array);	
+	$file_writability=in_array($ext,$writable_formats_array);
+	}
 	
 	$command=$exiftool_path."/exiftool -s -t --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= shell_exec($command);
@@ -63,8 +68,8 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 		} 
 
 	# build report:		
-	 
-	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted.":$write_status="No write will be attempted.";?>
+	if(!isset($file_writability)){$file_writability=true;$writability_comment="Not all file formats are writable by exiftool.";}
+	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted. ".$writability_comment:$write_status="No write will be attempted.";?>
 	
 	<?php
 	echo "<table>";
