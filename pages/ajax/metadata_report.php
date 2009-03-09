@@ -68,7 +68,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 		} 
 
 	# build report:		
-	if(!isset($file_writability)){$file_writability=true;$writability_comment="Not all file formats are writable by exiftool.";}
+	if(!isset($file_writability)){$file_writability=true;$writability_comment="Not all file formats are writable by exiftool.";}else{$writability_comment="";}
 	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted. ".$writability_comment:$write_status="No write will be attempted.";?>
 	
 	<?php
