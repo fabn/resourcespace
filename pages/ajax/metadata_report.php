@@ -72,10 +72,9 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted. ".$writability_comment:$write_status="No write will be attempted.";?>
 	
 	<?php
-	echo "<table>";
-	echo "<tr><td colwidth=\"4\">Resource Type: ".$type_name."</td></td></tr>";
+	echo "<table class=\"InfoTable\">";
+	echo "<tr><td>Resource Type: ".$type_name."</td></tr>";
 	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">$write_status</td></tr>";
-	echo "<tr><td></td><td></td><td></td><td></td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
 		{
@@ -97,11 +96,11 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 				$RS_field_ref=$simcommands[$tag]['ref'];
 				$RS_field_name=sql_query("select title from resource_type_field where ref = $RS_field_ref");
 				$RS_field_name=$RS_field_name[0]['title'];
-				echo "<td>".$RS_field_ref." - ".$RS_field_name."</td>$tag $tagprops</td>";
+				echo "<td>".$RS_field_ref." - ".$RS_field_name."</td><td>$tag $tagprops</td>";
 				} 
 			else 
 				{
-				echo "<td></td>$tag $tagprops</td>";
+				echo "<td></td><td>$tag $tagprops</td>";
 				}
 				
 					
