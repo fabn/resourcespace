@@ -663,10 +663,10 @@ function relate_to_array($ref,$array)
 		sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$array) . ")");
 	}		
 
-function get_exiftool_fields()
+function get_exiftool_fields($resource_type)
 	{
 	# Returns a list of exiftool fields, which are basically fields with an 'exiftool field' set.
-	return sql_query("select ref,exiftool_field from resource_type_field where length(exiftool_field)>0 order by exiftool_field");
+	return sql_query("select ref,exiftool_field from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
 	}
 
 function write_metadata($path,$ref)
@@ -676,7 +676,8 @@ function write_metadata($path,$ref)
 	# Fetch file extension
 	$resource_data=get_resource_data($ref);
 	$extension=$resource_data["file_extension"];
-	
+	$resource_type=$resource_data["resource_type"];
+		
 	if (isset($exiftool_path) && ($exiftool_write) && !in_array($extension,$exiftool_no_process))
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
@@ -686,22 +687,23 @@ function write_metadata($path,$ref)
 				$filename = $filename['basename'];	
 				$tmpfile=$storagedir . "/tmp/" . $filename;				
 				copy($path,$tmpfile);
-				
-				#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
-				$command=$exiftool_path."/exiftool -overwrite_original ";
-				if ($exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
-				$write_to=get_exiftool_fields();
-				for($i=0;$i< count($write_to);$i++)
-					{
-					$field=explode(",",$write_to[$i]['exiftool_field']);
-					foreach ($field as $field)
+			
+					#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
+					$command=$exiftool_path."/exiftool -overwrite_original ";
+					if ($exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
+					$write_to=get_exiftool_fields($resource_type);
+					for($i=0;$i< count($write_to);$i++)
 						{
-						$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;
+						$field=explode(",",$write_to[$i]['exiftool_field']);
+						foreach ($field as $field)
+							{
+							$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;
+							}
 						}
-					}
-			$command.=" $tmpfile";
+					$command.=" $tmpfile";
  
-			$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
+					$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
+					
 			return $tmpfile;
 			}
 		else

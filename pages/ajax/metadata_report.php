@@ -5,13 +5,14 @@ include "../../include/general.php";
 include "../../include/resource_functions.php"; 
 
 
-
-global $exiftool_path;
 if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
 {
 
 	$ref=getval("ref","");
-	$ext=getval("ext","");
+	$resource=get_resource_data($ref);
+	$ext=$resource['file_extension'];
+	$resource_type=$resource['resource_type'];
+	$type_name=get_resource_type_name($resource_type);
 
 	$image=get_resource_path($ref,true,"",false,$ext);
 	if (!file_exists($image)) {die("error");}
@@ -37,7 +38,9 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	#build array of writable formats
 	$command=$exiftool_path."/exiftool -listwf";
 	$writable_formats=shell_exec($command);
+	$writable_formats=str_replace("\n","",$writable_formats);
 	$writable_formats_array=explode(" ",$writable_formats);
+	$file_writability=in_array($ext,$writable_formats_array);	
 	
 	$command=$exiftool_path."/exiftool -s -t --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= shell_exec($command);
@@ -47,7 +50,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	# I'm commenting out the following line because I'm not sure why it would be used or how to handle it   
 	# if ($exiftool_remove_existing) {$command="-EXIF:all -XMP:all= -IPTC:all= ";}
 				
-	$write_to=get_exiftool_fields();
+	$write_to=get_exiftool_fields($resource_type);
 	for($i=0;$i< count($write_to);$i++)
 		{
 		$field=explode(",",$write_to[$i]['exiftool_field']);
@@ -58,15 +61,15 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			$simcommands[$field]['ref']=$write_to[$i]['ref'];
 			}
 		} 
-	
-	# see if file is writable
-	$file_writability=in_array($ext,$writable_formats_array);	
-	# build report:		 
-	($exiftool_write)?$write_status="On":$write_status="Off";?>
+
+	# build report:		
+	 
+	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted.":$write_status="No write will be attempted.";?>
 	
 	<?php
 	echo "<table>";
-	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">CURRENT DIFF (Exiftool Write: $write_status)</td></tr>";
+	echo "<tr><td colwidth=\"4\">Resource Type: ".$type_name."</td></td></tr>";
+	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">$write_status</td></tr>";
 	echo "<tr><td></td><td></td><td></td><td></td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)

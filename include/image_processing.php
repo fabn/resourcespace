@@ -90,13 +90,15 @@ function extract_exif_comment($ref,$extension)
 
 	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
+	
 
 global $exiftool_path,$exif_comment,$exiftool_no_process;
 if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-			{
-			$read_from=get_exiftool_fields();
+			{	
+			$resource=get_resource_data($ref);
+			$read_from=get_exiftool_fields($resource['resource_type']);
 
             # run exiftool to get all the valid fields. Use -s -s option so that
             # the command result isn't printed in columns, which will help in parsing

@@ -512,8 +512,7 @@ if ($metadata_report && isset($exiftool_path)){?>
 <div class="RecordBox">
 <div class="RecordPanel">  
 <div class="Title"><?php echo $lang['metadata-report']?></div>
-<?php $file_ext=$resource['file_extension'];?>
-<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>,'<?php echo $file_ext?>');return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br>
+<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>);return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br>
 </div></div>
 <div class="PanelShadow"></div>
 </div>
