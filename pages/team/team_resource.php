@@ -43,7 +43,7 @@ include "../../include/header.php";
 		<li><a href="../search.php?search=<?php echo urlencode("!userpending")?>"><?php echo $lang["viewuserpending"]?></a></li>
 
 		<!--<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>-->
-		<li><a href="../search.php?search=<?=urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>
+		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>
 		<?php if (checkperm("k")): // Check if user can manage keywords and fields ?>
 			<li><a href="team_related_keywords.php"><?php echo $lang["managerelatedkeywords"]?></a></li>
 			<li><a href="team_fields.php"><?php echo $lang["managefieldoptions"]?></a></li>
