@@ -635,4 +635,4 @@ $local_ftp_upload_folder = 'upload/';
 # $active_collections="-3 months";
 
 # Set this to true to separate related resource results into separate sections (ie. PDF, JPG)
-$sort_relations_by_filetype=true;
+$sort_relations_by_filetype=false;
