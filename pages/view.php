@@ -525,37 +525,87 @@ if (checkperm("s") && ($k=="")) {
 $result=do_search("!related" . $ref);
 if (count($result)>0) 
 	{
-	?><!--Panel for related resources-->
-<div class="RecordBox">
-<div class="RecordPanel">  
+	# -------- Related Resources by File Extension
+	if($sort_relations_by_filetype){	
+		#build array of related resources' file extensions
+		for ($n=0;$n<count($result);$n++){
+			$related_file_extension=$result[$n]["file_extension"];
+			$related_file_extensions[]=$related_file_extension;
+			}
+		#reduce extensions array to unique values
+		$related_file_extensions=array_unique($related_file_extensions);
+		$count_extensions=0;
+		foreach($related_file_extensions as $rext){
+		?><!--Panel for related resources-->
+		<div class="RecordBox">
+		<div class="RecordPanel">  
 
-<div class="RecordResouce">
-<div class="Title"><?php echo $lang["relatedresources"]?></div>
-<?php
-	# loop and display the results
-	for ($n=0;$n<count($result);$n++)			
-		{
-		$rref=$result[$n]["ref"];
+		<div class="RecordResouce">
+		<div class="Title"><?php echo $lang["relatedresources"]?> - <?php echo strtoupper($rext);?></div>
+		<?php
+		# loop and display the results by file extension
+		for ($n=0;$n<count($result);$n++)			
+			{
+			if ($result[$n]["file_extension"]==$rext){
+				$rref=$result[$n]["ref"];
+				?>
+				<!--Resource Panel-->
+				<div class="CollectionPanelShell">
+				<table border="0" class="CollectionResourceAlign"><tr><td>
+				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 width=56 height=75 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"/><?php } ?></a></td>
+				</tr></table>
+				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+				</div>
+				<?php		
+				}
+			}
 		?>
-		<!--Resource Panel-->
-		<div class="CollectionPanelShell">
-			<table border="0" class="CollectionResourceAlign"><tr><td>
-			<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 width=56 height=75 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"/><?php } ?></a></td>
-			</tr></table>
-			<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+		<div class="clearerleft"> </div>
+		<?php $count_extensions++; if ($count_extensions==count($related_file_extensions)){?><a href="search.php?search=<?php echo urlencode("!related" . $ref) ?>"><?php echo $lang["clicktoviewasresultset"]?></a><?php }?>
 		</div>
-		<?php		
-		}
-	?>
-	<div class="clearerleft"> </div>
-		<a href="search.php?search=<?php echo urlencode("!related" . $ref) ?>"><?php echo $lang["clicktoviewasresultset"]?></a>
+		</div>
+		<div class="PanelShadow"></div>
+		</div><?php
+		} #end of display loop by resource extension
+	} #end of IF sorted relations
+	
+	
+	# -------- Related Resources (Default)
+	else { 
+		 ?><!--Panel for related resources-->
+		<div class="RecordBox">
+		<div class="RecordPanel">  
 
-	</div>
-	</div>
-	<div class="PanelShadow"></div>
-	</div><?php
-	}
+		<div class="RecordResouce">
+		<div class="Title"><?php echo $lang["relatedresources"]?></div>
+		<?php
+    	# loop and display the results
+    	for ($n=0;$n<count($result);$n++)            
+        	{
+        	$rref=$result[$n]["ref"];
+        	?>
+        	<!--Resource Panel-->
+        	<div class="CollectionPanelShell">
+            <table border="0" class="CollectionResourceAlign"><tr><td>
+            <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 width=56 height=75 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"/><?php } ?></a></td>
+            </tr></table>
+            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+        </div>
+        <?php        
+        }
+    ?>
+    <div class="clearerleft"> </div>
+        <a href="search.php?search=<?php echo urlencode("!related" . $ref) ?>"><?php echo $lang["clicktoviewasresultset"]?></a>
 
+    </div>
+    </div>
+    <div class="PanelShadow"></div>
+    </div><?php
+		}# end related resources display
+	} 
+	# -------- End Related Resources
+	
+	
 
 if ($show_related_themes==true ){
 # -------- Public Collections / Themes

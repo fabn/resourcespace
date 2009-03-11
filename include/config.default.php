@@ -633,3 +633,6 @@ $local_ftp_upload_folder = 'upload/';
 # This is based on creation date for now. Older collections are effectively 'archived', but accessible through Manage My Collections.
 # You can use any English-language strings supported by php's strtotime() function.
 # $active_collections="-3 months";
+
+# Set this to true to separate related resource results into separate sections (ie. PDF, JPG)
+$sort_relations_by_filetype=true;
