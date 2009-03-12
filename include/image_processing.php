@@ -103,9 +103,9 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             # run exiftool to get all the valid fields. Use -s -s option so that
             # the command result isn't printed in columns, which will help in parsing
             # We then split the lines in the result into an array
-            $command=$exiftool_path."/exiftool -s -s -f -m -ScanforXMP -fast " . escapeshellarg($image);
+            $command=$exiftool_path."/exiftool -s -s -f -m -ScanforXMP -fast -d \"%Y-%m-%d %H:%M:%S\" " . escapeshellarg($image);
             $metalines = explode("\n", shell_exec($command));
-            
+            print_r($metalines);exit();
             $metadata = array(); # an associative array to hold metadata field/value pairs
             
             # go through each line and split field/value using the first
@@ -138,6 +138,11 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	}
 elseif (isset($exif_comment))
 {
+	#
+	# Exiftool is not installed. As a fallback we grab some predefined basic fields using the PHP function
+	# exif_read_data()
+	#
+	
 	$data=@exif_read_data($image);
 
 	if ($data!==false)
