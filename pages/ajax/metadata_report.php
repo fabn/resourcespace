@@ -22,6 +22,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$formats=shell_exec($command);
 	$ext=strtoupper($ext);
 	if (strlen(strstr($formats,$ext))<2){die("filetype $ext not supported");}
+	if (in_array(strtolower($ext),$exiftool_no_process)) {die("Exiftool processing is disabled for filetype $ext.");}
 	
 	#build array of supported tags
 	$command=$exiftool_path."/exiftool -list";
