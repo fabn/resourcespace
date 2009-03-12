@@ -11,8 +11,8 @@ else
 	}
 $flashpath=urlencode($flashpath);
 
-$thumb=get_resource_path($ref,false,"pre",false,"jpg"); // Dan: Is it needed?
-$thumb=urlencode($thumb); // Dan: Is it needed?
+$thumb=get_resource_path($ref,false,"pre",false,"jpg"); 
+$thumb=urlencode($thumb);
 
 # Choose a colour based on the theme.
 # This is quite hacky, and ideally of course this would be CSS based, but the FLV player requires that the colour
@@ -27,5 +27,5 @@ if ($theme=="greyblu") {$colour="446693";}
                     <param name="allowFullScreen" value="true" />
 
      <param name="movie" value="../lib/flashplayer/player_flv_maxi.swf" />
-     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $ffmpeg_preview_max_width?>&amp;height=<?php echo $ffmpeg_preview_max_height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;showtime=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;playercolor=<?php echo $colour?>" />
+     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $ffmpeg_preview_max_width?>&amp;height=<?php echo $ffmpeg_preview_max_height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;showtime=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;playercolor=<?php echo $colour?>&startimage=<?php echo $thumb?>" />
 </object>
