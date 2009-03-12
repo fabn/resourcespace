@@ -105,7 +105,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             # We then split the lines in the result into an array
             $command=$exiftool_path."/exiftool -s -s -f -m -ScanforXMP -fast -d \"%Y-%m-%d %H:%M:%S\" " . escapeshellarg($image);
             $metalines = explode("\n", shell_exec($command));
-            print_r($metalines);exit();
+
             $metadata = array(); # an associative array to hold metadata field/value pairs
             
             # go through each line and split field/value using the first
