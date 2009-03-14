@@ -48,7 +48,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$file_writability=in_array($ext,$writable_formats_array);
 	}
 	
-	$command=$exiftool_path."/exiftool -s -t --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
+	$command=$exiftool_path."/exiftool -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= shell_exec($command);
 		          
 	# get commands that would be run on download:      
@@ -74,34 +74,35 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	
 	<?php
 	echo "<table class=\"InfoTable\">";
-	echo "<tr><td colspan=\"4\">Resource Type: ".$type_name."</td></tr>";
-	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"150\">EXIFTOOL</td><td>EMBEDDED VALUE</td><td width=\"40%\">$write_status</td></tr>";
+	echo "<tr><td colspan=\"5\">Resource Type: ".$type_name."</td></tr>";
+	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"50\">GROUP</td><td width=\"150\">EXIFTOOL TAG</td><td>EMBEDDED VALUE</td><td>$write_status</td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
 		{
 		echo "<tr>";
 		$tag_value=explode("\t",$field); 
-		if (count($tag_value)==2)
+		if (count($tag_value)==3)
 			{
-			$tag=$tag_value[0];
-			$value=trim($tag_value[1]);
+			$group=$tag_value[0];
+			$tag=$tag_value[1];
+			$value=trim($tag_value[2]);
 			$tag=trim(strtolower($tag));
 			$tagprops="";
 			if(in_array($tag,$supported_tags_array)){$tagprops.="r";}
 			if(in_array($tag,$writable_tags_array)&&$file_writability){$tagprops.="w";}
 			if ($tagprops!="")$tagprops="($tagprops)";
-					
+			
 			if(isset($simcommands[$tag]['value']))
 				{
 				#add notes to mapped fields	
 				$RS_field_ref=$simcommands[$tag]['ref'];
 				$RS_field_name=sql_query("select title from resource_type_field where ref = $RS_field_ref");
 				$RS_field_name=$RS_field_name[0]['title'];
-				echo "<td>".$RS_field_ref." - ".$RS_field_name."</td><td>$tag $tagprops</td>";
+				echo "<td>".$RS_field_ref." - ".$RS_field_name."</td><td>$group</td><td>$tag $tagprops</td>";
 				} 
 			else 
 				{
-				echo "<td></td><td>$tag $tagprops</td>";
+				echo "<td></td><td>$group</td><td>$tag $tagprops</td>";
 				}
 				
 					
