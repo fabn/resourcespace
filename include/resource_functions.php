@@ -666,7 +666,7 @@ function relate_to_array($ref,$array)
 function get_exiftool_fields($resource_type)
 	{
 	# Returns a list of exiftool fields, which are basically fields with an 'exiftool field' set.
-	return sql_query("select ref,exiftool_field from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
+	return sql_query("select ref,type,exiftool_field from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
 	}
 
 function write_metadata($path,$ref)
@@ -694,14 +694,17 @@ function write_metadata($path,$ref)
 					$write_to=get_exiftool_fields($resource_type);
 					for($i=0;$i< count($write_to);$i++)
 						{
+						$fieldtype=$write_to[$i]['type'];
 						$field=explode(",",$write_to[$i]['exiftool_field']);
+						# write datetype fields as ISO 8601 date ("c") 
+						if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
+						else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
 						foreach ($field as $field)
 							{
-							$command.="-".$field."=\"". str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref'])) . "\" " ;
+							$command.="-".$field."=\"". str_replace("\"","\\\"",$writevalue) . "\" " ;
 							}
 						}
 					$command.=" $tmpfile";
- 
 					$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
 					
 			return $tmpfile;
