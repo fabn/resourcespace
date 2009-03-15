@@ -311,7 +311,7 @@ if (!isset($newfile))
 			$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
 			if (file_exists($target)) {unlink($target);}
 			
-			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
+			$gscommand2 = $gscommand . " -dBATCH -r150 -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
  			$output=shell_exec($gscommand2); 
 	
 			# Set that this is the file to be used.
@@ -321,9 +321,9 @@ if (!isset($newfile))
 				}
 			
 			# For files other than page 1, resize directly to the screen size (no other sizes needed)
-			if (file_exists($target) && $n>1)
+			if (file_exists($target))
 				{
-				$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 800x800 " . escapeshellarg($target); 
+				$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
 				$output=shell_exec($command2); 
 				
 				# Add a watermarked image too?
