@@ -72,8 +72,13 @@ if($width>$ffmpeg_preview_max_width)
 	$width=$ffmpeg_preview_max_width;
 	}
 
+# Frame size must be a multiple of two
+if ($width % 2){$width++;}
+if ($height % 2) {$height++;}
+
 $shell_exec_cmd = $ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 $output=shell_exec($shell_exec_cmd);
+
 if (!file_exists($targetfile))
     {
     error_log("FFmpeg failed: ".$shell_exec_cmd);
