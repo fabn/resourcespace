@@ -59,11 +59,15 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$write_to=get_exiftool_fields($resource_type);
 	for($i=0;$i< count($write_to);$i++)
 		{
+		$fieldtype=$write_to[$i]['type'];	
 		$field=explode(",",$write_to[$i]['exiftool_field']);
+		 # write datetype fields as ISO 8601 date ("c") 
+		 if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
+		 else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
 		foreach ($field as $field)
 			{
 			$field=strtolower($field);
-			$simcommands[$field]['value']=str_replace("\"","\\\"",get_data_by_field($ref,$write_to[$i]['ref']));
+			$simcommands[$field]['value']=str_replace("\"","\\\"",$writevalue);
 			$simcommands[$field]['ref']=$write_to[$i]['ref'];
 			}
 		} 
