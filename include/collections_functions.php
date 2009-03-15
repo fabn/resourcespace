@@ -760,4 +760,14 @@ function get_collection_log($collection)
 	{
 	return sql_query("select c.date,u.username,u.fullname,c.type,r.title,c.resource from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
 	}
+	
+function get_collection_videocount($ref)
+	{
+	global $videotypes;
+    #figure out how many videos are in a collection. if more than one, can make a playlist
+	$resources = do_search("!collection" . $ref);
+	$videocount=0;
+	foreach ($resources as $resource){if (in_array($resource['resource_type'],$videotypes)){$videocount++;}}
+	return $videocount;
+	}
 ?>

@@ -708,4 +708,7 @@ $lang["requestcollection"]="Request Collection";
 
 # Metadata report
 $lang["metadata-report"]="Metadata Report";
+
+# Video Playlist
+$lang["videoplaylist"]="Video Playlist";
 ?>
