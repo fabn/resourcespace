@@ -320,7 +320,7 @@ if (!isset($newfile))
 				$newfile=$target;
 				}
 			
-			# For files other than page 1, resize directly to the screen size (no other sizes needed)
+			# resize directly to the screen size (no other sizes needed)
 			if (file_exists($target))
 				{
 				$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
