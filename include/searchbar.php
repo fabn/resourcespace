@@ -108,22 +108,15 @@ if (!$basic_simple_search)
 	<input type="hidden" name="resetrestypes" value="yes">
 	<?php
 	$rt=explode(",",@$restypes);
-	$function="";
+	$clear_function="";
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
 		{
 		?><div class="tick"><input id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> />&nbsp;<?php echo $types[$n]["name"]?></div><?php	
-		$function.="document.getElementById('TickBox" . $n . "').checked=true;";
+		$clear_function.="document.getElementById('TickBox" . $n . "').checked=true;";
 		}
-	?>
-	<script language="Javascript">
-	function ResetTicks() {<?php echo $function?>}
-	</script>
-	<?php
 	}
 ?>
 	<div class="SearchItem"><?php if (!$basic_simple_search) { ?><input name="Clear" type="button" value="&nbsp;&nbsp;<?php echo $lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';
-	<?php if ($country_search==true) {?>document.getElementById('basiccountry').value='';
-	<?php } ?>
 	document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';
 	<?php if ($searchbyday) { ?>document.getElementById('basicday').value='';<?php } ?>
 	ResetTicks();"/><?php } ?><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
@@ -149,7 +142,11 @@ if (!$basic_simple_search)
 			case 0: # -------- Text boxes
 			case 1:
 			case 5:
-			?><input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
+			?><input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" id="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
+			
+			# Add to the clear function so clicking 'clear' clears this box.
+			$clear_function.="document.getElementById('field_" . $fields[$n]["name"] . "').value='';";
+			
 			break;
 		
 			case 2:
@@ -169,6 +166,10 @@ if (!$basic_simple_search)
 			  ?>
 	  		</select>
 			<?php
+
+			# Add to the clear function so clicking 'clear' clears this box.
+			$clear_function.="document.getElementById('field_" . $fields[$n]["name"] . "').selectedIndex=0;";
+
 			break;
 			
 			}
@@ -237,6 +238,10 @@ if (!$basic_simple_search)
 	<?php } ?>
 
 	</div>
+
+	<script language="Javascript">
+	function ResetTicks() {<?php echo $clear_function?>}
+	</script>
 	
 	<!--				
 	<div class="SearchItem">By Category<br />
