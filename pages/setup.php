@@ -335,6 +335,7 @@ h2#dbaseconfig{  min-height: 32px;}
 			$search_paths[]='/sw/bin';
 			$search_paths[]='/usr/share/bin';
 			$search_paths[]='/usr/local/bin';
+			$search_paths[]='/opt/local/bin';
 		}
 		//Check if we're on windows and set config_windows if we are.
 		elseif(stristr($os,'windows')){
