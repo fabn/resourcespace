@@ -31,23 +31,7 @@ if ($submitted != "")
 		{
 		$ref=$result[$n]["ref"];
 		# Load access level
-		$access=$result[$n]["access"];
-		if (checkperm("v"))
-			{
-			$access=0; # Permission to access all resources
-			}
-		elseif (!checkperm("g"))
-			{
-			$access=1;
-			}
-		else
-			{
-			if ($access==3)
-				{
-				# Load custom access level
-				$access=get_custom_access($ref,$usergroup);
-				}
-			}
+		$access=get_resource_access($ref);
 			
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)
@@ -213,23 +197,7 @@ for ($n=0;$n<count($result);$n++)
 	{
 	$ref=$result[$n]["ref"];
 	# Load access level
-	$access=$result[$n]["access"];
-	if (checkperm("v"))
-		{
-		$access=0; # Permission to access all resources
-		}
-	elseif (!checkperm("g"))
-		{
-		$access=1;
-		}
-	else
-		{
-		if ($access==3)
-			{
-			# Load custom access level
-			$access=get_custom_access($ref,$usergroup);
-			}
-		}
+	$access=get_resource_access($ref);
 	if ($access<$maxaccess) {$maxaccess=$access;}
 	}
 

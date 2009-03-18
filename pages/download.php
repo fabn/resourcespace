@@ -12,6 +12,10 @@ $ext=getvalescaped("ext","");
 $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
 
+# Permissions check
+$access=get_resource_access($ref);
+if ($access==2) {exit("Permission denied");}
+
 /**
  * Returns filename component of path
  * This version is UTF-8 proof.
