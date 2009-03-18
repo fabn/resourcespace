@@ -54,16 +54,7 @@ if ($go!="")
 $resource=get_resource_data($ref);
 
 # Load access level
-$access=$resource["access"];
-if (checkperm("v"))
-	{
-	$access=0; # Permission to access all resources
-	}
-elseif ($access==3)
-	{
-	# Load custom access level
-	$access=get_custom_access($ref,$usergroup);
-	}
+$access=get_resource_access($ref);
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
@@ -197,14 +188,26 @@ else
 <td><?php echo $lang["options"]?></td>
 </tr>
 <?php
-$nodownloads=false;$counter=0;
+$nodownloads=false;$counter=0;$fulldownload=false;
 if ($resource["has_image"]==1)
 	{
-	# Work out if the user is allowed to download these images
-	$download=true;
-	if (checkperm("v")) {$download=true;}
-	if (($k!="") && (check_access_key($ref,$k))) {$download=true;} # External users to whom the resource has been e-mailed
-
+	# Restricted access? Show the request link.
+		
+	if ($access==1)
+		{
+		# No file. Link to request form.
+		$path=get_resource_path($ref,true,"",false,$resource["file_extension"]);
+		?>
+		<tr class="DownloadDBlend">
+		<td><h2><?php echo $lang["original"]?> <?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
+		<td><?php echo formatfilesize(filesize($path))?></td>
+		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+		</tr>
+		<?php
+		}
+	
+	
+	# List all sizes and allow the user to download them
 	$sizes=get_image_sizes($ref,false,$resource["file_extension"]);
 	for ($n=0;$n<count($sizes);$n++)
 		{
@@ -227,22 +230,16 @@ if ($resource["has_image"]==1)
 		# MP calculation
 		$mp=round(($sizes[$n]["width"]*$sizes[$n]["height"])/1000000,1);
 		
-		$downloadthissize=$download;
-		if (($access==1) && $downloadthissize)
-			{
-			# Additional check on restricted downloads - is this download available for restricted access?
-			if ($sizes[$n]["allow_restricted"]!=1) {$downloadthissize=false;}
-			}
-
-		if (!checkperm("v") && !checkperm("g") && $downloadthissize && $k=="") 
-			{
-			# Restricted access if used does not have 'g' permission
-			# Only allow downloads of sizes where 'allow restricted download' is set to 1.
-			if (!$sizes[$n]["allow_restricted"]==1) {$downloadthissize=false;}
-			}
-			
+		# Should we allow this download?
+		# For restricted access, only show sizes that are available for the restricted view.
+		$downloadthissize=($access==0 || ($access==1 && $sizes[$n]["allow_restricted"]));
+		
 		if ($downloadthissize)
 			{
+			# Is this the original file? Set that the user can download the original file
+			# so the request box does not appear.
+			if ($sizes[$n]["id"]=="") {$fulldownload=true;}
+			
 			$counter++;
 			$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 			?>
@@ -273,7 +270,7 @@ if ($resource["has_image"]==1)
 	}
 elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_full_download==false))
 	{
-	# Files without multiple download sizes (i.e. no thumbnail, or ImageMagick generated).
+	# Files without multiple download sizes (i.e. no alternative previews generated).
 	$counter++;
 	$path=get_resource_path($ref,true,"",false,$resource["file_extension"]);
 	if (file_exists($path))

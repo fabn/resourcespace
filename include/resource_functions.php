@@ -1038,5 +1038,40 @@ function add_field_option($field,$option)
 	sql_query("update resource_type_field set options=concat(options,', " . escape_check($option) . "') where ref='$field'");
 	return true;
 	}
+
+function get_resource_access($resource)
+	{
+	# Returns the access that the currently logged-in user has to $resource.
+	# Return values:
+	# 0 = Full Access (download all sizes)
+	# 1 = Restricted Access (download only those sizes that are set to allow restricted downloads)
+	# 2 = Confidential (no access)
 	
+	# Load the 'global' access level set on the resource
+	$resourcedata=get_resource_data($resource);
+	$access=$resourcedata["access"];
+	
+	if (checkperm("v"))
+		{
+		# Permission to access all resources
+		# Always return 0
+		return 0; 
+		}
+	
+	if ($access==3)
+		{
+		# Load custom access level
+		global $usergroup;
+		$access=get_custom_access($resource,$usergroup);
+		}
+
+	if ($access==0 && !checkperm("g"))
+		{
+		# User does not have the 'g' permission. Always return restricted for live resources.
+		return 1; 
+		}
+
+	return $access;	
+	}
+
 ?>
