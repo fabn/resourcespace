@@ -153,7 +153,32 @@ if ($submitted != "")
 	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 	
 	$file="collection_" . $collection . "_" . $size . ".zip";
-	exec("$zipcommand " . $storagedir . "/tmp/" . $file . $path );
+
+	$thefullzipcommand = "$zipcommand " . $storagedir . "/tmp/" . $file . $path;
+	if (strlen($thefullzipcommand) <= 1024 || !$config_windows)
+		{
+		exec($thefullzipcommand);
+		}
+	else
+		{
+		# Windows only.
+		# Windows has an issue with commands over a certain length. In this case a temporary file is
+		# fed to the supported Windows zip client (7zip) containing the filenames to zip.
+		
+		# Prepare path
+		$path = trim($path);
+		$path = str_replace("\" \"", "\"\r\n\"", $path);
+		
+		# Write command parameters to file.
+		$textfile = $storagedir . "/tmp/zipcmd" . $collection . "_" . $size . ".txt";
+		$fh = fopen($textfile, 'w') or die("can't open file");
+		fwrite($fh, $path);
+		fclose($fh);
+		
+		# Execute the zip command.
+		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " @" . $textfile);
+		}	
+
 	$filesize=filesize($storagedir . "/tmp/" . $file);
 	
 	header("Content-Disposition: attachment; filename=" . $file);

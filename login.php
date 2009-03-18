@@ -42,7 +42,7 @@ elseif (array_key_exists("username",$_POST))
 
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
     
-    $valid=sql_query("select ref from user where username='$username' and (password='$password' or password='$password_hash')");
+    $valid=sql_query("select ref,usergroup from user where username='$username' and (password='$password' or password='$password_hash')");
     
     if (count($valid)>=1)
         {
@@ -65,6 +65,7 @@ elseif (array_key_exists("username",$_POST))
 
 			# Log this
 			$userref=$valid[0]["ref"];
+			$usergroup=$valid[0]["usergroup"];
 			daily_stat("User session",$userref);
 			resource_log(0,'l',0);
 			
