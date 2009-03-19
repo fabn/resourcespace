@@ -74,10 +74,35 @@ if ($extension=="psd")
 			}
 		if (file_exists($target))
 			{
-			if (filesize($target)>0){$newfile = $target;}
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
 			}
 		}
 	}
+	
+/* ----------------------------------------
+	Try RAW thumbnail extraction (CR2) via exiftool
+   ----------------------------------------
+*/
+# Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+if ($extension=="cr2")
+	{
+	global $cr2_thumb_extract;
+	if ($cr2_thumb_extract)
+		{
+		global $exiftool_path;
+		if (isset($exiftool_path))
+			{
+			shell_exec($exiftool_path.'/exiftool -b -previewimage '.$file.' > '.$target);
+			}
+		if (file_exists($target))
+			{
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+			}
+		}
+	}	
+	
 	
 /* ----------------------------------------
 	Unoconv is a python-based utility to run files through OpenOffice. It is available in Ubuntu.
