@@ -1074,4 +1074,39 @@ function get_resource_access($resource)
 	return $access;	
 	}
 
+function resource_download_allowed($resource,$size)
+	{
+	# For the given resource and size, can the curent user download it?
+	$access=get_resource_access($resource);
+	
+	# Full access
+	if ($access==0)
+		{
+		return true;
+		}
+		
+	# Restricted
+	if ($access==1)
+		{
+		if ($size=="")
+			{
+			# Original file - access depends on the 'restricted_full_download' config setting.
+			global $restricted_full_download;
+			return $restricted_full_download;
+			}
+		else
+			{
+			# Return the restricted access setting for this resource type.
+			return (sql_value("select allow_restricted value from preview_size where id='" . escape_check($size) . "'",0)==1);
+			}
+		}
+		
+	# Confidential
+	if ($access==2)
+		{
+		return false;
+		}
+	
+	}
+
 ?>

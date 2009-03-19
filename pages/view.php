@@ -193,19 +193,6 @@ if ($resource["has_image"]==1)
 	{
 	# Restricted access? Show the request link.
 		
-	if ($access==1)
-		{
-		# No file. Link to request form.
-		$path=get_resource_path($ref,true,"",false,$resource["file_extension"]);
-		?>
-		<tr class="DownloadDBlend">
-		<td><h2><?php echo $lang["original"]?> <?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
-		<td><?php echo formatfilesize(filesize($path))?></td>
-		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
-		</tr>
-		<?php
-		}
-	
 	
 	# List all sizes and allow the user to download them
 	$sizes=get_image_sizes($ref,false,$resource["file_extension"]);
@@ -230,32 +217,47 @@ if ($resource["has_image"]==1)
 		# MP calculation
 		$mp=round(($sizes[$n]["width"]*$sizes[$n]["height"])/1000000,1);
 		
+		# Is this the original file? Set that the user can download the original file
+		# so the request box does not appear.
+		if ($sizes[$n]["id"]=="") {$fulldownload=true;}
+		
+		$counter++;
+		$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
+		?>
+		<tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
+		<td><h2><?php echo $headline?></h2>
+		<?php  if (is_numeric($sizes[$n]["width"])) { ?>
+		<p><?php echo $sizes[$n]["width"]?> x <?php echo $sizes[$n]["height"]?> <?php echo $lang["pixels"]?> <?php if ($mp>=1) { ?> (<?php echo $mp?> MP)<?php } ?></p>
+		<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> dpi</p></td>
+		<?php } ?>
+		<td><?php echo $sizes[$n]["filesize"]?></td>
+		<!--<td><?php echo $sizes[$n]["filedown"]?></td>-->
+
+		<?php
+
 		# Should we allow this download?
 		# For restricted access, only show sizes that are available for the restricted view.
 		$downloadthissize=($access==0 || ($access==1 && $sizes[$n]["allow_restricted"]));
-		
+
+		# If the download is allowed, show a download button, otherwise show a request button.
 		if ($downloadthissize)
 			{
-			# Is this the original file? Set that the user can download the original file
-			# so the request box does not appear.
-			if ($sizes[$n]["id"]=="") {$fulldownload=true;}
-			
-			$counter++;
-			$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 			?>
-			<tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
-			<td><h2><?php echo $headline?></h2>
-			<?php  if (is_numeric($sizes[$n]["width"])) { ?>
-			<p><?php echo $sizes[$n]["width"]?> x <?php echo $sizes[$n]["height"]?> <?php echo $lang["pixels"]?> <?php if ($mp>=1) { ?> (<?php echo $mp?> MP)<?php } ?></p>
-			<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> dpi</p></td>
-			<?php } ?>
-			<td><?php echo $sizes[$n]["filesize"]?></td>
-			<!--<td><?php echo $sizes[$n]["filedown"]?></td>-->
 			<td class="DownloadButton">
 			<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k)?>"><?php echo $lang["download"]?></a>
-			</td></tr>
+			</td>
 			<?php
 			}
+		else
+			{
+			?>
+			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+			<?php
+			}
+		?>
+		</tr>
+		<?php
+
 		if ($downloadthissize && $sizes[$n]["allow_preview"]==1)
 			{ 
 		 	# Add an extra line for previewing

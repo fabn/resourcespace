@@ -13,8 +13,11 @@ $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
 
 # Permissions check
-$access=get_resource_access($ref);
-if ($access==2) {exit("Permission denied");}
+if (!resource_download_allowed($ref,$size))
+	{
+	# This download is not allowed. How did the user get here?
+	exit("Permission denied");
+	}
 
 /**
  * Returns filename component of path
