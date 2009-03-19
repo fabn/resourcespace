@@ -397,18 +397,15 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			# We're generating based on a new preview (scr) image.
 			$file=get_resource_path($ref,true,"tmp",false,$extension);	
 			}
-
-		# Locate imagemagick.
-		$command=$imagemagick_path . "/bin/convert";
-		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-		if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
+			
+		$lpr_path=get_resource_path($ref,true,"lpr",false);	
+		if (file_exists($lpr_path)) {unlink($lpr_path);}	
+		$scr_path=get_resource_path($ref,true,"scr",false);	
+		if (file_exists($scr_path)) {unlink($scr_path);}
 		
 		$prefix = '';
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
-
-		$command .= ' '. escapeshellarg($prefix.$file) .'[0]  -flatten -quality ' . $imagemagick_quality;
 
 		# Locate imagemagick.
 		$identcommand=$imagemagick_path . "/bin/identify";
@@ -426,10 +423,21 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if ($thumbonly) {$sizes=" where id='thm' or id='col'";}
 		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
-		$ps=sql_query("select * from preview_size $sizes order by width asc, height asc");
+		$ps=sql_query("select * from preview_size $sizes order by width desc, height desc");
 		$highestsize = false;
 		for ($n=0;$n<count($ps);$n++)
 			{
+			if(file_exists($lpr_path)){$file=$lpr_path;}
+			if(file_exists($scr_path)){$file=$scr_path;}
+			
+			# Locate imagemagick.
+			$command=$imagemagick_path . "/bin/convert";
+			if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+			if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+			if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
+			
+			$command .= ' '. escapeshellarg($prefix.$file) .'[0]  -flatten -quality ' . $imagemagick_quality;
+			
 			# fetch target width and height
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
@@ -453,8 +461,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 				$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
 				$output=shell_exec($runcommand);  
-				
-
+				# echo $runcommand."<br>";
 				# Add a watermarked image too?
 				global $watermark;
 				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
@@ -468,11 +475,10 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					
 					#die($runcommand);
 					$output=shell_exec($runcommand); 
-					 
+					# echo $runcommand;
 					}
 				}
 			}
-
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
 		$target=@imagecreatefromjpeg(get_resource_path($ref,true,"thm",false));
 		if ($target) 
