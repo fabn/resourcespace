@@ -112,8 +112,7 @@ if ($noattach=="")
 		}
 	
 	# We use quotes around the filename to handle filenames with spaces.
-	#header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
-	header('Content-Disposition: attachment; filename=' . $filename);
+	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
 	}
 
 # We assign a default mime-type, in case we can find the one associated to the file extension.
