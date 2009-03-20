@@ -25,6 +25,9 @@ if ($submitted != "")
 	$path="";
 	$deletion_array=array();
 	
+	# No temporary folder? Create one
+	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
+	
 	# Build a list of files to download
 	$result=do_search("!collection" . $collection);
 	for ($n=0;$n<count($result);$n++)
@@ -110,7 +113,7 @@ if ($submitted != "")
 					}
 				}
 				
-				$path.=" \"" . $p . "\"";	
+				$path.=$p . "\r\n";	
 				
 				# build an array of paths so we can clean up any exiftool-modified files.
 				
@@ -129,40 +132,41 @@ if ($submitted != "")
 	fwrite($fh, $text);
 	fclose($fh);
 
-	$path.=" \"" . $textfile . "\"";	
+	$path.=$textfile . "\r\n";	
 	$deletion_array[]=$textfile;	
 	}
 
 	# Create and send the zipfile
-	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 	
+	# Build a file name for the zip file.
 	$file="collection_" . $collection . "_" . $size . ".zip";
 
-	$thefullzipcommand = "$zipcommand " . $storagedir . "/tmp/" . $file . $path;
-	if (strlen($thefullzipcommand) <= 1024 || !$config_windows)
+	# Write command parameters to file.
+	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection . "_" . $size . ".txt";
+	$fh = fopen($cmdfile, 'w') or die("can't open file");
+	fwrite($fh, $path);
+	fclose($fh);
+		
+	# Execute the zip command.
+	if ($config_windows)
 		{
-		exec($thefullzipcommand);
+		# Use the Zzip format to specify the external file
+		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " @" . $cmdfile);
 		}
 	else
 		{
-		# Windows only.
-		# Windows has an issue with commands over a certain length. In this case a temporary file is
-		# fed to the supported Windows zip client (7zip) containing the filenames to zip.
-		
-		# Prepare path
-		$path = trim($path);
-		$path = str_replace("\" \"", "\"\r\n\"", $path);
-		
-		# Write command parameters to file.
-		$textfile = $storagedir . "/tmp/zipcmd" . $collection . "_" . $size . ".txt";
-		$fh = fopen($textfile, 'w') or die("can't open file");
-		fwrite($fh, $path);
-		fclose($fh);
-		
-		# Execute the zip command.
-		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " @" . $textfile);
-		}	
+		# UNIX et al.
+		# Pipe the file containing the filenames to zip
+		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " -@ < " . $cmdfile);
+		}
+	
+	# Zip done, add the 
+	$deletion_array[]=$cmdfile;
 
+	# Remove temporary files.
+	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
+	
+	# Get the file size of the zip.
 	$filesize=filesize($storagedir . "/tmp/" . $file);
 	
 	header("Content-Disposition: attachment; filename=" . $file);
@@ -172,9 +176,9 @@ if ($submitted != "")
 	set_time_limit(0);
 	readfile($storagedir . "/tmp/" . $file);
 	
+	# Remove zip file.
 	unlink($storagedir . "/tmp/" . $file);
-	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
-	exit();
+	exit();	
 	}
 include "../include/header.php";
 ?>
