@@ -11,7 +11,7 @@ function upload_file($ref)
 	# Work out which file has been posted (switch is necessary for SWFUpload)
 	if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];} else {$processfile=$_FILES['Filedata'];}
 	
-    $filename=strtolower(str_replace(" ","_",$processfile['name']));
+    $filename=str_replace(" ","_",$processfile['name']);
     
     # Work out extension
     $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
