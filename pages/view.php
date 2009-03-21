@@ -147,12 +147,15 @@ elseif ($resource["has_image"]==1)
 		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
 		}
 	$previewpath=get_resource_path($ref,true,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	$preview_page_size="scr"; // for checking if download is allowed
 	if (!file_exists($previewpath))
 		{
 		$previewpath=get_resource_path($ref,true,"",false,$resource["preview_extension"]);
+		$preview_page_size=""; // for checking if download is allowed
 		}
 	
-	if (file_exists($previewpath) && $access==0) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php }
+	// if the size that the preview page is going to display is not available for download, the preview page should not be available.
+	if (file_exists($previewpath) && resource_download_allowed($ref,$preview_page_size)) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php }
 	if (file_exists($imagepath))
 		{ ?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
 	if (file_exists($previewpath)) { ?></a><?php }
@@ -219,6 +222,7 @@ if ($resource["has_image"]==1)
 		
 		# Is this the original file? Set that the user can download the original file
 		# so the request box does not appear.
+		$fulldownload=false;
 		if ($sizes[$n]["id"]=="") {$fulldownload=true;}
 		
 		$counter++;
@@ -237,8 +241,9 @@ if ($resource["has_image"]==1)
 
 		# Should we allow this download?
 		# For restricted access, only show sizes that are available for the restricted view.
-		$downloadthissize=($access==0 || ($access==1 && $sizes[$n]["allow_restricted"]));
-
+		# This depends on "allow restricted download" in Downloads/Preview Sizes and, for the original file, $restricted_full_download in config.php.
+		$downloadthissize=($access==0 || ($access==1 && $sizes[$n]["allow_restricted"])|| ($access==1 && $fulldownload &&$restricted_full_download));
+		
 		# If the download is allowed, show a download button, otherwise show a request button.
 		if ($downloadthissize)
 			{

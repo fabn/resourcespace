@@ -115,10 +115,10 @@ a:active {text-decoration:underline;}
 .ResourceAlignSmall {width:90px;height:90px;text-align: center;vertical-align: middle;}
 
 
-.IconCollect	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
-.IconCollectOut	{width: 22px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;}
-.IconEmail	{width:16px;height:12px;padding: 0;display: block;margin-left: 4px;float: right;}
-.IconPreview	{width:16px;height:12px;padding: 0;display: block;margin-left: 5px;float: right;margin-right: 5px;}
+.IconCollect	{width: 22px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
+.IconCollectOut	{width: 22px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
+.IconEmail	{width:16px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
+.IconPreview	{width:16px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
 
 .IconStar	{width:11px;height:12px;padding: 0;display: block;float: right;}
 

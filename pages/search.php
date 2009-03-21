@@ -1,6 +1,7 @@
 <?php
 include "../include/db.php";
 include "../include/general.php";
+include "../include/resource_functions.php"; //for checking scr access
 include "../include/search_functions.php";
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -300,8 +301,9 @@ if (true) #search condition
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 			
-			<div class="ResourcePanelCountry"><?php if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><?php } ?>&nbsp;</div>				
-			<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+			<div class="ResourcePanelCountry"><?php if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><?php } ?>&nbsp;</div>	
+					
+			<?php if( resource_download_allowed($ref,"scr")){?><span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><?php } ?>
 			
 			<?php if (!checkperm("b") && $k=="") { ?>
             <span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12"/></a></span>
@@ -347,8 +349,9 @@ if (true) #search condition
 			</td>
 			</tr></table>
 			<div class="ResourcePanelCountry">
+			<?php if( resource_download_allowed($ref,"scr")){?>
 			<span class="IconPreview">
-			<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+			<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><?php } ?>
 			
 			<?php if (!checkperm("b") && $k=="") { ?>
 			<span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
