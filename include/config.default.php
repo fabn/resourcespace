@@ -176,6 +176,7 @@ $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=be
 # (Files must be saved with Previews). If a preview image can't be extracted, RS will revert to ImageMagick.
 $photoshop_thumb_extract=false;
 $cr2_thumb_extract=false; 
+$nef_thumb_extract=false;
 
 # Attempt to resolve a height and width of the ImageMagick file formats at view time
 # (enabling may cause a slowdown on viewing resources when large files are used)
