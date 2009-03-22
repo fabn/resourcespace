@@ -380,7 +380,7 @@ if (true) #search condition
 			<?php
 			} else if ($display=="list") { # List view
 			?>
-			<?php if !hook("replacelistitem") {?>
+			<?php if (!hook("replacelistitem")) {?>
 			<!--List Item-->
 			<tr>
 			<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),45) . 
