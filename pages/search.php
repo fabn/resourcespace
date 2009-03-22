@@ -221,7 +221,8 @@ if (true) #search condition
 			<div class="Listview">
 			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 	
-			<!--Title row-->	
+			<!--Title row-->
+			<?php if(!hook("replacelistviewtitlerow")){?>	
 			<tr class="ListviewTitleStyle">
 			<td><?php echo $lang["titleandcountry"]?></td>
 			<td>&nbsp;</td>
@@ -230,6 +231,7 @@ if (true) #search condition
 			<td><?php echo $lang["date"]?> </td>
 			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 			</tr>
+			<?php } ?> <!--end hook replace listviewtitlerow-->
 			<?php
 			}
 			
