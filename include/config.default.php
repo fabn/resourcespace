@@ -236,6 +236,10 @@ $country_search=false;
 # Country sort in the search results? (requires that the 'country' field maps to the 'country' database column on resource)
 $country_sort=false;
 
+# Enable sorting resources by colour,title
+$colour_sort=true;
+$title_sort=false; 
+
 # Enable themes (promoted collections intended for showcasing selected resources)
 $enable_themes=true;
 
@@ -441,9 +445,6 @@ $about_link=true;
 # When uploading resources (batch upload) and editing the template, should the date be reset to today's date?
 # If set to false, the previously entered date is used.
 $reset_date_upload_template=false;
-
-# Enable sorting resources by colour
-$colour_sort=true;
 
 # Make the frameset resizeable. Useful for viewing large collections, especially if re-ordering.
 $collection_resize=false;

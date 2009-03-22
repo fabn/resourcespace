@@ -212,7 +212,7 @@ for ($n=0;$n<count($sizes);$n++)
 	{
 	?><option value="<?php echo $sizes[$n]["id"]?>"><?php echo i18n_get_translated($sizes[$n]["name"])?></option><?php
 	}
-?></select>
+	?><option value="original"><?php echo $lang['original'];?></option></select>
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
 
