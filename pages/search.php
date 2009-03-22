@@ -188,6 +188,11 @@ if (true) #search condition
 			<?php if ($order_by=="title") {?><span class="Selected"><?php echo $lang["resourcetitle"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
 			<?php } ?>
 			
+			<?php if ($original_filename_sort) { ?>
+			&nbsp;|&nbsp;
+			<?php if ($order_by=="file_path") {?><span class="Selected"><?php echo $lang["filename"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
+			<?php } ?>
+			
 			<?php if ($country_sort) { ?>
 			&nbsp;|&nbsp;
 			<?php if ($order_by=="country") {?><span class="Selected"><?php echo $lang["country"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["country"]?></a><?php } ?>

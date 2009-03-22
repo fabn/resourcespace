@@ -240,6 +240,9 @@ $country_sort=false;
 $colour_sort=true;
 $title_sort=false; 
 
+# Original filename sort will only work if you are not using staticsync
+$original_filename_sort=false; 
+
 # Enable themes (promoted collections intended for showcasing selected resources)
 $enable_themes=true;
 

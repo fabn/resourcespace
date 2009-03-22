@@ -193,6 +193,7 @@ $lang["similarresource"]="similar resource"; # e.g. 1 similar resource
 $lang["nosimilarresources"]="No similar resources";
 $lang["emailresource"]="E-mail";
 $lang["resourcetitle"]="Resource Title";
+$lang["filename"]="Original Filename";
 $lang["requestresource"]="Request Resource";
 $lang["viewmatchingresources"]="View matching resources";
 $lang["nomatchingresources"]="No matching resources";
