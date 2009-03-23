@@ -167,6 +167,17 @@ if (true) #search condition
 			if (strpos($search,"!")!==false) {$rel=$lang["asadded"];}
 			?>
 			<div class="InpageNavLeftBlock "><?php echo $lang["sortorder"]?>:<br /><?php if ($order_by=="relevance") {?><span class="Selected"><?php echo $rel?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=relevance&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $rel?></a><?php } ?>
+			
+			<?php if ($title_sort) { ?>
+			&nbsp;|&nbsp;
+			<?php if ($order_by=="title") {?><span class="Selected"><?php echo $lang["resourcetitle"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
+			<?php } ?>
+			
+			<?php if ($original_filename_sort) { ?>
+			&nbsp;|&nbsp;
+			<?php if ($order_by=="file_path") {?><span class="Selected"><?php echo $lang["filename"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
+			<?php } ?>
+			
 			&nbsp;|&nbsp;
 			<?php if ($order_by=="popularity") {?><span class="Selected"><?php echo $lang["popularity"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?>
 			
@@ -181,16 +192,6 @@ if (true) #search condition
 			<?php if ($colour_sort) { ?>
 			&nbsp;|&nbsp;
 			<?php if ($order_by=="colour") {?><span class="Selected"><?php echo $lang["colour"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["colour"]?></a><?php } ?>
-			<?php } ?>
-			
-			<?php if ($title_sort) { ?>
-			&nbsp;|&nbsp;
-			<?php if ($order_by=="title") {?><span class="Selected"><?php echo $lang["resourcetitle"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
-			<?php } ?>
-			
-			<?php if ($original_filename_sort) { ?>
-			&nbsp;|&nbsp;
-			<?php if ($order_by=="file_path") {?><span class="Selected"><?php echo $lang["filename"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
 			<?php } ?>
 			
 			<?php if ($country_sort) { ?>

@@ -236,12 +236,10 @@ $country_search=false;
 # Country sort in the search results? (requires that the 'country' field maps to the 'country' database column on resource)
 $country_sort=false;
 
-# Enable sorting resources by colour,title
+# Enable sorting resources in other ways:
 $colour_sort=true;
 $title_sort=false; 
-
-# Original filename sort will only work if you are not using staticsync
-$original_filename_sort=false; 
+$original_filename_sort=false; // will only work if you are not using staticsync 
 
 # Enable themes (promoted collections intended for showcasing selected resources)
 $enable_themes=true;
