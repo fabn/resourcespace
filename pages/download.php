@@ -104,6 +104,10 @@ if ($noattach=="")
 			}
 		if (strlen($origfile)>0)
 			{
+			#do an extra check to see if the original filename might have uppercase extension that can be preserved.	
+			$pathparts=pathinfo($origfile);
+			if (strtolower($pathparts['extension'])==$ext){$ext=$pathparts['extension'];}	
+				
 			# Use the original filename if one has been set.
 			# Strip any path information (e.g. if the staticsync.php is used).
 			$filename = sprintf('%s.%s', strip_extension(mb_basename($origfile)), $ext);

@@ -40,7 +40,7 @@ if ($submitted != "")
 		if ($access==0 || $access=1)
 			{
 			if ($access==1) {$size="scr";}
-			$pextension = $size == '' ? $result[$n]["file_extension"] : 'jpg';
+			$pextension = $size == 'original' ? $result[$n]["file_extension"] : 'jpg';
 			$p=get_resource_path($ref,true,$size,false,$pextension);
 			$usesize=$size;
 			if (!file_exists($p))
@@ -58,22 +58,25 @@ if ($submitted != "")
 
 				$tmpfile=write_metadata($p,$ref);
 				if($tmpfile!==false && file_exists($tmpfile)){$p=$tmpfile;}		
-				
 	
 				# if the tmpfile is made, from here on we are working with that. 
-				
 				
 				# If using original filenames when downloading, copy the file to new location so the name is included.
 				if ($original_filenames_when_downloading)	
 					{
 					if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
-					# Retrieve the original file name (strip the path if it's present due to staticsync.php)
+					# Retrieve the original file name
 					$filename=get_resource_data($ref);
 					$filename=$filename["file_path"];
+					# now you've got original filename, but it may have an extension in a different letter case. 
+					# The system needs to replace the extension to change it to jpg if necessary, but if the original file
+					# is being downloaded, and it originally used a different case, then it should not come from the file_extension, 
+					# but rather from the original filename itself.
 					
-					# Replace (instead of appending) original extension with extension of the actual file that is sent
-					preg_match('/\.[^\.]+$/', $p, $pext);
-					$filename=preg_replace('/\.[^\.]+$/', $pext[0], $filename);
+					#do an extra check to see if the original filename might have uppercase extension that can be preserved.	
+					$pathparts=pathinfo($filename);
+					if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
+					$filename=$pathparts['filename'].".".$pextension;
 
 					if (strlen($filename)>0)
 						{
