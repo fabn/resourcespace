@@ -51,6 +51,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# Connect to FTP server
 		$ftp=ftp_connect(getval("ftp_server",""));
 		ftp_login($ftp,getval("ftp_username",""),getval("ftp_password",""));
+		ftp_pasv($ftp,true);
 		}
 		
 	$path=getval("ftp_folder","") . $uploadfiles[$n];
