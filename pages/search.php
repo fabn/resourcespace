@@ -405,7 +405,7 @@ if (true) #search condition
 			
 			
 			</tr>
-			<?php } ?><!--end hook replacelistitem--?> 
+			<?php } ?><!--end hook replacelistitem--> 
 			<?php
 			}
 		
