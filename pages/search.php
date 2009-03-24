@@ -128,15 +128,13 @@ if ($allow_reorder)
 		}
 	}
 
-
+# Initialise the results references array (used later for search suggestions)
 $refs=array();
 
 # Special query? Ignore restypes
 if (strpos($search,"!")!==false) {$restypes="";}
 
-# Story only? Display as list
-#if ($restypes=="2") {$display="list";}
-
+# Do the search!
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset);
 
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
@@ -145,6 +143,7 @@ if (is_numeric($search) && is_array($result) && count($result)==1)
 	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
 	}
 
+# Include the page header to and render the search results
 include "../include/header.php";
 
 if (is_array($result))
