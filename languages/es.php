@@ -427,10 +427,10 @@ $lang["stat-search"]="Búsqueda";
 $lang["stat-usersession"]="Sesión de usuario";
 
 # Others
-$lang["access0"]="Abrir";
+$lang["access0"]="Abierto";
 $lang["access1"]="Restringido";
 $lang["access2"]="Confidencial";
-$lang["access3"]="Costumbre";
+$lang["access3"]="Personalizar";
 
 $lang["statusandrelationships"]="Estado y relaciones";
 
