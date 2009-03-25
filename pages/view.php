@@ -512,7 +512,8 @@ for ($n=0;$n<count($fields);$n++)
 
 <?php 
 // include optional ajax metadata report
-if ($metadata_report && isset($exiftool_path)){?>
+if ($metadata_report && isset($exiftool_path)){
+if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_report)) { ?>
 <div class="RecordBox">
 <div class="RecordPanel">  
 <div class="Title"><?php echo $lang['metadata-report']?></div>
@@ -520,6 +521,7 @@ if ($metadata_report && isset($exiftool_path)){?>
 </div></div>
 <div class="PanelShadow"></div>
 </div>
+<?php } ?>
 <?php } ?>
 
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>

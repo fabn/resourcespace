@@ -150,8 +150,10 @@ $exif_comment=18;
 $exif_model=52;
 $exif_date=12;
 
-#if exiftool is installed, you can optionally enable the metadata report available on the View page.  
+# If exiftool is installed, you can optionally enable the metadata report available on the View page.  
 $metadata_report=false;
+# Restrict metadata report to same permissions as System Setup (could confuse general users but is generally useful to admins)
+$restricted_metadata_report=false;
 
 # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources using exiftool.
 $exiftool_remove_existing=false; 
