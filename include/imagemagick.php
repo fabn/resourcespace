@@ -147,7 +147,7 @@ if (($extension=="doc"||$extension=="docx"||$extension=="odt"||$extension=="odp"
 		$alt_ref=add_alternative_file($ref,"PDF version");
 		$alt_path=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);	
 	    copy($pdffile,$alt_path);unlink($pdffile);
-	    sql_query("update resource_alt_files set file_name='$ref-converted',description='PDF version',file_extension='pdf',file_size='".filesize($alt_path)."' where resource=$ref and ref=$alt_ref");
+	    sql_query("update resource_alt_files set file_name='$ref-converted.pdf',description='PDF version',file_extension='pdf',file_size='".filesize($alt_path)."' where resource=$ref and ref=$alt_ref");
 	    $extension="pdf";
 	    $file=$alt_path;
 		}
