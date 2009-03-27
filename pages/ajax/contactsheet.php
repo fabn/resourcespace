@@ -152,22 +152,23 @@ for ($n=0;$n<count($result);$n++)
 						    $page = $page+1;
 							$j=0; 
 							if (($preview==true) && ($page>1)){break;} else{
-							if ($n<count($result)-1){							
+							if ($n<count($result)-1){ //avoid making an additional page if it will be empty							
 								$pdf->AddPage();
 								}
 							}
 							
-							#When moving to a new page, get current coordinates, place a new page header.
-							$pagestartx=$pdf->GetX();
-							$pagestarty=$pdf->GetY();
-							$pdf->SetFont('helvetica','',$titlefontsize);
-							$pagenumber = " - p.". $page;
-							$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
-							#then restore the saved coordinates and fontsize to continue as usual.
-							$pdf->SetFontSize($refnumberfontsize);
-							$pdf->Setx($pagestartx);
-							$pdf->SetY($pagestarty);
-							
+							if ($n<count($result)-1){// avoid adding header if this is the last page and the next would be empty
+								#When moving to a new page, get current coordinates, place a new page header.
+								$pagestartx=$pdf->GetX();
+								$pagestarty=$pdf->GetY();
+								$pdf->SetFont('helvetica','',$titlefontsize);
+								$pagenumber = " - p.". $page;
+								$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+								#then restore the saved coordinates and fontsize to continue as usual.
+								$pdf->SetFontSize($refnumberfontsize);
+								$pdf->Setx($pagestartx);
+								$pdf->SetY($pagestarty);
+								}
 							}			
 					}
 				}
