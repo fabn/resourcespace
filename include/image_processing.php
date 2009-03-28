@@ -24,7 +24,7 @@ function upload_file($ref)
 	else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
 		{
 		$file_type_by_exiftool=shell_exec($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
-		if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}
+		if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}else{return false;}
 		}
 	# if no clue of extension by now, return false		
 	else {return false;}	
