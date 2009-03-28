@@ -73,10 +73,13 @@ if ($submitted != "")
 					# is being downloaded, and it originally used a different case, then it should not come from the file_extension, 
 					# but rather from the original filename itself.
 					
-					#do an extra check to see if the original filename might have uppercase extension that can be preserved.	
+					# do an extra check to see if the original filename might have uppercase extension that can be preserved.	
+					# also, set extension to "" if the original filename didn't have an extension (exiftool identification of filetypes)
 					$pathparts=pathinfo($filename);
-					if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
-					$filename=$pathparts['filename'].".".$pextension;
+					if (isset($pathparts['extension'])){
+					if (strtolower($pathparts['extension'])==$pextension){$pextension=".".$pathparts['extension'];}	
+					} else {$pextension="";}	
+					$filename=$pathparts['filename'].$pextension;
 
 					if (strlen($filename)>0)
 						{

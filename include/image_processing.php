@@ -14,8 +14,21 @@ function upload_file($ref)
     $filename=str_replace(" ","_",$processfile['name']);
     
     # Work out extension
-    $extension=explode(".",$filename);$extension=trim(strtolower($extension[count($extension)-1]));
-    
+    global $exiftool_path;
+    # first try to get it from the filename
+    $extension=explode(".",$filename);
+    if(count($extension)>1){
+    	$extension=trim(strtolower($extension[count($extension)-1]));
+		} 
+	# if not, try exiftool	
+	else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		{
+		$file_type_by_exiftool=shell_exec($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
+		if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}
+		}
+	# if no clue of extension by now, return false		
+	else {return false;}	
+
     # Banned extension?
     global $banned_extensions;
     if (in_array($extension,$banned_extensions)) {return false;}
