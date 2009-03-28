@@ -8,12 +8,23 @@ include "../../include/image_processing.php";
 
 set_time_limit(60*60*4);
 
-include "../../include/header.php";
-
 $use_local = getvalescaped('use_local', '') !== '';
 
 $collection=getvalescaped("collection","");
-if ($collection!="") {set_user_collection($userref,$collection);}
+
+# Create a new collection?
+if ($collection==-1)
+	{
+	# The user has chosen Create New Collection from the dropdown.
+	$collection=create_collection($userref,$lang["upload"] . " " . date("ymdHis"));
+	set_user_collection($userref,$collection);
+	refresh_collection_frame();
+	}
+
+if ($collection!="") {set_user_collection($userref,$collection); refresh_collection_frame();}
+
+
+include "../../include/header.php";
 
 ?>
 <div class="BasicsBox">
@@ -55,7 +66,6 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		}
 		
 	$path=getval("ftp_folder","") . $uploadfiles[$n];
-	echo $path;
 	
 	# Copy the resource
 	$ref=copy_resource(0-$userref,getvalescaped("resource_type",1));
@@ -116,7 +126,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 			}
     	
 		$status=$lang["uploaded"] . " " . ($n+1) . " " . $lang["of"] . " " . count($uploadfiles);
-		
+		$status.= " - ".$path;
 		# Show thumb?
 		$rd=get_resource_data($ref);$thumb=get_resource_path($ref,true,"thm",false,$rd["preview_extension"]);
 		if (file_exists($thumb))
@@ -128,8 +138,8 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# Add to collection?
 		if ($collection!="")
 			{
-			add_resource_to_collection($ref,$collection);
-			refresh_collection_frame();
+			?><script language="Javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>;
+	<?php
 			}
 			
 		# Log this
