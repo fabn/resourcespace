@@ -399,9 +399,13 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				}
 			else
 				{
+				# check if this is a raw file.	
+				$rawfile = false;
+				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)){$rawfile=true;}
+					
 				# Use GD to calculate the size
-				if (!((@list($sw,$sh) = @getimagesize($file))===false))
-				 	{
+				if (!((@list($sw,$sh) = @getimagesize($file))===false)&& !$rawfile)
+				 	{		
 					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."',' ". $sw ."', '". $sh ."', '" . $filesize . "')");
 					}
 				else
