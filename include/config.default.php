@@ -154,6 +154,8 @@ $exif_date=12;
 $metadata_report=false;
 # Restrict metadata report to same permissions as System Setup (could confuse general users but is generally useful to admins)
 $restricted_metadata_report=false;
+# Use Exiftool to attempt to extract specified resolution and unit information from files (ex. Adobe files) upon upload.
+$exiftool_resolution_calc=false;
 
 # Set to true to strip out existing EXIF,IPTC,XMP metadata when adding metadata to resources using exiftool.
 $exiftool_remove_existing=false; 

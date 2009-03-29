@@ -201,11 +201,17 @@ if ($resource["has_image"]==1)
 	$sizes=get_image_sizes($ref,false,$resource["file_extension"]);
 	for ($n=0;$n<count($sizes);$n++)
 		{
-		# DPI calculations
-		$dpi=300;
+		# DPI calculations 
+		if (isset($sizes[$n]['resolution'])&& $sizes[$n]['resolution']!=0){$dpi = $sizes[$n]['resolution'];}
+		elseif (isset($dpi)&& $dpi!=0){}
+		else { $dpi=300; }
+		if (isset($sizes[$n]['unit'])){
+			if (trim(strtolower($sizes[$n]['unit']))=="inches"){$imperial_measurements=true;}
+			if (trim($sizes[$n]['unit'])=="cm"){$imperial_measurements=false;}
+		}
 		
 		if ($imperial_measurements)
-			{
+			{	
 			$dpi_unit="in";
 			$dpi_w=round(($sizes[$n]["width"]/$dpi),1);
 			$dpi_h=round(($sizes[$n]["height"]/$dpi),1);

@@ -105,12 +105,34 @@ function extract_exif_comment($ref,$extension)
 	if (!file_exists($image)) {return false;}
 	
 
-global $exiftool_path,$exif_comment,$exiftool_no_process;
+global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc;
 if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-			{	
+			{			
 			$resource=get_resource_data($ref);
+			if ($exiftool_resolution_calc){
+				# see if we can use exiftool to get resolution/units, and dimensions here.
+				# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
+				# and exiftool can provide more data. 
+			
+				$command=$exiftool_path."/exiftool -s -s -s -t -imagewidth -imageheight -xresolution -resolutionunit " . escapeshellarg($image);
+				$dimensions_resolution_unit=explode("\t",shell_exec($command));
+				# if dimensions resolution and unit could be extracted, add them to the database.
+				# they can be used in view.php to give more accurate data.
+				if (count($dimensions_resolution_unit)==4)
+					{
+					$dru=$dimensions_resolution_unit;
+					$filesize=filesize($image); 
+					$width=$dru[0];
+					$height=$dru[1];
+					$resolution=$dru[2];
+					$unit=$dru[3];
+					sql_query("delete from resource_dimensions where resource='$ref'");
+					sql_query("insert into resource_dimensions (resource, width, height, resolution, unit, file_size) values ('$ref', '$width', '$height', '$resolution', '$unit', '$filesize')");  
+					}
+				}
+			
 			$read_from=get_exiftool_fields($resource['resource_type']);
 
             # run exiftool to get all the valid fields. Use -s -s option so that
@@ -269,7 +291,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		$file=get_resource_path($ref,true,"",false,$extension);	
 		
 		# Delete any existing resource dimensions.
-		sql_query("delete from resource_dimensions where resource='$ref'");
+		# sql_query("delete from resource_dimensions where resource='$ref'");
 		}
 	else
 		{

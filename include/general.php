@@ -362,18 +362,24 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
 		$returnline["id"]="";
-		$dimensions = sql_query("select width,height,file_size from resource_dimensions where resource=". $ref);
+		$dimensions = sql_query("select width,height,file_size,resolution,unit from resource_dimensions where resource=". $ref);
+		
 		if (count($dimensions))
 			{
 			$sw = $dimensions[0]['width'];
 			$sh = $dimensions[0]['height'];
 			$filesize=$dimensions[0]['file_size'];
+			# resolution and unit are not necessarily available, set to empty string if so.
+			$resolution = ($dimensions[0]['resolution'])?$dimensions[0]['resolution']:"";
+			$unit = ($dimensions[0]['unit'])?$dimensions[0]['unit']:"";
 			}
 		else
 			{
 			global $imagemagick_path;
 			$file=$path2;
 			$filesize=@filesize($file);
+			
+			# imagemagick_calculate_sizes is normally turned off 
 			if (isset($imagemagick_path) && $imagemagick_calculate_sizes)
 				{
 				# Use ImageMagick to calculate the size
@@ -396,8 +402,8 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				  {
 					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."', '". $sw ."', '". $sh ."', '" . $filesize . "')");
 					}
-				}
-			else
+				}	
+			else 
 				{
 				# check if this is a raw file.	
 				$rawfile = false;
@@ -420,6 +426,8 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		$returnline["width"]=$sw;			
 		$returnline["height"]=$sh;
 		$returnline["extension"]=$extension;
+		(isset($resolution))?$returnline["resolution"]=$resolution:$returnline["resolution"]="";
+		(isset($unit))?$returnline["unit"]=$unit:$returnline["unit"]="";
 		$return[]=$returnline;
 	}
 	# loop through all image sizes
