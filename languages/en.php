@@ -255,7 +255,7 @@ $lang["inthearchive"]="in the archive";
 $lang["nomatchesinthearchive"]="No matches in the archive";
 $lang["savethissearchtocollection"]="Save search query to collection";
 $lang["mustspecifyonekeyword"]="You must specify at least one search keyword.";
-$lang["hasemailedyouaresource"]="has e-mailed you a resource"; # Suffixed to user name, e.g. Fred has e-mailed you a resource
+$lang["hasemailedyouaresource"]="has e-mailed you a resource."; # Suffixed to user name, e.g. Fred has e-mailed you a resource
 $lang["clicktoviewresource"]="Click the link below to view the resource.";
 
 # Resource log - actions

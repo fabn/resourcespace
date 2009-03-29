@@ -25,7 +25,6 @@ if ($collection!="") {set_user_collection($userref,$collection); refresh_collect
 
 
 include "../../include/header.php";
-
 ?>
 <div class="BasicsBox">
 <h1><?php echo $lang["uploadresourcebatch"]?></h1>
@@ -138,7 +137,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# Add to collection?
 		if ($collection!="")
 			{
-			?><script language="Javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>;
+			?><script language="Javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
 	<?php
 			}
 			
