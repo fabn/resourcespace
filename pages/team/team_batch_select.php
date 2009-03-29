@@ -106,6 +106,7 @@ for ($n=0;$n<count($list);$n++)
 	if (($fn=="..") || ($fn==".")) {$show=false;}
 	if (strpos($fn,".")===false) {$show=false;}
 	if ($fn=="pspbrwse.jbf") {$show=false;} # Ignore PSP browse files (often imported by mistake)
+	if ($fn==".DS_Store") {$show=false;} # Ignore .DS_Store file on the mac
 	/* if ($show) { ?><div class="tick"><input type="checkbox" name="uploadfiles[]" value="<?php echo $fn?>" checked /><?php echo $fn?></div><?php } ?>
 	*/
 	if ($show) { ?><option value="<?php echo $fn?>" selected><?php echo $fn?></option><?php } ?>
