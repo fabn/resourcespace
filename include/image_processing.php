@@ -54,6 +54,8 @@ function upload_file($ref)
     # Store extension in the database and update file modified time.
     sql_query("update resource set file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$ref'");
 
+	# delete existing resource_dimensions
+    sql_query("delete from resource_dimensions where resource='$ref'");
 	# get file metadata 
     global $exiftool_path;
     extract_exif_comment($ref,$extension);
@@ -128,7 +130,6 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 					$height=$dru[1];
 					$resolution=$dru[2];
 					$unit=$dru[3];
-					sql_query("delete from resource_dimensions where resource='$ref'");
 					sql_query("insert into resource_dimensions (resource, width, height, resolution, unit, file_size) values ('$ref', '$width', '$height', '$resolution', '$unit', '$filesize')");  
 					}
 				}
@@ -289,9 +290,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	if (!$previewonly)
 		{
 		$file=get_resource_path($ref,true,"",false,$extension);	
-		
-		# Delete any existing resource dimensions.
-		# sql_query("delete from resource_dimensions where resource='$ref'");
 		}
 	else
 		{
