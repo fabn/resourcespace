@@ -143,7 +143,7 @@ if (isset($custom_home_panels))
 	for ($n=0;$n<count($custom_home_panels);$n++)
 		{
 		?>
-		<div class="HomePanel"><div class="HomePanelIN">
+		<div class="HomePanel"><div class="HomePanelIN" <?php if ($custom_home_panels[$n]["text"]=="") {?>style="min-height:0;"<?php } ?>>
 		<h2><a href="<?php echo $custom_home_panels[$n]["link"] ?>"><?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></a></h2>
 		<?php echo i18n_get_translated($custom_home_panels[$n]["text"]) ?>
 		</div>
