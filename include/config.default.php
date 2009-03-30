@@ -372,11 +372,42 @@ $smallthumbs=true;
 # Set to 'true' to make the simple search bar more basic, with just the single search box.
 $basic_simple_search=false;
 
-# Options to show/hide the box-links on the home page
+# Options to show/hide the link panels on the home page
 $home_themeheaders=false;
 $home_themes=true;
 $home_mycollections=true;
 $home_helpadvice=true;
+
+#
+# Custom panels for the home page.
+# You can add as many panels as you like. They must be numbered sequentially starting from zero (0,1,2,3 etc.)
+#
+# You may want to turn off $home_themes etc. above if you want ONLY your own custom panels to appear on the home page.
+#
+# The below are examples.
+#
+# $custom_home_panels[0]["title"]="Custom Panel A";
+# $custom_home_panels[0]["text"]="Custom Panel Text A";
+# $custom_home_panels[0]["link"]="search.php?search=example";
+#
+# $custom_home_panels[1]["title"]="Custom Panel B";
+# $custom_home_panels[1]["text"]="Custom Panel Text B";
+# $custom_home_panels[1]["link"]="search.php?search=example";
+#
+# $custom_home_panels[2]["title"]="Custom Panel C";
+# $custom_home_panels[2]["text"]="Custom Panel Text C";
+# $custom_home_panels[2]["link"]="search.php?search=example";
+
+
+# Custom top navigation links.
+# You can add as many panels as you like. They must be numbered sequentially starting from zero (0,1,2,3 etc.)
+# 
+# $custom_top_nav[0]["title"]="Example Link A";
+# $custom_top_nav[0]["link"]="search.php?search=a";
+#
+# $custom_top_nav[1]["title"]="Example Link B";
+# $custom_top_nav[1]["link"]="search.php?search=b";
+
 
 # Use original filename when downloading a file?
 $original_filenames_when_downloading=true;
@@ -601,6 +632,9 @@ $default_user_select="";
 $simple_search_dropdown_filtering=false;
 
 
+
+
+
 #
 # ------------------------- Development Items -------------------------
 #
@@ -635,7 +669,7 @@ $upload_methods = array(
 $local_ftp_upload_folder = 'upload/';
 
 # Set path to Unoconv (a python-based bridge to OpenOffice) to allow document conversion to PDF.
-# $unoconv_path="/usr/bin";
+## $unoconv_path="/usr/bin";
 
 # Uncomment to set a point in time where collections are considered 'active' and appear in the drop-down. 
 # This is based on creation date for now. Older collections are effectively 'archived', but accessible through Manage My Collections.
@@ -648,3 +682,4 @@ $sort_relations_by_filetype=false;
 # If collections have at least one video, enable multi-playback in the Video Playlist page. 
 $video_playlists=false;
 
+?>

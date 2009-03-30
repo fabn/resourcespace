@@ -127,6 +127,20 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		
 		<?php if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/tag.php"><?php echo $lang["tagging"]?></a></li><?php } ?>
 		
+		<?php 
+		/* ------------ Customisable top navigation ------------------- */
+		if (isset($custom_top_nav))
+			{
+			for ($n=0;$n<count($custom_top_nav);$n++)
+				{
+				?>
+				<li><a target="<?php echo $target?>" href="<?php echo $custom_top_nav[$n]["link"] ?>"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
+				<?php
+				}
+			}
+		?>
+		
+		
 		<li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php"><?php echo $lang["helpandadvice"]?></a></li>
 		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php"><?php echo $lang["teamcentre"]?></a></li><?php } ?>
 

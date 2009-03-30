@@ -22,7 +22,7 @@ include "../include/header.php";
 <form method=get id="themeform">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
-  <h1><?php echo $lang["themes"]?></h1>
+  <h1><?php echo getval("title",$lang["themes"])?></h1>
   <p><?php echo text("introtext")?></p>
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
 <?php

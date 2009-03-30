@@ -136,6 +136,24 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <?php } ?>
 	
+<?php 
+/* ------------ Customisable home page panels ------------------- */
+if (isset($custom_home_panels))
+	{
+	for ($n=0;$n<count($custom_home_panels);$n++)
+		{
+		?>
+		<div class="HomePanel"><div class="HomePanelIN">
+		<h2><a href="<?php echo $custom_home_panels[$n]["link"] ?>"><?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></a></h2>
+		<?php echo i18n_get_translated($custom_home_panels[$n]["text"]) ?>
+		</div>
+		<div class="PanelShadow"></div>
+		</div>
+		<?php
+		}
+	}
+?>
+
 	<div class="clearerleft"></div>
 
 <div class="BasicsBox">
