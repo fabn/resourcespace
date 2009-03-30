@@ -513,6 +513,16 @@ function delete_resource($ref)
 		if (file_exists($path)) {unlink($path);}
 		}
 	
+	# Log the deletion of this resource for any collection it was in. 
+	$in_collections=sql_query("select * from collection_resource where resource = '$ref'");
+	if (count($in_collections)>0){
+		if (!function_exists("collection_log")){include ("collections_functions.php");}
+		for($n=0;$n<count($in_collections);$n++)
+			{
+			collection_log($in_collections[$n]['collection'],'d',$in_collections[$n]['resource']);
+			}
+		}
+		
 	# Delete all database entries
 	sql_query("delete from resource where ref='$ref'");
 	sql_query("delete from resource_data where resource='$ref'");

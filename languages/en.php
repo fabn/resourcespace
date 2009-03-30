@@ -697,6 +697,7 @@ $lang["collectionlog"]="Collection Log";
 $lang["collectionlog-r"]="Removed resource";
 $lang["collectionlog-R"]="Removed all resources";
 $lang["collectionlog-D"]="Deleted all resources";
+$lang["collectionlog-d"]="Deleted resource"; // this shows external deletion of any resources related to the collection.
 $lang["collectionlog-a"]="Added resource";
 $lang["collectionlog-c"]="Added resource (copied)";
 $lang["collectionlog-m"]="Added resource comment";
