@@ -418,7 +418,8 @@ $save_as=false;
 $allow_share=true;
 
 # Auto-completion of search (quick search only)
-$autocomplete_search=true;
+# Disabled by default due to an apparent bug with the Scriptaculous code used for this.
+$autocomplete_search=false;
 $autocomplete_search_items=15;
 
 # Automatically order checkbox lists (alphabetically)
