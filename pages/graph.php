@@ -128,7 +128,7 @@ else
 	
 # Plot graph
 $oldx=-1;$oldy=-1;$lastplot=0;
-$thisyear=date("Y");$thisday=date("z");
+$thisyear=date("Y");$thismonth=date("n");$thisday=date("z");
 for ($n=$minx;($n<=$maxx && (   ($year<$thisyear) || ($n<=$thisday)  ));$n++)
 	{
 	if (array_key_exists($n,$days)) {$val=$days[$n];} else {$val=0;}
@@ -146,7 +146,7 @@ for ($n=$minx;($n<=$maxx && (   ($year<$thisyear) || ($n<=$thisday)  ));$n++)
 	}
 
 # Mark end of line
-if ($year==$thisyear) {imagefilledellipse ($graph,$oldx,$oldy,4,4,$col);}
+if ($year==$thisyear && ($month=="" || $month==$thismonth)) {imagefilledellipse ($graph,$oldx,$oldy,4,4,$col);}
 
 # Add text
 $col=imagecolorallocate($graph,0,0,0);
