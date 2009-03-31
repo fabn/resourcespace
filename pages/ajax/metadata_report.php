@@ -24,12 +24,6 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	if (strlen(strstr($formats,$ext))<2){die("filetype $ext not supported");}
 	if (in_array(strtolower($ext),$exiftool_no_process)) {die("Exiftool processing is disabled for filetype $ext.");}
 	
-	#build array of supported tags
-	$command=$exiftool_path."/exiftool -list";
-	$supported_tags=shell_exec($command);
-	$supported_tags=strtolower(str_replace("\n","",$supported_tags));
-	$supported_tags_array=explode(" ",$supported_tags);
-	
 	#build array of writable tags
 	$command=$exiftool_path."/exiftool -listw";
 	$writable_tags=shell_exec($command);
@@ -92,7 +86,6 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			$value=trim($tag_value[2]);
 			$tag=trim(strtolower($tag));
 			$tagprops="";
-			if(in_array($tag,$supported_tags_array)){$tagprops.="r";}
 			if(in_array($tag,$writable_tags_array)&&$file_writability){$tagprops.="w";}
 			if ($tagprops!="")$tagprops="($tagprops)";
 			
