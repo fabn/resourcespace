@@ -5,6 +5,7 @@ include "../../include/general.php";
 
 $activity_type=getvalescaped("activity_type","User session");
 $year=getvalescaped("year",date("Y"));
+$month=getvalescaped("month","");
 $groupselect=getvalescaped("groupselect","viewall");
 if ($groupselect=="select")
 	{
@@ -71,6 +72,20 @@ for ($n=0;$n<count($years);$n++)
 
 
 <div class="Question">
+<label for="month"><?php echo $lang["month"]?></label><select id="month" name="month" class="shrtwidth">
+<option value=""><?php echo $lang["viewall"] ?></option>
+<?php 
+for ($n=1;$n<=12;$n++)
+	{
+	?><option value="<?php echo $n ?>" <?php if ($month==$n) { ?>selected<?php } ?>><?php echo $lang["months"][$n-1]?></option><?php
+	}
+?>
+</select>
+<div class="clearerleft"> </div>
+</div>
+
+
+<div class="Question">
 <label for="groupselect"><?php echo $lang["group"]?></label><select id="groupselect" name="groupselect" class="shrtwidth"
 onchange="if (this.value=='viewall') {document.getElementById('groupselector').style.display='none';}
 else {document.getElementById('groupselector').style.display='block';}">
@@ -115,7 +130,7 @@ else {document.getElementById('groupselector').style.display='block';}">
 	<?php if ($activity_type!="") { ?>	
 	<br/>
 	<div class="BasicsBox">
-	<img style="border:1px solid black;" src="../graph.php?activity_type=<?php echo urlencode($activity_type)?>&year=<?php echo $year?>&groupselect=<?php echo $groupselect?>&groups=<?php echo join("_",$groups)?>" width=700 height=350>
+	<img style="border:1px solid black;" src="../graph.php?activity_type=<?php echo urlencode($activity_type)?>&year=<?php echo $year?>&month=<?php echo $month ?>&groupselect=<?php echo $groupselect?>&groups=<?php echo join("_",$groups)?>" width=700 height=350>
 	</div>
 	<?php } ?>
 	

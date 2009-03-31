@@ -283,6 +283,7 @@ $lang["activity"]="Activity";
 $lang["summary"]="summary";
 $lang["mostinaday"]="Most in a day";
 $lang["totalfortheyear"]="Total for the year";
+$lang["totalforthemonth"]="Total for the month";
 $lang["dailyaverage"]="Daily average for active days";
 $lang["nodata"]="No data for this period.";
 $lang["max"]="Max"; # i.e. maximum
