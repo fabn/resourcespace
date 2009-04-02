@@ -214,7 +214,7 @@ relate_to_collection($newresource,$collection);
 	
 	#Create thumbnails and redirect browser to the new contact sheet resource
 	create_previews($newresource,true,"pdf");
-	redirect("../pages/view.php?ref=" .$newresource);
+	redirect("pages/view.php?ref=" .$newresource);
 	}
 
 else
