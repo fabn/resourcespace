@@ -682,4 +682,6 @@ $sort_relations_by_filetype=false;
 # If collections have at least one video, enable multi-playback in the Video Playlist page. 
 $video_playlists=false;
 
+# Allow the addition of 'saved searches' to collections. 
+$allow_save_search=true;
 ?>
