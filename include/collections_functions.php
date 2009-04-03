@@ -770,4 +770,36 @@ function get_collection_videocount($ref)
 	foreach ($resources as $resource){if (in_array($resource['resource_type'],$videotypes)){$videocount++;}}
 	return $videocount;
 	}
+	
+function collection_max_access($collection)	
+	{
+	# Returns the maximum access (the most permissive) that the current user has to the resources in $collection.
+	$maxaccess=2;
+	$result=do_search("!collection" . $collection);
+	for ($n=0;$n<count($result);$n++)
+		{
+		$ref=$result[$n]["ref"];
+		# Load access level
+		$access=get_resource_access($ref);
+		if ($access<$maxaccess) {$maxaccess=$access;}
+		}
+	return $maxaccess;
+	}
+
+function collection_min_access($collection)	
+	{
+	# Returns the minimum access (the least permissive) that the current user has to the resources in $collection.
+	$minaccess=0;
+	$result=do_search("!collection" . $collection);
+	for ($n=0;$n<count($result);$n++)
+		{
+		$ref=$result[$n]["ref"];
+		# Load access level
+		$access=get_resource_access($ref);
+		if ($access>$minaccess) {$minaccess=$access;}
+		}
+	return $minaccess;
+	}
+
+	
 ?>

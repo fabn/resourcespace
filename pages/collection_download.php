@@ -201,15 +201,7 @@ include "../include/header.php";
 
 # Work out the maximum access level the user has to the resources in the collection
 # If this is 'restricted' then we must restrict the download sizes available.
-$result=do_search("!collection" . $collection);
-$maxaccess=2;
-for ($n=0;$n<count($result);$n++)
-	{
-	$ref=$result[$n]["ref"];
-	# Load access level
-	$access=get_resource_access($ref);
-	if ($access<$maxaccess) {$maxaccess=$access;}
-	}
+$maxaccess=collection_max_access($collection);
 
 $sizes=get_all_image_sizes(false,$maxaccess>=1);
 $sizes=array_reverse($sizes);

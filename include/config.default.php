@@ -448,8 +448,11 @@ $save_as=false;
 # Allow resources to be e-mailed / shared (internally and externally)
 $allow_share=true;
 
+# Should those with 'restricted' access to a resource be able to share the resource?
+$restricted_share=false;
+
 # Auto-completion of search (quick search only)
-# Disabled by default due to an apparent bug with the Scriptaculous code used for this.
+# Disabled by default due to an apparent bug with the Scriptaculous code used for this (Internet Explorer only)
 $autocomplete_search=false;
 $autocomplete_search_items=15;
 
@@ -630,7 +633,6 @@ $default_user_select="";
 # When multiple dropdowns are used on the simple search box, should selecting something from one or more dropdowns
 # limit the options available in the other dropdowns automatically? This adds a performance penalty so is off by default.
 $simple_search_dropdown_filtering=false;
-
 
 
 

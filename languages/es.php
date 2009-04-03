@@ -575,4 +575,5 @@ $lang["ratingthankyou"]="Gracias por tu puntuación.";
 $lang["ratings"]="puntajes";
 $lang["rating"]="puntaje";
 
+$lang["restrictedsharecollection"]="Usted tiene el acceso restringido a uno o más de los materiales en esta colección y, por tanto, está prohibido el intercambio.";
 ?>

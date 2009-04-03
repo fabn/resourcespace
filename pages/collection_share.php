@@ -2,6 +2,8 @@
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
+include "../include/search_functions.php";
+include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 
 # Fetch vars
@@ -13,6 +15,21 @@ if (getval("deleteaccess","")!="")
 	{
 	delete_collection_access_key($ref,getvalescaped("deleteaccess",""));
 	}
+	
+# Get maximum access to this collection
+$minaccess=collection_min_access($ref);
+
+if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower and sharing of restricted resources is not allowed. The user cannot share this collection.
+	{
+	?>
+	<script type="text/javascript">
+	alert("<?php echo $lang["restrictedsharecollection"]?>");
+	history.go(-1);
+	</script>
+	<?php
+	exit();
+	}
+	
 include "../include/header.php";
 ?>
 

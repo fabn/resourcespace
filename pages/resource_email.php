@@ -8,6 +8,10 @@ $ref=getvalescaped("ref","");
 # Fetch resource data
 $resource=get_resource_data($ref);if ($resource===false) {exit("Resource not found.");}
 
+# Load access level and check.
+$access=get_resource_access($ref);
+if (!($allow_share && ($access==0 || ($access==1 && $restricted_share)))) {exit("Access denied.");}
+
 $errors="";
 if (getval("save","")!="")
 	{

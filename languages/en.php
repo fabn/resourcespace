@@ -714,4 +714,7 @@ $lang["metadata-report"]="Metadata Report";
 
 # Video Playlist
 $lang["videoplaylist"]="Video Playlist";
+
+$lang["restrictedsharecollection"]="You have restricted access to one or more of the resources in this collection and therefore sharing is prohibited.";
+
 ?>
