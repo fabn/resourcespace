@@ -5,26 +5,29 @@ include "../../include/general.php";
 
 if ($send_statistics) {send_statistics();}
 
-# Some disk size allocation
-if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
-$avail=disk_total_space($storagedir);
-$free=disk_free_space($storagedir);
-$used=$avail-$free;
-
-# Quota?
-$overquota=false;
-if (isset($disksize))
+if (getval("showdisk","")!="")
 	{
-	# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
-	# Unix only due to reliance on 'du' command
-	$avail=$disksize*(1024*1024*1024);
-	$used=explode("\n",shell_exec("du -Lc --summarize ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
-	$used=$used*1024;
+	# Some disk size allocation
+	if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
+	$avail=disk_total_space($storagedir);
+	$free=disk_free_space($storagedir);
+	$used=$avail-$free;
 	
-	$free=$avail-$used;
-	if ($free<=0) {$free=0;$used=$avail;$overquota=true;}
+	# Quota?
+	$overquota=false;
+	if (isset($disksize))
+		{
+		# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
+		# Unix only due to reliance on 'du' command
+		$avail=$disksize*(1024*1024*1024);
+		$used=explode("\n",shell_exec("du -Lc --summarize ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
+		$used=$used*1024;
+		
+		$free=$avail-$used;
+		if ($free<=0) {$free=0;$used=$avail;$overquota=true;}
+		}
 	}
-
+	
 include "../../include/header.php";
 ?>
 
@@ -37,9 +40,7 @@ include "../../include/header.php";
 	<div class="VerticalNav">
 	<ul>
 	
-	<?php if (checkperm("c") && !$overquota) { ?><li><a href="team_resource.php"><?php echo $lang["manageresources"]?></a></li><?php } ?>
-
-	<?php if ($overquota) { ?><li style="color:red;font-weight:bold;"><?php echo $lang["overquota"]?></li><?php } ?>
+	<?php if (checkperm("c")) { ?><li><a href="team_resource.php"><?php echo $lang["manageresources"]?></a></li><?php } ?>
 
 	<?php if (checkperm("i")) { ?><li><a href="team_archive.php"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
 	
@@ -78,7 +79,7 @@ for ($n=0;$n<count($active);$n++) {if($n>0) {echo", ";}echo "<b>" . $active[$n][
 ?>
 </p>	
 
-<p><?php echo $lang["diskusage"]?>:  <b><?php echo round(($avail?$used/$avail:0)*100,0)?>%</b> (<?php echo $lang["available"]?>: <?php echo formatfilesize($avail)?>; <?php echo $lang["used"]?>: <?php echo formatfilesize($used)?>; <?php echo $lang["free"]?>:  <?php echo formatfilesize($free)?>)
+<p><?php echo $lang["diskusage"]?>:  <?php if (getval("showdisk","")!="") { ?><b><?php echo round(($avail?$used/$avail:0)*100,0)?>%</b> (<?php echo $lang["available"]?>: <?php echo formatfilesize($avail)?>; <?php echo $lang["used"]?>: <?php echo formatfilesize($used)?>; <?php echo $lang["free"]?>:  <?php echo formatfilesize($free)?>)<?php } else { ?><a href="team_home.php?showdisk=true"><?php echo $lang["view"]?></a><?php } ?>
 </p>
 <?php } ?>
 

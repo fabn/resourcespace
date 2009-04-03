@@ -1446,5 +1446,5 @@ function get_simple_search_fields()
 		}
 	return $return;
 	}
-
+	
 ?>
