@@ -453,7 +453,7 @@ $restricted_share=false;
 
 # Auto-completion of search (quick search only)
 # Disabled by default due to an apparent bug with the Scriptaculous code used for this (Internet Explorer only)
-$autocomplete_search=false;
+$autocomplete_search=true;
 $autocomplete_search_items=15;
 
 # Automatically order checkbox lists (alphabetically)
