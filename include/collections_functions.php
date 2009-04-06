@@ -20,7 +20,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 function get_collection($ref)
 	{
 	# Returns all data for collection $ref
-	$return=sql_query("select *,theme2,theme3 from collection where ref='$ref'");
+	$return=sql_query("select *,theme2,theme3,keywords from collection where ref='$ref'");
 	if (count($return)==0) {return false;} else 
 		{
 		$return=$return[0];
@@ -150,14 +150,50 @@ function refresh_collection_frame()
 		}
 	}
 	
-function search_public_collections($search="",$order_by="name",$sort="ASC")
+function search_public_collections($search="",$order_by="name",$sort="ASC",$exclude_themes=true,$exclude_public=false,$include_resources=false)
 	{
+	# Performs a search for themes / public collections.
+	# Returns a comma separated list of resource refs in each collection, used for thumbnail previews.
 	$sql="";
-	if (strlen($search)>1) {$sql="and (name like '%$search%' or u.username like '%$search%' or c.ref like '$search')";}
-	if (strlen($search)==1) {$sql="and (name like '$search%' or c.ref like '$search')";}	
-	if ($sql=="") {$sql=" ";} else {$sql.="  ";}
-
-	return sql_query("select c.*,u.username from collection c,user u where c.user=u.ref and c.public=1 $sql and (length(c.theme)=0 or c.theme is null) order by $order_by $sort");
+	# Keywords searching?
+	if (strlen($search)>0)
+		{
+		$keywords=split_keywords($search,true);
+		$keyrefs=array();
+		for ($n=0;$n<count($keywords);$n++)
+			{
+			$keyrefs[]=resolve_keyword($keywords[$n],false);
+			}
+		if (count($keyrefs)>0)
+			{
+			$keysql="or keyword in (" . join (",",$keyrefs) . ")";
+			}
+		else
+			{
+			$keysql="";
+			}
+		$sql="and (u.username='$search' or c.ref='$search' $keysql)";
+		}
+	
+	if ($exclude_themes) # Include only public collections.
+		{
+		$sql.=" and (length(c.theme)=0 or c.theme is null)";
+		}
+	
+	if ($exclude_public) # Exclude public only collections (return only themes)
+		{
+		$sql.=" and length(c.theme)>0";
+		}
+		
+	# Run the query
+	if ($include_resources)
+		{
+		return sql_query("select c.*,u.username,group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+		}
+	else
+		{
+		return sql_query("select c.*,u.username from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+		}
 	}
 
 function add_collection($user,$collection)
@@ -195,12 +231,24 @@ function save_collection($ref)
 	# Update collection with submitted form data
 	sql_query("update collection set
 				name='" . getvalescaped("name","") . "',
+				keywords='" . getvalescaped("keywords","") . "',
 				public='" . getvalescaped("public","") . "',
 				theme='" . $theme . "',
 				theme2='" . $theme2 . "',
 				theme3='" . $theme3 . "',
 				allow_changes='" . $allow_changes . "'
 	where ref='$ref'");
+	
+	# Update the keywords index for this collection
+	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
+	# Define an indexable string from the name, themes and keywords.
+	$index_string=getvalescaped("name","") . " " . getvalescaped("keywords","") . " " . $theme . " " . $theme2 . " " . $theme3;
+	$keywords=split_keywords($index_string,true);
+	for ($n=0;$n<count($keywords);$n++)
+		{
+		$keyref=resolve_keyword($keywords[$n],true);
+		sql_query("insert into collection_keyword values ('$ref','$keyref')");
+		}
 	
 	# Reset archive status if specified
 	if (getval("archive","")!="")

@@ -236,6 +236,12 @@ if (is_array($result))
 		<?php
 		}
 		
+	# Include public collections and themes in the main search, if configured.		
+	if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!")
+		{
+		include "../include/search_public.php";
+		}
+	
 	# work out common keywords among the results
 	if ((count($result)>$suggest_threshold) && (strpos($search,"!")===false) && ($suggest_threshold!=-1))
 		{

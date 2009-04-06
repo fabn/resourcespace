@@ -55,6 +55,11 @@ include "../include/header.php";
 </div>
 
 <div class="Question">
+<label for="keywords"><?php echo $lang["relatedkeywords"]?></label><textarea class="stdwidth" rows="3" name="keywords" id="keywords" <?php if ($collection["cant_delete"]==1) { ?>readonly=true<?php } ?>><?php echo htmlspecialchars($collection["keywords"])?></textarea>
+<div class="clearerleft"> </div>
+</div>
+
+<div class="Question">
 <label><?php echo $lang["id"]?></label><div class="Fixed"><?php echo $collection["ref"]?></div>
 <div class="clearerleft"> </div>
 </div>
