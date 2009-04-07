@@ -520,6 +520,7 @@ for ($n=0;$n<count($fields);$n++)
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
 		# Hide the dropdown, and set the default status depending on user permissions.
 		$mode=0;
+		if (checkperm("e-1")) {$mode=-1;}
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
