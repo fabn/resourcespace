@@ -18,7 +18,7 @@ include "../include/header.php";
 	<?php if ($usercontribute_swfupload) { ?>
 	<li><a href="edit.php?ref=-<?php echo $userref?>&swf=true"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php }  else { ?>
-	<li><a href="create.php?archive=-2"><?php echo $lang["contributenewresource"]?></a></li>
+	<li><a href="create.php?archive=<?php echo (checkperm("e-2")?-2:-1) ?>"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php } ?>
 
 	<?php if (!checkperm("e0") && checkperm("e-2")) { ?>

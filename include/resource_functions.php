@@ -2,19 +2,19 @@
 # Resource functions
 # Functions to create, edit and index resources
 
-function create_resource($resource_type,$archive=-1,$user=-1)
+function create_resource($resource_type,$archive=999,$user=-1)
 	{
 	# Create a new resource.
 
-	if ($archive==-1)
+	if ($archive==999)
 		{
 		# Work out an appropriate default state
 		$archive=0;
 		if (!checkperm("e0")) {$archive=2;} # Can't create a resource in normal state? create in archive.
 		}
-	if ($archive==-2)
+	if ($archive==-2 || $archive==-1)
 		{
-		# Work out user ref - note: only for content in status -2 (user submitted).
+		# Work out user ref - note: only for content in status -2 and -1 (user submitted / pending review).
 		global $userref;
 		$user=$userref;
 		} else {$user=-1;}
@@ -22,6 +22,12 @@ function create_resource($resource_type,$archive=-1,$user=-1)
 	sql_query("insert into resource(resource_type,creation_date,archive,created_by) values ('$resource_type',now(),'$archive','$user')");
 	
 	$insert=sql_insert_id();
+	
+	# Copying a resource of the 'pending review' state? Notify, if configured.
+	if ($archive==-1)
+		{
+		notify_user_contributed_submitted(array($insert));
+		}
 	
 	# Log this			
 	daily_stat("Create resource",$insert);
@@ -159,7 +165,7 @@ function save_resource_data($ref,$multi)
 	// Notify the resources team ($email_notify) if moving from pending review->submission.
 	$archive=getvalescaped("archive",0);
 	$oldarchive=sql_value("select archive value from resource where ref='$ref'",0);
-	if ($oldarchive==-2 && $archive==-1)
+	if ($oldarchive==-2 && $archive==-1 && $ref>0)
 		{
 		notify_user_contributed_submitted(array($ref));
 		}
@@ -564,12 +570,16 @@ function copy_resource($from,$resource_type=-1)
 	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access,created_by) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access,created_by from resource where ref='$from';");
 	$to=sql_insert_id();
 	
-	# Set the access level for user contributed resources.
-	global $userref;
-	if (!checkperm("e0")) {sql_query("update resource set access=-2,created_by='$userref' where ref='$to'");}
+	# Copying a resource of the 'pending review' state? Notify, if configured.
+	$archive=sql_value("select archive value from resource where ref='$from'",0);
+	if ($archive==-1)
+		{
+		notify_user_contributed_submitted(array($to));
+		}
 	
 	# User contributed but e0 permission, so can contribute straight to live - still need to set 'created by'
-	if (!checkperm("c")) {sql_query("update resource set created_by='$userref' where ref='$to'");}
+	global $userref;
+	if ((!checkperm("c")) || $archive<0) {sql_query("update resource set created_by='$userref' where ref='$to'");}
 	
 	# Now copy all data
 	sql_query("insert into resource_data(resource,resource_type_field,value) select '$to',resource_type_field,value from resource_data where resource='$from'");
@@ -861,7 +871,7 @@ function notify_user_contributed_submitted($refs)
 	{
 	// Send a notification mail to the administrators when resources are moved from "User Contributed - Pending Submission" to "User Contributed - Pending Review"
 	
-	global $notify_user_contributed_submitted,$applicationname,$email_notify,$baseurl,$lang;;
+	global $notify_user_contributed_submitted,$applicationname,$email_notify,$baseurl,$lang;
 	if (!$notify_user_contributed_submitted) {return false;} # Only if configured.
 	
 	$message=$lang["userresourcessubmitted"] . "\n";
