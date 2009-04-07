@@ -150,7 +150,7 @@ function refresh_collection_frame()
 		}
 	}
 	
-function search_public_collections($search="",$order_by="name",$sort="ASC",$exclude_themes=true,$exclude_public=false,$include_resources=false)
+function search_public_collections($search="", $order_by="name", $sort="ASC", $exclude_themes=true, $exclude_public=false, $include_resources=false)
 	{
 	# Performs a search for themes / public collections.
 	# Returns a comma separated list of resource refs in each collection, used for thumbnail previews.
@@ -162,7 +162,8 @@ function search_public_collections($search="",$order_by="name",$sort="ASC",$excl
 		$keyrefs=array();
 		for ($n=0;$n<count($keywords);$n++)
 			{
-			$keyrefs[]=resolve_keyword($keywords[$n],false);
+			$keyref=resolve_keyword($keywords[$n],false);
+			if ($keyref!==false) {$keyrefs[]=$keyref;}
 			}
 		if (count($keyrefs)>0)
 			{
