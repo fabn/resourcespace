@@ -35,7 +35,7 @@ if (getval("c","")!="")
 			}
 		else
 			{
-			$topurl="pages/home.php";
+			$topurl="pages/" . $default_home_page;
 			}
 		}
 	}
