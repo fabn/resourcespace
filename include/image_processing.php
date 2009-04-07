@@ -149,10 +149,21 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             # into uppercase for easier lookup later
             foreach($metalines as $metaline)
             {
-                if (stripos($metaline, ": ")) #get position of first ": ", return false if not exist
+            
+            # Use stripos() if available, but support earlier PHP versions if not.
+            if (function_exists("stripos"))
+            	{
+	            $pos=stripos($metaline, ": ");
+	            }
+	        else
+            	{
+	            $pos=strpos($metaline, ": ");
+	            }
+           
+                if ($pos) #get position of first ": ", return false if not exist
                 {
                     # add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
-                    $metadata[strtoupper(substr($metaline, 0, stripos($metaline, ": ")))] = trim(trim(substr($metaline,stripos($metaline, ": ")+2)),"'");
+                    $metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
                 }
             }
             
