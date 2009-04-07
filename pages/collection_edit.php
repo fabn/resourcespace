@@ -36,6 +36,11 @@ if (getval("name","")!="")
 			redirect ("pages/collection_manage.php?reload=true");
 			}
 		}
+	else
+		{
+		# No redirect, we stay on this page. Reload the collection info.
+		$collection=get_collection($ref);
+		}
 	refresh_collection_frame();
 	}
 
@@ -65,8 +70,9 @@ include "../include/header.php";
 </div>
 
 <div class="Question">
-<label for="public"><?php echo $lang["access"]?></label><select id="public" name="public" class="shrtwidth" onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();">
-<option value="0" <?php if ($collection["public"]==0) {?>selected<?php } ?>><?php echo $lang["private"]?></option>
+<label for="public"><?php echo $lang["access"]?></label>
+<select id="public" name="public" class="shrtwidth" onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();">
+<option value="0" <?php if ($collection["public"]!=1) {?>selected<?php } ?>><?php echo $lang["private"]?></option>
 <?php if ($enable_public_collections || checkperm("h")) { ?><option value="1" <?php if ($collection["public"]==1) {?>selected<?php } ?>><?php echo $lang["public"]?></option><?php } ?>
 </select>
 <div class="clearerleft"> </div>
