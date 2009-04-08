@@ -5,7 +5,7 @@
 
 <div class="clearer"></div>
 
-<?php if (($pagename!="login") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
+<?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="done") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
 <!--Global Footer-->
 <div id="Footer">
 
