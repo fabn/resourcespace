@@ -139,6 +139,7 @@ $lang["findpubliccollection"]="公開コレクションを探す";
 $lang["searchpubliccollections"]="公開コレクションの検索";
 $lang["addtomycollections"]="マイコレクションに追加";
 $lang["action-addtocollection"]="コレクションに追加";
+$lang["action-removefromcollection"]="コレクションから削除";
 $lang["addtocollection"]="コレクションに追加";
 $lang["cantmodifycollection"]="あなたは本コレクションの変更はできません。";
 $lang["currentcollection"]="現在のコレクション";
@@ -192,6 +193,7 @@ $lang["similarresource"]="類似リソース"; # e.g. 1 similar resource
 $lang["nosimilarresources"]="類似したリソースなし";
 $lang["emailresource"]="Eメール";
 $lang["resourcetitle"]="リソース・タイトル";
+$lang["filename"]="オリジナルのファイル名";
 $lang["requestresource"]="リソースの要求";
 $lang["viewmatchingresources"]="適合するリソース表示";
 $lang["nomatchingresources"]="適合するリソースなし";
@@ -281,6 +283,7 @@ $lang["activity"]="アクティビティー";
 $lang["summary"]="サマリー";
 $lang["mostinaday"]="一日の最大";
 $lang["totalfortheyear"]="年間合計";
+$lang["totalforthemonth"]="月間合計";
 $lang["dailyaverage"]="アクティブ日の一日平均";
 $lang["nodata"]="期間内にデータなし。";
 $lang["max"]="最大"; # i.e. 最大
@@ -492,7 +495,9 @@ $lang["warningexpired"]="リソースは期限切れ";
 $lang["warningexpiredtext"]="警告!このリソースは有効期限を超えています。ダウンロード昨日を有効にするには以下のリンクをクリックしてください。";
 $lang["warningexpiredok"]="&gt; リソースのダウンロード有効化";
 $lang["userrequestcomment"]="コメント";
-$lang["addresourcebatchbrowser"]="バッチでリソース追加 - ブラウザより (推奨)";
+$lang["addresourcebatchbrowser"]="バッチでリソース追加 - ブラウザより (Flash)";
+$lang["addresourcebatchbrowserjava"]="バッチでリソース追加 - ブラウザより (Java)";
+
 $lang["addresourcebatchftp"]="バッチでリソース追加 - FTP";
 $lang["replaceresourcebatch"]="バッチでリソース置換";
 $lang["editmode"]="編集モード";
@@ -613,4 +618,101 @@ $lang["hidealllanguages"]="全言語を隠す";
 $lang["clicktologinasthisuser"]="本ユーザとしてログインするためにクリック";
 $lang["addkeyword"]="キーワード追加";
 $lang["selectedresources"]="選択されたリソース";
+
+$lang["internalusersharing"]="内部ユーザとの共有";
+$lang["externalusersharing"]="外部ユーザとの共有";
+$lang["accesskey"]="アクセスキー";
+$lang["sharedby"]="から共有";
+$lang["sharedwith"]="と共有する";
+$lang["lastupdated"]="最新の更新";
+$lang["lastused"]="最後の利用";
+$lang["noattachedusers"]="追加ユーザなし";
+$lang["confirmdeleteaccess"]="本当にこのアクセスキーを削除しますか? このキーでアクセスしているユーザはもうこのコレクションにアクセスできなくなります。";
+$lang["noexternalsharing"]="外部との共有なし";
+$lang["sharedcollectionaddwarning"]="警告: 本コレクションは外部のユーザと共有しています。あなたが追加したリソースは外部ユーザに利用可能になります。本コレクションの外部アクセスを管理するには'共有'をクリックしてください。";
+$lang["addresourcebatchlocalfolder"]="バッチでリソース追加 - ローカルのアップロード用フォルダーから取得";
+# Setup Script
+$lang["setup-alreadyconfigured"]="あなたのResourceSpaceインスタレーションはすでに構成されています。再構成するには<pre>include/config.php</pre>を削除し再度本ページにブラウザでアクセスしてください。";
+$lang["setup-successheader"]="おめでとうございます!";
+$lang["setup-successdetails"]="初期のResourceSpaceセットアップは完了しました。詳細な構成オプションについては'include/default.config.php'を確認してください。";
+$lang["setup-successnextsteps"]="次のステップ:";
+$lang["setup-successremovewrite"]="あなたは'include/'から書き込み権限を削除できます。.";
+$lang["setup-visitwiki"]='あなたのインスタレーションをカスタマイズするための詳細な情報を得るには<a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a>を訪問してください。';
+$lang["setup-checkconfigwrite"]="構成ディレクトリーへ書き込み権限付与:";
+$lang["setup-checkstoragewrite"]="ストレージディレクトリーへ書き込み権限付与:";
+$lang["setup-welcome"]="ResourceSpaceへようこそ";
+$lang["setup-introtext"]="ResourceSpaceを選択していただきありがとうございます。本構成スクリプトはResourceSpaceのセットアップを支援します。このプロセスは一度だけ実施する必要があります。";
+$lang["setup-checkerrors"]="事前構成エラーが検出されました。<br />  このエラーを解消してから、継続するために本ページへ戻ってください。";
+$lang["setup-errorheader"]="あなたの構成にエラーが検出されました。詳細なエラーメッセージは以下を参照してください。";
+$lang["setup-warnheader"]="設定のいくつかで警告メッセージが出力されています。詳細は以下を参照してください。これは、必ずあなたの構成に関する問題があることを意味するというわけではありません。";
+$lang["setup-basicsettings"]="基本設定";
+$lang["setup-basicsettingsdetails"]="これらの設定はあなたのResourceSpaceインスタレーションの基本設定です。必須項目には<strong>*</strong>が付いています。";
+$lang["setup-dbaseconfig"]="データベース構成";
+$lang["setup-mysqlerror"]="MySQLの設定にエラーがあります:";
+$lang["setup-mysqlerrorversion"]="MySQLのバージョンは5以上でなければなりません。";
+$lang["setup-mysqlerrorserver"]="サーバにアクセスできません。";
+$lang["setup-mysqlerrorlogin"]="ログイン失敗。 (ユーザ名とパスワードを確認してください)";
+$lang["setup-mysqlerrordbase"]="データベースへアクセスできません。";
+$lang["setup-mysqlerrorperns"]="ユーザ権限を確認してください。テーブルの生成ができません。";
+$lang["setup-mysqlserver"]="MySQLサーバ:";
+$lang["setup-mysqlusername"]="MySQLユーザ名:";
+$lang["setup-mysqlpassword"]="MySQLパスワード:";
+$lang["setup-mysqldb"]="MySQLデータベース:";
+$lang["setup-mysqlbinpath"]="MySQLバイナリーのパス:";
+$lang["setup-generalsettings"]="一般設定";
+$lang["setup-baseurl"]="Base URL:";
+$lang["setup-emailfrom"]="電子メール From アドレス:";
+$lang["setup-emailnotify"]="電子メール通知:";
+$lang["setup-spiderpassword"]="スパイダーパスワード:";
+$lang["setup-scramblekey"]="スクランブルキー:";
+$lang["setup-secure"]="セキュアー (https)モード:";
+$lang["setup-paths"]="パス";
+$lang["setup-pathsdetail"]="それそぞれのパスについて、各バイナリーへのパスには最後のスラッシュは付けないでください。バイナリーを使わない場合には空白のままにしてください。自動的に検出したパスは表示されています。";
+$lang["setup-applicationname"]="アプリケーション名:";
+$lang["setup-basicsettingsfooter"]="注記: 本ページは<strong>必須</strong>の設定です。上級オプションに興味がないなら、下記をクリックしてインスタレーションを開始します。";
+$lang["setup-if_mysqlserver"]='MySQLサーバがインスタレーションされているIPアドレスもしくは<abbr title="完全なドメイン名">FQDN</abbr> MySqlがWebサーバと同一サーバにインストールされている場合は、"localhost"を使用してください。';
+$lang["setup-if_mysqlusername"]="MySQLサーバ接続に使用するユーザ名。本ユーザは下記のデータベースにテーブルを作成する権限が必要です。";
+$lang["setup-if_mysqlpassword"]="上記で指定したMySQLユーザのパスワード";
+$lang["setup-if_mysqldb"]="RSのためのMySQLデータベース名 (データベースは存在していなければなりません)";
+$lang["setup-if_mysqlbinpath"]="MySQLクライアント・バイナリーのパス - 例: mysqldump 注記: エキスポートツールを使用する場合だけ必要です。";
+$lang["setup-if_baseurl"]="このインスタレーションのための'base' Webアドレス  注記: 最後のスラッシュは不要";
+$lang["setup-if_emailfrom"]="発信元に表示されるRSからのメールアドレス";
+$lang["setup-if_emailnotify"]="リソース/ユーザ/調査依頼 要求がメールアドレスへ送信された。";
+$lang["setup-if_spiderpassword"]="スパイダーのパスワードは必須項目です。";
+$lang["setup-if_scramblekey"]="スクランブルするには、推測しにくい文字列(パスワードと同様の)になるようにスクランブルキーを設定してください。一般に公開されるインスタレーションであれば、これは非常に賢明な考えです。 リソースパスのスクランブルを無効にするにはフィールドを空白のままにしてください。 このフィールドはあなたのために既に乱数化されていますが、必要なら、既存のインストールに合うようにそれを変えることができます。";
+$lang["setup-if_secure"]="チェックすると、RSはhttpsを使用します。";
+$lang["setup-if_applicationname"]="サイト名 (e.g. 'MyCompany Resource System').";
+$lang["setup-err_mysqlbinpath"]="パスを確認できません。無効にするには空白にしてください。";
+$lang["setup-err_baseurl"]="Base URLは必須項目です。";
+$lang["setup-err_baseurlverify"]="Base URLは正しくないようです(license.txtがロードできませんでした)。";
+$lang["setup-err_spiderpassword"]="spider.phpに必要なパスワード  重要: 各新規インスタレーション毎に乱数化されています。あなたのソースは本パスワードを知った第三者によって参照可能となります。このフィールドはあなたのために既に乱数化されていますが、必要なら、既存のインストールに合うようにそれを変えることができます。";
+$lang["setup-err_scramblekey"]="これが一般公開のインスタレーションならスクランブルキーの設定を推奨します。";
+$lang["setup-err_path"]="ロケーションの確認が出来ません";
+$lang["setup-emailerr"]="正しいメールアドレスではありません。";
+
+# Collection log - actions
+$lang["collectionlog"]="コレクション・ログ";
+$lang["collectionlog-r"]="リソース削除";
+$lang["collectionlog-R"]="全リソース削除";
+$lang["collectionlog-D"]="全リソース削除";
+$lang["collectionlog-d"]="削除されたリソース"; // this shows external deletion of any resources related to the collection.
+$lang["collectionlog-a"]="追加されたリソース";
+$lang["collectionlog-c"]="追加されたリソース (コピー)";
+$lang["collectionlog-m"]="追加されたリソース・コメント";
+$lang["collectionlog-*"]="追加されたリソース・レーティング";
+
+$lang["viewuncollectedresources"]="コレクションで使用されていないリソース表示";
+
+# Collection requesting
+$lang["requestcollection"]="コレクションの要求";
+
+# Metadata report
+$lang["metadata-report"]="メタデータ報告";
+
+# Video Playlist
+$lang["videoplaylist"]="ビデオ・プレイリスト";
+
+$lang["restrictedsharecollection"]="あなたはこのコレクションにおけるリソースの1つ以上のアクセスを制限しました、したがって、共有は禁止されています。";
+
+$lang["collection"]="コレクション";
 ?>
