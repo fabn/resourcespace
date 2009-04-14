@@ -243,13 +243,15 @@ include "../include/header.php";
 <div class="tickset">
 <?php
 
+$maxaccess=collection_max_access($collection);
+$sizes=get_all_image_sizes(false,$maxaccess>=1);
+
 # analyze available sizes and present options
 ?><select name="size" class="stdwidth" id="downloadsize">
 <?php if (array_key_exists('original',$available_sizes)){?>
 <option value="original"><?php echo $lang['original']; echo " (".count($available_sizes['original'])." of ".count($result)." available)";?></option>
 <?php } ?>
 <?php
-
 foreach ($available_sizes as $key=>$value)
 	{
 	foreach($sizes as $size){if ($size['id']==$key) {$sizename=$size['name'];}}
