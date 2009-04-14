@@ -230,7 +230,7 @@ if ($submitted != "")
 	exit();	
 	}
 include "../include/header.php";
-print_r($sizes);
+
 ?>
 <div class="BasicsBox">
 <h1><?php echo $lang["downloadzip"]?></h1>
