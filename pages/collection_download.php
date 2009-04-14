@@ -174,7 +174,7 @@ if ($submitted != "")
 	$text.="NOTE: ".count($available_sizes[$size])." of ".count($result)." resources were available for this package.\r\n\r\n";
 	
 	foreach ($result as $resource)
-	{if (!in_array($resource['ref'],$used_resources)){$text.="Did not include: $ref \r\n\r\n";}}
+	{if (!in_array($resource['ref'],$used_resources)){$text.="Did not include: ".$resource['ref']." \r\n\r\n";}}
 	
 	$textfile = $storagedir . "/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
 	$fh = fopen($textfile, 'w') or die("can't open file");
