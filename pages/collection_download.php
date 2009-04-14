@@ -11,15 +11,55 @@ $collection=getvalescaped("collection","");
 $size=getvalescaped("size","");
 $submitted=getvalescaped("submitted","");
 $includetext=getvalescaped("text","false");
+$collectiondata=get_collection($collection);
 
 # initiate text file
 if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
-$collectiondata=get_collection($collection);
 $text=$collectiondata['name']."
 Downloaded ". date("D, F d, Y, H:i:s e")."\r\n
 Contents:\r\n\r\n";
 }
 
+# get collection
+$result=do_search("!collection" . $collection);
+
+#this array will store all the available downloads.
+$available_sizes=array();
+
+#build the available sizes array
+for ($n=0;$n<count($result);$n++)
+	{
+	$ref=$result[$n]["ref"];
+	# Load access level (0,1,2) for this resource
+	$access=get_resource_access($ref);
+	
+	# get all possible sizes for this resource
+	$sizes=get_all_image_sizes(false,$access>=1);
+
+	#check availability of original file 
+	$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
+	if (file_exists($p) && (($access==0) || ($access==1 && $restricted_full_download)))
+		{
+		$available_sizes['original'][]=$ref;
+		}
+	
+	#reverse array to get sizes in proper size order.
+	$sizes=array_reverse($sizes);
+	
+	# check for the availability of each size and load it to the available_sizes array
+	foreach ($sizes as $sizeinfo)
+		{
+		$size_id=$sizeinfo['id'];
+		# get file extension from database or use jpg.
+		$pextension = $size == 'original' ? $result[$n]["file_extension"] : 'jpg';
+		$p=get_resource_path($ref,true,$size_id,false,$pextension);
+		if (file_exists($p)) $available_sizes[$size_id][]=$ref;
+		
+		}
+	}
+	
+#print_r($available_sizes);
+$used_resources=array();
 if ($submitted != "")
 	{
 	$path="";
@@ -29,7 +69,6 @@ if ($submitted != "")
 	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 	
 	# Build a list of files to download
-	$result=do_search("!collection" . $collection);
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
@@ -39,23 +78,19 @@ if ($submitted != "")
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)
 			{
-			if ($access==1) {$size="scr";}
-			$pextension = $size == 'original' ? $result[$n]["file_extension"] : 'jpg';
-			$p=get_resource_path($ref,true,$size,false,$pextension);
 			$usesize=$size;
-			if (!file_exists($p))
-				{
-				# If the file doesn't exist for this size, then the original file must be in the requested size.
-				# Try again with the size omitted to get the original.
-				$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
-				$usesize="";
-				}
-		
-			# Check file exists and, if restricted access, that the user has access to the requested size.
-			if (file_exists($p))
-				{
-				# when writing metadata, we take an extra security measure by copying the files to tmp
+			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
+			($size == 'original') ? $usesize="" : $usesize=$usesize;
+			$p=get_resource_path($ref,true,$usesize,false,$pextension);
 
+			# Check file exists and, if restricted access, that the user has access to the requested size.
+			if ((file_exists($p) && $access==0) || 
+				(file_exists($p) && $access==1 && 
+					(image_size_restricted_access($size) || ($usesize='' && $restricted_full_download))))
+				{
+				
+				$used_resources[]=$ref;
+				# when writing metadata, we take an extra security measure by copying the files to tmp
 				$tmpfile=write_metadata($p,$ref);
 				if($tmpfile!==false && file_exists($tmpfile)){$p=$tmpfile;}		
 	
@@ -77,9 +112,10 @@ if ($submitted != "")
 					# also, set extension to "" if the original filename didn't have an extension (exiftool identification of filetypes)
 					$pathparts=pathinfo($filename);
 					if (isset($pathparts['extension'])){
-					if (strtolower($pathparts['extension'])==$pextension){$pextension=".".$pathparts['extension'];}	
+					if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
 					} else {$pextension="";}	
-					$filename=$pathparts['filename'].$pextension;
+					if ($usesize!=""){$append="-".$usesize;}else {$append="";}
+					$filename=$pathparts['filename'].$append.".".$pextension;
 
 					if (strlen($filename)>0)
 						{
@@ -130,9 +166,16 @@ if ($submitted != "")
 			}
 		}
 	if ($path=="") {exit("Nothing to download.");}	
-
-	# write text file, add to zip, and schedule for deletion 	
+	
+	
+	# append summary notes about the completeness of the package, write the text file, add to zip, and schedule for deletion 	
 	if (($zipped_collection_textfile==true)&&($includetext=="true")){
+	
+	$text.="NOTE: ".count($available_sizes[$size])." of ".count($result)." resources were available for this package.\r\n\r\n";
+	
+	foreach ($result as $resource)
+	{if (!in_array($resource['ref'],$used_resources)){$text.="Did not include: $ref \r\n\r\n";}}
+	
 	$textfile = $storagedir . "/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
 	$fh = fopen($textfile, 'w') or die("can't open file");
 	fwrite($fh, $text);
@@ -143,12 +186,12 @@ if ($submitted != "")
 	}
 
 	# Create and send the zipfile
-	
 	# Build a file name for the zip file.
-	$file="collection_" . $collection . "_" . $size . ".zip";
+	$collection_name=trim(str_replace(" ","",$collectiondata['name']));
+	$file="Col_ID" . $collection."_".$collection_name. "_" . $size . ".zip";
 
 	# Write command parameters to file.
-	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection . "_" . $size . ".txt";
+	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection."_".$collection_name. "_" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
@@ -187,6 +230,7 @@ if ($submitted != "")
 	exit();	
 	}
 include "../include/header.php";
+print_r($sizes);
 ?>
 <div class="BasicsBox">
 <h1><?php echo $lang["downloadzip"]?></h1>
@@ -199,25 +243,27 @@ include "../include/header.php";
 <div class="tickset">
 <?php
 
-# Work out the maximum access level the user has to the resources in the collection
-# If this is 'restricted' then we must restrict the download sizes available.
-$maxaccess=collection_max_access($collection);
-
-$sizes=get_all_image_sizes(false,$maxaccess>=1);
-$sizes=array_reverse($sizes);
-
-?><select name="size" class="shrtwidth" id="downloadsize">
-<option value="original"><?php echo $lang['original'];?></option>
+# analyze available sizes and present options
+?><select name="size" class="stdwidth" id="downloadsize">
+<?php if (array_key_exists('original',$available_sizes)){?>
+<option value="original"><?php echo $lang['original']; echo " (".count($available_sizes['original'])." of ".count($result)." available)";?></option>
+<?php } ?>
 <?php
-for ($n=0;$n<count($sizes);$n++)
+
+foreach ($available_sizes as $key=>$value)
 	{
-	?><option value="<?php echo $sizes[$n]["id"]?>"><?php echo i18n_get_translated($sizes[$n]["name"])?></option><?php
+	foreach($sizes as $size){if ($size['id']==$key) {$sizename=$size['name'];}}
+	if ($key!='original'){
+	?><option value="<?php echo $key?>"><?php echo i18n_get_translated($sizename);echo " (".count($value)." of ".count($result)." available)";?></option><?php
+	}
 	} ?>
 	</select>
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
 
-<?php if ($zipped_collection_textfile=="true") { ?>
+<?php 
+
+if ($zipped_collection_textfile=="true") { ?>
 <div class="Question">
 <label for="text"><?php echo $lang["zippedcollectiontextfile"]?></label>
 <select name="text" class="shrtwidth" id="text">
@@ -233,7 +279,7 @@ for ($n=0;$n<count($sizes);$n++)
 </form>
 
 </div>
-<?php
+<?php 
 include "../include/footer.php";
 ?>
 
