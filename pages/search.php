@@ -237,7 +237,7 @@ if (is_array($result))
 		}
 		
 	# Include public collections and themes in the main search, if configured.		
-	if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!")
+	if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
 		{
 		include "../include/search_public.php";
 		}

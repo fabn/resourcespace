@@ -1,10 +1,10 @@
 <?php
 
 # Perform the search
-$collections=search_public_collections($search,$order_by="theme",$sort="ASC",$exclude_themes=false,!$search_includes_public_collections,true);
+$collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
 for ($n=0;$n<count($collections);$n++)
 	{
-	$url="search.php?search=" . urlencode("!collection" . $collections[$n]["ref"]);
+	$pub_url="search.php?search=" . urlencode("!collection" . $collections[$n]["ref"]);
 	if ($display=="thumbs")
 		{
 		?>
@@ -14,7 +14,7 @@ for ($n=0;$n<count($collections);$n++)
 		<table  border="0" class="ResourceAlign"><tr><td>
 		
 		<div style="position: relative;height:140px;">
-		<a href="<?php echo $url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
+		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 		
 		<?php 
 		$resources=explode(",",$collections[$n]["resources"]);
@@ -37,9 +37,9 @@ for ($n=0;$n<count($collections);$n++)
 		</td>
 		</tr></table>
 
-		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
+		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
 
-		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a href="<?php echo $url?>"><?php echo $lang["viewcollection"]?></a></div>		
+		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewcollection"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
@@ -63,7 +63,7 @@ for ($n=0;$n<count($collections);$n++)
 		<table  border="0" class="ResourceAlignSmall"><tr><td>
 		
 		<div style="position: relative;height:70px;">
-		<a href="<?php echo $url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
+		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 		
 		<?php 
 		$resources=explode(",",$collections[$n]["resources"]);
@@ -102,12 +102,12 @@ for ($n=0;$n<count($collections);$n++)
 		{
 		?>
 		<tr>
-		<td nowrap><div class="ListTitle"><a href="<?php echo $url?>"><?php echo $lang["collection"] . ": " . highlightkeywords(tidy_trim(i18n_get_translated($collections[$n]["name"]),45),$search)?></a></div></td>
+		<td nowrap><div class="ListTitle"><a href="<?php echo $pub_url?>"><?php echo $lang["collection"] . ": " . highlightkeywords(tidy_trim(i18n_get_translated($collections[$n]["name"]),45),$search)?></a></div></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><?php echo $lang["collection"] ?></td>
 		<td><?php echo nicedate($collections[$n]["created"],false,true)?></td>
-		<td><div class="ListTools"><a href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
+		<td><div class="ListTools"><a href="<?php echo $pub_url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
 		</tr>
 	<?php } ?>		
 	
