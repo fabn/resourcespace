@@ -57,7 +57,8 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			
 			case 2: # -------- Dropdowns / check lists
 			case 3:
-			$options=trim_array(explode(",",$fields[$n]["options"]));sort($options);
+			$options=trim_array(explode(",",$fields[$n]["options"]));
+			if ($auto_order_checkbox) {sort($options);}
 			$p="";
 			$c=0;
 			for ($m=0;$m<count($options);$m++)
