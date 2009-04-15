@@ -233,6 +233,25 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
 		}
 	}
 
+/* ----------------------------------------
+	Try MP3 preview extraction via exiftool
+   ----------------------------------------
+*/
+
+if ($extension=="mp3")
+	{
+	global $exiftool_path;
+	if (isset($exiftool_path))
+		{
+		shell_exec($exiftool_path.'/exiftool -b -picture '.$file.' > '.$target);
+		}
+	if (file_exists($target))
+		{
+		#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+		if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+		}
+	}
+
 
 /* ----------------------------------------
 	Try text file to JPG conversion
