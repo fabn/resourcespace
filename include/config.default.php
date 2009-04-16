@@ -415,6 +415,7 @@ $original_filenames_when_downloading=true;
 
 # When $original_filenames_when_downloading, should the original filename be prefixed with the resource ID?
 # This ensures unique filenames when downloading multiple files.
+# WARNING: if switching this off, be aware that when downloading a collection as a zip file, a file with the same name as another file in the collection will overwrite that existing file. It is therefore advisiable to leave this set to 'true'.
 $prefix_resource_id_to_filename=true;
 
 # When using $prefix_resource_id_to_filename above, what string should be used prior to the resource ID?
