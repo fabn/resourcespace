@@ -40,7 +40,7 @@ include "../../include/header.php";
 		<li><a href="../upload_swf.php?replace=true"><?php echo $lang["replaceresourcebatch"]?></a></li>    
 
 		<li><a href="team_copy.php"><?php echo $lang["copyresource"]?></a></li>
-		<li><a href="../search.php?search=<?php echo urlencode("!userpending")?>"><?php echo $lang["viewuserpending"]?></a></li>
+		<li><a href="../search.php?search=&archive=-1"><?php echo $lang["viewuserpending"]?></a></li>
 
 		<!--<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>-->
 		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>

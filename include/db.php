@@ -611,8 +611,7 @@ function check_access_key_collection($collection,$key)
 	for ($n=0;$n<count($r);$n++)
 		{
 		# Verify a supplied external access key for all resources in a collection
-		$c=sql_value("select count(*) value from external_access_keys where resource='" . $r[$n] . "' and access_key='$key'",0);
-		if ($c==0) {return false;}
+		if (!check_access_key($r[$n],$key)) {return false;}
 		}	
 
 	# Set the 'last used' date for this key
