@@ -113,7 +113,10 @@ if ($noattach=="")
 			
 			# Use the original filename if one has been set.
 			# Strip any path information (e.g. if the staticsync.php is used).
-			$filename = sprintf('%s.%s', strip_extension(mb_basename($origfile)), $ext);
+			# append preview size to base name if not the original
+			if ($size!=""){$filename=strip_extension(mb_basename($origfile))."-".$size.".".$ext;}
+			else {$filename = strip_extension(mb_basename($origfile)).".".$ext;}
+			
 			if ($prefix_resource_id_to_filename) { $filename = $prefix_filename_string . $ref . "_" . $filename; }
 			}
 		}
