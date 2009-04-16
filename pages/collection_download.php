@@ -103,23 +103,24 @@ if ($submitted != "")
 					# Retrieve the original file name
 					$filename=get_resource_data($ref);
 					$filename=$filename["file_path"];
-					# now you've got original filename, but it may have an extension in a different letter case. 
-					# The system needs to replace the extension to change it to jpg if necessary, but if the original file
-					# is being downloaded, and it originally used a different case, then it should not come from the file_extension, 
-					# but rather from the original filename itself.
-					
-					# do an extra check to see if the original filename might have uppercase extension that can be preserved.	
-					# also, set extension to "" if the original filename didn't have an extension (exiftool identification of filetypes)
-					$pathparts=pathinfo($filename);
-					if (isset($pathparts['extension'])){
-					if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
-					} else {$pextension="";}	
-					if ($usesize!=""){$append="-".$usesize;}else {$append="";}
-					$filename=$pathparts['filename'].$append.".".$pextension;
 
 					if (strlen($filename)>0)
 						{
 						# Only perform the copy if an original filename is set.
+
+						# now you've got original filename, but it may have an extension in a different letter case. 
+						# The system needs to replace the extension to change it to jpg if necessary, but if the original file
+						# is being downloaded, and it originally used a different case, then it should not come from the file_extension, 
+						# but rather from the original filename itself.
+						
+						# do an extra check to see if the original filename might have uppercase extension that can be preserved.	
+						# also, set extension to "" if the original filename didn't have an extension (exiftool identification of filetypes)
+						$pathparts=pathinfo($filename);
+						if (isset($pathparts['extension'])){
+						if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
+						} else {$pextension="";}	
+						if ($usesize!=""){$append="-".$usesize;}else {$append="";}
+						$filename=$pathparts['filename'].$append.".".$pextension;
 
 						if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
 						
