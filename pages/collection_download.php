@@ -43,9 +43,6 @@ for ($n=0;$n<count($result);$n++)
 		$available_sizes['original'][]=$ref;
 		}
 	
-	#reverse array to get sizes in proper size order.
-	$sizes=array_reverse($sizes);
-	
 	# check for the availability of each size and load it to the available_sizes array
 	foreach ($sizes as $sizeinfo)
 		{
@@ -246,6 +243,8 @@ include "../include/header.php";
 
 $maxaccess=collection_max_access($collection);
 $sizes=get_all_image_sizes(false,$maxaccess>=1);
+
+$available_sizes=array_reverse($available_sizes,true);
 
 # analyze available sizes and present options
 ?><select name="size" class="stdwidth" id="downloadsize">
