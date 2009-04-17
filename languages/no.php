@@ -11,7 +11,7 @@ $lang["contactus"]="Kontakt oss";
 # next line
 $lang["home"]="Hjem";
 $lang["searchresults"]="Søkeresultater";
-$lang["themes"]="Innhold";
+$lang["themes"]="Kategorier";
 $lang["mycollections"]="Mine lysbord";
 $lang["mycontributions"]="Mine bidrag";
 $lang["researchrequest"]="Materialforespørsel";
@@ -131,7 +131,7 @@ $lang["emailcollection"]="Send lysbordet som e-post";
 $lang["collectionname"]="Lysbordnavn";
 $lang["collectionid"]="lysbord-ID";
 $lang["emailtousers"]="Send e-post til brukere...";
-$lang["emailcollection"]="Send lysbord som e-post";
+$lang["emailcollection"]="Send lysbordet som e-post";
 $lang["removecollectionareyousure"]="Er du sikker på at du vil fjerne lysbordet fra listen din?";
 $lang["managemycollections"]="Administrer lysbord";
 $lang["createnewcollection"]="Opprett nytt lysbord";
@@ -148,7 +148,7 @@ $lang["editall"]="Rediger alle";
 $lang["hidethumbnails"]="Skjul miniatyrbilder";
 $lang["showthumbnails"]="Vis miniatyrbilder";
 $lang["contactsheet"]="Kontaktkopi";
-$lang["mycollection"]="Mine lysbord";
+$lang["mycollection"]="Mitt lysbord";
 $lang["editresearchrequests"]="Rediger bildeforespørsler";
 $lang["savedsearch"]="Lagret søk";
 $lang["findapubliccollection"]="Finn et åpent lysbord";
@@ -156,6 +156,9 @@ $lang["mustspecifyoneusername"]="Du må oppgi minst ett brukernavn";
 $lang["couldnotmatchallusernames"]="Kunne ikke finne alle brukernavnene";
 $lang["emailcollectionmessage"]="har sendt deg en e-post fra $applicationname som har blitt lagt til din 'Mine lysbord'-side."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Klikk på lenken nedenfor for å se lysbordet.";
+$lang["collection_download_original"]="Original fil";
+$lang["zippedcollectiontextfile"]="Inkluder tekstfil med fil- eller lysbord-data.";
+$lang["copycollectionremoveall"]="Fjern alle filer før kopiering";
  
 # Resource create / edit / view
 $lang["createnewresource"]="Opprett nytt materiale";
@@ -163,7 +166,7 @@ $lang["resourcetype"]="Filtype";
 $lang["resourcetypes"]="Filtyper";
 $lang["deleteresource"]="Slett fil";
 $lang["downloadresource"]="Last ned fil";
-$lang["rightclicktodownload"]="Høyreklikk på denne lenken og velg 'Lagre som...' for å laste ned fila...";
+$lang["rightclicktodownload"]="Klikk på denne lenken og velg 'Lagre som...' for å laste ned filen...";
 $lang["downloadinprogress"]="Nedlasting pågår";
 $lang["editmultipleresources"]="Rediger filer";
 $lang["editresource"]="Rediger fil";
@@ -190,6 +193,7 @@ $lang["similarresource"]="lignende materiale"; # e.g. 1 similar resource
 $lang["nosimilarresources"]="Ikke noe lignende materiell";
 $lang["emailresource"]="Send materiale via e-post";
 $lang["resourcetitle"]="Materialtittel";
+$lang["filename"]="Originalt filnavn";
 $lang["requestresource"]="Bildeforespørsel";
 $lang["viewmatchingresources"]="Vis lignende treff";
 $lang["nomatchingresources"]="Ingen lignende treff";
@@ -212,24 +216,23 @@ $lang["jump"]="Hopp";
 $lang["titleandcountry"]="Tittel / Land";
 $lang["torefineyourresults"]="For å finjustere søket, prøv";
 $lang["verybestresources"]="Vårt beste materiale";
-$lang["emailresource"]="Send filene via e-post";
-$lang["addtocurrentcollection"]="Legg til aktivt lysbord";
+$lang["addtocurrentcollection"]="Legg til valgt lysbord";
 $lang["storyextract"]="Tekstutdrag";
-$lang["addresource"]="Last opp filer (enkeltvis)";
-$lang["addresourcebatch"]="Batchopplasting";
-$lang["fileupload"]="Last opp filer";
-$lang["clickbrowsetolocate"]="Klikk Naviger for å finne filen";
-$lang["resourcetools"]="Materiellverktøy";
-$lang["fileinformation"]="Filinformasjon";
+$lang["addresource"]="Legg til enkeltfil";
+$lang["addresourcebatch"]="Legg til flere filer";
+$lang["fileupload"]="Filopplasting";
+$lang["clickbrowsetolocate"]="Klikk på Velg fil for å finne filen";
+$lang["resourcetools"]="Filinformasjon";
+$lang["fileinformation"]="Oppløsning";
 $lang["filesize"]="Filstørrelse";
 $lang["options"]="Valg";
 $lang["previousresult"]="Forrige resultat";
 $lang["viewallresults"]="Vis alle resultater";
 $lang["nextresult"]="Neste resultat";
 $lang["pixels"]="piksler";
-$lang["download"]="Nedlasting";
-$lang["preview"]="Forhåndsvisning";
-$lang["fullscreenpreview"]="Fullskjermsvisning";
+$lang["download"]="Last ned";
+$lang["preview"]="Vis";
+$lang["fullscreenpreview"]="Fullskjermvisning";
 $lang["file"]="fil"; # e.g. PDF File
 $lang["edit"]="Rediger";
 $lang["delete"]="Slett";
@@ -262,6 +265,9 @@ $lang["log-c"]="Opprettede filer";
 $lang["log-d"]="Nedlastet fil";
 $lang["log-e"]="Redigerte materiell-felt";
 $lang["log-m"]="Masseredigerte materiell-felt";
+$lang["log-v"]="Viewed resource";
+$lang["log-l"]="Logged in"; # For user entries only.
+
 $lang["backtoresourceview"]="Tilbake til materialvisning";
 
 # Resource status
@@ -277,6 +283,7 @@ $lang["activity"]="Aktivitet";
 $lang["summary"]="sammendrag";
 $lang["mostinaday"]="Meste på en dag";
 $lang["totalfortheyear"]="Totalt for året";
+$lang["totalforthemonth"]="Total for the month";
 $lang["dailyaverage"]="Dagsgjennomsnitt for perioden";
 $lang["nodata"]="Ingen data for perioden.";
 $lang["max"]="Maks."; # i.e. maximum
@@ -368,7 +375,7 @@ $lang["fromdate"]="Fra dato";
 $lang["day"]="Dag";
 $lang["month"]="Måned";
 $lang["year"]="År";
-$lang["items"]="Filer";
+$lang["itemstitle"]="Filer";
 $lang["tools"]="Verktøy";
 $lang["created"]="Opprettet";
 $lang["user"]="Bruker";
@@ -395,13 +402,13 @@ $lang["newpasswordretype"]="Nytt passord (gjenta)";
 $lang["passwordnotvalid"]="Dette er ikke et gyldig passord";
 $lang["passwordnotmatch"]="Passordene du oppga er ikke like";
 $lang["wrongpassword"]="Uriktig passord, vennligst prøv igjen";
-$lang["action-view"]="vis";
-$lang["action-select"]="velg";
-$lang["action-download"]="last ned";
-$lang["action-email"]="e-post";
-$lang["action-edit"]="rediger";
-$lang["action-delete"]="slett";
-$lang["action-remove"]="fjern";
+$lang["action-view"]="Vis";
+$lang["action-select"]="Velg";
+$lang["action-download"]="Last ned";
+$lang["action-email"]="E-post";
+$lang["action-edit"]="Rediger";
+$lang["action-delete"]="Slett";
+$lang["action-remove"]="Fjern";
 $lang["complete"]="Fullført";
 $lang["backtohome"]="Tilbake til Hjem";
 $lang["backtohelphome"]="Tilbake til Hjelp";
@@ -488,8 +495,10 @@ $lang["warningexpired"]="Filen har gått ut på dato";
 $lang["warningexpiredtext"]="Advarsel! Denne filen har gått ut på dato. Du må klikke på lenken nedenfor for å slå på filnedlasting.";
 $lang["warningexpiredok"]="&gt; Slå på filnedlasting";
 $lang["userrequestcomment"]="Kommentar";
-$lang["addresourcebatchbrowser"]="Batch-opplasting - i nettleseren (anbefalt)";
-$lang["addresourcebatchftp"]="Batch-opplasting - FTP";
+$lang["addresourcebatchbrowser"]="Batch-opplasting - i nettleseren (Flash)";
+$lang["addresourcebatchbrowserjava"]="Batch-opplasting - i nettleseren (Java)";
+
+$lang["addresourcebatchftp"]="Batch-opplasting - hent filer fra FTP-tjener";
 $lang["replaceresourcebatch"]="Erstatt filer - Batch";
 $lang["editmode"]="Redigeringsmodus";
 $lang["replacealltext"]="Erstatt all tekst";
@@ -510,9 +519,202 @@ $lang["orientation"]="Høyde/bredde";
 $lang["requiredfield"]="Må fylles ut";
 $lang["requiredfields"]="Noen obligatoriske felt ble ikke fylt ut. Vennligst se gjennom skjemaet og prøv igjen.";
 $lang["viewduplicates"]="Se dupliserte filer";
-
-
+$lang["userlog"]="Brukerlogg";
+$lang["ipaddressrestriction"]="Restriksjon av IP-adresse (valgfritt)";
+$lang["format"]="Format";
+$lang["wildcardpermittedeg"]="Jokertegn tillat f.eks.";
 
 # New for 1.6
+$lang["collection_download_original"]="Originalfil";
 $lang["newflag"]="NYTT!";
+$lang["link"]="Lenke";
+$lang["uploadpreview"]="Last bare opp forhåndsvisningsbilder";
+$lang["starttypingusername"]="(Begynn å skrive brukernavn / fullt navn / gruppenavn)";
+$lang["requestfeedback"]="Be om tilbakemelding<br />(Svar blir sendt via e-post)";
+$lang["sendfeedback"]="Send tilbakemelding";
+$lang["feedbacknocomments"]="Du har ikke skrevet noen kommentarer til filene i lysbordet.<br />Klikk på snakkeboblen ved hver fil for å legge til kommentarer.";
+$lang["collectionfeedback"]="Tilbakemelding for lysbord";
+$lang["collectionfeedbackemail"]="Du har mottatt følgende tilbakemelding:";
+$lang["feedbacksent"]="Din tilbakemelding har blitt sendt.";
+$lang["newarchiveresource"]="Ny arkivert fil";
+$lang["nocategoriesselected"]="Ingen kategori valgt";
+$lang["showhidetree"]="Vis/skjul tre";
+$lang["clearall"]="Fjern alle";
+$lang["clearcategoriesareyousure"]="Sikker på at du vil fjerne alle valgene?";
+$lang["share"]="Dele";
+$lang["sharecollection"]="Del lysbordet";
+$lang["generateurl"]="Lag nettlenke";
+$lang["generateurlinternal"]="Nettlenken nedenfor gjelder kun for innloggede brukere.";
+$lang["generateurlexternal"]="Nettlenken nedenfor gjelder for ALLE og krever ikke innlogging. <strong>Hvis flere filer legges til lysbordet vil nettlenken opphøre av sikkerhetshensyn og en ny nettlenke må lages.</strong>";
+$lang["archive"]="Arkiv";
+$lang["collectionviewhover"]="Klikk for å se filene i dette lysbordet";
+$lang["collectioncontacthover"]="Lag et oversiktsark med filene i dette lysbordet";
+$lang["original"]="Original";
+
+$lang["password_not_min_length"]="Passordet må inneholde minst ? tegn";
+$lang["password_not_min_alpha"]="Passordet må inneholde minst ? alfabetiske (a-z, A-Z) bokstaver";
+$lang["password_not_min_uppercase"]="Passordet må inneholde minst ? store (A-Z) bokstaver";
+$lang["password_not_min_numeric"]="Passordet må inneholde minst ? numeriske (0-9) tall";
+$lang["password_not_min_special"]="Passordet må inneholde minst ? ikke-alfanumeriske tegn (!@$%&* osv.)";
+$lang["password_matches_existing"]="Passordet du har oppgitt er det samme som det eksisterende passordet";
+$lang["password_expired"]="Passordet ditt har utløpt og du må nå skrive inn et nytt passord";
+$lang["max_login_attempts_exceeded"]="Du har overskredet grensen for maksimum tillate innlogginsforsøk. Du må nå vente i ? minutter før du kan prøve å logge inn på nytt.";
+
+$lang["newlogindetails"]="Du finner ditt nye passord nedenfor."; # For new password mail
+$lang["youraccountdetails"]="Din kontoinformasjon"; # Subject of mail sent to user on user details save
+
+$lang["copyfromcollection"]="Kopier fra lysbordet";
+$lang["donotcopycollection"]="Ikke kopier fra lysbordet";
+
+$lang["resourcesincollection"]="filer i dette lysbordet"; # E.g. 3 resources in this collection
+$lang["removefromcurrentcollection"]="Fjern fra dette lysbordet";
+$lang["showtranslations"]="+ Vis oversettelser";
+$lang["hidetranslations"]="- Skjul oversettelser";
+$lang["archivedresource"]="Arkivert fil";
+
+$lang["managerelatedkeywords"]="Behandle beslektede nøkkelord";
+$lang["keyword"]="Nøkkelord";
+$lang["relatedkeywords"]="Beslektede nøkkelord";
+$lang["matchingrelatedkeywords"]="Sammenlign beslektede nøkkelord";
+$lang["newkeywordrelationship"]="Skap nytt slektskap for nøkkelordet:";
+
+$lang["exportdata"]="Eksporter data";
+$lang["exporttype"]="Eksporter type";
+
+$lang["managealternativefiles"]="Behandle alternative filer";
+$lang["managealternativefilestitle"]="Behandle alternative filer";
+$lang["alternativefiles"]="Alternative filer";
+$lang["filetype"]="Filtype";
+$lang["filedeleteconfirm"]="Er du sikker på at du vil slette denne filen?";
+$lang["addalternativefile"]="Legg til alternativ fil";
+$lang["editalternativefile"]="Rediger alternativ fil";
+$lang["description"]="Beskrivelse";
+$lang["notuploaded"]="Ikke opplastet";
+$lang["uploadreplacementfile"]="Last opp erstatningsfil";
+
+
+$lang["resourceistranscoding"]="Filen blir for øyeblikket omkodet";
+$lang["cantdeletewhiletranscoding"]="Du kan ikke slette filer mens de blir omkodet";
+
+$lang["maxcollectionthumbsreached"]="Det er for mange filer i dette lysbordet til å vise miniatyrbilder. Miniatyrbildene vil nå bli skjult.";
+
+$lang["ratethisresource"]="Hvordan vil du rangere denne filen?";
+$lang["ratingthankyou"]="Takk for rangeringen.";
+$lang["ratings"]="Rangeringer";
+$lang["rating_lowercase"]="rangering";
+$lang["cannotemailpassword"]="Du kan ikke sende brukere deres eksisterende passord ettersom det ikke blir lagret (en kryptografisk nøkkel blir lagret istedet).<br /><br />Du må bruke 'Foreslå'-knappen ovenfor som vil generere et nytt passord og sende det via e-post til brukeren.";
+
+$lang["userrequestnotification1"]="Bestillingsskjemaet for brukerinnlogging er fylt ut med følgende opplysninger:";
+$lang["userrequestnotification2"]="Hvis dette er en gyldig forespørsel så vennligst opprett en brukerkonto for denne brukeren på nettadressen nedenfor.";
+$lang["ipaddress"]="IP-adresse";
+$lang["userresourcessubmitted"]="Følgende brukerbidrag har blitt lastet opp for gjennomgang:";
+$lang["viewalluserpending"]="Se gjennom alle brukerbidrag som venter på gjennomgang:";
+
+# New for 1.7
+$lang["installationcheck"]="Installasjonssjekk";
+$lang["managefieldoptions"]="Behandle felt-innstillinger";
+$lang["matchingresourcesheading"]="Samsvarende filer";
+$lang["backtofieldlist"]="Tilbake til feltliste";
+$lang["rename"]="Døp om";
+$lang["showalllanguages"]="Vis alle språk";
+$lang["hidealllanguages"]="Skjul alle språk";
+$lang["clicktologinasthisuser"]="Klikk for å logge på som denne brukeren";
+$lang["addkeyword"]="Legg til nøkkelord";
+$lang["selectedresources"]="Valgte filer";
+
+$lang["internalusersharing"]="Intern brukerdeling";
+$lang["externalusersharing"]="Ekstern brukerdeling";
+$lang["accesskey"]="Tilgangsnøkkel";
+$lang["sharedby"]="Delt av";
+$lang["sharedwith"]="Delt med";
+$lang["lastupdated"]="Sist oppdatert";
+$lang["lastused"]="Sist brukt";
+$lang["noattachedusers"]="Ingen tilknyttede brukere.";
+$lang["confirmdeleteaccess"]="Er du sikker på at du vil slette denne tilgansnøkkelen? Brukere som har hatt tilgang via denne nøkkelen vil ikke lenger få tilgang til dette lysbordet.";
+$lang["noexternalsharing"]="Ingen ekstern deling.";
+$lang["sharedcollectionaddwarning"]="Advarsel: Dette lybordet har blitt delt med eksterne brukere. Filen du har lagt til har nå blitt tilgjenelig for disse brukerne. Klikk på 'Dele' for å behandle den eksterne tilgangen til dette lysbordet.";
+$lang["addresourcebatchlocalfolder"]="Batch-opplasting - hent filer fra lokal opplastingsmappe";
+# Setup Script
+$lang["setup-alreadyconfigured"]="Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
+$lang["setup-successheader"]="Congratulations!";
+$lang["setup-successdetails"]="Your initial ResourceSpace setup is complete.  Be sure to check out 'include/default.config.php' for more configuration options.";
+$lang["setup-successnextsteps"]="Next steps:";
+$lang["setup-successremovewrite"]="You can now remove write access to 'include/'.";
+$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation';
+$lang["setup-checkconfigwrite"]="Write access to config directory:";
+$lang["setup-checkstoragewrite"]="Write access to storage directory:";
+$lang["setup-welcome"]="Welcome to ResourceSpace";
+$lang["setup-introtext"]="Thanks for choosing ResourceSpace.  This configuration script will help you setup ResourceSpace.  This process only needs to be completed once.";
+$lang["setup-checkerrors"]="Pre-configuration errors were detected.<br />  Please resolve these errors and return to this page to continue.";
+$lang["setup-errorheader"]="There were errors detected in your configuration.  See below for detailed error messages.";
+$lang["setup-warnheader"]="Some of your settings generated warning messages.  See below for details.  This doesn't necessarily mean there is a problem with your configuration.";
+$lang["setup-basicsettings"]="Basic Settings";
+$lang["setup-basicsettingsdetails"]="These settings provide the basic setup for your ResourceSpace installation.  Required items are marked with a <strong>*</strong>";
+$lang["setup-dbaseconfig"]="Database Configuration";
+$lang["setup-mysqlerror"]="There was an error with your MySQL settings:";
+$lang["setup-mysqlerrorversion"]="MySQL version should be 5 or greater.";
+$lang["setup-mysqlerrorserver"]="Unable to reach server.";
+$lang["setup-mysqlerrorlogin"]="Login failed. (Check username and password.)";
+$lang["setup-mysqlerrordbase"]="Unable to access database.";
+$lang["setup-mysqlerrorperns"]="Check user permissions.  Unable to create tables.";
+$lang["setup-mysqlserver"]="MySQL Server:";
+$lang["setup-mysqlusername"]="MySQL Username:";
+$lang["setup-mysqlpassword"]="MySQL Password:";
+$lang["setup-mysqldb"]="MySQL Database:";
+$lang["setup-mysqlbinpath"]="MySQL Binary Path:";
+$lang["setup-generalsettings"]="General Settings";
+$lang["setup-baseurl"]="Base URL:";
+$lang["setup-emailfrom"]="Email From Address:";
+$lang["setup-emailnotify"]="Email Notify:";
+$lang["setup-spiderpassword"]="Spider Password:";
+$lang["setup-scramblekey"]="Scramble Key:";
+$lang["setup-secure"]="Secure (https) mode:";
+$lang["setup-paths"]="Paths";
+$lang["setup-pathsdetail"]="For each path, enter the path without a trailing slash to each binary.  To disable a binary, leave the path blank.  Any auto-detected paths have already been filled in.";
+$lang["setup-applicationname"]="Application Name:";
+$lang["setup-basicsettingsfooter"]="NOTE: The only <strong>required</strong> settings are on this page.  If you're not interested in checking out the advanced options, you may click below to begin the installation process.";
+$lang["setup-if_mysqlserver"]='The IP address or <abbr title="Fully Qualified Domain Name">FQDN</abbr> of your MySQL server installation.  If MySql is installed on the same server as your web server, use "localhost".';
+$lang["setup-if_mysqlusername"]="The username used to connect to your MySQL server.  This user must have rights to create tables in the database named below.";
+$lang["setup-if_mysqlpassword"]="The password for the MySQL username entered above.";
+$lang["setup-if_mysqldb"]="The Name of the MySQL database RS will use. (This database must exist.)";
+$lang["setup-if_mysqlbinpath"]="The path to the MySQL client binaries - e.g. mysqldump. NOTE: This is only needed if you plan to use the export tool.";
+$lang["setup-if_baseurl"]="The 'base' web address for this installation.  NOTE: No trailing slash.";
+$lang["setup-if_emailfrom"]="The address that emails from RS appear to come from.";
+$lang["setup-if_emailnotify"]="The email address to which resource/user/research requests are sent.";
+$lang["setup-if_spiderpassword"]="The spider password is a required field.";
+$lang["setup-if_scramblekey"]="To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable resource path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
+$lang["setup-if_secure"]="If checked, RS will use https.";
+$lang["setup-if_applicationname"]="The name of your implementation / installation (e.g. 'MyCompany Resource System').";
+$lang["setup-err_mysqlbinpath"]="Unable to verify path.  Leave blank to disable.";
+$lang["setup-err_baseurl"]="Base URL is a required field.";
+$lang["setup-err_baseurlverify"]="Base URL does not seem to be correct (could not load license.txt).";
+$lang["setup-err_spiderpassword"]="The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
+$lang["setup-err_scramblekey"]="If this is a public installation, setting the scramble key is recommended.";
+$lang["setup-err_path"]="Unable to verify location of";
+$lang["setup-emailerr"]="Not a valid email address.";
+
+# Collection log - actions
+$lang["collectionlog"]="Lysbord-logg";
+$lang["collectionlog-r"]="Fjernet fil";
+$lang["collectionlog-R"]="Fjernet alle filer";
+$lang["collectionlog-D"]="Slettet ale filer";
+$lang["collectionlog-d"]="Slettet fil"; // this shows external deletion of any resources related to the collection.
+$lang["collectionlog-a"]="Lagt til fil";
+$lang["collectionlog-c"]="Lagt til fil (kopiert)";
+$lang["collectionlog-m"]="Lagt til filkommentar";
+$lang["collectionlog-*"]="Lagt til filrangering";
+
+$lang["viewuncollectedresources"]="Vis filer som ikke er brukt i noen lysbord";
+
+# Collection requesting
+$lang["requestcollection"]="Lysbord-forespørsel";
+
+# Metadata report
+$lang["metadata-report"]="Metadata-rapport";
+
+# Video Playlist
+$lang["videoplaylist"]="Video-spilleliste";
+
+$lang["restrictedsharecollection"]="Du har begrenset tilgang til en eller flere filer i dette lysbordet og deling er derfor ikke tilatt.";
+
 ?>
