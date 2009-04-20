@@ -336,7 +336,7 @@ $infobox_fields=array(18,10,29,53);
 $collection_reorder_caption=false;
 
 # Footer text applied to all e-mails (blank by default)
-$emailfooter="";
+$email_footer="";
 
 # Contact Sheet feature, and whether contact sheet becomes resource.
 # Requires ImageMagick/Ghostscript.
