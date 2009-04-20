@@ -5,9 +5,9 @@ include "../include/db.php";
 $k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";}
 include "../include/general.php";
 
-$url=getval("url","home.php");
+$url=getval("url","pages/home.php");
 
-if ($terms_download==false) {redirect($url);}
+if ($terms_download==false && getval("noredir","")=="") {redirect($url);}
 
 if (getval("save","")!="")
 	{
@@ -39,6 +39,8 @@ include "../include/header.php";
 	<input type=hidden name="url" value="<?php echo $url?>">
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>		
+	<input name="decline" type="button" value="&nbsp;&nbsp;<?php echo $lang["idecline"]?>&nbsp;&nbsp;" onClick="history.go(-1);return false;"/>
+
 	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["iaccept"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
