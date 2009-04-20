@@ -464,9 +464,12 @@ else
 			{
 			# Add this one at the end, it can't be found
 			$notfound=get_collection($usercollection);
-			?>
-			<option selected><?php echo $notfound["name"]?></option>
-			<?php
+			if ($notfound!==false)
+				{
+				?>
+				<option selected><?php echo $notfound["name"]?></option>
+				<?php
+				}
 			}
 		?>
 		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>

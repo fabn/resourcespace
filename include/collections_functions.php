@@ -136,7 +136,7 @@ function delete_collection($ref)
 	sql_query("delete from collection_resource where collection='$ref'");
 	}
 	
-function refresh_collection_frame()
+function refresh_collection_frame($collection="")
 	{
 	# Refresh the collections frame
 	# Only works when we are using a frameset.
@@ -145,7 +145,7 @@ function refresh_collection_frame()
 		{
 		global $headerinsert,$baseurl;
 		$headerinsert.="<script language=\"Javascript\">
-		top.collections.location.href=\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection","") . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
+		top.collections.location.href=\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection",$collection) . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
 		</script>";
 		}
 	}
@@ -632,9 +632,17 @@ function get_mycollection_name($userref)
 	{
 	# Fetches the next name for a new My Collection for the given user (My Collection 1, 2 etc.)
 	global $lang;
-	for ($n=2;$n<500;$n++)
+	for ($n=1;$n<500;$n++)
 		{
-		$name=$lang["mycollection"] . " " . $n;
+		# Construct a name for this My Collection.
+		if ($n==1)
+			{
+			$name=$lang["mycollection"];
+			}
+		else
+			{
+			$name=$lang["mycollection"] . " " . $n;
+			}
 		$ref=sql_value("select ref value from collection where user='$userref' and name='$name'",0);
 		if ($ref==0)
 			{

@@ -31,7 +31,28 @@ if ($delete!="")
 	{
 	# Delete collection
 	delete_collection($delete);
-	refresh_collection_frame();
+
+	# Get count of collections
+	$c=get_user_collections($userref);
+	
+	# If the user has just deleted the collection they were using, select a new collection
+	if ($usercollection==$delete && count($c)>0)
+		{
+		# Select the first collection in the dropdown box.
+		$usercollection=$c[0];
+		set_user_collection($userref,$usercollection);
+		}
+
+	# User has deleted their last collection? add a new one.
+	if (count($c)==0)
+		{
+		# No collections to select. Create them a new collection.
+		$name=get_mycollection_name($userref);
+		$usercollection=create_collection ($userref,$name);
+		set_user_collection($userref,$usercollection);
+		}
+
+	refresh_collection_frame($usercollection);
 	}
 
 $remove=getvalescaped("remove","");
