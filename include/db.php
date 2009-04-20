@@ -440,17 +440,19 @@ function escape_check($text) #only escape a string if we need to, to prevent esc
     return $text;
     }
     
-function nicedate($date,$time=false,$wordy=false)
+function nicedate($date,$time=false,$wordy=true)
 	{
-	# format a MySQL ISO date in the UK style
+	# format a MySQL ISO date
+	# Always use the 'wordy' style from now on as this works better internationally.
+	
 	if ((strlen($date)==0) || (substr($date,0,4)=="0000")) {return "-";}
-	if ($time) {return substr($date,8,2) . "/" . substr($date,5,2) . "/" . substr($date,2,2) . " "  . substr($date,11,5);} else {
+	$t="";
+	if ($time)
+		{
+		$t= " @ "  . substr($date,11,5);
+		}
 	
-	if ($wordy) {global $lang;return substr($date,8,2) . " " . @$lang["months"][substr($date,5,2)-1] . " " . substr($date,2,2);
-	}
-	else {return substr($date,8,2) . "/" . substr($date,5,2) . "/" . substr($date,2,2);}
-	}
-	
+	global $lang;return substr($date,8,2) . " " . @$lang["months"][substr($date,5,2)-1] . " " . substr($date,2,2) . $t;
 	}	
 
 function redirect($url)

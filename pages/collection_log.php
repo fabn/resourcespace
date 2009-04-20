@@ -38,7 +38,7 @@ for ($n=0;$n<count($log);$n++)
 	?>
 	<!--List Item-->
 	<tr>
-	<td><?php echo $log[$n]["date"]?></td>
+	<td><?php echo nicedate($log[$n]["date"],true)?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
 	<td><?php echo $lang["collectionlog-" . $log[$n]["type"]]?></td>
 	<td><?php echo $log[$n]["resource"]?></td>
