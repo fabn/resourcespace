@@ -720,4 +720,6 @@ $lang["restrictedsharecollection"]="You have restricted access to one or more of
 $lang["collection"]="Collection";
 $lang["idecline"]="I Decline"; # For terms and conditions
 
+$lang["mycollection_notpublic"]="You cannot make your 'My Collection' into a public collection or theme. Please create a new collection for this purpose.";
+
 ?>

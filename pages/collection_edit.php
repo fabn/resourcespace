@@ -71,10 +71,17 @@ include "../include/header.php";
 
 <div class="Question">
 <label for="public"><?php echo $lang["access"]?></label>
+<?php if ($collection["cant_delete"]==1) { 
+# This is a user's My Collection, which cannot be made public or turned into a theme. Display a warning.
+?>
+<input type="hidden" id="public" name="public" value="0">
+<div class="Fixed"><?php echo $lang["mycollection_notpublic"] ?></div>
+<?php } else { ?>
 <select id="public" name="public" class="shrtwidth" onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();">
 <option value="0" <?php if ($collection["public"]!=1) {?>selected<?php } ?>><?php echo $lang["private"]?></option>
-<?php if ($enable_public_collections || checkperm("h")) { ?><option value="1" <?php if ($collection["public"]==1) {?>selected<?php } ?>><?php echo $lang["public"]?></option><?php } ?>
+<?php if ($collection["cant_delete"]!=1 && ($enable_public_collections || checkperm("h"))) { ?><option value="1" <?php if ($collection["public"]==1) {?>selected<?php } ?>><?php echo $lang["public"]?></option><?php } ?>
 </select>
+<?php } ?>
 <div class="clearerleft"> </div>
 </div>
 
@@ -220,7 +227,7 @@ if ($enable_collection_copy)
 <?php } ?>
 
 <div class="Question">
-<label for="archive"><?php echo $lang["collectionlog"]?></label>
+<label><?php echo $lang["collectionlog"]?></label>
 <div class="Fixed">
 <a href="collection_log.php?ref=<?php echo $ref?>"><?php echo $lang["log"]?> &gt;</a>
 </div>
