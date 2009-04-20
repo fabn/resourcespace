@@ -379,7 +379,7 @@ if (!isset($newfile))
 			$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
 			if (file_exists($target)) {unlink($target);}
 			
-			$gscommand2 = $gscommand . " -dBATCH -r150 -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
+			$gscommand2 = $gscommand . " -dBATCH -r150 -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
  			$output=shell_exec($gscommand2); 
 	
 			# Set that this is the file to be used.
