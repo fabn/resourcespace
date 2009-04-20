@@ -155,7 +155,7 @@ include "include/header.php";
   <p><?php if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?php echo $lang["nopassword"]?> </a><br/><?php } ?>
   <a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
   <?php if ($error!="") { ?><div class="FormIncorrect"><?php echo $error?></div><?php } ?>
-  <form id="form1" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
+  <form target="_top" id="form1" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
   <input type="hidden" name="url" value="<?php echo htmlspecialchars($url)?>">
 		<div class="Question">
 			<label for="name"><?php echo $lang["username"]?> </label>
