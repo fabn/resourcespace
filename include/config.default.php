@@ -646,6 +646,10 @@ $search_includes_public_collections=false;
 # $default_home_page="search.php?search=example";
 $default_home_page="home.php";
 
+# Configures separators to use when splitting keywords
+# You must reindex after altering this if you have existing data in the system (via pages/tools/reindex.php)
+$config_separators=array("/","_",".","; ","-","(",")","'","\"","\\");
+
 
 #
 # ------------------------- Development Items -------------------------

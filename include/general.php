@@ -276,13 +276,18 @@ function cleanse_string($string,$preserve_separators)
 	{
 	# Removes characters from a string prior to keyword splitting, for example full stops
 	# Also makes the string lower case ready for indexing.
+	global $config_separators;
 	if ($preserve_separators)
 		{
-		return strtolower(trim_spaces(str_replace(array("/","_",".","; ","-","(",")","'","\"","\\")," ",$string)));
+		return strtolower(trim_spaces(str_replace($config_separators," ",$string)));
 		}
 	else
 		{
-		return strtolower(trim_spaces(str_replace(array(";",",","_",":","/",".","; ","-","(",")","'","\"","\\")," ",$string)));
+		# Also strip out the separators used when specifying multiple field/keyword pairs (comma and colon)
+		$s=$config_separators;
+		$s[]=",";
+		$s[]=":";
+		return strtolower(trim_spaces(str_replace($s," ",$string)));
 		}
 	}
 
