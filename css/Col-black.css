@@ -88,9 +88,9 @@ a:active {color:#CCC;}
 
 .highlight {color: #FFFF88;}
 
-.Tab a {border: 1px solid #B5C3D4;border-bottom-style: none;color: #AAA;background-color:#777;}
+.Tab a {border: 1px solid #B5C3D4;border-bottom-style: none;color: #AAA;background-color:#555;}
 .StyledTabbedPanel {border: 1px solid #CCC;border-top: 1px solid white;background-image: url(../gfx/black/interface/Download.gif);}
-.TabSelected a {color: white;background-color:#6985A9;border-top-color: white;}
+.TabSelected a {color: white;background-color:#666;border-top-color: white;}
 
 .InfoTable {border-collapse:collapse;}
 .InfoTable tr {background-image: url(../gfx/black/interface/SearchBox.gif);background-repeat: repeat-x;background-color: #597499;}

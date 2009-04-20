@@ -468,7 +468,7 @@ for ($n=0;$n<count($fields);$n++)
 		# Value formatting
 		$value=i18n_get_translated($value);
 		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==3) || ($fields[$n]["type"]==7)) {$value=TidyList($value);}
-		$value=highlightkeywords(nl2br(htmlspecialchars($value)),$search);
+		$value=nl2br(htmlspecialchars($value));
 		
 		# draw new tab panel?
 		if (($tabname!=$fields[$n]["tab_name"]) && ($fieldcount>0))
@@ -487,6 +487,9 @@ for ($n=0;$n<count($fields);$n++)
 			$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
 			
+			# Highlight keywords
+			$value=highlightkeywords($value,$search);
+			
 			# Use a display template to render this field
 			$template=$fields[$n]["display_template"];
 			$template=str_replace("[title]",$title,$template);
@@ -503,6 +506,8 @@ for ($n=0;$n<count($fields);$n++)
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,30,"<br />",true);
 
+				# Highlight keywords
+				$value=highlightkeywords($value,$search);
 				?>
 				<div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div>
 				<?php
