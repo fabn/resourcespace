@@ -418,10 +418,15 @@ else
 <!--Menu-->	
 <div id="CollectionMinRightNav">
   <ul>
-  	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     		<?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main"><?php echo $lang["managemycollections"]?></a></li>
-    <li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
-        <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>"><?php echo $lang["edit"]?></a></li><?php } ?>
+    <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
+    
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
+
+    <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
+    
+    <?php } ?>
     <?php } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
