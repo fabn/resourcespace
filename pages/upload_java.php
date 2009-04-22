@@ -94,6 +94,7 @@ include "../include/header.php";
             <param name="nbFilesPerRequest" value="1">
             <param name="debugLevel" value="0">
             <param name="showLogWindow" value="false">
+            <param name="lang" value="<?php echo $language?>">
             
             <?php if (!$frameless_collections) { 
             # If not using frameless collections, refresh the bottom frame after upload.
