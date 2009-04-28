@@ -284,8 +284,8 @@ if ($k!="")
     <?php } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
-    <li><a href="team/team_research_edit.php?ref=<?php echo $research?>" target="main">&gt; <?php echo $lang["editresearchrequests"]?></a></li>    
     <li><a href="team/team_research.php" target="main">&gt; <?php echo $lang["manageresearchrequests"]?></a></li>    
+    <li><a href="team/team_research_edit.php?ref=<?php echo $research?>" target="main">&gt; <?php echo $lang["editresearchrequests"]?></a></li>    
     <?php } ?>
     
     <?php 
@@ -430,8 +430,8 @@ else
     <?php } else {
     $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
     ?>
-    <li><a href="team/team_research_edit.php?ref=<?php echo $research?>" target="main"><?php echo $lang["editresearchrequests"]?></a></li>    
-    <li><a href="team/team_research.php" target="main"><?php echo $lang["manageresearchrequests"]?></a></li>    
+    <li><a href="team/team_research.php" target="main"><?php echo $lang["manageresearchrequests"]?></a></li>   
+    <li><a href="team/team_research_edit.php?ref=<?php echo $research?>" target="main"><?php echo $lang["editresearchrequests"]?></a></li>     
     <?php } ?>
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
