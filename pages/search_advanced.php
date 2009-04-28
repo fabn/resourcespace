@@ -263,16 +263,28 @@ for ($n=0;$n<count($types);$n++)
 </div>
 
 <?php
+# Fetch fields
 $fields=get_advanced_search_fields($archive>0);
-$showndivide=false;
+$showndivide=-1;
+
+# Preload resource types
+$rtypes=get_resource_types();
+
 for ($n=0;$n<count($fields);$n++)
 	{
 	$name="field_" . $fields[$n]["ref"];
-	if (($fields[$n]["resource_type"]!=0) && ($showndivide==false))
+	if (($fields[$n]["resource_type"]!=0) && ($showndivide!=$fields[$n]["resource_type"]))
 		{
-		$showndivide=true;
+		$showndivide=$fields[$n]["resource_type"];
+		$label="??";
+		# Find resource type name
+		for ($m=0;$m<count($rtypes);$m++)
+			{
+			# Note: get_resource_types() has already translated the resource type name for the current user.
+			if ($rtypes[$m]["ref"]==$fields[$n]["resource_type"]) {$label=$rtypes[$m]["name"];}
+			}
 		?>
-		<h1><?php echo $lang["typespecific"]?></h1>
+		<h1><?php echo $lang["typespecific"] . ": " . $label ?></h1>
 		<?php
 		}
 	?>
