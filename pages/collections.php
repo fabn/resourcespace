@@ -451,7 +451,18 @@ else
    	<?php if (isset($zipcommand)) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["zipall"]?></a></li>
 	<?php } ?>
-    
+    <?php if (count($result)>0 && $k=="" && checkperm("q"))
+    	{ 
+		# Ability to request a whole collection (only if user has restricted access to any of these resources)
+		$min_access=collection_min_access($usercollection);
+		if ($min_access!=0)
+			{
+		    ?>
+		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>"><?php echo 	$lang["request"]?></a></li>
+		    <?php
+		    }
+	    }
+	?>
     <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
   </ul>
