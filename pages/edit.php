@@ -372,9 +372,13 @@ for ($n=0;$n<count($fields);$n++)
 		<select id="modeselectinput_<?php echo $n?>" name="modeselect_<?php echo $fields[$n]["ref"]?>" class="stdwidth" onChange="var fr=document.getElementById('findreplace_<?php echo $n?>');var q=document.getElementById('question_<?php echo $n?>');if (this.value=='FR') {fr.style.display='block';q.style.display='none';} else {fr.style.display='none';q.style.display='block';}">
 		<option value="RT"><?php echo $lang["replacealltext"]?></option>
 		<?php if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5) { 
-		# Find and replace and append apply to text boxes only.
+		# Find and replace appies to text boxes only.
 		?>
 		<option value="FR"><?php echo $lang["findandreplace"]?></option>
+		<?php } ?>
+		<?php if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==3) { 
+		# Append applies to text boxes, checkboxes and dropdowns only.
+		?>
 		<option value="AP"><?php echo $lang["appendtext"]?></option>
 		<?php } ?>
 		</select>

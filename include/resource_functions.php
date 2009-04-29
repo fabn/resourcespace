@@ -246,7 +246,16 @@ function save_resource_data_multi($collection)
 				# Append text mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
 					{
-					$val=$existing . " " . $origval;
+					if ($fields[$n]["type"]!=2 && $fields[$n]["type"]!=3)
+						{
+						# Automatically append a space when appending text types.
+						$val=$existing . " " . $origval;
+						}
+					else
+						{
+						# Checkbox/dropdown types can just append immediately (a comma will already be present at the beginning of $origval).
+						$val=$existing . $origval;
+						}
 					}
 					
 				#echo "<li>existing=$existing, new=$val";
