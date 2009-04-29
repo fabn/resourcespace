@@ -546,7 +546,9 @@ function delete_resource($ref)
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'");
 	sql_query("delete from collection_resource where resource='$ref'");
 	sql_query("delete from resource_custom_access where resource='$ref'");
-	sql_query("delete from external_access_keys where resource='$ref'");	
+	sql_query("delete from external_access_keys where resource='$ref'");
+	
+	hook("afterdeleteresource","all",$ref);
 	
 	return true;
 	}
