@@ -15,7 +15,11 @@ function send_research_request()
 	
 	# Insert the request
 	sql_query("insert into research_request(created,user,name,description,deadline,contact,finaluse,resource_types,noresources,shape)
-	values (now(),'$as_user','" . getvalescaped("name","") . "','" . getvalescaped("description","") . "','" . getvalescaped("deadline","") . "','" . getvalescaped("contact","") . "','" . getvalescaped("finaluse","") . "','" . $rt . "','" . getvalescaped("noresources","") . "','" . getvalescaped("shape","") . "')");
+	values (now(),'$as_user','" . getvalescaped("name","") . "','" . getvalescaped("description","") . "'," .
+	((getvalescaped("deadline","")=="")?"null":"'" . getvalescaped("deadline","") . "'") . 
+	",'" . getvalescaped("contact","") . "','" . getvalescaped("finaluse","") . "','" . $rt . "'," .
+	((getvalescaped("noresources","")=="")?"null":"'" . getvalescaped("noresources","") . "'") . 
+	",'" . getvalescaped("shape","") . "')");
 	
 	
 	# E-mails a resource request (posted) to the team
