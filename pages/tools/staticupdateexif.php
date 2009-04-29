@@ -11,7 +11,8 @@ echo "Updating EXIF/IPTC...";
 $rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=1");
 for ($n=0;$n<count($rd);$n++)
 	{
-	echo "." . $rd[$n]['ref'];
+	$ref=$rd[$n]['ref'];
+	echo "." . $ref;
 	extract_exif_comment($rd[$n]['ref'],$rd[$n]['file_extension']);
 	}
 echo "...done.";

@@ -92,7 +92,7 @@ function upload_file($ref)
     
 	# Create previews
 	create_previews($ref,false,$extension);
-
+	
     return $status;
     }}
 	
@@ -111,8 +111,12 @@ global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_ca
 if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-			{			
+			{	
+			
 			$resource=get_resource_data($ref);
+			
+			hook("beforeexiftoolextraction");
+			
 			if ($exiftool_resolution_calc){
 				# see if we can use exiftool to get resolution/units, and dimensions here.
 				# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
@@ -950,5 +954,6 @@ function extract_text($ref,$extension)
 		}
 	
 	}
+	
 
 ?>
