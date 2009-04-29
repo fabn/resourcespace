@@ -57,30 +57,49 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			
 			case 2: # -------- Dropdowns / check lists
 			case 3:
-			$options=trim_array(explode(",",$fields[$n]["options"]));
-			if ($auto_order_checkbox) {sort($options);}
-			$p="";
-			$c=0;
-			for ($m=0;$m<count($options);$m++)
+			if ($fields[$n]["display_as_dropdown"])
 				{
-				$name=$fields[$n]["ref"] . "_" . $m;
+				# Process dropdown box
+				$name="field_" . $fields[$n]["ref"];
 				$value=getvalescaped($name,"");
-				if ($value=="yes")
+				if ($value!="")
 					{
-					$c++;
-					if ($p!="") {$p.=";";}
-					$p.=strtolower(i18n_get_translated($options[$m]));
+					$vs=split_keywords($value);
+					for ($m=0;$m<count($vs);$m++)
+						{
+						if ($search!="") {$search.=", ";}
+						$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
+						}
 					}
 				}
-			if ($c==count($options))
+			else
 				{
-				# all options ticked - omit from the search
+				# Process checkbox list
+				$options=trim_array(explode(",",$fields[$n]["options"]));
+				if ($auto_order_checkbox) {sort($options);}
 				$p="";
-				}
-			if ($p!="")
-				{
-				if ($search!="") {$search.=", ";}
-				$search.=$fields[$n]["name"] . ":" . $p;
+				$c=0;
+				for ($m=0;$m<count($options);$m++)
+					{
+					$name=$fields[$n]["ref"] . "_" . $m;
+					$value=getvalescaped($name,"");
+					if ($value=="yes")
+						{
+						$c++;
+						if ($p!="") {$p.=";";}
+						$p.=strtolower(i18n_get_translated($options[$m]));
+						}
+					}
+				if ($c==count($options))
+					{
+					# all options ticked - omit from the search
+					$p="";
+					}
+				if ($p!="")
+					{
+					if ($search!="") {$search.=", ";}
+					$search.=$fields[$n]["name"] . ":" . $p;
+					}
 				}
 			break;
 
@@ -300,30 +319,50 @@ for ($n=0;$n<count($fields);$n++)
 		?><input class="stdwidth" type=text name="field_<?php echo $fields[$n]["ref"]?>" value="<?php echo htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?php
 		break;
 	
-		case 2: # -------- Show a check list for both dropdowns and check lists
+		case 2: 
 		case 3:
-		$options=trim_array(explode(",",$fields[$n]["options"]));
-		if ($auto_order_checkbox) {sort($options);}
-		$set=trim_array(explode(";",cleanse_string($value,true)));
-		$wrap=0;
-		$l=average_length($options);
-		$cols=5;
-		if ($l>10) {$cols=4;}
-		if ($l>15) {$cols=3;}
-		if ($l>25) {$cols=2;}
-		?><table cellpadding=2 cellspacing=0><tr><?php
-		for ($m=0;$m<count($options);$m++)
+		# -------- Show a check list or dropdown for dropdowns and check lists?
+		# By default show a checkbox list for both (for multiple selections this enabled OR functionality)
+		if ($fields[$n]["display_as_dropdown"])
 			{
-			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
-			$name=$fields[$n]["ref"] . "_" . $m;
-			if ($options[$m]!="")
+			# Show as a dropdown box
+			$options=explode(",",$fields[$n]["options"]);
+			$set=trim_array(explode(";",cleanse_string($value,true)));
+			?><select class="stdwidth" name="field_<?php echo $fields[$n]["ref"]?>" onChange="UpdateResultCount();">				<option value=""></option><?php
+			for ($m=0;$m<count($options);$m++)
 				{
 				?>
-				<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
 				<?php
 				}
+			?></select><?php
 			}
-		?></tr></table><?php
+		else
+			{
+			# Show as a checkbox list (default)
+			$options=trim_array(explode(",",$fields[$n]["options"]));
+			if ($auto_order_checkbox) {sort($options);}
+			$set=trim_array(explode(";",cleanse_string($value,true)));
+			$wrap=0;
+			$l=average_length($options);
+			$cols=5;
+			if ($l>10) {$cols=4;}
+			if ($l>15) {$cols=3;}
+			if ($l>25) {$cols=2;}
+			?><table cellpadding=2 cellspacing=0><tr><?php
+			for ($m=0;$m<count($options);$m++)
+				{
+				$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
+				$name=$fields[$n]["ref"] . "_" . $m;
+				if ($options[$m]!="")
+					{
+					?>
+					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+					<?php
+					}
+				}
+			?></tr></table><?php
+			}
 		break;
 		
 		case 7: # ----- Category Tree
