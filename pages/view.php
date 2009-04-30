@@ -609,7 +609,7 @@ if (count($result)>0)
             <table border="0" class="CollectionResourceAlign"><tr><td>
             <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 width=56 height=75 src="../gfx/type<?php echo $result[$n]["resource_type"]?>_col.gif"/><?php } ?></a></td>
             </tr></table>
-            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a>&nbsp;</div>
         </div>
         <?php        
         }
