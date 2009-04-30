@@ -427,6 +427,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 
 <div id="tab0" class="TabbedPanel<?php if ($tabcount>0) { ?> StyledTabbedPanel<?php } ?>">
 <div class="clearerleft"> </div>
+<div>
 <?php 
 # Draw standard fields
 ?>
@@ -475,7 +476,7 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			$tabcount++;
 			# Also display the custom formatted data $extra at the bottom of this tab panel.
-			?><div class="clearerleft"> </div><?php echo $extra?></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><?php	
+			?><div class="clearerleft"> </div><?php echo $extra?></div></div><div class="TabbedPanel StyledTabbedPanel" style="display:none;" id="tab<?php echo $tabcount?>"><div><?php	
 			$extra="";
 			}
 		$tabname=$fields[$n]["tab_name"];
@@ -508,20 +509,16 @@ for ($n=0;$n<count($fields);$n++)
 
 				# Highlight keywords
 				$value=highlightkeywords($value,$search);
-				?>
-				<div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div>
-				<?php
+				?><div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div><?php
 				}
 			}
 		}
 	}
-?>
-<?php hook("extrafields2");?>
-<div class="clearerleft"> </div>
-
+?><?php hook("extrafields2");?><div class="clearerleft"></div>
 <?php echo $extra?>
-
-</div><!-- end of tabbed panel-->
+</div>
+</div>
+<!-- end of tabbed panel-->
 </div></div>
 <div class="PanelShadow"></div>
 </div>
