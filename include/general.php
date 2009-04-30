@@ -560,6 +560,22 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
 
+function get_users_with_permission($permission)
+	{
+	# Returns all the users who have the permission $permission.
+	
+	# First find all matching groups
+	$groups=sql_query("select ref,permissions from usergroup");
+	$matched=array();
+	for ($n=0;$n<count($groups);$n++)
+		{
+		$perms=trim_array(split(",",$groups[$n]["permissions"]));
+		if (in_array($permission,$perms)) {$matched[]=$groups[$n]["ref"];}
+		}
+	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref where g.ref in ('" . join("','",$matched) . "') order by username",false);
+	}
+	
+
 function get_usergroups($usepermissions=false,$find="")
 	{
 	# Returns a list of user groups. Put anything starting with 'General Staff Users' at the top (e.g. General Staff)
