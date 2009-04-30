@@ -1,5 +1,10 @@
 <?php
+
+# This script is useful for initial imports when you're working out metadata mappings. However, be aware that 
+# local ResourceSpace field edits could be overwritten by original file metadata during this process.
+
 include "../../include/db.php";
+include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
 include "../../include/general.php";
 include "../../include/resource_functions.php";
 include "../../include/image_processing.php";

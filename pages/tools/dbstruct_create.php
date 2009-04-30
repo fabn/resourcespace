@@ -1,6 +1,6 @@
 <?php
 include "../../include/db.php";
-
+include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
 # Use the below to set which tables we will extract data for.
 #$datafor=array("usergroup","resource_type_field","site_text","user","collection","user_collection","report","preview_size","resource_type");
 $datafor=array();
