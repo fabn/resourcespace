@@ -700,4 +700,9 @@ $video_playlists=false;
 
 # Allow the addition of 'saved searches' to collections. 
 $allow_save_search=true;
+
+# Use the collection name in the downloaded zip filename when downloading collections as a zip file?
+$use_collection_name_in_zip_name=false;
+
+
 ?>

@@ -185,9 +185,18 @@ if ($submitted != "")
 
 	# Create and send the zipfile
 	# Build a file name for the zip file.
-	$collection_name=trim(str_replace(" ","",$collectiondata['name']));
-	$file="Col_ID" . $collection."_".$collection_name. "_" . $size . ".zip";
-
+	$collection_name=trim(str_replace(array(" ","\""),"",$collectiondata['name']));
+	if ($use_collection_name_in_zip_name)
+		{
+		# Use collection name (if configured)
+		$file="Col_ID" . $collection . "_".$collection_name. "_" . $size . ".zip";
+		}
+	else
+		{
+		# Do not include the collection name in the filename (default)
+		$file="Col_ID" . $collection . "_" . $size . ".zip";
+		}
+		
 	# Write command parameters to file.
 	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection."_".$collection_name. "_" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
