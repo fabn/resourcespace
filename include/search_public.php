@@ -90,7 +90,7 @@ for ($n=0;$n<count($collections);$n++)
 		</td>
 		</tr></table>
 
-		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a href="<?php echo $url?>"><?php echo $lang["view"]?></a></div>		
+		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["view"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
