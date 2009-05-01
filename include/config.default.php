@@ -102,6 +102,7 @@ $languages["jp"]="日本語";
 $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
+$languages["id"]="Bahasa Indonesia";
 
 # Disable language selection options
 $disable_languages=false;
