@@ -409,7 +409,7 @@ Version
 </td>
 <td align=right>
 <?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" xonclick="return confirm('Are you sure?');"><?php } ?>
-<?php if (($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?"save":"revert"?>" style="width:100px;"><?php } ?>
+<?php if (isset($t[8])&&($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?"save":"revert"?>" style="width:100px;"><?php } ?>
 </td></tr>
 </table>
 </form>
