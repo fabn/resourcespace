@@ -1,10 +1,7 @@
 <?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
-
 $tree=file("data/tree.txt");
-
-hook("treealter"); # Hook to allow the default tree to be altered with a plugin.
 
 #fetch ID string
 $id=$_GET["id"];
@@ -14,11 +11,12 @@ $ids=explode("-",$id);
 
 $historyview=getval("historyview",-1);
 $hist_filename="history/hist" . str_replace(array(":","."),array("_","_"),$id) . ".txt";
+$saved=false;
 
 #set up transform array (for queries etc) based on ID string
 $transfrom=array();
 $transto=array();
-$curid=0;$parentid=0;$ref=0;
+$curid=0;$parentid=0;$ref=0;$lastref=0;$recmin=0;
 for ($n=0;$n<count($ids);$n++)
     {
     $parentid=$curid;
@@ -30,27 +28,31 @@ for ($n=0;$n<count($ids);$n++)
         $transto[$n]=$s[1];
         $curid=$s[0];
         $ref=$s[1];
+        $recmin=$lastref;$lastref=$s[1];
         } else {$ref=0;}
     }
 
 #fetch tree data for current ID
-$t=explode(";",trim($tree[$curid]) . ";;;;;;;;;;;;;;");
-
-if (substr($t[7],0,3)=="url")
+$treeline=$tree[$curid];
+$t=explode(";",trim($treeline));
+if (substr($t[7],0,2)!="as")
 	{
-	header ("Location: " . str_replace($transfrom,$transto,substr($t[7],4)) . "&parent=" . $parent);
-	exit();
+	$treeline=str_replace("%recurse",$lastref,$treeline);#echo $treeline;
+	$treeline=str_replace("%recmin",$recmin,$treeline);#echo $treeline;
 	}
+$t=explode(";",trim($treeline));
 	
-if (substr($t[6],0,2)=="as")
+if (substr($t[7],0,2)=="as")
 	{
 	#echo "Parsing...";
     # "as" command means alias another line to this line, replacing certain values
-    $as=explode(" ",$t[6]);
+    $as=explode(" ",$t[7]);
     $query=trim($tree[$as[1]]);
     for ($q=2;$q<count($as);$q+=2)
         {
+	#echo "replace " . $as[$q] . " with " . $as[$q+1] . "<br><br>";
         $query=str_replace($as[$q],$as[$q+1],$query);
+	#echo $query . "<br><br>";
         }
 	$q=explode(";",$query);
 	for ($u=6;$u<count($q);$u++)
@@ -59,7 +61,42 @@ if (substr($t[6],0,2)=="as")
 		}
 	#echo $t[6];
 	}
-	
+    
+# A special case for global relationships.
+# If clicked, these should display the original (unalised) 'delete relationship' option
+# instead of the aliased article properties.
+if (substr($id,0,5)=="alias") {
+	$a=substr($id,5);
+	$a=explode(".",$a);		$im=$a[1];	$a=$a[0];
+	if ($a==36)
+		{
+		# Is this a global panel?
+		$panel=explode("-",$id);$panel=$panel[count($panel)-1];
+		$line=explode(":",$panel);
+		$panel=@$line[1];
+		$line=$line[0];
+
+		if ($line==15)
+			{
+			$section=sql_value("select section value from article where ref='$panel'","");
+			if ($section!=0)
+				{
+				$query=explode(";",$tree[$a]);$query=$query[7];
+				$t=explode(";",trim($tree[$a]));
+				$relation=explode("-",$im);$relation=$relation[0];
+				$transfrom[]="%4";
+				$transto[]=$relation;
+				}
+			}
+		}
+	} 
+
+
+if (substr($t[7],0,3)=="url")
+	{
+	header ("Location: " . str_replace($transfrom,$transto,substr($t[7],4)) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));
+	exit();
+	}	
 	
 #handle posts
 if (array_key_exists("userfile",$_FILES))
@@ -81,6 +118,7 @@ elseif (array_key_exists("submit",$_POST))
     
     #normal post
     $query=str_replace($transfrom,$transto,$t[8]);
+
     $history="datetime=" . urlencode(date("Y-m-d H:i:s"));
     $history.="&username=" . urlencode($username);
     
@@ -90,7 +128,7 @@ elseif (array_key_exists("submit",$_POST))
     	$filename=$_POST["filename"];
     	if (substr(strtolower($filename),strlen($filename)-4,4)==".pdf")
     		{
-    		#include "../../include/pdfextract.php";
+    		#include "include/pdfextract.php";
     		#$pdfcontents=pdf2string("../assets/" . $filename);
     		#echo $pdfcontents;
     		#$query=str_replace("[content_text]",$pdfcontents,$query);
@@ -100,20 +138,33 @@ elseif (array_key_exists("submit",$_POST))
     	
     foreach($_POST as $key=>$value)
         {
+        $value=str_replace("&AMP;","&",$value);
+		$value=fixSmartQuotes($value);
+        
         $query=str_replace("[" . $key . "]",escape_check($value),$query);
         $history.="&$key=" . urlencode($value);
         }
     #echo "<li>$parentid<li>$query";
+
     sql_query($query);
     
+    if (array_key_exists("newredirect",$_POST))
+    	{
+   		header ("Location: properties.php?id=" . getval("newredirect","") . mysql_insert_id() . "&name=Enter+New+Data&parent=" . $parent);
+   		exit();
+    	}
+    
     # now add this to the history for this object
+    /*
     if (file_exists($hist_filename))
         {$file=file($hist_filename);}
     else
         {$file=array();}
     if (count($file)>50) {array_shift($file);}
     array_push($file,$history . "\n");
-   # $fp=fopen($hist_filename,"w");fwrite($fp,join("",$file));fclose($fp); # version control disabled for the moment
+    $fp=fopen($hist_filename,"w");fwrite($fp,join("",$file));fclose($fp);
+    */
+    $saved=true;
     ?>
     <script>
     top.main.left.EmptyNode(<?php echo $parent?>);
@@ -140,12 +191,18 @@ if (array_key_exists("delete",$_POST))
     {
     #normal post
     $query=str_replace($transfrom,$transto,$t[9]);
+
     foreach($_POST as $key=>$value)
         {
         $query=str_replace("[" . $key . "]",escape_check($value),$query);
         }
     #echo "<li>$parentid<li>$query";
-    sql_query($query);
+#exit($query);
+    $q=explode(" then ",$query);
+    for ($n=0;$n<count($q);$n++)
+    	{
+	    sql_query($q[$n]);
+	    }
     ?>
     <script>
     top.main.left.EmptyNode(<?php echo $parent?>);
@@ -156,10 +213,19 @@ if (array_key_exists("delete",$_POST))
 
 include "include/header.php";
 ?>
-<body style="margin:15px;padding:0px;background-position:0px -80px;">
-<div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" <!--#" . $ref . "-->") . (($t[2]==$name)?"":" :: " . $name)?></div>
+<body style="background-color:#ffffff;background-image:url('gfx/shade_back.jpg');background-repeat:repeat-x;background-position:0 -50px;margin:15px;padding:0px;">
+<div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
+
 <div class="propbox">
+
+<?php if ($saved) { ?>
+<table width=100% style="border:1px solid black;">
+<tr><td width=40><img src="gfx/icons/apply.gif" width=32 height=32></td><td valign=middle align=left>Field updated</td></tr>
+</table>
+<?php } ?>
+
 <?php
+
 #fetch values
 if (substr($t[7],0,6)=="upload")
     {
@@ -194,8 +260,9 @@ else
     ?>
     <form method="post">
     <?php
+    #echo $t[7];
     $result=sql_query(str_replace($transfrom,$transto,$t[7]));
-    if (count($result)==0) {exit("This item can't be edited.</div></body></html>");}
+    if (count($result)==0) {exit("Item deleted.</div></body></html>");}
     $result=$result[0];
     
     #if viewing history, load history data
@@ -221,6 +288,11 @@ else
         
     foreach ($result as $key=>$value)
         {
+        if (substr($value,0,5)=="URL::") {header("Location: " . substr($value,5) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));exit();}
+
+        $value=str_replace("&","&AMP;",$value);
+
+        
         $type=substr($key,0,3);
         $key=str_replace($type . "_","",$key);
         
@@ -237,10 +309,13 @@ else
         	$label=str_replace($transfrom,$transto,$label);
         	$label=str_replace("[" . $key . "]",$value,$label);
 			}
+		if ($key=="newredirect") {?><input type=hidden name="newredirect" value="<?php echo $value?>"><?php } else {
         ?>
         <p>
         <?php if (!(is_numeric($key))) { ?><?php echo $label?><br><?php } ?>
         <?php
+        # include plugin
+		if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
         switch ($type)
             {
             #-------------------------------------------------------------------------
@@ -254,7 +329,7 @@ else
             case "btx":
             #Big Text
             ?>
-            <textarea style="width:100%" rows="20" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
+            <textarea style="width:100%" rows="26" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
             <?php
             break;
             #-------------------------------------------------------------------------
@@ -289,6 +364,8 @@ else
             #Dropdown
             #find query
             $query=explode(";",$tree[$key]);$query=str_replace($transfrom,$transto,$query[6]);
+			$query=str_replace("%search","",$query);
+			$query=str_replace("%recurse",$lastref,$query);
             $drop=sql_query($query);reset($drop);
             if ($type!="drp") {$key=$type . "_" . $key;}
             ?>
@@ -305,7 +382,14 @@ else
             <?php
             break;
             #-------------------------------------------------------------------------
+            case "lbl":
+            # label
+            ?>
+			<?php echo $value?>
+			<?php
+            break;
             }
+        }
         ?>
         </p>
         <?php
@@ -314,15 +398,17 @@ else
 ?>
 <table width="100%" cellpadding=0 cellspacing=0 style="margin-top:5px;">
 <tr><td align=left>
+<!--
 <?php if ((substr($t[7],0,6)!="upload") && ($t[8]!=""))  { ?>
 Version
-<input type=submit style="width:30px;" name="history" value="&lt;" <?php if (!((($historyview>0) || ($historyview==-1)) && (file_exists($hist_filename)))) {?>disabled="true"<?php } ?>>
+<input type=submit style="width:30px;" name="history" value="&lt;" <?php if (!((($historyview>0) || ($historyview==-1)) && (file_exists($hist_filename)))) {?>disabled="true"<?php }?>>
 
 <input type=submit style="width:30px;" name="history" value="&gt;" <?php if ($historyview==-1) {?>disabled="true"<?php } ?>>
 <?php } ?>
+-->
 </td>
 <td align=right>
-<?php if ($t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" onclick="return confirm('Are you sure?');"><?php } ?>
+<?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" xonclick="return confirm('Are you sure?');"><?php } ?>
 <?php if (($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?"save":"revert"?>" style="width:100px;"><?php } ?>
 </td></tr>
 </table>

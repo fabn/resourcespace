@@ -639,5 +639,44 @@ function get_ip()
 	# Can't find an IP address.
 	return "???";
 	}
-
+function fixSmartQuotes($string){ 
+    $pre = chr(226).chr(128);
+    
+    $search = array( $pre . chr(152),
+                    $pre . chr(153),
+                    $pre . chr(156),
+                    $pre . chr(157),
+                    $pre . chr(147),
+                    chr(145), 
+                    chr(146), 
+                    chr(147), 
+                    chr(148), 
+                    chr(150),
+                    chr(151),
+                    chr(130),
+                    chr(133),
+                    chr(152),
+                    chr(154),
+                    chr(160)
+                    ); 
+ 
+    $replace = array( "'",
+                             "'",
+                             '"',
+                             '"',
+                             '-',
+                             "'", 
+                             "'", 
+                             '"', 
+                             '"', 
+                             '-',
+                             '-',
+                             "&#8218;",
+                             "&#8230;",
+                             '-',
+                             '\"',
+                             ' ' ); 
+                    
+    return str_replace($search, $replace, $string); 
+} 
 
