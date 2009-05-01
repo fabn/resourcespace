@@ -46,7 +46,7 @@ if ($theme_category_levels>1)
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+		?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
 		}
 	?>
 	</select>
@@ -72,7 +72,7 @@ if ($theme_category_levels>1)
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
+				?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
 				}
 			?>
 			</select>
@@ -99,7 +99,7 @@ if ($theme_category_levels>1)
 				}
 			for ($n=0;$n<count($headers);$n++)
 				{
-				?><option value="<?php echo $headers[$n]?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+				?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
 				}
 			?>
 			</select>
