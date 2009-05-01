@@ -222,7 +222,7 @@ for ($n=1;$n<count($tree);$n++)
 parent.UpdateNode(<?php echo $node?>);
 </script>
 <?php
-echo $debug;
+#echo $debug;
 
 
 ?>
