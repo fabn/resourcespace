@@ -5,6 +5,7 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",
 include "../include/general.php";
 include "../include/search_functions.php";
 include "../include/collections_functions.php";
+include "../include/resource_functions.php";
 
 $ref=getval("ref","");
 $ext=getval("ext","");
@@ -19,6 +20,15 @@ $archive=getvalescaped("archive","");
 $restypes=getvalescaped("restypes","");
 $page=getvalescaped("page",1);
 if (strpos($search,"!")!==false) {$restypes="";}
+
+# Load access level
+$access=get_resource_access($ref);
+
+# check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
+if ($access==2) 
+		{
+		exit("This is a confidential resource.");
+		}
 
 # next / previous resource browsing
 $go=getval("go","");
@@ -48,10 +58,12 @@ if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage))
 $nextpage=$page+1;
 if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage))) {$nextpage=-1;}
 
-$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,checkperm("w"));
+
+# Locate the resource
+$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,checkperm("w") && $access==1);
 if (file_exists($path))
 	{
-	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,checkperm("w"));
+	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,checkperm("w") && $access==1);
 	}
 else
 	{

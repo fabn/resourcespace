@@ -364,7 +364,7 @@ $smallthumbs=true;
 
 
 # Watermarking - generate watermark images for 'internal' (thumb/preview) images.
-# Groups with the 'w' permission will see these watermarks.
+# Groups with the 'w' permission will see these watermarks when access is 'restricted'.
 # Uncomment and set to the location of a watermark graphic.
 # NOTE: only available when ImageMagick is installed.
 # $watermark="gfx/watermark.png";

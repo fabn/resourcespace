@@ -1096,6 +1096,14 @@ function get_resource_access($resource)
 		$access=get_custom_access($resource,$usergroup);
 		}
 
+	# Check for user-specific access (overrides any other restriction)
+	global $userref;
+	$userspecific=get_custom_access_user($resource,$userref);	
+	if ($userspecific!==false)
+		{
+		return $userspecific;
+		}
+		
 	if ($access==0 && !checkperm("g"))
 		{
 		# User does not have the 'g' permission. Always return restricted for live resources.
@@ -1103,6 +1111,11 @@ function get_resource_access($resource)
 		}
 
 	return $access;	
+	}
+	
+function get_custom_access_user($resource,$user)
+	{
+	return sql_value("select access value from resource_custom_access where resource='$resource' and user='$user'",false);
 	}
 
 function resource_download_allowed($resource,$size)

@@ -137,16 +137,16 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
 	if (!file_exists($imagepath))
 		{
-		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w"));
+		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
 		}
 	else
 		{
-		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w"));
+		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
 		}
-	$previewpath=get_resource_path($ref,true,"scr",false,$resource["preview_extension"],-1,1,checkperm("w"));
+	$previewpath=get_resource_path($ref,true,"scr",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
 	$preview_page_size="scr"; // for checking if download is allowed
 	if (!file_exists($previewpath))
 		{
