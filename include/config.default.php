@@ -1,10 +1,26 @@
 <?php
 
 /* ---------------------------------------------------
+config.default.php
+
+This file contains the default configuration settings.
+
+      **** DO NOT ALTER THIS FILE! ****
+
+If you need to change any of the below values, copy 
+them to config.php and change them there.
+
+This file will be overwritten when you upgrade and
+ensures that any new configuration options are set to
+a sensible default value.
+
+------------------------------------------------------ */
+
+
+
+/* ---------------------------------------------------
 BASIC PARAMETERS
 
-The below options must be reviewed and changed
-as necessary for every installation.
 ------------------------------------------------------ */
 
 
