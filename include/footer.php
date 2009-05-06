@@ -61,6 +61,8 @@ function SwapCSS(css)
 
 <?php hook("footerbottom"); ?>
 
+<div id="chromeFix"></div>
+
 </body>
 </html>
 	

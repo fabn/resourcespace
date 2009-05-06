@@ -2,7 +2,6 @@
 body {width:100%;margin:0;padding:0;font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;text-align: center;}
 td, textarea {font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;}
 
-
 /*Basic tag setup for creating standards across platforms and browsers*/
 p, h1, h2, h3, h4, h5 {padding:0; margin:0; vertical-align:top;}
 p {padding:0 0 1.75em; margin:0; font-size:1em; line-height:1.25em;}
@@ -355,7 +354,7 @@ div.autocomplete ul li {
 .FormHelp{margin: 0px 0px 10px 150px;padding: 0;}
 .FormHelpInner{background-color:#ffffff;border:1px solid #000000;    border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;width:360px;padding:5px;margin:10px 0 0 0;color:black;}
 
-
+#chromeFix { display: block; position: absolute; width: 1px; height: 100%; bottom: 0px; left: 0px; }
 
 
 
