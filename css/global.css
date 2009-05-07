@@ -195,9 +195,9 @@ a:active {text-decoration:underline;}
 .RecordPanel .Col {float: left;width: 352px;margin-bottom: 10px;}
 .RecordPanel .ColNarrow {float: left;width: 171px;margin-bottom: 10px;}
 .RecordPanel .buffer {margin-right: 10px;}
-.RecordPanel .itemNarrow {float: left;width: 170px;margin-bottom: 10px;margin-right: 5px;} 
+.RecordPanel .itemNarrow {float: left;width: 170px;margin-bottom: 10px;margin-right: 5px;position:relative;} 
 .RecordPanel .SearchSimilar {float: left;width: 120px;margin: 0px 10px 2px 0px;padding: 0px;}
-.RecordPanel .item {float: left;margin-bottom: 10px;width: 100%;}
+.RecordPanel .item {float: left;margin-bottom: 10px;width: 100%;position:relative;}
 .RecordPanel .item h3, .RecordPanel .itemNarrow h3 {font-size: 1em;margin: 0px;padding: 0px;}
 .RecordPanel .item p, .RecordPanel .itemNarrow p {margin: 0px;padding: 0px;}
 .RecordPanel .RecordDownload {float: left;width: 352px;margin: 0px 0px 10px;}
