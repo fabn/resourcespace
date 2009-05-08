@@ -11,7 +11,7 @@ if (getval("save","")!="")
 		$message=change_password(getvalescaped("password",""));
 		if ($message===true)
 			{
-			redirect("pages/home.php");
+			redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 			}
 		else
 			{
