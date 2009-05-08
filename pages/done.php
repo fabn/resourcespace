@@ -10,7 +10,7 @@ include "../include/header.php";
     <p><?php echo text(getvalescaped("text",""))?></p>
     
     <?php if (getval("user","")!="") { # User logged in? ?>
-    <p><a href="home.php">&gt;&nbsp;<?php echo $lang["backtohome"]?></a></p>
+    <p><a href="<?php echo ($use_theme_as_home?'themes.php':$default_home_page)?>">&gt;&nbsp;<?php echo $lang["backtohome"]?></a></p>
     <p><a href="search.php">&gt;&nbsp;<?php echo $lang["backtosearch"]?></a></p>
     <?php hook("extra");?>
     <?php } else {?>
