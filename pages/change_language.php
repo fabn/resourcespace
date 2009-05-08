@@ -5,7 +5,7 @@ include "../include/general.php";
 if (getval("save","")!="")
 	{
 	setcookie("language",getval("language",""),time()+(3600*24*1000));
-	redirect("pages/home.php");
+	redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 	}
 include "../include/header.php";
 ?>
