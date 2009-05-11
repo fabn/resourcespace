@@ -161,9 +161,15 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <?php hook("headerbottom"); ?>
 
 <div class="clearer"></div>
-<?php if (!in_array($pagename,array("search_advanced","login","preview","admin_header")) && ($loginterms==false)) { ?>
-<?php include "searchbar.php"; ?>
-<?php } ?>
+<?php
+# Include simple search sidebar?
+if (!in_array($pagename,array("search_advanced","login","preview","admin_header")) && ($loginterms==false)) 	
+	{
+	include "searchbar.php";
+	}
+?>	
+
+
 
 <?php 
 # Determine which content holder div to use
@@ -175,4 +181,17 @@ else {$div="CentralSpace";}
 <div id="<?php echo $div?>">
 
 
-
+<?php
+# Include theme bar?
+if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
+	{
+	# Tables seem to be the only solution to having a left AND right side bar, due to the way the clear CSS attribute works.
+	?>
+	<table width="100%" style="margin:0;padding:0;"><tr><td width="185" valign="top" align="left" style="margin:0;padding:0;">
+	<?php
+	include "themebar.php";
+	?>
+	</td><td valign="top" style="margin:0;padding:0;">
+	<?php
+	}
+?>

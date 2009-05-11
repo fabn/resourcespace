@@ -356,6 +356,7 @@ div.autocomplete ul li {
 
 #chromeFix { display: block; position: absolute; width: 1px; height: 100%; bottom: 0px; left: 0px; }
 
-
+#ThemeBox {padding:0;margin:0;text-align:left;width: 170px;}
+#ThemeBoxPanel {width: 170px;padding:0;margin:0;}
 
 

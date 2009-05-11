@@ -37,9 +37,9 @@ a:active {color:#B5C3D4;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
 
-#SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #94A7C0;border-bottom: 1px solid #94A7C0;border-left: 1px solid #94A7C0;}
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #94A7C0;border-bottom: 1px solid #94A7C0;border-left: 1px solid #94A7C0;}
 
-#SearchBoxPanel {background: #5A7599 url(../gfx/greyblu/interface/SearchBox.gif) repeat-x;}
+#ThemeBoxPanel , #SearchBoxPanel {background: #5A7599 url(../gfx/greyblu/interface/SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: #5A7599 url(../gfx/greyblu/interface/researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
 .ResourcePanelSmall {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
