@@ -1,4 +1,7 @@
+<?php 
+include_once("collections_functions.php");
 
+?>
 <div id="ThemeBox">
 
 <div id="ThemeBoxPanel">
