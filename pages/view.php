@@ -117,7 +117,7 @@ include "../include/header.php";
 
 <?php hook("renderbeforeresourceview"); ?>
 
-<div class="RecordResouce">
+<div class="RecordResource">
 <?php if (!hook("renderinnerresourceview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
