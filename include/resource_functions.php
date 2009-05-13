@@ -436,7 +436,7 @@ function update_field($resource,$field,$value)
 	}
 	
 
-function email_resource($resource,$resourcename,$fromusername,$userlist,$message)
+function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1)
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -478,7 +478,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		if ($key_required[$n])
 			{
 			$k=substr(md5(time()),0,10);
-			sql_query("insert into external_access_keys(resource,access_key,user) values ('$resource','$k','$userref');");
+			sql_query("insert into external_access_keys(resource,access_key,user,access) values ('$resource','$k','$userref','$access');");
 			$key="&k=". $k;
 			}
 
@@ -1081,6 +1081,14 @@ function get_resource_access($resource)
 	# Load the 'global' access level set on the resource
 	$resourcedata=get_resource_data($resource);
 	$access=$resourcedata["access"];
+
+	global $k;
+	if ($k!="")
+		{
+		# External access - check how this was shared.
+		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "'",-1);
+		if ($extaccess!=-1) {return $extaccess;}
+		}
 	
 	if (checkperm("v"))
 		{

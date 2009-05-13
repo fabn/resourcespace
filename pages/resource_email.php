@@ -19,7 +19,8 @@ if (getval("save","")!="")
 	# Build a new list and insert
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
-	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message);
+	$access=getvalescaped("access","");
+	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message,$access);
 	if ($errors=="")
 		{
 		# Log this			
@@ -58,6 +59,18 @@ include "../include/header.php";
 <label for="users"><?php echo $lang["emailtousers"]?></label><?php include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
+</div>
+
+<div class="Question" id="question_access">
+<label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
+<select class="stdwidth" name="access" id="access">
+<?php
+# List available access levels. The highest level must be the minimum user access level.
+for ($n=$access;$n<=1;$n++) { ?>
+<option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
+<?php } ?>
+</select>
+<div class="clearerleft"> </div>
 </div>
 
 <div class="QuestionSubmit">

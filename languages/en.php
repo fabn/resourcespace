@@ -724,4 +724,8 @@ $lang["mycollection_notpublic"]="You cannot make your 'My Collection' into a pub
 
 $lang["resourcemetadata"]="Resource Metadata";
 
+$lang["selectgenerateurlexternal"]="To create a URL that will work for external users (people that do not have a login) please choose the access level you wish to grant to the resources.";
+
+$lang["externalselectresourceaccess"]="If you are e-mailing external users, please select the level of access you would like to grant to this resource.";
+
 ?>

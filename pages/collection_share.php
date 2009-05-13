@@ -16,7 +16,7 @@ if (getval("deleteaccess","")!="")
 	delete_collection_access_key($ref,getvalescaped("deleteaccess",""));
 	}
 	
-# Get maximum access to this collection
+# Get min access to this collection
 $minaccess=collection_min_access($ref);
 
 if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower and sharing of restricted resources is not allowed. The user cannot share this collection.
@@ -49,18 +49,47 @@ include "../include/header.php";
 <li><a href="collection_share.php?ref=<?php echo $ref?>&generateurl=true"><?php echo $lang["generateurl"]?></a></li>
 
 <?php if (getval("generateurl","")!="")
-{
+	{
 	?>
 	<p><?php echo $lang["generateurlinternal"]?></p>
 	
 	<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>">
 	
-	<p><?php echo $lang["generateurlexternal"]?></p>
-	
-	<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>&k=<?php echo generate_collection_access_key($ref,0,"URL")?>">
-			
 	<?php
-}
+	$access=getvalescaped("access","");
+	if ($access=="")
+		{
+		?>
+		<p><?php echo $lang["selectgenerateurlexternal"] ?></p>
+		
+		<div class="Question" id="question_access">
+		<label for="archive"><?php echo $lang["access"]?></label>
+		<select class="stdwidth" name="access" id="access">
+		<?php
+		# List available access levels. The highest level must be the minimum user access level.
+		for ($n=$minaccess;$n<=1;$n++) { ?>
+		<option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
+		<?php } ?>
+		</select>
+		<div class="clearerleft"> </div>
+		</div>
+		
+		<div class="QuestionSubmit" style="padding-top:0;margin-top:0;">
+		<label for="buttons"> </label>
+		<input name="generateurl" type="submit" value="&nbsp;&nbsp;<?php echo $lang["generateurl"]?>&nbsp;&nbsp;" />
+		</div>
+		<?php
+		}
+	else
+		{
+		# Access has been selected. Generate a URL.
+		?>
+		<p><?php echo $lang["generateurlexternal"]?></p>
+	
+		<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>&k=<?php echo generate_collection_access_key($ref,0,"URL",$access)?>">
+		<?php
+		}
+	}
 ?>
 <?php hook("collectionshareoptions") ?>
 </ul>
@@ -101,6 +130,7 @@ include "../include/header.php";
 		<td><?php echo $lang["sharedwith"];?></td>
 		<td><?php echo $lang["lastupdated"];?></td>
 		<td><?php echo $lang["lastused"];?></td>
+		<td><?php echo $lang["access"];?></td>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		<?php
@@ -113,6 +143,7 @@ include "../include/header.php";
 			<td><?php echo $keys[$n]["emails"]?></td>
 			<td><?php echo nicedate($keys[$n]["maxdate"],true);	?></td>
 			<td><?php echo nicedate($keys[$n]["lastused"],true); ?></td>
+			<td><?php echo ($keys[$n]["access"]==-1)?"":$lang["access" . $keys[$n]["access"]]; ?></td>
 			<td><div class="ListTools">
 			<a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccess"]?>')) {document.getElementById('deleteaccess').value='<?php echo $keys[$n]["access_key"] ?>';document.getElementById('collectionform').submit(); }">&gt;&nbsp;<?php echo $lang["delete"]?></a>
 			</div></td>
