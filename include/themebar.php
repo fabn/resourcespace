@@ -56,11 +56,20 @@ function DisplayThemeBar($theme1)
 		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
 		&& !checkperm("f-" . $headers[$n]["ref"]))
 			{
+			$header_name="";
+			$header_name=$headers[$n]["smart_theme_name"];
+			$smart_theme_display="";
+			$smart_theme_display=getval("smart_theme_$n","off");
+			#echo $smart_theme_display;
 			?>
+<div 
+onclick="SetCookie('smart_theme_<?php echo $n?>',<?php if ($smart_theme_display=='off') {?>'on'<?php } else { ?>'off'<?php }?>,1000);
+$('<?php echo $header_name?>').toggle();
+return false;"> 
 
-			<?php echo "<B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B><br>"?>
+			<?php echo "<B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B><br>"?></div>
 		
-
+<div id="<?php echo $header_name?>" style="display:<?php if ($smart_theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 			<?php
 			$themes=get_smart_themes($headers[$n]["ref"]);
 			for ($m=0;$m<count($themes);$m++)
@@ -74,11 +83,11 @@ function DisplayThemeBar($theme1)
 				?>
 				<br>
 
-				<?php echo $indent?><a href="<?php echo $cd?>search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a>
+				<?php echo $indent?>&nbsp;<a href="<?php echo $cd?>search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a><?php echo $indent?>
 				<?php
 				}
 			?><br><br>
-
+</div>
 
 			<?php
 			}
@@ -86,5 +95,4 @@ function DisplayThemeBar($theme1)
 
 // bottom hook content:
 ?>
-
 
