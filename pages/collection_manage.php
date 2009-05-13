@@ -39,7 +39,7 @@ if ($delete!="")
 	if ($usercollection==$delete && count($c)>0)
 		{
 		# Select the first collection in the dropdown box.
-		$usercollection=$c[0];
+		$usercollection=$c[0]["ref"];
 		set_user_collection($userref,$usercollection);
 		}
 
