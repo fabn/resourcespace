@@ -436,7 +436,7 @@ function update_field($resource,$field,$value)
 	}
 	
 
-function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1)
+function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -478,7 +478,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		if ($key_required[$n])
 			{
 			$k=substr(md5(time()),0,10);
-			sql_query("insert into external_access_keys(resource,access_key,user,access) values ('$resource','$k','$userref','$access');");
+			sql_query("insert into external_access_keys(resource,access_key,user,access,expires) values ('$resource','$k','$userref','$access'," . (($expires=="")?"null":"'" . $expires . "'"). ");");
 			$key="&k=". $k;
 			}
 

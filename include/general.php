@@ -1468,4 +1468,92 @@ function get_simple_search_fields()
 	return $return;
 	}
 	
+function daily_stat($activity_type,$object_ref)
+	{
+	# Update the daily statistics after a loggable event.
+	# the daily_stat table contains a counter for each 'activity type' (i.e. download) for each object (i.e. resource)
+	# per day.
+	$date=getdate();$year=$date["year"];$month=$date["mon"];$day=$date["mday"];
+	
+
+    # Set object ref to zero if not set.
+
+    if ($object_ref=="") {$object_ref=0;}
+
+    
+	# Find usergroup
+	global $usergroup;
+	if (!isset($usergroup)) {$usergroup=0;}
+	
+	# First check to see if there's a row
+	$count=sql_value("select count(*) value from daily_stat where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'",0);
+	if ($count==0)
+		{
+		# insert
+		sql_query("insert into daily_stat(year,month,day,usergroup,activity_type,object_ref,count) values ('$year','$month','$day','$usergroup','$activity_type','$object_ref','1')");
+		}
+	else
+		{
+		# update
+		sql_query("update daily_stat set count=count+1 where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'");
+		}
+	}    
+	
+function check_access_key($resource,$key)
+	{
+	# Verify a supplied external access key
+	$keys=sql_query("select user,expires from external_access_keys where resource='$resource' and access_key='$key' and (expires is null or expires<now())");
+	if (count($keys)==0)
+		{
+		return false;
+		}
+	else
+		{
+		# "Emulate" the user that e-mailed the resource by setting the same group and permissions
+		
+		$user=$keys[0]["user"];
+		$expires=$keys[0]["expires"];
+		
+		# Has this expired?
+		if (strtotime($expires)<time())
+			{
+			global $lang;
+			?>
+			<script type="text/javascript">
+			alert("<?php echo $lang["externalshareexpired"] ?>");
+			history.go(-1);
+			</script>
+			<?php
+			exit();
+			}
+		
+		global $usergroup,$userpermissions;
+		$userinfo=sql_query("select u.usergroup,g.permissions from user u join usergroup g on u.usergroup=g.ref where u.ref='$user'");
+		if (count($userinfo)>0)
+			{
+			$usergroup=$userinfo[0]["usergroup"];
+			$userpermissions=split(",",$userinfo[0]["permissions"]);
+			}
+		
+		# Set the 'last used' date for this key
+		sql_query("update external_access_keys set lastused=now() where resource='$resource' and access_key='$key'");
+		
+		return true;
+		}
+	}
+
+function check_access_key_collection($collection,$key)
+	{
+	$r=get_collection_resources($collection);
+	for ($n=0;$n<count($r);$n++)
+		{
+		# Verify a supplied external access key for all resources in a collection
+		if (!check_access_key($r[$n],$key)) {return false;}
+		}	
+
+	# Set the 'last used' date for this key
+	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
+	return true;
+	}
+
 ?>

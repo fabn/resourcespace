@@ -57,6 +57,7 @@ include "../include/header.php";
 	
 	<?php
 	$access=getvalescaped("access","");
+	$expires=getvalescaped("expires","");
 	if ($access=="")
 		{
 		?>
@@ -74,6 +75,21 @@ include "../include/header.php";
 		<div class="clearerleft"> </div>
 		</div>
 		
+		<div class="Question">
+		<label><?php echo $lang["expires"]?></label>
+		<select name="expires" class="stdwidth">
+		<option value=""><?php echo $lang["never"]?></option>
+		<?php for ($n=1;$n<=150;$n++)
+			{
+			$date=time()+(60*60*24*$n);
+			?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo date("Y-m-d",$date)?>"><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>
+			<?php
+			}
+		?>
+		</select>
+		<div class="clearerleft"> </div>
+		</div>
+		
 		<div class="QuestionSubmit" style="padding-top:0;margin-top:0;">
 		<label for="buttons"> </label>
 		<input name="generateurl" type="submit" value="&nbsp;&nbsp;<?php echo $lang["generateurl"]?>&nbsp;&nbsp;" />
@@ -86,7 +102,7 @@ include "../include/header.php";
 		?>
 		<p><?php echo $lang["generateurlexternal"]?></p>
 	
-		<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>&k=<?php echo generate_collection_access_key($ref,0,"URL",$access)?>">
+		<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>&k=<?php echo generate_collection_access_key($ref,0,"URL",$access,$expires)?>">
 		<?php
 		}
 	}
@@ -130,6 +146,7 @@ include "../include/header.php";
 		<td><?php echo $lang["sharedwith"];?></td>
 		<td><?php echo $lang["lastupdated"];?></td>
 		<td><?php echo $lang["lastused"];?></td>
+		<td><?php echo $lang["expires"];?></td>
 		<td><?php echo $lang["access"];?></td>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
@@ -143,6 +160,7 @@ include "../include/header.php";
 			<td><?php echo $keys[$n]["emails"]?></td>
 			<td><?php echo nicedate($keys[$n]["maxdate"],true);	?></td>
 			<td><?php echo nicedate($keys[$n]["lastused"],true); ?></td>
+			<td><?php echo ($keys[$n]["expires"]=="")?$lang["never"]:nicedate($keys[$n]["expires"],false)?></td>
 			<td><?php echo ($keys[$n]["access"]==-1)?"":$lang["access" . $keys[$n]["access"]]; ?></td>
 			<td><div class="ListTools">
 			<a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccess"]?>')) {document.getElementById('deleteaccess').value='<?php echo $keys[$n]["access_key"] ?>';document.getElementById('collectionform').submit(); }">&gt;&nbsp;<?php echo $lang["delete"]?></a>

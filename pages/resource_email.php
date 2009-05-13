@@ -20,7 +20,8 @@ if (getval("save","")!="")
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
 	$access=getvalescaped("access","");
-	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message,$access);
+	$expires=getvalescaped("expires","");
+	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message,$access,$expires);
 	if ($errors=="")
 		{
 		# Log this			
@@ -61,6 +62,7 @@ include "../include/header.php";
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
 </div>
 
+
 <div class="Question" id="question_access">
 <label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
 <select class="stdwidth" name="access" id="access">
@@ -69,6 +71,21 @@ include "../include/header.php";
 for ($n=$access;$n<=1;$n++) { ?>
 <option value="<?php echo $n?>"><?php echo $lang["access" . $n]?></option>
 <?php } ?>
+</select>
+<div class="clearerleft"> </div>
+</div>
+
+<div class="Question">
+<label><?php echo $lang["externalselectresourceexpires"]?></label>
+<select name="expires" class="stdwidth">
+<option value=""><?php echo $lang["never"]?></option>
+<?php for ($n=1;$n<=150;$n++)
+	{
+	$date=time()+(60*60*24*$n);
+	?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo date("Y-m-d",$date)?>"><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>
+	<?php
+	}
+?>
 </select>
 <div class="clearerleft"> </div>
 </div>

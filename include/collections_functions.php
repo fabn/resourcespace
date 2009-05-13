@@ -438,7 +438,7 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	return $return;
 	}
 	
-function email_collection($collection,$collectionname,$fromusername,$userlist,$message,$feedback)
+function email_collection($collection,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -492,7 +492,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 		# Do we need to add an external access key for this user (e-mail specified rather than username)?
 		if ($key_required[$n])
 			{
-			$k=generate_collection_access_key($collection,$feedback,$emails[$n]);
+			$k=generate_collection_access_key($collection,$feedback,$emails[$n],$access,$expires);
 			$key="&k=". $k;
 			}
 		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $baseurl . 	"/?c=" . $collection . $key;
@@ -503,7 +503,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	return "";
 	}
 
-function generate_collection_access_key($collection,$feedback=0,$email="",$access=-1)
+function generate_collection_access_key($collection,$feedback=0,$email="",$access=-1,$expires="")
 	{
 	# For each resource in the collection, create an access key so an external user can access each resource.
 	global $userref;
@@ -512,7 +512,7 @@ function generate_collection_access_key($collection,$feedback=0,$email="",$acces
 	for ($m=0;$m<count($r);$m++)
 		{
 		# Add the key to each resource in the collection
-		sql_query("insert into external_access_keys(resource,access_key,collection,user,request_feedback,email,date,access) values ('" . $r[$m] . "','$k','$collection','$userref','$feedback','" . escape_check($email) . "',now(),$access);");
+		sql_query("insert into external_access_keys(resource,access_key,collection,user,request_feedback,email,date,access,expires) values ('" . $r[$m] . "','$k','$collection','$userref','$feedback','" . escape_check($email) . "',now(),$access," . (($expires=="")?"null":"'" . $expires . "'"). ");");
 		}
 	return $k;
 	}
@@ -798,7 +798,7 @@ function get_collection_external_access($collection)
 	{
 	# Return all external access given to a collection.
 	# Users, emails and dates could be multiple for a given access key, an in this case they are returned comma-separated.
-	return sql_query("select access_key,group_concat(DISTINCT user ORDER BY user SEPARATOR ', ') users,group_concat(DISTINCT email ORDER BY email SEPARATOR ', ') emails,max(date) maxdate,max(lastused) lastused,access from external_access_keys where collection='$collection' group by access_key order by date");
+	return sql_query("select access_key,group_concat(DISTINCT user ORDER BY user SEPARATOR ', ') users,group_concat(DISTINCT email ORDER BY email SEPARATOR ', ') emails,max(date) maxdate,max(lastused) lastused,access,expires from external_access_keys where collection='$collection' group by access_key order by date");
 	}
 	
 function delete_collection_access_key($collection,$access_key)
