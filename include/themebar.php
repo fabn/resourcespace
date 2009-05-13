@@ -64,7 +64,7 @@ function DisplayThemeBar($theme1)
 			?>
 <div 
 onclick="SetCookie('smart_theme_<?php echo $n?>',<?php if ($smart_theme_display=='off') {?>'on'<?php } else { ?>'off'<?php }?>,1000);
-$('<?php echo $header_name?>').toggle();
+Effect.toggle($('<?php echo $header_name?>'),'blind');
 return false;"> 
 
 			<?php echo "<B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B><br>"?></div>
