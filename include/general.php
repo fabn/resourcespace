@@ -1485,7 +1485,7 @@ function check_access_key($resource,$key)
 		$expires=$keys[0]["expires"];
 		
 		# Has this expired?
-		if (strtotime($expires)<time())
+		if ($expires!="" && strtotime($expires)<time())
 			{
 			global $lang;
 			?>
