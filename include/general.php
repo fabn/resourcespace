@@ -1468,37 +1468,7 @@ function get_simple_search_fields()
 	return $return;
 	}
 	
-function daily_stat($activity_type,$object_ref)
-	{
-	# Update the daily statistics after a loggable event.
-	# the daily_stat table contains a counter for each 'activity type' (i.e. download) for each object (i.e. resource)
-	# per day.
-	$date=getdate();$year=$date["year"];$month=$date["mon"];$day=$date["mday"];
-	
 
-    # Set object ref to zero if not set.
-
-    if ($object_ref=="") {$object_ref=0;}
-
-    
-	# Find usergroup
-	global $usergroup;
-	if (!isset($usergroup)) {$usergroup=0;}
-	
-	# First check to see if there's a row
-	$count=sql_value("select count(*) value from daily_stat where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'",0);
-	if ($count==0)
-		{
-		# insert
-		sql_query("insert into daily_stat(year,month,day,usergroup,activity_type,object_ref,count) values ('$year','$month','$day','$usergroup','$activity_type','$object_ref','1')");
-		}
-	else
-		{
-		# update
-		sql_query("update daily_stat set count=count+1 where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'");
-		}
-	}    
-	
 function check_access_key($resource,$key)
 	{
 	# Verify a supplied external access key
