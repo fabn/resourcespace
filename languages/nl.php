@@ -503,4 +503,7 @@ $lang["country"]="Land";
 
 # New for 1.6
 $lang["newflag"]="NIEUW!";
+
+$lang["resourcemetadata"]="Materiaal metagegevens";
+
 ?>

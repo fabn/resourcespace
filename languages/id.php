@@ -712,4 +712,7 @@ $lang["metadata-report"]="Laporan Metadata";
 
 # Video Playlist
 $lang["videoplaylist"]="Playlist Video";
+
+$lang["resourcemetadata"]="Aset Metadata";
+
 ?>

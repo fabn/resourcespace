@@ -544,4 +544,7 @@ $lang["archive"]="Archiv";
 $lang["collectionviewhover"]="Ressourcen dieser Kollektion anzeigen";
 $lang["collectioncontacthover"]="Kontaktabzug der Ressourcen dieser Kollektion erstellen";
 $lang["original"]="Original";
+
+$lang["resourcemetadata"]="Ressourcen-Felder";
+
 ?>

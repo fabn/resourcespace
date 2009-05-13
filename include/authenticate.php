@@ -32,7 +32,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $valid=true;
         $userref=$userdata[0]["ref"];
         $username=$userdata[0]["username"];
-        $userpermissions=split(",",$userdata[0]["permissions"]); #create userpermissions array for checkperm() function
+        $userpermissions=array_merge(split(",",$global_permissions),split(",",$userdata[0]["permissions"])); #create userpermissions array for checkperm() function
         $usergroup=$userdata[0]["usergroup"];
         $usergroupparent=$userdata[0]["parent"];
         $useremail=$userdata[0]["email"];

@@ -715,4 +715,7 @@ $lang["videoplaylist"]="ビデオ・プレイリスト";
 $lang["restrictedsharecollection"]="あなたはこのコレクションにおけるリソースの1つ以上のアクセスを制限しました、したがって、共有は禁止されています。";
 
 $lang["collection"]="コレクション";
+
+$lang["resourcemetadata"]="リソースのメタデータ";
+
 ?>

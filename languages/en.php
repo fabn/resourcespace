@@ -722,4 +722,6 @@ $lang["idecline"]="I Decline"; # For terms and conditions
 
 $lang["mycollection_notpublic"]="You cannot make your 'My Collection' into a public collection or theme. Please create a new collection for this purpose.";
 
+$lang["resourcemetadata"]="Resource Metadata";
+
 ?>

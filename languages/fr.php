@@ -698,3 +698,5 @@ $lang["collectionlog-c"]="Ajout d'un document (avec copie)";
 $lang["collectionlog-m"]="Commentaire d'un document";
 $lang["collectionlog-*"]="Évaluation d'un document";
 
+$lang["resourcemetadata"]="Document de métadonnées";
+

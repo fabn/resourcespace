@@ -576,4 +576,7 @@ $lang["ratings"]="puntajes";
 $lang["rating"]="puntaje";
 
 $lang["restrictedsharecollection"]="Tienes el acceso restringido a uno o más de los materiales de esta colección y, por tanto, no la podrás compartir con usuarios externos.";
+
+$lang["resourcemetadata"]="Metadatos de material";
+
 ?>

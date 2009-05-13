@@ -459,4 +459,8 @@ $lang["months"]=array("Janeiro","Fevereiro","Março","Abril","Maio","Junho","Jul
 # New for 1.6
 $lang["newflag"]="NOVO!";
 
+$lang["resourcemetadata"]="Conteúdo metadados";
+
+
+
 ?>

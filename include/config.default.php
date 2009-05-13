@@ -668,6 +668,13 @@ $default_home_page="home.php";
 $config_separators=array("/","_",".","; ","-","(",")","'","\"","\\");
 
 
+# Global permissions
+# Permissions that will be prefixed to all user group permissions
+# Handy for setting global options, e.g. for fields
+# By default do not allow the 'original filename' and 'camera make/model' fields to be edited.
+$global_permissions="F51,F52";
+
+
 #
 # ------------------------- Development Items -------------------------
 #

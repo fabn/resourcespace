@@ -717,4 +717,7 @@ $lang["videoplaylist"]="Video-spilleliste";
 
 $lang["restrictedsharecollection"]="Du har begrenset tilgang til en eller flere filer i dette lysbordet og deling er derfor ikke tilatt.";
 
+$lang["resourcemetadata"]="Material-metadata";
+
+
 ?>

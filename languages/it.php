@@ -503,4 +503,7 @@ $lang["country"]="Paese";
 
 # New for 1.6
 $lang["newflag"]="NUOVO!";
+
+$lang["resourcemetadata"]="Risorsa metadati";
+
 ?>

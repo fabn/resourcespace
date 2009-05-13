@@ -334,11 +334,25 @@ if ($enable_copy_data_from && !$multiple)
 $use=$ref;
 # 'Copy from' been supplied? Load data from this resource instead.
 if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
-	
+
+?>
+<br /><br /><h1><?php echo $lang["resourcemetadata"]?></h1>
+<?php
+
 $fields=get_resource_field_data($use,$multiple);
 for ($n=0;$n<count($fields);$n++)
 	{
-	if (!(($resource["archive"]==0) && ($fields[$n]["resource_type"]==999))) {
+	# Should this field be displayed?
+	if (!
+		(
+			# Field is an archive only field
+			(($resource["archive"]==0) && ($fields[$n]["resource_type"]==999))
+		||
+			# Field has write access denied
+			checkperm("F" . $fields[$n]["ref"])
+		))
+		
+		{
 
 	$name="field_" . $fields[$n]["ref"];
 	$value=$fields[$n]["value"];
