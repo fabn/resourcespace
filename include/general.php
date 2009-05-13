@@ -557,7 +557,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		$sql.="g.parent='" . $usergroup . "'";
 		}
-	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
+	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
 
 function get_users_with_permission($permission)
@@ -640,7 +640,7 @@ function save_user($ref)
 			$passsql=",password='" . $password . "',password_last_change=now()";
 			}
 		
-		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "' where ref='$ref'");
+		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "',approved='" . ((getval("approved","")=="")?"0":"1") . "' where ref='$ref'");
 		}
 	if (getval("emailme","")!="")
 		{
@@ -1524,6 +1524,73 @@ function check_access_key_collection($collection,$key)
 	# Set the 'last used' date for this key
 	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
 	return true;
+	}
+
+function auto_create_user_account()
+	{
+	# Automatically creates a non-approved user account
+	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup;
+	
+	# Add custom fields
+	$c="";
+	if (isset($custom_registration_fields))
+		{
+		$custom=explode(",",$custom_registration_fields);
+	
+		# Required fields?
+		if (isset($custom_registration_required)) {$required=explode(",",$custom_registration_required);}
+	
+		for ($n=0;$n<count($custom);$n++)
+			{
+			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
+				{
+				return false; # Required field was not set.
+				}
+			
+			$c.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
+			}
+		}
+
+	# Required fields (name, email) not set?
+	if (getval("name","")=="") {return false;}
+	if (getval("email","")=="") {return false;}
+	
+	# Create the user
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . escape_check(make_username(getval("name",""))) . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $user_account_auto_creation_usergroup . "','" . escape_check($c) . "',0)");
+	$new=sql_insert_id();
+	
+	# Build a message
+	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification3"] . "\n$baseurl?u=" . $new;
+	
+	
+	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message);
+	return true;
+	}
+
+function make_username($name)
+	{
+	# Generates a unique username for the given name
+	
+	# First compress the various name parts
+	$s=trim_array(explode(" ",$name));
+	
+	$name=$s[count($s)-1];
+	for ($n=count($s)-2;$n>=0;$n--)
+		{
+		$name=substr($s[$n],0,1) . $name;
+		}
+	$name=safe_file_name(strtolower($name));
+	
+	# Check for uniqueness... append an ever-increasing number until unique.
+	$unique=false;
+	$num=-1;
+	while (!$unique)
+		{
+		$num++;
+		$c=sql_value("select count(*) value from user where username='" . escape_check($name . (($num==0)?"":$num)) . "'",0);
+		$unique=($c==0);
+		}
+	return $name . (($num==0)?"":$num);
 	}
 
 ?>

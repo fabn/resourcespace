@@ -674,6 +674,12 @@ $config_separators=array("/","_",".","; ","-","(",")","'","\"","\\");
 # By default do not allow the 'original filename' and 'camera make/model' fields to be edited.
 $global_permissions="F51,F52";
 
+# User account application - auto creation
+# By default this is switched off and applications for new user accounts will be sent as e-mails
+# Enabling this option means user accounts will be created but will need to be approved by an administrator
+# before the user can log in.
+$user_account_auto_creation=false;
+$user_account_auto_creation_usergroup=2; # which user group for auto-created accounts?
 
 #
 # ------------------------- Development Items -------------------------

@@ -5,7 +5,17 @@ include "../include/general.php";
 $errors=false;
 if (getval("save","")!="")
 	{
-	if (email_user_request())
+	if ($user_account_auto_creation)
+		{
+		# Automatically create a new user account
+		$success=auto_create_user_account();
+		}
+	else
+		{
+		$success=email_user_request();
+		}
+		
+	if ($success)
 		{
 		redirect("pages/done.php?text=user_request");
 		}

@@ -97,11 +97,18 @@ for ($n=0;$n<count($groups);$n++)
 ?>
 <div class="Question"><label><?php echo $lang["ticktoemail"]?></label>
 <?php if (strlen($user["password"])!=32) { ?>
-<input name="emailme" type="checkbox" value="yes">
+<input name="emailme" type="checkbox" value="yes" <?php if ($user["approved"]==0) { ?>checked<?php } ?>>
 <?php } else { ?>
 <div class="Fixed"><?php echo $lang["cannotemailpassword"]?></div>
 <?php } ?>
 <div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?php echo $lang["approved"]?></label><input name="approved" type="checkbox"  value="yes" <?php if ($user["approved"]==1) { ?>checked<?php } ?>>
+<?php if ($user["approved"]==0) { ?><div class="FormError">!! <?php echo $lang["ticktoapproveuser"]?> !!</div><?php } ?>
+
+<div class="clearerleft"> </div></div>
+
+
 
 <div class="Question"><label><?php echo $lang["ticktodelete"]?></label><input name="deleteme" type="checkbox"  value="yes"><div class="clearerleft"> </div></div>
 

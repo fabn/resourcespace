@@ -734,4 +734,12 @@ $lang["externalshareexpired"]="Sorry, this share has expired and is no longer av
 
 $lang["expires"]="Expires";
 $lang["never"]="Never";
+
+$lang["approved"]="Approved";
+$lang["notapproved"]="Not approved";
+
+$lang["userrequestnotification3"]="If this is a valid request, click the link below to review the details and approve the user account.";
+
+$lang["ticktoapproveuser"]="You must tick the box to approve this user if you wish to enable this account";
+
 ?>

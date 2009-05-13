@@ -49,6 +49,13 @@ if (getval("r","")!="")
 	if ($k!="") {$bottomurl="";} # No bottom frame if anon. access for single resource
 	}
 
+if (getval("u","")!="")
+	{
+	# quick redirect to a user (from e-mails)
+	$u=getvalescaped("u","");
+	$topurl="pages/team/team_user_edit.php?ref=" . $u;
+	}
+	
 if (getval("url","")!="")
 	{
 	# New URL for top section (when the frameset is lost)
