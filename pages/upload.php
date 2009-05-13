@@ -33,7 +33,6 @@ include "../include/header.php";
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
-</td></tr>
 
 <div class="Question">
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
