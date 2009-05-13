@@ -67,7 +67,7 @@ onclick="SetCookie('smart_theme_<?php echo $n?>',<?php if ($smart_theme_display=
 Effect.toggle($('<?php echo $header_name?>'),'blind');
 return false;"> 
 
-			<?php echo "<B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B><br>"?></div>
+			<?php echo "<a href='#'><B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B></a><br>"?></div>
 		
 <div id="<?php echo $header_name?>" style="display:<?php if ($smart_theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 			<?php
