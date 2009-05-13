@@ -185,12 +185,20 @@ if ($submitted != "")
 
 	# Create and send the zipfile
 	# Build a file name for the zip file.
-	$collection_name=trim(str_replace(array(" ","\""),"",$collectiondata['name']));
-	
-	$file="Col_ID" . $collection . "_" . $size . ".zip";	
+	$collection_name=safe_file_name($collectiondata['name']);
+	if ($use_collection_name_in_zip_name)
+		{
+		# Use collection name (if configured)
+		$file="Col_ID" . $collection . "_".$collection_name. "_" . $size . ".zip";
+		}
+	else
+		{
+		# Do not include the collection name in the filename (default)
+		$file="Col_ID" . $collection . "_" . $size . ".zip";
+		}
 		
 	# Write command parameters to file.
-	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection."_" . $size . ".txt";
+	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection."_".$collection_name. "_" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
@@ -217,18 +225,7 @@ if ($submitted != "")
 	# Get the file size of the zip.
 	$filesize=filesize($storagedir . "/tmp/" . $file);
 	
-	if ($use_collection_name_in_zip_name)
-		{
-		# Use collection name (if configured)
-		$filename="Col_ID" . $collection . "_".str_replace(" ","_",$collectiondata['name'])."_" . $size . ".zip";
-		}
-	else
-		{
-		# Do not include the collection name in the filename (default)
-		$filename="Col_ID" . $collection . "_" . $size . ".zip";
-		}
-		
-	header("Content-Disposition: attachment; filename=" . $filename);
+	header("Content-Disposition: attachment; filename=" . $file);
 	header("Content-Type: application/zip");
 	header("Content-Length: " . $filesize);
 	
