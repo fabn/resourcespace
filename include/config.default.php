@@ -254,13 +254,15 @@ $research_request=false;
 # Country search in the right nav? (requires a field with the short name 'country')
 $country_search=false;
 
-# Country sort in the search results? (requires that the 'country' field maps to the 'country' database column on resource)
-$country_sort=false;
-
 # Enable sorting resources in other ways:
 $colour_sort=true;
 $title_sort=false; 
+$country_sort=false; // (requires that the 'country' field maps to the 'country' database column on resource)
 $original_filename_sort=false; // will only work if you are not using staticsync 
+
+# What is the default sort order?
+# Options are date, colour, relevance, popularity, country
+$default_sort="relevance";
 
 # Enable themes (promoted collections intended for showcasing selected resources)
 $enable_themes=true;
