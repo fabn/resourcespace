@@ -26,6 +26,8 @@ function get_cookie ( cookie_name )
 <h2><?php echo $lang["themes"] ?></h2>
 <?php
 
+hook("themebartoptoolbar"); 
+
 # Display all themes
 $headers=get_theme_headers();
 for ($n=0;$n<count($headers);$n++)
@@ -109,6 +111,6 @@ return false;">
 			}
 		}
 
-// bottom hook content:
+hook("themebarbottomtoolbar"); 
 ?>
 
