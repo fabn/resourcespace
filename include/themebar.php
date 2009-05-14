@@ -80,7 +80,7 @@ onclick="
 var smart_theme_display=get_cookie('smart_theme_<?php echo $n?>');
 if (smart_theme_display=='off'){var toggle_smart_theme_display='on';} else { var toggle_smart_theme_display='off';}
 SetCookie('smart_theme_<?php echo $n?>',toggle_smart_theme_display,1000);
-Effect.toggle($('<?php echo $header_name?>'),'blind');
+Effect.toggle($('<?php echo $header_name?>'),'blind',{ duration: 0.2 });
 return false;"> 
 
 			<?php echo "<a href='#'><B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B></a><br>"?></div>
