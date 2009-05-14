@@ -1,7 +1,20 @@
 <?php 
 include_once("collections_functions.php");
-
 ?>
+
+<script language="Javascript">
+
+function get_cookie ( cookie_name )
+{
+  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+  if ( results )
+    return ( unescape ( results[2] ) );
+  else
+    return null;
+}
+
+</script>
+
 <div id="ThemeBox">
 
 <div id="ThemeBoxPanel">
@@ -63,7 +76,10 @@ function DisplayThemeBar($theme1)
 			#echo $smart_theme_display;
 			?>
 <div 
-onclick="SetCookie('smart_theme_<?php echo $n?>',<?php if ($smart_theme_display=='off') {?>'on'<?php } else { ?>'off'<?php }?>,1000);
+onclick="
+var smart_theme_display=get_cookie('smart_theme_<?php echo $n?>');
+if (smart_theme_display=='off'){var toggle_smart_theme_display='on';} else { var toggle_smart_theme_display='off';}
+SetCookie('smart_theme_<?php echo $n?>',toggle_smart_theme_display,1000);
 Effect.toggle($('<?php echo $header_name?>'),'blind');
 return false;"> 
 
