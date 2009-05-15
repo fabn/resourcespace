@@ -37,25 +37,35 @@ for ($n=0;$n<count($headers);$n++)
 
 function DisplayThemeBar($theme1)
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$n;
 
 	# Work out theme name
 	$themename=$theme1;
-
+	$theme_display=getval("theme_$n","off");
+	
 	$themes=get_themes($theme1);
 	if (count($themes)>0)
 		{
 		?>
-		<br><b><?php echo stripslashes(str_replace("*","",$themename))?></b><br>
 
+<div 
+onclick="
+var theme_display=get_cookie('theme_<?php echo $n?>');
+if (theme_display=='off'){var toggle_theme_display='on';} else { var toggle_theme_display='off';}
+SetCookie('theme_<?php echo $n?>',toggle_theme_display,1000);
+Effect.toggle($('<?php echo $themename?>'),'blind',{ duration: 0.2 });
+return false;"> 		
+		
+		<a href='#'><b><?php echo stripslashes(str_replace("*","",$themename))?></b></a></div>
+		
+<div id="<?php echo $themename?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 		<?php
 		for ($m=0;$m<count($themes);$m++)
-			{
-			?>
-			<a href="search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a><br>
+			{ ?><br>
+			&nbsp;&nbsp;&nbsp;<a href="search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
 			<?php
 			}
-		?><?php
+		?><br><br></div><?php
 		}
 	}
 
