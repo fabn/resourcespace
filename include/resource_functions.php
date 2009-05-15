@@ -48,92 +48,95 @@ function save_resource_data($ref,$multi)
 	$fields=get_resource_field_data($ref,$multi);
 	for ($n=0;$n<count($fields);$n++)
 		{
-		if ($fields[$n]["type"]==2)
+		if (!checkperm("F" . $fields[$n]["ref"]))
 			{
-			# construct the value from the ticked boxes
-			$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
-			$options=trim_array(explode(",",$fields[$n]["options"]));
-			if ($auto_order_checkbox) {sort($options);}
-			for ($m=0;$m<count($options);$m++)
+			if ($fields[$n]["type"]==2)
 				{
-				$name=$fields[$n]["ref"] . "_" . $m;
-				if (getval($name,"")=="yes")
+				# construct the value from the ticked boxes
+				$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
+				$options=trim_array(explode(",",$fields[$n]["options"]));
+				if ($auto_order_checkbox) {sort($options);}
+				for ($m=0;$m<count($options);$m++)
 					{
-					if ($val!=",") {$val.=",";}
-					$val.=$options[$m];
+					$name=$fields[$n]["ref"] . "_" . $m;
+					if (getval($name,"")=="yes")
+						{
+						if ($val!=",") {$val.=",";}
+						$val.=$options[$m];
+						}
 					}
 				}
-			}
-		elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
-			{
-			# date type, construct the value from the date dropdowns
-			$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
-			$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-m","");
-			$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
-			if (strlen($val)!=10) {$val="";}
-			}
-		elseif ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
-			{
-			# Construct a multilingual string from the submitted translations
-			$val=getvalescaped("field_" . $fields[$n]["ref"],"");
-			$val="~" . $language . ":" . $val;
-			reset ($languages);
-			foreach ($languages as $langkey => $langname)
+			elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
 				{
-				if ($language!=$langkey)
+				# date type, construct the value from the date dropdowns
+				$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
+				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-m","");
+				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
+				if (strlen($val)!=10) {$val="";}
+				}
+			elseif ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
+				{
+				# Construct a multilingual string from the submitted translations
+				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
+				$val="~" . $language . ":" . $val;
+				reset ($languages);
+				foreach ($languages as $langkey => $langname)
 					{
-					$val.="~" . $langkey . ":" . getvalescaped("multilingual_" . $n . "_" . $langkey,"");
+					if ($language!=$langkey)
+						{
+						$val.="~" . $langkey . ":" . getvalescaped("multilingual_" . $n . "_" . $langkey,"");
+						}
 					}
 				}
-			}
-		else
-			{
-			# Set the value exactly as sent.
-			$val=getvalescaped("field_" . $fields[$n]["ref"],"");
-			}
-		if ($fields[$n]["value"]!=$val)
-			{
-			# This value is different from the value we have on record.
-			
-			# Write this edit to the log.
-			resource_log($ref,'e',$fields[$n]["ref"]);
-			
-			# If 'resource_column' is set, then we need to add this to a query to back-update
-			# the related columns on the resource table
-			if (strlen($fields[$n]["resource_column"])>0)
+			else
 				{
-				if ($resource_sql!="") {$resource_sql.=",";}
-				$resource_sql.=$fields[$n]["resource_column"] . "='" . escape_check($val) . "'";
+				# Set the value exactly as sent.
+				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 				}
-			# Purge existing data and keyword mappings, decrease keyword hitcounts.
-			sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
-			
-			# Insert new data and keyword mappings, increase keyword hitcounts.
-         	sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','" . str_replace((!(strpos($val,"\'")===false)?"\'":"'"),"''",$val) ."')");
-
-			$oldval=$fields[$n]["value"];
-			
-			if ($fields[$n]["type"]==3)
+			if ($fields[$n]["value"]!=$val)
 				{
-				# Prepend a comma when indexing dropdowns
-				$val="," . getvalescaped("field_" . $fields[$n]["ref"],"");
-				$oldval="," . $oldval;
+				# This value is different from the value we have on record.
+				
+				# Write this edit to the log.
+				resource_log($ref,'e',$fields[$n]["ref"]);
+				
+				# If 'resource_column' is set, then we need to add this to a query to back-update
+				# the related columns on the resource table
+				if (strlen($fields[$n]["resource_column"])>0)
+					{
+					if ($resource_sql!="") {$resource_sql.=",";}
+					$resource_sql.=$fields[$n]["resource_column"] . "='" . escape_check($val) . "'";
+					}
+				# Purge existing data and keyword mappings, decrease keyword hitcounts.
+				sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
+				
+				# Insert new data and keyword mappings, increase keyword hitcounts.
+				sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','" . str_replace((!(strpos($val,"\'")===false)?"\'":"'"),"''",$val) ."')");
+	
+				$oldval=$fields[$n]["value"];
+				
+				if ($fields[$n]["type"]==3)
+					{
+					# Prepend a comma when indexing dropdowns
+					$val="," . getvalescaped("field_" . $fields[$n]["ref"],"");
+					$oldval="," . $oldval;
+					}
+				
+				if ($fields[$n]["keywords_index"]==1) {
+					remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"]);
+					add_keyword_mappings($ref,i18n_get_indexable($val),$fields[$n]["ref"]);
+					}
+				
+				# update resources table if necessary
+				if ($resource_sql!="") sql_query("update resource set $resource_sql where ref='$ref'");
 				}
 			
-			if ($fields[$n]["keywords_index"]==1) {
-				remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"]);
-				add_keyword_mappings($ref,i18n_get_indexable($val),$fields[$n]["ref"]);
+			# Check required fields have been entered.
+			if ($fields[$n]["required"]==1 && ($val=="" || $val==","))
+				{
+				global $lang;
+				$errors[$fields[$n]["ref"]]=$lang["requiredfield"];
 				}
-			
-			# update resources table if necessary
-			if ($resource_sql!="") sql_query("update resource set $resource_sql where ref='$ref'");
-			}
-		
-		# Check required fields have been entered.
-		if ($fields[$n]["required"]==1 && ($val=="" || $val==","))
-			{
-			global $lang;
-			$errors[$fields[$n]["ref"]]=$lang["requiredfield"];
 			}
 		}
 		
