@@ -241,7 +241,6 @@ function debug()
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
-</td></tr>
 
 
 	<div style="margin: 0px 10px;">
