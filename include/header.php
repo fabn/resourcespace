@@ -67,6 +67,9 @@ if ($pagename!="preview") { ?>
 <div id="Header">
 
 <?php 
+
+hook("headertop");
+
 if (!isset($allow_password_change)) {$allow_password_change=true;}
 
 if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
