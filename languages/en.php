@@ -313,7 +313,7 @@ $lang["lastbrowser"]="Last Browser";
 $lang["searchusers"]="Search Users";
 $lang["createuserwithusername"]="Create user with username...";
 $lang["emailnotfound"]="The e-mail address specified could not be found";
-$lang["yourname"]="Your Name";
+$lang["yourname"]="Your Full Name";
 $lang["youremailaddress"]="Your E-mail Address";
 $lang["sendreminder"]="Send Reminder";
 $lang["passwordreminder"]="New Password";
@@ -576,7 +576,7 @@ $lang["managerelatedkeywords"]="Manage Related Keywords";
 $lang["keyword"]="Keyword";
 $lang["relatedkeywords"]="Related Keywords";
 $lang["matchingrelatedkeywords"]="Matching Related Keywords";
-$lang["newkeywordrelationship"]="Create New Relationship For Keyword:";
+$lang["newkeywordrelationship"]="Create new relationship for keyword...";
 
 $lang["exportdata"]="Export Data";
 $lang["exporttype"]="Export Type";
@@ -742,4 +742,9 @@ $lang["userrequestnotification3"]="If this is a valid request, click the link be
 
 $lang["ticktoapproveuser"]="You must tick the box to approve this user if you wish to enable this account";
 
+$lang["managerequestsorders"]="Manage Requests / Orders";
+$lang["editrequestorder"]="Edit Request / Order";
+$lang["requestorderid"]="Request / Order ID";
+$lang["viewrequesturl"]="To view this request, click the link below:";
+$lang["requestreason"]="Reason for request";
 ?>

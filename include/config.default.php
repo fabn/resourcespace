@@ -109,7 +109,8 @@ $applicationname="ResourceSpace"; # The name of your implementation / installati
 # Available languages
 $defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
 $languages["en"]="British English";
-$languages["us"]="American English";
+$languages["en-US"]="American English";
+$languages["id"]="Bahasa Indonesia";
 $languages["de"]="Deutsch";
 $languages["es"]="Español";
 $languages["fr"]="Français";
@@ -118,7 +119,8 @@ $languages["jp"]="日本語";
 $languages["nl"]="Nederlands";
 $languages["no"]="Norsk";
 $languages["pt"]="Português";
-$languages["id"]="Bahasa Indonesia";
+$languages["pt-BR"]="Português do Brasil";
+
 
 # Disable language selection options
 $disable_languages=false;
