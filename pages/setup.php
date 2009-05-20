@@ -1,4 +1,30 @@
 <?php
+
+if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
+echo "!!!";
+	define(FILTER_SANITIZE_STRING, 1);
+	define(FILTER_SANITIZE_EMAIL, 2);
+	define(FILTER_VALIDATE_EMAIL, 3);
+	define(FILTER_VALIDATE_URL, 4);
+	function filter_var($data, $filter){
+		switch ($filter){
+		case FILTER_VALIDATE_EMAIL:
+			if(preg_match('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/',$data, $output)>0)
+				return true;
+			else return false;
+			break;
+		case FILTER_SANITIZE_STRING:
+			return addslashes($data); //Just do an escape quotes.  We're not doing anything too dangerous here after all
+			break;
+		case FILTER_VALIDATE_URL:		
+			//Rely on checking the license.txt file to validate URL.  
+			//This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
+			return true;
+			break;
+		}
+	}
+}
+
 //Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
 $develmode = false;
 if ($develmode)
@@ -22,6 +48,10 @@ if ($defaultlanguage!='en'){
 		include "../languages/".$defaultlanguage.".php";
 	}
 }
+
+
+
+
 ?>
 <html>
 <head>
@@ -286,29 +316,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		fclose($fp);
 		return false;
 	}	
-	if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
-		define(FILTER_SANITIZE_STRING, 1);
-		define(FILTER_SANITIZE_EMAIL, 2);
-		define(FILTER_VALIDATE_EMAIL, 3);
-		define(FILTER_VALIDATE_URL, 4);
-		function filter_var($data, $filter){
-			switch ($filter){
-			case FILTER_VALIDATE_EMAIL:
-				if(preg_match('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/',$data, $output)>0)
-					return true;
-				else return false;
-				break;
-			case FILTER_SANITIZE_STRING:
-				return addslashes($data); //Just do an escape quotes.  We're not doing anything too dangerous here after all
-				break;
-			case FILTER_VALIDATE_URL:		
-				//Rely on checking the license.txt file to validate URL.  
-				//This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
-				return true;
-				break;
-			}
-		}
-	}
+
 	//Check if config file already exists and die with an error if it does.
 	if (file_exists($outputfile)){
 ?>
