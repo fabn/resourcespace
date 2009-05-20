@@ -1,5 +1,7 @@
 <?php
 include "../include/db.php";
+include "../include/general.php";
+
 include "../include/authenticate.php";
 
 include "../include/header.php";
