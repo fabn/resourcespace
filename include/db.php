@@ -86,6 +86,8 @@ $queryhist="";
 $pagename=str_replace(".php","",pagename());
 if (isset($defaultlanguage)) {$language=$defaultlanguage;} else {$language="en";}
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
+# Fix due to rename of US English language file
+if ($language=="us") {$language="en-US";}
 
 # Always include the english pack (in case items have not yet been translated)
 include dirname(__FILE__)."/../languages/en.php";
