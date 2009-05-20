@@ -49,10 +49,10 @@ $lang["managethemes"]="Gerenciar Temas";
 $lang["manageresearchrequests"]="Gerenciar Requisições de Pesquisa";
 $lang["manageusers"]="Gerenciar Usuários";
 $lang["managecontent"]="Gerenciar Textos do Serviço";
-# MktTV Devel - BEGIN STATISTICS
-$lang["viewstatistics"]="Ver Estatísticas do MediaSpace";
+
+$lang["viewstatistics"]="Ver Estatísticas do ResourceSpace";
 $lang["viewserverstatistics"]="Ver Estatísticas do Servidor";
-# MktTV Devel - END STATISTICS
+
 $lang["viewreports"]="Ver Relatórios";
 $lang["viewreport"]="Ver Relatório";
 $lang["report"]="Relatório";
@@ -260,9 +260,7 @@ $lang["savethissearchtocollection"]="Salvar os critérios da pesquisa na coleç�
 $lang["mustspecifyonekeyword"]="Você deve especificar ao menos uma palavra-chave.";
 $lang["hasemailedyouaresource"]="enviou um email com conteúdo para você."; # Suffixed to user name, e.g. Fred has e-mailed you a content
 $lang["clicktoviewresource"]="Clique no link abaixo para ver o conteúdo.";
-# MktTV Devel - BEGIN FLASH VERSION
 $lang["flashversion"]="\"A versão do Flash é muito antiga para reproduzir vídeos em alta qualidade. Atualize o Flash <a href=\\\"http://get.adobe.com/br/flashplayer/\\\" target=\\\"_blank\\\">aqui</a>.\"";
-# MktTV Devel - END FLASH VERSION
 
 # Content log - actions
 $lang["resourcelog"]="Registro do Conteúdo";
@@ -640,64 +638,6 @@ $lang["confirmdeleteaccess"]="Tem certeza que deseja apagar esta chave de conte�
 $lang["noexternalsharing"]="Nenhum compartilhamento externo.";
 $lang["sharedcollectionaddwarning"]="Aviso: esta coleção foi compartilhada com usuários externos. O conteúdo que você adicionou  nesta coleção foi disponibilizado para os usuários. Clique em \"compartilhar\" para gerenciar o acesso externo a essa coleção.";
 $lang["addresourcebatchlocalfolder"]="Adicionar Conteúdo em Lote - Pasta Local";
-# Setup Script (Don't need translation)
-$lang["setup-alreadyconfigured"]="Your MktTV MediaSpace installation is already configured. To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
-$lang["setup-successheader"]="Congratulations!";
-$lang["setup-successdetails"]="Your initial MktTV MediaSpace setup is complete.  Be sure to check out \"include/default.config.php\" for more configuration options.";
-$lang["setup-successnextsteps"]="Next steps:";
-$lang["setup-successremovewrite"]="You can now remove write access to \"include/\".";
-$lang["setup-visitwiki"]="Visit the <a href=\"http://dev.mkttv.net/trac/\" target=\"_blank\">MktTV MediaSpace Trac</a> for more information about customizing your installation";
-$lang["setup-checkconfigwrite"]="Write access to config directory:";
-$lang["setup-checkstoragewrite"]="Write access to storage directory:";
-$lang["setup-welcome"]="Welcome to MktTV MediaSpace";
-$lang["setup-introtext"]="Thanks for choosing MktTV MediaSpace.  This configuration script will help you setup MktTV MediaSpace.  This process only needs to be completed once.";
-$lang["setup-checkerrors"]="Pre-configuration errors were detected.<br />  Please resolve these errors and return to this page to continue.";
-$lang["setup-errorheader"]="There were errors detected in your configuration.  See below for detailed error messages.";
-$lang["setup-warnheader"]="Some of your settings generated warning messages.  See below for details.  This doesn't necessarily mean there is a problem with your configuration.";
-$lang["setup-basicsettings"]="Basic Settings";
-$lang["setup-basicsettingsdetails"]="These settings provide the basic setup for your MktTV MediaSpace installation.  Required items are marked with a <strong>*</strong>";
-$lang["setup-dbaseconfig"]="Database Configuration";
-$lang["setup-mysqlerror"]="There was an error with your MySQL settings:";
-$lang["setup-mysqlerrorversion"]="MySQL version should be 5 or greater.";
-$lang["setup-mysqlerrorserver"]="Unable to reach server.";
-$lang["setup-mysqlerrorlogin"]="Login failed. (Check username and password.)";
-$lang["setup-mysqlerrordbase"]="Unable to access database.";
-$lang["setup-mysqlerrorperns"]="Check user permissions.  Unable to create tables.";
-$lang["setup-mysqlserver"]="MySQL Server:";
-$lang["setup-mysqlusername"]="MySQL Username:";
-$lang["setup-mysqlpassword"]="MySQL Password:";
-$lang["setup-mysqldb"]="MySQL Database:";
-$lang["setup-mysqlbinpath"]="MySQL Binary Path:";
-$lang["setup-generalsettings"]="General Settings";
-$lang["setup-baseurl"]="Base URL:";
-$lang["setup-emailfrom"]="Email From Address:";
-$lang["setup-emailnotify"]="Email Notify:";
-$lang["setup-spiderpassword"]="Spider Password:";
-$lang["setup-scramblekey"]="Scramble Key:";
-$lang["setup-secure"]="Secure (https) mode:";
-$lang["setup-paths"]="Paths";
-$lang["setup-pathsdetail"]="For each path, enter the path without a trailing slash to each binary.  To disable a binary, leave the path blank.  Any auto-detected paths have already been filled in.";
-$lang["setup-applicationname"]="Application Name:";
-$lang["setup-basicsettingsfooter"]="NOTE: The only <strong>required</strong> settings are on this page.  If you're not interested in checking out the advanced options, you may click below to begin the installation process.";
-$lang["setup-if_mysqlserver"]="The IP address or <abbr title=\"Fully Qualified Domain Name\">FQDN</abbr> of your MySQL server installation.  If MySql is installed on the same server as your web server, use \"localhost\".";
-$lang["setup-if_mysqlusername"]="The username used to connect to your MySQL server.  This user must have rights to create tables in the database named below.";
-$lang["setup-if_mysqlpassword"]="The password for the MySQL username entered above.";
-$lang["setup-if_mysqldb"]="The Name of the MySQL database RS will use. (This database must exist.)";
-$lang["setup-if_mysqlbinpath"]="The path to the MySQL client binaries - e.g. mysqldump. NOTE: This is only needed if you plan to use the export tool.";
-$lang["setup-if_baseurl"]="The \"base\" web address for this installation.  NOTE: No trailing slash.";
-$lang["setup-if_emailfrom"]="The address that emails from RS appear to come from.";
-$lang["setup-if_emailnotify"]="The email address to which content/user/research requests are sent.";
-$lang["setup-if_spiderpassword"]="The spider password is a required field.";
-$lang["setup-if_scramblekey"]="To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable content path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
-$lang["setup-if_secure"]="If checked, RS will use https.";
-$lang["setup-if_applicationname"]="The name of your implementation / installation (e.g. \"MyCompany Content System\").";
-$lang["setup-err_mysqlbinpath"]="Unable to verify path.  Leave blank to disable.";
-$lang["setup-err_baseurl"]="Base URL is a required field.";
-$lang["setup-err_baseurlverify"]="Base URL does not seem to be correct (could not load license.txt).";
-$lang["setup-err_spiderpassword"]="The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your content will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
-$lang["setup-err_scramblekey"]="If this is a public installation, setting the scramble key is recommended.";
-$lang["setup-err_path"]="Unable to verify location of";
-$lang["setup-emailerr"]="Not a valid email address.";
 
 # Collection log - actions
 $lang["collectionlog"]="Registro de Coleção";
