@@ -1472,7 +1472,7 @@ function get_simple_search_fields()
 function check_access_key($resource,$key)
 	{
 	# Verify a supplied external access key
-	$keys=sql_query("select user,expires from external_access_keys where resource='$resource' and access_key='$key' and (expires is null or expires<now())");
+	$keys=sql_query("select user,expires from external_access_keys where resource='$resource' and access_key='$key' and (expires is null or expires>now())");
 	if (count($keys)==0)
 		{
 		return false;
