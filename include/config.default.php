@@ -111,6 +111,7 @@ $defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
 $languages["en"]="British English";
 $languages["en-US"]="American English";
 $languages["id"]="Bahasa Indonesia";
+$languages["da"]="Dansk";
 $languages["de"]="Deutsch";
 $languages["es"]="Español";
 $languages["fr"]="Français";
