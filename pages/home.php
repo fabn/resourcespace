@@ -8,6 +8,8 @@ include "../include/header.php";
 
 if (!hook("replacehome")) { 
 
+if (!hook("replaceslideshow")) { 
+
 # Count the files in the configured $homeanim_folder.
 $dir = dirname(__FILE__) . "/../" . $homeanim_folder; 
 $filecount = 0; 
@@ -68,6 +70,8 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 <div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg');"><img src='../<?php echo $homeanim_folder?>/2.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
+<?php } # End of hook replaceslideshow
+?>
 
 <?php if (checkperm("s")) { ?>
 
