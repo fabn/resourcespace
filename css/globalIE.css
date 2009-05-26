@@ -5,7 +5,6 @@ body {width:97.5%;font-size: 70%;}
 .RecordBox { display: inline-block; margin-right: 15px; }
 #SearchBox { position: relative; margin-left: 0; }
 .SearchSpace .SearchWidth {width: 155px; }
-.HomePanelIN {height: 90px;}
 .HomePanel {margin:0px 15px 7px 0px;} 
 .RecordHeader h1 {height:10px;}
 .StyledTabbedPanel div { position: relative; display: inline-block; }
