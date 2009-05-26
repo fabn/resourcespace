@@ -258,10 +258,17 @@ if ($resource["has_image"]==1)
 			</td>
 			<?php
 			}
-		else
+		elseif (checkperm("q"))
 			{
 			?>
 			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+			<?php
+			}
+		else
+			{
+			# No access to this size, and the request functionality has been disabled. Show just 'restricted'.
+			?>
+			<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
 			<?php
 			}
 		?>
@@ -308,7 +315,20 @@ if ($nodownloads || $counter==0)
 	<tr class="DownloadDBlend">
 	<td><h2><?php echo ($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
 	<td>N/A</td>
-	<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+
+	<?php if (checkperm("q"))
+		{
+		?>
+		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+		<?php
+		}
+	else
+		{
+		?>
+		<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
+		<?php
+		}
+	?>
 	</tr>
 	<?php
 	}
