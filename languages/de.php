@@ -85,8 +85,8 @@ $lang["couldnotmatchusers"]="Keine passende Benutzer gefunden (oder Benutzer meh
 $lang["comments"]="Kommentare";
 
 # Team Centre - Resource management
-$lang["viewuserpending"]="Überprüfung nocht nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
-$lang["searcharchivedresources"]="Archivierte Ressourcen durchuchen";
+$lang["viewuserpending"]="Überprüfung noch nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
+$lang["searcharchivedresources"]="Archivierte Ressourcen durchsuchen";
 $lang["viewresourcespendingarchive"]="Archivierung noch nicht erledigt: Ressourcen anzeigen";
 $lang["uploadresourcebatch"]="Ressourcen-Stapel hochladen";
 $lang["uploadinprogress"]="Hochladen und Größenanpassung in Bearbeitung";
@@ -545,6 +545,140 @@ $lang["collectionviewhover"]="Ressourcen dieser Kollektion anzeigen";
 $lang["collectioncontacthover"]="Kontaktabzug der Ressourcen dieser Kollektion erstellen";
 $lang["original"]="Original";
 
+# New for 1.7
+$lang["installationcheck"]="Installation Überprüfen";
+$lang["managefieldoptions"]="Feldoptionen verwalten";
+$lang["matchingresourcesheading"]="Passende Ressourcen";
+$lang["backtofieldlist"]="Zurück zur Feldliste";
+$lang["rename"]="Umbenennen";
+$lang["showalllanguages"]="Alle Sprachen anzeigen";
+$lang["hidealllanguages"]="Alle Sprachen verstecken";
+$lang["clicktologinasthisuser"]="Als dieser Benutzer anmelden";
+$lang["addkeyword"]="Stichwort hinzufügen";
+$lang["selectedresources"]="Ausgewählte Ressourcen";
+
+$lang["internalusersharing"]="Weitergeben an interne Benutzer";
+$lang["externalusersharing"]="Weitergeben an externe Benutzer";
+$lang["accesskey"]="Zugangscode";
+$lang["sharedby"]="Weitergegeben von";
+$lang["sharedwith"]="Weitergegeben an";
+$lang["lastupdated"]="Letzte Aktualisierung";
+$lang["lastused"]="Zuletzt benutzt";
+$lang["noattachedusers"]="keine zugeordneten Benutzer";
+$lang["confirmdeleteaccess"]="Sind Sie sicher, dass Sie diesen Zugangscode löschen wollen? Benutzer, denen Sie den Zugangscode geschickt haben, können dann nicht mehr auf die Kollektion zugreifen.";
+$lang["noexternalsharing"]="Nicht an externe Benutzer weitergegeben.";
+$lang["sharedcollectionaddwarning"]="Achtung: Diese Kollektion wurde an externe Benutzer weitergegeben. Die Ressource, die Sie zur Kollektion hinzugefügt haben, ist nun auch für diese Benutzer verfügbar. Klicken Sie auf 'Weitergeben', um die Einstellungen zu verwalten.";
+$lang["addresourcebatchlocalfolder"]="Ressourcen-Stapelverarbeitung hinzufügen - aus Upload Ordner";
+# Setup Script
+$lang["setup-alreadyconfigured"]="Ihre ResourceSpace installation ist bereits konfiguriert. Um die Installation neu zu konfigurieren, können Sie die Datei <pre>include/config.php</pre> und dann diese Seite neu laden.";
+$lang["setup-successheader"]="Glückwunsch!";
+$lang["setup-successdetails"]="Ihre ResourceSpace Installation ist abgeschlossen. Weitere Konfigurationsoptionen finden Sie in der Datei 'include/default.config.php'.";
+$lang["setup-successnextsteps"]="Nächste Schritte:";
+$lang["setup-successremovewrite"]="Sie können nun den Schreibzugriff auf den Ordner 'include/' entfernen.";
+$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation';
+$lang["setup-checkconfigwrite"]="Schreibzugriff auf Konfigurationsverzeichnis:";
+$lang["setup-checkstoragewrite"]="Schreibzugriff auf Datenverzeichnis:";
+$lang["setup-welcome"]="Willkommen bei ResourceSpace";
+$lang["setup-introtext"]="Danke, dass Sie sich für ResourceSpace entschieden haben.  Dieser Konfigurationsassistent wird Ihnen helfen, ResourceSpace einzurichten, und muss nur einmal ausgeführt werden.";
+$lang["setup-checkerrors"]="Fehler gefunden.<br />Bitte beheben Sie diese Fehler und laden Sie dann diese Seite erneut.";
+$lang["setup-errorheader"]="In Ihrer Konfiguration wurden Fehler gefunden.  Eine detaillierte Fehlerbeschreibung finden Sie unten.";
+$lang["setup-warnheader"]="Einige Ihrer Einstellungen haben zu Warnungen geführt.  Details finden Sie unten. Das bedeutet nicht, dass Ihre Konfiguration fehlerhaft ist.";
+$lang["setup-basicsettings"]="Grundeinstellungen";
+$lang["setup-basicsettingsdetails"]="Dies sind die Grundeinstellungen für Ihre ResourceSpace Installation. Pflichtfelder sind mit einem <strong>*</strong> markiert.";
+$lang["setup-dbaseconfig"]="Datenbank Konfiguration";
+$lang["setup-mysqlerror"]="Fehler in Ihren MySQL Einstellungen:";
+$lang["setup-mysqlerrorversion"]="MySQL Version 5 oder neuer benötigt.";
+$lang["setup-mysqlerrorserver"]="Server nicht erreichbar.";
+$lang["setup-mysqlerrorlogin"]="Login fehlgeschlagen. (Benutzername und Passwort prüfen)";
+$lang["setup-mysqlerrordbase"]="Zugriff auf Datenbank fehlgeschlagen.";
+$lang["setup-mysqlerrorperns"]="Bitte Benutzerrechte prüfen.  Konnte keine Tabelle erstellen.";
+$lang["setup-mysqlserver"]="MySQL Server:";
+$lang["setup-mysqlusername"]="MySQL Benutzername:";
+$lang["setup-mysqlpassword"]="MySQL Passwort:";
+$lang["setup-mysqldb"]="MySQL Datenbank:";
+$lang["setup-mysqlbinpath"]="MySQL Tools Pfad:";
+$lang["setup-generalsettings"]="Allgemeine Einstellungen";
+$lang["setup-baseurl"]="Basis URL:";
+$lang["setup-emailfrom"]="Absender für E-Mails:";
+$lang["setup-emailnotify"]="E-Mail Benachrichtigung:";
+$lang["setup-spiderpassword"]="Spider Passwort:";
+$lang["setup-scramblekey"]="Scramble Schlüssel:";
+$lang["setup-secure"]="Verschlüsselungsmodus (https):";
+$lang["setup-paths"]="Pfade";
+$lang["setup-pathsdetail"]="Geben Sie den Pfad zu den Tools ohne abschließenden Schrägstrich ein. Um ein Tool zu deaktivieren, lassen Sie die Angabe leer. Automatisch erkannte Pfade sind bereits eingetragen.";
+$lang["setup-applicationname"]="Name der Installation:";
+$lang["setup-basicsettingsfooter"]="HINWEIS: Auf dieser Seite befinden sich alle <strong>erforderlichen</strong> Einstellungen.  Wenn Sie nicht an den erweiterten Optionen interessiert sind, können Sie unten klicken, um die Installation sofort zu starten.";
+$lang["setup-if_mysqlserver"]='IP Adresse oder <abbr title="Fully Qualified Domain Name">FQDN</abbr> Ihres MySQL Servers.  Wenn MySQL auf dem selben Server wie ResourceSpace installiert ist, geben Sie bitte &quot;localhost&quot; an.';
+$lang["setup-if_mysqlusername"]="Der MySQL Benutzername. Dieser Benutzer muss in der unten angegebenen Datenbank das Recht zum Erstellen von Tabellen haben.";
+$lang["setup-if_mysqlpassword"]="Das Passwort zum oben angegebenen MySQL Benutzer.";
+$lang["setup-if_mysqldb"]="Name der MySQL Datenbank. (Die Datenbank muss bereits existieren)";
+$lang["setup-if_mysqlbinpath"]="Pfad zu den MySQL Tools, z.B. mysqldump. HINWEIS: Diese Angabe wird nur benötigt, wenn Sie die Export Funktion nutzen wollen.";
+$lang["setup-if_baseurl"]="Die Basis URL für diese Installation ohne abschließenden Schrägstrich.";
+$lang["setup-if_emailfrom"]="Diese E-Mail Adresse wird von ResourceSpace als Absender für E-Mails benutzt.";
+$lang["setup-if_emailnotify"]="An diese E-Mail Adresse werden Ressourcen-, Benutzer- und Suchanfragen gesendet.";
+$lang["setup-if_spiderpassword"]="Das Spider Passwort ist ein Pflichtfeld.";
+$lang["setup-if_scramblekey"]="Um verschlüsselte Pfade zu aktivieren, fügen Sie hier eine zufällige Zeichenkette (ähnlich einem Passwort) ein. Wenn diese Installation öffentlich zugänglich ist, wird dies dringend empfohlen. Um verschlüsselte Pfade nicht zu aktivieren, lassen Sie das Feld bitte leer. Eine zufällige Zeichenkette ist bereits vorgewählt worden, kann aber geändert werden, z.B. um die Einstellungen einer bestehenden Installation wiederherzustellen.";
+$lang["setup-if_secure"]="Auswählen, um HTTPS zu nutzen.";
+$lang["setup-if_applicationname"]="Name dieser Installation (z.B. 'Meine Firma Bilddatenbank').";
+$lang["setup-err_mysqlbinpath"]="Konnte Pfad nicht bestätigen. Leer lassen zum deaktivieren.";
+$lang["setup-err_baseurl"]="Basis URL muss ausgefüllt werden.";
+$lang["setup-err_baseurlverify"]="Basis URL scheint falsch zu sein (konnte license.txt nicht laden).";
+$lang["setup-err_spiderpassword"]="Passwort für spider.php. WICHTIG: Wählen Sie hier eine zufällige Zeichenkette für jede Installation. Ihre Ressourcen sind zugreifbar für jeden, der dieses Passwort kennt. Eine zufällige Zeichenkette ist bereits vorgewählt worden, kann aber geändert werden, z.B. um die Einstellungen einer bestehenden Installation wiederherzustellen.";
+$lang["setup-err_scramblekey"]="Wenn diese Installation öffentlich zugänglich ist, wird die Nutzung von verschlüsselten Pfaden dringend empfohlen.";
+$lang["setup-err_path"]="Konnte Pfad nicht bestätigen von";
+$lang["setup-emailerr"]="Ungültige E-Mail Adresse.";
+
+# Collection log - actions
+$lang["collectionlog"]="Kollektionen Log";
+$lang["collectionlog-r"]="Ressource entfernt";
+$lang["collectionlog-R"]="Alle Ressourcen entfernt";
+$lang["collectionlog-D"]="Alle Ressourcen gelöscht";
+$lang["collectionlog-a"]="Ressource hinzugefügt";
+$lang["collectionlog-c"]="Ressource hinzugefügt (kopiert)";
+$lang["collectionlog-m"]="Ressource kommentiert";
+$lang["collectionlog-*"]="Ressource bewertet";
+
+$lang["viewuncollectedresources"]="Ressourcen anzeigen, die nicht in einer Kollektion enthalten sind";
+
+# Collection requesting
+$lang["requestcollection"]="Kollektion anfordern";
+
+# Metadata report
+$lang["metadata-report"]="Metadaten Bericht";
+
+# Video Playlist
+$lang["videoplaylist"]="Video Wiedergabeliste";
+$lang["restrictedsharecollection"]="Sie haben eingeschränkten Zugriff auf eine oder mehrere Ressourcen in dieser Kollektion, daher ist die Weitergabe deaktiviert.";
+
+$lang["collection"]="Kollektion";
+$lang["idecline"]="Ablehnen"; # For terms and conditions
+
+$lang["mycollection_notpublic"]="'Meine Kollektion' kann nicht in eine öffentliche Kollektion oder ein Thema umgewandelt werden. Bitte erstellen Sie für diesen Zweck eine neue Kollektion.";
+
 $lang["resourcemetadata"]="Ressourcen-Felder";
 
+$lang["selectgenerateurlexternal"]="Um eine URL für Nutzer ohne Login zu generieren, wählen Sie bitte die Zugriffsrechte aus, die Sie für diese Ressourcen gewähren wollen.";
+
+$lang["externalselectresourceaccess"]="Wenn Sie die Ressourcen per E-Mail an Nutzer ohne Login weitergeben wollen, wählen Sie bitte die Zugriffsrechte aus, die Sie für diese Ressourcen gewähren wollen.";
+
+$lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nutzer ohne Login weitergeben wollen, geben Sie bitte ein Ablaufdatum für den Link ein.";
+ 
+ $lang["externalshareexpired"]="Dieser Link ist leider abgelaufen und damit nicht mehr verfügbar.";
+ 
+ $lang["expires"]="Läuft ab";
+ $lang["never"]="Niemals";
+ 
+ $lang["approved"]="Freigegeben";
+ $lang["notapproved"]="Nicht freigegeben";
+ 
+ $lang["userrequestnotification3"]="Wenn diese Anfrage gültig ist, klicken Sie den untenstehenden Link, um die Details des Benutzers anzusehen und den Benutzer freizugeben.";
+ 
+ $lang["ticktoapproveuser"]="Sie müssen dieses Kästchen aktivieren, um den Benutzer zu aktivieren.";
+ 
+ $lang["managerequestsorders"]="Anfragen / Bestellungen verwalten";
+ $lang["editrequestorder"]="Anfrage / Bestellung bearbeiten";
+ $lang["requestorderid"]="Anfrage / Bestellung Nr.";
+ $lang["viewrequesturl"]="Um diese Anfrage anzusehen, klicken Sie bitte diesen Link:";
+ $lang["requestreason"]="Grund für die Anfrage";
+ 
 ?>
