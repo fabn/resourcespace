@@ -293,7 +293,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# View Collection
 	if (substr($search,0,11)=="!collection")
 		{
-		if ($orig_order=="relevance") {$order_by="c.date_added desc";}
+		if ($orig_order=="relevance") {$order_by="c.date_added desc,r.ref";}
 		$colcustperm=$sql_join;
 		if (getval("k","")!="") {$colcustperm="";$sql_filter="ref>0";} # Special case if a key has been provided.
 		
