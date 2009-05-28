@@ -729,29 +729,7 @@ function email_resource_request($ref,$details)
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
 	}
 
-function email_collection_request($ref,$details)
-	{
-	# E-mails a collection request (posted) to the team
-	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
-	$message=$lang["username"] . ": " . $username . "\n";
-	
-	reset ($_POST);
-	foreach ($_POST as $key=>$value)
-		{
-		if (strpos($key,"_label")!==false)
-			{
-			# Add custom field
-			$message.=$value . ": " . $_POST[str_replace("_label","",$key)] . "\n";
-			}
-		}
-		
-	if (trim($details)!="") {$message.=$lang["message"] . ":\n" . newlines($details) . "\n\n";}
-	$message.=$lang["viewcollection"] . ":\n$baseurl/?c=$ref";
-	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
-	
-	# Increment the request counter
-	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
-	}
+
 
 function newlines($text)
 	{
@@ -1005,7 +983,7 @@ function i18n_get_translated($text)
 	# For multiple keywords, parse each keyword.
 	if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($n>0) {$out.=",";}; $out.=i18n_get_translated(trim($s[$n]));};return $out;}
 	
-	global $language;
+	global $language,$defaultlanguage;
 	
 	# Split
 	$s=explode("~",$text);
@@ -1014,14 +992,22 @@ function i18n_get_translated($text)
 	if (count($s)<2) {return $text;}
 
 	# Find the current language and return it
+	$default="";
 	for ($n=1;$n<count($s);$n++)
 		{
-		if (substr($s[$n],2,1)!=":") {return $text;}
-		if (substr($s[$n],0,2)==$language) {return substr($s[$n],3);}
+		# Not a translated string, return as-is
+		if (substr($s[$n],2,1)!=":" && substr($s[$n],5,1)!=":") {return $text;}
+		
+		# Support both 2 character and 5 character language codes (for example en, en-US).
+		$p=strpos($s[$n],':');
+		if (substr($s[$n],0,$p)==$language) {return substr($s[$n],$p+1);}
+		
+		if (substr($s[$n],0,$p)==$defaultlanguage) {$default=substr($s[$n],$p+1);}
 		}	
 	
-	# No language match, return the first item
-	if (count($s)>1) {return substr($s[1],3);} else {return $text;}
+	# Translation not found? Return default language
+	# No default language entry? Then consider this a broken language string and return the string unprocessed.
+	if ($default!="") {return $default;} else {return $text;}
 	}
 
 function i18n_get_indexable($text)
@@ -1497,12 +1483,13 @@ function check_access_key($resource,$key)
 			exit();
 			}
 		
-		global $usergroup,$userpermissions;
+		global $usergroup,$userpermissions,$userrequestmode;
 		$userinfo=sql_query("select u.usergroup,g.permissions from user u join usergroup g on u.usergroup=g.ref where u.ref='$user'");
 		if (count($userinfo)>0)
 			{
 			$usergroup=$userinfo[0]["usergroup"];
 			$userpermissions=split(",",$userinfo[0]["permissions"]);
+			$userrequestmode=0; # Always use 'email' request mode for external users
 			}
 		
 		# Set the 'last used' date for this key
