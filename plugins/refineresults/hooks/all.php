@@ -23,9 +23,10 @@ function HookRefineresultsSearchBeforesearchresults()
 	<div class="RecordPanel">  
 	
 	<form method="post">
-	<div class="Question" id="question_related" >
+	<div class="Question" id="question_related" style="border-top:none;">
 	<label for="related"><?php echo $lang["additionalkeywords"]?></label>
 	<input class="stdwidth" type=text name="refine_keywords" value="">
+	<input class="stdwidth" type=hidden name="search" value="<?php echo htmlspecialchars($search) ?>">
 	<div class="clearerleft"> </div>
 	</div>
 
