@@ -49,7 +49,14 @@ function HookRefineresultsSearchSearchstringprocessing()
 	$refine=getvalescaped("refine_keywords","");
 	if ($refine!="")
 		{
-		$search.=" " . $refine;
+		if (strpos($search,":")===false)
+			{
+			$search.=" " . $refine;
+			}
+		else
+			{
+			$search.=", " . $refine;
+			}
 		}
 	}
 
