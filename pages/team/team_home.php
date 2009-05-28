@@ -44,6 +44,8 @@ include "../../include/header.php";
 
 	<?php if (checkperm("i")) { ?><li><a href="team_archive.php"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
 	
+	<?php if (checkperm("R")) { ?><li><a href="team_request.php"><?php echo $lang["managerequestsorders"]?></a></li><?php } ?>
+	
     <?php if (checkperm("r")) { ?><li><a href="team_research.php"><?php echo $lang["manageresearchrequests"]?></a></li><?php } ?>
 
     <?php if (checkperm("u")) { ?><li><a href="team_user.php"><?php echo $lang["manageusers"]?></a></li><?php } ?>

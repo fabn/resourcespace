@@ -56,6 +56,7 @@ Administration
 a	Can access administration tree
 t	Can see the team centre home
 r	Can manage research requests
+R	Can manage resource requests / orders
 o	Can manage content
 m	Can bulk-mail users
 u	Can manage users

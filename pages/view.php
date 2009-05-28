@@ -99,15 +99,15 @@ include "../include/header.php";
 
 <div class="RecordHeader">
 <?php if (!hook("renderinnerresourceheader")) { ?>
-<?php if ($k=="") { ?>
+
 <div class="backtoresults">
-<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
+<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>&k=<?php echo $k?>"><?php echo $lang["viewallresults"]?></a>
 |
-<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
-<?php } ?>
+
 <h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>

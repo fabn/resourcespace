@@ -10,7 +10,7 @@ include "../include/search_functions.php";
 
 # Hide/show thumbs
 $thumbs=getval("thumbs",$thumbs_default);
-if ($k!="") {$thumbs="show";$infobox=false;} # Always show thumbnails for external user access. Disable info box.
+if ($k!="") {$infobox=false;} # Disable info box for external access.
 
 
 setcookie("thumbs",$thumbs,0);
@@ -232,6 +232,7 @@ if ($k!="")
 	<a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
+    <br/><br/><a href="collections.php?thumbs=hide&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a>
 </div>
 <?php 
 } else { 
@@ -418,7 +419,25 @@ else
 # ------------------------- Minimised view
 ?>
 <!--Title-->	
-<?php if (!hook("nothumbs")) { ?>
+<?php if (!hook("nothumbs")) {
+
+if ($k!="")
+	{
+	# Anonymous access, slightly different display
+	$tempcol=get_collection($usercollection);
+	?>
+<div id="CollectionMinTitle"><h2><?php echo $tempcol["name"]?></h2></div>
+<div id="CollectionMinRightNav">
+  	<?php if (isset($zipcommand)) { ?>
+	<li><a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main"><?php echo $lang["action-download"]?></a></li>
+	<?php } ?>
+    <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo $lang["sendfeedback"]?></a></li><?php } ?>
+   	<li><a href="collections.php?thumbs=show&collection=<?php echo $usercollection?>&k=<?php echo $k?>" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></li>
+</div>
+<?php 
+} else { 
+?>
+
 <div id="CollectionMinTitle"><h2><?php echo $lang["mycollections"]?></h2></div>
 
 <!--Menu-->	
@@ -500,6 +519,7 @@ else
 		</div>				
   </form>
 </div>
+<?php } ?>
 <?php } ?>
 <!--Collection Count-->	
 <div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php echo $lang["items"]?></div>		

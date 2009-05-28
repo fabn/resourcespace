@@ -747,4 +747,8 @@ $lang["editrequestorder"]="Edit Request / Order";
 $lang["requestorderid"]="Request / Order ID";
 $lang["viewrequesturl"]="To view this request, click the link below:";
 $lang["requestreason"]="Reason for request";
+
+$lang["resourcerequeststatus0"]="Open";
+$lang["resourcerequeststatus1"]="Closed";
+
 ?>

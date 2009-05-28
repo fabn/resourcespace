@@ -3,13 +3,23 @@ include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
+include "../include/request_functions.php";
 
 $ref=getval("ref","");
 $cinfo=get_collection($ref);
 
 if (getval("save","")!="")
 	{
-	email_collection_request($ref,getvalescaped("request",""));
+	if ($userrequestmode==0)
+		{
+		# Request mode 0 : Simply e-mail the request.
+		email_collection_request($ref,getvalescaped("request",""));
+		}
+	else
+		{
+		# Request mode 1 : "Managed" mode via Manage Requests / Orders
+		managed_collection_request($ref,getvalescaped("request",""));
+		}
 	redirect("pages/done.php?text=resource_request");
 	}
 include "../include/header.php";
@@ -29,6 +39,9 @@ include "../include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 
+	<?php 
+	# Only ask for user details if this is an external share. Otherwise this is already known from the user record.
+	if ($k!="") { ?>
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
@@ -49,23 +62,10 @@ include "../include/header.php";
 	<input type="hidden" name="contact_label" value="<?php echo $lang["contacttelephone"]?>">
 	<div class="clearerleft"> </div>
 	</div>
-
-	<div class="Question">
-	<label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
-	<input name="gree" class="stdwidth">
-	<input type="hidden" name="gree_label" value="<?php echo $lang["finaluse"]?>">
-	<div class="clearerleft"> </div>
-	</div>
+	<?php } ?>
 	
 	<div class="Question">
-	<label><?php echo $lang["format"]?></label>
-	<input type="hidden" name="format_label" value="<?php echo $lang["format"]?>">
-	<input name="format" class="stdwidth">
-	<div class="clearerleft"> </div>
-	</div>
-
-	<div class="Question">
-	<label for="request"><?php echo $lang["message"]?></label>
+	<label for="requestreason"><?php echo $lang["requestreason"]?></label>
 	<textarea class="stdwidth" name="request" id="request" rows=5 cols=50></textarea>
 	<div class="clearerleft"> </div>
 	</div>

@@ -56,6 +56,13 @@ if (getval("u","")!="")
 	$topurl="pages/team/team_user_edit.php?ref=" . $u;
 	}
 	
+if (getval("q","")!="")
+	{
+	# quick redirect to a request (from e-mails)
+	$q=getvalescaped("q","");
+	$topurl="pages/team/team_request_edit.php?ref=" . $q;
+	}
+	
 if (getval("url","")!="")
 	{
 	# New URL for top section (when the frameset is lost)

@@ -1,0 +1,7 @@
+ref,int(11),NO,PRI,,auto_increment
+user,int(11),YES,,,
+collection,int(11),YES,MUL,,
+created,datetime,YES,,,
+request_mode,int(11),NO,,0,
+status,int(11),NO,,0,
+comments,text,YES,,,
