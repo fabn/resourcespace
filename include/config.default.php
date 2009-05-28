@@ -125,7 +125,7 @@ $languages["no"]="Norsk"; # Norwegian
 $languages["pt"]="Português"; # Portuguese
 $languages["pt-BR"]="Português do Brasil"; # Brazilian Portuguese
 $languages["ru"]="Русский язык"; # Russian
-#$languages["sv"]="Svenska"; # Swedish
+$languages["sv"]="Svenska"; # Swedish
 
 
 # Disable language selection options

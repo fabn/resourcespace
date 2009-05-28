@@ -285,7 +285,7 @@ if (!$basic_simple_search)
 	<div class="PanelShadow"></div>
 <?php } ?>	
 	
-	<?php if (($research_request) && ($k=="") && (checkperm("q"))) { ?>
+	<?php if (($research_request) && (!isset($k) || $k=="") && (checkperm("q"))) { ?>
 	<div id="ResearchBoxPanel">
   	<div class="SearchSpace">
   	<h2><?php echo $lang["researchrequest"]?></h2>
