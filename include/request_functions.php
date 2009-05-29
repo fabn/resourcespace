@@ -14,6 +14,15 @@ function email_collection_request($ref,$details)
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
 	$message=$lang["username"] . ": " . $username . "\n";
 	
+	# Create a copy of the collection which is the one sent to the team. This is so that the admin
+	# user can e-mail back an external URL to the collection if necessary, to 'unlock' full (open) access.
+	# The user cannot then gain access to further resources by adding them to their original collection as the
+	# shared collection is a copy.
+	# A complicated scenario that is best avoided using 'managed requests'.
+	$copied=create_collection(-1,$lang["requestcollection"]);
+	copy_collection($ref,$copied);
+	$ref=$copied;
+	
 	reset ($_POST);
 	foreach ($_POST as $key=>$value)
 		{
