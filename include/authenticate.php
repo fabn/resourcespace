@@ -38,7 +38,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $useremail=$userdata[0]["email"];
         $userpassword=$userdata[0]["password"];
         $userfullname=$userdata[0]["fullname"];
-        if ($userdata[0]["fixed_theme"]!="") {$userfixedtheme=$userdata[0]["fixed_theme"];} 
+		if (!isset($userfixedtheme)) {$userfixedtheme=$userdata[0]["fixed_theme"];} # only set if not set in config.php
         
         $ip_restrict_group=trim($userdata[0]["ip_restrict_group"]);
         $ip_restrict_user=trim($userdata[0]["ip_restrict_user"]);

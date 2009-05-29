@@ -691,6 +691,13 @@ $global_permissions="F51,F52";
 $user_account_auto_creation=false;
 $user_account_auto_creation_usergroup=2; # which user group for auto-created accounts?
 
+# Optional additional items added to the top navigation
+# This example adds a Public Collections link. Repeat this block for multiple links, incrementing the number.
+#
+# $custom_top_nav[0]["title"]="Public Collections";
+# $custom_top_nav[0]["link"]="/pages/collection_public.php";
+
+
 #
 # ------------------------- Development Items -------------------------
 #
