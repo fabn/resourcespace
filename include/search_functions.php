@@ -266,7 +266,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (substr($search,0,5)=="!last") 
 		{
 		if ($orig_order=="relevance") {$order_by="ref desc";}
-
+		if ($orig_order=="date") {$order_by="creation_date desc,ref desc";}
+		if ($orig_order=="popularity") {$order_by="hit_count desc,ref desc";}
+		
 		# Extract the number of records to produce
 		$last=explode(" ",$search);$last=str_replace("!last","",$last[0]);
 		
