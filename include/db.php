@@ -93,7 +93,7 @@ if ($language=="us") {$language="en-US";}
 include dirname(__FILE__)."/../languages/en.php";
 if ($language!="en")
 	{
-	include dirname(__FILE__)."/../languages/" . $language . ".php";
+	include dirname(__FILE__)."/../languages/" . safe_file_name($language) . ".php";
 	}
 
 # Include language files for for each of the plugins too (if provided)
@@ -617,7 +617,7 @@ function safe_file_name($name)
 	{
 	# Returns a file name stipped of all non alphanumeric values
 	# Spaces are replaced with underscores
-	$alphanum="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+	$alphanum="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-";
 	$name=str_replace(" ","_",$name);
 	$newname="";
 	for ($n=0;$n<strlen($name);$n++)
