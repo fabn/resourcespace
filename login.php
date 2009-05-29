@@ -168,20 +168,6 @@ include "include/header.php";
   <form target="_top" id="loginform" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
   <input type="hidden" name="langupdate" id="langupdate" value="">  
   <input type="hidden" name="url" value="<?php echo htmlspecialchars($url)?>">
-  
-  <?php if ($disable_languages==false) { ?>	
-		<div class="Question">
-			<label for="pass"><?php echo $lang["language"]?> </label>
-			<select class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
-			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
-			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
-			<?php } ?>
-			</select>
-			<div class="clearerleft"> </div>
-		</div> 
-<br />
-<?php } ?>
-
 		<div class="Question">
 			<label for="name"><?php echo $lang["username"]?> </label>
 			<input type="text" name="username" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> value="<?php echo htmlspecialchars(getval("username","")) ?>" />
@@ -193,7 +179,17 @@ include "include/header.php";
 			<input type="password" name="password" id="password" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> />
 			<div class="clearerleft"> </div>
 		</div>
-
+<?php if ($disable_languages==false) { ?>	
+		<div class="Question">
+			<label for="pass"><?php echo $lang["language"]?> </label>
+			<select class="stdwidth" name="language" onChange="document.getElementById('langupdate').value='YES';document.getElementById('loginform').submit();">
+			<?php reset ($languages); foreach ($languages as $key=>$value) { ?>
+			<option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
+			<?php } ?>
+			</select>
+			<div class="clearerleft"> </div>
+		</div> 
+<?php } ?>
 	
 		<?php if ($allow_keep_logged_in) { ?>
 		<div class="Question">

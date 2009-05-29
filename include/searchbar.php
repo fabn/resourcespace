@@ -161,7 +161,10 @@ if (!$basic_simple_search)
 			  for ($m=0;$m<count($options);$m++)
 				{
 				$c=i18n_get_translated($options[$m]);
-				?><option <?php if (cleanse_string($c,false)==$value) { ?>selected<?php } ?>><?php echo $c?></option><?php
+				if ($c!="")
+					{
+					?><option <?php if (cleanse_string($c,false)==$value) { ?>selected<?php } ?>><?php echo $c?></option><?php
+					}
 				}
 			  ?>
 	  		</select>
