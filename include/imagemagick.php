@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path,$pdf_dynamic_rip;
 
 if (!$previewonly)
 	{
@@ -360,55 +360,93 @@ if (!isset($newfile))
     
    if (($extension=="pdf") || ($extension=="eps") || ($extension=="ai") || ($extension=="ps")) 
     	{
-   	    # For EPS/PS/PDF files, use GS directly and allow multiple pages.
-		# EPS files are always single pages:
-		if ($extension=="eps") {$pdf_pages=1;}
-		if ($extension=="ai") {$pdf_pages=1;}
-		if ($extension=="ps") {$pdf_pages=1;}
-		# Locate ghostscript command
-		$gscommand= $ghostscript_path. "/gs";
-	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
+   	  # For EPS/PS/PDF files, use GS directly and allow multiple pages.
+	# EPS files are always single pages:
+	if ($extension=="eps") {$pdf_pages=1;}
+	if ($extension=="ai") {$pdf_pages=1;}
+	if ($extension=="ps") {$pdf_pages=1;}
+	# Locate ghostscript command
+	$gscommand= $ghostscript_path. "/gs";
+	if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
         if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
 		
-        
-		# Create multiple pages.
-		for ($n=1;$n<=$pdf_pages;$n++)
-			{
-			# Set up target file
-			$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
-			$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
-			if (file_exists($target)) {unlink($target);}
-			
-			$gscommand2 = $gscommand . " -dBATCH -r150 -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
- 			$output=shell_exec($gscommand2); 
-	
-			# Set that this is the file to be used.
-			if (file_exists($target) && $n==1)
-				{
-				$newfile=$target;
+	$resolution=150;
+
+        if ($pdf_dynamic_rip) {
+		/* We want to rip at ~150 dpi by default because it provides decent 
+		* quality previews and speed in the end. It is not always efficient to just 
+		* rip at 150, though, because for very large pages, a lot of pixels 
+		* get wasted when we resize to 850 pixels. Also, if the page size is 
+		* quite small, ripping at 150 may not provide enough quality for the 
+		* scr size preview. So, use PDFinfo to calculate a rip resolution 
+		* that will give us a source bitmap of approximately 1600 pixels.
+		*/
+
+			$pdfinfocommand="pdfinfo ".escapeshellarg($file);
+			$pdfinfo=shell_exec($pdfinfocommand);
+			$pdfinfo=explode("\n",$pdfinfo);
+			$pdfinfo=preg_grep("/Page size/",$pdfinfo);
+			sort($pdfinfo);
+			#die(print_r($pdfinfo));
+			if (isset($pdfinfo[0])){
+				$pdfinfo=$pdfinfo[0];
 				}
-			
-			# resize directly to the screen size (no other sizes needed)
-			if (file_exists($target))
-				{
-				$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
-				$output=shell_exec($command2); 
-				
-				# Add a watermarked image too?
-				global $watermark;
-    			if (isset($watermark))
-    				{
-					$path=get_resource_path($ref,true,$size,false,"",-1,$n,true);
-					if (file_exists($path)) {unlink($path);}
-    				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
-    				
-				    $command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
-					$output=shell_exec($command2); 
+			else {
+				$pdfinfo="";
+				}
+			if ($pdfinfo!=""){	
+				$pdfinfo=str_replace("Page size:","",$pdfinfo);
+				$pdfinfo=str_replace("pts","",$pdfinfo);
+				$pdfinfo=str_replace(" x","",$pdfinfo);
+				$pdfinfo=explode(" ",trim($pdfinfo));
+				if($pdfinfo[0]>$pdfinfo[1]){
+					$pdf_max_dim=$pdfinfo[0];
 					}
-				
+				else{
+					$pdf_max_dim=$pdfinfo[1];
+					}
+				$resolution=ceil(1768/($pdf_max_dim/72));
 				}
 			}
+		
+	# Create multiple pages.
+	for ($n=1;$n<=$pdf_pages;$n++)
+		{
+		# Set up target file
+		$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
+		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
+		if (file_exists($target)) {unlink($target);}
+
+		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
+ 		$output=shell_exec($gscommand2); 
+	
+		# Set that this is the file to be used.
+		if (file_exists($target) && $n==1)
+			{
+			$newfile=$target;
+			}
+			
+		# resize directly to the screen size (no other sizes needed)
+		if (file_exists($target))
+			{
+			$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
+			$output=shell_exec($command2); 
+				
+			# Add a watermarked image too?
+			global $watermark;
+    			if (isset($watermark))
+    				{
+				$path=get_resource_path($ref,true,$size,false,"",-1,$n,true);
+				if (file_exists($path)) {unlink($path);}
+    				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
+    				
+				$command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
+					$output=shell_exec($command2); 
+				}
+				
+			}
 		}
+	}
     else
     	{
     	# Not a PDF file, so single extraction only.

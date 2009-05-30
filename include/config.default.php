@@ -754,5 +754,10 @@ $use_collection_name_in_zip_name=false;
 # Enable a permanently visible 'themes bar' on the left hand side of the screen for quick access to themes.
 $use_theme_bar=false;
 
+# Use pdfinfo to extract document size in order to calculate an efficient ripping resolution 
+# Useful mainly if you have odd sized pdfs, as you might in the printing industry; 
+# ex: you have very large PDFs, such as 50 to 200 in (will greatly decrease ripping time and avoid overload) 
+# or very small, such as PDFs < 5 in (will improve quality of the scr image)
+$pdf_dynamic_rip=false;
 
 ?>
