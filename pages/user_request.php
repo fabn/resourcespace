@@ -32,13 +32,13 @@ include "../include/header.php";
 
 <form method="post">  
 <div class="Question">
-<label for="name"><?php echo $lang["yourname"]?></label>
+<label for="name"><?php echo $lang["yourname"]?> <sup>*</sup></label>
 <input type=text name="name" id="name" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("name",""))?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label for="email"><?php echo $lang["youremailaddress"]?></label>
+<label for="email"><?php echo $lang["youremailaddress"]?> <sup>*</sup></label>
 <input type=text name="email" id="email" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("email",""))?>">
 <div class="clearerleft"> </div>
 </div>
@@ -47,6 +47,8 @@ include "../include/header.php";
 if (isset($custom_registration_fields))
 	{
 	$custom=explode(",",$custom_registration_fields);
+	$required=explode(",",$custom_registration_required);
+	
 	for ($n=0;$n<count($custom);$n++)
 		{
 		$type=1;
@@ -63,7 +65,9 @@ if (isset($custom_registration_fields))
 			{
 			?>
 			<div class="Question">
-			<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?></label>
+			<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?>
+			<?php if (in_array($custom[$n],$required)) { ?><sup>*</sup><?php } ?>
+			</label>
 			
 			<?php if ($type==1) {  # Normal text box
 			?>
@@ -127,7 +131,8 @@ $groups=get_registration_selectable_usergroups();
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
 </form>
-	
+
+<p><sup>*</sup> <?php echo $lang["requiredfield"] ?></p>	
 
 <?php
 include "../include/footer.php";
