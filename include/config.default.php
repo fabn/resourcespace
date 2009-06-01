@@ -613,6 +613,12 @@ $enable_public_collections=true;
 #   3: Drop down box (set options using $custom_registration_options["Field Name"]=array("Option 1","Option 2","Option 3");
 #   4: HTML block, e.g. help text paragraph (set HTML usign $custom_registration_html="<b>Some HTML</b>";
 
+# Allow user group to be selected as part of user registration?
+# User groups available for user selection must be specified using the 'Allow registration selection' option on each user group
+# in System Setup.
+# Only useful when $user_account_auto_creation=true;
+$registration_group_select=false;
+
 
 # Send an e-mail to the address set at $email_notify above when user contributed
 # resources are submitted (status changes from "User Contributed - Pending Submission" to "User Contributed - Pending Review").
@@ -697,7 +703,7 @@ $global_permissions="F51,F52";
 # Enabling this option means user accounts will be created but will need to be approved by an administrator
 # before the user can log in.
 $user_account_auto_creation=false;
-$user_account_auto_creation_usergroup=2; # which user group for auto-created accounts?
+$user_account_auto_creation_usergroup=2; # which user group for auto-created accounts? (see also $registration_group_select - allows users to select the group themselves).
 
 # Optional additional items added to the top navigation
 # This example adds a Public Collections link. Repeat this block for multiple links, incrementing the number.

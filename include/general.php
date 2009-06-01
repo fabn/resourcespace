@@ -1516,7 +1516,7 @@ function check_access_key_collection($collection,$key)
 function auto_create_user_account()
 	{
 	# Automatically creates a non-approved user account
-	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup;
+	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select;
 	
 	# Add custom fields
 	$c="";
@@ -1542,8 +1542,17 @@ function auto_create_user_account()
 	if (getval("name","")=="") {return false;}
 	if (getval("email","")=="") {return false;}
 	
+	# Work out which user group to set.
+	$usergroup=$user_account_auto_creation_usergroup;
+	if ($registration_group_select)
+		{
+		$usergroup=getvalescaped("usergroup","");
+		# Check this is a valid selectable usergroup (should always be valid unless this is a hack attempt)
+		if (sql_value("select allow_registration_selection value from usergroup where ref='$usergroup'",0)!=1) {exit("Invalid user group selection");}
+		}
+
 	# Create the user
-	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . escape_check(make_username(getval("name",""))) . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $user_account_auto_creation_usergroup . "','" . escape_check($c) . "',0)");
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . escape_check(make_username(getval("name",""))) . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $usergroup . "','" . escape_check($c) . "',0)");
 	$new=sql_insert_id();
 	
 	# Build a message
@@ -1578,6 +1587,11 @@ function make_username($name)
 		$unique=($c==0);
 		}
 	return $name . (($num==0)?"":$num);
+	}
+	
+function get_registration_selectable_usergroups()
+	{
+	return sql_query("select ref,name from usergroup where allow_registration_selection=1 order by name");
 	}
 
 ?>

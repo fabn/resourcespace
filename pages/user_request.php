@@ -96,6 +96,24 @@ if (isset($custom_registration_fields))
 	}
 ?>
 
+<?php if ($registration_group_select) {
+# Allow users to select their own group
+$groups=get_registration_selectable_usergroups();
+?>
+<div class="Question">
+<label for="usergroup"><?php echo $lang["group"]?></label>
+<select name="usergroup" id="usergroup" class="stdwidth">
+<?php for ($n=0;$n<count($groups);$n++)
+	{
+	?>
+	<option value="<?php echo $groups[$n]["ref"] ?>"><?php echo htmlspecialchars(i18n_get_translated($groups[$n]["name"])) ?></option>
+	<?php
+	}
+?>
+</select>
+<div class="clearerleft"> </div>
+</div>	
+<?php } ?>
 
 <div class="Question">
 <label for="email"><?php echo $lang["userrequestcomment"]?></label>
