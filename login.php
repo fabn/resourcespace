@@ -15,6 +15,14 @@ $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_
 # Also check that the username provided has not been locked out due to excessive login attempts.
 $ulockouts=sql_value("select count(*) value from user where username='" . getvalescaped("username","") . "' and login_tries>='" . $max_login_attempts_per_username . "' and date_add(login_last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
 
+# Default the username to the stored username in the case of session expiry (if configured)
+$stored_username="";
+if ($login_remember_username && isset($_COOKIE["user"]))
+	{
+    $s=explode("|",$_COOKIE["user"]);
+    $stored_username=$s[0];
+	}
+
 if ($lockouts>0 || $ulockouts>0)
 	{
 	$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
@@ -139,6 +147,9 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
         
     #blank cookie
     setcookie("user","",0);
+
+	#Do not show stored username.
+	$stored_username="";
     
     unset($username);
     
@@ -160,17 +171,6 @@ if (getval("langupdate","")!="")
 
 
 include "include/header.php";
-
-
-
-# Default the username to the stored username in the case of session expiry (if configured)
-$stored_username="";
-if ($login_remember_username && isset($_COOKIE["user"]))
-	{
-    $s=explode("|",$_COOKIE["user"]);
-    $stored_username=$s[0];
-	}
-
 ?>
 
   <h1><?php echo text("welcomelogin")?></h1>
