@@ -546,6 +546,10 @@ $session_autologout=false;
 # Allow browsers to save the login information on the login form.
 $login_autocomplete=true;
 
+# Remember the username on the login screen if the previous session expired
+# (logging out clears the username for security purposes)
+$login_remember_username=true;
+
 # Password standards - these must be met when a user or admin creates a new password.
 $password_min_length=7; # Minimum length of password
 $password_min_alpha=1; # Minimum number of alphabetical characters (a-z, A-Z) in any case
@@ -710,6 +714,7 @@ $user_account_auto_creation_usergroup=2; # which user group for auto-created acc
 #
 # $custom_top_nav[0]["title"]="Public Collections";
 # $custom_top_nav[0]["link"]="/pages/collection_public.php";
+
 
 
 #

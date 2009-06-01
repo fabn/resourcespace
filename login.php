@@ -158,7 +158,19 @@ if (getval("langupdate","")!="")
 	redirect("login.php?username=" . urlencode(getval("username","")));
 	}
 
+
 include "include/header.php";
+
+
+
+# Default the username to the stored username in the case of session expiry (if configured)
+$stored_username="";
+if ($login_remember_username && isset($_COOKIE["user"]))
+	{
+    $s=explode("|",$_COOKIE["user"]);
+    $stored_username=$s[0];
+	}
+
 ?>
 
   <h1><?php echo text("welcomelogin")?></h1>
@@ -169,8 +181,8 @@ include "include/header.php";
   <input type="hidden" name="langupdate" id="langupdate" value="">  
   <input type="hidden" name="url" value="<?php echo htmlspecialchars($url)?>">
 		<div class="Question">
-			<label for="name"><?php echo $lang["username"]?> </label>
-			<input type="text" name="username" id="name" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> value="<?php echo htmlspecialchars(getval("username","")) ?>" />
+			<label for="username"><?php echo $lang["username"]?> </label>
+			<input type="text" name="username" id="username" class="stdwidth" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?> value="<?php echo htmlspecialchars(getval("username",$stored_username)) ?>" />
 			<div class="clearerleft"> </div>
 		</div>
 		
@@ -207,5 +219,25 @@ include "include/header.php";
   <p>&nbsp;</p>
 
 <?php
+
+if ($stored_username!="")
+	{
+    # Javascript to default the focus to the password box
+    ?>
+    <script type="text/javascript">
+	document.getElementById('password').focus();
+    </script>
+    <?php
+	}
+else
+	{
+    # Javascript to default the focus to the username box
+    ?>
+    <script type="text/javascript">
+	document.getElementById('username').focus();
+    </script>
+    <?php
+	}
+
 include "include/footer.php";
 ?>
