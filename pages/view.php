@@ -237,7 +237,7 @@ if ($resource["has_image"]==1)
 		<td><h2><?php echo $headline?></h2>
 		<?php  if (is_numeric($sizes[$n]["width"])) { ?>
 		<p><?php echo $sizes[$n]["width"]?> x <?php echo $sizes[$n]["height"]?> <?php echo $lang["pixels"]?> <?php if ($mp>=1) { ?> (<?php echo $mp?> MP)<?php } ?></p>
-		<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> ppi</p></td>
+		<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> <?php echo $lang["ppi"] ?></p></td>
 		<?php } ?>
 		<td><?php echo $sizes[$n]["filesize"]?></td>
 		<!--<td><?php echo $sizes[$n]["filedown"]?></td>-->

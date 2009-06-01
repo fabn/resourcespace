@@ -751,4 +751,6 @@ $lang["requestreason"]="Reason for request";
 $lang["resourcerequeststatus0"]="Open";
 $lang["resourcerequeststatus1"]="Closed";
 
+$lang["ppi"]="PPI"; # (Pixels Per Inch - used on the resource download options list).
+
 ?>
