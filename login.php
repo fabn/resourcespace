@@ -174,8 +174,12 @@ include "include/header.php";
 ?>
 
   <h1><?php echo text("welcomelogin")?></h1>
-  <p><?php if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?php echo $lang["nopassword"]?> </a><br/><?php } ?>
-  <a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
+  <p>
+  <?php if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?php echo $lang["nopassword"]?> </a><?php } ?>
+  <?php if ($allow_password_reset) { ?><br/><a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a><?php } ?>
+  </p>
+  
+  
   <?php if ($error!="") { ?><div class="FormIncorrect"><?php echo $error?></div><?php } ?>
   <form target="_top" id="loginform" method="post" <?php if (!$login_autocomplete) { ?>AUTOCOMPLETE="OFF"<?php } ?>>
   <input type="hidden" name="langupdate" id="langupdate" value="">  

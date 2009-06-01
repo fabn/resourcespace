@@ -242,6 +242,9 @@ $ffmpeg_preview_async=false;
 # Allow users to request accounts?
 $allow_account_request=true;
 
+# Should the system allow users to request new passwords via the login screen?
+$allow_password_reset=true;
+
 # Highlight search keywords when displaying results and resources?
 $highlightkeywords=true;
 
