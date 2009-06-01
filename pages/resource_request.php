@@ -4,6 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 
 $ref=getval("ref","");
+$k=getval("k","");
 
 if (getval("save","")!="")
 	{
