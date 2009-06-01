@@ -79,9 +79,9 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		{
 
 		# Batch upload - change resource type
-		if (getval("swf","")!="" || getval("java","")!="")
+		$resource_type=getvalescaped("resource_type","");
+		if ($resource_type!="")
 			{
-			$resource_type=getvalescaped("resource_type","");
 			update_resource_type($ref,$resource_type);
 			}		
 
@@ -256,8 +256,6 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 <h1><?php echo $lang["specifydefaultcontent"]?></h1>
 <p><?php echo text("batch")?></p>
 
-<?php if (getval("swf","")!="" || getval("java","")!="") { # We need to ask for the resource type here for SWFUploads/Java
-?>
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
@@ -272,6 +270,8 @@ for ($n=0;$n<count($types);$n++)
 </div>
 
 <?php
+if (getval("swf","")!="" || getval("java","")!="") { 
+
 # Batch uploads (SWF/Java) - also ask which collection to add the resource to.
 if ($enable_add_collection_on_upload) 
 	{

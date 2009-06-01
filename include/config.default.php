@@ -605,6 +605,14 @@ $enable_public_collections=true;
 #$custom_registration_fields="Phone Number,Department";
 # Which of the custom fields are required?
 # $custom_registration_required="Phone Number";
+# You can also set that particular fields are displayed in different ways as follows:
+# $custom_registration_types["Department"]=1;
+# Types are as follows:
+# 	1: Normal text box (default)
+# 	2: Large text box
+#   3: Drop down box (set options using $custom_registration_options["Field Name"]=array("Option 1","Option 2","Option 3");
+#   4: HTML block, e.g. help text paragraph (set HTML usign $custom_registration_html="<b>Some HTML</b>";
+
 
 # Send an e-mail to the address set at $email_notify above when user contributed
 # resources are submitted (status changes from "User Contributed - Pending Submission" to "User Contributed - Pending Review").

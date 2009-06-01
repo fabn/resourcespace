@@ -49,13 +49,49 @@ if (isset($custom_registration_fields))
 	$custom=explode(",",$custom_registration_fields);
 	for ($n=0;$n<count($custom);$n++)
 		{
-		?>
-		<div class="Question">
-		<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?></label>
-		<input type=text name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?>">
-		<div class="clearerleft"> </div>
-		</div>
-		<?php
+		$type=1;
+		
+		# Support different question types for the custom fields.
+		if (isset($custom_registration_types[$custom[$n]])) {$type=$custom_registration_types[$custom[$n]];}
+		
+		if ($type==4)
+			{
+			# HTML type - just output the HTML.
+			echo $custom_registration_html[$custom[$n]];
+			}
+		else
+			{
+			?>
+			<div class="Question">
+			<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?></label>
+			
+			<?php if ($type==1) {  # Normal text box
+			?>
+			<input type=text name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?>">
+			<?php } ?>
+
+			<?php if ($type==2) { # Large text box 
+			?>
+			<textarea name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" rows="5"><?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?></textarea>
+			<?php } ?>
+
+			<?php if ($type==3) { # Drop down box
+			?>
+			<select name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth">
+			<?php foreach ($custom_registration_options[$custom[$n]] as $option)
+				{
+				?>
+				<option><?php echo htmlspecialchars(i18n_get_translated($option));?></option>
+				<?php
+				}
+			?>
+			</select>
+			<?php } ?>
+			
+			<div class="clearerleft"> </div>
+			</div>
+			<?php
+			}
 		}
 	}
 ?>
