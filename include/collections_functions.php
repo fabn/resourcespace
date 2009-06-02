@@ -257,7 +257,7 @@ function save_collection($ref)
 	# Update the keywords index for this collection
 	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
 	# Define an indexable string from the name, themes and keywords.
-	$index_string=getvalescaped("name","") . " " . getvalescaped("keywords","") . " " . $theme . " " . $theme2 . " " . $theme3;
+	$index_string=getvalescaped("keywords","");
 	$keywords=split_keywords($index_string,true);
 	for ($n=0;$n<count($keywords);$n++)
 		{

@@ -25,8 +25,8 @@ for ($n=0;$n<count($collections);$n++)
 	# Update the keywords index for this collection
 	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
 	
-	# Define an indexable string from the name, themes and keywords.
-	$index_string=$collections[$n]["name"] . " " . $collections[$n]["keywords"] . " " . $collections[$n]["theme"] . " " . $collections[$n]["theme2"] . " " . $collections[$n]["theme3"];
+	# Define an indexable string from the keywords.
+	$index_string=$collections[$n]["keywords"];
 	$keywords=split_keywords($index_string,true);
 	$words=count($keywords);
 	for ($m=0;$m<count($keywords);$m++)
