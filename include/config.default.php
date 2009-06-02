@@ -723,6 +723,8 @@ $user_account_auto_creation_usergroup=2; # which user group for auto-created acc
 # Display a larger preview image on the edit page?
 $edit_large_preview=false;
 
+# Allow sorting by resource ID
+$order_by_resource_id=false;
 
 #
 # ------------------------- Development Items -------------------------

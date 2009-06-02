@@ -198,6 +198,12 @@ if (is_array($result))
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="country") {?><span class="Selected"><?php echo $lang["country"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["country"]?></a><?php } ?>
 		<?php } ?>
+		
+		<?php if ($order_by_resource_id) { ?>
+		&nbsp;|&nbsp;
+		<?php if ($order_by=="resourceid") {?><span class="Selected"><?php echo $lang["resourceid"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourceid"]?></a><?php } ?>
+		<?php } ?>
+		
 		</div>
 		<?php
 		}
