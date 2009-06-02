@@ -591,9 +591,20 @@ function copy_resource($from,$resource_type=-1)
 		notify_user_contributed_submitted(array($to));
 		}
 	
-	# User contributed but e0 permission, so can contribute straight to live - still need to set 'created by'
+	# Set that this resource was created by this user. 
+	# This needs to be done if either:
+	# 1) The user does not have direct 'resource create' permissions and is therefore contributing using My Contributions directly into the live state
+	# 2) The user is contributiting via My Contributions to the standard User Contributed pre-live states.
 	global $userref;
-	if ((!checkperm("c")) || $archive<0) {sql_query("update resource set created_by='$userref' where ref='$to'");}
+	if ((!checkperm("c")) || $archive<0)
+		{
+		# Update the user record
+		sql_query("update resource set created_by='$userref' where ref='$to'");
+
+		# Also add the user's username and full name to the keywords index so the resource is searchable using this name.
+		global $username,$userfullname;
+		add_keyword_mappings($to,$username . " " . $userfullname,-1);
+		}
 	
 	# Now copy all data
 	sql_query("insert into resource_data(resource,resource_type_field,value) select '$to',resource_type_field,value from resource_data where resource='$from'");

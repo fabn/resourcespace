@@ -459,7 +459,7 @@ $udata=get_user($resource["created_by"]);
 if ($udata!==false)
 	{
 	?>
-	<div class="itemNarrow"><h3><?php echo $lang["contributedby"]?></h3><p><?php if (checkperm("u")) { ?><a href="team_user_edit.php?ref=<?php echo $udata["ref"]?>"><?php } ?><?php echo $udata["fullname"]?><?php if (checkperm("u")) { ?></a><?php } ?></p></div>
+	<div class="itemNarrow"><h3><?php echo $lang["contributedby"]?></h3><p><?php if (checkperm("u")) { ?><a href="team/team_user_edit.php?ref=<?php echo $udata["ref"]?>"><?php } ?><?php echo highlightkeywords($udata["fullname"],$search)?><?php if (checkperm("u")) { ?></a><?php } ?></p></div>
 	<?php
 	}
 
