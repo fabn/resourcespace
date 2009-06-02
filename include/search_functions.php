@@ -348,7 +348,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	if ($search=="!userpending")
 		{
-		if ($order_by="user_rating desc,hit_count desc,creation_date desc") {$order_by="request_count desc," . $order_by;}
+		if ($orig_order=="rating") {$order_by="request_count desc," . $order_by;}
 		return sql_query("select distinct r.*,r.hit_count score from resource r $sql_join where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 		
