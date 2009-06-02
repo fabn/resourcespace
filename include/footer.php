@@ -16,7 +16,7 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 
 <?php hook("footertop"); ?>
 
-<?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="done") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
+<?php if (($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
 <!--Global Footer-->
 <div id="Footer">
 
