@@ -720,6 +720,8 @@ $user_account_auto_creation_usergroup=2; # which user group for auto-created acc
 # $custom_top_nav[0]["title"]="Public Collections";
 # $custom_top_nav[0]["link"]="/pages/collection_public.php";
 
+# Display a larger preview image on the edit page?
+$edit_large_preview=false;
 
 
 #
