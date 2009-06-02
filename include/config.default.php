@@ -361,6 +361,8 @@ $plugins=array();
 $infobox=true;
 # A list of fields to display in the info box (using the field reference number)
 $infobox_fields=array(18,10,29,53);
+# Display the resource ID in the info box?
+$infobox_display_resource_id=true;
 
 # Reordering, captioning and ranking of collections
 $collection_reorder_caption=false;

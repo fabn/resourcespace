@@ -12,24 +12,7 @@ $ref=getvalescaped("ref","");
 $resource=get_resource_data($ref);
 
 # Load access level
-$access=$resource["access"];
-if (checkperm("v"))
-	{
-	$access=0; # Permission to access all resources
-	}
-else
-	{
-	if ($k!="")
-		{
-		#if ($access==3) {$access=2;} # Can't support custom group permissions for non-users
-		if ($access==3) {$access=0;}
-		}
-	elseif ($access==3)
-		{
-		# Load custom access level
-		$access=get_custom_access($ref,$usergroup);
-		}
-	}
+$access=get_resource_access($ref);
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
@@ -37,7 +20,17 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 ?>
-<?php if (!hook("infoboxreplace")) { ?>
+<?php if (!hook("infoboxreplace")) {
+
+
+if ($infobox_display_resource_id)
+	{
+	# Display resource ID
+	?>
+	<div style="float:right"><?php echo $lang["resourceid"] ?>: <?php echo $ref?></div>
+	<?php
+	}
+?>
 
 <h2><?php echo htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
 
