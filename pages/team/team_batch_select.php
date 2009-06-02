@@ -47,9 +47,11 @@ else
 	$ftp=@ftp_connect(getval("ftp_server",""));
 	if ($ftp===false) {exit("FTP connection failed.");}
 	ftp_login($ftp,getval("ftp_username",""),getval("ftp_password",""));
+	ftp_pasv($ftp,true);
+
 	$folder=getval("ftp_folder","");
 	if (substr($folder,strlen($folder)-1,1)!="/") {$folder.="/";}
-	$files=ftp_rawlist($ftp,$folder);
+	$files=ftp_nlist($ftp,$folder);
 	ftp_close($ftp);
 	}
 	
@@ -101,7 +103,13 @@ for ($n=0;$n<count($list);$n++)
 <select name="uploadfiles[]" multiple size=20>
 <?php for ($n=0;$n<count($files);$n++)
 	{
-	if ($use_local) {$fn=$files[$n];} else {$fs=explode(" ",$files[$n]);$fn=$fs[count($fs)-1];}
+	if ($use_local) {$fn=$files[$n];} else
+		{
+		# FTP - split up path
+		$fs=explode("/",$files[$n]);
+		if (count($fs)==1) {$fs=explode("\\",$files[$n]);} # Support backslashes
+		$fn=$fs[count($fs)-1];
+		}
 	$show=true;
 	if (($fn=="..") || ($fn==".")) {$show=false;}
 	if (strpos($fn,".")===false) {$show=false;}
