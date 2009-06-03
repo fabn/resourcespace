@@ -89,7 +89,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 						}
 					else
 						{
-						redirect("login.php");
+						$valid=false;
 						}
 					}
 				else
