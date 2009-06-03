@@ -265,9 +265,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# View Last
 	if (substr($search,0,5)=="!last") 
 		{
-		if ($orig_order=="relevance") {$order_by="ref desc";}
-		if ($orig_order=="date") {$order_by="creation_date desc,ref desc";}
-		if ($orig_order=="popularity") {$order_by="hit_count desc,ref desc";}
+		# Replace r2.ref with r.ref for the alternative query used here.
+		$order_by=str_replace("r.ref","r2.ref",$order_by);
 		
 		# Extract the number of records to produce
 		$last=explode(" ",$search);$last=str_replace("!last","",$last[0]);
