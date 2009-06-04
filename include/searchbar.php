@@ -278,8 +278,8 @@ if (!$basic_simple_search)
 	<?php } ?>
 			
   </form>
-	
-  <p><br /><a href="<?php echo $baseurl?>/pages/search_advanced.php">&gt; <?php echo $lang["gotoadvancedsearch"]?></a></p>
+
+  <?php if (! $advancedsearch_disabled) { ?><p><br /><a href="<?php echo $baseurl?>/pages/search_advanced.php">&gt; <?php echo $lang["gotoadvancedsearch"]?></a></p><?php } ?>
   <?php if ($view_new_material) { ?><p><a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last1000")?>">&gt; <?php echo $lang["viewnewmaterial"]?></a></p><?php } ?>
 	</div>
 	
