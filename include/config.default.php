@@ -289,8 +289,23 @@ $theme_images=true;
 # Maximum of 3 category levels (so with the themes themselves, a total of 4 categorisation levels for resources).
 $theme_category_levels=1;
 
+##  Advanced Search Options
+##  Defaults (all false) shows advanced search in the search bar but not the home page or top navigation.
+##  To disable advanced search altogether, set 
+##      $advancedsearch_disabled = true;
+##      $home_advancedsearch=false;
+##      $advanced_search_nav=false;
+
+#Hide advanced search on search bar
+$advancedsearch_disabled = false;
+
 # Show advanced search on the home page?
 $home_advancedsearch=false;
+
+# Display the advanced search as a 'search' link in the top navigation
+$advanced_search_nav=false;
+
+
 
 # Show My Contributions on the home page?
 $home_mycontributions=false;
@@ -460,9 +475,6 @@ $flag_new_themes=true;
 
 # Create file checksums? (experimental)
 $file_checksums=false;
-
-# Display the advanced search as a 'search' link in the top navigation
-$advanced_search_nav=false;
 
 # Default group when adding new users;
 $default_group=2;
