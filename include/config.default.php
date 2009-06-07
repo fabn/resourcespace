@@ -310,6 +310,9 @@ $advanced_search_nav=false;
 # Show My Contributions on the home page?
 $home_mycontributions=false;
 
+# Do not display 'search results' link in the top navigation
+$disable_searchresults = false;
+
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
 
@@ -325,9 +328,16 @@ $terms_download=false;
 # Require terms on first login?
 $terms_login=false;
 
+##  Thumbnails options
+
 # In the collection frame, show or hide thumbnails by default? ("hide" is better if collections are not going to be heavily used).
 $thumbs_default="show";
-
+#  Automatically show thumbs when you change collection (only if default is show)
+$autoshow_thumbs = false;
+# Enable small thumbnails option for search screen
+$smallthumbs=true;
+# How many thumbnails to show in the collections frame until the frame automatically hides thumbnails.
+$max_collection_thumbs=150;
 
 
 # How many results per page? (default)
@@ -404,10 +414,6 @@ $show_related_themes=true;
 
 # Multi-lingual support for e-mails. Try switching this to true if e-mail links aren't working and ASCII characters alone are required (e.g. in the US).
 $disable_quoted_printable_enc=false;
-
-# Enable small thumbnails option
-$smallthumbs=true;
-
 
 # Watermarking - generate watermark images for 'internal' (thumb/preview) images.
 # Groups with the 'w' permission will see these watermarks when access is 'restricted'.
@@ -607,9 +613,6 @@ $extracted_text_field=72;
 # The resources will not be downloadable, except to the contributer and those with edit capability to the resource.
 $pending_review_visible_to_all=false;
 
-# How many thumbnails to show in the collections frame until the frame automatically hides thumbnails.
-$max_collection_thumbs=150;
-
 # Enable user rating of resources
 # Users can rate resources using a star ratings system on the resource view page.
 # Average ratings are automatically calculated and used for the 'popularity' search ordering.
@@ -799,5 +802,38 @@ $use_theme_bar=false;
 # ex: you have very large PDFs, such as 50 to 200 in (will greatly decrease ripping time and avoid overload) 
 # or very small, such as PDFs < 5 in (will improve quality of the scr image)
 $pdf_dynamic_rip=false;
+
+##  Hide the 'link' link on view.php (link is back to the same page)
+$disable_link_in_view = false;
+
+##  The URL that goes in the bottom of the 'new user' email (save_user function in general.php)
+##  If blank, uses $baseurl 
+$email_url_save_user = ""; 
+
+# edit.php - disable links to upload preview and manage alternative files
+$disable_upload_preview = false;
+$disable_alternative_files = false;
+
+#collection_manage.php - hide 'access' column
+$hide_access_column = false;
+#collection_manage.php - show 'edit all' link on collections
+$show_edit_all_link = false;
+
+##  Contact Print settings - paper size options
+$papersize_select = '
+<option value="letter">US Letter - 8.5" x 11"</option>
+<option value="legal">US Legal - 8.5" x 14"</option>
+<option value="tabloid">US Tabloid - 11" x 17"</option>
+<option value="a4">A4 - 210mm x 297mm</option>
+<option value="a3">A3 - 297mm x 420mm</option>';
+
+# Print title as well as ID on scontact sheet
+$print_contact_title = false;
+
+# If displaying a collection in search.php, display collection title at top.
+$display_collection_title = false;
+
+#Bypass share.php and go straight to e-mail
+$bypass_share_screen = false;
 
 ?>
