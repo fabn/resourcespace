@@ -412,7 +412,7 @@ function CheckDBStruct($path)
 	
 function getval($val,$default)
     {
-    # return a value from get/post or a default if neither set
+    # return a value from POST, GET or COOKIE (in that order), or $default if none set
     if (array_key_exists($val,$_POST)) {return $_POST[$val];}
     if (array_key_exists($val,$_GET)) {return $_GET[$val];}
     if (array_key_exists($val,$_COOKIE)) {return $_COOKIE[$val];}
