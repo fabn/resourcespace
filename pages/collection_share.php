@@ -8,6 +8,12 @@ include "../include/collections_functions.php";
 
 # Fetch vars
 $ref=getvalescaped("ref","");
+# if bypass sharing page option is on, redirect to e-mail
+if ($bypass_share_screen)
+	{
+	header( 'Location:collection_email.php?ref='.$ref ) ;
+	}
+
 $collection=get_collection($ref);
 
 # Process deletion of access keys
