@@ -17,7 +17,7 @@ else {
 $search=getvalescaped("search","");
 
 # Append extra search parameters from the quick search.
-if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typicall expect numeric searches to return the resource with that ID and ignore country/date filters.
+if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
 	// For the simple search fields, collect from the GET request and assemble into the search string.
 	reset ($_GET);
@@ -51,19 +51,31 @@ $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_p
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
 
+
+## If displaying a collection
 # Enable/disable the reordering feature. Just for collections for now.
 $allow_reorder=false;
-if (substr($search,0,11)=="!collection" && $collection_reorder_caption)
+# display collection title if uption set.
+$collection_title = "";
+
+if (substr($search,0,11)=="!collection")
 	{
-	# Check to see if this user can edit (and therefore reorder) this resource
 	$collection=substr($search,11);
 	$collectiondata=get_collection($collection);
-	if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+	if ($collection_reorder_caption)
 		{
-		$allow_reorder=true;
+	# Check to see if this user can edit (and therefore reorder) this resource
+		if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+			{
+			$allow_reorder=true;
+			}
+		}
+
+	if ($display_collection_title)
+		{
+		$collection_title = '<br /><div align="center"><h1>'.$collectiondata ["name"].'</h1></div></div>';
 		}
 	}
-
 
 # fetch resource types from query string and generate a resource types cookie
 if (getval("resetrestypes","")=="")
@@ -142,6 +154,7 @@ if (is_numeric($search) && is_array($result) && count($result)==1)
 	{
 	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
 	}
+	
 
 # Include the page header to and render the search results
 include "../include/header.php";
@@ -150,7 +163,7 @@ if (is_array($result))
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive;
 	?>
-	<div class="TopInpageNav TopInpageNav">
+	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(count($result))?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
 	<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
 	<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
@@ -216,7 +229,8 @@ if (is_array($result))
 
 	pager();
 	$draw_pager=true;
-	?></div>
+	?><?php echo $collection_title ?>
+	</div>
 	
 	<?php		
 	hook("beforesearchresults");
