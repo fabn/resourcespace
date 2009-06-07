@@ -113,7 +113,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		<?php if (!$use_theme_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php"<?php if (!checkperm("b")) { ?> target="main"<?php } ?>><?php echo $lang["home"]?></a></li><?php }  ?>
 		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php" <?php if (!checkperm("b")) { ?>target="main"<?php } ?>><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
 		<?php if 	(
-			(checkperm("s"))
+			(checkperm("s"))  && (! $disable_searchresults )
 		&&
 			(
 				(strlen(@$_COOKIE["search"])>0)
