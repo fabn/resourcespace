@@ -8,12 +8,13 @@ include "../include/research_functions.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
-# Hide/show thumbs
+# Disable info box for external access.
+if ($k!="") {$infobox=false;} 
+
+# Hide/show thumbs - set cookie must be before header is sent
 $thumbs=getval("thumbs",$thumbs_default);
-if ($k!="") {$infobox=false;} # Disable info box for external access.
-
-
 setcookie("thumbs",$thumbs,0);
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
@@ -85,9 +86,24 @@ if ($allow_reorder || $infobox)
 		}
 	}
 
-
-
 ?>
+<script type="text/javascript">
+function ToggleThumbs()
+	{
+	document.getElementById("collectbody").style.paddingTop="400px";
+	
+	<?php if ($thumbs=="show") { ?>
+	document.getElementById("CollectionSpace").style.visibility="hidden";
+	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
+	<?php } else { ?>
+	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138";
+	<?php } ?>
+	}
+<?php if ($thumbs=="hide") { ?>
+top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
+<?php } ?>
+</script>
+
 </head>
 
 <body class="CollectBack" id="collectbody"<?php if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<?php } ?>>
@@ -180,22 +196,6 @@ if ($research!="")
 hook("processusercommand");
 ?>
 
-<script language="Javascript">
-function ToggleThumbs()
-	{
-	document.getElementById("collectbody").style.paddingTop="400px";
-	
-	<?php if ($thumbs=="show") { ?>
-	document.getElementById("CollectionSpace").style.visibility="hidden";
-	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
-	<?php } else { ?>
-	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138";
-	<?php } ?>
-	}
-<?php if ($thumbs=="hide") { ?>
-top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
-<?php } ?>
-</script>
 
 <?php 
 $searches=get_saved_searches($usercollection);
