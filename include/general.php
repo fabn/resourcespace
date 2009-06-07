@@ -644,13 +644,16 @@ function save_user($ref)
 		}
 	if (getval("emailme","")!="")
 		{
-		global $applicationname,$email_from,$baseurl,$lang;
+		global $applicationname,$email_from,$baseurl,$lang,$email_url_save_user;
 		
 		# Fetch any welcome message for this user group
 		$welcome=sql_value("select welcome_message value from usergroup where ref='" . getvalescaped("usergroup","") . "'","");
 		if (trim($welcome)!="") {$welcome.="\n\n";}
 		
-		$message=$welcome . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","") . "\n\n$baseurl";
+		$message=$welcome . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","");
+		if (trim($email_url_save_user)!="") { $message .= "\n\n$email_url_save_user"; }
+		else {$message .= "\n\n$baseurl"; }
+		
 		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message);
 		}
 	return true;
