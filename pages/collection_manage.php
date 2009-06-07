@@ -142,7 +142,7 @@ $url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 <td><a href="collection_manage.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a></td>
 <td><a href="collection_manage.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a></td>
 <td><a href="collection_manage.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a></td>
-<td><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a></td>
+<?php if (! $hide_access_column){ ?><td><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a></td><?php }?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 <?php
@@ -152,15 +152,22 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	if($video_playlists){$videocount=get_collection_videocount($collections[$n]["ref"]);}else{$videocount="";}		
 	?><tr>
 	<td><div class="ListTitle">
-    <a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>><?php echo highlightkeywords($collections[$n]["name"],$find)?></a>
+    <a  <?php if ($frameless_collections && !checkperm("b")){ ?> href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
+		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
+		href="collections.php?collection=<?php echo $collections[$n]["ref"]?>&amp;thumbs=show" target="collections"
+		<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>><?php echo highlightkeywords($collections[$n]["name"],$find)?>
+	</a></div></td>
 	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
 	<td><?php echo $collections[$n]["count"]?></td>
-	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
-	
+<?php if (! $hide_access_column){ ?>	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
+<?php }?>
 	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
-	&nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a>
+	&nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
+		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
+		href="collections.php?collection=<?php echo $collections[$n]["ref"]?>&amp;thumbs=show" target="collections"
+		<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a>
 	<?php if (isset($zipcommand)) { ?>
 	&nbsp;<a href="collection_download.php?collection=<?php echo $collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
@@ -181,8 +188,11 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<?php if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+    <?php     # If this collection is (fully) editable, then display an edit all link
+    if (($collections[$n]["count"] >0) && allow_multi_edit($usercollection) && $show_edit_all_link ) { ?>
+    &nbsp;<a href="edit.php?collection=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["editall"]?></a><?php } ?>
 
-	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
+	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?><a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
 
 	<?php hook("addcustomtool"); ?>
 	
