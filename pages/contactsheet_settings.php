@@ -58,13 +58,7 @@ include "../include/header.php";
 
 <div class="Question">
 <label><?php echo $lang["size"]?></label>
-<select class="shrtwidth" name="size" id="size">
-<option value="a4">A4 - 210mm x 297mm</option>
-<option value="a3">A3 - 297mm x 420mm</option>
-<option value="letter">US Letter - 8.5" x 11"</option>
-<option value="legal">US Legal - 8.5" x 14"</option>
-<option value="tabloid">US Tabloid - 11" x 17"</option>
-
+<select class="shrtwidth" name="size" id="size"><?php echo $papersize_select ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
