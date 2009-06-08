@@ -60,7 +60,7 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo nicedate($requests[$n]["created"],false,true)?></td>
 	<td><?php echo $statusname[$requests[$n]["status"]]?></td>
 	<td><?php echo (strlen($requests[$n]["assigned_username"])==0)?"-":$requests[$n]["assigned_username"]?></td>
-	<td><?php echo (strlen($requests[$n]["collection"])==0)?"-":$requests[$n]["collection"]?></td>
+	<td><?php echo (strlen($requests[$n]["collection"])==0)?"-":$collection_prefix . $requests[$n]["collection"]?></td>
 	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?php echo $requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["editcollection"]?></a></div></td>
 	</tr>
 	<?php
