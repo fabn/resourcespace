@@ -452,12 +452,14 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	return $return;
 	}
 	
-function email_collection($collection,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="")
+function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
 	# Send them an e-mail linking to this collection
-	global $baseurl,$email_from,$applicationname,$lang,$userref;
+	#  handle multiple collections if $email_multi_collections = true
+	#  		Actually, as this works quite well for single collections, we don't bother checking
+	global $baseurl,$email_from,$applicationname,$lang,$userref, $email_multi_collections ;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
 	$userlist=resolve_userlist_groups($userlist);
@@ -465,6 +467,7 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 	$emails=array();
 	$key_required=array();
 	if ($feedback) {$feedback=1;} else {$feedback=0;}
+	$reflist=trim_array(explode(",",$colrefs));
 	
 	for ($n=0;$n<count($ulist);$n++)
 		{
@@ -485,32 +488,45 @@ function email_collection($collection,$collectionname,$fromusername,$userlist,$m
 			}
 		}
 
-	# Add the collection to the user's My Collections page
+	# Add the collection(s) to the user's My Collections page
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 	if (count($urefs)>0)
 		{
 		# Delete any existing collection entries
-		sql_query("delete from user_collection where collection='$collection' and user in ('" . join("','",$urefs) . "')");
+		sql_query("delete from user_collection where collection in ('" .join("','", $reflist) . "') and user in ('" . join("','",$urefs) . "')");
 		
-		# Insert new user_collection row
-		sql_query("insert into user_collection(collection,user,request_feedback) values ($collection," . join(",'$feedback'),(" . $collection . ",",$urefs) . ",'$feedback')");
+		# Insert new user_collection row(s)
+		#loop through the collections
+			for ($nx1=0;$nx1<count($reflist);$nx1++)
+			{	#loop through the users
+				for ($nx2=0;$nx2<count($urefs);$nx2++)
+				{
+		sql_query("insert into user_collection(collection,user,request_feedback) values ($reflist[$nx1], $urefs[$nx2], $feedback )");
+				}
+			}
 		}
 	
 	# Send an e-mail to each resolved user
 
 	$subject="$applicationname: $collectionname";
 	if ($message!="") {$message="\n\n" . $lang["message"] . ": " . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);}
-	for ($n=0;$n<count($emails);$n++)
+	##  loop through recipients
+	for ($nx1=0;$nx1<count($emails);$nx1++)
 		{
-		$key="";
-		# Do we need to add an external access key for this user (e-mail specified rather than username)?
-		if ($key_required[$n])
+		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] ;
+		## loop through collections
+		for ($nx2=0;$nx2<count($reflist);$nx2++)
 			{
-			$k=generate_collection_access_key($collection,$feedback,$emails[$n],$access,$expires);
-			$key="&k=". $k;
+			$key="";
+			# Do we need to add an external access key for this user (e-mail specified rather than username)?
+			if ($key_required[$nx1])
+				{
+				$k=generate_collection_access_key($reflist[$nx2],$feedback,$emails[$nx1],$access,$expires);
+				$key="&k=". $k;
+				}
+			$body .= "\n\n" . $baseurl . 	"/?c=" . $reflist[$nx2] . $key;
 			}
-		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $baseurl . 	"/?c=" . $collection . $key;
-		send_mail($emails[$n],$subject,$body);
+		send_mail($emails[$nx1],$subject,$body);
 		}
 		
 	# Return an empty string (all OK).
