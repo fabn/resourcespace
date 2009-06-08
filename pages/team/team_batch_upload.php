@@ -64,10 +64,10 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		ftp_pasv($ftp,true);
 		}
 		
-	$path=getval("ftp_folder","") . $uploadfiles[$n];
+	$path=getval("ftp_folder","") . "/"	. $uploadfiles[$n];
 	
 	# Copy the resource
-	$ref=copy_resource(0-$userref,getvalescaped("resource_type",1));
+	$ref=copy_resource(0-$userref);
 	
     # Find and store extension in the database
     $extension=explode(".",$uploadfiles[$n]);$extension=trim(strtolower($extension[count($extension)-1]));

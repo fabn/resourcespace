@@ -741,6 +741,46 @@ $edit_large_preview=false;
 # Allow sorting by resource ID
 $order_by_resource_id=false;
 
+# Enable find similar search?
+$enable_find_similar=true;
+
+##  Hide the 'link' link on view.php (link is back to the same page)
+$disable_link_in_view = false;
+
+##  The URL that goes in the bottom of the 'new user' email (save_user function in general.php)
+##  If blank, uses $baseurl 
+$email_url_save_user = ""; 
+
+# edit.php - disable links to upload preview and manage alternative files
+$disable_upload_preview = false;
+$disable_alternative_files = false;
+
+#collection_manage.php - hide 'access' column
+$hide_access_column = false;
+#collection_manage.php - show 'edit all' link on collections
+$show_edit_all_link = false;
+
+##  Contact Print settings - paper size options
+$papersize_select = '
+<option value="letter">US Letter - 8.5" x 11"</option>
+<option value="legal">US Legal - 8.5" x 14"</option>
+<option value="tabloid">US Tabloid - 11" x 17"</option>
+<option value="a4">A4 - 210mm x 297mm</option>
+<option value="a3">A3 - 297mm x 420mm</option>';
+
+# Print title as well as ID on scontact sheet
+$print_contact_title = false;
+
+# If displaying a collection in search.php, display collection title at top.
+$display_collection_title = false;
+
+#Bypass share.php and go straight to e-mail
+$bypass_share_screen = false;
+
+
+
+
+
 #
 # ------------------------- Development Items -------------------------
 #
@@ -803,37 +843,7 @@ $use_theme_bar=false;
 # or very small, such as PDFs < 5 in (will improve quality of the scr image)
 $pdf_dynamic_rip=false;
 
-##  Hide the 'link' link on view.php (link is back to the same page)
-$disable_link_in_view = false;
 
-##  The URL that goes in the bottom of the 'new user' email (save_user function in general.php)
-##  If blank, uses $baseurl 
-$email_url_save_user = ""; 
 
-# edit.php - disable links to upload preview and manage alternative files
-$disable_upload_preview = false;
-$disable_alternative_files = false;
-
-#collection_manage.php - hide 'access' column
-$hide_access_column = false;
-#collection_manage.php - show 'edit all' link on collections
-$show_edit_all_link = false;
-
-##  Contact Print settings - paper size options
-$papersize_select = '
-<option value="letter">US Letter - 8.5" x 11"</option>
-<option value="legal">US Legal - 8.5" x 14"</option>
-<option value="tabloid">US Tabloid - 11" x 17"</option>
-<option value="a4">A4 - 210mm x 297mm</option>
-<option value="a3">A3 - 297mm x 420mm</option>';
-
-# Print title as well as ID on scontact sheet
-$print_contact_title = false;
-
-# If displaying a collection in search.php, display collection title at top.
-$display_collection_title = false;
-
-#Bypass share.php and go straight to e-mail
-$bypass_share_screen = false;
 
 ?>

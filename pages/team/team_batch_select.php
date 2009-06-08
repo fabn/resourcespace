@@ -69,19 +69,6 @@ include "../../include/header.php";
 <input type="hidden" name="use_local" value="<?php echo getval("use_local","")?>">
 
 <div class="Question">
-<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
-<select name="resource_type" id="resourcetype" class="shrtwidth">
-<?php
-$types=get_resource_types();
-for ($n=0;$n<count($types);$n++)
-	{
-	?><option value="<?php echo $types[$n]["ref"]?>"><?php echo $types[$n]["name"]?></option><?php
-	}
-?></select>
-<div class="clearerleft"> </div>
-</div>
-
-<div class="Question">
 <label for="collection"><?php echo $lang["addtocollection"]?></label>
 <select name="collection" id="collection" class="shrtwidth">
 <option value="-1" selected>(<?php echo $lang["createnewcollection"]?>)</option>

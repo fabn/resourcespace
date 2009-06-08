@@ -680,7 +680,7 @@ if (count($result)>0)
 
 
 
-
+<?php if ($enable_find_similar) { ?>
 <!--Panel for search for similar resources-->
 <div class="RecordBox">
 <div class="RecordPanel"> 
@@ -732,6 +732,10 @@ for ($n=0;$n<count($keywords);$n++)
 </div>
 <div class="PanelShadow"></div>
 </div></div>
+<?php } ?>
+
+
+
 <?php } # end of block that requires search permissions?>
 
 <?php
