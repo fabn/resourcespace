@@ -777,6 +777,17 @@ $display_collection_title = false;
 #Bypass share.php and go straight to e-mail
 $bypass_share_screen = false;
 
+# add a prefix to all collection refs, to distinguish them from resource refs
+$collection_prefix = "";
+
+# Allow multiple collections to be e-mailed at once
+$email_multi_collections = true;
+
+#  Link back to collections from log page - if "" then link is ignored.
+#  suggest 
+# $back_to_collections_link = "&lt;&lt;-- Back to My Collections &lt;&lt;--";
+$back_to_collections_link = "";
+
 
 
 
@@ -842,6 +853,8 @@ $use_theme_bar=false;
 # ex: you have very large PDFs, such as 50 to 200 in (will greatly decrease ripping time and avoid overload) 
 # or very small, such as PDFs < 5 in (will improve quality of the scr image)
 $pdf_dynamic_rip=false;
+
+
 
 
 
