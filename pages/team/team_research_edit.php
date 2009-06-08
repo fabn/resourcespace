@@ -80,7 +80,7 @@ for ($n=0;$n<count($users);$n++)
 
 <div class="Question"><label><?php echo $lang["copyexistingresources"]?></label>
 <input name="copyexisting" type="checkbox" value="yes"><b><?php echo $lang["yes"]?></b> <?php echo $lang["typecollectionid"]?><br/>
-<input name="copyexistingref" type="text" class="shrtwidth">
+<strong><?php echo $collection_prefix?></strong> <input name="copyexistingref" type="text" class="shrtwidth">
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["deletethisrequest"]?></label>
