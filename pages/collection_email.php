@@ -7,7 +7,14 @@ include "../include/search_functions.php";
 
 $ref=getvalescaped("ref","");
 # Fetch collection data
+if (!is_numeric($ref)) ##  multiple collections may be referenced
+	{
+	$refArray = explode(',',$ref);
+	$collection=get_collection($refArray[0]);if ($collection===false) {exit("Collection not found.");}
+	}
+else {
 $collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
+	}
 
 $errors="";
 if (getval("save","")!="")
@@ -49,17 +56,64 @@ include "../include/header.php";
 
 <p><?php echo text("introtext")?></p>
 
-<form method=post id="collectionform">
+<form name="collectionform" method=post id="collectionform">
 <input type=hidden name=redirect id=redirect value=yes>
 <input type=hidden name=ref value="<?php echo $ref?>">
-
+<?php if ($email_multi_collections) { ?>
+<script type="text/javascript">
+   function getSelected(opt) {
+      var sel = '';
+	  var newref = '';
+      var index = 0;
+      for (var intLoop=0; intLoop < opt.length; intLoop++) { 
+         if (opt[intLoop].selected) 
+		 {  sel = sel + ', ' +  '<?php echo $collection_prefix?>' + opt[intLoop].value;
+		 	newref = newref + ',' +  opt[intLoop].value;
+		 }
+      }
+	  document.collectionform.ref.value = newref.substring(1, newref.length );
+      return sel.substring(2, sel.length );
+   }
+</script>
+<?php } ?>
 <div class="Question">
-<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo $collection["name"]?></div>
+<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php 
+	if (! $email_multi_collections) { 
+		echo $collection["name"] ;
+	} else { ##  this select copied from collections.php 
+?>
+		<select name="collection" multiple="multiple" size="5" class="SearchWidth" 
+			onchange="document.getElementById('refDiv').innerHTML = getSelected(this); " >
+		<?php
+		$list=get_user_collections($userref);
+		$found=false;
+		for ($n=0;$n<count($list);$n++)
+			{
+			#show only active collections if a start date is set for $active_collections 
+			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
+					{ ?>
+				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			<?php }
+			}
+		if ($found==false)
+			{
+			# Add this one at the end, it can't be found
+			$notfound=get_collection($usercollection);
+			if ($notfound!==false)
+				{
+				?>
+				<option selected><?php echo $notfound["name"]?></option>
+				<?php
+				}
+			}
+		?>
+		</select> <?php } ?>
+</div>
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question">
-<label><?php echo $lang["collectionid"]?></label><div class="Fixed"><?php echo $collection["ref"]?></div>
+<label><?php echo $lang["collectionid"]?></label><div id="refDiv" class="Fixed"><?php echo $collection_prefix . $collection["ref"]?></div>
 <div class="clearerleft"> </div>
 </div>
 
