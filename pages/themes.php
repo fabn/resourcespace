@@ -207,10 +207,14 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		
 		<div class="RecordHeader">
 		<?php
-		$image=get_theme_image($theme1, $theme2, $theme3);
-		if (($image) && ($theme_images))
+		$images=get_theme_image($theme1, $theme2, $theme3);
+		if (($images!==false) && ($theme_images))
 			{
-			?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?php echo $image?>" /></div><?php
+			for ($n=0;$n<count($images);$n++)
+				{
+				?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?php echo get_resource_path($images[$n],false,"col",false) ?>" /></div>
+				<?php
+				}
 			}
 		?>
 		<h1 style="margin-top:12px;float:left;"><?php echo stripslashes(str_replace("*","",$themename))?></h1>

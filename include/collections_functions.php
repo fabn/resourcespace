@@ -581,11 +581,22 @@ function allow_multi_edit($collection)
 
 function get_theme_image($theme,$theme2="",$theme3="")
 	{
-	$image=sql_value("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
+	# Returns an array of resource references that can be used as theme category images.
+	
+	# First try to find resources that have been specifically chosen using the option on the collection comments page.
+	$chosen=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
+	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
+	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
+	. " and r.has_image=1 and cr.use_as_theme_thumbnail=1 order by r.ref desc",0);
+	if (count($chosen)>0) {return $chosen;}
+	
+	# No chosen images? Manually choose a single image based on hit counts.
+	$images=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
 	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
 	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
 	. " and r.has_image=1 order by r.hit_count desc limit 1",0);
-	if ($image==0) {return false;} else {return get_resource_path($image,false,"col",false);}
+	if (count($images)>0) {return $images;}
+	return false;
 	}
 
 function swap_collection_order($resource1,$resource2,$collection)
@@ -618,7 +629,7 @@ function swap_collection_order($resource1,$resource2,$collection)
 
 function get_collection_resource_comment($resource,$collection)
 	{
-	$data=sql_query("select * from collection_resource where collection='$collection' and resource='$resource'","");
+	$data=sql_query("select *,use_as_theme_thumbnail from collection_resource where collection='$collection' and resource='$resource'","");
 	return $data[0];
 	}
 	
@@ -626,7 +637,7 @@ function save_collection_resource_comment($resource,$collection,$comment,$rating
 	{
 	# get data before update so that changes can be logged.	
 	$data=sql_query("select comment,rating from collection_resource where resource='$resource' and collection='$collection'");
-	sql_query("update collection_resource set comment='" . escape_check($comment) . "',rating=" . (($rating!="")?"'$rating'":"null") . " where resource='$resource' and collection='$collection'");
+	sql_query("update collection_resource set comment='" . escape_check($comment) . "',rating=" . (($rating!="")?"'$rating'":"null") . ",use_as_theme_thumbnail='" . (getval("use_as_theme_thumbnail","")==""?0:1) . "' where resource='$resource' and collection='$collection'");
 	
 	# log changes
 	if ($comment!=$data[0]['comment']){collection_log($collection,"m",$resource);}
