@@ -158,7 +158,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 		<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>><?php echo highlightkeywords($collections[$n]["name"],$find)?>
 	</a></div></td>
 	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
-	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
+	<td><?php echo highlightkeywords($collection_prefix . $collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
 	<td><?php echo $collections[$n]["count"]?></td>
 <?php if (! $hide_access_column){ ?>	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
