@@ -781,7 +781,7 @@ $bypass_share_screen = false;
 $collection_prefix = "";
 
 # Allow multiple collections to be e-mailed at once
-$email_multi_collections = true;
+$email_multi_collections = false;
 
 #  Link back to collections from log page - if "" then link is ignored.
 #  suggest 
