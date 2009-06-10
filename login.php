@@ -8,6 +8,9 @@ $url=getval("url","index.php");
 # process log in
 $error="";
 
+# Auto logged out? Set error message.
+if (getval("auto","")!="") {$error=str_replace("30",$session_length,$lang["sessionexpired"]);}
+
 # First check that this IP address has not been locked out due to excessive attempts.
 $ip=get_ip();
 $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
@@ -86,6 +89,10 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 	        
 	        # Set default resource types
 	        setcookie("restypes",$default_res_types);
+
+			# If the redirect URL is the collection frame, do not redirect to this as this will cause
+			# the collection frame to appear full screen.
+			if (strpos($url,"pages/collections.php")!==false) {$url="index.php";}
 
 	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
 	        if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}

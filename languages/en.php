@@ -754,5 +754,5 @@ $lang["resourcerequeststatus1"]="Closed";
 $lang["ppi"]="PPI"; # (Pixels Per Inch - used on the resource download options list).
 
 $lang["useasthemethumbnail"]="Use this resource as a theme category thumbnail?";
-
+$lang["sessionexpired"]="You have been automatically logged out because you were inactive for more than 30 minutes. Please enter your login details to continue.";
 ?>
