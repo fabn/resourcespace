@@ -13,7 +13,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc,r.ref","popularity"=>"user_rating desc,hit_count desc,creation_date desc,r.ref","rating"=>"r.rating desc, user_rating desc, score desc,r.ref","date"=>"creation_date desc,r.ref","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date,r.ref","country"=>"country,r.ref","title"=>"title,r.ref","file_path"=>"file_path,r.ref","resourceid"=>"r.ref");
+	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc,r.ref desc","popularity"=>"user_rating desc,hit_count desc,creation_date desc,r.ref desc","rating"=>"r.rating desc, user_rating desc, score desc,r.ref desc","date"=>"creation_date desc,r.ref desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date,r.ref desc","country"=>"country,r.ref desc","title"=>"title,r.ref desc","file_path"=>"file_path,r.ref desc","resourceid"=>"r.ref desc");
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search); # remove any trailing or leading spaces
