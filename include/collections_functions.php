@@ -93,6 +93,8 @@ function add_resource_to_collection($resource,$collection)
 				# Insert a new access key entry for this resource/collection.
 				global $userref;
 				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
+				#log this
+				collection_log($collection,"s",$resource, "new resource");
 				}
 			}
 
@@ -148,6 +150,8 @@ function delete_collection($ref)
 	# Deletes the collection with reference $ref
 	sql_query("delete from collection where ref='$ref'");
 	sql_query("delete from collection_resource where collection='$ref'");
+		#log this
+	collection_log($collection,"X",0, "" );
 	}
 	
 function refresh_collection_frame($collection="")
@@ -219,12 +223,17 @@ function add_collection($user,$collection)
 	remove_collection($user,$collection);
 	# Insert row
 	sql_query("insert into user_collection(user,collection) values ('$user','$collection')");
+			#log this
+	collection_log($collection,"S",0, "User ref $user");
+
 	}
 
 function remove_collection($user,$collection)
 	{
 	# Remove someone else's collection from a user's My Collections
 	sql_query("delete from user_collection where user='$user' and collection='$collection'");
+			#log this
+	collection_log($collection,"T",0, $user);
 	}
 
 function save_collection($ref)
@@ -276,6 +285,9 @@ function save_collection($ref)
 	if ($users!==false)
 		{
 		sql_query("delete from user_collection where collection='$ref'");
+		#log this
+		collection_log($ref,"T",0, "all users");
+
 		if (($users)!="")
 			{
 			# Build a new list and insert
@@ -286,6 +298,8 @@ function save_collection($ref)
 				{
 				sql_query("insert into user_collection(collection,user) values ($ref," . join("),(" . $ref . ",",$urefs) . ")");
 				}
+			#log this
+			collection_log($ref,"S",0, $users);
 			}
 		}
 		
@@ -457,8 +471,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
 	# Send them an e-mail linking to this collection
-	#  handle multiple collections if $email_multi_collections = true
-	#  		Actually, as this works quite well for single collections, we don't bother checking
+	#  handle multiple collections (comma seperated list)
 	global $baseurl,$email_from,$applicationname,$lang,$userref, $email_multi_collections ;
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
@@ -502,6 +515,9 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				for ($nx2=0;$nx2<count($urefs);$nx2++)
 				{
 		sql_query("insert into user_collection(collection,user,request_feedback) values ($reflist[$nx1], $urefs[$nx2], $feedback )");
+					#log this
+		collection_log($reflist[$nx1],"S",0, $urefs[$nx2]);
+
 				}
 			}
 		}
@@ -525,6 +541,9 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				$key="&k=". $k;
 				}
 			$body .= "\n\n" . $baseurl . 	"/?c=" . $reflist[$nx2] . $key;
+					#log this
+			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
+			
 			}
 		send_mail($emails[$nx1],$subject,$body);
 		}
@@ -844,19 +863,39 @@ function get_collection_external_access($collection)
 	
 function delete_collection_access_key($collection,$access_key)
 	{
+	# Get details for log
+	$users = sql_value("select group_concat(DISTINCT email ORDER BY email SEPARATOR ', ') value from external_access_keys where collection='$collection' and access_key = '$access_key' group by access_key ", "");
 	# Deletes the given access key.
 	sql_query("delete from external_access_keys where access_key='$access_key' and collection='$collection'");
+	# log changes
+	collection_log($collection,"t","",$users);
+
 	}
 	
-function collection_log($collection,$type,$resource)
+function collection_log($collection,$type,$resource,$notes = "")
 	{
 	global $userref;
-	sql_query("insert into collection_log(date,user,collection,type,resource) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$collection','$type','$resource')");
+	sql_query("insert into collection_log(date,user,collection,type,resource, notes) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$collection','$type','$resource', '$notes')");
 	}
-
+/*  Log entry types  
+$lang["collectionlog-r"]="Removed resource";
+$lang["collectionlog-R"]="Removed all resources";
+$lang["collectionlog-D"]="Deleted all resources";
+$lang["collectionlog-d"]="Deleted resource"; // this shows external deletion of any resources related to the collection.
+$lang["collectionlog-a"]="Added resource";
+$lang["collectionlog-c"]="Added resource (copied)";
+$lang["collectionlog-m"]="Added resource comment";
+$lang["collectionlog-*"]="Added resource rating";
+$lang["collectionlog-S"]="Shared collection with "; //  + notes field
+$lang["collectionlog-E"]="E-mailed collection to ";//  + notes field
+$lang["collectionlog-s"]="Shared Resource with ";//  + notes field
+$lang["collectionlog-T"]="Stopped sharing collection with ";//  + notes field
+$lang["collectionlog-t"]="Stopped access to resource by ";//  + notes field
+$lang["collectionlog-X"]="Collection deleted";
+*/
 function get_collection_log($collection)
 	{
-	return sql_query("select c.date,u.username,u.fullname,c.type,r.title,c.resource from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
+	return sql_query("select c.date,u.username,u.fullname,c.type,r.title,c.resource, c.notes from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
 	}
 	
 function get_collection_videocount($ref)

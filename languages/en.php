@@ -703,6 +703,13 @@ $lang["collectionlog-a"]="Added resource";
 $lang["collectionlog-c"]="Added resource (copied)";
 $lang["collectionlog-m"]="Added resource comment";
 $lang["collectionlog-*"]="Added resource rating";
+$lang["collectionlog-S"]="Shared collection with "; //  + notes field
+$lang["collectionlog-E"]="E-mailed collection to ";//  + notes field
+$lang["collectionlog-s"]="Shared Resource with ";//  + notes field
+$lang["collectionlog-T"]="Stopped sharing collection with ";//  + notes field
+$lang["collectionlog-t"]="Stopped access to resource by ";//  + notes field
+$lang["collectionlog-X"]="Collection deleted";
+
 
 $lang["viewuncollectedresources"]="View Resources Not Used in Collections";
 

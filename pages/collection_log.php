@@ -15,9 +15,10 @@ $colinfo=get_collection($ref);
 $colname=$colinfo["name"];
 ?>
 
-
 <div class="BasicsBox">
-<h1><?php echo $lang["collectionlog"];?> - <a <a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $ref;?>);"<?php } else {?>href="collections.php?collection=<?php echo $ref;?>" target="collections"<?php }?>><?php echo @$colname;?></a></h1>
+<?php if ($back_to_collections_link != "") { ?><div style="float:right;"><a href="collection_manage.php"><strong><?php echo $back_to_collections_link ?></strong> </a></div> <?php } ?>
+<h1><?php echo $lang["collectionlog"];?> - <a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $ref;?>);"<?php } else {?>href="collections.php?collection=<?php echo $ref;?>" target="collections"<?php }?>><?php echo @$colname;?></a></h1>
+
 </div>
 
 <div class="Listview">
@@ -40,13 +41,12 @@ for ($n=0;$n<count($log);$n++)
 	<tr>
 	<td><?php echo nicedate($log[$n]["date"],true)?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
-	<td><?php echo $lang["collectionlog-" . $log[$n]["type"]]?></td>
+	<td><?php echo $lang["collectionlog-" . $log[$n]["type"]] ;
+		if ($log[$n]["notes"] != "" ) { echo $log[$n]["notes"] ; } ?></td>
 	<td><?php echo $log[$n]["resource"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
-	</tr>
-	<?php
-	}
-?>
+	</tr> 
+<?php } ?>
 </table>
 </div>
 <?php
