@@ -267,7 +267,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		# Replace r2.ref with r.ref for the alternative query used here.
 		$order_by=str_replace("r.ref","r2.ref",$order_by);
-		
+		if ($orig_order=="relevance") {$order_by="r2.ref desc";}
+
 		# Extract the number of records to produce
 		$last=explode(" ",$search);$last=str_replace("!last","",$last[0]);
 		
