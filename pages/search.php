@@ -55,7 +55,7 @@ $jumpcount=0;
 ## If displaying a collection
 # Enable/disable the reordering feature. Just for collections for now.
 $allow_reorder=false;
-# display collection title if uption set.
+# display collection title if option set.
 $collection_title = "";
 
 if (substr($search,0,11)=="!collection")
@@ -73,7 +73,7 @@ if (substr($search,0,11)=="!collection")
 
 	if ($display_collection_title)
 		{
-		$collection_title = '<br /><div align="center"><h1>'.$collectiondata ["name"].'</h1></div></div>';
+		$collection_title = '<br /></div><div align="left"><h1>'.$collectiondata ["name"].'</h1>';
 		}
 	}
 
