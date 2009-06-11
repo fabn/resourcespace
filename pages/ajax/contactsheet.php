@@ -94,8 +94,8 @@ for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
 		$preview_extension=$result[$n]["preview_extension"];
-		$title="";
-		if ($print_contact_title) {	$title = " - " . $result[$n]["title"];}
+		$resourcetitle="";
+		if ($print_contact_title) {	$resourcetitle = " - " . $result[$n]["title"];}
     	$i++;
 
 		if ($ref!==false)
@@ -116,7 +116,7 @@ for ($n=0;$n<count($result);$n++)
 					
 					if ($sheetstyle=="thumbnails")
 					{
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref.$title);		
+						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref.$resourcetitle);		
 					}
 					else if ($sheetstyle=="list")
 					{
@@ -133,7 +133,7 @@ for ($n=0;$n<count($result);$n++)
 						
 					if ($sheetstyle=="thumbnails")
 					{
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref);	
+						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref.$resourcetitle);	
 					}
 					else if ($sheetstyle=="list")
 					{
