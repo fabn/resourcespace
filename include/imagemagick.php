@@ -141,7 +141,8 @@ if (($extension=="doc"||$extension=="docx"||$extension=="odt"||$extension=="odp"
 
 	shell_exec($unocommand . " --format=pdf \"" . $file . "\"");
 	$path_parts=pathinfo($file);
-	$pdffile=$path_parts['dirname']."/".$path_parts['filename'].".pdf";
+	$basename_minus_extension=remove_extension($path_parts['basename']);
+	$pdffile=$path_parts['dirname']."/".$basename_minus_extension.".pdf";
 	if (file_exists($pdffile))
 		{
 		$alt_ref=add_alternative_file($ref,"PDF version");

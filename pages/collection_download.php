@@ -117,7 +117,9 @@ if ($submitted != "")
 						if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
 						} else {$pextension="";}	
 						if ($usesize!=""){$append="-".$usesize;}else {$append="";}
-						$filename=$pathparts['filename'].$append.".".$pextension;
+
+						$basename_minus_extension=remove_extension($pathparts['basename']);
+						$filename=$basename_minus_extension.$append.".".$pextension;
 
 						if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
 						

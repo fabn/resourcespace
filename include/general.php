@@ -1597,4 +1597,15 @@ function get_registration_selectable_usergroups()
 	return sql_query("select ref,name from usergroup where allow_registration_selection=1 order by name");
 	}
 
+function remove_extension($strName)
+{
+$ext = strrchr($strName, '.');
+if($ext !== false)
+{
+$strName = substr($strName, 0, -strlen($ext));
+}
+return $strName;
+}
+
+
 ?>
