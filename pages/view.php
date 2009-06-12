@@ -30,6 +30,8 @@ $archive=getvalescaped("archive",0);
 $go=getval("go","");
 if ($go!="")
 	{
+	$origref=$ref; # Store the reference of the resource before we move, in case we need to revert this.
+	
 	# Re-run the search and locate the next and previous records.
 	$result=do_search($search,$restypes,$order_by,$archive,72+$offset+1);
 	if (is_array($result))
@@ -46,6 +48,8 @@ if ($go!="")
 			if (($go=="next") && ($pos<($n-1))) {$ref=$result[$pos+1]["ref"];if (($pos+1)>=($offset+72)) {$offset=$pos+1;}} # move to next page if we've advanced far enough
 			}
 		}
+	# Check access permissions for this new resource, if an external user.
+	if ($k!="" && !check_access_key($ref,$k)) {$ref=$origref;} # cancel the move.
 	}
 
 
@@ -102,8 +106,10 @@ include "../include/header.php";
 
 <div class="backtoresults">
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+<?php if ($k=="") { ?>
 |
 <a href="search.php?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&k=<?php echo $k?>"><?php echo $lang["viewallresults"]?></a>
+<?php } ?>
 |
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
