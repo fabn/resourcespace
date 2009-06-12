@@ -501,7 +501,7 @@ else
 	<?php hook("resultsbottomtoolbar"); ?>
 	
 	<?php 
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive;	
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k;	
 
 	if (isset($draw_pager)) {pager(false);} ?>
 </div>	
