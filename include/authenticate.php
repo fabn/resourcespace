@@ -1,6 +1,7 @@
 <?php
 # authenticate user based on cookie
 $valid=true;
+$autologgedout=false;
 
 if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login))
     {
@@ -89,6 +90,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 					else
 						{
 						$valid=false;
+						$autologgedout=true;
 						}
 					}
 				else
@@ -115,7 +117,7 @@ if (!$valid)
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script>
-	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?>&auto=true";
+	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?><?php if ($autologgedout) { ?>&auto=true<?php } ?>";
 	</script>
 	<?php
     exit();
