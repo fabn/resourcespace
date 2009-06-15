@@ -711,9 +711,9 @@ $search_includes_public_collections=false;
 # $default_home_page="search.php?search=example";
 $default_home_page="home.php";
 
-# Configures separators to use when splitting keywords
+# Configures separators to use when splitting keywords (in other words - characters to treat as white space)
 # You must reindex after altering this if you have existing data in the system (via pages/tools/reindex.php)
-$config_separators=array("/","_",".","; ","-","(",")","'","\"","\\");
+$config_separators=array("/","_",".","; ","-","(",")","'","\"","\\", "?");
 
 
 # Global permissions
@@ -788,7 +788,8 @@ $email_multi_collections = false;
 # $back_to_collections_link = "&lt;&lt;-- Back to My Collections &lt;&lt;--";
 $back_to_collections_link = "";
 
-
+# For fields with partial keyword indexing enabled, this determines the minimum infix length
+$partial_index_min_word_length=3;
 
 
 

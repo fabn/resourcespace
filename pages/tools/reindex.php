@@ -39,7 +39,7 @@ for ($n=0;$n<count($resources);$n++)
 				# Prepend a comma when indexing dropdowns
 				$value="," . $value;
 				}
-			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"]);		
+			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"],$data[$m]["partial_index"]);		
 			}
 		}
 	

@@ -156,7 +156,7 @@ function get_resource_field_data($ref,$multi=false)
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
 	$return=array();
-	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.resource_type,f.order_by,f.ref");
+	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.resource_type,f.order_by,f.ref");
 	
 	# Build an array of valid types and only return fields of this type.
 	$validtypes=sql_array("select ref value from resource_type");
@@ -220,7 +220,7 @@ function get_resource_top_keywords($resource,$count)
 	return sql_array("select distinct k.ref,k.keyword value from keyword k,resource_keyword r,resource_type_field f where k.ref=r.keyword and r.resource='$resource' and f.ref=r.resource_type_field and f.use_for_similar=1 and length(k.keyword)>=3 and length(k.keyword)<=15 and k.keyword not like '%0%' and k.keyword not like '%1%' and k.keyword not like '%2%' and k.keyword not like '%3%' and k.keyword not like '%4%' and k.keyword not like '%5%' and k.keyword not like '%6%' and k.keyword not like '%7%' and k.keyword not like '%8%' and k.keyword not like '%9%' order by k.hit_count desc limit $count");
 	}
 
-function split_keywords($search,$index=false)
+function split_keywords($search,$index=false,$partial_index=false)
 	{
 	# Takes $search and returns an array of individual keywords.
 
@@ -256,6 +256,8 @@ function split_keywords($search,$index=false)
 					for ($m=0;$m<count($words);$m++) {$return2[]=trim($words[$m]);}
 					}
 				}
+
+			if ($partial_index) {$return2=add_partial_index($return2);}
 			return trim_array($return2);
 			}
 		else
@@ -265,9 +267,10 @@ function split_keywords($search,$index=false)
 		}
 	else
 		{
-		# split using spaces and similar chars
-		$ns=cleanse_string($ns,false);
-		return trim_array(explode(" ",$ns));
+		# split using spaces and similar chars (according to configured whitespace characters)
+		$ns=explode(" ",cleanse_string($ns,false));
+		if ($index && $partial_index) {$ns=add_partial_index($ns);}
+		return trim_array($ns);
 		}
 
 	}
@@ -303,7 +306,35 @@ function resolve_keyword($keyword,$create=false)
 		}
 	return $return;
 	}
-	
+
+function add_partial_index($keywords)
+	{
+	# For each keywords in the supplied keywords list add all possible infixes and return the combined array.
+	# This therefore returns all keywords that need indexing for the given string.
+	# Only for fields with 'partial_index' enabled.
+	$return=$keywords;
+	for ($n=0;$n<count($keywords);$n++)
+		{
+		$keyword=trim($keywords[$n]);
+		if (strpos($keyword," ")===false) # Do not do this for keywords containing spaces as these have already been broken to individual words using the code above.
+			{
+			global $partial_index_min_word_length;
+			# For each appropriate infix length
+			for ($m=$partial_index_min_word_length;$m<strlen($keyword);$m++)
+				{
+				# For each position an infix of this length can exist in the string
+				for ($o=0;$o<=strlen($keyword)-$m;$o++)
+					{
+					$infix=substr($keyword,$o,$m);
+					$return[]=$infix;
+					}
+				}
+			} # End of no-spaces condition
+		} # End of partial indexing keywords loop
+	return $return;
+	}
+
+
 function trim_spaces($text)
 	{
 	# replace multiple spaces with a single space
