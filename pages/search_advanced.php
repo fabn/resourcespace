@@ -103,6 +103,30 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 				}
 			break;
 
+			case 4:
+			case 6:
+			$name="field_" . $fields[$n]["ref"];
+			$datepart="";
+			if (getval($name . "_year","")!="")
+				{
+				$datepart.=getval($name . "_year","");
+				if (getval($name . "_month","")!="")
+					{
+					$datepart.="-" . getval($name . "_month","");
+					if (getval($name . "_day","")!="")
+						{
+						$datepart.="-" . getval($name . "_day","");
+						}
+					}
+				}
+			if ($datepart!="")
+				{
+				if ($search!="") {$search.=", ";}
+				$search.=$fields[$n]["name"] . ":" . $datepart;
+				}
+
+			break;
+
 			case 7: # -------- Category tree
 			$name="field_" . $fields[$n]["ref"];
 			$value=getvalescaped($name,"");
@@ -249,7 +273,7 @@ for ($n=0;$n<count($types);$n++)
 
 <div class="Question"><label><?php echo $lang["bydate"]?></label>
 <select name="year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?php echo $lang["anyyear"]?></option>
+  <option value=""><?php echo $lang["anyyear"]?></option>
   <?php
   $y=date("Y");
   for ($n=$minyear;$n<=$y;$n++)
@@ -259,7 +283,7 @@ for ($n=0;$n<count($types);$n++)
   ?>
 </select>
 <select name="month" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?php echo $lang["anymonth"]?></option>
+  <option value=""><?php echo $lang["anymonth"]?></option>
   <?php
   for ($n=1;$n<=12;$n++)
 	{
@@ -269,7 +293,7 @@ for ($n=0;$n<count($types);$n++)
   ?>
 </select>
 <select name="day" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
-  <option selected="selected" value=""><?php echo $lang["anyday"]?></option>
+  <option value=""><?php echo $lang["anyday"]?></option>
   <?php
   for ($n=1;$n<=31;$n++)
 	{
@@ -364,6 +388,51 @@ for ($n=0;$n<count($fields);$n++)
 			?></tr></table><?php
 			}
 		break;
+		
+		case 4:
+		case 6: # ----- Date types
+		$found_year='';$found_month='';$found_day='';
+		$s=explode("-",$value);
+		if (count($s)>=3)
+			{
+			$found_year=$s[0];
+			$found_month=$s[1];
+			$found_day=$s[2];
+			}
+		?>		
+		<select name="<?php echo $name?>_year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anyyear"]?></option>
+		  <?php
+		  $y=date("Y");
+		  for ($d=$minyear;$d<=$y;$d++)
+			{
+			?><option <?php if ($d==$found_year) { ?>selected<?php } ?>><?php echo $d?></option><?php
+			}
+		  ?>
+		</select>
+		<select name="<?php echo $name?>_month" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anymonth"]?></option>
+		  <?php
+		  for ($d=1;$d<=12;$d++)
+			{
+			$m=str_pad($d,2,"0",STR_PAD_LEFT);
+			?><option <?php if ($d==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$d-1]?></option><?php
+			}
+		  ?>
+		</select>
+		<select name="<?php echo $name?>_day" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anyday"]?></option>
+		  <?php
+		  for ($d=1;$d<=31;$d++)
+			{
+			$m=str_pad($d,2,"0",STR_PAD_LEFT);
+			?><option <?php if ($d==$found_day) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
+			}
+		  ?>
+		</select>
+		<?php		
+		break;
+		
 		
 		case 7: # ----- Category Tree
 		$options=$fields[$n]["options"];

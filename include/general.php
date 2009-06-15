@@ -220,9 +220,24 @@ function get_resource_top_keywords($resource,$count)
 	return sql_array("select distinct k.ref,k.keyword value from keyword k,resource_keyword r,resource_type_field f where k.ref=r.keyword and r.resource='$resource' and f.ref=r.resource_type_field and f.use_for_similar=1 and length(k.keyword)>=3 and length(k.keyword)<=15 and k.keyword not like '%0%' and k.keyword not like '%1%' and k.keyword not like '%2%' and k.keyword not like '%3%' and k.keyword not like '%4%' and k.keyword not like '%5%' and k.keyword not like '%6%' and k.keyword not like '%7%' and k.keyword not like '%8%' and k.keyword not like '%9%' order by k.hit_count desc limit $count");
 	}
 
-function split_keywords($search,$index=false,$partial_index=false)
+function split_keywords($search,$index=false,$partial_index=false,$is_date=false)
 	{
 	# Takes $search and returns an array of individual keywords.
+
+	if ($index && $is_date)
+		{
+		# Date handling... index a little differently to support various levels of date matching (Year, Year+Month, Year+Month+Day).
+		$s=explode("-",$search);
+		if (count($s)>=3)
+			{
+			return (array($s[0],$s[0] . "-" . $s[1],$search));
+			}
+		else
+			{
+			return $search;
+			}
+		}
+
 
 	# Remove any real / unescaped lf/cr
 	$search=str_replace("\r"," ",$search);

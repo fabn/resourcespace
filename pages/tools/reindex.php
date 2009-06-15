@@ -39,7 +39,11 @@ for ($n=0;$n<count($resources);$n++)
 				# Prepend a comma when indexing dropdowns
 				$value="," . $value;
 				}
-			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"],$data[$m]["partial_index"]);		
+			
+			# Date field? These need indexing differently.
+			$is_date=($data[$m]["type"]==4 || $data[$m]["type"]==6);
+			
+			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"],$data[$m]["partial_index"],$is_date);		
 			}
 		}
 	

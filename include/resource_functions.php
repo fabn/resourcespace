@@ -124,8 +124,11 @@ function save_resource_data($ref,$multi)
 				
 				if ($fields[$n]["keywords_index"]==1)
 					{
-					remove_keyword_mappings($ref, i18n_get_indexable($oldval), $fields[$n]["ref"], $fields[$n]["partial_index"]);
-					add_keyword_mappings($ref, i18n_get_indexable($val), $fields[$n]["ref"], $fields[$n]["partial_index"]);
+					# Date field? These need indexing differently.
+					$is_date=($fields[$n]["type"]==4 || $fields[$n]["type"]==6);
+					
+					remove_keyword_mappings($ref, i18n_get_indexable($oldval), $fields[$n]["ref"], $fields[$n]["partial_index"],$is_date);
+					add_keyword_mappings($ref, i18n_get_indexable($val), $fields[$n]["ref"], $fields[$n]["partial_index"],$is_date);
 					}
 				
 				# update resources table if necessary
@@ -294,8 +297,10 @@ function save_resource_data_multi($collection)
 					
 					if ($fields[$n]["keywords_index"]==1)
 						{
-						remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"],$fields[$n]["partial_index"]);
-						add_keyword_mappings($ref,i18n_get_indexable($newval),$fields[$n]["ref"],$fields[$n]["partial_index"]);
+						# Date field? These need indexing differently.
+						$is_date=($fields[$n]["type"]==4 || $fields[$n]["type"]==6); 
+						remove_keyword_mappings($ref,i18n_get_indexable($oldval),$fields[$n]["ref"],$fields[$n]["partial_index"],$is_date);
+						add_keyword_mappings($ref,i18n_get_indexable($newval),$fields[$n]["ref"],$fields[$n]["partial_index"],$is_date);
 						}
 					}
 				}
@@ -360,14 +365,14 @@ function save_resource_data_multi($collection)
 		}
 	}
 
-function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false)
+function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
 	{
 	# Removes one instance of each keyword->resource mapping for each occurrence of that
 	# keyword in $string.
 	# This is used to remove keyword mappings when a field has changed.
 	# We also decrease the hit count for each keyword.
 	if (trim($string)=="") {return false;}
-	$keywords=split_keywords($string,true,$partial_index);
+	$keywords=split_keywords($string,true,$partial_index,$is_date);
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		#echo "<li>removing " . $keywords[$n];
@@ -376,14 +381,14 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 		}	
 	}
 	
-function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false)
+function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
 	{
 	# For each instance of a keyword in $string, add a keyword->resource mapping.
 	# Create keywords that do not yet exist.
 	# Increase the hit count of each keyword that matches.
 	# Store the position and field the string was entered against for advanced searching.
 	if (trim($string)=="") {return false;}
-	$keywords=split_keywords($string,true,$partial_index);
+	$keywords=split_keywords($string,true,$partial_index,$is_date);
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		global $noadd;

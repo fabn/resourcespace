@@ -116,7 +116,18 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					else
 						{
 						$ckeywords=explode(";",$k[1]);
-						$field=sql_value("select ref value from resource_type_field where name='" . escape_check($k[0]) . "'",0);
+						
+						# Fetch field info
+						$fieldinfo=sql_query("select ref,type from resource_type_field where name='" . escape_check($k[0]) . "'",0);
+						if (count($fieldinfo)==0) {return false;} else {$fieldinfo=$fieldinfo[0];}
+						
+						# Special handling for dates
+						if ($fieldinfo["type"]==4 || $fieldinfo["type"]==6) 
+							{
+							$ckeywords=array(str_replace(" ","-",$k[1]));
+							}
+						
+						$field=$fieldinfo["ref"];
 						
 						$c++;
 						$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
