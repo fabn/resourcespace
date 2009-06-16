@@ -869,6 +869,14 @@ function save_site_text($page,$name,$language,$group)
 		{
 		sql_query("insert into site_text(page,name,text,language,specific_to_group) values ('$page','$name','" . getvalescaped("text","") . "','$language',$g)");
 		}
+	elseif (getval("newhelp","")!="")
+		{
+		global $newhelp;
+		$check=sql_query("select * from site_text where page = 'help' and name='$newhelp'");
+		if (!isset($check[0])){
+			sql_query("insert into site_text(page,name,text,language,specific_to_group) values ('$page','$newhelp','','$language',$g)");
+			}
+		}	
 	else
 		{
 		$text=sql_query ("select * from site_text where page='$page' and name='$name' and language='$language' and specific_to_group $gc $g");

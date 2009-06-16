@@ -6,10 +6,9 @@ include "../../include/research_functions.php";
 include "../../include/collections_functions.php";
 
 $offset=getvalescaped("offset",0);
-$find=getvalescaped("find","");
 
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
-
+$find=getvalescaped("find","");
 
 include "../../include/header.php";
 ?>
@@ -50,7 +49,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo $text[$n]["page"]?></td>
 	<td><div class="ListTitle"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>"><?php echo $text[$n]["name"]?></div></td>
 	<td><?php echo tidy_trim(htmlspecialchars($text[$n]["text"]),45)?></td>
-	<td><div class="ListTools"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?> </a></div></td>
+	<td><div class="ListTools"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>&find=<?php echo $find?>">&gt;&nbsp;<?php echo $lang["action-edit"]?> </a></div></td>
 	</tr>
 	<?php
 	}

@@ -6,6 +6,8 @@ include "../../include/research_functions.php";
 
 $page=getvalescaped("page","");
 $name=getvalescaped("name","");
+$find=getvalescaped("find","");
+$newhelp=getvalescaped("newhelp","");
 $editlanguage=getvalescaped("editlanguage",$defaultlanguage);
 $editgroup=getvalescaped("editgroup","");
 
@@ -16,7 +18,10 @@ if ((getval("save","")!="") && (getval("langswitch","")==""))
 	{
 	# Save data
 	save_site_text($page,$name,$editlanguage,$editgroup);
-	redirect ("pages/team/team_content.php?nc=" . time());
+	if ($newhelp!=""){
+		redirect("pages/team/team_content_edit.php?page=help&name=".$newhelp);
+		}
+	redirect ("pages/team/team_content.php?nc=" . time()."&find=".$find);
 	}
 
 include "../../include/header.php";
@@ -31,8 +36,11 @@ include "../../include/header.php";
 <input type=hidden name=groupswitch id=groupswitch value="">
 
 <div class="Question"><label><?php echo $lang["page"]?></label><div class="Fixed"><?php echo $page?></div><div class="clearerleft"> </div></div>
-
+<?php if ($page=="help"){?>
+<div class="Question"><label><?php echo $lang["name"]?></label><input type=text name="name" class="stdwidth" value="<?php echo htmlspecialchars($name)?>">
+<?php } else { ?>
 <div class="Question"><label><?php echo $lang["name"]?></label><div class="Fixed"><?php echo $name?></div><div class="clearerleft"> </div></div>
+<?php } ?>
 
 <div class="Question">
 <label for="password"><?php echo $lang["language"]?></label>
@@ -65,6 +73,14 @@ for ($n=0;$n<count($groups);$n++) { ?>
 
 <div class="Question"><label>Tick to save as a copy</label><input name="copyme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 -->
+
+<?php # add special ability to create and remove help pages
+if ($page=="help") { ?>
+<?php if ($name!="introtext"){ ?>
+	<div class="Question"><label><?php echo $lang["ticktodeletehelp"]?></label><input name="deleteme" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+<?php } ?><br><br>
+<label><?php echo $lang["createnewhelp"]?></label><input name="newhelp" type=text value=""><div class="clearerleft"> </div>
+<?php } ?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
