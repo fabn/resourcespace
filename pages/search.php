@@ -24,9 +24,28 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 	foreach ($_GET as $key=>$value)
 		{
 		$value=trim($value);
-		if ($value!="")
+		if ($value!="" && substr($key,0,6)=="field_")
 			{
-			if (substr($key,0,6)=="field_") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;}
+			if (strpos($key,"_year")!==false)
+				{
+				# Date field
+				
+				# Construct the date from the supplied dropdown values
+				$key_month=str_replace("_year","_month",$key);
+				if (getval($key_month,"")!="") {$value.="-" . getval($key_month,"");}
+
+				$key_day=str_replace("_year","_day",$key);
+				if (getval($key_day,"")!="") {$value.="-" . getval($key_day,"");}
+				
+				echo $value;
+				
+				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . str_replace("_year","",substr($key,6)) . ":" . $value;
+				}
+			elseif (strpos($key,"_month")===false && strpos($key,"_day")===false)
+				{
+				# Standard field
+				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;
+				}
 			}
 		}
 	

@@ -177,14 +177,11 @@ if (!$basic_simple_search)
 			case 4:
 			case 6:
 			// Date types
-			$found_year='';$found_month='';$found_day='';
+			$d_year='';$d_month='';$d_day='';
 			$s=explode(" ",$value);
-			if (count($s)>=3)
-				{
-				$found_year=$s[0];
-				$found_month=$s[1];
-				$found_day=$s[2];
-				}
+			if (count($s)>=1) {$d_year=$s[0];}
+			if (count($s)>=2) {$d_month=$s[1];}
+			if (count($s)>=3) {$d_day=$s[2];}
 			?>
 			<select id="field_<?php echo $fields[$n]["name"]?>_year" name="field_<?php echo $fields[$n]["name"]?>_year" <?php if (!$searchbyday) { ?>style="width:60px;"<?php } ?>>
 			  <option selected="selected" value=""><?php echo $lang["anyyear"]?></option>
@@ -192,7 +189,7 @@ if (!$basic_simple_search)
 			  $y=date("Y");
 			  for ($d=$y;$d>=$minyear;$d--)
 				{
-				?><option <?php if ($d==$found_year) { ?>selected<?php } ?>><?php echo $d?></option><?php
+				?><option <?php if ($d==$d_year) { ?>selected<?php } ?>><?php echo $d?></option><?php
 				}
 			  ?>
 			</select>
@@ -203,7 +200,7 @@ if (!$basic_simple_search)
 			  for ($d=1;$d<=12;$d++)
 				{
 				$m=str_pad($d,2,"0",STR_PAD_LEFT);
-				?><option <?php if ($d==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$n-1]?></option><?php
+				?><option <?php if ($d==$d_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$d-1]?></option><?php
 				}
 			  ?>		
 			</select>
@@ -214,7 +211,7 @@ if (!$basic_simple_search)
 			  for ($d=1;$d<=31;$d++)
 				{
 				$m=str_pad($d,2,"0",STR_PAD_LEFT);
-				?><option <?php if ($d==$found_day) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
+				?><option <?php if ($d==$d_day) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
 				}
 			  ?>
 			</select>
