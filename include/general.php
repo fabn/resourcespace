@@ -1580,7 +1580,7 @@ function check_access_key_collection($collection,$key)
 function auto_create_user_account()
 	{
 	# Automatically creates a non-approved user account
-	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select;
+	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select;
 	
 	# Add custom fields
 	$c="";
@@ -1623,7 +1623,7 @@ function auto_create_user_account()
 	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification3"] . "\n$baseurl?u=" . $new;
 	
 	
-	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message);
+	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message,"",$user_email);
 	return true;
 	}
 
