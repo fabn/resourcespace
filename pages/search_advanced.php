@@ -263,8 +263,8 @@ $wrap=0;
 ?><table><tr><?php
 for ($n=0;$n<count($types);$n++)
 	{
-	$wrap++;if ($wrap>3) {$wrap=1;?></tr><tr><?php }
-	?><td valign=top><input type=checkbox name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?php } ?> onChange="UpdateResultCount();"></td><td width="32%" valign=top><?php echo $types[$n]["name"]?></td><?php	
+	$wrap++;if ($wrap>4) {$wrap=1;?></tr><tr><?php }
+	?><td valign=middle><input type=checkbox name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?php } ?> onChange="UpdateResultCount();"></td><td valign=middle><?php echo $types[$n]["name"]?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><?php	
 	}
 ?>
 </tr></table>
