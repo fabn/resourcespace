@@ -3,6 +3,8 @@ include "../include/db.php";
 include "../include/general.php";
 
 $errors=false;
+$user_email=getval("email","");
+
 if (getval("save","")!="")
 	{
 	if ($user_account_auto_creation)

@@ -791,7 +791,7 @@ function newlines($text)
 function email_user_request()
 	{
 	# E-mails the submitted user request form to the team.
-	global $applicationname,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required;
+	global $applicationname,$email_from,$user_email,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required;
 	
 	# Add custom fields
 	$c="";
@@ -821,7 +821,7 @@ function email_user_request()
 	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification2"] . "\n$baseurl";
 	
 	
-	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message);
+	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message,"",$user_email);
 	return true;
 	}
 
@@ -1083,7 +1083,7 @@ function i18n_get_indexable($text)
 	return $out;
 	}
 
-function send_mail($email,$subject,$message,$from="")
+function send_mail($email,$subject,$message,$from="",$reply_to="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
@@ -1103,6 +1103,7 @@ function send_mail($email,$subject,$message,$from="")
 	
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
+	if ($reply_to=="") {$reply_to=$email_from;}
 	
 	# Work out correct EOL to use for mails (should use the system EOL).
 	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
@@ -1111,7 +1112,7 @@ function send_mail($email,$subject,$message,$from="")
 	$headers="";
    	$headers .= "X-Sender:  $email_from" . $eol;
    	$headers .= "From: $email_from" . $eol;
- 	$headers .= "Reply-To: $email_from" . $eol;
+ 	$headers .= "Reply-To: $reply_to" . $eol;
    	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $email_from . ">" . $eol;
    	$headers .= "Return-Path: $email_from" . $eol;
@@ -1120,7 +1121,6 @@ function send_mail($email,$subject,$message,$from="")
    	$headers .= "X-Mailer: PHP Mail Function" . $eol;
 	$headers .= "Content-Type: text/plain; charset=\"UTF-8\"" . $eol;
 	$headers .= "Content-Transfer-Encoding: quoted-printable" . $eol;
-	
 	mail ($email,$subject,$message,$headers);
 	}
 
