@@ -1198,7 +1198,7 @@ function highlightkeywords($text,$search)
 		}
 
 	# Parse and replace.
-	return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_WHOLEWD);
+	return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_SIMPLE);
 	}
 
 
