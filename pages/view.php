@@ -515,8 +515,8 @@ for ($n=0;$n<count($fields);$n++)
 			if (file_exists($plugin)) {include $plugin;}
 			
 			# Highlight keywords
-			$value=highlightkeywords($value,$search);
-			
+			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"]);
+
 			# Use a display template to render this field
 			$template=$fields[$n]["display_template"];
 			$template=str_replace("[title]",$title,$template);
@@ -534,7 +534,7 @@ for ($n=0;$n<count($fields);$n++)
 				$value=wordwrap($value,30,"<br />",true);
 
 				# Highlight keywords
-				$value=highlightkeywords($value,$search);
+				$value=highlightkeywords($value,$search,$fields[$n]["partial_index"]);
 				?><div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div><?php
 				}
 			}

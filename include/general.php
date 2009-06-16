@@ -1176,7 +1176,7 @@ function quoted_printable_encode_subject($string, $encoding='UTF-8') {
        return '=?'.$encoding.'?q?'.$result.'?=';
 }
 
-function highlightkeywords($text,$search)
+function highlightkeywords($text,$search,$partial_index=false)
 	{
 	# Highlight searched keywords in $text
 	# Optional - depends on $highlightkeywords being set in config.php.
@@ -1198,7 +1198,14 @@ function highlightkeywords($text,$search)
 		}
 
 	# Parse and replace.
-	return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_SIMPLE);
+	if ($partial_index)
+		{
+		return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_SIMPLE);
+		}
+	else
+		{
+		return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_WHOLEWD);
+		}
 	}
 
 
