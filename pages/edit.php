@@ -24,7 +24,7 @@ $go=getval("go","");
 if ($go!="")
 	{
 	# Re-run the search and locate the next and previous records.
-	$result=do_search($search,$restypes,$order_by,$archive,72+$offset+1);
+	$result=do_search($search,$restypes,$order_by,$archive,240+$offset+1);
 	if (is_array($result))
 		{
 		# Locate this resource
@@ -37,6 +37,14 @@ if ($go!="")
 			{
 			if (($go=="previous") && ($pos>0)) {$ref=$result[$pos-1]["ref"];}
 			if (($go=="next") && ($pos<($n-1))) {$ref=$result[$pos+1]["ref"];if (($pos+1)>=($offset+72)) {$offset=$pos+1;}} # move to next page if we've advanced far enough
+			}
+		else
+			{
+			?>
+			<script type="text/javascript">
+			alert("<?php echo $lang["resourcenotinresults"] ?>");
+			</script>
+			<?php
 			}
 		}
 	}
