@@ -83,6 +83,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		if ($resource_type!="")
 			{
 			update_resource_type($ref,$resource_type);
+			$resource=get_resource_data($ref); # Reload resource data.
 			}		
 
 		$save_errors=save_resource_data($ref,$multiple);
@@ -263,7 +264,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
 	{
-	?><option value="<?php echo $types[$n]["ref"]?>" <?php if (getval("resource_type","")==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
+	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
 	}
 ?></select>
 <div class="clearerleft"> </div>
