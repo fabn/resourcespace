@@ -36,68 +36,68 @@ for ($n=0;$n<count($ids);$n++)
 $treeline=$tree[$curid];
 $t=explode(";",trim($treeline));
 if (substr($t[7],0,2)!="as")
-	{
-	$treeline=str_replace("%recurse",$lastref,$treeline);#echo $treeline;
-	$treeline=str_replace("%recmin",$recmin,$treeline);#echo $treeline;
-	}
+    {
+    $treeline=str_replace("%recurse",$lastref,$treeline);#echo $treeline;
+    $treeline=str_replace("%recmin",$recmin,$treeline);#echo $treeline;
+    }
 $t=explode(";",trim($treeline));
-	
+    
 if (substr($t[7],0,2)=="as")
-	{
-	#echo "Parsing...";
+    {
+    #echo "Parsing...";
     # "as" command means alias another line to this line, replacing certain values
     $as=explode(" ",$t[7]);
     $query=trim($tree[$as[1]]);
     for ($q=2;$q<count($as);$q+=2)
         {
-	#echo "replace " . $as[$q] . " with " . $as[$q+1] . "<br><br>";
+    #echo "replace " . $as[$q] . " with " . $as[$q+1] . "<br><br>";
         $query=str_replace($as[$q],$as[$q+1],$query);
-	#echo $query . "<br><br>";
+    #echo $query . "<br><br>";
         }
-	$q=explode(";",$query);
-	for ($u=6;$u<count($q);$u++)
-		{
-		$t[$u]=$q[$u];
-		}
-	#echo $t[6];
-	}
+    $q=explode(";",$query);
+    for ($u=6;$u<count($q);$u++)
+        {
+        $t[$u]=$q[$u];
+        }
+    #echo $t[6];
+    }
     
 # A special case for global relationships.
 # If clicked, these should display the original (unalised) 'delete relationship' option
 # instead of the aliased article properties.
 if (substr($id,0,5)=="alias") {
-	$a=substr($id,5);
-	$a=explode(".",$a);		$im=$a[1];	$a=$a[0];
-	if ($a==36)
-		{
-		# Is this a global panel?
-		$panel=explode("-",$id);$panel=$panel[count($panel)-1];
-		$line=explode(":",$panel);
-		$panel=@$line[1];
-		$line=$line[0];
+    $a=substr($id,5);
+    $a=explode(".",$a);        $im=$a[1];    $a=$a[0];
+    if ($a==36)
+        {
+        # Is this a global panel?
+        $panel=explode("-",$id);$panel=$panel[count($panel)-1];
+        $line=explode(":",$panel);
+        $panel=@$line[1];
+        $line=$line[0];
 
-		if ($line==15)
-			{
-			$section=sql_value("select section value from article where ref='$panel'","");
-			if ($section!=0)
-				{
-				$query=explode(";",$tree[$a]);$query=$query[7];
-				$t=explode(";",trim($tree[$a]));
-				$relation=explode("-",$im);$relation=$relation[0];
-				$transfrom[]="%4";
-				$transto[]=$relation;
-				}
-			}
-		}
-	} 
+        if ($line==15)
+            {
+            $section=sql_value("select section value from article where ref='$panel'","");
+            if ($section!=0)
+                {
+                $query=explode(";",$tree[$a]);$query=$query[7];
+                $t=explode(";",trim($tree[$a]));
+                $relation=explode("-",$im);$relation=$relation[0];
+                $transfrom[]="%4";
+                $transto[]=$relation;
+                }
+            }
+        }
+    } 
 
 
 if (substr($t[7],0,3)=="url")
-	{
-	header ("Location: " . str_replace($transfrom,$transto,substr($t[7],4)) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));
-	exit();
-	}	
-	
+    {
+    header ("Location: " . str_replace($transfrom,$transto,substr($t[7],4)) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));
+    exit();
+    }    
+    
 #handle posts
 if (array_key_exists("userfile",$_FILES))
     { #file uploads
@@ -124,22 +124,22 @@ elseif (array_key_exists("submit",$_POST))
     
     # PDF text processing
     if (array_key_exists("filename",$_POST))
-    	{
-    	$filename=$_POST["filename"];
-    	if (substr(strtolower($filename),strlen($filename)-4,4)==".pdf")
-    		{
-    		#include "include/pdfextract.php";
-    		#$pdfcontents=pdf2string("../assets/" . $filename);
-    		#echo $pdfcontents;
-    		#$query=str_replace("[content_text]",$pdfcontents,$query);
-    		#echo $query;
-    		}
-    	}
-    	
+        {
+        $filename=$_POST["filename"];
+        if (substr(strtolower($filename),strlen($filename)-4,4)==".pdf")
+            {
+            #include "include/pdfextract.php";
+            #$pdfcontents=pdf2string("../assets/" . $filename);
+            #echo $pdfcontents;
+            #$query=str_replace("[content_text]",$pdfcontents,$query);
+            #echo $query;
+            }
+        }
+        
     foreach($_POST as $key=>$value)
         {
         $value=str_replace("&AMP;","&",$value);
-		$value=fixSmartQuotes($value);
+        $value=fixSmartQuotes($value);
         
         $query=str_replace("[" . $key . "]",escape_check($value),$query);
         $history.="&$key=" . urlencode($value);
@@ -149,10 +149,10 @@ elseif (array_key_exists("submit",$_POST))
     sql_query($query);
     
     if (array_key_exists("newredirect",$_POST))
-    	{
-   		header ("Location: properties.php?id=" . getval("newredirect","") . mysql_insert_id() . "&name=Enter+New+Data&parent=" . $parent);
-   		exit();
-    	}
+        {
+           header ("Location: properties.php?id=" . getval("newredirect","") . mysql_insert_id() . "&name=Enter+New+Data&parent=" . $parent);
+           exit();
+        }
     
     # now add this to the history for this object
     /*
@@ -200,9 +200,9 @@ if (array_key_exists("delete",$_POST))
 #exit($query);
     $q=explode(" then ",$query);
     for ($n=0;$n<count($q);$n++)
-    	{
-	    sql_query($q[$n]);
-	    }
+        {
+        sql_query($q[$n]);
+        }
     ?>
     <script>
     top.main.left.EmptyNode(<?php echo $parent?>);
@@ -215,10 +215,9 @@ include "include/header.php";
 ?>
 <body style="background-position:0px -80px;">
 <div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
-<?php $result=sql_query(str_replace($transfrom,$transto,$t[7]));
-if(isset($result[0])&&count($result[0])<10){?>
+
 <div class="propbox">
-<?php } else { ?><div class="propboxnarrow"><?php } ?>
+
 <?php if ($saved) { ?>
 <table width=100% style="border:1px solid black;">
 <tr><td width=40><img src="gfx/icons/apply.gif" width=32 height=32></td><td valign=middle align=left>Field updated</td></tr>
@@ -263,7 +262,6 @@ else
     <?php
     #echo $t[7];
     $result=sql_query(str_replace($transfrom,$transto,$t[7]));
-
     if (count($result)==0) {exit("Item deleted.</div></body></html>");}
     $result=$result[0];
     
@@ -287,12 +285,9 @@ else
             }
 
         }
-    $wrap=0;
-	$wrapcount=count($result)/2;
+        
     foreach ($result as $key=>$value)
         {
-	
-	$wrap++;if ($wrap>$wrapcount&count($result)>10){?></div><div class="propboxnarrow"><? $wrap=0; }
         if (substr($value,0,5)=="URL::") {header("Location: " . substr($value,5) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));exit();}
 
         $value=str_replace("&","&AMP;",$value);
@@ -309,18 +304,18 @@ else
             
         $label=$key;
         if (strpos($label,"<")===false) {$label=ucfirst(str_replace("_"," ",$label));}
-        else	
-        	{
-        	$label=str_replace($transfrom,$transto,$label);
-        	$label=str_replace("[" . $key . "]",$value,$label);
-			}
-		if ($key=="newredirect") {?><input type=hidden name="newredirect" value="<?php echo $value?>"><?php } else {
+        else    
+            {
+            $label=str_replace($transfrom,$transto,$label);
+            $label=str_replace("[" . $key . "]",$value,$label);
+            }
+        if ($key=="newredirect") {?><input type=hidden name="newredirect" value="<?php echo $value?>"><?php } else {
         ?>
         <p>
         <?php if (!(is_numeric($key))) { ?><?php echo $label?><br><?php } ?>
         <?php
         # include plugin
-		if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
+        if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
         switch ($type)
             {
             #-------------------------------------------------------------------------
@@ -348,7 +343,7 @@ else
             case "upl":
             #In-line file uploader
             ?>
-			<input type="text" style="width:100%;background-color:#eeeeee" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
+            <input type="text" style="width:100%;background-color:#eeeeee" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
             <iframe width="100%" height="70" scrolling="no" src="upload.php?callback=<?php echo $key?>"></iframe>
             <?php
             break;
@@ -369,20 +364,20 @@ else
             #Dropdown
             #find query
             $query=explode(";",$tree[$key]);$query=str_replace($transfrom,$transto,$query[6]);
-			$query=str_replace("%search","",$query);
-			$query=str_replace("%recurse",$lastref,$query);
+            $query=str_replace("%search","",$query);
+            $query=str_replace("%recurse",$lastref,$query);
             $drop=sql_query($query);reset($drop);
             if ($type!="drp") {$key=$type . "_" . $key;}
             ?>
             <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="0">Please select:</option>
             <?php
             foreach ($drop as $item)
-				{
-				?>
-            	<option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
-            	<?php
-            	}
-           	?>
+                {
+                ?>
+                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
+                <?php
+                }
+               ?>
             </select>
             <?php
             break;
@@ -390,8 +385,8 @@ else
             case "lbl":
             # label
             ?>
-			<?php echo $value?>
-			<?php
+            <?php echo $value?>
+            <?php
             break;
             }
         }
