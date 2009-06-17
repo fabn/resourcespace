@@ -3,7 +3,7 @@
 # Functions to manipulate collections
 
 
-function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetchrows=-1)
+function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetchrows=-1,$auto_create=true)
 	{
 	# Returns a list of user collections.
 	$sql="";
@@ -16,7 +16,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	union
 	select c.*,u.username,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref where (length(c.theme)=0 or c.theme is null) $sql group by c.ref) clist order by $order_by $sort");
 	
-	if (count($return)==0)
+	if (count($return)==0 && $auto_create)
 		{
 		# No collections? The user must have at least one My Collection
 		global $usercollection;
@@ -25,7 +25,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 		set_user_collection($user,$usercollection);
 		
 		# Recurse to send the updated collection list.
-		return get_user_collections($user,$find,$order_by,$sort,$fetchrows);
+		return get_user_collections($user,$find,$order_by,$sort,$fetchrows,false);
 		}
 	
 	return $return;
