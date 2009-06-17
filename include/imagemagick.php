@@ -462,5 +462,5 @@ if (isset($newfile))
 	{
 	create_previews($ref,false,"jpg",$previewonly);	
 	}
-if ($extension=="ai"){extract_exif_comment($ref,"jpg");}
+
 ?>
