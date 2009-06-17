@@ -68,6 +68,14 @@ p
     padding:10px;
     width:95%;
     }
+.propboxnarrow
+    {
+float:left; margin-right:1%;
+    background-color:white;
+    border:1px solid black;
+    padding:10px;
+    width:47%;
+    }
 .treetext a
     {
     color:black;

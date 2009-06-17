@@ -7,7 +7,7 @@ include "../../include/authenticate.php";
 
 <frameset rows="80,*" frameborder=0>
 <frame colspan=2 name="top" id="top" src="../admin_header.php" frameborder=0 scrolling=no>
-	<frameset cols="43%,*" frameborder=0>
+	<frameset cols="30%,*" frameborder=0>
 	<frame name="left" id="left" src="tree.php">
 	<frame name="right" id="right" src="blank.php">
 	</frameset>

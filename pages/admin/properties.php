@@ -215,9 +215,10 @@ include "include/header.php";
 ?>
 <body style="background-position:0px -80px;">
 <div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
-
+<?php $result=sql_query(str_replace($transfrom,$transto,$t[7]));
+if(isset($result[0])&&count($result[0])<10){?>
 <div class="propbox">
-
+<?php } else { ?><div class="propboxnarrow"><?php } ?>
 <?php if ($saved) { ?>
 <table width=100% style="border:1px solid black;">
 <tr><td width=40><img src="gfx/icons/apply.gif" width=32 height=32></td><td valign=middle align=left>Field updated</td></tr>
@@ -262,6 +263,7 @@ else
     <?php
     #echo $t[7];
     $result=sql_query(str_replace($transfrom,$transto,$t[7]));
+
     if (count($result)==0) {exit("Item deleted.</div></body></html>");}
     $result=$result[0];
     
@@ -285,9 +287,12 @@ else
             }
 
         }
-        
+    $wrap=0;
+	$wrapcount=count($result)/2;
     foreach ($result as $key=>$value)
         {
+	
+	$wrap++;if ($wrap>$wrapcount&count($result)>10){?></div><div class="propboxnarrow"><? $wrap=0; }
         if (substr($value,0,5)=="URL::") {header("Location: " . substr($value,5) . "&parent=" . $parent . "&gparent=" . getval("gparent",""));exit();}
 
         $value=str_replace("&","&AMP;",$value);
