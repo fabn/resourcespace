@@ -151,7 +151,7 @@ function delete_collection($ref)
 	sql_query("delete from collection where ref='$ref'");
 	sql_query("delete from collection_resource where collection='$ref'");
 		#log this
-	collection_log($collection,"X",0, "" );
+	collection_log($ref,"X",0, "");
 	}
 	
 function refresh_collection_frame($collection="")
