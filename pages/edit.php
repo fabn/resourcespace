@@ -91,7 +91,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		if ($resource_type!="")
 			{
 			update_resource_type($ref,$resource_type);
-			$resource=get_resource_data($ref); # Reload resource data.
+			$resource=get_resource_data($ref,false); # Reload resource data.
 			}		
 
 		$save_errors=save_resource_data($ref,$multiple);
