@@ -21,8 +21,8 @@ while ($f = $d->read()) {
 } 
 $homeimages=$filecount;
 
+if ($filecount>1) { # Only add Javascript if more than one image.
 ?>
-
 <script language="Javascript">
 
 var num_photos=<?php echo $homeimages?>;  // <---- number of photos (/images/slideshow?.jpg)
@@ -66,6 +66,7 @@ function nextPhoto()
 
 window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
+<?php } ?>
 
 <div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg');"><img src='../<?php echo $homeanim_folder?>/2.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
