@@ -19,7 +19,7 @@ help,introtext,"Get the most out of ResourceSpace. These guides will help you us
 <p>Use ""Themes"" to browse resources by theme or use the simple search box to search for specific resources.</p>
 
 
-<p><a href=""http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf"">Download the user guide (PDF file)</a>
+<p><a href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Download the user guide (PDF file)</a>
 
 
 <p><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Online Documentation (Wiki)</a>",,en,,
