@@ -3,7 +3,7 @@
 <!--
 ResourceSpace version <?php echo $productversion?>
 Copyright Oxfam GB and Montala 2006-2008
-http://www.montala.net/resourcespace.php
+http://www.resourcespace.org/
 -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

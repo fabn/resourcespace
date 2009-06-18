@@ -83,19 +83,19 @@ team_batch_select,introtext,"You can upload a batch of resource files by placing
 download_click,introtext,"To download the resource file, right click the link below and choose ""Save As..."". You will then be asked where you would like to save the file. To open the file in your browser simply click the link.",,en,,
 collection_manage,newcollection,"To create a new collection, enter a short name.",,en,,
 collection_email,introtext,"Complete the form below to e-mail this collection. The user(s) will receive a link to the resource rather than file attachments so they can choose and download the appropriate resources.",,en,,
-all,footer,"Powered by <a target=""_top"" href=""http://www.montala.net/resourcespace.php"">ResourceSpace</a>: Open Source Digital Asset Management",,en,,
+all,footer,"Powered by <a target=""_top"" href=""http://www.resourcespace.org/"">ResourceSpace</a>: Open Source Digital Asset Management",,en,,
 change_language,introtext,"Please select your language below.",,en,,
 all,searchpanel,"Search using descriptions, keywords and resource numbers",,es,,
-all,footer,"Accionado por el <a href=""http://www.montala.net/resourcespace.php"">ResourceSpace</a>",,es,,
+all,footer,"Accionado por el <a href=""http://www.resourcespace.org/"">ResourceSpace</a>",,es,,
 all,researchrequest,"Let our resources team find the resources you need.",,es,,
 delete,introtext,,68,es,,
 contribute,introtext,"You can contribute your own resources. When you initially create a resource it is in the ""Pending Submission"" status. When you have uploaded your file and edited the fields, set the status field to ""Pending Review"". It will then be reviewed by the resources team.",,es,,
 done,deleted,"The resource has been deleted.",,es,,
 change_password,introtext,"Enter a new password below to change your password.",,en,,
 collection_manage,findpublic,"Public collections are groups of resources made widely available by users of the system. Enter a collection ID, or all or part of a collection name or username to find public collections. Add them to your list of collections to access the resources.",,es,,
-themes,findpublic,"Powered by <a href=""http://www.montala.net/resourcespace.php"">ResourceSpace</a>",,es,,
+themes,findpublic,"Powered by <a href=""http://www.resourcespace.org/"">ResourceSpace</a>",,es,,
 login,welcomelogin,"Welcome to ResourceSpace, please log in...",,en,,
-all,footer,"Desarrollado por <a href=""http://www.montala.net/resourcespace.php"">ResourceSpace</a>",,es,,
+all,footer,"Desarrollado por <a href=""http://www.resourcespace.org/"">ResourceSpace</a>",,es,,
 all,researchrequest,"Pídenos fotografías, vídeos o testimonios.",,es,,
 contact,contact,"Introduce aquí tus datos de contacto.",,es,,
 collection_manage,newcollection,"Para crear una nueva colección, introduce un nombre.",,es,,
@@ -308,7 +308,7 @@ upload_swf,introtext,"以下のボタンをクリックして、ファイルを�
 "download_click","introtext","Pour télécharger le fichier ressource, cliquez droit sur le lien ci-dessous et choisissez ""Enregistrer sous..."". Il vous sera alors demandé l'emplacement où vous souhaitez sauvegarder le fichier. Pour ouvrir le fichier dans votre navigateur, cliquez simplement sur le lien.",,"fr",," "
 "collection_manage","newcollection","Pour créer une nouvelle collection, entrez un nom court.",,"fr",," "
 "collection_email","introtext","Remplissez le formulaire ci-dessous pour envoyer cette collection par mél. Les utilisateurs recevront un lien vers la ressource plutôt que des fichiers attachés pour qu'ils puissent choisir et télécharger les ressources appropriées.",,"fr",," "
-"all","footer","Ce site utilise le système de gestion des actifs numériques <a href=""http://www.montala.net/resourcespace.php"">ResourceSpace</a>.",,"fr",," "
+"all","footer","Ce site utilise le système de gestion des actifs numériques <a href=""http://www.resourcespace.org/"">ResourceSpace</a>.",,"fr",," "
 "change_language","introtext","Veuillez sélectionner votre langue ci-dessous.",,"fr",," "
 "change_password","introtext","Saisissez un nouveau mot de passe ci-dessous pour changer votre mot de passe.",,"fr",," "
 "login","welcomelogin","Bienvenue dans ResourceSpace, veuillez vous identifier...",,"fr",," "
