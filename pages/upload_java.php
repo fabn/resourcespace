@@ -92,6 +92,7 @@ include "../include/header.php";
             <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>" />
             
             <param name="nbFilesPerRequest" value="1">
+            <param name="allowHttpPersistent" value="false">
             <param name="debugLevel" value="0">
             <param name="showLogWindow" value="false">
             <param name="lang" value="<?php echo $language?>">
