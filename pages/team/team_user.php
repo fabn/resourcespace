@@ -70,12 +70,12 @@ $atoz.="</div>";
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><a href="team_user.php?offset=0&order_by=u.username&find=<?php echo urlencode($find)?>"><?php echo $lang["username"]?></a></td>
-<td><a href="team_user.php?offset=0&order_by=u.fullname&find=<?php echo urlencode($find)?>"><?php echo $lang["fullname"]?></a></td>
-<td><a href="team_user.php?offset=0&order_by=g.name&find=<?php echo urlencode($find)?>"><?php echo $lang["group"]?></a></td>
-<td><a href="team_user.php?offset=0&order_by=email&find=<?php echo urlencode($find)?>"><?php echo $lang["email"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="u.username")?"u.username+desc":"u.username")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["username"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="u.fullname")?"u.fullname+desc":"u.fullname")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["fullname"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="g.name")?"g.name+desc":"g.name")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["group"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="email")?"email+desc":"email")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["email"]?></a></td>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active,approved")?"last_active+desc,approved+desc":"last_active,approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] . " / " . $lang["lastactive"]?></a></td>
-<td><a href="team_user.php?offset=0&order_by=last_browser&find=<?php echo urlencode($find)?>"><?php echo $lang["lastbrowser"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_browser")?"last_browser+desc":"last_browser")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastbrowser"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
