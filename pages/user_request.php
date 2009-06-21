@@ -2,8 +2,10 @@
 include "../include/db.php";
 include "../include/general.php";
 
+
 $errors=false;
 $user_email=getval("email","");
+hook("preuserrequest");
 
 if (getval("save","")!="")
 	{
@@ -31,6 +33,8 @@ include "../include/header.php";
 
 <h1><?php echo $lang["requestuserlogin"]?></h1>
 <p><?php echo text("introtext")?></p>
+
+<?php if (!hook("replaceuserrequestform")) { ?>
 
 <form method="post">  
 <div class="Question">
@@ -134,8 +138,11 @@ $groups=get_registration_selectable_usergroups();
 </div>
 </form>
 
+<?php } /* end hook to replace user request form */ ?> 
+
 <p><sup>*</sup> <?php echo $lang["requiredfield"] ?></p>	
 
 <?php
 include "../include/footer.php";
 ?>
+

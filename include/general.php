@@ -1576,7 +1576,8 @@ function check_access_key_collection($collection,$key)
 	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
 	return true;
 	}
-
+	
+if (!function_exists("auto_create_user_account")){
 function auto_create_user_account()
 	{
 	# Automatically creates a non-approved user account
@@ -1626,6 +1627,7 @@ function auto_create_user_account()
 	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message,"",$user_email);
 	return true;
 	}
+} //end function replace hook	
 
 function make_username($name)
 	{
