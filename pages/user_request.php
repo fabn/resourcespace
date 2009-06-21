@@ -34,9 +34,10 @@ include "../include/header.php";
 <h1><?php echo $lang["requestuserlogin"]?></h1>
 <p><?php echo text("introtext")?></p>
 
-<?php if (!hook("replaceuserrequestform")) { ?>
-
 <form method="post">  
+
+<?php if (!hook("replacemain")) { /* BEGIN hook Replacemain */ ?>
+
 <div class="Question">
 <label for="name"><?php echo $lang["yourname"]?> <sup>*</sup></label>
 <input type=text name="name" id="name" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("name",""))?>">
@@ -48,6 +49,8 @@ include "../include/header.php";
 <input type=text name="email" id="email" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("email",""))?>">
 <div class="clearerleft"> </div>
 </div>
+
+<?php } /* END hook Replacemain */ ?>
 
 <?php # Add custom fields 
 if (isset($custom_registration_fields))
@@ -106,6 +109,7 @@ if (isset($custom_registration_fields))
 	}
 ?>
 
+<?php if (!hook("replacegroupselect")) { /* BEGIN hook Replacegroupselect */ ?>
 <?php if ($registration_group_select) {
 # Allow users to select their own group
 $groups=get_registration_selectable_usergroups();
@@ -124,6 +128,7 @@ $groups=get_registration_selectable_usergroups();
 <div class="clearerleft"> </div>
 </div>	
 <?php } ?>
+<?php } /* END hook Replacegroupselect */ ?>
 
 <div class="Question">
 <label for="email"><?php echo $lang["userrequestcomment"]?></label>
@@ -137,8 +142,6 @@ $groups=get_registration_selectable_usergroups();
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
 </form>
-
-<?php } /* end hook to replace user request form */ ?> 
 
 <p><sup>*</sup> <?php echo $lang["requiredfield"] ?></p>	
 
