@@ -19,17 +19,23 @@ $fieldref="";
 
 if ($fieldref==""){die ("Please add a fieldref parameter, which is the ref number of the field that you would like exiftool to extract from.");}
 
-$fieldref_info= sql_query("select exiftool_field,title from resource_type_field where ref='$fieldref'");
+$fieldref_info= sql_query("select exiftool_field,title,resource_type from resource_type_field where ref='$fieldref'");
 
 $title=$fieldref_info[0]["title"];
 $exiftool_tag=$fieldref_info[0]["exiftool_field"];
+$field_resource_type=$fieldref_info[0]["resource_type"];
 
 if ($exiftool_tag==""){ die ("Please add an exiftool mapping to your $title Field");}
 
 
 echo "Updating RS Field $fieldref - $title, with exiftool extraction of: $exiftool_tag<br><br>";
 
-$rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=1");
+if($field_resource_type==0){
+$rd=sql_query("select ref,file_extension from resource where has_image=1");
+} else {
+$rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=$field_resource_type");
+}	
+
 for ($n=0;$n<count($rd);$n++)
 	{
 	$ref=$rd[$n]['ref'];
