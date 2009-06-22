@@ -4,12 +4,10 @@
 # Contributed by Tom Gleason
 #
 
-# This is a really nice line... It takes the serialized array from the form and 
-# automakes the variables 
 foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
 include('../../lib/fpdf/fpdf.php');
-include('../../include/general.php');
 include('../../include/db.php');
+include('../../include/general.php');
 include('../../include/authenticate.php');
 include('../../include/search_functions.php');
 include('../../include/resource_functions.php');
