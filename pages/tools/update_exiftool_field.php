@@ -1,6 +1,6 @@
 <?php
 
-# This script is useful if you've added an exiftool field mapping and would like to update a single RS field with the original file information 
+# This script is useful if you've added an exiftool field mapping and would like to update RS fields with the original file information 
 # for all your resources.
 
 include "../../include/db.php";
@@ -12,13 +12,14 @@ include "../../include/image_processing.php";
 set_time_limit(60*60*40);
 
 # ex. 
-# $fieldref=29;
 
-$fieldref="";
+# $fieldrefs=array(8,18);
+$include_blanks=true; // if new value is blank, it will replace the old value.
+$fieldrefs=array();
 
+if (count($fieldrefs)==0){die ("Please add a list of refs to the fieldrefs array, which are the ref numbers of the fields that you would like exiftool to extract from.");}
 
-if ($fieldref==""){die ("Please add a fieldref parameter, which is the ref number of the field that you would like exiftool to extract from.");}
-
+foreach ($fieldrefs as $fieldref){
 $fieldref_info= sql_query("select exiftool_field,title,resource_type from resource_type_field where ref='$fieldref'");
 
 $title=$fieldref_info[0]["title"];
@@ -28,7 +29,7 @@ $field_resource_type=$fieldref_info[0]["resource_type"];
 if ($exiftool_tag==""){ die ("Please add an exiftool mapping to your $title Field");}
 
 
-echo "Updating RS Field $fieldref - $title, with exiftool extraction of: $exiftool_tag<br><br>";
+echo "<b>Updating RS Field $fieldref - $title, with exiftool extraction of: $exiftool_tag</b><br><br>";
 
 if($field_resource_type==0){
 $rd=sql_query("select ref,file_extension from resource where has_image=1");
@@ -49,11 +50,20 @@ for ($n=0;$n<count($rd);$n++)
 	$command=$exiftool_path."/exiftool -s -s -s -".$exiftool_tag." ". escapeshellarg($image);
 	
 	$value = iptc_return_utf8(trim(shell_exec($command)));	
-	#if ($value!=""){
+	
+	if ($include_blanks){
 		update_field($ref,$fieldref,$value);
 		echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");
-	#	}
+		}
+	else {
+		if ($value!=""){
+			update_field($ref,$fieldref,$value);
+			echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");	
+		}
 	}
+			
+	}
+}	
 echo "...done.";
 
 
