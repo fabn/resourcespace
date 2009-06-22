@@ -637,7 +637,7 @@ for ($n=0;$n<count($fields);$n++)
 	($ref>0 && checkperm("e-1"))
 	&& ((!$multiple && ($resource['archive']==-1 && $resource['archive']!=0)) || ($multiple))
 	){ /* unsubmit button */?>
-	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmunsubmitall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
+	<input onclick="<?php if ($multiple) { ?>$('editthis_status').checked=true;$('archive').value=-2;return confirm('<?php echo $lang["confirmunsubmitall"]?>');<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
 	<?php $pending_submission_button_available=true; } ?>
 	
 	<?php 
@@ -646,7 +646,7 @@ for ($n=0;$n<count($fields);$n++)
 	($ref>0 && checkperm("e-1"))
 	&& ((!$multiple && ($resource['archive']!=-1 && $resource['archive']!=0)) || ($multiple))
 	){ ?>
-	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmsubmitall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-1;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-1"];?>&nbsp;&nbsp;" />
+	<input onclick="<?php if ($multiple) { ?>$('editthis_status').checked=true;$('archive').value=-1;return confirm('<?php echo $lang["confirmsubmitall"]?>');<?php } ?>$('archive').value=-1;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-1"];?>&nbsp;&nbsp;" />
 	<?php } ?>
 	
 	<?php 
@@ -655,7 +655,7 @@ for ($n=0;$n<count($fields);$n++)
 	($ref>0 && checkperm("e-2") && checkperm("e0")) 
 	&& ((!$multiple && $resource['archive']!=0) || ($multiple))
 	) { ?>
-	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmpublishall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=0;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status0"];?>&nbsp;&nbsp;" />
+	<input onclick="<?php if ($multiple) { ?>$('editthis_status').checked=true;$('archive').value=0;return confirm('<?php echo $lang["confirmpublishall"]?>');<?php } ?>$('archive').value=0;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status0"];?>&nbsp;&nbsp;" />
 	<?php } ?>
 	
 	<?php 
@@ -664,7 +664,7 @@ for ($n=0;$n<count($fields);$n++)
 	($ref>0 && checkperm("e-2") && checkperm("e0")) 
 	&& ((!$multiple && $resource['archive']==0) || ($multiple))
 	&& !isset($pending_submission_button_available) ) { ?>
-	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmunpublishall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
+	<input onclick="<?php if ($multiple) { ?>$('editthis_status').checked=true;$('archive').value=-2;return confirm('<?php echo $lang["confirmunpublishall"]?>');<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
 	<?php } ?>
 	</div>
 	
