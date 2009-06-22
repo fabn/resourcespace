@@ -647,6 +647,7 @@ $registration_group_select=false;
 # Send an e-mail to the address set at $email_notify above when user contributed
 # resources are submitted (status changes from "User Contributed - Pending Submission" to "User Contributed - Pending Review").
 $notify_user_contributed_submitted=true;
+$notify_user_contributed_unsubmitted=false;
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
 $frameless_collections=false;
@@ -855,7 +856,8 @@ $use_theme_bar=false;
 # or very small, such as PDFs < 5 in (will improve quality of the scr image)
 $pdf_dynamic_rip=false;
 
-
+# Replace Status dropdown with buttons
+$use_publishing_buttons=false;
 
 
 

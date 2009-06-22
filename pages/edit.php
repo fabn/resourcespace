@@ -551,16 +551,16 @@ for ($n=0;$n<count($fields);$n++)
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
+		if (checkperm("e0") && checkperm("e-2")) {$mode=-2;}
 		?>
 		<input type=hidden name="archive" value="<?php echo $mode?>">
 		<?php
 		}
 	else { ?>
-	<?php if ($multiple) { ?><div><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["status"]?></label></div><?php } ?>
+	<?php if ($multiple) { ?><div id="editmultiple_status"><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label id="editthis_status_label" for="editthis<?php echo $n?>"><?php echo $lang["status"]?></label></div><?php } ?>
 	<div class="Question" id="question_status" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="archive"><?php echo $lang["status"]?></label>
 	<select class="stdwidth" name="archive" id="archive">
-	
 	<?php for ($n=-2;$n<=2;$n++) { ?>
 	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
 	<?php } ?>
@@ -568,6 +568,8 @@ for ($n=0;$n<count($fields);$n++)
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
+	<?php if (!(checkperm("e2")||checkperm("e1")) && $use_publishing_buttons){?><script type="text/javascript"> 
+	<?php if ($multiple){?>$('editmultiple_status').style.display='none';<?php } else {?> $('question_status').style.display='none';<?php } ?></script><?php } ?>
 	
 	<!-- Access -->
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
@@ -623,11 +625,59 @@ for ($n=0;$n<count($fields);$n++)
 	</div>
 	<?php } ?>
 	
+	<?php if ($use_publishing_buttons) {?>
+	
+	<div class="Question">
+	<label for="buttons"><?php echo $lang['publishstatus'];?></label>	
+	<!-- Additional Buttons for Status Management -->
+	
+	<?php 
+	/* unsubmit button */
+	if (
+	($ref>0 && checkperm("e-1"))
+	&& ((!$multiple && ($resource['archive']==-1 && $resource['archive']!=0)) || ($multiple))
+	){ /* unsubmit button */?>
+	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmunsubmitall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
+	<?php $pending_submission_button_available=true; } ?>
+	
+	<?php 
+	/* submit button */
+	if (
+	($ref>0 && checkperm("e-1"))
+	&& ((!$multiple && ($resource['archive']!=-1 && $resource['archive']!=0)) || ($multiple))
+	){ ?>
+	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmsubmitall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-1;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-1"];?>&nbsp;&nbsp;" />
+	<?php } ?>
+	
+	<?php 
+	/* publish button */
+	if (
+	($ref>0 && checkperm("e-2") && checkperm("e0")) 
+	&& ((!$multiple && $resource['archive']!=0) || ($multiple))
+	) { ?>
+	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmpublishall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=0;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status0"];?>&nbsp;&nbsp;" />
+	<?php } ?>
+	
+	<?php 
+	/* unpublish button */
+	if (
+	($ref>0 && checkperm("e-2") && checkperm("e0")) 
+	&& ((!$multiple && $resource['archive']==0) || ($multiple))
+	&& !isset($pending_submission_button_available) ) { ?>
+	<input onclick="<?php if ($multiple) { ?>return confirm('<?php echo $lang["confirmunpublishall"]?>');$('editthis_status').checked=true;<?php } ?>$('archive').value=-2;" name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["status-2"];?>&nbsp;&nbsp;" />
+	<?php } ?>
+	</div>
+	
+	<?php } ?>
+	
+	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
 	<input name="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />&nbsp;
-	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" />
+	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" /><br><br>
+	<div class="clearerleft"> </div>
 	</div>
+	
 </form>
 <p><sup>*</sup> <?php echo $lang["requiredfield"]?></p>
 </div>

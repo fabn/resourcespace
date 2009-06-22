@@ -176,6 +176,10 @@ function save_resource_data($ref,$multi)
 		{
 		notify_user_contributed_submitted(array($ref));
 		}
+	if ($oldarchive==-1 && $archive==-2 && $ref>0)
+		{
+		notify_user_contributed_unsubmitted(array($ref));
+		}	
 
 	# Also update archive status and access level
 	sql_query("update resource set archive='" . getvalescaped("archive",0) . "',access='" . getvalescaped("access",0) . "' where ref='$ref'");
@@ -913,6 +917,23 @@ function notify_user_contributed_submitted($refs)
 	$message.="\n" . $lang["viewalluserpending"] . "\n" . $baseurl . "/pages/search.php?search=!userpending";
 	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message);
 	}
+	
+function notify_user_contributed_unsubmitted($refs)
+	{
+	// Send a notification mail to the administrators when resources are moved from "User Contributed - Pending Submission" to "User Contributed - Pending Review"
+	
+	global $notify_user_contributed_unsubmitted,$applicationname,$email_notify,$baseurl,$lang;
+	if (!$notify_user_contributed_unsubmitted) {return false;} # Only if configured.
+	
+	$message=$lang["userresourcesunsubmitted"] . "\n";
+	for ($n=0;$n<count($refs);$n++)
+		{
+		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
+		}
+	$message.="\n" . $lang["viewalluserpending"] . "\n" . $baseurl . "/pages/search.php?search=!userpending";
+	send_mail($email_notify,$applicationname . ": " . $lang["status-2"],$message);
+	}	
+	
 	
 function get_fields_with_options()
 	{

@@ -21,11 +21,11 @@ include "../include/header.php";
 	<li><a href="create.php?archive=<?php echo (checkperm("e-2")?-2:-1) ?>"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php } ?>
 
-	<?php if (!checkperm("e0") && checkperm("e-2")) { ?>
+	<?php if (checkperm("e-2")) { ?>
 	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
 	<?php } ?>
 	
-	<?php if (!checkperm("e0") && checkperm("e-1")) { ?>
+	<?php if (checkperm("e-1")) { ?>
 	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=-1"><?php echo $lang["viewcontributedpr"]?></a></li>
 	<?php } ?>
 	

@@ -274,8 +274,8 @@ $lang["backtoresourceview"]="Back to resource view";
 
 # Resource status
 $lang["status"]="Status";
-$lang["status-2"]="User Contributed: Pending Submission";
-$lang["status-1"]="User Contributed: Pending Review";
+$lang["status-2"]="Pending Submission";
+$lang["status-1"]="Pending Review";
 $lang["status0"]="Active";
 $lang["status1"]="Waiting to be archived";
 $lang["status2"]="Archived";
@@ -483,6 +483,10 @@ $lang["existingkeywords"]="Existing Keywords:";
 $lang["extrakeywords"]="Extra Keywords";
 $lang["leaderboard"]="Leaderboard";
 $lang["confirmeditall"]="Are you sure you wish to save? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection.";
+$lang["confirmsubmitall"]="Are you sure you wish to submit all for review? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection and submit them all for review.";
+$lang["confirmunsubmitall"]="Are you sure you wish to unsubmit all from the review process? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection and unsubmit them all from review.";
+$lang["confirmpublishall"]="Are you sure you wish to publish? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection and publish them all for public viewing";
+$lang["confirmunpublishall"]="Are you sure you wish to unpublish these resources? This will overwrite the existing values(s) for the selected field(s) for all the resources in your current collection and remove them from public viewing";
 $lang["collectiondeleteconfirm"]="Are you sure you wish to delete this collection?";
 $lang["hidden"]="(hidden)";
 $lang["requestnewpassword"]="Request New Password";
@@ -610,6 +614,7 @@ $lang["userrequestnotification1"]="The User Login Request form has been complete
 $lang["userrequestnotification2"]="If this is a valid request, please visit the system at the URL below and create an account for this user.";
 $lang["ipaddress"]="IP Address";
 $lang["userresourcessubmitted"]="The following user contributed resources have been submitted for review:";
+$lang["userresourcesunsubmitted"]="The following user contributed resources have been unsubmitted, and no longer require review:";
 $lang["viewalluserpending"]="View all user contributed resources pending review:";
 
 # New for 1.7
@@ -766,5 +771,5 @@ $lang["useasthemethumbnail"]="Use this resource as a theme category thumbnail?";
 $lang["sessionexpired"]="You have been automatically logged out because you were inactive for more than 30 minutes. Please enter your login details to continue.";
 
 $lang["resourcenotinresults"]="The current resource is no longer within your active search results so next/previous navigation is not possible.";
-
+$lang["publishstatus"]="Save with Publish Status:";
 ?>
