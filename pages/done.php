@@ -1,7 +1,14 @@
 <?php
 include "../include/db.php";
 include "../include/general.php";
+include "../include/collections_functions.php";
 if (getval("user","")!="") {include "../include/authenticate.php";} # Authenticate if already logged in, so the correct theme is displayed when using user group specific themes.
+
+if (getval("refreshcollection","")!="")
+	{
+	refresh_collection_frame();
+	}
+
 include "../include/header.php";
 ?>
 

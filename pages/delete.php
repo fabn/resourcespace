@@ -21,7 +21,7 @@ if (getval("save","")!="")
 		
 		hook("custompostdeleteresource");
 		
-		redirect("pages/done.php?text=deleted");
+		redirect("pages/done.php?text=deleted&refreshcollection=true");
 		}
 	}
 include "../include/header.php";
