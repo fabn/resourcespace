@@ -51,7 +51,7 @@ include "../include/header.php";
 	</div>
 	</form>
 	
-
+<?php hook("afterchangepasswordform");?>
 <?php
 include "../include/footer.php";
 ?>
