@@ -585,7 +585,8 @@ for ($n=0;$n<count($fields);$n++)
 	<select class="stdwidth" name="access" id="access" onChange="var c=document.getElementById('custom_access');if (this.value==3) {c.style.display='block';} else {c.style.display='none';}">
 	
 	<?php for ($n=0;$n<=($custom_access?3:2);$n++) { ?>
-	<option value="<?php echo $n?>" <?php if ($resource["access"]==$n) { ?>selected<?php } ?>><?php echo $lang["access" . $n]?></option>
+	<?php if ($n==2 && checkperm("v")){?><option value="<?php echo $n?>" <?php if ($resource["access"]==$n) { ?>selected<?php } ?>><?php echo $lang["access" . $n]?></option><?php } 
+	else if ($n!=2){ ?><option value="<?php echo $n?>" <?php if ($resource["access"]==$n) { ?>selected<?php } ?>><?php echo $lang["access" . $n]?></option><?php } ?>
 	<?php } ?>
 	</select>
 	<div class="clearerleft"> </div>
@@ -605,8 +606,8 @@ for ($n=0;$n<count($fields);$n++)
 		<td align=left valign=middle><?php echo $lang["access0"]?></td>
 		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked<?php } ?>></td>
 		<td align=left valign=middle><?php echo $lang["access1"]?></td>
-		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked<?php } ?>></td>
-		<td align=left valign=middle><?php echo $lang["access2"]?></td>
+		<?php if (checkperm("v")){?><td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked<?php } ?>></td>
+		<td align=left valign=middle><?php echo $lang["access2"]?></td><?php } ?>
 		</tr>
 		<?php
 		}
