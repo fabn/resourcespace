@@ -39,7 +39,7 @@ for ($n=0;$n<count($collections);$n++)
 
 		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
 
-		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewcollection"]?></a></div>		
+		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
@@ -90,7 +90,7 @@ for ($n=0;$n<count($collections);$n++)
 		</td>
 		</tr></table>
 
-		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["view"]?></a></div>		
+		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
@@ -107,7 +107,7 @@ for ($n=0;$n<count($collections);$n++)
 		<td>&nbsp;</td>
 		<td><?php echo $lang["collection"] ?></td>
 		<td><?php echo nicedate($collections[$n]["created"],false,true)?></td>
-		<td><div class="ListTools"><a href="<?php echo $pub_url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
+		<td><div class="ListTools"><a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>&nbsp;&nbsp;<a href="<?php echo $pub_url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
 		</tr>
 	<?php } ?>		
 	
