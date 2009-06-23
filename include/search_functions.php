@@ -253,7 +253,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			# Find keyword(s)
 			$ks=explode("|",strtolower(escape_check($s[1])));
 			$k=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
-			if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
+			#if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
 					
 			$sql_join.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$k) . "') ";	
 			}
