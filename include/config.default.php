@@ -316,6 +316,9 @@ $disable_searchresults = false;
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
 
+# Display Search Results link in top navigation
+$search_results_link=true;
+
 # Display 'View New Material' link in the quick search bar (same as 'Recent')
 $view_new_material=false;
 

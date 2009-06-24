@@ -121,7 +121,8 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 				((strlen(@$search)>0) && (strpos($search,"!")===false))
 			)
 		)
-		{?><li><a<?php if (!checkperm("b")) { ?> target="main"<?php } ?> href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?>
+		{?>
+		<?php if ($search_results_link){?><li><a<?php if (!checkperm("b")) { ?> target="main"<?php } ?> href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
 		<?php if (checkperm("s") && $enable_themes) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/themes.php"><?php echo $lang["themes"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last1000")?>"><?php echo $lang["recent"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php"><?php echo $lang["mycollections"]?></a></li><?php } ?>
