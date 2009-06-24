@@ -762,7 +762,7 @@ $disable_alternative_files = false;
 #collection_manage.php - hide 'access' column
 $hide_access_column = false;
 #collection_manage.php - show 'edit all' link on collections
-$show_edit_all_link = true;
+$show_edit_all_link = false;
 
 ##  Contact Print settings - paper size options
 $papersize_select = '
