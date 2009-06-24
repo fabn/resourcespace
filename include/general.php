@@ -649,6 +649,7 @@ function get_user($ref)
 	if (count($return)>0) {return $return[0];} else {return false;}
 	}
 	
+if (!function_exists("save_user")){	
 function save_user($ref)
 	{
 	global $lang;
@@ -704,6 +705,7 @@ function save_user($ref)
 		}
 	return true;
 	}
+}
 
 function email_reminder($email)
 	{

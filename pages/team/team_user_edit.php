@@ -62,7 +62,9 @@ if (getval("loginas","")!="")
 
 <div class="Question"><label><?php echo $lang["password"]?></label><input name="password" type="text" class="stdwidth" value="<?php echo (strlen($user["password"])==32)?$lang["hidden"]:$user["password"]?>">&nbsp;<input type=submit name="suggest" value="<?php echo $lang["suggest"]?>" /><div class="clearerleft"> </div></div>
 
+<?php if (!hook("replacefullname")){?>
 <div class="Question"><label><?php echo $lang["fullname"]?></label><input name="fullname" type="text" class="stdwidth" value="<?php echo $user["fullname"]?>"><div class="clearerleft"> </div></div>
+<?php } ?>
 
 <div class="Question"><label><?php echo $lang["group"]?></label>
 <select class="stdwidth" name="usergroup">
