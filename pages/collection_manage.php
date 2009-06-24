@@ -189,8 +189,8 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
     <?php     # If this collection is (fully) editable, then display an edit all link
-    if (($collections[$n]["count"] >0) && allow_multi_edit($usercollection) && $show_edit_all_link ) { ?>
-    &nbsp;<a href="edit.php?collection=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["editall"]?></a><?php } ?>
+    if (($collections[$n]["count"] >0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>
+    &nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["editall"]?></a>&nbsp;<?php } ?>
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?><a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
 
