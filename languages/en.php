@@ -773,4 +773,6 @@ $lang["sessionexpired"]="You have been automatically logged out because you were
 $lang["resourcenotinresults"]="The current resource is no longer within your active search results so next/previous navigation is not possible.";
 $lang["publishstatus"]="Save with Publish Status:";
 $lang["addnewcontent"]="New content (Page,Name)";
+$lang["hitcount"]="Hit Count";
+$lang["downloads"]="Downloads";
 ?>

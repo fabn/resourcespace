@@ -128,7 +128,7 @@ function get_resource_data($ref,$cache=true)
 	# For 'dynamic' field data, see get_resource_field_data
 	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads;
 	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
-	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
+	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, new_hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
 		if ($ref>0)
