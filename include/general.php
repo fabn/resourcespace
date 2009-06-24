@@ -126,7 +126,7 @@ function get_resource_data($ref,$cache=true)
 	{
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
-	global $default_resource_type, $get_resource_data_cache;
+	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads;
 	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
 	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
 	if (count($resource)==0) 
@@ -143,10 +143,11 @@ function get_resource_data($ref,$cache=true)
 			}
 		}
 
-	# update hit count
-
-	# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
-	sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
+	# update hit count if not tracking downloads only
+	if (!$resource_hit_count_on_downloads) { 
+		# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
+		sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
+	} 
 	$get_resource_data_cache[$ref]=$resource[0];
 	return $resource[0];
 	}

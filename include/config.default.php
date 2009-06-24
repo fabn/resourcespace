@@ -866,6 +866,6 @@ $use_publishing_buttons=false;
 # note: this is intended for developers who create custom pages or hooks and need to have more manageable content,
 $site_text_custom_create=false;
 
-
+$resource_hit_count_on_downloads=true;
 
 ?>

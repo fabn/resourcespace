@@ -87,6 +87,12 @@ if ($noattach=="")
 	daily_stat("Resource download",$ref);
 	resource_log($ref,'d',0);
 	
+	# update hit count if tracking downloads only
+	if ($resource_hit_count_on_downloads) { 
+		# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
+		sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
+	} 
+	
 	# We compute a file name for the download.
 	$filename=$ref . $size . ($alternative>0?"_" . $alternative:"") . "." . $ext;
 	
