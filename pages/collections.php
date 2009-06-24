@@ -27,6 +27,8 @@ setcookie("thumbs",$thumbs,0);
 <!--[if lte IE 5.6]> <link href="../css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <?php
 $collection=getvalescaped("collection","");
+$entername=getvalescaped("entername","");
+
 if ($collection!="")
 	{
 	hook("prechangecollection");
@@ -35,7 +37,8 @@ if ($collection!="")
 	if ($k=="" && $collection==-1)
 		{
 		# Create new collection
-		$name=get_mycollection_name($userref);
+		if ($entername!=""){ $name=$entername;} 
+		else { $name=get_mycollection_name($userref);}
 		$new=create_collection ($userref,$name);
 		set_user_collection($userref,$new);
 		
@@ -242,7 +245,7 @@ if ($k!="")
   <h2><?php echo $lang["mycollections"]?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>:
-		<select name="collection" onchange="document.getElementById('colselect').submit();" class="SearchWidth">
+		<select name="collection" onchange="if($(this).value==-1){Effect.toggle('entername','blind',{duration:.5});return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
@@ -268,7 +271,8 @@ if ($k!="")
 		?>
 		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
-		</div>				
+		<input type=text id="entername" name="entername" style="display:none;" class="SearchWidth" onUnfocus="$(this).submit();">
+		</div>			
   </form>
 
   <ul>
@@ -491,7 +495,7 @@ if ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" class="SearchWidth" onchange="document.getElementById('colselect').submit();">
+		<select name="collection" class="SearchWidth" onchange="if($(this).value==-1){Effect.toggle('entername','blind',{duration:.5});return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
@@ -515,7 +519,7 @@ if ($k!="")
 		?>
 		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
-		
+		<input type=text id="entername" name="entername" style="display:inline;display:none;" class="SearchWidth" onUnfocus="$(this).submit();">
 		</div>				
   </form>
 </div>
