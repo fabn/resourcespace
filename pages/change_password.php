@@ -3,6 +3,8 @@ include "../include/db.php";
 include "../include/authenticate.php"; if (checkperm("p")) {exit("Not allowed.");}
 include "../include/general.php";
 
+hook("prechangepasswordform");
+
 if (getval("save","")!="")
 	{
 	if (getval("password","")!=getval("password2","")) {$error2=true;}
