@@ -71,7 +71,9 @@ $atoz.="</div>";
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="u.username")?"u.username+desc":"u.username")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["username"]?></a></td>
+<?php if (!hook("replacefullnameheader")){?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="u.fullname")?"u.fullname+desc":"u.fullname")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["fullname"]?></a></td>
+<?php } ?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="g.name")?"g.name+desc":"g.name")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["group"]?></a></td>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="email")?"email+desc":"email")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["email"]?></a></td>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active,approved")?"last_active+desc,approved+desc":"last_active,approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] . " / " . $lang["lastactive"]?></a></td>
@@ -85,7 +87,9 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	?>
 	<tr>
 	<td><div class="ListTitle"><a href="team_user_edit.php?ref=<?php echo $users[$n]["ref"]?>&backurl=<?php echo urlencode($url . "&offset=" . $offset)?>"><?php echo $users[$n]["username"]?></div></td>
+	<?php if (!hook("replacefullnamerow")){?>
 	<td><?php echo $users[$n]["fullname"]?></td>
+	<?php } ?>
 	<td><?php echo $users[$n]["groupname"]?></td>
 	<td><?php echo $users[$n]["email"]?></td>
 	<td><?php 
