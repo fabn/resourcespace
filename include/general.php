@@ -855,19 +855,39 @@ function get_site_text($page,$name,$language,$group)
 	return $text[0]["text"];
 	}
 
+function check_site_text_custom($page,$name)
+	{
+	# Check if site text section is custom, i.e. deletable.
+	
+	$check=sql_query ("select custom from site_text where page='$page' and name='$name'");
+	if (isset($check[0]["custom"])){return $check[0]["custom"];}
+	}
+
 function save_site_text($page,$name,$language,$group)
 	{
 	# Saves the submitted site text changes to the database.
 
 	if ($group=="") {$g="null";$gc="is";} else {$g="'" . $group . "'";$gc="=";}
-
-	if (getval("deleteme","")!="")
+	
+	global $custom,$newcustom;
+	
+	if($newcustom)
+		{
+		$test=sql_query("select * from site_text where page='$page' and name='$name'");
+		if (count($test)>0){return true;}
+		}
+	
+	if (getval("deletecustom","")!="")
+		{
+		sql_query("delete from site_text where page='$page' and name='$name'");
+		}
+	elseif (getval("deleteme","")!="")
 		{
 		sql_query("delete from site_text where page='$page' and name='$name' and specific_to_group $gc $g");
 		}
 	elseif (getval("copyme","")!="")
 		{
-		sql_query("insert into site_text(page,name,text,language,specific_to_group) values ('$page','$name','" . getvalescaped("text","") . "','$language',$g)");
+		sql_query("insert into site_text(page,name,text,language,specific_to_group,custom) values ('$page','$name','" . getvalescaped("text","") . "','$language',$g,'$custom')");
 		}
 	elseif (getval("newhelp","")!="")
 		{
@@ -883,7 +903,7 @@ function save_site_text($page,$name,$language,$group)
 		if (count($text)==0)
 			{
 			# Insert a new row for this language/group.
-			sql_query("insert into site_text(page,name,language,specific_to_group,text) values ('$page','$name','$language',$g,'" . getvalescaped("text","") . "')");
+			sql_query("insert into site_text(page,name,language,specific_to_group,text,custom) values ('$page','$name','$language',$g,'" . getvalescaped("text","") . "','$custom')");
 			}
 		else
 			{

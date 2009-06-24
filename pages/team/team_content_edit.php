@@ -11,6 +11,9 @@ $newhelp=getvalescaped("newhelp","");
 $editlanguage=getvalescaped("editlanguage",$defaultlanguage);
 $editgroup=getvalescaped("editgroup","");
 
+# get custom value from database, unless it has been newly passed from team_content.php
+if (getval("custom","")==1){ $custom=1; $newcustom=true; } else {$custom=check_site_text_custom($page,$name); $newcustom=false;}
+
 # Fetch user data
 $text=get_site_text($page,$name,$editlanguage,$editgroup);
 
@@ -21,6 +24,9 @@ if ((getval("save","")!="") && (getval("langswitch","")==""))
 	if ($newhelp!=""){
 		redirect("pages/team/team_content_edit.php?page=help&name=".$newhelp);
 		}
+	if (getval("custom","")==1){
+		redirect("pages/team/team_content_edit.php?page=$page&name=$name");
+		}	
 	redirect ("pages/team/team_content.php?nc=" . time()."&find=".$find);
 	}
 
@@ -81,6 +87,12 @@ if ($page=="help") { ?>
 <?php } ?><br><br>
 <label><?php echo $lang["createnewhelp"]?></label><input name="newhelp" type=text value=""><div class="clearerleft"> </div>
 <?php } ?>
+
+<?php # add ability to delete custom page/name entries
+ if ($custom==1 && $page!="help"){ ?>
+	<div class="Question"><label><?php echo $lang["ticktodeletehelp"]?></label><input name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
+<?php } ?>
+
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			

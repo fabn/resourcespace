@@ -9,6 +9,10 @@ $offset=getvalescaped("offset",0);
 
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 $find=getvalescaped("find","");
+$page=getvalescaped("page","");
+$name=getvalescaped("name","");
+
+if ($page && $name){redirect("pages/team/team_content_edit.php?page=$page&name=$name&save=true&custom=1");}
 
 include "../../include/header.php";
 ?>
@@ -47,7 +51,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 	?>
 	<tr>
 	<td><?php echo $text[$n]["page"]?></td>
-	<td><div class="ListTitle"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>"><?php echo $text[$n]["name"]?></div></td>
+	<td><div class="ListTitle"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>&find=<?php echo $find?>"><?php echo $text[$n]["name"]?></div></td>
 	<td><?php echo tidy_trim(htmlspecialchars($text[$n]["text"]),45)?></td>
 	<td><div class="ListTools"><a href="team_content_edit.php?page=<?php echo $text[$n]["page"]?>&name=<?php echo $text[$n]["name"]?>&find=<?php echo $find?>">&gt;&nbsp;<?php echo $lang["action-edit"]?> </a></div></td>
 	</tr>
@@ -73,6 +77,22 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 		</div>
 	</form>
 </div>
+
+<?php if ($site_text_custom_create){?>
+<div class="BasicsBox">
+    <form method="post">
+		<div class="Question">
+			<label for="find"><?php echo $lang["addnewcontent"]?></label>
+			<div class="tickset">
+			 <div class="Inline"><input type=text name="page" id="page" maxlength="50" class="shrtwidth" /></div>
+			 <div class="Inline"><input type=text name="name" id="name" maxlength="50" class="shrtwidth" /></div>
+			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
+			</div>
+			<div class="clearerleft"> </div>
+		</div>
+	</form>
+</div>
+<? } ?>
 
 <?php
 include "../../include/footer.php";

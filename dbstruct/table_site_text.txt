@@ -5,3 +5,4 @@ ref,int(11),NO,PRI,,auto_increment
 language,varchar(10),YES,,,
 ignore_me,int(11),YES,,,
 specific_to_group,int(11),YES,,,
+custom,int(11),YES,,,

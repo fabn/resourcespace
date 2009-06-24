@@ -859,6 +859,9 @@ $pdf_dynamic_rip=false;
 # Replace Status dropdown with buttons
 $use_publishing_buttons=false;
 
+# Allow for the creation of new site text entries from Manage Content
+# note: this is intended for developers who create custom pages or hooks and need to have more manageable content,
+$site_text_custom_create=false;
 
 
 
