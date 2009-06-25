@@ -153,6 +153,7 @@ if (!$basic_simple_search)
 			case 3:
 			// Dropdown and checkbox types - display a list for each
 			$options=get_field_options($fields[$n]["ref"]);
+			if (hook("adjustdropdownoptions")){$options=hook("adjustdropdownoptions");}
 			$optionfields[]=$fields[$n]["name"]; # Append to the option fields array, used by the AJAX dropdown filtering
 			?>
 			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions();">
