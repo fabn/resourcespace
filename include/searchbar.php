@@ -308,22 +308,6 @@ if (!$basic_simple_search)
 	</div>
 	-->
 	
-	<div class="SearchItem"><?php echo $lang["resultsdisplay"]?><br />
-	<select name="per_page" class="SearchWidth">
-	  <option value="12" <?php if (getval("per_page",$default_perpage)==12) { ?>selected<?php } ?> >12 <?php echo $lang["perpage"]?></option>
-	  <option value="24" <?php if (getval("per_page",$default_perpage)==24) { ?>selected<?php } ?> >24 <?php echo $lang["perpage"]?></option>
-	  <option value="48" <?php if (getval("per_page",$default_perpage)==48) { ?>selected<?php } ?> >48 <?php echo $lang["perpage"]?></option>
-	  <option value="72" <?php if (getval("per_page",$default_perpage)==72) { ?>selected<?php } ?> >72 <?php echo $lang["perpage"]?></option>
-   	  <option value="120" <?php if (getval("per_page",$default_perpage)==120) { ?>selected<?php } ?> >120 <?php echo $lang["perpage"]?></option>
-  	  <option value="240" <?php if (getval("per_page",$default_perpage)==240) { ?>selected<?php } ?> >240 <?php echo $lang["perpage"]?></option>
-	</select>
-	</div>
-
-	  <div class="tick"><label><input name="display" type="radio" value="thumbs" <?php if (getval("display","thumbs")=="thumbs") { ?>checked="checked"<?php } ?> />&nbsp;<?php echo $lang["largethumbs"]?></label>
-	  <?php if ($smallthumbs==true){?><label><input name="display" type="radio" value="smallthumbs" <?php if (getval("display","smallthumbs")=="smallthumbs") { ?>checked="checked"<?php } ?> />&nbsp;<?php echo $lang["smallthumbs"]?></label><?php } ?>
-	  </div>
-	  <div class="tick"><label><input type="radio" name="display" value="list" <?php if (getval("display","")=="list") { ?>checked="checked"<?php } ?> />&nbsp;<?php echo $lang["list"]?></label></div>
-
 	<?php } ?>
 			
   </form>
