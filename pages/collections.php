@@ -245,7 +245,7 @@ if ($k!="")
   <h2><?php echo $lang["mycollections"]?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>:
-		<select name="collection" onchange="if($(this).value==-1){Effect.toggle('entername','blind',{duration:.5});return false;} document.getElementById('colselect').submit();" class="SearchWidth">
+		<select name="collection" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
@@ -495,7 +495,7 @@ if ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" class="SearchWidth" onchange="if($(this).value==-1){Effect.toggle('entername','blind',{duration:.5});return false;} document.getElementById('colselect').submit();">
+		<select name="collection" class="SearchWidth" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
