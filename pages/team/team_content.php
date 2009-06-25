@@ -92,7 +92,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 		</div>
 	</form>
 </div>
-<? } ?>
+<?php } ?>
 
 <?php
 include "../../include/footer.php";
