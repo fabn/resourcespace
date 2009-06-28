@@ -74,8 +74,12 @@ $atoz.="</div>";
 <?php if (!hook("replacefullnameheader")){?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="u.fullname")?"u.fullname+desc":"u.fullname")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["fullname"]?></a></td>
 <?php } ?>
+<?php if (!hook("replacegroupnameheader")){?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="g.name")?"g.name+desc":"g.name")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["group"]?></a></td>
+<?php } ?>
+<?php if (!hook("replaceemailheader")){?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="email")?"email+desc":"email")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["email"]?></a></td>
+<?php } ?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active,approved")?"last_active+desc,approved+desc":"last_active,approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] . " / " . $lang["lastactive"]?></a></td>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_browser")?"last_browser+desc":"last_browser")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastbrowser"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
@@ -90,8 +94,12 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<?php if (!hook("replacefullnamerow")){?>
 	<td><?php echo $users[$n]["fullname"]?></td>
 	<?php } ?>
+	<?php if (!hook("replacegroupnamerow")){?>
 	<td><?php echo $users[$n]["groupname"]?></td>
+	<?php } ?>
+	<?php if (!hook("replaceemailrow")){?>
 	<td><?php echo $users[$n]["email"]?></td>
+	<?php } ?>
 	<td><?php 
 	# Forumulate a sensible last active date that also includes a non-approved indication.
 	$last_active=$lang["never"];

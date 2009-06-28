@@ -590,6 +590,7 @@ function get_data_by_field($resource,$field)
 	return sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 	}
 	
+if (!function_exists("get_users")){		
 function get_users($group=0,$find="",$order_by="u.username",$usepermissions=false,$fetchrows=-1)
 	{
 	# Returns a user list. Group or search tearm is optional.
@@ -606,6 +607,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 		}
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
+}	
 
 function get_users_with_permission($permission)
 	{
