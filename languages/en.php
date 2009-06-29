@@ -178,6 +178,7 @@ $lang["previewimage"]="Preview Image";
 $lang["file"]="File";
 $lang["upload"]="Upload";
 $lang["uploadafile"]="Upload a file";
+$lang["replacefile"]="Replace file";
 $lang["imagecorrection"]="Image Correction";
 $lang["previewthumbonly"]="(preview / thumbnail only)";
 $lang["rotateclockwise"]="Rotate clockwise";

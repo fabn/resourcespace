@@ -1111,6 +1111,7 @@ function add_field_option($field,$option)
 	return true;
 	}
 
+if (!function_exists("get_resource_access")){	
 function get_resource_access($resource)
 	{
 	# Returns the access that the currently logged-in user has to $resource.
@@ -1161,6 +1162,7 @@ function get_resource_access($resource)
 
 	return $access;	
 	}
+}
 	
 function get_custom_access_user($resource,$user)
 	{

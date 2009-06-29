@@ -236,7 +236,11 @@ if ($multiple) { ?>
 <?php } 
 if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 
+<?php if ($resource["has_image"]!=1) { ?>
 <a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
+<?php } else { ?>
+<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
+<?php } ?>
 <?php if (! $disable_upload_preview) { ?><br />
 <a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
 <?php if (! $disable_alternative_files) { ?><br />
