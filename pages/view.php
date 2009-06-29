@@ -275,7 +275,9 @@ if ($resource["has_image"]==1)
 		elseif (checkperm("q"))
 			{
 			?>
+			<?php if(!hook("resourcerequest")){?>
 			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+			<?php } ?>
 			<?php
 			}
 		else
