@@ -863,13 +863,11 @@ $use_theme_bar=false;
 # or very small, such as PDFs < 5 in (will improve quality of the scr image)
 $pdf_dynamic_rip=false;
 
-# Replace Status dropdown with buttons
-$use_publishing_buttons=false;
-
 # Allow for the creation of new site text entries from Manage Content
 # note: this is intended for developers who create custom pages or hooks and need to have more manageable content,
 $site_text_custom_create=false;
 
+# use hit count functionality to track downloads rather than resource views.
 $resource_hit_count_on_downloads=false;
 $show_hitcount=false;
 ?>
