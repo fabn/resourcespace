@@ -42,7 +42,7 @@ include "../../include/header.php";
 		<li><a href="team_copy.php"><?php echo $lang["copyresource"]?></a></li>
 		<li><a href="../search.php?search=&archive=-1"><?php echo $lang["viewuserpending"]?></a></li>
 
-		<li><a href="../search.php?search=!contributions-<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
+		<li><a href="../search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
 
 		<!--<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>-->
 		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>
