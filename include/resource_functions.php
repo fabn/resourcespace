@@ -187,6 +187,8 @@ function save_resource_data($ref,$multi)
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
 	
+	hook("aftersaveresourcedata");
+	
 	if (count($errors)==0) {return true;} else {return $errors;}
 	}
 	
@@ -367,6 +369,9 @@ function save_resource_data_multi($collection)
 			if ($access==3) {save_resource_custom_access($ref);}
 			}
 		}
+		
+		hook("aftersaveresourcedata");
+		
 	}
 
 function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
