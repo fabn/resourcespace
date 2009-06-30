@@ -595,6 +595,7 @@ function add_saved_search_items($collection)
 		}
 	}
 
+if (!function_exists("allow_multi_edit")){
 function allow_multi_edit($collection)
 	{
 	# Returns true or false, can this collection be edited as a multi-edit?
@@ -613,6 +614,7 @@ function allow_multi_edit($collection)
 	return true;
 	*/
 	}
+}	
 
 function get_theme_image($theme,$theme2="",$theme3="")
 	{
