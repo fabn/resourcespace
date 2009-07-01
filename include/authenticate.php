@@ -166,11 +166,19 @@ $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_t
 sql_query("update user set last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,100)) . "'$terms where ref='$userref'");
 
 # Add group specific text (if any) when logged in.
-if (isset($usergroup))
+if (hook("replacesitetextloader"))
 	{
-	$results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and specific_to_group='$usergroup'");
-	for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];}
+	# this hook expects $site_text to be modified and returned by the plugin	 
+	$site_text=hook("replacesitetextloader");
 	}
+else
+	{
+	if (isset($usergroup))
+		{
+		$results=sql_query("select language,name,text from site_text where (page='$pagename' or page='all') and specific_to_group='$usergroup'");
+		for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];}
+		}
+	}	/* end replacesitetextloader */
 
 
 

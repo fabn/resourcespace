@@ -58,6 +58,7 @@ include "../../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<?php if(!hook("managecontenteditgroupselector")){ ?>
 <div class="Question">
 <label for="password"><?php echo $lang["group"]?></label>
 <select class="stdwidth" name="editgroup" onchange="document.getElementById('groupswitch').value='yes';document.getElementById('mainform').submit();">
@@ -70,7 +71,7 @@ for ($n=0;$n<count($groups);$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
-
+<?php } /* End managecontenteditgroupselector */?>
 
 <div class="Question"><label><?php echo $lang["text"]?></label><textarea name="text" class="stdwidth" rows=15 cols=50><?php echo htmlspecialchars($text)?></textarea><div class="clearerleft"> </div></div>
 
