@@ -872,5 +872,5 @@ $resource_hit_count_on_downloads=false;
 $show_hitcount=false;
 
 # Use checkboxes for selecting resources 
-$use_checkboxes_for_selection=true;
+$use_checkboxes_for_selection=false;
 ?>
