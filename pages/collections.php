@@ -10,7 +10,8 @@ include "../include/search_functions.php";
 
 # Disable info box for external access.
 if ($k!="") {$infobox=false;} 
-
+# Disable checkboxes for external users.
+if ($k!="") {$use_checkboxes_for_selection=false;}
 
 # Hide/show thumbs - set cookie must be before header is sent
 $thumbs=getval("thumbs",$thumbs_default);

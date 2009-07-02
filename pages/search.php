@@ -13,6 +13,8 @@ else {
        #note current user collection for add/remove links
        $user=get_user($userref);$usercollection=$user['current_collection'];
 }
+# Disable checkboxes for external users.
+if ($k!="") {$use_checkboxes_for_selection=false;}
 
 $search=getvalescaped("search","");
 
