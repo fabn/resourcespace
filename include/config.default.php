@@ -870,4 +870,7 @@ $site_text_custom_create=false;
 # use hit count functionality to track downloads rather than resource views.
 $resource_hit_count_on_downloads=false;
 $show_hitcount=false;
+
+# Use checkboxes for selecting resources 
+$use_checkboxes_for_selection=true;
 ?>

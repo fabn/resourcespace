@@ -94,6 +94,11 @@ if (substr($search,0,11)=="!collection")
 		}
 	}
 
+# get current collection resources to pre-fill checkboxes
+if ($use_checkboxes_for_selection){
+$collectionresources=get_collection_resources($usercollection);
+}
+
 # fetch resource types from query string and generate a resource types cookie
 if (getval("resetrestypes","")=="")
 	{
@@ -269,6 +274,7 @@ if (is_array($result))
 		<!--Title row-->
 		<?php if(!hook("replacelistviewtitlerow")){?>	
 		<tr class="ListviewTitleStyle">
+		<?php if ($use_checkboxes_for_selection){?><td></td><?php } ?>
 		<td><?php echo $lang["titleandcountry"]?></td>
 		<td>&nbsp;</td>
 		<td><?php echo $lang["id"]?></td>
@@ -305,7 +311,7 @@ if (is_array($result))
 			?></p><?php
 			}
 		}
-
+		
 	$rtypes=array();
 	$types=get_resource_types();
 	for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
@@ -365,6 +371,7 @@ if (is_array($result))
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<?php } ?>
 		<div class="clearer"></div>
+		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onClick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
 	</div>
 <div class="PanelShadow"></div>
 </div>
@@ -417,6 +424,8 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if (!hook("replacelistitem")) {?>
 		<!--List Item-->
 		<tr>
+		<?php if ($use_checkboxes_for_selection){?><td><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onClick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
+		
 		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),45) . 
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
@@ -535,7 +544,6 @@ else
 # Add the infobox.
 ?>
 <div id="InfoBox"><div id="InfoBoxInner"> </div></div>
-
 <?php
 include "../include/footer.php";
 ?>

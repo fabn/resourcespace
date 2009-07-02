@@ -11,6 +11,7 @@ include "../include/search_functions.php";
 # Disable info box for external access.
 if ($k!="") {$infobox=false;} 
 
+
 # Hide/show thumbs - set cookie must be before header is sent
 $thumbs=getval("thumbs",$thumbs_default);
 setcookie("thumbs",$thumbs,0);
@@ -106,6 +107,15 @@ function ToggleThumbs()
 top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
 <?php } ?>
 </script>
+
+<?php if ($use_checkboxes_for_selection){?>
+<!--clear checkboxes-->
+<script type="text/javascript">
+var checkboxes=parent.main.$$('input.checkselect');
+checkboxes.each(function(box)
+{box.checked=false;});
+</script>
+<?php } ?>
 
 </head>
 
@@ -205,6 +215,20 @@ $searches=get_saved_searches($usercollection);
 $result=do_search("!collection" . $usercollection);
 $cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
+
+if ($use_checkboxes_for_selection){
+	# update checkboxes in main window
+	for ($n=0;$n<count($result);$n++)			
+		{
+		$ref=$result[$n]["ref"];
+		?>
+		<script type="text/javascript">
+		if (parent.main.$('check<?php echo $ref?>')!=null){parent.main.$('check<?php echo $ref?>').checked=true;}
+		</script>
+	<?php
+	}
+}
+
 
 if ($thumbs=="show") { 
 
