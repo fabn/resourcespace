@@ -139,10 +139,23 @@ if (!$basic_simple_search)
 		
 		switch ($fields[$n]["type"])
 			{
-			case 0: # -------- Text boxes
+			case 0: # -------- Text boxes?><?php
 			case 1:
 			case 5:
-			?><input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" id="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
+			?>	
+
+
+			<input id="field_<?php echo $fields[$n]["name"]?>" name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
+			<?php
+			
+			if ($autocomplete_search) { # Auto-complete search functionality
+			?>
+			<div id="autocomplete_<?php echo $fields[$n]["name"]?>" class="autocomplete"></div>
+			<script type="text/javascript">
+			new Ajax.Autocompleter("field_<?php echo $fields[$n]["name"]?>", "autocomplete_<?php echo $fields[$n]["name"]?>", "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?ref=<?php echo $fields[$n]["ref"]?>" );
+			</script>
+
+			<?php } 
 			
 			# Add to the clear function so clicking 'clear' clears this box.
 			$clear_function.="document.getElementById('field_" . $fields[$n]["name"] . "').value='';";

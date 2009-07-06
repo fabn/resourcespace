@@ -6,6 +6,7 @@ include "../../include/authenticate.php";
 include "../../include/general.php";
 
 $search=getvalescaped("search","");
+$ref=getval("ref",""); # get field ref if doing a simple search completion
 
 # Find last keyword user is searching for
 $s=explode(" ",$search);
@@ -21,7 +22,7 @@ if (strlen($last)>=2) # Activate when last entered keyword >=3 chars long
 	{
 	?>
 	<?php
-	$keywords=get_suggested_keywords($last);
+	$keywords=get_suggested_keywords($last,$ref);
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		?>
