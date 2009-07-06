@@ -353,7 +353,14 @@ if (is_array($result))
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
-		<div class="ResourcePanelCountry"><?php if (!$allow_reorder) { # Do not display the country if reordering (to create more room) ?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),10),$search)?><?php } ?>&nbsp;</div>	
+		<?php
+		foreach ($thumbs_display_fields as $thumbs_display_field){
+			$field_content=get_data_by_field($ref,$thumbs_display_field);
+			?>		
+			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),32),$search)?>&nbsp;</div>
+		<?php } ?>
+		
+		<div class="ResourcePanelCountry">&nbsp;</div>	
 				
 		<?php if( resource_download_allowed($ref,"scr")){?><span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><?php } ?>
 		

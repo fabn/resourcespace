@@ -799,6 +799,9 @@ $back_to_collections_link = "";
 # For fields with partial keyword indexing enabled, this determines the minimum infix length
 $partial_index_min_word_length=3;
 
+# array of fields to display on the large thumbnail view.
+$thumbs_display_fields=array(3);
+
 
 
 #
