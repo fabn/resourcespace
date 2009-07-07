@@ -23,6 +23,7 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 	{
 	// For the simple search fields, collect from the GET request and assemble into the search string.
 	reset ($_GET);
+
 	foreach ($_GET as $key=>$value)
 		{
 		$value=trim($value);
@@ -48,7 +49,7 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 				}
 			}
 		}
-	
+
 	$year=getvalescaped("year","");
 	if ($year!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "year:" . $year;}
 	$month=getvalescaped("month","");
