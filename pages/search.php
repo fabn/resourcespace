@@ -357,6 +357,7 @@ if (is_array($result))
 		<?php
 		foreach ($thumbs_display_fields as $thumbs_display_field){
 			$field_content=get_data_by_field($ref,$thumbs_display_field);
+			
 			?>		
 			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),32),$search)?>&nbsp;</div>
 		<?php } ?>
