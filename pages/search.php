@@ -277,7 +277,7 @@ if (is_array($result))
 		<!--Title row-->
 		<?php if(!hook("replacelistviewtitlerow")){?>	
 		<tr class="ListviewTitleStyle">
-		<?php if ($use_checkboxes_for_selection){?><td></td><?php } ?>
+		<?php if ($use_checkboxes_for_selection){?><td><?php echo $lang['addremove'];?></td><?php } ?>
 		<td><?php echo $lang["titleandcountry"]?></td>
 		<td>&nbsp;</td>
 		<td><?php echo $lang["id"]?></td>
@@ -366,11 +366,11 @@ if (is_array($result))
 				
 		<?php if( resource_download_allowed($ref,"scr")){?><span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span><?php } ?>
 		
-		<?php if (!checkperm("b") && $k=="") { ?>
+		<?php if (!checkperm("b") && $k=="" && !$use_checkboxes_for_selection) { ?>
 		<span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12"/></a></span>
 		<?php } ?>
 
-		<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
+		<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="" && !$use_checkboxes_for_selection) { ?>
 		<?php if ($search=="!collection".$usercollection){?><span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 		<?php } ?>
 		<?php } ?>
@@ -435,7 +435,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if (!hook("replacelistitem")) {?>
 		<!--List Item-->
 		<tr>
-		<?php if ($use_checkboxes_for_selection){?><td><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onClick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
+		<?php if ($use_checkboxes_for_selection){?><td width="100px"><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onClick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
 		
 		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),45) . 
 		
@@ -448,7 +448,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td>
 		<td><div class="ListTools"><a <?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);"onMouseOut="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
-		if (!checkperm("b")&& $k=="") { ?>
+		if (!checkperm("b")&& $k=="" && !$use_checkboxes_for_selection) { ?>
 		<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a> &nbsp;
 		<?php } ?>
 

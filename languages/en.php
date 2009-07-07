@@ -776,4 +776,6 @@ $lang["publishstatus"]="Save with Publish Status:";
 $lang["addnewcontent"]="New content (Page,Name)";
 $lang["hitcount"]="Hit Count";
 $lang["downloads"]="Downloads";
+
+$lang["addremove"]="Add/Remove";
 ?>
