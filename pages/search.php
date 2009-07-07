@@ -45,7 +45,10 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 			elseif (strpos($key,"_month")===false && strpos($key,"_day")===false)
 				{
 				# Standard field
-				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;
+				$values=explode(" ",$value);
+				foreach ($values as $value){
+					$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;
+					}
 				}
 			}
 		}
