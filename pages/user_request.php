@@ -136,6 +136,8 @@ $groups=get_registration_selectable_usergroups();
 <div class="clearerleft"> </div>
 </div>	
 
+<?php hook("userrequestadditional");?>
+
 <div class="QuestionSubmit">
 <?php if ($errors) { ?><div class="FormError">!! <?php echo $lang["requiredfields"] ?> !!</div><?php } ?>
 <label for="buttons"> </label>			
