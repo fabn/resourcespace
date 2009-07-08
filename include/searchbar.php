@@ -90,7 +90,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 	
 	<form id="form1" method="get" action="<?php echo $baseurl?>/pages/search.php">
 
-        <input id="ssearchbox" name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
+        <input id="ssearchbox" <?php if ($hide_main_simple_search){?>type="hidden"<?php } ?> name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
 
 <?php if ($autocomplete_search) { 
 # Auto-complete search functionality

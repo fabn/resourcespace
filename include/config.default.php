@@ -429,6 +429,9 @@ $disable_quoted_printable_enc=false;
 # Set to 'true' to make the simple search bar more basic, with just the single search box.
 $basic_simple_search=false;
 
+# Hide the main simple search field in the searchbar (if using only simple search fields for the searchbar)
+$hide_main_simple_search=false;
+
 # Options to show/hide the link panels on the home page
 $home_themeheaders=false;
 $home_themes=true;
