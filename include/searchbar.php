@@ -137,6 +137,10 @@ if (!$basic_simple_search)
 		
 		$value=""; # to do, fetch set value.
 		if (isset($set_fields[$fields[$n]["name"]])) {$value=$set_fields[$fields[$n]["name"]];}
+		
+		#hook to modify field type in special case
+		if(hook("modifyfieldtype")){$fields[$n]["type"]=hook("modifyfieldtype");}
+		
 		switch ($fields[$n]["type"])
 			{
 			case 0: # -------- Text boxes?><?php
