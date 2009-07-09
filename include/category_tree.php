@@ -7,7 +7,7 @@
 </div>
 
 <div id="tree" class="CategoryTree" <?php if ($category_tree_open) { ?>style="display:block;"<?php } ?>>&nbsp;</div>
-<script language="JavaScript">
+<script type="text/javascript">
 
 var TreeParents=new Array();
 var TreeNames=new Array();

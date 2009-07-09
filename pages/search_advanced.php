@@ -171,7 +171,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			}
 		?>
 		<html>
-		<script language="Javascript">
+		<script type="text/javascript">
 		<?php if ($count==0) { ?>
 		parent.document.getElementById("dosearch").disabled=true;
 		parent.document.getElementById("dosearch").value="<?php echo $lang["nomatchingresources"]?>";
@@ -229,7 +229,7 @@ include "../include/header.php";
 <input type="hidden" name="countonly" id="countonly" value="">
 <input type="hidden" name="archive" value="<?php echo $archive?>">
 
-<script language="Javascript">
+<script type="text/javascript">
 var updating=false;
 function UpdateResultCount()
 	{

@@ -42,7 +42,7 @@ if ($add!="")
 	hook("preaddtocollection");
 	#add to current collection
 	if (add_resource_to_collection($add,$usercollection)==false)
-		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
+		{ ?><script type="text/javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	
    	# Log this
 	daily_stat("Add resource to collection",$add);

@@ -2,7 +2,7 @@
 include_once("collections_functions.php");
 ?>
 
-<script language="Javascript">
+<script type="text/javascript">
 
 function get_cookie ( cookie_name )
 {

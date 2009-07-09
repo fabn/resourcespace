@@ -16,7 +16,7 @@ include "include/header.php";
 	font-size:11px;
 	}
 </style>
-<script language="JavaScript">
+<script type="text/javascript">
 
 var TreeParents=new Array();TreeParents[0]=-1;
 var TreeNames=new Array();TreeNames[0]='Root';
@@ -249,7 +249,7 @@ function PreviousInFolder(i)
 
 <iframe width="100%" height="100" frameborder=0 border=0 name="treeloader" id="treeloader" xstyle="visibility:hidden;"></iframe>
 
-<script>
+<script type="text/javascript">
 DrawTree();
 ToggleNode(0);
 </script>

@@ -36,7 +36,7 @@ for ($n=0;$n<count($ids);$n++)
 #print_r($transto);
 #echo "'$id' cur='$curid'";
 
-echo "<script language=\"Javascript\">";
+echo "<script type=\"text/javascript\">";
 
 if (getval("reloadnode","")!="")
 	{

@@ -173,7 +173,7 @@ elseif (array_key_exists("submit",$_POST))
     */
     $saved=true;
     ?>
-    <script>
+    <script type="text/javascript">
     top.main.left.EmptyNode(<?php echo $parent?>);
     top.main.left.ReloadNode(<?php echo $parent?>);
     </script>
@@ -211,7 +211,7 @@ if (array_key_exists("delete",$_POST))
         sql_query($q[$n]);
         }
     ?>
-    <script>
+    <script type="text/javascript">
     top.main.left.EmptyNode(<?php echo $parent?>);
     top.main.left.ReloadNode(<?php echo $parent?>);
     </script>

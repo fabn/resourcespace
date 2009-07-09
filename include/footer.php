@@ -20,7 +20,7 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 <!--Global Footer-->
 <div id="Footer">
 
-<script language="Javascript">
+<script type="text/javascript">
 function SetCookie(cookieName,cookieValue,nDays) {
  var today = new Date();
  var expire = new Date();

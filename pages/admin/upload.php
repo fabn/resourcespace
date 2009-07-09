@@ -20,7 +20,7 @@ if (array_key_exists("userfile",$_FILES))
      	else
      		{
      		?>
-     		<script language="Javascript">
+     		<script type="text/javascript">
      		top.right.document.getElementById("<?php echo getval("callback","")?>").value="<?php echo $filename?>";
      		</script>
 			<?php

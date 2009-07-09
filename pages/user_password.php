@@ -31,7 +31,7 @@ include "../include/header.php";
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			
-	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["sendreminder"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["sendnewpassword"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
 	

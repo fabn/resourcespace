@@ -43,7 +43,7 @@ for ($n=0;$n<count($plugins);$n++)
 <?php
 # Check for the frameset, and if necessary, redirect to index.php so the frameset is drawn.
 if (($pagename!="terms") && ($pagename!="change_language") && ($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && (getval("k","")=="") && (!$frameless_collections) && (!checkperm("b"))) { ?>
-<script language="Javascript">
+<script type="text/javascript">
 if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' + escape(document.location);} // Missing frameset? redirect to frameset.
 </script>
 <?php } ?>

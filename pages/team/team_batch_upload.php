@@ -49,7 +49,7 @@ flush();
 # Download files
 if (!array_key_exists("uploadfiles",$_POST))
 	{
-	?><script>alert("<?php echo $lang["pleaseselectfiles"]?>");history.go(-1);</script><?php
+	?><script type="text/javascript">alert("<?php echo $lang["pleaseselectfiles"]?>");history.go(-1);</script><?php
 	exit();
 	}
 $uploadfiles=$_POST["uploadfiles"];
@@ -108,7 +108,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 	if ($result) 
 		{
 	    # Create image previews for supported image files only.
-    	?><script>document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["resizingimage"]?> <?php echo $n+1?> <?php echo $lang["of"]?> <?php echo count($uploadfiles)?><br/>";</script>
+    	?><script type="text/javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["resizingimage"]?> <?php echo $n+1?> <?php echo $lang["of"]?> <?php echo count($uploadfiles)?><br/>";</script>
     	<?php
 		flush();
     	create_previews($ref,false,$extension);
@@ -137,7 +137,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# Add to collection?
 		if ($collection!="")
 			{
-			?><script language="Javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
+			?><script type="text/javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
 	<?php
 			}
 			
@@ -150,7 +150,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		$status=$lang["uploadfailedfor"] . $path;
 		sleep(2);$failed++;
 		}
-	?><script language="Javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $status?><br/><br/>";</script>
+	?><script type="text/javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $status?><br/><br/>";</script>
 	<?php
 	flush();
 	}
@@ -160,4 +160,4 @@ if (!$use_local)
 	ftp_close($ftp);
 	}
 ?>
-<script>document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["uploadcomplete"]?> <?php echo $done?> <?php echo $lang["resourcesuploadedok"]?>, <?php echo $failed?> <?php echo $lang["failed"]?>. <?php echo $lang["clickviewnewmaterial"]?>";</script>
+<script type="text/javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["uploadcomplete"]?> <?php echo $done?> <?php echo $lang["resourcesuploadedok"]?>, <?php echo $failed?> <?php echo $lang["failed"]?>. <?php echo $lang["clickviewnewmaterial"]?>";</script>

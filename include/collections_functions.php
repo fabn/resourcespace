@@ -162,7 +162,7 @@ function refresh_collection_frame($collection="")
 	if (!$frameless_collections)
 		{
 		global $headerinsert,$baseurl;
-		$headerinsert.="<script language=\"Javascript\">
+		$headerinsert.="<script  type=\"text/javascript\">
 		top.collections.location.href=\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection",$collection) . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
 		</script>";
 		}

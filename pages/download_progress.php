@@ -25,7 +25,7 @@ include "../include/header.php";
 if (!$save_as)
 	{
 	?>
-	<script language="Javascript">
+	<script type="text/javascript">
 	window.setTimeout("document.location='<?php echo $url?>'",1000);
 	</script>
 	<?php

@@ -398,7 +398,7 @@ for ($n=0;$n<count($altfiles);$n++)
 	<?php if (!checkperm("b")) { ?><li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["addtocollection"]?></a></li><?php } ?>
 	<?php if ($allow_share && ($access==0 || ($access==1 && $restricted_share))) { ?>
 		<li><a href="resource_email.php?ref=<?php echo $ref?>" target="main">&gt; <?php echo $lang["emailresource"]?></a></li>
-		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>" target="main">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>
+		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>
 	<?php if (checkperm("e" . $resource["archive"])) { ?>
 		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>">&gt; 
 			<?php echo $lang["edit"]?></a>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["delete"]?></a></li><?php } ?>
@@ -450,7 +450,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 		}
 	?>
 	</div>
-	<script language="Javascript">
+	<script type="text/javascript">
 	function SelectTab(tab)
 		{
 		// Deselect all tabs
@@ -718,7 +718,7 @@ if (count($result)>0)
 -->
 
 <?php } ?>
-<script language="Javascript">
+<script type="text/javascript">
 function UpdateResultCount()
 	{
 	// set the target of the form to be the result count iframe and submit

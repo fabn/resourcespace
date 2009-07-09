@@ -23,7 +23,7 @@ $homeimages=$filecount;
 
 if ($filecount>1) { # Only add Javascript if more than one image.
 ?>
-<script language="Javascript">
+<script type="text/javascript">
 
 var num_photos=<?php echo $homeimages?>;  // <---- number of photos (/images/slideshow?.jpg)
 var photo_delay=5; // <---- photo delay in seconds

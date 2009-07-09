@@ -119,7 +119,7 @@ if (!$valid)
 	['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '')));
     $path=$_SERVER["REQUEST_URI"];
 	?>
-	<script>
+	<script type="text/javascript">
 	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?><?php if ($autologgedout) { ?>&auto=true<?php } ?>";
 	</script>
 	<?php

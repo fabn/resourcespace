@@ -319,6 +319,7 @@ $lang["emailnotfound"]="The e-mail address specified could not be found";
 $lang["yourname"]="Your Full Name";
 $lang["youremailaddress"]="Your E-mail Address";
 $lang["sendreminder"]="Send Reminder";
+$lang["sendnewpassword"]="Send New Password";
 $lang["passwordreminder"]="New Password";
 $lang["requestuserlogin"]="Request User Login";
 

@@ -305,7 +305,7 @@ if (!$basic_simple_search)
 
 	</div>
 
-	<script language="Javascript">
+	<script type="text/javascript">
 	function ResetTicks() {<?php echo $clear_function?>}
 	</script>
 	
