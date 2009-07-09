@@ -283,6 +283,8 @@ $use_theme_as_home=false;
 
 # Show images along with theme category headers (image selected is the most popular within the theme category)
 $theme_images=true;
+$theme_images_number=1; # How many to auto-select (if none chosen manually)
+$theme_images_align_right=false; # Align theme images to the right on the themes page? (particularly useful when there are multiple theme images)
 
 # How many levels of theme category to show.
 # If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
@@ -804,6 +806,8 @@ $partial_index_min_word_length=3;
 
 # array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(3);
+
+
 
 
 

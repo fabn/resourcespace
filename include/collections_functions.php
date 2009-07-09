@@ -619,6 +619,7 @@ function allow_multi_edit($collection)
 function get_theme_image($theme,$theme2="",$theme3="")
 	{
 	# Returns an array of resource references that can be used as theme category images.
+	global $theme_images_number;
 	
 	# First try to find resources that have been specifically chosen using the option on the collection comments page.
 	$chosen=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
@@ -631,7 +632,7 @@ function get_theme_image($theme,$theme2="",$theme3="")
 	$images=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
 	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
 	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
-	. " and r.has_image=1 order by r.hit_count desc limit 1",0);
+	. " and r.has_image=1 order by r.hit_count desc limit " . $theme_images_number,0);
 	if (count($images)>0) {return $images;}
 	return false;
 	}

@@ -191,7 +191,7 @@ if ($header=="")
 
 function DisplayTheme($theme1,$theme2="",$theme3="")
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right;
 
 	# Work out theme name
 	if ($theme1!="") {$themename=$theme1;}
@@ -206,7 +206,15 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		<div class="RecordPanel">  
 		
 		<div class="RecordHeader">
+		
 		<?php
+		if ($theme_images_align_right)
+			{
+			?>
+			<div style="float:right;">
+			<?php	
+			}
+		
 		$images=get_theme_image($theme1, $theme2, $theme3);
 		if (($images!==false) && ($theme_images))
 			{
@@ -216,8 +224,16 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 				<?php
 				}
 			}
+		if ($theme_images_align_right)
+			{
+			?>
+			</div>
+			<?php	
+			}
 		?>
-		<h1 style="margin-top:12px;float:left;"><?php echo stripslashes(str_replace("*","",$themename))?></h1>
+		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php echo stripslashes(str_replace("*","",$themename))?></h1>
+
+		<div class="clearerright"> </div>
 		</div>
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
