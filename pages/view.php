@@ -531,7 +531,7 @@ for ($n=0;$n<count($fields);$n++)
 			if (file_exists($plugin)) {include $plugin;}
 			
 			# Highlight keywords
-			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"]);
+			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);
 
 			# Use a display template to render this field
 			$template=$fields[$n]["display_template"];
@@ -548,9 +548,9 @@ for ($n=0;$n<count($fields);$n++)
 
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,30,"<br />",true);
-
+				
 				# Highlight keywords
-				$value=highlightkeywords($value,$search,$fields[$n]["partial_index"]);
+				$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);
 				?><div class="itemNarrow"><h3><?php echo $title?></h3><p><?php echo $value?></p></div><?php
 				}
 			}

@@ -1209,25 +1209,35 @@ function quoted_printable_encode_subject($string, $encoding='UTF-8') {
        return '=?'.$encoding.'?q?'.$result.'?=';
 }
 
-function highlightkeywords($text,$search,$partial_index=false)
+function highlightkeywords($text,$search,$partial_index=false,$field_name="",$keywords_index=1)
 	{
+	# do not hightlight if the field is not indexed, so it is clearer where results came from.	
+	if ($keywords_index!=1){return $text;}	
 	# Highlight searched keywords in $text
 	# Optional - depends on $highlightkeywords being set in config.php.
 	global $highlightkeywords;
 	# Situations where we do not need to do this.
 	if (!isset($highlightkeywords) || ($highlightkeywords==false) || ($search=="") || ($text=="") || (substr($search,0,1)=="!")) {return $text;}
-	
-	global $hlkeycache;
-	if (!isset($hlkeycache))
-		{
-		# Generate the cache of search keywords (this is a global variable, so the next time the function is called we don't need to regenerate the list
+
+		# Generate the cache of search keywords (no longer global so it can test against particular fields.
+		# a search is a small array so I don't think there is much to lose by processing it.
 		$hlkeycache=array();
 		$s=split_keywords($search);
 		for ($n=0;$n<count($s);$n++)
 			{
-			if (strpos($s[$n],":")!==false) {$c=explode(":",$s[$n]);$s[$n]=$c[1];}
-			$hlkeycache[]=$s[$n];
+			if (strpos($s[$n],":")!==false) {
+				$c=explode(":",$s[$n]);
+				# only add field specific keywords
+				if($field_name!="" && $c[0]==$field_name){
+					$hlkeycache[]=$c[1];			
+				}	
+				
 			}
+			# else add general keywords
+			else {
+				$hlkeycache[]=$s[$n];	
+			}	
+
 		}
 
 	# Parse and replace.

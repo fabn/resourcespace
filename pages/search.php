@@ -18,6 +18,17 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 
 $search=getvalescaped("search","");
 
+# create a thumbs_display_field array with information needed for detailed field highlighting
+for ($n=0;$n<count($thumbs_display_fields);$n++){
+	$field_info=get_field($thumbs_display_fields[$n]);
+	if (count($field_info>1)){
+		$tdf[$n]['ref']=$thumbs_display_fields[$n];
+		$tdf[$n]['indexed']=$field_info['keywords_index'];
+		$tdf[$n]['partial_index']=$field_info['partial_index'];
+		$tdf[$n]['name']=$field_info['name'];
+	}
+}
+
 # Append extra search parameters from the quick search.
 if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
@@ -358,11 +369,10 @@ if (is_array($result))
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
 		<?php
-		foreach ($thumbs_display_fields as $thumbs_display_field){
-			$field_content=get_data_by_field($ref,$thumbs_display_field);
-			
+		for ($x=0;$x<count($tdf);$x++){
+			$field_content=get_data_by_field($ref,$tdf[$x]['ref']);
 			?>		
-			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),32),$search)?>&nbsp;</div>
+			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),32),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
 		<?php } ?>
 		
 		<div class="ResourcePanelCountry">&nbsp;</div>	
@@ -444,7 +454,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
 		($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
-		,$search) ?></a></div></td>
+		,$search,"","",1) ?></a></div></td>
 		<td><?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
 		<td><?php echo $result[$n]["ref"]?></td>
 		<td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td>
