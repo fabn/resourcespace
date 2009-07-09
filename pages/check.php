@@ -42,11 +42,19 @@ if ($mysqlversion<'5') {$result="FAIL: should be 5 or greater";} else {$result="
 ?><tr><td>MySQL version</td><td><?php echo $mysqlversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
-$gdinfo=gd_info();
-if (is_array($gdinfo))
+if (function_exists("gd_info"))
 	{
-	$version=$gdinfo["GD Version"];
-	$result="OK";
+	$gdinfo=gd_info();
+	if (is_array($gdinfo))
+		{
+		$version=$gdinfo["GD Version"];
+		$result="OK";
+		}
+	else
+		{
+		$version="Not installed.";
+		$result="FAIL";
+		}
 	}
 else
 	{
