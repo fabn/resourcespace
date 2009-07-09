@@ -507,7 +507,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 				if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
 
-				$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
+				$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
 				$output=shell_exec($runcommand);  
 				# echo $runcommand."<br>";
 				# Add a watermarked image too?
@@ -519,7 +519,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					
 					$watermarkreal=dirname(__FILE__) ."/../" . $watermark;
 					
-					$runcommand = $command ." $profile -resize " . $tw . "x" . $th . "\">\" -tile ".escapeshellarg($watermarkreal)." -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
+					$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" -tile ".escapeshellarg($watermarkreal)." -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
 					
 					#die($runcommand);
 					$output=shell_exec($runcommand); 
