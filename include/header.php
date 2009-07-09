@@ -17,7 +17,7 @@ http://www.resourcespace.org/
 <script src="<?php echo $baseurl?>/lib/js/prototype.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script src="<?php echo $baseurl?>/lib/js/scriptaculous.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
-<?php if ($frameless_collections) { ?>
+<?php if ($frameless_collections||$use_checkboxes_for_selection) { ?>
 <script src="<?php echo $baseurl?>/lib/js/frameless_collections.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script type="text/javascript">
 var baseurl_short="<?php echo $baseurl_short?>";

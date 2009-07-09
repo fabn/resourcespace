@@ -4,6 +4,7 @@ include "include/general.php";
 include "include/resource_functions.php";
 
 $url=getval("url","index.php");
+$text=getvalescaped("text","");
 
 # process log in
 $error="";
@@ -181,6 +182,7 @@ include "include/header.php";
 ?>
 
   <h1><?php echo text("welcomelogin")?></h1>
+  <p><?php echo text(getvalescaped("text",""))?></p>
   <p>
   <?php if ($allow_account_request) { ?><a href="pages/user_request.php">&gt; <?php echo $lang["nopassword"]?> </a><?php } ?>
   <?php if ($allow_password_reset) { ?><br/><a href="pages/user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a><?php } ?>
