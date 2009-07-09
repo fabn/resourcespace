@@ -364,7 +364,7 @@ if (is_array($result))
 		
 <?php if (!hook("rendertitlethumb")) { ?>			
 
-		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($result[$n]["title"]),32)),$search)?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($result[$n]["title"]),30)),$search)?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
@@ -372,7 +372,7 @@ if (is_array($result))
 		for ($x=0;$x<count($tdf);$x++){
 			$field_content=get_data_by_field($ref,$tdf[$x]['ref']);
 			?>		
-			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),32),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
+			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),30),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
 		<?php } ?>
 		
 		<div class="ResourcePanelCountry">&nbsp;</div>	
