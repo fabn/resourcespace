@@ -944,7 +944,7 @@ function get_fields_with_options()
 	{
 	# Returns a list of fields that have option lists (checking user permissions)
 	# Used for 'manage field options' page.
-	$fields=sql_query("select * from resource_type_field where type=2 or type=3 order by resource_type,order_by");
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where type=2 or type=3 order by resource_type,order_by");
 	$return=array();
 	# Apply permissions.
 	for ($n=0;$n<count($fields);$n++)
@@ -960,10 +960,10 @@ function get_fields_with_options()
 
 function get_field($field)
 	{
-	$return=sql_query("select * from resource_type_field where ref='$field'");
+	$return=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where ref='$field'");
 	if (count($return)>0) {return $return[0];} else {return false;}
 	}
-	
+
 function get_field_options_with_stats($field)
 	{
 	# For a given field, list all options with usage stats.
