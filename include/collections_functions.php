@@ -174,7 +174,12 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Returns a comma separated list of resource refs in each collection, used for thumbnail previews.
 	$sql="";
 	# Keywords searching?
-	if (strlen($search)>0)
+	if (strlen($search)==1)
+		{
+		# A-Z search
+		$sql="and c.name like '$search%'";
+		}
+	elseif (strlen($search)>1)
 		{
 		$keywords=split_keywords($search,true);
 		$keyrefs=array();
