@@ -141,7 +141,9 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		{
 		# Save multiple resources
 		save_resource_data_multi($collection);
-		redirect("pages/search.php?refreshcollectionframe=true&search=!collection" . $collection);
+		if(!hook("redirectaftermultisave")){
+			redirect("pages/search.php?refreshcollectionframe=true&search=!collection" . $collection);
+			}
 		}
 	}
 

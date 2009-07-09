@@ -2,7 +2,7 @@
 # Collections functions
 # Functions to manipulate collections
 
-
+if (!function_exists("get_user_collections")){
 function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetchrows=-1,$auto_create=true)
 	{
 	# Returns a list of user collections.
@@ -30,6 +30,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	
 	return $return;
 	}
+}	
 
 function get_collection($ref)
 	{

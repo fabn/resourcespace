@@ -109,6 +109,7 @@ top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=tru
 <?php } ?>
 </script>
 
+<?php if(!hook("clearmaincheckboxesfromcollectionframe")){?>
 <?php if ($use_checkboxes_for_selection){?>
 <!--clear checkboxes-->
 <script type="text/javascript">
@@ -117,6 +118,7 @@ checkboxes.each(function(box)
 {box.checked=false;});
 </script>
 <?php } ?>
+<?php } #end hook clearmaincheckboxesfromcollectionframe?>
 
 </head>
 
@@ -217,18 +219,20 @@ $result=do_search("!collection" . $usercollection);
 $cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
 
-if ($use_checkboxes_for_selection){
-	# update checkboxes in main window
-	for ($n=0;$n<count($result);$n++)			
-		{
-		$ref=$result[$n]["ref"];
-		?>
-		<script type="text/javascript">
-		if (parent.main.$('check<?php echo $ref?>')!=null){parent.main.$('check<?php echo $ref?>').checked=true;}
-		</script>
-	<?php
+if(!hook("updatemaincheckboxesfromcollectionframe")){
+	if ($use_checkboxes_for_selection){	
+		# update checkboxes in main window
+		for ($n=0;$n<count($result);$n++)			
+			{
+			$ref=$result[$n]["ref"];
+			?>
+			<script type="text/javascript">
+			if (parent.main.$('check<?php echo $ref?>')!=null){parent.main.$('check<?php echo $ref?>').checked=true;}
+			</script>
+		<?php
+		}
 	}
-}
+} # end hook updatemaincheckboxesfromcollectionframe
 
 
 if ($thumbs=="show") { 

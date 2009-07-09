@@ -8,7 +8,7 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalesc
 include "../../include/research_functions.php";
 include "../../include/resource_functions.php";
 include "../../include/search_functions.php";
-
+	
 $collection=getvalescaped("collection","");
 if ($collection!="")
 	{
@@ -35,6 +35,8 @@ if ($collection!="")
 	hook("postchangecollection");
 	}
 
+if(hook("modifyusercollection")){$usercollection=hook("modifyusercollection");} 
+
 # Process adding of items
 $add=getvalescaped("add","");
 if ($add!="")
@@ -43,7 +45,6 @@ if ($add!="")
 	#add to current collection
 	if (add_resource_to_collection($add,$usercollection)==false)
 		{ ?><script type="text/javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
-	
    	# Log this
 	daily_stat("Add resource to collection",$add);
 	
