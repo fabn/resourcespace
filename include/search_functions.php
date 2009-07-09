@@ -313,7 +313,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		# Extract the collection number
 		$collection=explode(" ",$search);$collection=str_replace("!collection","",$collection[0]);
 		
-		return sql_query("select distinct r.*,c.*,r.hit_count score,length(c.comment) commentset from resource r join collection_resource c on r.ref=c.resource $colcustperm where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
+		return sql_query("select distinct r.*,c.date_added,c.comment,r.hit_count score,length(c.comment) commentset from resource r join collection_resource c on r.ref=c.resource $colcustperm where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
 		}
 	
 	# View Related
