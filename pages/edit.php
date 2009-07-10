@@ -557,7 +557,7 @@ for ($n=0;$n<count($fields);$n++)
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
-		if (checkperm("e0") && checkperm("e-2")) {$mode=-2;}
+		#if (checkperm("e0") && checkperm("e-2")) {$mode=-2;}
 		?>
 		<input type=hidden name="archive" value="<?php echo $mode?>">
 		<?php
