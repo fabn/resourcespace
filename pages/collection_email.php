@@ -123,12 +123,15 @@ include "../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<?php if(!hook("replaceemailtousers")){?>
 <div class="Question">
 <label for="users"><?php echo $lang["emailtousers"]?></label><?php $userstring=getval("users","");include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
 </div>
+<?php } #end hook replaceemailtousers ?>
 
+<?php if(!hook("replaceemailaccessselector")){?>
 <div class="Question" id="question_access">
 <label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
 <select class="stdwidth" name="access" id="access">
@@ -140,7 +143,9 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
+<?php } # end hook replaceemailaccessselector ?>
 
+<?php if(!hook("replaceemailexpiryselector")){?>
 <div class="Question">
 <label><?php echo $lang["externalselectresourceexpires"]?></label>
 <select name="expires" class="stdwidth">
@@ -155,20 +160,24 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
-
+<?php } # end hook replaceemailexpiryselector ?>
 
 <?php if ($collection["user"]==$userref) { # Collection owner can request feedback.
 ?>
+<?php if(!hook("replaceemailrequestfeedback")){?>
 <div class="Question">
 <label for="request_feedback"><?php echo $lang["requestfeedback"]?></label><input type=checkbox id="request_feedback" name="request_feedback" value="yes">
 <div class="clearerleft"> </div>
 </div>
+<?php } # end hook replaceemailrequestfeedback ?>
 <?php } ?>
 
+<?php if(!hook("replaceemailsubmitbutton")){?>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["emailcollection"]?>&nbsp;&nbsp;" />
 </div>
+<?php } # end hook replaceemailsubmitbutton ?>
 
 </form>
 </div>

@@ -56,13 +56,15 @@ include "../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<?php if(!hook("replaceemailtousers")){?>
 <div class="Question">
 <label for="users"><?php echo $lang["emailtousers"]?></label><?php include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
 <?php if ($errors!="") { ?><div class="FormError">!! <?php echo $errors?> !!</div><?php } ?>
 </div>
+<?php } ?>
 
-
+<?php if(!hook("replaceemailaccessselector")){?>
 <div class="Question" id="question_access">
 <label for="archive"><?php echo $lang["externalselectresourceaccess"]?></label>
 <select class="stdwidth" name="access" id="access">
@@ -74,7 +76,9 @@ for ($n=$access;$n<=1;$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
 
+<?php if(!hook("replaceemailexpiryselector")){?>
 <div class="Question">
 <label><?php echo $lang["externalselectresourceexpires"]?></label>
 <select name="expires" class="stdwidth">
@@ -89,11 +93,14 @@ for ($n=$access;$n<=1;$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
 
+<?php if(!hook("replaceemailsubmitbutton")){?>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["emailresource"]?>&nbsp;&nbsp;" />
 </div>
+<?php } # end replaceemailsubmitbutton ?>
 
 </form>
 </div>
