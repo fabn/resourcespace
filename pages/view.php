@@ -175,14 +175,6 @@ elseif ($resource["has_image"]==1)
 	if (file_exists($imagepath))
 		{ ?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
 	if (file_exists($previewpath)) { ?></a><?php }
-	
-	//check for mp3 file and allow optional player
-	$mp3path=get_resource_path($ref,false,"",false,"mp3");
-	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
-	
-	if (file_exists($mp3realpath)){
-		include "mp3_play.php";
-		}
 	}
 else
 	{
@@ -190,6 +182,7 @@ else
 	<img src="../gfx/type<?php echo $resource["resource_type"]?>.gif" alt="" class="Picture" style="border:none;" />
 	<?php
 	}
+	
 ?>
 <?php } /* End of renderinnerresourcepreview hook */ ?>
 
@@ -201,6 +194,17 @@ else
 <h2><?php echo $lang["resourcetools"]?></h2>
 
 <?php 
+
+if ($mp3_player){
+	//check for mp3 file and allow optional player
+	$mp3path=get_resource_path($ref,false,"",false,"mp3");
+	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+	
+	if (file_exists($mp3realpath)){
+		include "mp3_play.php";
+	}
+}
+
 # Look for a viewer to handle the right hand panel. If not, display the standard photo download / file download boxes.
 if (file_exists("../viewers/type" . $resource["resource_type"] . ".php"))
 	{
