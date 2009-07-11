@@ -883,4 +883,9 @@ $show_hitcount=false;
 
 # Use checkboxes for selecting resources 
 $use_checkboxes_for_selection=false;
+
+# allow player for mp3 files
+# player docs at http://flash-mp3-player.net/players/maxi/
+$mp3_player=false;
+
 ?>
