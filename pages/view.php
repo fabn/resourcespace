@@ -437,14 +437,16 @@ if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 
 <?php
 $extra="";
+$fields=get_resource_field_data($ref);
+
+
+#  -----------------------------  Draw tabs ---------------------------
 $tabname="";
 $tabcount=0;
-$fields=get_resource_field_data($ref);
 if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	{ ?>
 	<div class="TabBar">
 	<?php
-	# Draw tabs.
 	$extra="";
 	$tabname="";
 	$tabcount=0;
@@ -476,13 +478,16 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	</script>
 	<?php
 	}
+	
+	
+	
 ?>
 
 <div id="tab0" class="TabbedPanel<?php if ($tabcount>0) { ?> StyledTabbedPanel<?php } ?>">
 <div class="clearerleft"> </div>
 <div>
 <?php 
-# Draw standard fields
+#  ----------------------------- Draw standard fields ------------------------
 ?>
 <?php if ($show_resourceid) { ?><div class="itemNarrow"><h3><?php echo $lang["resourceid"]?></h3><p><?php echo $ref?></p></div><?php } ?>
 <?php if ($show_access_field) { ?><div class="itemNarrow"><h3><?php echo $lang["access"]?></h3><p><?php echo @$lang["access" . $resource["access"]]?></p></div><?php } ?>
