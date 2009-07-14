@@ -33,16 +33,18 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $valid=true;
         $userref=$userdata[0]["ref"];
         $username=$userdata[0]["username"];
-        $userpermissions=array_merge(split(",",trim($global_permissions)),split(",",trim($userdata[0]["permissions"]))); #create userpermissions array for checkperm() function
+		
+		# Hook to modify user permissions
+		if (hook("userpermissions")){$userdata[0]["permissions"]=hook("userpermissions");} 
+		
+		$userpermissions=array_merge(split(",",trim($global_permissions)),split(",",trim($userdata[0]["permissions"]))); #create userpermissions array for checkperm() function
+	
 		$usergroup=$userdata[0]["usergroup"];
         $usergroupparent=$userdata[0]["parent"];
         $useremail=$userdata[0]["email"];
         $userpassword=$userdata[0]["password"];
         $userfullname=$userdata[0]["fullname"];
 		if (!isset($userfixedtheme)) {$userfixedtheme=$userdata[0]["fixed_theme"];} # only set if not set in config.php
-       
-		# Hook to modify user permissions
-		if (hook("userpermissions")){$userpermissions=hook("userpermissions");}
 
         $ip_restrict_group=trim($userdata[0]["ip_restrict_group"]);
         $ip_restrict_user=trim($userdata[0]["ip_restrict_user"]);
