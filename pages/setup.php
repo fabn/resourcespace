@@ -569,7 +569,7 @@ if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 		<p><?php echo $lang["setup-successnextsteps"]; ?></p>
 		<ul>
 			<li><?php echo $lang["setup-successremovewrite"]; ?></li>
-			<li><?php echo $lang["setup-successvisitwiki"]; ?></li>
+			<li><?php echo $lang["setup-visitwiki"]; ?></li>
 			<li><a href="<?php echo $baseurl;?>/login.php">Login to <?php echo $applicationname;?></a>
 				<ul>
 					<li>Username: admin</li>
