@@ -479,6 +479,128 @@ function get_advanced_search_fields($archive=false)
 	return $return;
 	}
 
+function render_search_field($field,$name,$value="")
+	{
+	# Renders the HTML for the provided $field for inclusion in a search form, for example the
+	# advanced search page.
+	#
+	# $field	an associative array of field data, i.e. a row from the resource_type_field table.
+	# $name		the input name to use in the form (post name)
+	# $value	the default value to set for this field, if any
 	
+	global $auto_order_checkbox;
+	?>
+	<div class="Question">
+	<label><?php echo i18n_get_translated($field["title"])?></label>
+	<?php
+	switch ($field["type"]) {
+		case 0: # -------- Text boxes
+		case 1:
+		case 5:
+		?><input class="stdwidth" type=text name="field_<?php echo $field["ref"]?>" value="<?php echo htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?php
+		break;
+	
+		case 2: 
+		case 3:
+		# -------- Show a check list or dropdown for dropdowns and check lists?
+		# By default show a checkbox list for both (for multiple selections this enabled OR functionality)
+		if ($field["display_as_dropdown"])
+			{
+			# Show as a dropdown box
+			$options=explode(",",$field["options"]);
+			$set=trim_array(explode(";",cleanse_string($value,true)));
+			?><select class="stdwidth" name="field_<?php echo $field["ref"]?>" onChange="UpdateResultCount();">				<option value=""></option><?php
+			for ($m=0;$m<count($options);$m++)
+				{
+				?>
+				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
+				<?php
+				}
+			?></select><?php
+			}
+		else
+			{
+			# Show as a checkbox list (default)
+			$options=trim_array(explode(",",$field["options"]));
+			if ($auto_order_checkbox) {sort($options);}
+			$set=trim_array(explode(";",cleanse_string($value,true)));
+			$wrap=0;
+			$l=average_length($options);
+			$cols=5;
+			if ($l>10) {$cols=4;}
+			if ($l>15) {$cols=3;}
+			if ($l>25) {$cols=2;}
+			?><table cellpadding=2 cellspacing=0><tr><?php
+			for ($m=0;$m<count($options);$m++)
+				{
+				$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
+				$name=$field["ref"] . "_" . $m;
+				if ($options[$m]!="")
+					{
+					?>
+					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+					<?php
+					}
+				}
+			?></tr></table><?php
+			}
+		break;
+		
+		case 4:
+		case 6: # ----- Date types
+		$found_year='';$found_month='';$found_day='';
+		$s=explode("-",$value);
+		if (count($s)>=3)
+			{
+			$found_year=$s[0];
+			$found_month=$s[1];
+			$found_day=$s[2];
+			}
+		?>		
+		<select name="<?php echo $name?>_year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anyyear"]?></option>
+		  <?php
+		  $y=date("Y");
+		  for ($d=$minyear;$d<=$y;$d++)
+			{
+			?><option <?php if ($d==$found_year) { ?>selected<?php } ?>><?php echo $d?></option><?php
+			}
+		  ?>
+		</select>
+		<select name="<?php echo $name?>_month" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anymonth"]?></option>
+		  <?php
+		  for ($d=1;$d<=12;$d++)
+			{
+			$m=str_pad($d,2,"0",STR_PAD_LEFT);
+			?><option <?php if ($d==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$d-1]?></option><?php
+			}
+		  ?>
+		</select>
+		<select name="<?php echo $name?>_day" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		  <option value=""><?php echo $lang["anyday"]?></option>
+		  <?php
+		  for ($d=1;$d<=31;$d++)
+			{
+			$m=str_pad($d,2,"0",STR_PAD_LEFT);
+			?><option <?php if ($d==$found_day) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $m?></option><?php
+			}
+		  ?>
+		</select>
+		<?php		
+		break;
+		
+		
+		case 7: # ----- Category Tree
+		$options=$field["options"];
+		include "category_tree.php";
+		break;
+		}
+	?>
+	<div class="clearerleft"> </div>
+	</div>
+	<?php
+	}
+
 	
 ?>
