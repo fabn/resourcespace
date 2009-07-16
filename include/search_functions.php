@@ -469,7 +469,8 @@ function get_advanced_search_fields($archive=false)
 	{
 	# Returns a list of fields suitable for advanced searching.	
 	$return=array();
-	$fields=sql_query("select *,display_as_dropdown from resource_type_field where advanced_search=1 and keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where advanced_search=1 and keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
+	# Apply field permissions
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
@@ -479,7 +480,22 @@ function get_advanced_search_fields($archive=false)
 	return $return;
 	}
 
-function render_search_field($field,$name,$value="")
+function get_fields($field_refs)
+	{
+	# Returns a list of fields with refs matching the supplied field refs.
+	$return=array();
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where  keywords_index=1 and length(name)>0 and ref in ('" . join("','",$field_refs) . "') order by order_by");
+	# Apply field permissions
+	for ($n=0;$n<count($fields);$n++)
+		{
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+		&& !checkperm("f-" . $fields[$n]["ref"]))
+		{$return[]=$fields[$n];}
+		}
+	return $return;
+	}
+
+function render_search_field($field,$value="",$autoupdate,$class="stdwidth")
 	{
 	# Renders the HTML for the provided $field for inclusion in a search form, for example the
 	# advanced search page.
@@ -489,6 +505,7 @@ function render_search_field($field,$name,$value="")
 	# $value	the default value to set for this field, if any
 	
 	global $auto_order_checkbox;
+	$name="field_" . $field["ref"];
 	?>
 	<div class="Question">
 	<label><?php echo i18n_get_translated($field["title"])?></label>
@@ -497,7 +514,7 @@ function render_search_field($field,$name,$value="")
 		case 0: # -------- Text boxes
 		case 1:
 		case 5:
-		?><input class="stdwidth" type=text name="field_<?php echo $field["ref"]?>" value="<?php echo htmlspecialchars($value)?>" onChange="UpdateResultCount();" onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?php
+		?><input class="<?php echo $class ?>" type=text name="field_<?php echo $field["ref"]?>" value="<?php echo htmlspecialchars($value)?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?> onKeyPress="if (!(updating)) {setTimeout('UpdateResultCount()',2000);updating=true;}"><?php
 		break;
 	
 		case 2: 
@@ -509,7 +526,7 @@ function render_search_field($field,$name,$value="")
 			# Show as a dropdown box
 			$options=explode(",",$field["options"]);
 			$set=trim_array(explode(";",cleanse_string($value,true)));
-			?><select class="stdwidth" name="field_<?php echo $field["ref"]?>" onChange="UpdateResultCount();">				<option value=""></option><?php
+			?><select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>><option value=""></option><?php
 			for ($m=0;$m<count($options);$m++)
 				{
 				?>
@@ -538,7 +555,7 @@ function render_search_field($field,$name,$value="")
 				if ($options[$m]!="")
 					{
 					?>
-					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> onClick="UpdateResultCount();"></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
 					<?php
 					}
 				}
@@ -557,7 +574,7 @@ function render_search_field($field,$name,$value="")
 			$found_day=$s[2];
 			}
 		?>		
-		<select name="<?php echo $name?>_year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		<select name="<?php echo $name?>_year" class="SearchWidth" style="width:100px;" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>>
 		  <option value=""><?php echo $lang["anyyear"]?></option>
 		  <?php
 		  $y=date("Y");
@@ -567,7 +584,7 @@ function render_search_field($field,$name,$value="")
 			}
 		  ?>
 		</select>
-		<select name="<?php echo $name?>_month" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		<select name="<?php echo $name?>_month" class="SearchWidth" style="width:100px;" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>>
 		  <option value=""><?php echo $lang["anymonth"]?></option>
 		  <?php
 		  for ($d=1;$d<=12;$d++)
@@ -577,7 +594,7 @@ function render_search_field($field,$name,$value="")
 			}
 		  ?>
 		</select>
-		<select name="<?php echo $name?>_day" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">
+		<select name="<?php echo $name?>_day" class="SearchWidth" style="width:100px;" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>>
 		  <option value=""><?php echo $lang["anyday"]?></option>
 		  <?php
 		  for ($d=1;$d<=31;$d++)
@@ -602,5 +619,146 @@ function render_search_field($field,$name,$value="")
 	<?php
 	}
 
+function search_form_to_search_query($fields)
+	{
+	# Take the data in the the posted search form that contained $fields, and assemble
+	# a search query string that can be used for a standard search.
+	#
+	# This is used to take the advanced search form and assemble it into a search query.
 	
+	global $auto_order_checkbox;
+	$search="";
+	if (getval("year","")!="")
+		{
+		if ($search!="") {$search.=", ";}
+		$search.="year:" . getval("year","");	
+		}
+	if (getval("month","")!="")
+		{
+		if ($search!="") {$search.=", ";}
+		$search.="month:" . getval("month","");	
+		}
+	if (getval("day","")!="")
+		{
+		if ($search!="") {$search.=", ";}
+		$search.="day:" . getval("day","");	
+		}
+		
+	for ($n=0;$n<count($fields);$n++)
+		{
+		switch ($fields[$n]["type"])
+			{
+			case 0: # -------- Text boxes
+			case 1:
+			case 5:
+			$name="field_" . $fields[$n]["ref"];
+			$value=getvalescaped($name,"");
+			if ($value!="")
+				{
+				$vs=split_keywords($value);
+				for ($m=0;$m<count($vs);$m++)
+					{
+					if ($search!="") {$search.=", ";}
+					$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
+					}
+				}
+			break;
+			
+			case 2: # -------- Dropdowns / check lists
+			case 3:
+			if ($fields[$n]["display_as_dropdown"])
+				{
+				# Process dropdown box
+				$name="field_" . $fields[$n]["ref"];
+				$value=getvalescaped($name,"");
+				if ($value!="")
+					{
+					$vs=split_keywords($value);
+					for ($m=0;$m<count($vs);$m++)
+						{
+						if ($search!="") {$search.=", ";}
+						$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
+						}
+					}
+				}
+			else
+				{
+				# Process checkbox list
+				$options=trim_array(explode(",",$fields[$n]["options"]));
+				if ($auto_order_checkbox) {sort($options);}
+				$p="";
+				$c=0;
+				for ($m=0;$m<count($options);$m++)
+					{
+					$name=$fields[$n]["ref"] . "_" . $m;
+					$value=getvalescaped($name,"");
+					if ($value=="yes")
+						{
+						$c++;
+						if ($p!="") {$p.=";";}
+						$p.=strtolower(i18n_get_translated($options[$m]));
+						}
+					}
+				if ($c==count($options))
+					{
+					# all options ticked - omit from the search
+					$p="";
+					}
+				if ($p!="")
+					{
+					if ($search!="") {$search.=", ";}
+					$search.=$fields[$n]["name"] . ":" . $p;
+					}
+				}
+			break;
+
+			case 4:
+			case 6:
+			$name="field_" . $fields[$n]["ref"];
+			$datepart="";
+			if (getval($name . "_year","")!="")
+				{
+				$datepart.=getval($name . "_year","");
+				if (getval($name . "_month","")!="")
+					{
+					$datepart.="-" . getval($name . "_month","");
+					if (getval($name . "_day","")!="")
+						{
+						$datepart.="-" . getval($name . "_day","");
+						}
+					}
+				}
+			if ($datepart!="")
+				{
+				if ($search!="") {$search.=", ";}
+				$search.=$fields[$n]["name"] . ":" . $datepart;
+				}
+
+			break;
+
+			case 7: # -------- Category tree
+			$name="field_" . $fields[$n]["ref"];
+			$value=getvalescaped($name,"");
+			$selected=trim_array(explode(",",$value));
+			$p="";
+			for ($m=0;$m<count($selected);$m++)
+				{
+				if ($selected[$m]!="")
+					{
+					if ($p!="") {$p.=";";}
+					$p.=$selected[$m];
+					}
+				}
+			if ($p!="")
+				{
+				if ($search!="") {$search.=", ";}
+				$search.=$fields[$n]["name"] . ":" . $p;
+				}
+			break;
+
+			}
+		}
+	return $search;
+	}
+
 ?>

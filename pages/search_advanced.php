@@ -19,137 +19,9 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 	$fields=get_advanced_search_fields();
 	$search=join(", ",explode(" ",getvalescaped("allfields",""))); # prepend 'all fields' option
 	
-	if (getval("year","")!="")
-		{
-		if ($search!="") {$search.=", ";}
-		$search.="year:" . getval("year","");	
-		}
-	if (getval("month","")!="")
-		{
-		if ($search!="") {$search.=", ";}
-		$search.="month:" . getval("month","");	
-		}
-	if (getval("day","")!="")
-		{
-		if ($search!="") {$search.=", ";}
-		$search.="day:" . getval("day","");	
-		}
-		
-	for ($n=0;$n<count($fields);$n++)
-		{
-		switch ($fields[$n]["type"])
-			{
-			case 0: # -------- Text boxes
-			case 1:
-			case 5:
-			$name="field_" . $fields[$n]["ref"];
-			$value=getvalescaped($name,"");
-			if ($value!="")
-				{
-				$vs=split_keywords($value);
-				for ($m=0;$m<count($vs);$m++)
-					{
-					if ($search!="") {$search.=", ";}
-					$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
-					}
-				}
-			break;
+	# Build a search query from the search form
+	$search.=search_form_to_search_query($fields);
 			
-			case 2: # -------- Dropdowns / check lists
-			case 3:
-			if ($fields[$n]["display_as_dropdown"])
-				{
-				# Process dropdown box
-				$name="field_" . $fields[$n]["ref"];
-				$value=getvalescaped($name,"");
-				if ($value!="")
-					{
-					$vs=split_keywords($value);
-					for ($m=0;$m<count($vs);$m++)
-						{
-						if ($search!="") {$search.=", ";}
-						$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
-						}
-					}
-				}
-			else
-				{
-				# Process checkbox list
-				$options=trim_array(explode(",",$fields[$n]["options"]));
-				if ($auto_order_checkbox) {sort($options);}
-				$p="";
-				$c=0;
-				for ($m=0;$m<count($options);$m++)
-					{
-					$name=$fields[$n]["ref"] . "_" . $m;
-					$value=getvalescaped($name,"");
-					if ($value=="yes")
-						{
-						$c++;
-						if ($p!="") {$p.=";";}
-						$p.=strtolower(i18n_get_translated($options[$m]));
-						}
-					}
-				if ($c==count($options))
-					{
-					# all options ticked - omit from the search
-					$p="";
-					}
-				if ($p!="")
-					{
-					if ($search!="") {$search.=", ";}
-					$search.=$fields[$n]["name"] . ":" . $p;
-					}
-				}
-			break;
-
-			case 4:
-			case 6:
-			$name="field_" . $fields[$n]["ref"];
-			$datepart="";
-			if (getval($name . "_year","")!="")
-				{
-				$datepart.=getval($name . "_year","");
-				if (getval($name . "_month","")!="")
-					{
-					$datepart.="-" . getval($name . "_month","");
-					if (getval($name . "_day","")!="")
-						{
-						$datepart.="-" . getval($name . "_day","");
-						}
-					}
-				}
-			if ($datepart!="")
-				{
-				if ($search!="") {$search.=", ";}
-				$search.=$fields[$n]["name"] . ":" . $datepart;
-				}
-
-			break;
-
-			case 7: # -------- Category tree
-			$name="field_" . $fields[$n]["ref"];
-			$value=getvalescaped($name,"");
-			$selected=trim_array(explode(",",$value));
-			$p="";
-			for ($m=0;$m<count($selected);$m++)
-				{
-				if ($selected[$m]!="")
-					{
-					if ($p!="") {$p.=";";}
-					$p.=$selected[$m];
-					}
-				}
-			if ($p!="")
-				{
-				if ($search!="") {$search.=", ";}
-				$search.=$fields[$n]["name"] . ":" . $p;
-				}
-			break;
-
-			}
-		}
-		
 	if (getval("countonly","")!="")
 		{
 		# Only show the results (this will appear in an iframe)
@@ -315,8 +187,6 @@ $rtypes=get_resource_types();
 
 for ($n=0;$n<count($fields);$n++)
 	{
-	$name="field_" . $fields[$n]["ref"];
-	
 	# Show a dividing header for resource type specific fields?
 	if (($fields[$n]["resource_type"]!=0) && ($showndivide!=$fields[$n]["resource_type"]))
 		{
@@ -338,7 +208,7 @@ for ($n=0;$n<count($fields);$n++)
 	if (getval("resetform","")!="") {$value="";}
 	
 	# Render this field
-	render_search_field($fields[$n],$name,$value);
+	render_search_field($fields[$n],$value,true);
 	}
 ?>
 <iframe name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
