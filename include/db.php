@@ -79,7 +79,8 @@ set_magic_quotes_runtime(0);
 # statistics
 $querycount=0;
 $querytime=0;
-$queryhist="";
+$querylog=array();
+
 
 # -----------LANGUAGES AND PLUGINS-------------------------------
 # Include the appropriate language file
@@ -183,11 +184,29 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     # just fetch $fetchrows row but pad the array to the full result set size with empty values.
     # This has been added retroactively to support large result sets, yet a pager can work as if a full
     # result set has been returned as an array (as it was working previously).
-    global $db,$querycount,$querytime,$queryhist;
-    $querycount++; #$queryhist.=$sql . "\n\n\n";# stats
+    global $db,$querycount,$querytime,$config_show_performance_footer,$querylog;
     $counter=0;
-    $time_start = microtime(true);
+    if ($config_show_performance_footer)
+    	{
+    	# Stats
+    	# Start measuring query time
+    	$time_start = microtime(true);
+   	    $querycount++;
+    	}
+    	
+    # Execute query
     $result=mysql_query($sql);
+
+    if ($config_show_performance_footer)
+    	{
+    	# Stats
+   		# Log performance data
+		$time_end = microtime(true);
+		$time_total=($time_end - $time_start);
+		$querylog[$sql]=$time_total;
+		$querytime += $time_total;
+		}
+		
     $error=mysql_error();
     if ($error!="")
         {
@@ -219,8 +238,6 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     elseif ($result===true)
         {
         # no result set, (query was insert, update etc.)
-        $time_end = microtime(true);
-		$querytime += ($time_end - $time_start);
         }
     else
         {
@@ -236,8 +253,7 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
                 }
             $counter++;
             }
-        $time_end = microtime(true);
-		$querytime += ($time_end - $time_start);
+
 		# If we haven't returned all the rows ($fetchrows isn't -1) then we need to fill the array so the count
 		# is still correct (even though these rows won't be shown).
 		$rows=count($row);

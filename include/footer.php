@@ -65,10 +65,31 @@ function SwapCSS(css)
 </div>
 <?php } ?>
 
-
-
-<!--c<?php echo $querycount?>, t<?php echo $querytime?>-->
 <br />
+
+<?php if ($config_show_performance_footer)
+	{
+	# --- If configured (for debug/development only) show query statistics
+	?>
+	<table class="InfoTable" style="float: right;margin-right: 10px;">
+	<tr><td>Query count</td><td><?php echo $querycount?></td></tr>
+	<tr><td>Query time</td><td><?php echo round($querytime,4)?></td></tr>
+	<tr><td colspan=2><a href="#" onClick="document.getElementById('querylog').style.display='block';return false;">&gt;&nbsp;details</a></td></tr>
+	</table>
+	<table class="InfoTable" id="querylog" style="display: none; float: right; margin: 10px;">
+	<?php
+	arsort($querylog);
+	foreach ($querylog as $query=>$time)
+		{
+		?>
+		<tr><td align="left"><?php echo $query?></td><td><?php echo round($time,4)?></td></tr>
+		<?php	
+		}
+	?>
+	</table>
+	<?php
+	}
+?>
 
 <?php hook("footerbottom"); ?>
 

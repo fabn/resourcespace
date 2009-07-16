@@ -889,4 +889,7 @@ $use_checkboxes_for_selection=false;
 # player docs at http://flash-mp3-player.net/players/maxi/
 $mp3_player=false;
 
+# Show the performance metrics in the footer (for debug)
+$config_show_performance_footer=false;
+
 ?>

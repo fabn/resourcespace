@@ -18,17 +18,26 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 
 $search=getvalescaped("search","");
 
-# create a thumbs_display_field array with information needed for detailed field highlighting
-for ($n=0;$n<count($thumbs_display_fields);$n++){
-	$field_info=get_field($thumbs_display_fields[$n]);
-	if (count($field_info>1)){
-		$tdf[$n]['ref']=$thumbs_display_fields[$n];
-		$tdf[$n]['indexed']=$field_info['keywords_index'];
-		$tdf[$n]['partial_index']=$field_info['partial_index'];
-		$tdf[$n]['name']=$field_info['name'];
-	}
-}
+# Work out if we need to display extra thumbs data
+# i.e. if the query is not at the top
+$thumb_field_extra_data=!(count($thumbs_display_fields)==1 && $thumbs_display_fields[0]==3);
 
+# create a thumbs_display_field array with information needed for detailed field highlighting
+if ($thumb_field_extra_data)
+	{
+	for ($n=0;$n<count($thumbs_display_fields);$n++)
+		{
+		$field_info=get_field($thumbs_display_fields[$n]);
+		if (count($field_info>1))
+			{
+			$tdf[$n]['ref']=$thumbs_display_fields[$n];
+			$tdf[$n]['indexed']=$field_info['keywords_index'];
+			$tdf[$n]['partial_index']=$field_info['partial_index'];
+			$tdf[$n]['name']=$field_info['name'];
+			}
+		}
+	}
+	
 # Append extra search parameters from the quick search.
 if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
@@ -371,11 +380,24 @@ if (is_array($result))
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
 		<?php
-		for ($x=0;$x<count($tdf);$x++){
-			$field_content=get_data_by_field($ref,$tdf[$x]['ref']);
-			?>		
-			<div class="ResourcePanelCountry"><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),30),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
-		<?php } ?>
+		if ($thumb_field_extra_data)
+			{
+			for ($x=0;$x<count($tdf);$x++)
+				{
+				$field_content=get_data_by_field($ref,$tdf[$x]['ref']);
+				?>		
+				<div class="ResourcePanelCountry"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),30),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
+				<?php
+				}
+			}
+		else
+			{
+			$field_content=$result[$n]["country"];
+			?>
+			<div class="ResourcePanelCountry"><?php echo 	tidy_trim(TidyList(i18n_get_translated($field_content)),30)?>&nbsp;</div>
+			<?php
+			}
+		?>
 		
 		<div class="ResourcePanelCountry">&nbsp;</div>	
 				
