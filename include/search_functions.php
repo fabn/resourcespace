@@ -293,7 +293,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		# Fix the order by for this query (special case due to inner query)
 		$order_by=str_replace("r.rating","rating",$order_by);
 
-		return sql_query("select distinct *,r2.hit_count score $select from (select r.* from resource r $sql_join $resource_data_join where $sql_filter order by ref desc limit $last ) r2 order by $order_by",false,$fetchrows);
+		return sql_query("select distinct *,r2.hit_count score from (select r.* $select from resource r $sql_join $resource_data_join where $sql_filter order by ref desc limit $last ) r2 order by $order_by",false,$fetchrows);
 		}
 	
 	# View Resources With No Downloads
