@@ -1260,7 +1260,6 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	if (isset($templatevars['thumbnail'])){
 	$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
 	}
-	$mail->AddAttachment('/var/www/resourcespace/gfx/homeanim/gfx/2.jpg','ref','binary','application/octet-stream');
 	$h2t = new html2text($body); 
 	$text = $h2t->get_text(); 
 	$mail->AltBody = $text;  
