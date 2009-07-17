@@ -499,10 +499,17 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			sql_query("insert into external_access_keys(resource,access_key,user,access,expires) values ('$resource','$k','$userref','$access'," . (($expires=="")?"null":"'" . $expires . "'"). ");");
 			$key="&k=". $k;
 			}
-
+		
+		# make vars available to template
+		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false);
+		$templatevars['url']=$baseurl . "/?r=" . $resource . $key;
+		$templatevars['fromusername']=$fromusername;
+		$templatevars['message']=$message;
+		$templatevars['resourcename']=$resourcename;
+		
 		# Build message and send.
-		$body="$fromusername " . $lang["hasemailedyouaresource"] . "$message\n\n" . $lang["clicktoviewresource"] . "\n\n" . $baseurl . "/?r=" . $resource . $key;
-		send_mail($emails[$n],$subject,$body);
+		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
+		send_mail($emails[$n],$subject,$body,"","","emailresource",$templatevars);
 		}
 		
 	# Return an empty string (all OK).

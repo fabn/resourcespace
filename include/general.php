@@ -1120,6 +1120,17 @@ function send_mail($email,$subject,$message,$from="",$reply_to="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
+	# old mail function remains the same to avoid possible issues with phpmailer
+	# send_mail_phpmailer allows for the use of text and html (multipart) emails,
+	# and the use of email templates in Manage Content 
+		
+	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
+	global $use_phpmailer;
+	if ($use_phpmailer){
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template="",$templatevars=null); 
+		return true;
+		}
+	
 	# No email address? Exit.
 	if (trim($email)=="") {return false;}
 	
@@ -1156,6 +1167,110 @@ function send_mail($email,$subject,$message,$from="",$reply_to="")
 	$headers .= "Content-Transfer-Encoding: quoted-printable" . $eol;
 	mail ($email,$subject,$message,$headers);
 	}
+
+function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null)
+	{
+	
+	# if ($use_phpmailer==true) this function is used instead.
+	# Mail templates can include lang, server, site_text, and POST variables by default
+	# ex ( [lang_mycollections], [server_REMOTE_ADDR], [text_footer] , [message]
+	
+	# additional values must be made available through $templatevars
+	# For example, a complex url or image path that may be sent in an 
+	# email should be added to the templatevars array and passed into send_mail.
+	# available templatevars need to be well-documented, and sample templates
+	# need to be available.
+	
+	# Include footer
+	global $email_footer;
+	
+	include_once("../lib/phpmailer/class.phpmailer.php");
+	include_once("../lib/phpmailer/class.html2text.php");
+	
+	global $email_from;
+	if ($from=="") {$from=$email_from;}
+	if ($reply_to=="") {$reply_to=$email_from;}
+
+	#check for html template. If exists, attempt to include vars into message
+	if ($html_template!="")
+		{
+		$template=text($html_template);
+		if ($template!="")
+			{
+			preg_match_all('/\[[^\]]*\]/',$template,$test);
+			foreach($test[0] as $variable)
+				{
+			
+				$variable=str_replace("[","",$variable);
+				$variable=str_replace("]","",$variable);
+			
+				
+				# get lang variables (ex. [lang_mycollections])
+				if (substr($variable,0,5)=="lang_"){
+					global $lang;
+					$$variable=$lang[substr($variable,5)];
+				}
+				
+				# get server variables (ex. [server_REMOTE_ADDR] for a user request)
+				else if (substr($variable,0,7)=="server_"){
+					$$variable=$_SERVER[substr($variable,7)];
+				}
+				
+				# embed thumbnail (resource thumb) ( ex. [embed_thumbnail] )
+				else if (substr($variable,0,15)=="embed_thumbnail"){
+					$$variable="<img src='cid:thumbnail' />";
+				}
+				
+				# get site text variables (ex. [text_footer], for example to 
+				# manage html snippets that you want available in all emails.)
+				else if (substr($variable,0,5)=="text_"){
+					$$variable=text(substr($variable,5));
+				}
+				
+				# try to get the variable from POST
+				else{
+					$$variable=getval($variable,"");
+				}
+				
+				# avoid resetting templatevars that may have been passed here
+				if (!isset($templatevars[$variable])){$templatevars[$variable]=$$variable;}
+				}
+
+			if (isset($templatevars))
+				{
+				foreach($templatevars as $key=>$value)
+					{
+					$template=str_replace("[" . $key . "]",$value,$template);
+					}
+				}
+			$body=$template;	
+			}
+		}		
+
+	if (!isset($body)){$body=$message;}
+			
+	$mail = new PHPMailer();
+	$mail->From = $from;
+	$mail->AddReplyto = $reply_to;
+	$mail->AddAddress($email);
+	$mail->CharSet = "utf-8"; 
+	$mail->IsHTML(true);  	
+	$mail->Subject = $subject;
+	$mail->Body    = $body;
+	if (isset($templatevars['thumbnail'])){
+	$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
+	}
+	$mail->AddAttachment('/var/www/resourcespace/gfx/homeanim/gfx/2.jpg','ref','binary','application/octet-stream');
+	$h2t = new html2text($body); 
+	$text = $h2t->get_text(); 
+	$mail->AltBody = $text;  
+	if(!$mail->Send())
+		{
+		echo "Message could not be sent. <p>";
+		echo "Mailer Error: " . $mail->ErrorInfo;
+		exit;
+		}
+}
 
 function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
         // Quoted printable encoding is rather simple.
