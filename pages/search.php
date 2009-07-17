@@ -21,15 +21,20 @@ $search=getvalescaped("search","");
 # create a thumbs_display_field array with information needed for detailed field highlighting
 if ($thumbs_display_fields)
 	{
+	$all_field_info=get_fields($thumbs_display_fields);
 	for ($n=0;$n<count($thumbs_display_fields);$n++)
 		{
-		$field_info=get_field($thumbs_display_fields[$n]);
-		if (count($field_info>1))
+		# Find field in selected list
+		for ($m=0;$m<count($all_field_info);$m++)
 			{
-			$tdf[$n]['ref']=$thumbs_display_fields[$n];
-			$tdf[$n]['indexed']=$field_info['keywords_index'];
-			$tdf[$n]['partial_index']=$field_info['partial_index'];
-			$tdf[$n]['name']=$field_info['name'];
+			if ($all_field_info[$m]["ref"]==$thumbs_display_fields[$n])
+				{
+				$field_info=$all_field_info[$m];
+				$tdf[$n]['ref']=$thumbs_display_fields[$n];
+				$tdf[$n]['indexed']=$field_info['keywords_index'];
+				$tdf[$n]['partial_index']=$field_info['partial_index'];
+				$tdf[$n]['name']=$field_info['name'];
+				}
 			}
 		}
 	}
