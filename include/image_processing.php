@@ -412,11 +412,11 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		}
 	else
 		{
-		# Use imagemagick? (also includes ffmpeg for video handling functions)
+		# If using ImageMagick, call preview_preprocessing.php which makes use of ImageMagick and other tools
+		# to attempt to extract a preview.
 		if (isset($imagemagick_path))
 			{
-      		//include "include/imagemagick.php";
-      		include(dirname(__FILE__)."/imagemagick.php");
+      		include(dirname(__FILE__)."/preview_preprocessing.php");
 			}
 		}
 	return true;
