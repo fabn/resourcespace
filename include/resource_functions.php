@@ -461,6 +461,9 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	# Send them an e-mail linking to this collection
 	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
+	# remove any line breaks that may have been entered
+	$userlist=str_replace("\\r\\n",",",$userlist);
+
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
 	$userlist=resolve_userlist_groups($userlist);
 	$ulist=trim_array(explode(",",$userlist));
