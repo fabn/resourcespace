@@ -1216,7 +1216,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 					$$variable=$_SERVER[substr($variable,7)];
 				}
 				
-				# embed thumbnail (resource thumb) ( ex. [embed_thumbnail] )
+				# [embed_thumbnail] (requires url in templatevars['thumbnail'])
 				else if (substr($variable,0,15)=="embed_thumbnail"){
 					$$variable="<img src='cid:thumbnail' />";
 				}
@@ -1261,7 +1261,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->Subject = $subject;
 	$mail->Body    = $body;
 	
-	if (isset($templatevars['thumbnail'])){
+	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
 		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
 		}
 	if ($html_template!=""){
