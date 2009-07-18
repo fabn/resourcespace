@@ -1254,15 +1254,21 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->AddReplyto = $reply_to;
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
-	$mail->IsHTML(true);  	
+	
+	if ($html_template!="") {$mail->IsHTML(true);}  	
+	else {$mail->IsHTML(false);}
+	
 	$mail->Subject = $subject;
 	$mail->Body    = $body;
+	
 	if (isset($templatevars['thumbnail'])){
-	$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
-	}
-	$h2t = new html2text($body); 
-	$text = $h2t->get_text(); 
-	$mail->AltBody = $text;  
+		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
+		}
+	if ($html_template!=""){
+		$h2t = new html2text($body); 
+		$text = $h2t->get_text(); 
+		$mail->AltBody = $text; 
+		}	 
 	if(!$mail->Send())
 		{
 		echo "Message could not be sent. <p>";
