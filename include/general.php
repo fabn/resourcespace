@@ -1116,7 +1116,7 @@ function i18n_get_indexable($text)
 	return $out;
 	}
 
-function send_mail($email,$subject,$message,$from="",$reply_to="")
+function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null)
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
@@ -1127,7 +1127,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="")
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	global $use_phpmailer;
 	if ($use_phpmailer){
-		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template="",$templatevars=null); 
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars); 
 		return true;
 		}
 	
