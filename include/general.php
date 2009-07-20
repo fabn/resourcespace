@@ -1180,7 +1180,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	# email should be added to the templatevars array and passed into send_mail.
 	# available templatevars need to be well-documented, and sample templates
 	# need to be available.
-	
+
 	# Include footer
 	global $email_footer;
 	
@@ -1248,7 +1248,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		}		
 
 	if (!isset($body)){$body=$message;}
-			
+
 	$mail = new PHPMailer();
 	$mail->From = $from;
 	$mail->AddReplyto = $reply_to;
@@ -1275,6 +1275,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		echo "Mailer Error: " . $mail->ErrorInfo;
 		exit;
 		}
+	hook("aftersendmailphpmailer","",$email);	
 }
 
 function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
