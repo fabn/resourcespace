@@ -95,7 +95,7 @@ function add_resource_to_collection($resource,$collection)
 				global $userref;
 				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
 				#log this
-				collection_log($collection,"s",$resource, "new resource");
+				collection_log($collection,"s",$resource, '#new_resource');
 				}
 			}
 
@@ -230,7 +230,7 @@ function add_collection($user,$collection)
 	# Insert row
 	sql_query("insert into user_collection(user,collection) values ('$user','$collection')");
 			#log this
-	collection_log($collection,"S",0, "User ref $user");
+	collection_log($collection,"S",0, sql_value ("select username as value from user where ref = $user",""));
 
 	}
 
@@ -239,7 +239,7 @@ function remove_collection($user,$collection)
 	# Remove someone else's collection from a user's My Collections
 	sql_query("delete from user_collection where user='$user' and collection='$collection'");
 			#log this
-	collection_log($collection,"T",0, $user);
+	collection_log($collection,"T",0, sql_value ("select username as value from user where ref = $user",""));
 	}
 
 function save_collection($ref)
@@ -292,7 +292,7 @@ function save_collection($ref)
 		{
 		sql_query("delete from user_collection where collection='$ref'");
 		#log this
-		collection_log($ref,"T",0, "all users");
+		collection_log($ref,"T",0, '#all_users');
 
 		if (($users)!="")
 			{
@@ -305,7 +305,7 @@ function save_collection($ref)
 				sql_query("insert into user_collection(collection,user) values ($ref," . join("),(" . $ref . ",",$urefs) . ")");
 				}
 			#log this
-			collection_log($ref,"S",0, $users);
+			collection_log($ref,"S",0, join(", ",$ulist));
 			}
 		}
 		
@@ -522,7 +522,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				{
 		sql_query("insert into user_collection(collection,user,request_feedback) values ($reflist[$nx1], $urefs[$nx2], $feedback )");
 					#log this
-		collection_log($reflist[$nx1],"S",0, $urefs[$nx2]);
+		collection_log($reflist[$nx1],"S",0, sql_value ("select username as value from user where ref = $urefs[$nx2]",""));
 
 				}
 			}

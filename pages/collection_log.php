@@ -41,8 +41,17 @@ for ($n=0;$n<count($log);$n++)
 	<tr>
 	<td><?php echo nicedate($log[$n]["date"],true)?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
-	<td><?php echo $lang["collectionlog-" . $log[$n]["type"]] ;
-		if ($log[$n]["notes"] != "" ) { echo $log[$n]["notes"] ; } ?></td>
+	<td><?php 
+		echo $lang["collectionlog-" . $log[$n]["type"]] ;
+		if ($log[$n]["notes"] != "" ) { 
+			##  notes field contains user IDs, collection references and /or standard texts
+			##  Translate the standard texts
+			$standard = array('#all_users', '#new_resource');
+			$translated   = array($lang["all_users"], $lang["new_resource"]);
+			$newnotes = str_replace($standard, $translated, $log[$n]["notes"]);
+			echo $newnotes;
+		}
+		?></td>
 	<td><?php echo $log[$n]["resource"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
 	</tr> 

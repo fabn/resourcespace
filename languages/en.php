@@ -781,4 +781,13 @@ $lang["hitcount"]="Hit Count";
 $lang["downloads"]="Downloads";
 
 $lang["addremove"]="Add/Remove";
+
+##  Translations for standard log entries
+$lang["all_users"]="all users";
+$lang["new_resource"]="new resource";
+
+
+
+
+
 ?>
