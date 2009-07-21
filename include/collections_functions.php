@@ -530,8 +530,11 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	
 	# Send an e-mail to each resolved user
 
+	$templatevars['message']="\n\n" . $lang["message"] . ": " . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);
+
 	$subject="$applicationname: $collectionname";
-	if ($message!="") {$message="\n\n" . $lang["message"] . ": " . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);}
+	if ($message!="") {$message=$templatevars['message'];}
+	
 	##  loop through recipients
 	for ($nx1=0;$nx1<count($emails);$nx1++)
 		{
@@ -539,6 +542,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		## loop through collections
 		for ($nx2=0;$nx2<count($reflist);$nx2++)
 			{
+			$url="";
 			$key="";
 			# Do we need to add an external access key for this user (e-mail specified rather than username)?
 			if ($key_required[$nx1])
@@ -546,12 +550,15 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				$k=generate_collection_access_key($reflist[$nx2],$feedback,$emails[$nx1],$access,$expires);
 				$key="&k=". $k;
 				}
-			$body .= "\n\n" . $baseurl . 	"/?c=" . $reflist[$nx2] . $key;
+			$url="\n\n" . $baseurl . 	"/?c=" . $reflist[$nx2] . $key;
+			$body .= $url;
 					#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
 			
 			}
-		send_mail($emails[$nx1],$subject,$body);
+		$templatevars['body']=$body;
+		
+		send_mail($emails[$nx1],$subject,$body,"","","emailcollection",$templatevars);
 		}
 		
 	# Return an empty string (all OK).

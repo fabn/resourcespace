@@ -932,7 +932,12 @@ function notify_user_contributed_submitted($refs)
 		{
 		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
 		}
-	$message.="\n" . $lang["viewalluserpending"] . "\n" . $baseurl . "/pages/search.php?search=!userpending";
+	
+	$templatevars['url']=$baseurl . "/pages/search.php?search=!userpending";	
+	$templatevars['message']=$message;
+		
+	$message.="\n" . $lang["viewalluserpending"] . "\n" . $templatevars['url'];
+	
 	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message);
 	}
 	
@@ -948,7 +953,12 @@ function notify_user_contributed_unsubmitted($refs)
 		{
 		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
 		}
-	$message.="\n" . $lang["viewalluserpending"] . "\n" . $baseurl . "/pages/search.php?search=!userpending";
+
+	$templatevars['url']=$baseurl . "/pages/search.php?search=!userpending";	
+	$templatevars['message']=$message;
+		
+	$message.="\n" . $lang["viewalluserpending"] . "\n" . $templatevars['url'];
+
 	send_mail($email_notify,$applicationname . ": " . $lang["status-2"],$message);
 	}	
 	

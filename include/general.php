@@ -1183,10 +1183,17 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	# Include footer
 	global $email_footer;
-	
-	include_once("../lib/phpmailer/class.phpmailer.php");
-	include_once("../lib/phpmailer/class.html2text.php");
-	
+
+	if (file_exists("../lib/phpmailer/class.phpmailer.php")){
+		include_once("../lib/phpmailer/class.phpmailer.php");
+		include_once("../lib/phpmailer/class.html2text.php");
+		}
+	else if (file_exists("../../lib/phpmailer/class.phpmailer.php")){
+		# team center
+		include_once("../../lib/phpmailer/class.phpmailer.php");
+		include_once("../../lib/phpmailer/class.html2text.php");
+		}	
+		
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	if ($reply_to=="") {$reply_to=$email_from;}

@@ -26,7 +26,13 @@ function send_research_request()
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$userfullname,$useremail,$lang;
 	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";
 	$message.="$baseurl/pages/team/team_research.php";
-	send_mail($email_notify,$applicationname . ": " . $lang["newresearchrequestwaiting"],$message,$useremail);
+	
+	$templatevars['username']=$username;
+	$templatevars['userfullname']=$userfullname;
+	$templatevars['useremail']=$useremail;
+	$templatevars['url']=$baseurl."/pages/team/team_research.php";
+	
+	send_mail($email_notify,$applicationname . ": " . $lang["newresearchrequestwaiting"],$message,$useremail,"","emailnewresearchrequestwaiting",$templatevars);
 	}
 
 function get_research_requests($find="")
@@ -71,7 +77,10 @@ function save_research_request($ref)
 			# Log this			
 			daily_stat("Processed research request",0);
 			}
-		if ($message!="") {send_mail ($email,$applicationname . ": " . $subject,$message);}
+			
+		$templatevars['url']=$baseurl . "/?c=" . $collection;
+		
+		if ($message!="") {send_mail ($email,$applicationname . ": " . $subject,$message,"","","emailresearchrequestcomplete",$templatevars);}
 		}
 	
 	sql_query("update research_request set status='" . $newstatus . "',assigned_to='" . getvalescaped("assigned_to",0) . "' where ref='$ref'");
