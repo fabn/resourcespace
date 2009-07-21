@@ -923,22 +923,32 @@ function user_rating_save($ref,$rating)
 function notify_user_contributed_submitted($refs)
 	{
 	// Send a notification mail to the administrators when resources are moved from "User Contributed - Pending Submission" to "User Contributed - Pending Review"
-	
 	global $notify_user_contributed_submitted,$applicationname,$email_notify,$baseurl,$lang;
 	if (!$notify_user_contributed_submitted) {return false;} # Only if configured.
 	
-	$message=$lang["userresourcessubmitted"] . "\n";
+	$htmlbreak="";
+	global $use_phpmailer;
+	if ($use_phpmailer){$htmlbreak="<br><br>";}
+	
+	$list="";
 	for ($n=0;$n<count($refs);$n++)
 		{
-		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
+		$url="";
+		$url=$baseurl . "/?r=" . $refs[$n];
+		
+		if ($use_phpmailer){$url="<a href=\"$url\">$url</a>";}
+		
+		$list.=$htmlbreak . $url . "\n\n";
 		}
+		
+	$list.=$htmlbreak;	
 	
 	$templatevars['url']=$baseurl . "/pages/search.php?search=!userpending";	
-	$templatevars['message']=$message;
+	$templatevars['list']=$list;
 		
-	$message.="\n" . $lang["viewalluserpending"] . "\n" . $templatevars['url'];
+	$message=$lang["userresourcessubmitted"] . "\n\n". $templatevars['list'] . $lang["viewalluserpending"] . "\n\n" . $templatevars['url'];
 	
-	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message);
+	send_mail($email_notify,$applicationname . ": " . $lang["status-1"],$message,"","","emailnotifyresourcessubmitted",$templatevars);
 	}
 	
 function notify_user_contributed_unsubmitted($refs)
@@ -948,18 +958,30 @@ function notify_user_contributed_unsubmitted($refs)
 	global $notify_user_contributed_unsubmitted,$applicationname,$email_notify,$baseurl,$lang;
 	if (!$notify_user_contributed_unsubmitted) {return false;} # Only if configured.
 	
-	$message=$lang["userresourcesunsubmitted"] . "\n";
+	$htmlbreak="";
+	global $use_phpmailer;
+	if ($use_phpmailer){$htmlbreak="<br><br>";}
+	
+	$list="";
+
 	for ($n=0;$n<count($refs);$n++)
 		{
-		$message.=$baseurl . "/?r=" . $refs[$n] . "\n";
+		$url="";	
+		$url=$baseurl . "/?r=" . $refs[$n];
+		
+		if ($use_phpmailer){$url="<a href=\"$url\">$url</a>";}
+		
+		$list.=$htmlbreak . $url . "\n\n";
 		}
+	
+	$list.=$htmlbreak;		
 
 	$templatevars['url']=$baseurl . "/pages/search.php?search=!userpending";	
-	$templatevars['message']=$message;
+	$templatevars['list']=$list;
 		
-	$message.="\n" . $lang["viewalluserpending"] . "\n" . $templatevars['url'];
+	$message=$lang["userresourcesunsubmitted"]."\n\n". $templatevars['list'] . $lang["viewalluserpending"] . "\n\n" . $templatevars['url'];
 
-	send_mail($email_notify,$applicationname . ": " . $lang["status-2"],$message);
+	send_mail($email_notify,$applicationname . ": " . $lang["status-2"],$message,"","","emailnotifyresourcesunsubmitted",$templatevars);
 	}	
 	
 	
