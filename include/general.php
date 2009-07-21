@@ -700,11 +700,15 @@ function save_user($ref)
 		$welcome=sql_value("select welcome_message value from usergroup where ref='" . getvalescaped("usergroup","") . "'","");
 		if (trim($welcome)!="") {$welcome.="\n\n";}
 		
-		$message=$welcome . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . getval("username","") . "\n" . $lang["password"] . ": " . getval("password","");
-		if (trim($email_url_save_user)!="") { $message .= "\n\n$email_url_save_user"; }
-		else {$message .= "\n\n$baseurl"; }
+		$templatevars['welcome']=$welcome;
+		$templatevars['username']=getval("username","");
+		$templatevars['password']=getval("password","");
+		if (trim($email_url_save_user)!=""){$templatevars['url']=$email_url_save_user;}
+		else {$templatevars['url']=$baseurl;}
 		
-		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message);
+		$message="nottemplate".$templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password']."\n\n".$templatevars['url'];
+		
+		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
 		}
 	return true;
 	}
@@ -722,8 +726,12 @@ function email_reminder($email)
 	
 	sql_query("update user set password='$password_hash' where username='" . escape_check($details["username"]) . "'");
 	
-	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $details["username"] . "\n" . $lang["password"] . ": " . $password . "\n\n$baseurl";
-	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message);
+	$templatevars['username']=$details["username"];
+	$templatevars['password']=$password;
+	$templatevars['url']=$baseurl;
+	
+	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
+	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);
 	return true;
 	}
 
