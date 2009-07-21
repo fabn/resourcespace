@@ -529,17 +529,22 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		}
 	
 	# Send an e-mail to each resolved user
-
-	$templatevars['message']="\n\n" . $lang["message"] . ": " . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);
-
-	$subject="$applicationname: $collectionname";
-	if ($message!="") {$message=$templatevars['message'];}
 	
+	# htmlbreak is for composing list
+	$htmlbreak="";
+	global $use_phpmailer;
+	if ($use_phpmailer){$htmlbreak="<br><br>";} 
+	
+	$templatevars['message']=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);	
+	$templatevars['fromusername']=$fromusername;
+	
+	$subject="$applicationname: ".(count($reflist)>1)?$lang['mycollections']:$collectionname;
+		
 	##  loop through recipients
 	for ($nx1=0;$nx1<count($emails);$nx1++)
 		{
-		$body="$fromusername " . $lang["emailcollectionmessage"] . "$message\n\n" . $lang["clicklinkviewcollection"] ;
 		## loop through collections
+		$list="";
 		for ($nx2=0;$nx2<count($reflist);$nx2++)
 			{
 			$url="";
@@ -550,14 +555,21 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				$k=generate_collection_access_key($reflist[$nx2],$feedback,$emails[$nx1],$access,$expires);
 				$key="&k=". $k;
 				}
-			$url="\n\n" . $baseurl . 	"/?c=" . $reflist[$nx2] . $key;
-			$body .= $url;
+			$url=$baseurl . 	"/?c=" . $reflist[$nx2] . $key;
+			
+			if ($use_phpmailer){
+			$collection_name="";
+			$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
+			$url="<a href=\"$url\">$collection_name</a>";}	
+			
+			$list .= $htmlbreak.$url."\n\n";
 					#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
-			
 			}
-		$templatevars['body']=$body;
+		$list.=$htmlbreak;	
+		$templatevars['list']=$list;
 		
+		$body=$templatevars['fromusername']." " . ((count($reflist)>1)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
 		send_mail($emails[$nx1],$subject,$body,"","","emailcollection",$templatevars);
 		}
 		
