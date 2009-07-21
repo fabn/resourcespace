@@ -21,16 +21,18 @@ function send_research_request()
 	((getvalescaped("noresources","")=="")?"null":"'" . getvalescaped("noresources","") . "'") . 
 	",'" . getvalescaped("shape","") . "')");
 	
-	
 	# E-mails a resource request (posted) to the team
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$userfullname,$useremail,$lang;
-	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";
-	$message.="$baseurl/pages/team/team_research.php";
 	
+	$templatevars['ref']=sql_insert_id();
+	$templatevars['teamresearchurl']=$baseurl."/pages/team/team_research.php";
 	$templatevars['username']=$username;
 	$templatevars['userfullname']=$userfullname;
 	$templatevars['useremail']=$useremail;
-	$templatevars['url']=$baseurl."/pages/team/team_research.php";
+	$templatevars['url']=$baseurl."/pages/team/team_research_edit.php?ref=".$templatevars['ref'];
+	
+	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";
+	$message.=$templatevars['teamresearchurl'];
 	
 	send_mail($email_notify,$applicationname . ": " . $lang["newresearchrequestwaiting"],$message,$useremail,"","emailnewresearchrequestwaiting",$templatevars);
 	}
@@ -62,25 +64,30 @@ function save_research_request($ref)
 	$oldstatus=sql_value("select status value from research_request where ref='$ref'",0);
 	$newstatus=getvalescaped("status",0);
 	$collection=sql_value("select collection value from research_request where ref='$ref'",0);
+	
+	$templatevars['url']=$baseurl . "/?c=" . $collection;	
+	
 	if ($oldstatus!=$newstatus)
 		{
 		$email=sql_value("select u.email value from user u,research_request r where u.ref=r.user and r.ref='$ref'","");
 		$message="";
-		if ($newstatus==1) {$message=$lang["researchrequestassignedmessage"];$subject=$lang["researchrequestassigned"];
-		# Log this			
-		daily_stat("Assigned research request",0);
-		}
+		if ($newstatus==1) 
+			{
+			$message=$lang["researchrequestassignedmessage"];$subject=$lang["researchrequestassigned"];
+
+			send_mail ($email,$applicationname . ": " . $subject,$message,"","","emailresearchrequestassigned",$templatevars);			
+			# Log this
+			daily_stat("Assigned research request",0);
+			}
 		if ($newstatus==2)
 			{
-			$message=$lang["researchrequestcompletemessage"] . "\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $baseurl . "/?c=" . $collection;$subject=$lang["researchrequestcomplete"];
+			$message=$lang["researchrequestcompletemessage"] . "\n\n" . $lang["clicklinkviewcollection"] . "\n\n" . $templatevars['url'];$subject=$lang["researchrequestcomplete"];
 
+			send_mail ($email,$applicationname . ": " . $subject,$message,"","","emailresearchrequestcomplete",$templatevars);
 			# Log this			
 			daily_stat("Processed research request",0);
 			}
-			
-		$templatevars['url']=$baseurl . "/?c=" . $collection;
 		
-		if ($message!="") {send_mail ($email,$applicationname . ": " . $subject,$message,"","","emailresearchrequestcomplete",$templatevars);}
 		}
 	
 	sql_query("update research_request set status='" . $newstatus . "',assigned_to='" . getvalescaped("assigned_to",0) . "' where ref='$ref'");
