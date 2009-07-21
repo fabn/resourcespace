@@ -409,6 +409,7 @@ for ($n=0;$n<count($fields);$n++)
 		# Append applies to text boxes, checkboxes and dropdowns only.
 		?>
 		<option value="AP"><?php echo $lang["appendtext"]?></option>
+		<option value="RM"><?php echo $lang["removetext"]?></option>
 		<?php } ?>
 		</select>
 		</div>

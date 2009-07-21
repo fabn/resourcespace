@@ -256,7 +256,7 @@ function save_resource_data_multi($collection)
 						);
 					}
 				
-				# Append text mode?
+				# Append text/option(s) mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="AP")
 					{
 					if ($fields[$n]["type"]!=2 && $fields[$n]["type"]!=3)
@@ -269,6 +269,12 @@ function save_resource_data_multi($collection)
 						# Checkbox/dropdown types can just append immediately (a comma will already be present at the beginning of $origval).
 						$val=$existing . $origval;
 						}
+					}
+					
+				# Remove text/option(s) mode?
+				if (getval("modeselect_" . $fields[$n]["ref"],"")=="RM")
+					{
+					$val=str_replace($origval,"",$existing);
 					}
 					
 				#echo "<li>existing=$existing, new=$val";
