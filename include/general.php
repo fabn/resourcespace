@@ -771,21 +771,35 @@ function email_resource_request($ref,$details)
 	{
 	# E-mails a resource request (posted) to the team
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
-	$message=$lang["username"] . ": " . $username . "\n";
 	
+	$templatevars['username']=$username;
+	$templatevars['url']=$baseurl."/?r=".$ref;
+	
+	$htmlbreak="";
+	global $use_phpmailer;
+	if ($use_phpmailer){$htmlbreak="<br><br>";}
+	
+	$list="";
 	reset ($_POST);
 	foreach ($_POST as $key=>$value)
 		{
 		if (strpos($key,"_label")!==false)
 			{
-			# Add custom field
-			$message.=$value . ": " . $_POST[str_replace("_label","",$key)] . "\n";
+			# Add custom field	
+			$data="";
+			$data=$_POST[str_replace("_label","",$key)];
+			$list.=$htmlbreak. $value . ": " . $data."\n";
 			}
 		}
-		
-	if (trim($details)!="") {$message.=$lang["message"] . ":\n" . newlines($details) . "\n\n";}
-	$message.=$lang["clicktoviewresource"] . "\n$baseurl/?r=$ref";
-	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail);
+	$list.=$htmlbreak;		
+	$templatevars['list']=$list;
+
+	$templatevars['details']=$details;
+	if ($templatevars['details']!=""){$adddetails=newlines($details)."\n\n";} else { $adddetails="";}
+	
+	$message=$lang["username"] . ": " . $username . "\n".$templatevars['list']."\n".$adddetails. $lang["clicktoviewresource"] . $templatevars['url'];
+
+	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail,$useremail,"emailresourcerequest",$templatevars);
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");

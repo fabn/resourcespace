@@ -291,7 +291,7 @@ if ($resource["has_image"]==1)
 			{
 			?>
 			<?php if(!hook("resourcerequest")){?>
-			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo getval("k","")?>"><?php echo $lang["request"]?></a></td>
 			<?php } ?>
 			<?php
 			}
@@ -585,7 +585,7 @@ for ($n=0;$n<count($fields);$n++)
 
 <?php 
 // include optional ajax metadata report
-if ($metadata_report && isset($exiftool_path)){
+if ($metadata_report && isset($exiftool_path) && $k==""){
 if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_report)) { ?>
 <div class="RecordBox">
 <div class="RecordPanel">  
