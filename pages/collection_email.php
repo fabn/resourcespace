@@ -24,7 +24,7 @@ if (getval("save","")!="")
 	# Build a new list and insert
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
-	$access=getvalescaped("access","");
+	$access=getvalescaped("access",-1);
 	$expires=getvalescaped("expires","");	
 	$feedback=getvalescaped("request_feedback","");	if ($feedback=="") {$feedback=false;} else {$feedback=true;}
 	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires);
