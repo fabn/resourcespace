@@ -79,7 +79,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	$resource_data_join="";
 	foreach( $thumbs_display_fields as $tdf)
 		{
-		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $tdf . " on r.ref = rd" . $tdf . ".resource and resource_type_field =".$tdf." ";
+		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $tdf . " on r.ref = rd" . $tdf . ".resource and rd" . $tdf . ".resource_type_field =".$tdf." ";
 		$select.=",rd".$tdf.".value field".$tdf." ";
 		}
 	
