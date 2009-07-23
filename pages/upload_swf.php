@@ -27,23 +27,21 @@ if (array_key_exists("Filedata",$_FILES))
     if (getval("replace","")=="")
     	{
 		# New resource
-		
-		if(verify_extension($_FILES['Filedata']['name'],$allowed_extensions)){
-		
-			$ref=copy_resource(0-$userref); # Copy from user template
-		
-			# Add to collection?
-			if ($collection_add!="")
-				{
-				add_resource_to_collection($ref,$collection_add);
-				}
-			
-			# Log this			
-			daily_stat("Resource upload",$ref);
-			resource_log($ref,"u",0);
 	
-			$status=upload_file($ref);
-		}
+		
+		$ref=copy_resource(0-$userref); # Copy from user template
+		
+		# Add to collection?
+		if ($collection_add!="")
+			{
+			add_resource_to_collection($ref,$collection_add);
+			}
+			
+		# Log this			
+		daily_stat("Resource upload",$ref);
+		resource_log($ref,"u",0);
+	
+		$status=upload_file($ref);
 		
 		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
@@ -176,7 +174,16 @@ a.progressCancel:hover
 	background-position: 0px 0px;
 }
 </style>
+<?php 
+$allowed="";
+if ($allowed_extensions!=""){ $extensions=explode(",",$allowed_extensions); 
+foreach ($extensions as $allowed_extension){
+	$allowed.="*.".$allowed_extension.";";
+}	
+} 
+if ($allowed==""){$allowed="*.*";}
 
+?>
 <script type="text/javascript">
 
 var swfu; 
@@ -193,7 +200,7 @@ window.onload =  function()
 
 				file_size_limit : "2000000",
 				file_upload_limit : "0",
-
+				file_types : "<?php echo $allowed?>",
 				// Event Handler Settings - these functions as defined in Handlers.js
 				//  The handlers are not part of SWFUpload but are part of my website and control how
 				//  my website reacts to the SWFUpload events.
