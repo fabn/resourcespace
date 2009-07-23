@@ -5,6 +5,8 @@ include "../../include/general.php";
 include "../../include/collections_functions.php";
 
 $use_local = getvalescaped('use_local', '') !== '';
+$resource_type=getvalescaped('resource_type','');
+$allowed_extensions=get_allowed_extensions_by_type($resource_type);
 
 if ($use_local)
 	{
@@ -88,7 +90,8 @@ for ($n=0;$n<count($list);$n++)
 <div class="Question"><label><?php echo $lang["selectfiles"]?></label>
 <!--<div class="tickset">-->
 <select name="uploadfiles[]" multiple size=20>
-<?php for ($n=0;$n<count($files);$n++)
+<?php 
+for ($n=0;$n<count($files);$n++)
 	{
 	if ($use_local) {$fn=$files[$n];} else
 		{
@@ -102,6 +105,16 @@ for ($n=0;$n<count($list);$n++)
 	if (strpos($fn,".")===false) {$show=false;}
 	if ($fn=="pspbrwse.jbf") {$show=false;} # Ignore PSP browse files (often imported by mistake)
 	if ($fn==".DS_Store") {$show=false;} # Ignore .DS_Store file on the mac
+	
+	# omit disallowed extensions
+	if ($allowed_extensions!=""){
+	    $extension=explode(".",$fn);
+		if(count($extension)>1){
+    	$extension=trim(strtolower($extension[count($extension)-1]));
+		} 
+		if (!strstr($allowed_extensions,$extension)){$show=false;}
+	}
+	
 	/* if ($show) { ?><div class="tick"><input type="checkbox" name="uploadfiles[]" value="<?php echo $fn?>" checked /><?php echo $fn?></div><?php } ?>
 	*/
 	if ($show) { ?><option value="<?php echo $fn?>" selected><?php echo $fn?></option><?php } ?>

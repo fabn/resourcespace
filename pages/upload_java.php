@@ -7,9 +7,9 @@ include "../include/image_processing.php";
 include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 $status="";
-
+$resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
-
+$allowed_extensions=get_allowed_extensions_by_type($resource_type);
 # Create a new collection?
 if ($collection_add==-1)
 	{
@@ -23,24 +23,24 @@ if ($collection_add==-1)
 if (array_key_exists("File0",$_FILES))
     {
 	$_FILES["Filedata"]=$_FILES["File0"];
-	
     if (getval("replace","")=="")
     	{
-		# New resource
-		$ref=copy_resource(0-$userref); # Copy from user template
+			# New resource
+			if(verify_extension($_FILES['Filedata']['name'],$allowed_extensions)){
+			$ref=copy_resource(0-$userref); # Copy from user template
 		
-		# Add to collection?
-		if ($collection_add!="")
-			{
-			add_resource_to_collection($ref,$collection_add);
-			}
+			# Add to collection?
+			if ($collection_add!="")
+				{
+				add_resource_to_collection($ref,$collection_add);
+				}
 			
-		# Log this			
-		daily_stat("Resource upload",$ref);
-		resource_log($ref,"u",0);
+			# Log this			
+			daily_stat("Resource upload",$ref);
+			resource_log($ref,"u",0);
 	
-		$status=upload_file($ref);
-		
+			$status=upload_file($ref,true);
+		}
 		echo "SUCCESS";
 		exit();
 		}
@@ -73,7 +73,7 @@ include "../include/header.php";
 <h2>&nbsp;</h2>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?php echo text("introtext")?></p>
-
+<?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ".$allowed_extensions?></p><?php } ?>
 
 <!---------------------------------------------------------------------------------------------------------
 -------------------     A SIMPLE AND STANDARD APPLET TAG, to call the JUpload applet  --------------------- 
@@ -89,7 +89,7 @@ include "../include/header.php";
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>" />
             
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">

@@ -1861,5 +1861,30 @@ $strName = substr($strName, 0, -strlen($ext));
 return $strName;
 }
 
+function verify_extension($filename,$allowed_extensions=""){
+	# Allowed extension?
+	$extension=explode(".",$filename);
+    if(count($extension)>1){
+    	$extension=trim(strtolower($extension[count($extension)-1]));
+		} else { return false;}
+		
+	if ($allowed_extensions!=""){
+		$allowed_extensions=explode(",",strtolower($allowed_extensions));
+		if (!in_array($extension,$allowed_extensions)){ return false;}
+	}
+	
+	
+	return true;
+}
+
+function get_allowed_extensions($ref){
+	$type = sql_value("select resource_type value from resource where ref=$ref","");
+	$allowed_extensions=sql_value("select allowed_extensions value from resource_type where ref=$type","");
+	return $allowed_extensions;
+}
+function get_allowed_extensions_by_type($resource_type){
+	$allowed_extensions=sql_value("select allowed_extensions value from resource_type where ref=$resource_type","");
+	return $allowed_extensions;
+}
 
 ?>

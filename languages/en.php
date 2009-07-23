@@ -786,8 +786,8 @@ $lang["addremove"]="Add/Remove";
 $lang["all_users"]="all users";
 $lang["new_resource"]="new resource";
 
-
-
+$lang["invalidextension_mustbe"]="Invalid extension, must be";
+$lang["allowedextensions"]="Allowed Extensions";
 
 
 ?>

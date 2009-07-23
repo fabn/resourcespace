@@ -4,12 +4,13 @@ include "../../include/authenticate.php"; if (!checkperm("c")) {exit ("Permissio
 include "../../include/general.php";
 
 include "../../include/header.php";
+$resource_type=getvalescaped('resource_type','');
 ?>
 <div class="BasicsBox">
 	<h1><?php echo $lang["specifyftpserver"]?></h1>
 	<p><?php echo text("introtext")?></p>
 
-	<form method="post" action="team_batch_select.php">
+	<form method="post" action="team_batch_select.php?resource_type=<?php echo $resource_type?>">
 
 		<div class="Question"><label><?php echo $lang["ftpserver"]?></label><input name="ftp_server" type="text" class="stdwidth" value="<?php echo $ftp_server?>"><div class="clearerleft"> </div></div>
 

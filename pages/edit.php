@@ -109,22 +109,22 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add",""));}
+					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type);}
 					}
 				elseif (getval("java","")!="") // Test if in browser java upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add",""));}
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type);}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes");}
+					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type);}
 					}
 				else
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch.php");}
+					if (getval("save","")!="") {redirect("pages/team/team_batch.php&resource_type=".$resource_type);}
 					}
 				}
 			}

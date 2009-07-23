@@ -24,11 +24,15 @@ include "../include/header.php";
 
 <form method=post>
 <input type=hidden name="archive" value="<?php echo $archive?>">
-
+<script type="text/javascript"> function hideAllExtensions(){
+	$$('div[class="extensions"]').each(function(elem){
+       elem.style.display='none';
+     });
+	}</script>
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <div class="tickset">
-<div class="Inline"><select name="resource_type" class="shrtwidth">
+<div class="Inline"><select name="resource_type" class="shrtwidth" OnChange="var type=$(this).value;hideAllExtensions();$(type).style.display='block';">
 <?php
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
@@ -36,6 +40,15 @@ for ($n=0;$n<count($types);$n++)
 	?><option value="<?php echo $types[$n]["ref"]?>"><?php echo $types[$n]["name"]?></option><?php
 	}
 ?></select></div>
+<?php
+for ($n=0;$n<count($types);$n++){
+	$allowed_extensions=get_allowed_extensions_by_type($types[$n]["ref"]);	
+	?>
+	<div class="clearerleft"></div>
+	<div class="extensions" id="<?php echo $types[$n]["ref"]?>" style="display:none;">
+	<?php if ($allowed_extensions!=""){echo $lang['allowedextensions'].": ".$allowed_extensions;}?></div>
+<?php } ?>
+
 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>

@@ -6,8 +6,10 @@ include "../include/image_processing.php";
 include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 $status="";
-
+$resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
+
+$allowed_extensions=get_allowed_extensions_by_type($resource_type);
 
 # Create a new collection?
 if ($collection_add==-1)
@@ -25,19 +27,23 @@ if (array_key_exists("Filedata",$_FILES))
     if (getval("replace","")=="")
     	{
 		# New resource
-		$ref=copy_resource(0-$userref); # Copy from user template
 		
-		# Add to collection?
-		if ($collection_add!="")
-			{
-			add_resource_to_collection($ref,$collection_add);
-			}
+		if(verify_extension($_FILES['Filedata']['name'],$allowed_extensions)){
+		
+			$ref=copy_resource(0-$userref); # Copy from user template
+		
+			# Add to collection?
+			if ($collection_add!="")
+				{
+				add_resource_to_collection($ref,$collection_add);
+				}
 			
-		# Log this			
-		daily_stat("Resource upload",$ref);
-		resource_log($ref,"u",0);
+			# Log this			
+			daily_stat("Resource upload",$ref);
+			resource_log($ref,"u",0);
 	
-		$status=upload_file($ref);
+			$status=upload_file($ref);
+		}
 		
 		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
@@ -179,7 +185,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 
@@ -238,6 +244,7 @@ function debug()
 <h2>&nbsp;</h2>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?php echo text("introtext")?></p>
+<?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ".$allowed_extensions?></p><?php } ?>
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
