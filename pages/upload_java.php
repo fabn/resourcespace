@@ -25,22 +25,22 @@ if (array_key_exists("File0",$_FILES))
 	$_FILES["Filedata"]=$_FILES["File0"];
     if (getval("replace","")=="")
     	{
-			# New resource
-			if(verify_extension($_FILES['Filedata']['name'],$allowed_extensions)){
-			$ref=copy_resource(0-$userref); # Copy from user template
+		# New resource
+
+		$ref=copy_resource(0-$userref); # Copy from user template
 		
-			# Add to collection?
-			if ($collection_add!="")
-				{
-				add_resource_to_collection($ref,$collection_add);
-				}
+		# Add to collection?
+		if ($collection_add!="")
+			{
+			add_resource_to_collection($ref,$collection_add);
+			}
 			
-			# Log this			
-			daily_stat("Resource upload",$ref);
-			resource_log($ref,"u",0);
+		# Log this			
+		daily_stat("Resource upload",$ref);
+		resource_log($ref,"u",0);
 	
-			$status=upload_file($ref,true);
-		}
+		$status=upload_file($ref,true);
+		
 		echo "SUCCESS";
 		exit();
 		}
@@ -67,7 +67,17 @@ if (array_key_exists("File0",$_FILES))
     
 include "../include/header.php";
 ?>
+<?php 
+# generate AllowedFileExtensions parameter
+$allowed="";
+if ($allowed_extensions!=""){ $extensions=explode(",",$allowed_extensions); 
+foreach ($extensions as $allowed_extension){
+	$allowed.=$allowed_extension."/";
+	}	
+} 
 
+
+?>
 
 <div class="BasicsBox" id="uploadbox"> 
 <h2>&nbsp;</h2>
@@ -90,7 +100,7 @@ include "../include/header.php";
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
             <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>" />
-            
+            <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
             <param name="debugLevel" value="0">

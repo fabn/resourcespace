@@ -175,11 +175,12 @@ a.progressCancel:hover
 }
 </style>
 <?php 
+# Generate file_types parameter for swfupload
 $allowed="";
 if ($allowed_extensions!=""){ $extensions=explode(",",$allowed_extensions); 
 foreach ($extensions as $allowed_extension){
 	$allowed.="*.".$allowed_extension.";";
-}	
+	}	
 } 
 if ($allowed==""){$allowed="*.*";}
 
