@@ -45,7 +45,7 @@ for ($n=0;$n<count($types);$n++){
 	$allowed_extensions=get_allowed_extensions_by_type($types[$n]["ref"]);	
 	?>
 	<div class="clearerleft"></div>
-	<div class="extensions" id="<?php echo $types[$n]["ref"]?>" style="display:none;">
+	<div class="extensions" id="<?php echo $types[$n]["ref"]?>" <?php if ($n!=0){?>style="display:none;"<?php } ?>>
 	<?php if ($allowed_extensions!=""){echo $lang['allowedextensions'].": ".$allowed_extensions;}?></div>
 <?php } ?>
 
