@@ -77,10 +77,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	global $thumbs_display_fields;
 	$select="";
 	$resource_data_join="";
-	foreach( $thumbs_display_fields as $tdf){
-		$resource_data_join.=" LEFT OUTER JOIN (SELECT resource, value FROM resource_data WHERE resource_type_field =".$tdf.") rd".$tdf." ON r.ref = rd".$tdf.".resource  ";
+	foreach( $thumbs_display_fields as $tdf)
+		{
+		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $tdf . " on r.ref = rd" . $tdf . ".resource and resource_type_field =".$tdf." ";
 		$select.=",rd".$tdf.".value field".$tdf." ";
-	}
+		}
 	
 	# Prepare SQL to add join table for all provided keywods
 	
