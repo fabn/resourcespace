@@ -13,14 +13,7 @@ if ($use_local)
 	# File list from local upload directory.
 
 	# We compute the folder name from the upload folder option.
-	if(preg_match('/^(\/|[a-zA-Z]:[\\/]{1})/', $local_ftp_upload_folder)) // If the upload folder path start by a '/' or 'c:\', it is an absolute path.
-		{
-		$folder = $local_ftp_upload_folder;
-		}
-	else // It is a relative path.
-		{
-		$folder = sprintf('%s%s..%s..%s%s', dirname(__FILE__), DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $local_ftp_upload_folder);
-		}
+	$folder = getAbsolutePath($local_ftp_upload_folder, true);
 
 	if ($groupuploadfolders) // Test if we are using sub folders assigned to groups.
 		{
@@ -32,16 +25,8 @@ if ($use_local)
 		mkdir($folder,0777);
 		}
 
-	$dh=opendir($folder);
-	$files=array();
-	while (($file = readdir($dh)) !== false)
-		{
-		$filetype=filetype($folder . "/" . $file);
-	  if ($filetype=="file")
-	  	{
-	   	$files[]=$file;
-	   	}
-	  }
+	// We list folder contents
+	$files = getFolderContents($folder);
 	}
 else
 	{
@@ -85,7 +70,6 @@ for ($n=0;$n<count($list);$n++)
 	}?></select>
 <div class="clearerleft"> </div>
 </div>
-
 
 <div class="Question"><label><?php echo $lang["selectfiles"]?></label>
 <!--<div class="tickset">-->

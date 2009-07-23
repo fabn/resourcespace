@@ -893,4 +893,44 @@ $mp3_player=false;
 $config_show_performance_footer=false;
 
 $use_phpmailer=false;
+
+# Allow to disable thumbnail generation during batch resource upload from FTP or local folder.
+# In addition to this option, a multi-thread thumbnail generation script is available in the batch
+# folder. You can use it as a cron job, or manually.
+$enable_thumbnail_creation_on_upload = true;
+
+# List of extensions that can be processed by ffmpeg.
+# Mostly video files.
+# @see http://en.wikipedia.org/wiki/List_of_file_formats#Video
+$ffmpeg_supported_extensions = array(
+		'aaf',
+		'3gp',
+		'asf',
+		'avchd',
+		'avi',
+		'cam',
+		'dat',
+		'dsh',
+		'flv',
+		'm1v',
+		'm2v',
+		'mkv',
+		'wrap',
+		'mov',
+		'mpeg',
+		'mpg',
+		'mpe',
+		'mp4',
+		'mxf',
+		'nsv',
+		'ogm',
+		'rm',
+		'ram',
+		'svi',
+		'smi',
+		'wmv',
+		'divx',
+		'xvid',
+	);
+
 ?>

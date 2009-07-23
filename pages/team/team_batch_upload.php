@@ -52,6 +52,18 @@ if (!array_key_exists("uploadfiles",$_POST))
 	?><script type="text/javascript">alert("<?php echo $lang["pleaseselectfiles"]?>");history.go(-1);</script><?php
 	exit();
 	}
+
+if ($use_local) // Test if we fetch files from local upload folder.
+	{
+	# We compute the folder name from the upload folder option.
+	$folder = getAbsolutePath($local_ftp_upload_folder, true);
+
+	if ($groupuploadfolders) // Test if we are using sub folders assigned to groups.
+		{
+		$folder.= DIRECTORY_SEPARATOR . $usergroup;
+		}
+	} // Test if we fetch files from local upload folder.
+
 $uploadfiles=$_POST["uploadfiles"];
 $done=0;$failed=0;
 for ($n=0;$n<count($uploadfiles);$n++)
@@ -69,9 +81,10 @@ for ($n=0;$n<count($uploadfiles);$n++)
 	# Copy the resource
 	$ref=copy_resource(0-$userref);
 	
-    # Find and store extension in the database
-    $extension=explode(".",$uploadfiles[$n]);$extension=trim(strtolower($extension[count($extension)-1]));
-    sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
+	# Find and store extension in the database
+	$extension=explode(".",$uploadfiles[$n]);
+	$extension=trim(strtolower($extension[count($extension)-1]));
+	sql_query("update resource set file_extension='$extension',preview_extension='$extension' where ref='$ref'");
 
 
 	$localpath=get_resource_path($ref,true,"",true,$extension);
@@ -81,23 +94,6 @@ for ($n=0;$n<count($uploadfiles);$n++)
 
 	if ($use_local)
 		{
-		# File list from local upload directory.
-
-		# We compute the folder name from the upload folder option.
-		if(preg_match('/^(\/|[a-zA-Z]:[\\/]{1})/', $local_ftp_upload_folder)) // If the upload folder path start by a '/' or 'c:\', it is an absolute path.
-			{
-			$folder = $local_ftp_upload_folder;
-			}
-		else // It is a relative path.
-			{
-			$folder = sprintf('%s%s..%s..%s%s', dirname(__FILE__), DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $local_ftp_upload_folder);
-			}
-
-		if ($groupuploadfolders) // Test if we are using sub folders assigned to groups.
-			{
-			$folder.= DIRECTORY_SEPARATOR . $usergroup;
-			}
-
 		$result=copy($folder . DIRECTORY_SEPARATOR . $uploadfiles[$n],$localpath);
 		}
 	else
@@ -107,23 +103,32 @@ for ($n=0;$n<count($uploadfiles);$n++)
 
 	if ($result) 
 		{
-	    # Create image previews for supported image files only.
-    	?><script type="text/javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["resizingimage"]?> <?php echo $n+1?> <?php echo $lang["of"]?> <?php echo count($uploadfiles)?><br/>";</script>
-    	<?php
-		flush();
-    	create_previews($ref,false,$extension);
-    	
-		# get file metadata 
-   		 global $exiftool_path;
-   		 extract_exif_comment($ref,$extension);
 
- 	
+		if($enable_thumbnail_creation_on_upload) // Test if thumbnail creation is allowed during upload
+			{
+			# Create image previews for supported image files only.
+			?><script type="text/javascript">document.getElementById('uploadstatus').innerHTML+="<?php echo $lang["resizingimage"]?> <?php echo $n+1?> <?php echo $lang["of"]?> <?php echo count($uploadfiles)?><br/>";</script>
+			<?php
+			flush();
+			create_previews($ref,false,$extension);
+			
+			} // Test if thumbnail creation is allowed during upload
+
 		# Store original filename in field, if set
 		if (isset($filename_field))
 			{
-			update_field($ref,$filename_field,$uploadfiles[$n]);
+			$filename = $uploadfiles[$n];
+			if ($use_local)
+				{
+				$filename = mb_basename($filename);
+				}
+			update_field($ref,$filename_field, $filename);
 			}
-    	
+
+		# get file metadata 
+		global $exiftool_path;
+		extract_exif_comment($ref,$extension);
+
 		$status=$lang["uploaded"] . " " . ($n+1) . " " . $lang["of"] . " " . count($uploadfiles);
 		$status.= " - ".$path;
 		# Show thumb?

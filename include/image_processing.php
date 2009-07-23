@@ -140,50 +140,66 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			
 			$read_from=get_exiftool_fields($resource['resource_type']);
 
-            # run exiftool to get all the valid fields. Use -s -s option so that
-            # the command result isn't printed in columns, which will help in parsing
-            # We then split the lines in the result into an array
-            $command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" " . escapeshellarg($image);
-            $metalines = explode("\n", shell_exec($command));
+			# run exiftool to get all the valid fields. Use -s -s option so that
+			# the command result isn't printed in columns, which will help in parsing
+			# We then split the lines in the result into an array
+			$command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" " . escapeshellarg($image);
+			$metalines = explode("\n", shell_exec($command));
 
-            $metadata = array(); # an associative array to hold metadata field/value pairs
-            
-            # go through each line and split field/value using the first
-            # occurrance of ": ".  The keys in the associative array is converted
-            # into uppercase for easier lookup later
-            foreach($metalines as $metaline)
-            {
-            
-            # Use stripos() if available, but support earlier PHP versions if not.
-            if (function_exists("stripos"))
-            	{
-	            $pos=stripos($metaline, ": ");
-	            }
-	        else
-            	{
-	            $pos=strpos($metaline, ": ");
-	            }
-           
-                if ($pos) #get position of first ": ", return false if not exist
-                {
-                    # add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
-                    $metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
-                }
-            }
-            
-            # now we lookup fields from the database to see if a corresponding value
-            # exist in the uploaded file
-            for($i=0;$i< count($read_from);$i++)
+			$metadata = array(); # an associative array to hold metadata field/value pairs
+			
+			# go through each line and split field/value using the first
+			# occurrance of ": ".  The keys in the associative array is converted
+			# into uppercase for easier lookup later
+			foreach($metalines as $metaline)
 			{
-				$field=explode(",",$read_from[$i]['exiftool_field']);
-				foreach ($field as $subfield){
-					$subfield = strtoupper($subfield); // convert to upper case for easier comparision
-                    if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-" && trim($metadata[$subfield])!="")
-                    {
-                        update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));
-                    }
+			
+			# Use stripos() if available, but support earlier PHP versions if not.
+			if (function_exists("stripos"))
+				{
+				$pos=stripos($metaline, ": ");
+				}
+			else
+				{
+				$pos=strpos($metaline, ": ");
+				}
+
+			if ($pos) #get position of first ": ", return false if not exist
+				{
+				# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
+				$metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
 				}
 			}
+
+		// We try to fetch the original filename from database.
+		$resources = sql_query("SELECT resource.file_path FROM resource WHERE resource.ref = " . $ref);
+
+		if($resources)
+			{
+			$resource = $resources[0];
+			if($resource['file_path'])
+				{
+				$metadata['FILENAME'] = mb_basename($resource['file_path']);
+				}
+			}
+
+		$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);
+
+		# now we lookup fields from the database to see if a corresponding value
+		# exist in the uploaded file
+		for($i=0;$i< count($read_from);$i++)
+			{
+			$field=explode(",",$read_from[$i]['exiftool_field']);
+			foreach ($field as $subfield)
+				{
+				$subfield = strtoupper($subfield); // convert to upper case for easier comparision
+				if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-")
+					{
+					update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));
+					}
+				}
+			}
+
 		}
 
 	}

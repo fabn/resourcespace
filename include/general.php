@@ -1887,4 +1887,128 @@ function get_allowed_extensions_by_type($resource_type){
 	return $allowed_extensions;
 }
 
-?>
+/**
+ * Detect if a path is relative or absolute.
+ * If it is relative, we compute its absolute location by assuming it is
+ * relative to the application root (parent folder).
+ * 
+ * @param string $path A relative or absolute path
+ * @param boolean $create_if_not_exists Try to create the path if it does not exists. Default to False.
+ * @access public
+ * @return string A absolute path
+ */
+function getAbsolutePath($path, $create_if_not_exists = false)
+	{
+	if(preg_match('/^(\/|[a-zA-Z]:[\\/]{1})/', $path)) // If the path start by a '/' or 'c:\', it is an absolute path.
+		{
+		$folder = $path;
+		}
+	else // It is a relative path.
+		{
+		$folder = sprintf('%s%s..%s%s', dirname(__FILE__), DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+		}
+
+	if ($create_if_not_exists && !file_exists($folder)) // Test if the path need to be created.
+		{
+		mkdir($folder,0777);
+		} // Test if the path need to be created.
+
+	return $folder;
+	} // getAbsolutePath()
+
+
+
+/**
+ * Find the files present in a folder, and sub-folder.
+ * 
+ * @param string $path The path to look into.
+ * @param boolean $recurse Trigger the recursion, default to True.
+ * @param boolean $include_hidden Trigger the listing of hidden files / hidden directories, default to False.
+ * @access public
+ * @return array A list of files present in the inspected folder (paths are relative to the inspected folder path).
+ */
+function getFolderContents($path, $recurse = true, $include_hidden = false)
+	{
+	if(!is_dir($path)) // Test if the path is not a folder.
+		{
+			return array();
+		} // Test if the path is not a folder.
+
+	$directory_handle = opendir($path);
+	if($directory_handle === false) // Test if the directory listing failed.
+		{
+		return array();
+		} // Test if the directory listing failed.
+
+	$files = array();
+	while(($file = readdir($directory_handle)) !== false) // For each directory listing entry.
+		{
+		if(! in_array($file, array('.', '..'))) // Test if file is not unix parent and current path.
+			{
+			if($include_hidden || ! preg_match('/^\./', $file)) // Test if the file can be listed.
+				{
+				$complete_path = $path . DIRECTORY_SEPARATOR . $file;
+				if(is_dir($complete_path) && $recurse) // If the path is a directory, and need to be explored.
+					{
+					$sub_dir_files = getFolderContents($complete_path, $recurse, $include_hidden);
+					foreach($sub_dir_files as $sub_dir_file) // For each subdirectory contents.
+						{
+						$files[] = $file . DIRECTORY_SEPARATOR . $sub_dir_file;
+						} // For each subdirectory contents.
+					}
+				elseif(is_file($complete_path)) // If the path is a file.
+					{
+					$files[] = $file;
+					}
+				} // Test if the file can be listed.
+			} // Test if file is not unix parent and current path.
+		} // For each directory listing entry.
+
+	// We close the directory handle:
+	closedir($directory_handle);
+
+	// We sort the files alphabetically.
+	natsort($files);
+
+	return $files;
+	} // getPathFiles()
+
+
+
+/**
+ * Returns filename component of path
+ * This version is UTF-8 proof.
+ * Thanks to nasretdinov at gmail dot com
+ * @link http://www.php.net/manual/en/function.basename.php#85369
+ * 
+ * @param string $file A path.
+ * @access public
+ * @return string Returns the base name of the given path.
+ */
+function mb_basename($file)
+	{
+	$exploded_path = preg_split('/[\\/]+/',$file);
+	return end($exploded_path);
+	} // mb_basename()
+
+
+
+/**
+ * Remove the extension part of a filename.
+ * Thanks to phparadise
+ * http://fundisom.com/phparadise/php/file_handling/strip_file_extension
+ * 
+ * @param string $name A file name.
+ * @access public
+ * @return string Return the file name without the extension part.
+ */
+function strip_extension($name)
+	{
+	$ext = strrchr($name, '.');
+	if($ext !== false)
+		{
+		$name = substr($name, 0, -strlen($ext));
+		}
+	return $name;
+	} // strip_extension()
+

@@ -279,11 +279,11 @@ if ($extension=="txt")
 	Try FFMPEG for video files
    ----------------------------------------
 */
-global $ffmpeg_path; 
+global $ffmpeg_path, $ffmpeg_supported_extensions;
 $ffmpeg_path.="/ffmpeg";
 if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
 
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile)) 
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
         {
         $ffmpeg_path=escapeshellarg($ffmpeg_path);
         	

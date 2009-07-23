@@ -20,41 +20,6 @@ if (!resource_download_allowed($ref,$size))
 	exit("Permission denied");
 	}
 
-/**
- * Returns filename component of path
- * This version is UTF-8 proof.
- * Thanks to nasretdinov at gmail dot com
- * http://fr2.php.net/manual/en/function.basename.php#85369
- * 
- * @param string $file A path.
- * @access public
- * @return string Returns the base name of the given path.
- */
-function mb_basename($file)
-	{
-	$exploded_path = explode('/',$file);
-	return end($exploded_path);
-	} // mb_basename()
-
-/**
- * Remove the extension part of a filename.
- * Thanks to phparadise
- * http://fundisom.com/phparadise/php/file_handling/strip_file_extension
- * 
- * @param string $name A file name.
- * @access public
- * @return string Return the file name without the extension part.
- */
-function strip_extension($name)
-	{
-	$ext = strrchr($name, '.');
-	if($ext !== false)
-		{
-		$name = substr($name, 0, -strlen($ext));
-		}
-	return $name;
-	} // strip_extension()
-
 # If no extension was provided, we fallback to JPG.
 if ($ext=="") {$ext="jpg";}
 
