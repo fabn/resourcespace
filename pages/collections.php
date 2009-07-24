@@ -28,6 +28,20 @@ setcookie("thumbs",$thumbs,0);
 <!--[if lte IE 6]> <link href="../css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="../css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <?php
+# Include CSS files for for each of the plugins too (if provided)
+for ($n=0;$n<count($plugins);$n++)
+	{
+	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/style.css";
+	if (file_exists($csspath))
+		{
+		?>
+		<link href="<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/style.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+		<?php
+		}
+	}
+?>
+
+<?php
 $collection=getvalescaped("collection","");
 $entername=getvalescaped("entername","");
 
