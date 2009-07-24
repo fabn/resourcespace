@@ -1290,6 +1290,8 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->Subject = $subject;
 	$mail->Body    = $body;
 	
+	if (isset($templatevars['fromusername'])){$mail->FromName = $templatevars['fromusername'];} else {$mail->FromName="";}
+	
 	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
 		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
 		}
