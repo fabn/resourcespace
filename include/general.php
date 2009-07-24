@@ -1866,6 +1866,7 @@ return $strName;
 function get_fields($field_refs)
 	{
 	# Returns a list of fields with refs matching the supplied field refs.
+	if (!is_array($field_refs)) {print_r($field_refs);exit(" passed to getfields() is not an array. ");}
 	$return=array();
 	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where  keywords_index=1 and length(name)>0 and ref in ('" . join("','",$field_refs) . "') order by order_by");
 	# Apply field permissions

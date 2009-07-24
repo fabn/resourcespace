@@ -497,7 +497,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	# $name		the input name to use in the form (post name)
 	# $value	the default value to set for this field, if any
 	
-	global $auto_order_checkbox;
+	global $auto_order_checkbox,$lang,$category_tree_open;
 	$name="field_" . $field["ref"];
 	
 	if (!$forsearchbar)
@@ -615,7 +615,18 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		
 		case 7: # ----- Category Tree
 		$options=$field["options"];
-		include "category_tree.php";
+		if ($forsearchbar)
+			{
+			# On the search bar?
+			# Produce a smaller version of the category tree in a single dropdown - max two levels
+			
+			
+			}
+		else
+			{
+			# For advanced search and elsewhere, include the category tree.
+			include "category_tree.php";
+			}
 		break;
 		}
 	?>
