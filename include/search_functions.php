@@ -615,12 +615,42 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		
 		case 7: # ----- Category Tree
 		$options=$field["options"];
+		$set=trim_array(explode(";",cleanse_string($value,true)));
 		if ($forsearchbar)
 			{
 			# On the search bar?
 			# Produce a smaller version of the category tree in a single dropdown - max two levels
-			
-			
+			?>
+			<select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>"><option value=""></option><?php
+			$class=explode("\n",$options);
+
+			for ($t=0;$t<count($class);$t++)
+				{
+				$s=explode(",",$class[$t]);
+				if (count($s)==3 && $s[1]==0)
+					{
+					# Found a first level
+					?>
+					<option <?php if (in_array(cleanse_string($s[2],true),$set)) {?>selected<?php } ?>><?php echo $s[2] ?></option>
+					<?php
+					
+					# Parse tree again looking for level twos at this point
+					for ($u=0;$u<count($class);$u++)
+						{
+						$v=explode(",",$class[$u]);
+						if (count($v)==3 && $v[1]==$s[0])
+							{
+							# Found a first level
+							?>
+							<option value="<?php echo $s[2] . "," . $v[2] ?>" <?php if (in_array(cleanse_string($s[2],true),$set) && in_array(cleanse_string($v[2],true),$set)) {?>selected<?php } ?>>&nbsp;-&nbsp;<?php echo $v[2] ?></option>
+							<?php
+							}						
+						}
+					}
+				}			
+			?>
+			</select>
+			<?php
 			}
 		else
 			{
@@ -635,7 +665,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	<?php
 	}
 
-function search_form_to_search_query($fields)
+function search_form_to_search_query($fields,$fromsearchbar=false)
 	{
 	# Take the data in the the posted search form that contained $fields, and assemble
 	# a search query string that can be used for a standard search.
