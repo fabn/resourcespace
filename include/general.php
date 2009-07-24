@@ -1861,6 +1861,21 @@ $strName = substr($strName, 0, -strlen($ext));
 return $strName;
 }
 
+function get_fields($field_refs)
+	{
+	# Returns a list of fields with refs matching the supplied field refs.
+	$return=array();
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where  keywords_index=1 and length(name)>0 and ref in ('" . join("','",$field_refs) . "') order by order_by");
+	# Apply field permissions
+	for ($n=0;$n<count($fields);$n++)
+		{
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+		&& !checkperm("f-" . $fields[$n]["ref"]))
+		{$return[]=$fields[$n];}
+		}
+	return $return;
+	}
+
 function verify_extension($filename,$allowed_extensions=""){
 	# Allowed extension?
 	$extension=explode(".",$filename);

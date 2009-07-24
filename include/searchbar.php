@@ -12,6 +12,7 @@ for ($n=0;$n<count($fields);$n++)
 	}
 # Also strip date related fields.
 $simple_fields[]="year";$simple_fields[]="month";$simple_fields[]="day";
+hook("simplesearch_stripsimplefields");
 
 # Process all keywords, putting set fieldname/value pairs into an associative array ready for setting later.
 # Also build a quicksearch string.
@@ -382,3 +383,4 @@ if (!$basic_simple_search)
 	
 </div>
 
+<?php hook("searchbarbottom"); ?>

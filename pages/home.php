@@ -4,6 +4,8 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
 
+hook("homeheader");
+
 include "../include/header.php";
 
 if (!hook("replacehome")) { 
