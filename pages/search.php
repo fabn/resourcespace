@@ -19,22 +19,20 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 $search=getvalescaped("search","");
 
 # create a thumbs_display_field array with information needed for detailed field highlighting
-if ($thumbs_display_fields)
+$tdf=array();
+$all_field_info=get_fields($thumbs_display_fields);
+for ($n=0;$n<count($thumbs_display_fields);$n++)
 	{
-	$all_field_info=get_fields($thumbs_display_fields);
-	for ($n=0;$n<count($thumbs_display_fields);$n++)
+	# Find field in selected list
+	for ($m=0;$m<count($all_field_info);$m++)
 		{
-		# Find field in selected list
-		for ($m=0;$m<count($all_field_info);$m++)
+		if ($all_field_info[$m]["ref"]==$thumbs_display_fields[$n])
 			{
-			if ($all_field_info[$m]["ref"]==$thumbs_display_fields[$n])
-				{
-				$field_info=$all_field_info[$m];
-				$tdf[$n]['ref']=$thumbs_display_fields[$n];
-				$tdf[$n]['indexed']=$field_info['keywords_index'];
-				$tdf[$n]['partial_index']=$field_info['partial_index'];
-				$tdf[$n]['name']=$field_info['name'];
-				}
+			$field_info=$all_field_info[$m];
+			$tdf[$n]['ref']=$thumbs_display_fields[$n];
+			$tdf[$n]['indexed']=$field_info['keywords_index'];
+			$tdf[$n]['partial_index']=$field_info['partial_index'];
+			$tdf[$n]['name']=$field_info['name'];
 			}
 		}
 	}
