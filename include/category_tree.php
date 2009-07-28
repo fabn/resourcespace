@@ -47,7 +47,7 @@ function DrawFromNode(node,inner)
             if (TreeExpand[i]) {result+=DrawFromNode(i);}
             }
 		}
-	result+="</td></tr></table>";	
+	if (!inner) {result+="</td></tr></table>";}
 
 	return result;
 	}
@@ -251,7 +251,8 @@ function UpdateHiddenField()
 			}	
 		}
 	document.getElementById("category").value=f;
-	if (UpdateResultCount) {UpdateResultCount();}
+	// Update the result counter, if the function is available (e.g. on Advanced Search).
+	if (typeof UpdateResultCount == 'function') {UpdateResultCount();}
 	}
 <?php
 # Load the tree

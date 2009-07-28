@@ -164,7 +164,7 @@ a.progressCancel:hover
 	height: 14px;
 	width: 14px;
 	
-	background-image: url(swfupload/cancelbutton.gif);
+	background-image: url(../lib/swfupload/cancelbutton.gif);
 	background-repeat: no-repeat;
 	background-position: -14px 0px;
 	float: right;

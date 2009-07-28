@@ -26,19 +26,77 @@ if (strlen($lastsync)>0) {$lastsync=strtotime($lastsync);} else {$lastsync="";}
 
 echo "...done. Looking for changes...";
 
+# Pre-load the category tree, if configured.
+if ($staticsync_mapped_category_tree)
+	{
+	$field=get_field($staticsync_mapped_category_tree);
+	$tree=explode("\n",trim($field["options"]));
+	}
+
+
+function touch_category_tree_level($path_parts)
+	{
+	# For each level of the mapped category tree field, ensure that the matching path_parts path exists
+	global $staticsync_mapped_category_tree,$tree;
+
+	$altered_tree=false;
+	$parent_search=0;
+	
+	for ($n=0;$n<count($path_parts);$n++)
+		{
+		# Look for this node in the tree.		
+		$found=false;
+		for ($m=0;$m<count($tree);$m++)
+			{
+			$s=explode(",",$tree[$m]);
+			if ((count($s)==3) && ($s[1]==$parent_search) && $s[2]==$path_parts[$n])
+				{
+				# A match!
+				$found=true;
+				$parent_search=$m+1; # Search for this as the parent node on the pass for the next level.
+				}
+			}
+		if (!$found)
+			{
+			echo "Not found: " . $path_parts[$n] . " @ level " . $n . "\n";
+			# Add this node
+
+			$tree[]=(count($tree)+1) . "," . $parent_search . "," . $path_parts[$n];
+			$altered_tree=true;
+			$parent_search=count($tree); # Search for this as the parent node on the pass for the next level.
+			}
+		}
+	if ($altered_tree)
+		{
+		# Save the updated tree.
+		sql_query("update resource_type_field set options='" . escape_check(join("\n",$tree)) . "' where ref='" . $staticsync_mapped_category_tree . "'");
+		}
+	}
+
 
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$type,$max,$count,$done,$modtimes,$lastsync,$ffmpeg_preview_extension;
+	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree;
 	
 	$collection=0;
+	
+	echo "Processing Folder: $folder\n";
 	
 	# List all files in this folder.
 	$dh=opendir($folder);
 	while (($file = readdir($dh)) !== false)
 		{
 		$filetype=filetype($folder . "/" . $file);
+		$fullpath=$folder . "/" . $file;
+		$shortpath=str_replace($syncdir . "/","",$fullpath);
+		
+		if ($staticsync_mapped_category_tree)
+			{
+			$path_parts=explode("/",$shortpath);
+			array_pop($path_parts);
+			touch_category_tree_level($path_parts);
+			}	
 		
 		# -----FOLDERS-------------
 		if ((($filetype=="dir") || $filetype=="link") && ($file!=".") && ($file!="..") && (strpos($nogo,"[" . $file . "]")===false))
@@ -48,24 +106,20 @@ function ProcessFolder($folder)
 			if (true || (strlen($lastsync)=="") || (filemtime($folder . "/" . $file)>($lastsync-26000)))
 				{
 				ProcessFolder($folder . "/" . $file);
-				echo ".";
 				}
 			}
 			
 		# -------FILES---------------
 		if (($filetype=="file") && (substr($file,0,1)!=".") && (strtolower($file)!="thumbs.db"))
 			{
-			$fullpath=$folder . "/" . $file;
-			$shortpath=str_replace($syncdir . "/","",$fullpath);
-			
 			# Already exists?
 			if (!in_array($shortpath,$done))
 				{
 				$count++;if ($count>$max) {return(true);}
 
-				echo "Processing file $fullpath\n";
+				echo "Processing file: $fullpath\n";
 				
-				if ($collection==0)
+				if ($collection==0 && $staticsync_autotheme)
 					{
 					# Make a new collection for this folder.
 					$e=explode("/",$shortpath);
@@ -83,9 +137,13 @@ function ProcessFolder($folder)
 				# Work out extension
 				$extension=explode(".",$file);$extension=trim(strtolower($extension[count($extension)-1]));
 
-				if (($extension==$ffmpeg_preview_extension)) {$type=4;} 
-				elseif (($extension=="mov") || ($extension=="3gp") || ($extension=="avi") || ($extension=="mpg") || ($extension=="mp4") || ($extension=="flv"))	{$type=3;}
-				else {$type=1;}
+				# Work out a resource type based on the extension.
+				$type=$staticsync_extension_mapping_default;
+				reset ($staticsync_extension_mapping);
+				foreach ($staticsync_extension_mapping as $rt=>$extensions)
+					{
+					if (in_array($extension,$extensions)) {$type=$rt;}
+					}
 				
 				# Formulate a title
 				$title=str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath));
@@ -94,8 +152,19 @@ function ProcessFolder($folder)
 				# Import this file
 				$r=import_resource($shortpath,$type,$title);
 				
+				# Add to mapped category tree (if configured)
+				if (isset($staticsync_mapped_category_tree))
+					{
+					# Save tree data
+					update_field ($r,$staticsync_mapped_category_tree,"," . join(",",$path_parts));
+					echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
+					}			
+				
 				# Add to collection
-				sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+				if ($staticsync_autotheme)
+					{
+					sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+					}
 				}
 			else
 				{

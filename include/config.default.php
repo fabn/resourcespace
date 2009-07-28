@@ -349,11 +349,6 @@ $results_display_array=array(12,24,48,72,120,240);
 # How many results per page? (default)
 $default_perpage=48;
 
-# for sync
-$syncdir="/path/to/static/files";
-$nogo="[folder1]";
-$type=1;
-
 # Group based upload folders? (separate local upload folders for each group)
 $groupuploadfolders=false;
 
@@ -932,5 +927,17 @@ $ffmpeg_supported_extensions = array(
 		'divx',
 		'xvid',
 	);
+
+# for staticsync.php
+$syncdir="/path/to/static/files"; # The sync folder
+$nogo="[folder1]"; # A list of folders to ignore within the sign folder.
+$staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
+# Mapping extensions to resource types for sync'd files
+# Format: staticsync_extension_mapping[resource_type]=array("extension 1","extension 2");
+$staticsync_extension_mapping_default=1;
+$staticsync_extension_mapping[3]=array("mov","3gp","avi","mpg","mp4","flv"); # Video
+$staticsync_extension_mapping[4]=array("flv");
+# Uncomment and set the next line to specify a category tree field to use to store the retieved path information for each file. The tree structure will be automatically modified as necessary to match the folder strucutre within the sync folder.
+# $staticsync_mapped_category_tree=50;
 
 ?>

@@ -99,3 +99,7 @@ a:active {color:#737373;}
 .ListviewBoxedTitleStyle td {background-color:#fff;}
 
 .NewFlag {background-color:#737373;color:#fff;}
+
+/* Mouseover effect on list views */
+.ListviewStyle tr:hover td {background-color: #eeeeee;} 
+.ListviewStyle tr.ListviewTitleStyle:hover td {background:none;} 
