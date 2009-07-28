@@ -10,7 +10,6 @@ global $lang,$baseurl,$css_reload_key;
 </div>
 
 <div id="<?php echo $name?>_tree" class="CategoryTree" <?php if ($category_tree_open) { ?>style="display:block;"<?php } ?>>&nbsp;</div>
-<script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script type="text/javascript">
 
 
