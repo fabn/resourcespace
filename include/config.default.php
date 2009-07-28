@@ -345,7 +345,7 @@ $smallthumbs=true;
 $max_collection_thumbs=150;
 
 # Options for number of results to display per page:
-$results_display_array=array(12,24,48,72,120,240);
+$results_display_array=array(24,48,72,120,240);
 # How many results per page? (default)
 $default_perpage=48;
 
