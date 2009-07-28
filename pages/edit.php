@@ -548,6 +548,7 @@ for ($n=0;$n<count($fields);$n++)
 		}
 	}
 ?>
+
 <?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
 
 	<!-- Archive Status -->
@@ -576,7 +577,8 @@ for ($n=0;$n<count($fields);$n++)
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
-	
+
+<?php if (!hook("replaceaccessselector")){ ?>	
 	<!-- Access -->
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
 		# Do not show for user editable templates.
@@ -621,6 +623,7 @@ for ($n=0;$n<count($fields);$n++)
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
+	<?php } /* end Hook replaceaccessselector */ ?>
 
 	<!-- Related Resources -->
 	<?php if ($enable_related_resources) { ?>
