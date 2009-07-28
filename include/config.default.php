@@ -803,6 +803,15 @@ $partial_index_min_word_length=3;
 # array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(3);
 
+# On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
+# to that specified in the dropdown on the edit page.
+# Set this option to 'true' to rectify this.
+$image_rotate_reverse_options=false;
+
+
+
+
+
 
 
 
@@ -939,5 +948,6 @@ $staticsync_extension_mapping[3]=array("mov","3gp","avi","mpg","mp4","flv"); # V
 $staticsync_extension_mapping[4]=array("flv");
 # Uncomment and set the next line to specify a category tree field to use to store the retieved path information for each file. The tree structure will be automatically modified as necessary to match the folder strucutre within the sync folder.
 # $staticsync_mapped_category_tree=50;
+
 
 ?>

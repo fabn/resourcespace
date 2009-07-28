@@ -256,8 +256,25 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 <div class="Question">
 <label><?php echo $lang["imagecorrection"]?><br/><?php echo $lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
 <option value=""><?php echo $lang["select"]?></option>
-<option value="rotateclock"><?php echo $lang["rotateclockwise"]?></option>
-<option value="rotateanti"><?php echo $lang["rotateanticlockwise"]?></option>
+
+<?php
+# On some PHP installations, the imagerotate() function is wrong and images are turned incorrectly.
+# A local configuration setting allows this to be rectified
+if (!$image_rotate_reverse_options)
+	{
+	?>
+	<option value="rotateclock"><?php echo $lang["rotateclockwise"]?></option>
+	<option value="rotateanti"><?php echo $lang["rotateanticlockwise"]?></option>
+	<?php
+	}
+else
+	{
+	?>
+	<option value="rotateanti"><?php echo $lang["rotateclockwise"]?></option>
+	<option value="rotateclock"><?php echo $lang["rotateanticlockwise"]?></option>
+	<?php
+	}
+?>
 <option value="gammaplus"><?php echo $lang["increasegamma"]?></option>
 <option value="gammaminus"><?php echo $lang["decreasegamma"]?></option>
 <option value="restore"><?php echo $lang["restoreoriginal"]?></option>
