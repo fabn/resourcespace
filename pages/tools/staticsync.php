@@ -31,6 +31,7 @@ if ($staticsync_mapped_category_tree)
 	{
 	$field=get_field($staticsync_mapped_category_tree);
 	$tree=explode("\n",trim($field["options"]));
+	$tree=array();
 	}
 
 
@@ -41,15 +42,20 @@ function touch_category_tree_level($path_parts)
 
 	$altered_tree=false;
 	$parent_search=0;
+	$nodename="";
 	
 	for ($n=0;$n<count($path_parts);$n++)
 		{
+		# The node name should contain all the subsequent parts of the path
+		if ($n>0) {$nodename.="~";}
+		$nodename.=$path_parts[$n];
+		
 		# Look for this node in the tree.		
 		$found=false;
 		for ($m=0;$m<count($tree);$m++)
 			{
 			$s=explode(",",$tree[$m]);
-			if ((count($s)==3) && ($s[1]==$parent_search) && $s[2]==$path_parts[$n])
+			if ((count($s)==3) && ($s[1]==$parent_search) && $s[2]==$nodename)
 				{
 				# A match!
 				$found=true;
@@ -58,10 +64,10 @@ function touch_category_tree_level($path_parts)
 			}
 		if (!$found)
 			{
-			echo "Not found: " . $path_parts[$n] . " @ level " . $n . "\n";
+			echo "Not found: " . $nodename . " @ level " . $n . "\n";
 			# Add this node
 
-			$tree[]=(count($tree)+1) . "," . $parent_search . "," . $path_parts[$n];
+			$tree[]=(count($tree)+1) . "," . $parent_search . "," . $nodename;
 			$altered_tree=true;
 			$parent_search=count($tree); # Search for this as the parent node on the pass for the next level.
 			}
@@ -155,9 +161,19 @@ function ProcessFolder($folder)
 				# Add to mapped category tree (if configured)
 				if (isset($staticsync_mapped_category_tree))
 					{
-					# Save tree data
+					$basepath="";
+					# Save tree position to category tree field
+			
+					# For each node level, expand it back to the root so the full path is stored.
+					for ($n=0;$n<count($path_parts);$n++)
+						{
+						if ($basepath!="") {$basepath.="~";}
+						$basepath.=$path_parts[$n];
+						$path_parts[$n]=$basepath;
+						}
+					
 					update_field ($r,$staticsync_mapped_category_tree,"," . join(",",$path_parts));
-					echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
+					#echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
 					}			
 				
 				# Add to collection
