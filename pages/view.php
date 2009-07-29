@@ -422,8 +422,10 @@ for ($n=0;$n<count($altfiles);$n++)
 <div class="clearerleft"> </div>
 
 <?php
+if (!hook("replaceuserratingsbox")){
 # Include user rating box, if enabled and the user is not external.
 if ($user_rating && $k=="") { include "../include/user_rating.php"; }
+} /* end hook replaceuserratingsbox */
 ?>
 
 
