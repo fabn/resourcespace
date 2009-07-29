@@ -27,7 +27,7 @@ if (strlen($lastsync)>0) {$lastsync=strtotime($lastsync);} else {$lastsync="";}
 echo "...done. Looking for changes...";
 
 # Pre-load the category tree, if configured.
-if ($staticsync_mapped_category_tree)
+if (isset($staticsync_mapped_category_tree))
 	{
 	$field=get_field($staticsync_mapped_category_tree);
 	$tree=explode("\n",trim($field["options"]));
