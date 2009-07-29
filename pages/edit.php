@@ -446,7 +446,10 @@ for ($n=0;$n<count($fields);$n++)
 
 	# Define some Javascript for help actions (applies to all fields)
 	$help_js="onBlur=\"HideHelp(" . $fields[$n]["ref"] . ");return false;\" onFocus=\"ShowHelp(" . $fields[$n]["ref"] . ");return false;\"";
-
+	
+	#hook to modify field type in special case. Returning zero (to get a standard text box) doesn't work, so return 1 for type 0, 2 for type 1, etc.
+	if(hook("modifyfieldtype")){$fields[$n]["type"]=hook("modifyfieldtype")-1;}
+	
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Plain text entry
 		?><input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>" <?php echo $help_js; ?>><?php

@@ -139,8 +139,8 @@ if (!$basic_simple_search)
 		$value=""; # to do, fetch set value.
 		if (isset($set_fields[$fields[$n]["name"]])) {$value=$set_fields[$fields[$n]["name"]];}
 		
-		#hook to modify field type in special case
-		if(hook("modifyfieldtype")){$fields[$n]["type"]=hook("modifyfieldtype");}
+	#hook to modify field type in special case. Returning zero (to get a standard text box) doesn't work, so return 1 for type 0, 2 for type 1, etc.
+	if(hook("modifyfieldtype")){$fields[$n]["type"]=hook("modifyfieldtype")-1;}
 		
 		switch ($fields[$n]["type"])
 			{
