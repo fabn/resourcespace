@@ -1215,6 +1215,12 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		include_once("../../lib/phpmailer/class.phpmailer.php");
 		include_once("../../lib/phpmailer/class.html2text.php");
 		}	
+	else if (file_exists("../../../lib/phpmailer/class.phpmailer.php")){
+		# plugin
+		include_once("../../../lib/phpmailer/class.phpmailer.php");
+		include_once("../../../lib/phpmailer/class.html2text.php");
+		}	
+			
 		
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
