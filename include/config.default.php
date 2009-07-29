@@ -949,6 +949,7 @@ $staticsync_extension_mapping[3]=array("mov","3gp","avi","mpg","mp4","flv"); # V
 $staticsync_extension_mapping[4]=array("flv");
 # Uncomment and set the next line to specify a category tree field to use to store the retieved path information for each file. The tree structure will be automatically modified as necessary to match the folder strucutre within the sync folder.
 # $staticsync_mapped_category_tree=50;
-
+# Should the generated resource title include the sync folder path?
+$staticsync_title_includes_path=true;
 
 ?>

@@ -83,7 +83,7 @@ function touch_category_tree_level($path_parts)
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree;
+	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path;
 	
 	$collection=0;
 	
@@ -152,8 +152,15 @@ function ProcessFolder($folder)
 					}
 				
 				# Formulate a title
-				$title=str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath));
-				$title=ucfirst(str_replace("_"," ",$title));
+				if ($staticsync_title_includes_path)
+					{
+					$title=str_ireplace("." . $extension,"",str_replace("/"," - ",$shortpath));
+					$title=ucfirst(str_replace("_"," ",$title));
+					}
+				else
+					{
+					$title=str_ireplace("." . $extension,"",$file);
+					}
 				
 				# Import this file
 				$r=import_resource($shortpath,$type,$title);
