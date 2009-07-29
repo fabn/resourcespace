@@ -31,7 +31,6 @@ if (isset($staticsync_mapped_category_tree))
 	{
 	$field=get_field($staticsync_mapped_category_tree);
 	$tree=explode("\n",trim($field["options"]));
-	$tree=array();
 	}
 
 
