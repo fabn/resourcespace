@@ -1746,6 +1746,7 @@ function check_access_key($resource,$key)
 			{
 			$usergroup=$userinfo[0]["usergroup"];
 			$userpermissions=split(",",$userinfo[0]["permissions"]);
+			if (hook("modifyuserpermissions")){$userpermissions=hook("modifyuserpermissions");}
 			$userrequestmode=0; # Always use 'email' request mode for external users
 			}
 		
