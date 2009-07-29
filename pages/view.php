@@ -63,6 +63,7 @@ if ($go!="")
 
 # Load resource data
 $resource=get_resource_data($ref);
+if ($resource===false) {exit("Resource not found.");}
 
 # Load access level
 $access=get_resource_access($ref);
