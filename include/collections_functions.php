@@ -471,7 +471,8 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 		}
 	return $return;
 	}
-	
+
+if (!function_exists("email_collection")){
 function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
@@ -576,6 +577,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	# Return an empty string (all OK).
 	return "";
 	}
+}	
 
 function generate_collection_access_key($collection,$feedback=0,$email="",$access=-1,$expires="")
 	{
