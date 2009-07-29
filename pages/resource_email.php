@@ -20,6 +20,7 @@ if (getval("save","")!="")
 	$users=getvalescaped("users","");
 	$message=getvalescaped("message","");
 	$access=getvalescaped("access","");
+	if (hook("modifyresourceaccess")){$access=hook("modifyresourceaccess");}
 	$expires=getvalescaped("expires","");
 	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message,$access,$expires);
 	if ($errors=="")

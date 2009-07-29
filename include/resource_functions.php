@@ -458,13 +458,12 @@ function update_field($resource,$field,$value)
 		sql_query("update resource set $column = '$value' where ref='$resource'");
 		}
 	}
-	
 
+if (!function_exists("email_resource")){	
 function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
-	# Add $collection to these user's 'My Collections' page
-	# Send them an e-mail linking to this collection
+
 	global $baseurl,$email_from,$applicationname,$lang,$userref;
 	
 	# remove any line breaks that may have been entered
@@ -527,6 +526,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	# Return an empty string (all OK).
 	return "";
 	}
+}
 
 function delete_resource($ref)
 	{
