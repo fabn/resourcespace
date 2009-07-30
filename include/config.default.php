@@ -318,6 +318,9 @@ $disable_searchresults = false;
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
 
+# Display Help and Advice link in the top navigation
+$help_link=true;
+
 # Display Search Results link in top navigation
 $search_results_link=true;
 

@@ -156,7 +156,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		?>
 		
 		
-		<li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php"><?php echo $lang["helpandadvice"]?></a></li>
+		<?php if ($help_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php"><?php echo $lang["helpandadvice"]?></a></li><?php } ?>
 		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php"><?php echo $lang["teamcentre"]?></a></li><?php } ?>
 
 <?php hook("toptoolbaradder"); ?>
