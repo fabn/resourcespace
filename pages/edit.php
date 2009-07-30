@@ -489,7 +489,7 @@ for ($n=0;$n<count($fields);$n++)
 
 		case 3: # -------- Drop down list
 		$options=explode(",",$fields[$n]["options"]);
-		if (hook("adjustdropdownoptions")){$options=hook("adjustdropdownoptions");}
+		if (hook("adjusteditdropdownoptions")){$options=hook("adjusteditdropdownoptions");}
 		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php
 		for ($m=0;$m<count($options);$m++)
 			{
