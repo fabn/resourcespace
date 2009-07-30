@@ -1,6 +1,17 @@
 <?php
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
+
+# Work out the path to the top of the DOM (for updating the left frame)
+if (!$frameless_collections)
+	{
+	$top_dom="top.main";
+	}
+else
+	{
+	$top_dom="top";
+	}
+
 $tree=file("data/tree.txt");
 
 ## one main plugin can replace the System Setup tree completely, with a file in the plugin called: admin/data/tree.txt.
@@ -174,8 +185,8 @@ elseif (array_key_exists("submit",$_POST))
     $saved=true;
     ?>
     <script type="text/javascript">
-    top.main.left.EmptyNode(<?php echo $parent?>);
-    top.main.left.ReloadNode(<?php echo $parent?>);
+    <?php echo $top_dom ?>.left.EmptyNode(<?php echo $parent?>);
+    <?php echo $top_dom ?>.left.ReloadNode(<?php echo $parent?>);
     </script>
     <?php
     }
@@ -212,8 +223,8 @@ if (array_key_exists("delete",$_POST))
         }
     ?>
     <script type="text/javascript">
-    top.main.left.EmptyNode(<?php echo $parent?>);
-    top.main.left.ReloadNode(<?php echo $parent?>);
+    <?php echo $top_dom ?>.left.EmptyNode(<?php echo $parent?>);
+    <?php echo $top_dom ?>.left.ReloadNode(<?php echo $parent?>);
     </script>
     <?php
     }
