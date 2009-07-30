@@ -1256,13 +1256,13 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 					$$variable="<img src='cid:thumbnail' />";
 				}
 				
-				# embed images (ex [img_/var/www/resourcespace/gfx/greyblu/titles/title.gif])
+				# embed images (ex [img_/var/www/resourcespace/gfx/whitegry/titles/title.gif])
 				else if (substr($variable,0,4)=="img_"){
 					$$variable="<img src='cid:".basename(substr($variable,4))."'/>";
 					$images[]=substr($variable,4);
 				}
 				
-				# attach files (ex [attach_/var/www/resourcespace/gfx/greyblu/titles/title.gif])
+				# attach files (ex [attach_/var/www/resourcespace/gfx/whitegry/titles/title.gif])
 				else if (substr($variable,0,7)=="attach_"){
 					$$variable="";
 					$attachments[]=substr($variable,7);
