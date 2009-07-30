@@ -938,7 +938,10 @@ $ffmpeg_supported_extensions = array(
 		'xvid',
 	);
 
-# for staticsync.php
+# ------------------------------------------------------------------------------------------------------------------
+# StaticSync (staticsync.php)
+# The ability to synchronise ResourceSpace with a separate and stand-alone filestore.
+# ------------------------------------------------------------------------------------------------------------------
 $syncdir="/path/to/static/files"; # The sync folder
 $nogo="[folder1]"; # A list of folders to ignore within the sign folder.
 $staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
@@ -951,5 +954,29 @@ $staticsync_extension_mapping[4]=array("flv");
 # $staticsync_mapped_category_tree=50;
 # Should the generated resource title include the sync folder path?
 $staticsync_title_includes_path=true;
+# Should the sync'd resource files be 'ingested' i.e. moved into ResourceSpace's own filestore structure?
+# In this scenario, the sync'd folder merely acts as an upload mechanism. If path to metadata mapping is used then this allows metadata to be extracted based on the file's location.
+$staticsync_ingest=false;
+#
+# StaticSync Path to metadata mapping
+# ------------------------
+# It is possible to take path information and map selected parts of the path to metadata fields.
+# For example, if you added a mapping for '/projects/' and specified that the second level should be 'extracted' means that 'ABC' would be extracted as metadata into the specified field if you added a file to '/projects/ABC/'
+# Hence meaningful metadata can be specified by placing the resource files at suitable positions within the static
+# folder heirarchy.
+# Use the line below as an example. Repeat this for every mapping you wish to set up
+#	$staticsync_mapfolders[]=array
+#		(
+#		"match"=>"/projects/",
+#		"field"=>10,
+#		"level"=>2
+#		);
+#
+#
+# End of StaticSync settings
+# ------------------------------------------------------------------------------------------------------------------
+	
+
+
 
 ?>

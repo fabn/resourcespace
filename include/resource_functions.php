@@ -804,7 +804,7 @@ function delete_exif_tmpfile($tmpfile)
 	if(file_exists($tmpfile)){unlink ($tmpfile);}
 }
 
-function import_resource($path,$type,$title)
+function import_resource($path,$type,$title,$ingest=false)
 	{
 	# Import the resource at the given path
 	# This is used by staticsync.php and Camillo's SOAP API
@@ -813,23 +813,44 @@ function import_resource($path,$type,$title)
 	# Create resource
 	$r=create_resource($type);
 			
-	# Work out extension
-	$extension=explode(".",$path);$extension=trim(strtolower($extension[count($extension)-1]));
+	# Work out extension based on path
+	$extension=explode(".",$path);$extension=trim(strtolower(end($extension)));
 
 	# Store extension/data in the database
 	sql_query("update resource set archive=0,file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
 			
 	# Store original filename in field, if set
-	global $filename_field;
-	if (isset($filename_field))
+	if (!$ingest)
 		{
-		update_field($r,$filename_field,$path);
+		# This file remains in situ; store the full path in the filename field to indicated that the file is stored remotely.
+		global $filename_field;
+		if (isset($filename_field))
+			{
+			update_field($r,$filename_field,$path);
+			}
 		}
+	else
+		{
+		# This file is being ingested. Store only the filename.
+		$s=explode("/",$path);
+		$filename=end($s);
+		
+		global $filename_field;
+		if (isset($filename_field))
+			{
+			update_field($r,$filename_field,$filename);
+			}
+		
+		# Move the file
+		global $syncdir;
+		$destination=get_resource_path($r,true,"",true,$extension);	
+		rename($syncdir . "/" . $path,$destination);
+		}
+
 	# Add title
 	update_field($r,8,$title);
 	
 	# get file metadata 
-	global $exiftool_path;
 	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.

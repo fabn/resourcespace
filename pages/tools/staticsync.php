@@ -82,7 +82,7 @@ function touch_category_tree_level($path_parts)
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path;
+	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path, $staticsync_ingest, $staticsync_mapfolders;
 	
 	$collection=0;
 	
@@ -162,7 +162,7 @@ function ProcessFolder($folder)
 					}
 				
 				# Import this file
-				$r=import_resource($shortpath,$type,$title);
+				$r=import_resource($shortpath,$type,$title,$staticsync_ingest);
 				
 				# Add to mapped category tree (if configured)
 				if (isset($staticsync_mapped_category_tree))
@@ -181,6 +181,32 @@ function ProcessFolder($folder)
 					update_field ($r,$staticsync_mapped_category_tree,"," . join(",",$path_parts));
 					#echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
 					}			
+				
+				# StaticSync path / metadata mapping
+				# Extract metadata from the file path as per $staticsync_mapfolders in config.php
+				if (isset($staticsync_mapfolders))
+					{
+					foreach ($staticsync_mapfolders as $mapfolder)
+						{
+						$match=$mapfolder["match"];
+						$field=$mapfolder["field"];
+						$level=$mapfolder["level"];
+						
+						if (strpos("/" . $shortpath,$match)!==false)
+							{
+							# Match. Extract metadata.
+							$path_parts=explode("/",$shortpath);
+							if ($level<count($path_parts))
+								{
+								# Save the value
+								print_r($path_parts);
+								$value=$path_parts[$level-1];
+								update_field ($r,$field,$value);
+								echo " - Extracted metadata from path: $value\n";
+								}
+							}
+						}
+					}
 				
 				# Add to collection
 				if ($staticsync_autotheme)
@@ -215,31 +241,37 @@ function ProcessFolder($folder)
 # Recurse through the folder structure.
 ProcessFolder($syncdir);
 
-echo "...done. Looking for deleted files...";
-# For all resources with filepaths, check they still exist and archive if not.
-$rf=sql_query("select ref,file_path from resource where archive=0 and length(file_path)>0 and file_path like '%/%'");
-for ($n=0;$n<count($rf);$n++)
-	{
-	$fp=$syncdir . "/" . $rf[$n]["file_path"];
-	if (!file_exists($fp))
-		{
-		echo "File no longer exists: " . $rf[$n]["ref"] . " (" . $fp . ")\n";
-		# Set to archived.
-		sql_query("update resource set archive=2 where ref='" . $rf[$n]["ref"] . "'");
-		sql_query("delete from collection_resource where resource='" . $rf[$n]["ref"] . "'");
-		}
-	}
-# Remove any themes that are now empty as a result of deleted files.
-sql_query("delete from collection where theme is not null and length(theme)>0 and (select count(*) from collection_resource cr where cr.collection=collection.ref)=0;");
+echo "...done.";
 
-# also set dates where none set by going back through filename until a year is found, then going forward and looking for month/year.
-/*
-$rf=sql_query("select ref,file_path from resource where archive=0 and length(file_path)>0 and (length(creation_date)=0 or creation_date is null)");
-for ($n=0;$n<count($rf);$n++)
+if (!$staticsync_ingest)
 	{
+	# If not ingesting files, look for deleted files in the sync folder and archive the appropriate file from ResourceSpace.
+	echo "\nLooking for deleted files...";
+	# For all resources with filepaths, check they still exist and archive if not.
+	$rf=sql_query("select ref,file_path from resource where archive=0 and length(file_path)>0 and file_path like '%/%'");
+	for ($n=0;$n<count($rf);$n++)
+		{
+		$fp=$syncdir . "/" . $rf[$n]["file_path"];
+		if (!file_exists($fp))
+			{
+			echo "File no longer exists: " . $rf[$n]["ref"] . " (" . $fp . ")\n";
+			# Set to archived.
+			sql_query("update resource set archive=2 where ref='" . $rf[$n]["ref"] . "'");
+			sql_query("delete from collection_resource where resource='" . $rf[$n]["ref"] . "'");
+			}
+		}
+	# Remove any themes that are now empty as a result of deleted files.
+	sql_query("delete from collection where theme is not null and length(theme)>0 and (select count(*) from collection_resource cr where cr.collection=collection.ref)=0;");
+	
+	# also set dates where none set by going back through filename until a year is found, then going forward and looking for month/year.
+	/*
+	$rf=sql_query("select ref,file_path from resource where archive=0 and length(file_path)>0 and (length(creation_date)=0 or creation_date is null)");
+	for ($n=0;$n<count($rf);$n++)
+		{
+		}
+	*/
+	echo "...Complete\n";
 	}
-*/
-echo "...Complete\n";
 
 sql_query("update sysvars set value=now() where name='lastsync'");
 
