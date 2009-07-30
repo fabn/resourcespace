@@ -1256,6 +1256,18 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 					$$variable="<img src='cid:thumbnail' />";
 				}
 				
+				# embed images (ex [img_/var/www/resourcespace/gfx/greyblu/titles/title.gif])
+				else if (substr($variable,0,4)=="img_"){
+					$$variable="<img src='cid:".basename(substr($variable,4))."'/>";
+					$images[]=substr($variable,4);
+				}
+				
+				# attach files (ex [attach_/var/www/resourcespace/gfx/greyblu/titles/title.gif])
+				else if (substr($variable,0,7)=="attach_"){
+					$$variable="";
+					$attachments[]=substr($variable,7);
+				}
+				
 				# get site text variables (ex. [text_footer], for example to 
 				# manage html snippets that you want available in all emails.)
 				else if (substr($variable,0,5)=="text_"){
@@ -1301,6 +1313,14 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
 		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
 		}
+	if (isset($images)){
+		foreach ($images as $image){
+		$mail->AddEmbeddedImage($image,basename($image),basename($image));}
+	}	
+	if (isset($attachments)){
+		foreach ($attachments as $attachment){
+		$mail->AddAttachment($attachment,basename($attachment));}
+	}	
 	if ($html_template!=""){
 		$h2t = new html2text($body); 
 		$text = $h2t->get_text(); 
