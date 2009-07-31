@@ -138,6 +138,8 @@ include "../include/header.php";
 <?php if (!hook("renderinnerresourceview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
+$download_multisize=true;
+
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
 if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
 if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
@@ -147,6 +149,7 @@ if (file_exists("../players/type" . $resource["resource_type"] . ".php"))
 elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
 	{
 	# Include the Flash player if an FLV file exists for this resource.
+	$download_multisize=false;
 	include "flv_play.php";
 	
 	# If configured, and if the resource itself is not an FLV file (in which case the FLV can already be downloaded), then allow the FLV file to be downloaded.
@@ -221,7 +224,7 @@ else
 </tr>
 <?php
 $nodownloads=false;$counter=0;$fulldownload=false;
-if ($resource["has_image"]==1)
+if ($resource["has_image"]==1 && $download_multisize)
 	{
 	# Restricted access? Show the request link.
 		
