@@ -74,7 +74,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 			setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
 
 			# Update the user record. Set the password hash again in case a plain text password was provided.
-			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0 where username='$username' and (password='$password' or password='$password_hash')");
+			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0,lang='".getval("language","")."' where username='$username' and (password='$password' or password='$password_hash')");
 
 			# Log this
 			$userref=$valid[0]["ref"];

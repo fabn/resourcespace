@@ -1220,7 +1220,6 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		include_once("../../../lib/phpmailer/class.phpmailer.php");
 		include_once("../../../lib/phpmailer/class.html2text.php");
 		}	
-			
 		
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
@@ -1229,7 +1228,56 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	#check for html template. If exists, attempt to include vars into message
 	if ($html_template!="")
 		{
-		$template=text($html_template);
+		# Attempt to verify users by email, which allows us to get the email template by lang and usergroup
+		$to_usergroup=sql_query("select lang,usergroup from user where email ='$email'","");
+
+		if (count($to_usergroup)!=0)
+			{
+			$to_usergroupref=$to_usergroup[0]['usergroup'];
+			$to_usergrouplang=$to_usergroup[0]['lang'];
+			}
+		else 
+			{
+			$to_usergrouplang="";	
+			}
+			
+		if ($to_usergrouplang==""){global $defaultlanguage; $to_usergrouplang=$defaultlanguage;}
+			
+		if (isset($to_usergroupref))
+			{	
+			if (hook("modifytousergroup","",$to_usergroupref)!=null){$to_usergroup=hook("modifytousergroup","",$to_usergroupref);}
+
+			$results=sql_query("select language,name,text from site_text where page='all' and name='$html_template' and specific_to_group='$to_usergroup'");
+			}
+		else 
+			{	
+			$results=sql_query("select language,name,text from site_text where page='all' and name='$html_template' and specific_to_group is null");
+			}
+			
+		global $site_text;
+		for ($n=0;$n<count($results);$n++) {$site_text[$results[$n]["language"] . "-" . $results[$n]["name"]]=$results[$n]["text"];} 
+				
+		$language=$to_usergrouplang;
+
+
+		if (array_key_exists($language . "-" . $html_template,$site_text)) 
+			{
+			$template=$site_text[$language . "-" .$html_template];
+			} 
+		else 
+			{
+			global $languages;
+
+			# Can't find the language key? Look for it in other languages.
+			reset($languages);
+			foreach ($languages as $key=>$value)
+				{
+				if (array_key_exists($key . "-" . $html_template,$site_text)) {$template= $site_text[$key . "-" . $html_template];break;} 		
+				}
+			}	
+			
+
+
 		if ($template!="")
 			{
 			preg_match_all('/\[[^\]]*\]/',$template,$test);
