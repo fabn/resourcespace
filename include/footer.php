@@ -38,7 +38,14 @@ function SwapCSS(css)
 </script>
 
 <?php if (getval("k","")=="") { ?>
-<div id="FooterNavLeft" class=""><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;<a href="#" onClick="SwapCSS('greyblu');return false;"><img src="<?php echo $baseurl?>/gfx/interface/BlueChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('whitegry');return false;"><img src="<?php echo $baseurl?>/gfx/interface/WhiteChip.gif" alt="" width="11" height="11" /></a>&nbsp;<a href="#" onClick="SwapCSS('black');return false;"><img src="<?php echo $baseurl?>/gfx/interface/BlackChip.gif" alt="" width="11" height="11" /></a>
+<div id="FooterNavLeft" class=""><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;
+<?php // enable custom theme chips 
+	if (count($available_themes!=0)){
+		foreach ($available_themes as $available_theme){?>
+		&nbsp;<a href="#" onClick="SwapCSS('<?php echo $available_theme?>');return false;"><img src="<?php echo $baseurl?>/gfx/interface/<?php echo ucfirst($available_theme)?>Chip.gif" alt="" width="11" height="11" /></a>
+	<?php }
+	}
+?>	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php } ?>
 <?php if ($disable_languages==false){?>
 <?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php"><?php echo $languages[$language]?></a>
