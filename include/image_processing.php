@@ -100,6 +100,13 @@ function upload_file($ref)
 		$path=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);
 		if (file_exists($path)) {unlink($path);}
 		}
+	
+	# Remove any MP3 (except if the actual resource is an MP3 file).
+	if ($extension!="mp3")
+		{
+		$path=get_resource_path($ref,true,"",false,"mp3");
+		if (file_exists($path)) {unlink($path);}
+		}	
     
 	# Create previews
 	create_previews($ref,false,$extension);
