@@ -377,7 +377,7 @@ $defaulttheme="greyblu";
 # Theme chips available. This makes it possible to add new themes and chips using the same structure.
 # To create a new theme, you need a chip in gfx/interface, a graphics folder called gfx/<themename>,
 # and a css file called css/Col-<Themename>.css 
-$available_themes=array("greyblu","black","whitegry","yellow");
+$available_themes=array("greyblu","black","whitegry");
 
 # Uncomment and set the next line to lock to one specific colour scheme (e.g. greyblu/whitegry).
 # $userfixedtheme="whitegry";
