@@ -38,7 +38,18 @@ function upload_file($ref)
 
     if ($filename!="")
     	{
-	    $result=move_uploaded_file($processfile['tmp_name'], $filepath);
+    	global $jupload_alternative_upload_location;
+    	if (isset($jupload_alternative_upload_location))
+    		{
+    		# JUpload - file was sent chunked and reassembled - use the reassembled file location
+		    $result=rename($jupload_alternative_upload_location, $filepath);
+    		}
+		else
+			{
+			# Standard upload.
+		    $result=move_uploaded_file($processfile['tmp_name'], $filepath);
+			}
+			
     	if ($result==false)
        	 	{
        	 	$status="File upload error. Please check the size of the file you are trying to upload.";

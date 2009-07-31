@@ -23,6 +23,66 @@ if ($collection_add==-1)
 if (array_key_exists("File0",$_FILES))
     {
 	$_FILES["Filedata"]=$_FILES["File0"];
+
+
+	# ------------------------JUpload chunking support ----------------------------------------
+	$jupart=getval("jupart","");
+	if ($jupart!="")
+		{
+		# The sent file is a chunk.
+		# JUpload passes two values when sending chunks:
+		# - jupart - the part number
+		# - jufinal - is this the final part? (0=no, 1=yes)
+		
+		# Move the chunk to a temporary location.
+		$uploadedchunk=$_FILES["Filedata"]['tmp_name'];
+		if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);} # check tmp dir exists
+		$chunkpath=$storagedir . "/tmp/jupload_chunk_part_" . $userref . ".tmp";
+		if (file_exists($chunkpath)) {unlink ($chunkpath);} # remove any existing chunk file
+		$result=move_uploaded_file($uploadedchunk, $chunkpath);
+		
+		if ($result===false)
+			{
+			# Upload failed?
+			echo "ERROR: PHP move_uploaded_file() failed.";
+			exit();
+			}
+   		chmod($chunkpath,0777); # Make the chunk writeable.
+
+		# Add this to the assembled file.
+		$assembledpath=$storagedir . "/tmp/jupload_chunk_assembled_" . $userref . ".tmp";
+		if ($jupart==1)
+			{
+			# First part - simply move the chunk to the assembled file location
+			
+			# Drop any existing file
+			if (file_exists($assembledpath)) {unlink ($assembledpath);}
+			rename($chunkpath,$assembledpath);
+			}
+		else
+			{
+			# Subsequent parts - append the chunk to the main file location
+			$f=fopen($assembledpath,"a"); # Open assembled file for appending.
+			fwrite($f,file_get_contents($chunkpath));
+			fclose($f);
+			unlink($chunkpath); # Delete the temporary chunk file.
+			}
+			
+		if (getval("jufinal","")==0)
+			{
+			# We are still waiting for the rest of the file. Return success message but do not process yet.
+			echo "SUCCESS";
+			exit();
+			}
+		else
+			{
+			# This is the last chunk.
+			# Proceed with processing as normal
+			$jupload_alternative_upload_location=$assembledpath;
+			}
+		}
+	# ------------------------ End of chunking support ----------------------------------------
+	
     if (getval("replace","")=="")
     	{
 		# New resource
@@ -106,6 +166,7 @@ foreach ($extensions as $allowed_extension){
             <param name="debugLevel" value="0">
             <param name="showLogWindow" value="false">
             <param name="lang" value="<?php echo $language?>">
+            <param name="maxChunkSize" value="<?php echo $jupload_chunk_size ?>">
             
             <?php if (!$frameless_collections) { 
             # If not using frameless collections, refresh the bottom frame after upload.

@@ -505,7 +505,7 @@ $lang["warningexpiredtext"]="Warning! This resource has exceeded the expiry date
 $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
 $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (Flash)";
-$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser (Java)";
+$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser (Java - recommended)";
 
 $lang["addresourcebatchftp"]="Add Resource Batch - Fetch from FTP server";
 $lang["replaceresourcebatch"]="Replace Resource Batch";

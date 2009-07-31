@@ -812,7 +812,10 @@ $thumbs_display_fields=array(3);
 # Set this option to 'true' to rectify this.
 $image_rotate_reverse_options=false;
 
-
+# JUpload Chunk Size (bytes)
+# The size in bytes that Jupload (Java Batch Upload) will break files into.
+# JUpload chunking completely bypasses PHP's file upload limits (if chunk size is set lower than the upload limit).
+$jupload_chunk_size="5000000"; # Chunk size ~5MB.
 
 
 
