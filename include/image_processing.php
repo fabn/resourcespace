@@ -201,7 +201,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				}
 			}
 
-		$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);
+		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
 
 		# now we lookup fields from the database to see if a corresponding value
 		# exist in the uploaded file
