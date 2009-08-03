@@ -21,14 +21,6 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 <div id="Footer">
 
 <script type="text/javascript">
-function SetCookie(cookieName,cookieValue,nDays) {
- var today = new Date();
- var expire = new Date();
- if (nDays==null || nDays==0) nDays=1;
- expire.setTime(today.getTime() + 3600000*24*nDays);
- document.cookie = cookieName+"="+escape(cookieValue)
-                 + ";expires="+expire.toGMTString();
-}
 function SwapCSS(css)
 	{
 	document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css?css_reload_key=<?php echo $css_reload_key?>';

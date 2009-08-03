@@ -5,6 +5,8 @@ include "../include/general.php";
 if (getval("save","")!="")
 	{
 	setcookie("language",getval("language",""),time()+(3600*24*1000));
+	setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/"); # Also set with pages path
+
 	redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 	}
 include "../include/header.php";
