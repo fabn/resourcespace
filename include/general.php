@@ -204,12 +204,17 @@ function get_resource_types()
 	{
 	# Returns a list of resource types.
 	$r=sql_query("select * from resource_type order by ref");
-	# Translate names
+	$return=array();
+	# Translate names and check permissions
 	for ($n=0;$n<count($r);$n++)
 		{
-		$r[$n]["name"]=i18n_get_translated($r[$n]["name"]);
+		if (!checkperm("T" . $r[$n]["ref"]))
+			{
+			$r[$n]["name"]=i18n_get_translated($r[$n]["name"]);	# Translate name
+			$return[]=$r[$n]; # Add to return array
+			}
 		}
-	return $r;
+	return $return;
 	}
 
 function get_resource_top_keywords($resource,$count)

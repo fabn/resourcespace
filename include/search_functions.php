@@ -29,6 +29,24 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$sql_filter.="resource_type in ($restypes)";
 		}
 	
+	# append resource type restrictions based on 'T' permission	
+	# look for all 'T' permissions and append to the SQL filter.
+	global $userpermissions;
+	$rtfilter=array();
+	for ($n=0;$n<count($userpermissions);$n++)
+		{
+		if (substr($userpermissions[$n],0,1)=="T")
+			{
+			$rt=substr($userpermissions[$n],1);
+			if (is_numeric($rt)) {$rtfilter[]=$rt;}
+			}
+		}
+	if (count($rtfilter)>0)
+		{
+		if ($sql_filter!="") {$sql_filter.=" and ";}
+		$sql_filter.="resource_type not in (" . join(",",$rtfilter) . ")";
+		}
+	
 	# append "use" access rights, do not show restricted resources unless admin
 	if (!checkperm("v"))
 		{
