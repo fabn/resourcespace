@@ -789,5 +789,6 @@ $lang["new_resource"]="new resource";
 $lang["invalidextension_mustbe"]="Invalid extension, must be";
 $lang["allowedextensions"]="Allowed Extensions";
 
+$lang["alternativebatchupload"]="Batch upload alternative files (Java)";
 
 ?>

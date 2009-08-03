@@ -9,7 +9,12 @@ include "../include/collections_functions.php";
 $status="";
 $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
-$allowed_extensions=get_allowed_extensions_by_type($resource_type);
+
+$allowed_extensions="";
+if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
+
+$alternative=getval("alternative",""); # Upload alternative resources
+
 # Create a new collection?
 if ($collection_add==-1)
 	{
@@ -83,9 +88,49 @@ if (array_key_exists("File0",$_FILES))
 		}
 	# ------------------------ End of chunking support ----------------------------------------
 	
+	if ($alternative!="")
+		{
+		# Upload an alternative file (JUpload only)
+
+		# Add a new alternative file
+		$filename=$_FILES["Filedata"]['name'];
+		$aref=add_alternative_file($alternative,$filename);
+		
+		# Work out the extension
+		$extension=explode(".",$filename); $extension=trim(strtolower($extension[count($extension)-1]));
+
+		# Find the path for this resource.
+    	$path=get_resource_path($alternative, true, "", true, $extension, -1, 1, false, "", $aref);
+    	
+    	# Move the sent file to the alternative file location
+    	if (isset($jupload_alternative_upload_location))
+    		{
+    		# JUpload - file was sent chunked and reassembled - use the reassembled file location
+		    $result=rename($jupload_alternative_upload_location, $path);
+    		}
+		else
+			{
+			# Standard upload.
+		    $result=move_uploaded_file($_FILES["Filedata"]['tmp_name'], $path);
+			}
+
+		if ($result===false)
+			{
+			exit("ERROR: File upload error. Please check the size of the file you are trying to upload.");
+			}
+
+		chmod($path,0777);
+		$file_size=@filesize($path);
+		
+		# Save alternative file data.
+		sql_query("update resource_alt_files set file_name='" . escape_check($filename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now() where resource='$alternative' and ref='$aref'");
+		
+		echo "SUCCESS";
+		exit();
+		}
     if (getval("replace","")=="")
     	{
-		# New resource
+		# Standard upload of a new resource
 
 		$ref=copy_resource(0-$userref); # Copy from user template
 		
@@ -159,7 +204,7 @@ foreach ($extensions as $allowed_extension){
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">

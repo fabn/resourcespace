@@ -90,6 +90,8 @@ for ($n=0;$n<count($files);$n++)
 			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
 			</div>
 		<div class="clearerleft"> </div>
+		<br />
+		<p><a href="upload_java.php?alternative=<?php echo $ref ?>">&gt;&nbsp;<?php echo $lang["alternativebatchupload"] ?></a></p>
 	    </div>
 	</form>
 </div>
