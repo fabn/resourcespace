@@ -234,8 +234,20 @@ if ($multiple) { ?>
 <div class="Question">
 <label><?php echo $lang["file"]?></label>
 <div class="Fixed">
-<?php if ($resource["has_image"]==1) { ?><img align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
-<?php } 
+<?php
+if ($resource["has_image"]==1)
+	{
+	?><img align="top" src="<?php echo get_resource_path($ref,false,($edit_large_preview?"pre":"thm"),false,$resource["preview_extension"],-1,1,checkperm("w"))?>" class="ImageBorder" style="margin-right:10px;"/><br />
+	<?php
+	}
+else
+	{
+	# Show the no-preview icon
+	?>
+	<img src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],true)?>" />
+	<br />
+	<?
+	}
 if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 
 <?php if ($resource["has_image"]!=1) { ?>

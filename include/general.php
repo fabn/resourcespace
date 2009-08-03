@@ -2110,3 +2110,49 @@ function strip_extension($name)
 	return $name;
 	} // strip_extension()
 
+
+
+function get_nopreview_icon($resource_type,$extension,$col_size)
+	{
+	# Returns the path (relative to the gfx folder) of a suitable folder to represent
+	# a resource with the given resource type or extension
+	# Extension matches are tried first, followed by resource type matches
+	# Finally, if there are no matches then the 'type1' image will be used.
+	
+	$col=($col_size?"_col":"");
+	
+	# Try extension
+	$try="no_preview/extension/" . $extension . $col . ".png";
+	if (file_exists("../gfx/" . $try))
+		{
+		return $try;
+		}
+	
+	# Try resource type
+	$try="no_preview/resource_type/type" . $resource_type . $col . ".gif";
+	if (file_exists("../gfx/" . $try))
+		{
+		return $try;
+		}
+	
+	# Fall back to the 'no preview' icon used for type 1.
+	return "no_preview/resource_type/type1" . $col . ".gif";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

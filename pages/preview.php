@@ -77,7 +77,8 @@ else
 	else
 		{
 		$info=get_resource_data($ref);
-		$url="../gfx/type" . $info["resource_type"] . ".gif";
+		$url="../gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
+		$border=false;
 		}
 	}
 
