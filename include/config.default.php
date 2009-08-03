@@ -825,8 +825,8 @@ $image_rotate_reverse_options=false;
 # JUpload chunking completely bypasses PHP's file upload limits (if chunk size is set lower than the upload limit).
 $jupload_chunk_size="5000000"; # Chunk size ~5MB.
 
-
-
+# Once collections have been published as themes by default they are removed from the user's My Collections. These option leaves them in place.
+$themes_in_my_collections=false;
 
 
 
@@ -996,7 +996,6 @@ $staticsync_ingest=false;
 # End of StaticSync settings
 # ------------------------------------------------------------------------------------------------------------------
 	
-
 
 
 ?>

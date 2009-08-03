@@ -102,6 +102,7 @@ $lang["private"]="Privat";
 $lang["public"]="Offentlige";
 $lang["attachedusers"]="Attached Brugere";
 $lang["themecategory"]="Tema Kategori";
+$lang["theme"]="Tema";
 $lang["newcategoryname"]="ELLER: Indtast et nyt tema kategorinavnet ...";
 $lang["allowothersaddremove"]="Tillad andre brugere at tilføje / fjerne ressourcer";
 $lang["resetarchivestatus"]="Nulstil archive status for alle ressourcer i indsamling";

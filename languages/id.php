@@ -121,6 +121,7 @@ $lang["private"]="Pribadi";
 $lang["public"]="Publik";
 $lang["attachedusers"]="Pengguna Terhubungt";
 $lang["themecategory"]="Kategori Tema";
+$lang["theme"]="Tema";
 $lang["newcategoryname"]="ATAU: Masukkan nama Tema baru...";
 $lang["allowothersaddremove"]="Ijinkan pengguna lain untuk menambah/menyingkirkan aset";
 $lang["resetarchivestatus"]="Reset status arsip untuk semua asset dalam koleksi";

@@ -102,6 +102,7 @@ $lang["private"]="Privat";
 $lang["public"]="Offentlig";
 $lang["attachedusers"]="Bifogat Användare";
 $lang["themecategory"]="Tema Kategori";
+$lang["theme"]="Tema";
 $lang["newcategoryname"]="ELLER: Ange ett nytt tema kategoribeteckningen ...";
 $lang["allowothersaddremove"]="Till&#229;t andra användare att lägga till / ta bort resurser";
 $lang["resetarchivestatus"]="&#197;terställ archive status för alla resurser i samlingen";

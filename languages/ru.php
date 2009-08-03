@@ -102,6 +102,7 @@ $lang["private"]="Частные";
 $lang["public"]="Государственное";
 $lang["attachedusers"]="В приложении Пользователи";
 $lang["themecategory"]="Тема Категория";
+$lang["theme"]="Тема";
 $lang["newcategoryname"]="ИЛИ: Ввести новые темы категории имя ...";
 $lang["allowothersaddremove"]="Разрешить другим пользователям добавлять / удалять ресурсы";
 $lang["resetarchivestatus"]="Сброс архив статус всех ресурсов, в сборе";

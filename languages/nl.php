@@ -120,6 +120,7 @@ $lang["private"]="Besloten";
 $lang["public"]="Publiek";
 $lang["attachedusers"]="Verbonden gebruikers";
 $lang["themecategory"]="collectie catagorieën";
+$lang["theme"]="Collectie";
 $lang["newcategoryname"]="OF: Voeg nieuw naam collectie in...";
 $lang["allowothersaddremove"]="Sta toe dat andere gebruikers materiaal toevoegen of verwijderen";
 $lang["resetarchivestatus"]="Herstel archiefstatus van alle materialen in de collectie";

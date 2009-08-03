@@ -121,6 +121,7 @@ $lang["private"]="Privat";
 $lang["public"]="Åpen";
 $lang["attachedusers"]="Tilknyttede brukere";
 $lang["themecategory"]="Tema- eller kategorinavn";
+$lang["theme"]="Kategorinavn";
 $lang["newcategoryname"]="ELLER: Oppgi et nytt tema- eller kategorinavn...";
 $lang["allowothersaddremove"]="Tillat andre brukere  legge til/fjerne materiell";
 $lang["resetarchivestatus"]="Tilbakestill arkivstatusen for alt materiale i lysbordet";

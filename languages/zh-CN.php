@@ -102,6 +102,7 @@ $lang["private"]="私营";
 $lang["public"]="公共";
 $lang["attachedusers"]="重视用户";
 $lang["themecategory"]="主题分类";
+$lang["theme"]="主题";
 $lang["newcategoryname"]="或：输入一个新的主题类别名称...";
 $lang["allowothersaddremove"]="允许其他用户添加/删除资源";
 $lang["resetarchivestatus"]="重启封存状态中的所有资源收集";

@@ -121,6 +121,7 @@ $lang["private"]="Privé";
 $lang["public"]="Public";
 $lang["attachedusers"]="Utilisateurs joints";
 $lang["themecategory"]="Catégorie de thème";
+$lang["theme"]="Thème";
 $lang["newcategoryname"]="OU: Entrez un nouveau nom de catégorie de thème...";
 $lang["allowothersaddremove"]="Permettre aux autres utilisateurs d'ajouter/retirer des documents";
 $lang["resetarchivestatus"]="Restaurer le statut d'archive pour tous les documents dans cette collection";

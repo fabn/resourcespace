@@ -96,6 +96,7 @@ $lang["private"]="Privatno";
 $lang["public"]="Javno";
 $lang["attachedusers"]="Attached Korisnici";
 $lang["themecategory"]="Tematski Kategorija";
+$lang["theme"]="Tematski";
 $lang["newcategoryname"]="ILI: Unesite novu temu kategoriji naziv ...";
 $lang["allowothersaddremove"]="Dozvoli drugim korisnicima na Dodaj / Ukloni resursi";
 $lang["resetarchivestatus"]="Reset arhiva statusa za sve resurse u zbirci";

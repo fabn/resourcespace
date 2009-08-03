@@ -113,6 +113,7 @@ $lang["private"]="Privado";
 $lang["public"]="Público";
 $lang["attachedusers"]="Usuarios autorizados";
 $lang["themecategory"]="Selecciona categoría temática";
+$lang["theme"]="Temática";
 $lang["newcategoryname"]="O introduce un nuevo nombre de categoría temática";
 $lang["allowothersaddremove"]="Autorizar a otros usuarios a añadir/eliminar materiales";
 $lang["resetarchivestatus"]="Reinicializar estado de archivo en todos los materiales de la colección";

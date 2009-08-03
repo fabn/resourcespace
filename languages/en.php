@@ -123,6 +123,7 @@ $lang["private"]="Private";
 $lang["public"]="Public";
 $lang["attachedusers"]="Attached Users";
 $lang["themecategory"]="Theme Category";
+$lang["theme"]="Theme";
 $lang["newcategoryname"]="OR: Enter a new theme category name...";
 $lang["allowothersaddremove"]="Allow other users to add/remove resources";
 $lang["resetarchivestatus"]="Reset archive status for all resources in collection";

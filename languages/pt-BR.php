@@ -124,6 +124,7 @@ $lang["private"]="Privado";
 $lang["public"]="Público";
 $lang["attachedusers"]="Usuários";
 $lang["themecategory"]="Categoria do Tema";
+$lang["theme"]="Tema";
 $lang["newcategoryname"]="OU: Digite uma novo nome para a categoria do tema...";
 $lang["allowothersaddremove"]="Permitir que outros usuário adicionem/removam conteúdo";
 $lang["resetarchivestatus"]="Remover estado de arquivo para todo o conteúdo nesta coleção";

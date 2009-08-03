@@ -121,6 +121,7 @@ $lang["private"]="プライベート";
 $lang["public"]="公開";
 $lang["attachedusers"]="ユーザ追加";
 $lang["themecategory"]="テーマ カテゴリ";
+$lang["theme"]="テーマ";
 $lang["newcategoryname"]="もしくは: 新規テーマカテゴリ名を入力...";
 $lang["allowothersaddremove"]="他のユーザがリソースの追加/削除することを許可";
 $lang["resetarchivestatus"]="コレクション内の全てのリソースのアーカイブステータスをリセット";

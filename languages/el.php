@@ -102,6 +102,7 @@ $lang["private"]="Ιδιωτικός Τομέας";
 $lang["public"]="Δημόσια";
 $lang["attachedusers"]="Συνημμένες Χρήστες";
 $lang["themecategory"]="Θέμα Κατηγορία";
+$lang["theme"]="Θέμα";
 $lang["newcategoryname"]="Ή: Πληκτρολογήστε ένα νέο όνομα κατηγορίας θέμα ...";
 $lang["allowothersaddremove"]="Αφήστε τους άλλους χρήστες για να προσθέσετε / αφαιρέσετε πόρων";
 $lang["resetarchivestatus"]="Επαναφέρετε το αρχείο καθεστώς για όλους τους πόρους κατά συλλογή";

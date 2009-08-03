@@ -7,14 +7,22 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	{
 	# Returns a list of user collections.
 	$sql="";
-	if (strlen($find)>1) {$sql="and name like '%$find%' or u.username like '%$find%' or c.ref like '$find'";}
-	if (strlen($find)==1) {$sql="and name like '$find%' or c.ref like '$find'";}
-
-	if ($sql=="") {$sql=" ";} else {$sql.="  ";}
+	if (strlen($find)>1) {$sql="(name like '%$find%' or u.username like '%$find%' or c.ref like '$find')";}
+	if (strlen($find)==1) {$sql="(name like '$find%' or c.ref like '$find')";}
    
-	$return=sql_query ("select * from (select c.*,u.username,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection where (length(c.theme)=0 or c.theme is null) $sql group by c.ref
+    # Include themes in my collecions? 
+    # Only filter out themes if $themes_in_my_collections is set to false in config.php
+   	global $themes_in_my_collections;
+   	if (!$themes_in_my_collections)
+   		{
+   		if ($sql!="") {$themesql.=" and ";}
+   		$sql.="(length(c.theme)=0 or c.theme is null) ";
+   		}
+	if ($sql!="") {$sql="where " . $sql;}
+   
+	$return=sql_query ("select * from (select c.*,u.username,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
 	union
-	select c.*,u.username,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref where (length(c.theme)=0 or c.theme is null) $sql group by c.ref) clist order by $order_by $sort");
+	select c.*,u.username,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist order by $order_by $sort");
 	
 	if (count($return)==0 && $auto_create)
 		{

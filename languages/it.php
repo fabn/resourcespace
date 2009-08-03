@@ -120,6 +120,7 @@ $lang["private"]="Privato";
 $lang["public"]="Pubblico";
 $lang["attachedusers"]="Utenti condivisi";
 $lang["themecategory"]="Categoria del tema";
+$lang["theme"]="Tema";
 $lang["newcategoryname"]="Oppure: Crea una nuova categoria per il tema...";
 $lang["allowothersaddremove"]="Permetti agli altri utenti di aggiungere/cancellare risorse";
 $lang["resetarchivestatus"]="Elimina lo stato di archiviato a tutte le risorse di questa collezione";

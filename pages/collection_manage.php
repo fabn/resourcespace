@@ -152,7 +152,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	if($video_playlists){$videocount=get_collection_videocount($collections[$n]["ref"]);}else{$videocount="";}		
 	?><tr>
 	<td><div class="ListTitle">
-    <a  <?php if ($frameless_collections && !checkperm("b")){ ?> href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
+    <a <?php if  ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> <?php if ($frameless_collections && !checkperm("b")){ ?> href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
 		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
 		href="collections.php?collection=<?php echo $collections[$n]["ref"]?>&amp;thumbs=show" target="collections"
 		<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>><?php echo highlightkeywords($collections[$n]["name"],$find)?>
@@ -161,8 +161,26 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo highlightkeywords($collection_prefix . $collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
 	<td><?php echo $collections[$n]["count"]?></td>
-<?php if (! $hide_access_column){ ?>	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
-<?php }?>
+<?php if (! $hide_access_column){ ?>	<td><?php
+# Work out the correct access mode to display
+if ($collections[$n]["public"]==0)
+	{
+	echo $lang["private"];
+	}
+else
+	{
+	if (strlen($collections[$n]["theme"])>0)
+		{
+		echo $lang["theme"];
+		}
+	else
+		{
+		echo $lang["public"];
+		}
+	}
+?></td><?php
+}
+?>
 	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
 	&nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
 		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"

@@ -101,4 +101,5 @@ a:active {color:#B5C3D4;}
 
 /* Mouseover effect on list views */
 .ListviewStyle tr:hover td {background-color: #5982bb;} 
-.ListviewStyle tr.ListviewTitleStyle:hover td {background:none;} 
+.ListviewStyle tr.ListviewTitleStyle:hover td, .ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;} 
+
