@@ -918,6 +918,12 @@ $use_phpmailer=false;
 # folder. You can use it as a cron job, or manually.
 $enable_thumbnail_creation_on_upload = true;
 
+# Zip files - the contents of the zip file can be imported to a text field on upload.
+# Requires 'unzip' on the command path.
+# If the below is not set, but unzip is available, the archive contents will be written to $extracted_text_field
+#
+# $zip_contents_field=18;
+
 # List of extensions that can be processed by ffmpeg.
 # Mostly video files.
 # @see http://en.wikipedia.org/wiki/List_of_file_formats#Video

@@ -905,7 +905,7 @@ function upload_preview($ref)
 function extract_text($ref,$extension)
 	{
 	# Extract text from the resource and save to the configured field.
-	global $extracted_text_field,$antiword_path,$pdftotext_path;
+	global $extracted_text_field,$antiword_path,$pdftotext_path,$zip_contents_field;
 	$text="";
 	$path=get_resource_path($ref,true,"",false,$extension);
 	
@@ -978,7 +978,19 @@ function extract_text($ref,$extension)
 		$text=file_get_contents($path);
 		}
 
-		
+	if ($extension=="zip")
+		{
+		# Zip files - map the field
+		$path=escapeshellarg($path);
+		$text=shell_exec("unzip -l $path");
+		if (isset($zip_contents_field))
+			{
+			$extracted_text_field=$zip_contents_field;
+			}
+		}
+	
+	
+	
 		
 	# Save the extracted text.
 	if ($text!="")
