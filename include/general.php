@@ -2135,6 +2135,13 @@ function get_nopreview_icon($resource_type,$extension,$col_size)
 		return $try;
 		}
 	
+	# Support the old location for resource type (root of gfx folder)
+	$try="type" . $resource_type . $col . ".gif";
+	if (file_exists("../gfx/" . $try))
+		{
+		return $try;
+		}
+	
 	# Fall back to the 'no preview' icon used for type 1.
 	return "no_preview/resource_type/type1" . $col . ".gif";
 	}

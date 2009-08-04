@@ -516,7 +516,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	# $name		the input name to use in the form (post name)
 	# $value	the default value to set for this field, if any
 	
-	global $auto_order_checkbox,$lang,$category_tree_open;
+	global $auto_order_checkbox,$lang,$category_tree_open,$minyear;
 	$name="field_" . $field["ref"];
 	
 	if (!$forsearchbar)
