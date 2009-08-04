@@ -2112,32 +2112,35 @@ function strip_extension($name)
 
 
 
-function get_nopreview_icon($resource_type,$extension,$col_size)
+function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=false)
 	{
 	# Returns the path (relative to the gfx folder) of a suitable folder to represent
 	# a resource with the given resource type or extension
 	# Extension matches are tried first, followed by resource type matches
 	# Finally, if there are no matches then the 'type1' image will be used.
+	# set contactsheet to true to cd up one more level.
 	
 	$col=($col_size?"_col":"");
+	$folder="../gfx/";
+	if ($contactsheet){$folder="../../gfx/";}
 	
 	# Try extension
 	$try="no_preview/extension/" . $extension . $col . ".png";
-	if (file_exists("../gfx/" . $try))
+	if (file_exists($folder . $try))
 		{
 		return $try;
 		}
 	
 	# Try resource type
 	$try="no_preview/resource_type/type" . $resource_type . $col . ".gif";
-	if (file_exists("../gfx/" . $try))
+	if (file_exists($folder . $try))
 		{
 		return $try;
 		}
 	
 	# Support the old location for resource type (root of gfx folder)
 	$try="type" . $resource_type . $col . ".gif";
-	if (file_exists("../gfx/" . $try))
+	if (file_exists($folder . $try))
 		{
 		return $try;
 		}

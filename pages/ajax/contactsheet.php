@@ -6,6 +6,7 @@
 
 foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
 include('../../lib/fpdf/fpdf.php');
+include('../../lib/fpdf/fpdf_imagealpha.php');
 include('../../include/db.php');
 include('../../include/general.php');
 include('../../include/authenticate.php');
@@ -68,7 +69,7 @@ $result=do_search("!collection" . $collection);
 $user= get_user($collectiondata['user']);
 
 #Start PDF, set metadata, etc.
-$pdf=new FPDF("P","in",$pagesize);
+$pdf=new PDF_ImageAlpha("P","in",$pagesize);
 $pdf->SetTitle($collectiondata['name']." ".$date);
 $pdf->SetAuthor($user['fullname']." ".$user['email']);
 $pdf->SetSubject($applicationname." Contact Sheet");
@@ -102,9 +103,11 @@ for ($n=0;$n<count($result);$n++)
 			$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
 			
 			if (!file_exists($imgpath)){
-			$resource=get_resource_data($ref);
-				$imgpath="../../gfx/type".$resource['resource_type'].".gif"; $preview_extension="gif";}
-				
+			$imgpath="../../gfx/".get_nopreview_icon($result[$n]['resource_type'],$result[$n]['file_extension'],false,true); }
+			    $preview_extension=explode(".",$imgpath);
+				if(count($preview_extension)>1){
+				$preview_extension=trim(strtolower($preview_extension[count($preview_extension)-1]));
+				} 
 			if (file_exists($imgpath))
 			{
 				
