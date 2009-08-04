@@ -97,28 +97,10 @@ if ($language!="en")
 	include dirname(__FILE__)."/../languages/" . safe_file_name($language) . ".php";
 	}
 
-# Include language files for for each of the plugins too (if provided)
+# Register all plugins
 for ($n=0;$n<count($plugins);$n++)
 	{
-	$langpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/languages/";
-	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
-	
-	if ($language!="en")
-		{
-		if (file_exists($langpath . $language . ".php")) {include $langpath . $language . ".php";}
-		}
-		
-	# Also include plugin configuration.
-	$configpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/config/config.php";
-	if (file_exists($configpath)) {include $configpath;}
-	
-	# Also include plugin hook file for this page.
-	$hookpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/hooks/" . $pagename . ".php";
-	if (file_exists($hookpath)) {include $hookpath;}
-	
-	# Support an 'all' hook
-	$hookpath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/hooks/all.php";
-	if (file_exists($hookpath)) {include $hookpath;}
+	register_plugin($plugins[$n]);
 	}
 
 
@@ -675,4 +657,43 @@ function daily_stat($activity_type,$object_ref)
 		sql_query("update daily_stat set count=count+1 where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'");
 		}
 	}    
+	
+function register_plugin($plugin)
+	{
+	global $plugins,$language,$pagename;
+
+	# Add to the plugins array if not already present, to support this function being called
+	# later on (i.e. in config_override()).
+	if (!in_array($plugin,$plugins)) {$plugins[]=$plugin;}
+	
+	# Include language file
+	$langpath=dirname(__FILE__)."/../plugins/" . $plugin . "/languages/";
+	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
+	if ($language!="en")
+		{
+		if (file_exists($langpath . $language . ".php")) {include $langpath . $language . ".php";}
+		}
+		
+	# Also include plugin configuration.
+	$configpath=dirname(__FILE__)."/../plugins/" . $plugin . "/config/config.php";
+	if (file_exists($configpath)) {include $configpath;}
+	# Copy config variables to global scope.
+	$vars=get_defined_vars();
+	foreach ($vars as $name=>$value)
+		{
+		global $$name;
+		$$name=$value;
+		}
+	
+	# Also include plugin hook file for this page.
+	$hookpath=dirname(__FILE__)."/../plugins/" . $plugin . "/hooks/" . $pagename . ".php";
+	if (file_exists($hookpath)) {include $hookpath;}
+	
+	# Support an 'all' hook
+	$hookpath=dirname(__FILE__)."/../plugins/" . $plugin . "/hooks/all.php";
+	if (file_exists($hookpath)) {include $hookpath;}
+
+	return true;	
+	}
+
 	
