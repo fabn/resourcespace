@@ -711,7 +711,7 @@ function save_user($ref)
 		if (trim($email_url_save_user)!=""){$templatevars['url']=$email_url_save_user;}
 		else {$templatevars['url']=$baseurl;}
 		
-		$message="nottemplate".$templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password']."\n\n".$templatevars['url'];
+		$message=$templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password']."\n\n".$templatevars['url'];
 		
 		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
 		}
