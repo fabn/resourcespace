@@ -103,11 +103,12 @@ for ($n=0;$n<count($result);$n++)
 			$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
 			
 			if (!file_exists($imgpath)){
-			$imgpath="../../gfx/".get_nopreview_icon($result[$n]['resource_type'],$result[$n]['file_extension'],false,true); }
+			$imgpath="../../gfx/".get_nopreview_icon($result[$n]['resource_type'],$result[$n]['file_extension'],false,true); 
 			    $preview_extension=explode(".",$imgpath);
 				if(count($preview_extension)>1){
 				$preview_extension=trim(strtolower($preview_extension[count($preview_extension)-1]));
 				} 
+			}	
 			if (file_exists($imgpath))
 			{
 				
@@ -125,8 +126,8 @@ for ($n=0;$n<count($result);$n++)
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
 							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
 					}
-						
-						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,$preview_extension,$baseurl. "/?r=" . $ref),0,0);
+						$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,$preview_extension,$baseurl. "/?r=" . $ref);
+						$pdf->Cell($cellsize[0],$cellsize[1],"",0,0);
 					
 					}
 					
@@ -142,8 +143,8 @@ for ($n=0;$n<count($result);$n++)
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
 							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
 					}
-
-						$pdf->Cell($cellsize[0],$cellsize[1],$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,$preview_extension,$baseurl. "/?r=" . $ref),0,0);
+						$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,$preview_extension,$baseurl. "/?r=" . $ref);
+						$pdf->Cell($cellsize[0],$cellsize[1],"",0,0);
 						
 					}
 			$n=$n++;
