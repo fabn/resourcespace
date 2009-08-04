@@ -65,7 +65,9 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 				{
 				# Standard field
 				$values=explode(" ",$value);
-				foreach ($values as $value){
+				foreach ($values as $value)
+					{
+					# Standard field
 					$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,6) . ":" . $value;
 					}
 				}
