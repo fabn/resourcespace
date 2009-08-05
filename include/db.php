@@ -660,7 +660,7 @@ function daily_stat($activity_type,$object_ref)
 	
 function register_plugin($plugin)
 	{
-	global $plugins,$language,$pagename,$lang;
+	global $plugins,$language,$pagename,$lang,$applicationname;
 
 	# Add to the plugins array if not already present, to support this function being called
 	# later on (i.e. in config_override()).
