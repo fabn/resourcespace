@@ -166,20 +166,14 @@ elseif ($resource["has_image"]==1)
 		{
 		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
 		}
-	$previewpath=get_resource_path($ref,true,"scr",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
-	$preview_page_size="scr"; // for checking if download is allowed
-	if (!file_exists($previewpath))
-		{
-		$previewpath=get_resource_path($ref,true,"",false,$resource["preview_extension"]);
-		$preview_page_size=""; // for checking if download is allowed
-		}
 	
-	// if the size that the preview page is going to display is not available for download, the preview page should not be available.
-	if (file_exists($previewpath) && resource_download_allowed($ref,$preview_page_size)) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php }
+	?>
+	<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>">
+	<?php
 	if (file_exists($imagepath))
-		{ ?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
-	if (file_exists($previewpath)) { ?></a><?php }
-	}
+		{ 
+		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
+		}
 else
 	{
 	?>

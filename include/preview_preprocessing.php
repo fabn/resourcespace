@@ -468,7 +468,7 @@ if (!isset($newfile))
 			}
 			
 		# resize directly to the screen size (no other sizes needed)
-		if (file_exists($target))
+		 if (file_exists($target)&& $n!=1)
 			{
 			$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
 			$output=shell_exec($command2); 

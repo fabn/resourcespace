@@ -37,7 +37,7 @@ for ($n=0;$n<count($result);$n++)
 	$sizes=get_all_image_sizes(false,$access>=1);
 
 	#check availability of original file 
-	$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
+	$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"],-1,1,checkperm("w") && $access==1);
 	if (file_exists($p) && (($access==0) || ($access==1 && $restricted_full_download)))
 		{
 		$available_sizes['original'][]=$ref;
@@ -49,7 +49,7 @@ for ($n=0;$n<count($result);$n++)
 		$size_id=$sizeinfo['id'];
 		# get file extension from database or use jpg.
 		$pextension = $size == 'original' ? $result[$n]["file_extension"] : 'jpg';
-		$p=get_resource_path($ref,true,$size_id,false,$pextension);
+		$p=get_resource_path($ref,true,$size_id,false,$pextension,-1,1,checkperm("w") && $access==1);
 		if (file_exists($p)) $available_sizes[$size_id][]=$ref;
 		
 		}
@@ -78,7 +78,7 @@ if ($submitted != "")
 			$usesize=$size;
 			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
 			($size == 'original') ? $usesize="" : $usesize=$usesize;
-			$p=get_resource_path($ref,true,$usesize,false,$pextension);
+			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,checkperm("w") && $access==1);
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 
