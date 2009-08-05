@@ -996,6 +996,10 @@ $staticsync_ingest=false;
 # End of StaticSync settings
 # ------------------------------------------------------------------------------------------------------------------
 	
-
+# Data Joins -- Developer's tool to allow joining resource field data to the search query.
+# $thumbs_display_fields array items are already joined. These are fields in addition to the $thumbs_display_fields array, 
+# that you want available for other, typically plugin, purposes, in order to avoid an excessive query count.
+# ex. $data_joins=array(13); to add the expiry date to the general search query result.  
+$data_joins=array();
 
 ?>

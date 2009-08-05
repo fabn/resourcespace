@@ -101,6 +101,14 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $tdf . " on r.ref = rd" . $tdf . ".resource and rd" . $tdf . ".resource_type_field =".$tdf." ";
 		$select.=",rd".$tdf.".value field".$tdf." ";
 		}
+		
+	# Join any other fields specified in $data_joins
+	global $data_joins;	
+	foreach( $data_joins as $datajoin)
+		{
+		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $datajoin. " on r.ref = rd" . $datajoin . ".resource and rd" . $datajoin . ".resource_type_field =".$datajoin." ";
+		$select.=",rd".$datajoin.".value field".$datajoin." ";
+		}	
 	
 	# Prepare SQL to add join table for all provided keywods
 	
