@@ -78,7 +78,7 @@ if ($submitted != "")
 			$usesize=$size;
 			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
 			($size == 'original') ? $usesize="" : $usesize=$usesize;
-			$p=get_resource_path($ref,true,$usesize,false,$pextension);
+			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,(checkperm("w") && $access==1));
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 

@@ -14,17 +14,21 @@ $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
 
 # Permissions check
-if (!resource_download_allowed($ref,$size))
+$allowed=resource_download_allowed($ref,$size);
+if (!$allowed)
 	{
 	# This download is not allowed. How did the user get here?
 	exit("Permission denied");
 	}
 
+# additional access check, as the resource download may be allowed, but access restriction should force watermark.	
+$watermark=get_resource_access($ref);	
+
 # If no extension was provided, we fallback to JPG.
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w") && $alternative==-1),"",$alternative);
+$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w") && $alternative==-1 && $watermark),"",$alternative);
 
 if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page,false,"",$alternative);}
 
