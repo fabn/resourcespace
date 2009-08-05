@@ -401,6 +401,7 @@ if (count($result)>0)
 <?php if (!hook("resourceview")) { ?>
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell" id="ResourceShell<?php echo $ref?>">
+		<?php if (!hook("rendercollectionthumb")){?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php if ($result[$n]["has_image"]==1) { 
 		
@@ -415,6 +416,7 @@ if (count($result)>0)
 		<?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?>
 		/><?php } ?></a></td>
 		</tr></table>
+		<?php } /* end hook rendercollectionthumb */?>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),14)?></a>&nbsp;</div>
 	
 		<?php if ($k!="" && $feedback) { # Allow feedback for external access key users
