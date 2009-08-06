@@ -71,26 +71,19 @@ if (file_exists($path)&&resource_download_allowed($ref,"scr"))
 	}
 else
 	{
-	$path=get_resource_path($ref,true,"",false,$ext,-1,$page,checkperm("w") && $access==1);
-	if (file_exists($path)&&resource_download_allowed($ref,""))
+	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,checkperm("w") && $access==1);
+	if (file_exists($path))
 		{
-		$url=get_resource_path($ref,false,"",false,$ext,-1,$page,checkperm("w") && $access==1);
+		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,checkperm("w") && $access==1);
 		}
-	else {
-		# when using watermarks, the original size should not be accessible as above, so check for "pre"
-		$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,checkperm("w") && $access==1);
-		if (file_exists($path))
-			{
-			$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,checkperm("w") && $access==1);
-			}
-		 }	
-	if (!isset($url))
-		{
-		$info=get_resource_data($ref);
-		$url="../gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
-		$border=false;
-		}
+	 }	
+if (!isset($url))
+	{
+	$info=get_resource_data($ref);
+	$url="../gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
+	$border=false;
 	}
+
 
 include "../include/header.php";
 ?>

@@ -25,13 +25,22 @@ include "../include/header.php";
 <h2>&nbsp;</h2>
 <h1><?php echo $lang["uploadpreview"]?></h1>
 <p><?php echo text("introtext")?></p>
-
+<script language="JavaScript">
+// Check allowed extensions:
+function check(filename) {
+	var allowedExtensions='jpg'.toLowerCase();	
+	if (allowedExtensions.length==0){return true;}
+	var ext = filename.substr(filename.lastIndexOf('.'));
+	ext =ext.substr(1).toLowerCase();
+	if (allowedExtensions.indexOf(ext)==-1){ return false;} else {return true;}
+}
+</script>
 <form method="post" class="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxsize?>">
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
-
+<div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." JPG";?></div>
 <div class="Question">
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
 <input type=file name=userfile id=userfile>
@@ -40,7 +49,7 @@ include "../include/header.php";
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
 <p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>

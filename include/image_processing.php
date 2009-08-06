@@ -329,21 +329,36 @@ function iptc_return_utf8($text)
 	return $text;
 	}
 	
-function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
+function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false)
 	{
 	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
 
 	# File checksum (experimental) - disabled for now
 	# if (!$previewonly) {generate_file_checksum($ref,$extension);}
-
-	if (!$previewonly)
+	
+	# pages/tools/update_previews.php?previewbased=true
+	# use previewbased to avoid touching original files (to preserve manually-uploaded preview images
+	# when regenerating previews (i.e. for watermarks)
+	if($previewbased)
+		{
+		$file=get_resource_path($ref,true,"lpr",false,"jpg");	
+		if (!file_exists($file))
+			{
+			$file=get_resource_path($ref,true,"scr",false,"jpg");		
+			if (!file_exists($file))
+				{
+				$file=get_resource_path($ref,true,"pre",false,"jpg");		
+				}
+			}
+		}
+	else if (!$previewonly)
 		{
 		$file=get_resource_path($ref,true,"",false,$extension);	
 		}
 	else
 		{
 		# We're generating based on a new preview (scr) image.
-		$file=get_resource_path($ref,true,"tmp",false,$extension);	
+		$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 		}
 	
 	# Make sure the file exists
@@ -361,7 +376,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		{
 		if (isset($imagemagick_path))
 			{
-			create_previews_using_im($ref,$thumbonly,$extension,$previewonly);
+			create_previews_using_im($ref,$thumbonly,$extension,$previewonly,$previewbased);
 			}
 		else
 			{
@@ -388,9 +403,9 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 				$id=$ps[$n]["id"];
 			
-				# Find the target path and delete anything that's already there.
+				# Find the target path 
 				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
-				if (file_exists($path)) {unlink($path);}
+				if (file_exists($path) && !$previewbased) {unlink($path);}
 				# Also try the watermarked version.
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
 				if (file_exists($wpath)) {unlink($wpath);}
@@ -456,7 +471,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	return true;
 	}
 
-function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false)
+function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false)
 	{
 	global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
 
@@ -469,21 +484,34 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 		# For resource $ref, (re)create the various preview sizes listed in the table preview_sizes
 		# Set thumbonly=true to (re)generate thumbnails only.
-
-		if (!$previewonly)
+		if($previewbased)
+			{
+			$file=get_resource_path($ref,true,"lpr",false,"jpg");	
+			if (!file_exists($file))
+				{
+				$file=get_resource_path($ref,true,"scr",false,"jpg");		
+				if (!file_exists($file))
+					{
+					$file=get_resource_path($ref,true,"pre",false,"jpg");		
+					}
+				}
+			}
+		else if (!$previewonly)
 			{
 			$file=get_resource_path($ref,true,"",false,$extension);	
 			}
 		else
 			{
 			# We're generating based on a new preview (scr) image.
-			$file=get_resource_path($ref,true,"tmp",false,$extension);	
+			$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 			}
-			
+
 		$lpr_path=get_resource_path($ref,true,"lpr",false);	
 		if (file_exists($lpr_path)) {unlink($lpr_path);}	
 		$scr_path=get_resource_path($ref,true,"scr",false);	
-		if (file_exists($scr_path)) {unlink($scr_path);}
+		if (file_exists($scr_path) && !$previewbased) {unlink($scr_path);}
+		$scr_wm_path=get_resource_path($ref,true,"scr",false,"jpg",-1,1,true);	
+		if (file_exists($scr_wm_path) && !$previewbased) {unlink($scr_wm_path);}
 		
 		$prefix = '';
 		# Camera RAW images need prefix
@@ -524,18 +552,17 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 
-			if ((!$highestsize && !eregi("jp[e]?g", $extension)) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
+			if ((!$highestsize && !eregi("jp[e]?g", $extension)) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col") || $previewbased || ($previewonly && $id=="scr"))
 				{
 				if (($sw<$tw) && ($sh<$th))
 					{
 					$highestsize = true;
 					}
-				# Find the target path and delete anything that's already there.
+				# Find the target path
 				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
-				if (file_exists($path)) {unlink($path);}
 				# Also try the watermarked version.
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
-				if (file_exists($wpath)) {unlink($wpath);}
+				if (file_exists($wpath)){unlink($wpath);}
 	
 				# Preserve colour profiles? (omit for smaller sizes)   
 				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
