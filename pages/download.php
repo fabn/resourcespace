@@ -28,7 +28,7 @@ $watermark=get_resource_access($ref);
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,($size=="scr" && checkperm("w") && $alternative==-1 && $watermark),"",$alternative);
+$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,(checkperm("w") && $alternative==-1 && $watermark),"",$alternative);
 
 if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page,false,"",$alternative);}
 
