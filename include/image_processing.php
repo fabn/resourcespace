@@ -506,6 +506,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 			}
 
+		$hpr_path=get_resource_path($ref,true,"hpr",false);	
+		if (file_exists($hpr_path)) {unlink($hpr_path);}	
 		$lpr_path=get_resource_path($ref,true,"lpr",false);	
 		if (file_exists($lpr_path)) {unlink($lpr_path);}	
 		$scr_path=get_resource_path($ref,true,"scr",false);	
