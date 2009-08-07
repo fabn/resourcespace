@@ -55,7 +55,7 @@ include "../include/header.php";
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
-		
+		$access=get_resource_access($ref);
 		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),60));
 		?>	
 		<!--Resource Panel-->
