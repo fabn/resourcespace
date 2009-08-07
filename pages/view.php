@@ -157,14 +157,14 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
+	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
 	if (!file_exists($imagepath))
 		{
-		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
+		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
 		}
 	else
 		{
-		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,checkperm("w") && $access==1);
+		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
 		}
 	
 	?>
@@ -386,7 +386,7 @@ for ($n=0;$n<count($altfiles);$n++)
 		<td colspan="3"><?php echo $lang["alternativefiles"]?></td>
 		</tr>
 		<?php
-		}
+		}	
 	?>
 	<tr class="DownloadDBlend">
 	<td><h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
@@ -394,7 +394,11 @@ for ($n=0;$n<count($altfiles);$n++)
 	<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 	</td>
 	<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
+	<?php if ($access==0){?>
 	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
+	<?php } else { ?>
+	<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
+	<?php } ?>
 	</tr>
 	<?php	
 	}

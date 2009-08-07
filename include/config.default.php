@@ -431,6 +431,9 @@ $disable_quoted_printable_enc=false;
 # Groups with the 'w' permission will see these watermarks when access is 'restricted'.
 # Uncomment and set to the location of a watermark graphic.
 # NOTE: only available when ImageMagick is installed.
+# NOTE: if set, you must be sure watermarks are generated for all images; This can be done using pages/tools/update_previews.php?previewbased=true
+# NOTE: also, if set, restricted external emails will recieve watermarked versions. Restricted mails inherit the permissions of the sender, but
+# if watermarks are enabled, we must assume restricted access requires the equivalent of the "w" permission
 # $watermark="gfx/watermark.png";
 
 # Simple search even more simple
