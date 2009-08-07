@@ -163,55 +163,62 @@ function ProcessFolder($folder)
 				
 				# Import this file
 				$r=import_resource($shortpath,$type,$title,$staticsync_ingest);
-				
-				# Add to mapped category tree (if configured)
-				if (isset($staticsync_mapped_category_tree))
+				if ($r!==false)
 					{
-					$basepath="";
-					# Save tree position to category tree field
-			
-					# For each node level, expand it back to the root so the full path is stored.
-					for ($n=0;$n<count($path_parts);$n++)
+					# Add to mapped category tree (if configured)
+					if (isset($staticsync_mapped_category_tree))
 						{
-						if ($basepath!="") {$basepath.="~";}
-						$basepath.=$path_parts[$n];
-						$path_parts[$n]=$basepath;
-						}
-					
-					update_field ($r,$staticsync_mapped_category_tree,"," . join(",",$path_parts));
-					#echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
-					}			
+						$basepath="";
+						# Save tree position to category tree field
 				
-				# StaticSync path / metadata mapping
-				# Extract metadata from the file path as per $staticsync_mapfolders in config.php
-				if (isset($staticsync_mapfolders))
-					{
-					foreach ($staticsync_mapfolders as $mapfolder)
-						{
-						$match=$mapfolder["match"];
-						$field=$mapfolder["field"];
-						$level=$mapfolder["level"];
-						
-						if (strpos("/" . $shortpath,$match)!==false)
+						# For each node level, expand it back to the root so the full path is stored.
+						for ($n=0;$n<count($path_parts);$n++)
 							{
-							# Match. Extract metadata.
-							$path_parts=explode("/",$shortpath);
-							if ($level<count($path_parts))
+							if ($basepath!="") {$basepath.="~";}
+							$basepath.=$path_parts[$n];
+							$path_parts[$n]=$basepath;
+							}
+						
+						update_field ($r,$staticsync_mapped_category_tree,"," . join(",",$path_parts));
+						#echo "update_field($r,$staticsync_mapped_category_tree," . "," . join(",",$path_parts) . ");\n";
+						}			
+					
+					# StaticSync path / metadata mapping
+					# Extract metadata from the file path as per $staticsync_mapfolders in config.php
+					if (isset($staticsync_mapfolders))
+						{
+						foreach ($staticsync_mapfolders as $mapfolder)
+							{
+							$match=$mapfolder["match"];
+							$field=$mapfolder["field"];
+							$level=$mapfolder["level"];
+							
+							if (strpos("/" . $shortpath,$match)!==false)
 								{
-								# Save the value
-								print_r($path_parts);
-								$value=$path_parts[$level-1];
-								update_field ($r,$field,$value);
-								echo " - Extracted metadata from path: $value\n";
+								# Match. Extract metadata.
+								$path_parts=explode("/",$shortpath);
+								if ($level<count($path_parts))
+									{
+									# Save the value
+									print_r($path_parts);
+									$value=$path_parts[$level-1];
+									update_field ($r,$field,$value);
+									echo " - Extracted metadata from path: $value\n";
+									}
 								}
 							}
 						}
+					
+					# Add to collection
+					if ($staticsync_autotheme)
+						{
+						sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+						}
 					}
-				
-				# Add to collection
-				if ($staticsync_autotheme)
+				else
 					{
-					sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+					# Import failed - file still being uploaded?
+					echo " *** Skipping file - it was not possible to move the file (still being imported/uploaded?) \n";
 					}
 				}
 			else

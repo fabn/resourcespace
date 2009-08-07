@@ -844,7 +844,15 @@ function import_resource($path,$type,$title,$ingest=false)
 		# Move the file
 		global $syncdir;
 		$destination=get_resource_path($r,true,"",true,$extension);	
-		rename($syncdir . "/" . $path,$destination);
+		$result=rename($syncdir . "/" . $path,$destination);
+		if ($result===false)
+			{
+			# The rename failed. The file is possibly still being copied or uploaded and must be ignored on this pass.
+			# Delete the resouce just created and return false.
+			delete_resource($r);
+			return false;
+			}
+		chmod($destination,0777);
 		}
 
 	# Add title
