@@ -506,12 +506,10 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 			}
 
-		if ($previewonly || $previewbased){
-			$hpr_path=get_resource_path($ref,true,"hpr",false);	
-			if (file_exists($hpr_path)) {unlink($hpr_path);}	
-		}
+		$hpr_path=get_resource_path($ref,true,"hpr",false);	
+		if (file_exists($hpr_path) && !$previewbased) {unlink($hpr_path);}	
 		$lpr_path=get_resource_path($ref,true,"lpr",false);	
-		if (file_exists($lpr_path)) {unlink($lpr_path);}	
+		if (file_exists($lpr_path) && !$previewbased) {unlink($lpr_path);}	
 		$scr_path=get_resource_path($ref,true,"scr",false);	
 		if (file_exists($scr_path) && !$previewbased) {unlink($scr_path);}
 		$scr_wm_path=get_resource_path($ref,true,"scr",false,"jpg",-1,1,true);	
