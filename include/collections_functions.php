@@ -15,7 +15,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
    	global $themes_in_my_collections;
    	if (!$themes_in_my_collections)
    		{
-   		if ($sql!="") {$themesql.=" and ";}
+   		if ($sql!="") {$sql.=" and ";}
    		$sql.="(length(c.theme)=0 or c.theme is null) ";
    		}
 	if ($sql!="") {$sql="where " . $sql;}
