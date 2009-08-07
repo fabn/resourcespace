@@ -71,11 +71,21 @@ include "../include/header.php";
 				# Use 'scr' path
 				$path=get_resource_path ($ref, false,"scr",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
 				}
-			else
+			else if (!file_exists($path))
 				{
-				# Use original file.
-				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+				# Attempt pre
+				$path=get_resource_path ($ref, false,"pre",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
 				}
+			else if (!file_exists($path))
+				{
+				# Attempt pre
+				$path=get_resource_path ($ref, false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+				}	
+			else	
+				{
+				# Use original.
+				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+				}	
 		
 		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<?php } else { ?>		<img border=0 src="../gfx/type<?php echo $result[$n]["resource_type"]?>.gif" /><?php } ?>
