@@ -303,18 +303,19 @@ if ($resource["has_image"]==1 && $download_multisize)
 		?>
 		</tr>
 		<?php
-
-		if ($downloadthissize && $sizes[$n]["allow_preview"]==1)
-			{ 
-		 	# Add an extra line for previewing
-		 	?> 
-			<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td><td class="DownloadButton">
-			<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
-			</td>
-			</tr>
-      		<?php
-      		} 
-		}
+		if (!hook("previewlinkbar")){
+			if ($downloadthissize && $sizes[$n]["allow_preview"]==1)
+				{ 
+				# Add an extra line for previewing
+				?> 
+				<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td><td class="DownloadButton">
+				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
+				</td>
+				</tr>
+				<?php
+				} 
+			}
+		} /* end hook previewlinkbar */
 	}
 elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_full_download==false))
 	{
