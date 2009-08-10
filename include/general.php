@@ -799,10 +799,10 @@ function email_resource_request($ref,$details)
 	$list.=$htmlbreak;		
 	$templatevars['list']=$list;
 
-	$templatevars['details']=$details;
-	if ($templatevars['details']!=""){$adddetails=newlines($details)."\n\n";} else { $adddetails="";}
+	$templatevars['details']=stripslashes($details);
+	if ($templatevars['details']!=""){$adddetails=newlines($templatevars['details'])."\n\n";} else { $adddetails="";}
 	
-	$message=$lang["username"] . ": " . $username . "\n".$templatevars['list']."\n".$adddetails. $lang["clicktoviewresource"] . $templatevars['url'];
+	$message=$lang["username"] . ": " . $username . "\n".$templatevars['list']."\n".$adddetails. $lang["clicktoviewresource"] . "\n\n". $templatevars['url'];
 
 	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail,$useremail,"emailresourcerequest",$templatevars);
 	
@@ -1283,7 +1283,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 			
 
 
-		if ($template!="")
+		if (isset($template) && $template!="")
 			{
 			preg_match_all('/\[[^\]]*\]/',$template,$test);
 			foreach($test[0] as $variable)
