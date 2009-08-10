@@ -557,6 +557,9 @@ $about_link=true;
 $reset_date_upload_template=false;
 $reset_date_field=12; # Which date field to reset? (if using multiple date fields)
 
+# Show expiry warning when expiry date has been passed
+$show_expiry_warning=true;
+
 # Make the frameset resizeable. Useful for viewing large collections, especially if re-ordering.
 $collection_resize=false;
 
