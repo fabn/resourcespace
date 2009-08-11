@@ -300,6 +300,19 @@ else
 <h1><?php echo $lang["specifydefaultcontent"]?></h1>
 <p><?php echo text("batch")?></p>
 
+<?php if ($ref<0) { 
+	# User edit template. Show the save / clear buttons at the top too, to avoid unnecessary scrolling.
+	?>
+	<div class="QuestionSubmit">
+	<label for="buttons"> </label>
+	<input name="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />&nbsp;
+	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["next"]?>&nbsp;&nbsp;" /><br><br>
+	<div class="clearerleft"> </div>
+	</div>
+	<?php
+	}
+?>
+
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
