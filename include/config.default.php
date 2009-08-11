@@ -834,8 +834,9 @@ $jupload_chunk_size="5000000"; # Chunk size ~5MB.
 # Once collections have been published as themes by default they are removed from the user's My Collections. These option leaves them in place.
 $themes_in_my_collections=false;
 
-
-
+# Show an upload link in the top navigation? (if 't' and 'c' permissions for the current user)
+$top_nav_upload=true;
+$top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
 
 #
 # ------------------------- Development Items -------------------------
