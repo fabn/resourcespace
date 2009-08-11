@@ -1250,9 +1250,10 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 			
 		if (isset($to_usergroupref))
 			{	
-			if (hook("modifytousergroup","",$to_usergroupref)!=null){$to_usergroup=hook("modifytousergroup","",$to_usergroupref);}
+			$modified_to_usergroupref=hook("modifytousergroup","",$to_usergroupref);
+			if ($modified_to_usergroupref!==null){$to_usergroupref=$modified_to_usergroupref;}
 
-			$results=sql_query("select language,name,text from site_text where page='all' and name='$html_template' and specific_to_group='$to_usergroup'");
+			$results=sql_query("select language,name,text from site_text where page='all' and name='$html_template' and specific_to_group='$to_usergroupref'");
 			}
 		else 
 			{	

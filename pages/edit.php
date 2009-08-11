@@ -473,7 +473,9 @@ for ($n=0;$n<count($fields);$n++)
 	$help_js="onBlur=\"HideHelp(" . $fields[$n]["ref"] . ");return false;\" onFocus=\"ShowHelp(" . $fields[$n]["ref"] . ");return false;\"";
 	
 	#hook to modify field type in special case. Returning zero (to get a standard text box) doesn't work, so return 1 for type 0, 2 for type 1, etc.
-	if(hook("modifyfieldtype")){$fields[$n]["type"]=hook("modifyfieldtype")-1;}
+	$modified_field_type="";
+	$modified_field_type=(hook("modifyfieldtype"));
+	if ($modified_field_type){$fields[$n]["type"]=$modified_field_type-1;}
 	
 	switch ($fields[$n]["type"]) {
 		case 0: # -------- Plain text entry
@@ -514,7 +516,10 @@ for ($n=0;$n<count($fields);$n++)
 
 		case 3: # -------- Drop down list
 		$options=explode(",",$fields[$n]["options"]);
-		if (hook("adjusteditdropdownoptions")){$options=hook("adjusteditdropdownoptions");}
+		
+		$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
+		if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
+		
 		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php
 		for ($m=0;$m<count($options);$m++)
 			{
@@ -604,7 +609,10 @@ for ($n=0;$n<count($fields);$n++)
 		if (checkperm("e-2")) {$mode=-2;}
 		if (checkperm("e2")) {$mode=2;}
 		if (checkperm("e0")) {$mode=0;}
-		if (hook("modifydefaultstatusmode")){$mode=hook("modifydefaultstatusmode");}
+		
+		$modified_defaultstatus=(hook("modifydefaultstatusmode"));
+		if ($modified_defaultstatus){$mode=$modified_defaultstatus;}
+		
 		#if (checkperm("e0") && checkperm("e-2")) {$mode=-2;}
 		?>
 		<input type=hidden name="archive" value="<?php echo $mode?>">
