@@ -514,6 +514,7 @@ function resolve_user_agent($agent)
     $agent=strtolower($agent);
     $bmatches=array( # Note - order is important - first come first matched
                     "firefox"=>"Firefox",
+                    "chrome"=>"Chrome",
                     "opera"=>"Opera",
                     "safari"=>"Safari",
                     "applewebkit"=>"Safari",
@@ -523,12 +524,16 @@ function resolve_user_agent($agent)
                     "msie 5."=>"IE5",
                     "msie 6."=>"IE6",
                     "msie 7."=>"IE7",
+                    "msie 8."=>"IE8",
+                    "msie 9."=>"IE9",
+                    "msie 10."=>"IE10",
                     "msie"=>"IE",
                     "netscape"=>"Netscape",
                     "mozilla"=>"Mozilla" #catch all for mozilla references not specified above
                     );
     $osmatches=array(
-                    "nt 6."=>"Vista",
+                    "nt 6.1"=>"Windows 7",
+                    "nt 6.0"=>"Vista",
                     "nt 5.2"=>"WS2003",
                     "nt 5.1"=>"XP",
                     "nt 5.0"=>"2000",
