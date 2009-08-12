@@ -156,6 +156,11 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     #blank cookie
     setcookie("user","",0);
 
+	# Also blank search related cookies
+    setcookie("search","");	
+    setcookie("saved_offset","");	
+    setcookie("saved_archive","");	
+
 	#Do not show stored username.
 	$stored_username="";
     
