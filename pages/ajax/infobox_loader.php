@@ -1,10 +1,10 @@
 <?php
-include "../include/db.php";
-include "../include/general.php";
+include "../../include/db.php";
+include "../../include/general.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
-$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
-include "../include/search_functions.php";
-include "../include/resource_functions.php";
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../../include/authenticate.php";}
+include "../../include/search_functions.php";
+include "../../include/resource_functions.php";
 
 $ref=getvalescaped("ref","");
 
@@ -27,7 +27,15 @@ if ($infobox_display_resource_id)
 	{
 	# Display resource ID
 	?>
-	<div style="float:right"><?php echo $lang["resourceid"] ?>: <?php echo $ref?></div>
+	<div style="float:right;padding-right:10px;"><?php echo $lang["resourceid"] ?>: <?php echo $ref?></div>
+	<?php
+	}
+
+if ($infobox_display_resource_icon && $resource["file_extension"]!="")
+	{
+	# Display resource type indicator icon (no preview icon)
+	?>
+	<img style="float:right;clear:right;" src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],true,true) ?>">
 	<?php
 	}
 ?>

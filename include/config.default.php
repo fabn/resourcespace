@@ -400,6 +400,9 @@ $infobox=true;
 $infobox_fields=array(18,10,29,53);
 # Display the resource ID in the info box?
 $infobox_display_resource_id=true;
+# Display a small resource file type icon in the info box?
+$infobox_display_resource_icon=true;
+
 
 # Reordering, captioning and ranking of collections
 $collection_reorder_caption=false;
