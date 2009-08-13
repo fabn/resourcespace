@@ -139,8 +139,9 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		<?php } /* end hook replacerecentlink */?>
 		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php"><?php echo $lang["mycollections"]?></a></li><?php } ?>
 		<?php if (checkperm("d")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/contribute.php"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
+		<?php if (!hook("replaceresearchrequestlink")) { ?>
 		<?php if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/research_request.php"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
-		
+		<?php } ?>
 		<?php if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/tag.php"><?php echo $lang["tagging"]?></a></li><?php } ?>
 		
 		<?php 

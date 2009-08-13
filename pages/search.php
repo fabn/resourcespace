@@ -386,12 +386,12 @@ if (is_array($result))
 			{
 			$field_content=$result[$n]['field'.$tdf[$x]['ref']];
 			?>		
-			<div class="ResourcePanelCountry"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div>
+			<div class="ResourcePanelCountry"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div><div class="clearer"></div>
 			<?php
 			}
 		?>
 		
-		<div class="ResourcePanelCountry">&nbsp;</div>	
+		<div class="ResourcePanelCountry">&nbsp;</div>
 				
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
