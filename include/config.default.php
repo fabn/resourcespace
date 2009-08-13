@@ -838,6 +838,17 @@ $themes_in_my_collections=false;
 $top_nav_upload=true;
 $top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
 
+
+
+
+
+
+
+
+
+
+
+
 #
 # ------------------------- Development Items -------------------------
 #
@@ -930,6 +941,7 @@ $enable_thumbnail_creation_on_upload = true;
 # If the below is not set, but unzip is available, the archive contents will be written to $extracted_text_field
 #
 # $zip_contents_field=18;
+$zip_contents_field_crop=1; # The number of lines to remove from the top of the zip contents output (in order to remove the filename field and other unwanted header information).
 
 # List of extensions that can be processed by ffmpeg.
 # Mostly video files.

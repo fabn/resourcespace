@@ -533,6 +533,7 @@ for ($n=0;$n<count($fields);$n++)
 		# Value formatting
 		$value=i18n_get_translated($value);
 		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==3) || ($fields[$n]["type"]==7)) {$value=TidyList($value);}
+		$value_unformatted=$value; # store unformatted value for replacement also
 		$value=nl2br(htmlspecialchars($value));
 		
 		# draw new tab panel?
@@ -559,6 +560,7 @@ for ($n=0;$n<count($fields);$n++)
 			$template=$fields[$n]["display_template"];
 			$template=str_replace("[title]",$title,$template);
 			$template=str_replace("[value]",$value,$template);
+			$template=str_replace("[value_unformatted]",$value_unformatted,$template);
 			$template=str_replace("[ref]",$ref,$template);
 			$extra.=$template;
 			}

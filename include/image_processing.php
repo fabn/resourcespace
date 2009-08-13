@@ -1012,6 +1012,16 @@ function extract_text($ref,$extension)
 		# Zip files - map the field
 		$path=escapeshellarg($path);
 		$text=shell_exec("unzip -l $path");
+		
+		global $zip_contents_field_crop;
+		if ($zip_contents_field_crop>0)
+			{
+			# Remove the first few lines according to $zip_contents_field_crop in config.
+			$text=explode("\n",$text);
+			for ($n=0;$n<count($zip_contents_field_crop);$n++) {array_shift($text);}
+			$text=join("\n",$text);
+			}
+		
 		if (isset($zip_contents_field))
 			{
 			$extracted_text_field=$zip_contents_field;
