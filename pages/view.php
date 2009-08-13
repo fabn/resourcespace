@@ -172,8 +172,10 @@ elseif ($resource["has_image"]==1)
 	<?php
 	if (file_exists($imagepath))
 		{ 
-		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php } 
-		}
+		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php 
+		} 
+	?></a><?php
+	}
 else
 	{
 	?>
