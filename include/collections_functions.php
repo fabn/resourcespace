@@ -844,11 +844,13 @@ function copy_collection($copied,$current,$remove_existing=false)
 		}
 	}
 
+if (!function_exists("collection_is_research_request")){
 function collection_is_research_request($collection)
 	{
 	# Returns true if a collection is a research request
 	return (sql_value("select count(*) value from research_request where collection='$collection'",0)>0);
 	}
+}	
 
 function add_to_collection_link($resource,$search="")
 	{
