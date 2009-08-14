@@ -320,7 +320,7 @@ if ($k!="")
 
   <ul>
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-    		<?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li>
+    <?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
@@ -329,11 +329,13 @@ if ($k!="")
     
     <?php } ?>
     <?php } else {
-    $research=sql_value("select ref value from research_request where collection='$usercollection'",0);
-    ?>
+	if (!hook("replacecollectionsresearchlinks")){	
+    $research=sql_value("select ref value from research_request where collection='$usercollection'",0);	
+	?>
     <li><a href="team/team_research.php" target="main">&gt; <?php echo $lang["manageresearchrequests"]?></a></li>    
     <li><a href="team/team_research_edit.php?ref=<?php echo $research?>" target="main">&gt; <?php echo $lang["editresearchrequests"]?></a></li>    
-    <?php } ?>
+    <?php } /* end hook replacecollectionsresearchlinks */ ?>
+	<?php } ?>
     
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
