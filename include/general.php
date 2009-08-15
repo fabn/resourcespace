@@ -1389,7 +1389,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	hook("aftersendmailphpmailer","",$email);	
 }
 
-function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
+if (!function_exists("quoted_printable_encode")) {function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
         // Quoted printable encoding is rather simple.
         // Each character in the string $string should be encoded if:
         //  Character code is <0x20 (space)
@@ -1417,6 +1417,7 @@ function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $bre
                 $linelen++;
         }
         return $result;
+}
 }
 
 function quoted_printable_encode_subject($string, $encoding='UTF-8') {
