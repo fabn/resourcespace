@@ -224,7 +224,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
 	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
         if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
 		
-		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop " . escapeshellarg($target . ".ps");
+		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop " . escapeshellarg($target . ".ps");
 		$output=shell_exec($gscommand); 
 
 		if (file_exists($target))
@@ -263,7 +263,7 @@ if ($extension=="mp3")
 if ($extension=="txt")
 	{
 	$text=wordwrap(file_get_contents($file),90);
-	$width=600;$height=800;
+	$width=650;$height=850;
 	$font=dirname(__FILE__). "/../gfx/fonts/vera.ttf";
 	$im=imagecreatetruecolor($width,$height);
 	$col=imagecolorallocate($im,255,255,255);
