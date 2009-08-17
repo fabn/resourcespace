@@ -7,6 +7,9 @@ include "../../include/collections_functions.php";
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
+$order_by=getvalescaped("order_by","ref");
+$sort=getval("sort","ASC");
+$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
@@ -25,14 +28,14 @@ include "../../include/header.php";
   <p><?php echo text("introtext")?></p>
  
 <?php 
-$requests=get_research_requests($find);
+$requests=get_research_requests($find,$order_by,$sort);
 
 # pager
 $per_page=10;
 $results=count($requests);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
-$url="team_research.php?find=" . urlencode($find);
+$url="team_research.php?find=" . urlencode($find)."&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
 $jumpcount=1;
 
 ?><div class="TopInpageNav"><?php pager();	?></div>
@@ -40,12 +43,12 @@ $jumpcount=1;
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><?php echo $lang["researchid"]?></td>
-<td><?php echo $lang["nameofproject"]?></td>
-<td><?php echo $lang["date"]?></td>
-<td><?php echo $lang["status"]?></td>
-<td><?php echo $lang["assignedto"]?></td>
-<td><?php echo $lang["collectionid"]?></td>
+<td><a href="team_research.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["researchid"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["nameofproject"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["date"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=status&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["status"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=assigned_to&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["assignedto"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=collection&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionid"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 

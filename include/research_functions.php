@@ -39,10 +39,10 @@ function send_research_request()
 	}
 }
 
-function get_research_requests($find="")
+function get_research_requests($find="",$order_by="name",$sort="ASC")
 	{
 	if ($find!="") {$searchsql="where name like '%$find%' or description like '%$find%' or contact like '%$find%' or ref='$find'";} else {$searchsql="";}
-	return sql_query("select *,(select username from user u where u.ref=r.user) username, (select username from user u where u.ref=r.assigned_to) assigned_username from research_request r $searchsql order by ref desc");
+	return sql_query("select *,(select username from user u where u.ref=r.user) username, (select username from user u where u.ref=r.assigned_to) assigned_username from research_request r $searchsql order by $order_by $sort");
 	}
 
 if (!function_exists("get_research_request")){
