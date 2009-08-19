@@ -93,13 +93,13 @@ include "../include/header.php";
 			#show only active collections if a start date is set for $active_collections 
 			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
 					{ ?>
-				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
 			<?php }
 			}
 		if ($found==false)
 			{
 			# Add this one at the end, it can't be found
-			$notfound=get_collection($usercollection);
+			$notfound=get_collection($ref);
 			if ($notfound!==false)
 				{
 				?>
