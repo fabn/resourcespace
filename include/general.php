@@ -623,7 +623,7 @@ function get_users_with_permission($permission)
 	$matched=array();
 	for ($n=0;$n<count($groups);$n++)
 		{
-		$perms=trim_array(split(",",$groups[$n]["permissions"]));
+		$perms=trim_array(explode(",",$groups[$n]["permissions"]));
 		if (in_array($permission,$perms)) {$matched[]=$groups[$n]["ref"];}
 		}
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref where g.ref in ('" . join("','",$matched) . "') order by username",false);
@@ -1826,7 +1826,7 @@ function check_access_key($resource,$key)
 		if (count($userinfo)>0)
 			{
 			$usergroup=$userinfo[0]["usergroup"];
-			$userpermissions=split(",",$userinfo[0]["permissions"]);
+			$userpermissions=explode(",",$userinfo[0]["permissions"]);
 			if (hook("modifyuserpermissions")){$userpermissions=hook("modifyuserpermissions");}
 			$userrequestmode=0; # Always use 'email' request mode for external users
 			}

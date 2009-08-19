@@ -539,9 +539,9 @@ for ($n=0;$n<count($fields);$n++)
 		if ($value!="" && !($ref<0 && $reset_date_upload_template && $reset_date_field==$fields[$n]["ref"]))
         	{
             #fetch the date parts from the value
-            $sd=split(" ",$value);
+            $sd=explode(" ",$value);
             $value=$sd[0];
-            $sd=split("-",$value);
+            $sd=explode("-",$value);
             if (count($sd)>=3)
             	{
 	            $dy=intval($sd[0]);$dm=intval($sd[1]);$dd=intval($sd[2]);

@@ -38,7 +38,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 		if (hook("userpermissions")){$userdata[0]["permissions"]=hook("userpermissions");} 
 		
 		# Create userpermissions array for checkperm() function
-		$userpermissions=array_merge(split(",",trim($global_permissions)),split(",",trim($userdata[0]["permissions"]))); 
+		$userpermissions=array_merge(explode(",",trim($global_permissions)),explode(",",trim($userdata[0]["permissions"]))); 
 	
 		$usergroup=$userdata[0]["usergroup"];
         $usergroupparent=$userdata[0]["parent"];
