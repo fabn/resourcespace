@@ -3,10 +3,11 @@
 # PDF Contact Sheet Functionality
 # Contributed by Tom Gleason
 #
-
 foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
-include('../../lib/fpdf/fpdf.php');
-include('../../lib/fpdf/fpdf_imagealpha.php');
+#require_once('../../lib/tcpdf/config/lang/eng.php');
+require_once('../../lib/tcpdf/tcpdf.php');
+
+// create new PDF document
 include('../../include/db.php');
 include('../../include/general.php');
 include('../../include/authenticate.php');
@@ -69,7 +70,9 @@ $result=do_search("!collection" . $collection);
 $user= get_user($collectiondata['user']);
 
 #Start PDF, set metadata, etc.
-$pdf=new PDF_ImageAlpha("P","in",$pagesize);
+$pdf = new TCPDF("P", "in", $pagesize, true, 'UTF-8', false); 
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
 $pdf->SetTitle($collectiondata['name']." ".$date);
 $pdf->SetAuthor($user['fullname']." ".$user['email']);
 $pdf->SetSubject($applicationname." Contact Sheet");
@@ -78,10 +81,10 @@ $pdf->SetAutoPageBreak(true,0);
 $pdf->AddPage();
 
 #Title on sheet
-$pdf->SetFont('helvetica','',$titlefontsize);
+$pdf->SetFont($contact_sheet_font,'',$titlefontsize);
 $title = $applicationname." - ". $collectiondata['name']." - ".$date;
 $pagenumber = " - p.". $page;
-$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+$pdf->Text(1,.8,$title.$pagenumber,0,0,"L");$pdf->ln();
 $pdf->SetFontSize($refnumberfontsize);
 
 #Begin loop through resources, collecting Keywords too.
@@ -165,9 +168,9 @@ for ($n=0;$n<count($result);$n++)
 								#When moving to a new page, get current coordinates, place a new page header.
 								$pagestartx=$pdf->GetX();
 								$pagestarty=$pdf->GetY();
-								$pdf->SetFont('helvetica','',$titlefontsize);
+								$pdf->SetFont($contact_sheet_font,'',$titlefontsize);
 								$pagenumber = " - p.". $page;
-								$pdf->Text(1,.8,utf8_decode($title.$pagenumber),0,0,"L");$pdf->ln();
+								$pdf->Text(1,.8,$title.$pagenumber,0,0,"L");$pdf->ln();
 								#then restore the saved coordinates and fontsize to continue as usual.
 								$pdf->SetFontSize($refnumberfontsize);
 								$pdf->Setx($pagestartx);
