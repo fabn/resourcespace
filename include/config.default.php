@@ -417,13 +417,15 @@ $contact_sheet=true;
 $contact_sheet_resource=false; 
 # Ajax previews in contact sheet configuration. 
 $contact_sheet_previews=true;
-
 # Select a contact sheet font. Default choices are 
 # helvetica,times (pdf core fonts: not embedded, very small pdf file size but unpredictable results)
 # dejavusans (adds about 300K! to each file but covers a very large set of glyphs)
 # You can use fontforge to add or remove glyphs to a font for your purposes.
 # see tcpdf site for information on how to create new fonts for tcpdf.
 $contact_sheet_font="helvetica";
+# allow unicode filenames? (stripped out by default in tcpdf but since collection names may 
+# have special characters, probably want to try this on.)
+$contact_sheet_unicode_filenames=true;
 
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);

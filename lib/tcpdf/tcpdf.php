@@ -5060,7 +5060,10 @@ if (!class_exists('TCPDF', false)) {
 			$dest = strtoupper($dest);
 			if ($dest != 'F') {
 				$name = preg_replace('/[\s]+/', '_', $name);
+				global $contact_sheet_unicode_filenames;
+				if (!$contact_sheet_unicode_filenames){
 				$name = preg_replace('/[^a-zA-Z0-9_\.-]/', '', $name);
+				}
 			}
 			if ($this->sign) {
 				// *** apply digital signature to the document ***
