@@ -386,7 +386,7 @@ if (is_array($result))
 			{
 			$field_content=$result[$n]['field'.$tdf[$x]['ref']];
 			?>		
-			<div class="ResourcePanelCountry"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div><div class="clearer"></div>
+			<div class="ResourcePanelInfo"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div><div class="clearer"></div>
 			<?php
 			}
 		?>
