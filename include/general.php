@@ -1879,8 +1879,8 @@ function auto_create_user_account()
 		}
 
 	# Required fields (name, email) not set?
-	if (getval("name","")=="") {return false;}
-	if (getval("email","")=="") {return false;}
+	if (getval("name","")=="") {return $lang['requiredfields'];}
+	if (getval("email","")=="") {return $lang['requiredfields'];}
 	
 	# Work out which user group to set.
 	$usergroup=$user_account_auto_creation_usergroup;
@@ -1890,9 +1890,15 @@ function auto_create_user_account()
 		# Check this is a valid selectable usergroup (should always be valid unless this is a hack attempt)
 		if (sql_value("select allow_registration_selection value from usergroup where ref='$usergroup'",0)!=1) {exit("Invalid user group selection");}
 		}
+	
+	$username=escape_check(make_username(getval("name","")));
+	
+	#check if account already exists
+	$check=sql_value("select email value from user where email = '$user_email'","");
+	if ($check!=""){return $lang["useremailalreadyexists"];}
 
 	# Create the user
-	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . escape_check(make_username(getval("name",""))) . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $usergroup . "','" . escape_check($c) . "',0)");
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $usergroup . "','" . escape_check($c) . "',0)");
 	$new=sql_insert_id();
 	
 	# Build a message

@@ -305,6 +305,7 @@ $lang["login"]="Log in";
 $lang["loginincorrect"]="Sorry, your login in details were incorrect.<br /><br />If you have forgotten your password,<br />use the link above to request a new one.";
 $lang["accountexpired"]="Your account has expired. Please contact the resources team.";
 $lang["useralreadyexists"]="An account with that e-mail or username already exists, changes not saved";
+$lang["useremailalreadyexists"]="An account with that e-mail already exists.";
 $lang["ticktoemail"]="E-mail this user their username and new password";
 $lang["ticktodelete"]="Tick to delete this user";
 $lang["edituser"]="Edit User";

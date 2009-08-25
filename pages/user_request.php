@@ -3,29 +3,29 @@ include "../include/db.php";
 include "../include/general.php";
 
 
-$errors=false;
+$error=false;
 $user_email=getval("email","");
 hook("preuserrequest");
 
 if (getval("save","")!="")
 	{
 	if ($user_account_auto_creation)
-		{
+		{	
 		# Automatically create a new user account
-		$success=auto_create_user_account();
+		$try=auto_create_user_account();
 		}
 	else
 		{
-		$success=email_user_request();
+		$try=email_user_request();
 		}
 		
-	if ($success)
+	if ($try===true || is_numeric($try))
 		{
 		redirect("pages/done.php?text=user_request");
 		}
 	else
 		{
-		$errors=true;
+		$error=$try;
 		}
 	}
 include "../include/header.php";
@@ -141,7 +141,7 @@ $groups=get_registration_selectable_usergroups();
 <?php hook("userrequestadditional");?>
 
 <div class="QuestionSubmit">
-<?php if ($errors) { ?><div class="FormError">!! <?php echo $lang["requiredfields"] ?> !!</div><?php } ?>
+<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!</div><?php } ?>
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
