@@ -74,7 +74,7 @@ if ($extension=="psd")
 			}
 		if (file_exists($target))
 			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
 			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
 			}
 		}
@@ -97,7 +97,7 @@ if ($extension=="cr2")
 			}
 		if (file_exists($target))
 			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
 			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
 			}
 		}
@@ -120,7 +120,7 @@ if ($extension=="nef")
 			}
 		if (file_exists($target))
 			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
 			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
 			}
 		}
@@ -249,7 +249,7 @@ if ($extension=="mp3")
 		}
 	if (file_exists($target))
 		{
-		#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in imagemagick_preview.php
+		#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
 		if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
 		}
 	}
@@ -327,7 +327,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
                 	if ($ffmpeg_preview_async && $php_path && file_exists($php_path . "/php"))
 	                	{
 	                	global $scramble_key;
-	                	exec($php_path . "/php " . dirname(__FILE__)."/imagemagick_preview.php " . 
+	                	exec($php_path . "/php " . dirname(__FILE__)."/ffmpeg_processing.php " . 
 	                		escapeshellarg($scramble_key) . " " . 
 	                		escapeshellarg($ref) . " " . 
 	                		escapeshellarg($file) . " " . 
@@ -337,7 +337,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
 	                	}
                 	else 
 	                	{
-	                	include(dirname(__FILE__)."/imagemagick_preview.php");
+	                	include(dirname(__FILE__)."/ffmpeg_processing.php");
 	                	}
                 }
             } 
