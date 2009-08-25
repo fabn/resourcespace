@@ -19,7 +19,7 @@ if (getval("save","")!="")
 		$try=email_user_request();
 		}
 		
-	if ($try===true || is_numeric($try))
+	if ($try===true)
 		{
 		redirect("pages/done.php?text=user_request");
 		}
