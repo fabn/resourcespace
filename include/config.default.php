@@ -232,6 +232,23 @@ $ffmpeg_preview_force=false;
 # Encode preview asynchronous?
 $ffmpeg_preview_async=false;
 
+# FFMPEG - generation of alternative video file sizes/formats
+# It is possible to automatically generate different file sizes and have them attached as alternative files.
+# See below for examples.
+# The blocks must be numbered sequentially (0, 1, 2).
+# Ensure the formats you are specifiying with vcodec and acodec are supported by checking 'ffmpeg -formats'.
+#
+# $ffmpeg_alternatives[0]["name"]="QuickTime H.264 WVGA";
+# $ffmpeg_alternatives[0]["filename"]="quicktime_h264";
+# $ffmpeg_alternatives[0]["extension"]="mov";
+# $ffmpeg_alternatives[0]["params"]="-vcodec h264 -s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
+#
+# $ffmpeg_alternatives[1]["name"]="Larger FLV";
+# $ffmpeg_alternatives[0]["filename"]="flash";
+# $ffmpeg_alternatives[1]["extension"]="FLV";
+# $ffmpeg_alternatives[1]["params"]="-s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
+
+
 # To be able to run certain actions asyncronus (eg. preview transcoding), define the path to php:
 # $php_path="/usr/bin";
 

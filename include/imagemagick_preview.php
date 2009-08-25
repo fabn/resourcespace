@@ -92,6 +92,38 @@ if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_a
     unlink($targetfiletmp);
     }
 
+# Handle alternative files.
+global $ffmpeg_alternatives;
+if (isset($ffmpeg_alternatives))
+	{
+	for($n=0;$n<count($ffmpeg_alternatives);$n++)
+		{
+		# Remove any existing alternative file(s) with this name.
+		$existing=sql_query("select ref from resource_alt_files where resource='$ref' and name='" . escape_check($ffmpeg_alternatives[$n]["name"]) . "'");
+		for ($m=0;$m<count($existing);$m++)
+			{
+			delete_alternative_file($ref,$existing[$m]["ref"]);
+			}
+			
+		# Create the alternative file.
+		$aref=add_alternative_file($ref,$ffmpeg_alternatives[$n]["name"]);
+		$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
+		
+		# Process the video 
+		$shell_exec_cmd = $ffmpeg_path . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
+		$output=shell_exec($shell_exec_cmd);
+
+		if (file_exists($apath))
+			{
+			# Update the database with the new file details.
+			$file_size=filesize($apath);
+			sql_query("update resource_alt_files set file_name='" . escape_check($ffmpeg_alternatives[$n]["filename"] . "." . $ffmpeg_alternatives[$n]["extension"]) . "',file_extension='" . escape_check($ffmpeg_alternatives[$n]["extension"]) . "',file_size='" . $file_size . "',creation_date=now() where ref='$aref'");
+			}
+		}
+	}
+
+
+
 if (!mysql_ping())
 	{
 	mysql_connect($mysql_server,$mysql_username,$mysql_password,true);
