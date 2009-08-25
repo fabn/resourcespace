@@ -210,8 +210,12 @@ if (file_exists("../viewers/type" . $resource["resource_type"] . ".php"))
 	{
 	include "../viewers/type" . $resource["resource_type"] . ".php";
 	}
+elseif (hook("replacedownloadoptions"))
+	{
+	}
 else
-	{ ?>
+	{ 
+	?>
 <table cellpadding="0" cellspacing="0">
 <tr>
 <td><?php echo $lang["fileinformation"]?></td>
