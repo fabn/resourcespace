@@ -22,7 +22,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 		
 		$test_ext = explode(".",$fp);$test_ext=trim(strtolower($test_ext[count($test_ext)-1]));
 		
-		if (($test_ext == $extension) && (strlen($fp)>0) && (strpos($fp,"/")!==false))
+		if (($test_ext == $extension) && (strlen($fp)>0) && (strpos($fp,"/")!==false) && !($alternative > 0))
 			{
 				
 			if ($getfilepath)
