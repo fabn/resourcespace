@@ -514,6 +514,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		{
 		?>
 		<!--Key to Panel-->
+		<?php if (!hook("replacesearchkey")){?>
 		<div class="BottomInpageKey"> 
 			<?php echo $lang["key"]?>:
 			<?php if ($display=="thumbs") { ?>
@@ -527,6 +528,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			<?php if (!checkperm("b")) { ?><div class="KeyCollect"><?php echo $lang["addtocurrentcollection"]?></div><?php } ?>
 			<div class="KeyPreview"><?php echo $lang["fullscreenpreview"]?></div>
 		</div>
+		<?php }/*end replacesearchkey */?>
 		<?php
 		}
 	}
