@@ -336,8 +336,8 @@ if ($enable_add_collection_on_upload)
 	<div class="Question">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
 	<select name="collection_add" id="collection_add" class="stdwidth">
-	<option value="-1" selected>(<?php echo $lang["createnewcollection"]?>)</option>
-	<option value=""><?php echo $lang["batchdonotaddcollection"]?></option>
+	<option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected<?php }?>>(<?php echo $lang["createnewcollection"]?>)</option>
+	<option value="" <?php if (!$upload_add_to_new_collection){ ?>selected<?php }?>><?php echo $lang["batchdonotaddcollection"]?></option>
 	<?php
 	$list=get_user_collections($userref);
 	$currentfound=false;

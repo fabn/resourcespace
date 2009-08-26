@@ -560,6 +560,8 @@ $auto_order_checkbox=true;
 
 # When batch uploading, show the 'add resources to collection' selection box
 $enable_add_collection_on_upload=true;
+# Batch Uploads, default is "Add to New Collection". Turn off to default to "Do not Add to Collection"
+$upload_add_to_new_collection=true;
 
 # When batch uploading, enable the 'copy resource data from existing resource' feature
 $enable_copy_data_from=true;
@@ -863,8 +865,6 @@ $themes_in_my_collections=false;
 # Show an upload link in the top navigation? (if 't' and 'c' permissions for the current user)
 $top_nav_upload=true;
 $top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
-
-
 
 
 
