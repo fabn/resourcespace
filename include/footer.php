@@ -24,7 +24,7 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 function SwapCSS(css)
 	{
 	document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css?css_reload_key=<?php echo $css_reload_key?>';
-	<?php if (!checkperm("b") && !$frameless_collections) { ?>top.collections.document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css';<?php } ?>
+	<?php if (!checkperm("b") && !$frameless_collections) { ?>parent.collections.document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css';<?php } ?>
 	SetCookie("colourcss",css,1000);	
 	}
 </script>

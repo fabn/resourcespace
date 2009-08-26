@@ -142,7 +142,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# Add to collection?
 		if ($collection!="")
 			{
-			?><script type="text/javascript">top.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
+			?><script type="text/javascript">parent.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
 	<?php
 			}
 			

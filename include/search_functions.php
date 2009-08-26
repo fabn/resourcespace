@@ -319,7 +319,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if ($orig_order=="relevance") {$order_by="r2.ref desc";}
 
 		# Extract the number of records to produce
-		$last=explode(" ",$search);$last=str_replace("!last","",$last[0]);
+		$last=explode(" ",$search);
+		$last=str_replace("!last","",$last[0]);
 		
 		# Fix the order by for this query (special case due to inner query)
 		$order_by=str_replace("r.rating","rating",$order_by);
