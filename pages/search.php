@@ -486,7 +486,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td>
 		<td><div class="ListTools"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);"onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
-		if (!checkperm("b")&& $k=="" && !$use_checkboxes_for_selection) { ?>
+		if (!checkperm("b")&& $k=="") { ?>
 		<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a> &nbsp;
 		<?php } ?>
 
