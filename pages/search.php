@@ -393,7 +393,9 @@ if (is_array($result))
 		
 		<div class="ResourcePanelCountry">&nbsp;</div>
 				
+		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+		<?php } /* end hook replacefullscreenpreviewicon */?>
 		
 		<?php if(!hook("iconcollect")){?>
 		<?php if (!checkperm("b") && $k=="" && !$use_checkboxes_for_selection) { ?>
