@@ -384,33 +384,40 @@ if (isset($flv_download) && $flv_download)
 	}
 	
 # Alternative files listing
-$altfiles=get_alternative_files($ref);
-for ($n=0;$n<count($altfiles);$n++)
+if ($access==0) # open access only (not restricted)
 	{
-	if ($n==0)
+	$altfiles=get_alternative_files($ref);
+	for ($n=0;$n<count($altfiles);$n++)
 		{
+		if ($n==0)
+			{
+			?>
+			<tr>
+			<td colspan="3"><?php echo $lang["alternativefiles"]?></td>
+			</tr>
+			<?php
+			}	
 		?>
-		<tr>
-		<td colspan="3"><?php echo $lang["alternativefiles"]?></td>
+		<tr class="DownloadDBlend">
+		<td><h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
+		<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
+		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
+		</td>
+		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
+		<?php if ($access==0){?>
+		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
+		<?php } else { ?>
+		<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
+		<?php } ?>
 		</tr>
-		<?php
-		}	
-	?>
-	<tr class="DownloadDBlend">
-	<td><h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
-	<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
-	<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
-	</td>
-	<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
-	<?php if ($access==0){?>
-	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
-	<?php } else { ?>
-	<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
-	<?php } ?>
-	</tr>
-	<?php	
+		<?php	
+		}
 	}
+# --- end of alternative files listing
 ?>
+
+
+
 </table>
 <?php } ?>
 <br />

@@ -6,6 +6,7 @@
 #
 
 include "../../include/db.php";
+include "../../include/general.php";
 include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
 
 
@@ -54,11 +55,25 @@ echo mysql_affected_rows() . " orphaned resource related rows deleted.<br/><br/>
 sql_query("delete from resource_type_field where resource_type<>999 and resource_type<>0 and resource_type not in (select ref from resource_type)");
 echo mysql_affected_rows() . " orphaned fields deleted.<br/><br/>";
 
+sql_query("delete from user_collection where user not in (select ref from user) or collection not in (select ref from collection)");
+echo mysql_affected_rows() . " orphaned user-collection relationships deleted.<br/><br/>";
+
 sql_query("delete from resource_data where resource not in (select ref from resource) or resource_type_field not in (select ref from resource_type_field)");
 echo mysql_affected_rows() . " orphaned resource data rows deleted.<br/><br/>";
 
-sql_query("delete from user_collection where user not in (select ref from user) or collection not in (select ref from collection)");
-echo mysql_affected_rows() . " orphaned user-collection relationships deleted.<br/><br/>";
+# Clean out and resource data that is set for fields not applicable to a given resource type.
+$r=get_resource_types();
+for ($n=0;$n<count($r);$n++)
+	{
+	$rt=$r[$n]["ref"];
+	$fields=sql_array("select ref value from resource_type_field where resource_type=0 or resource_type=999 or resource_type='" . $rt . "'");
+	if (count($fields)>0)
+		{
+		sql_query("delete from resource_data where resource in (select ref from resource where resource_type='$rt') and resource_type_field not in (" . join (",",$fields) . ")");
+		echo mysql_affected_rows() . " orphaned resource data rows deleted for resource type $rt.<br/><br/>";
+		}
+	}
+
 
 
 ?>

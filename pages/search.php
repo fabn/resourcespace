@@ -160,7 +160,7 @@ if (getval("refreshcollectionframe","")!="")
 
 # Include javascript for infobox panels.
 $headerinsert.="
-<script src=\"../lib/js/infobox.js\" type=\"text/javascript\"></script>
+<script src=\"../lib/js/infobox.js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
 ";
 
 if ($infobox)
