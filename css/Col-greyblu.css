@@ -1,4 +1,4 @@
-body {color:#B5C3D4;background: #4C6C96 url(../gfx/greyblu/interface/back.gif) repeat-x fixed;}
+body,html {color:#B5C3D4;background: #4C6C96 url(../gfx/greyblu/interface/back.gif) repeat-x fixed;}
 h2 {color: #FFFFFF;}
 h1 {color: #FFFFFF;}
 .CollectDivide {color:#B5C3D4;background: #000000 url(../gfx/greyblu/interface/CollectDivide.gif) repeat-x;}

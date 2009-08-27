@@ -33,7 +33,7 @@ a:active {text-decoration:underline;}
 /*General layout*/
 #Header {margin:20px 25px;padding:0;text-align:left;}
 #HeaderNav1 {text-align:right;}
-#HeaderNav2 {text-align:right;margin-top: 15px;margin-bottom: 4px;}
+#HeaderNav2 {text-align:right;margin-top: 28px;margin-bottom: 4px;}
 
 #Footer {margin:20px 25px;padding:0;text-align:left;}
 #FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
@@ -352,8 +352,6 @@ div.autocomplete ul li {
 
 .FormHelp{margin: 0px 0px 10px 150px;padding: 0;}
 .FormHelpInner{background-color:#ffffff;border:1px solid #000000;    border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;width:360px;padding:5px;margin:10px 0 0 0;color:black;}
-
-#chromeFix { display: block; position: absolute; width: 1px; height: 100%; bottom: 0px; left: 0px; }
 
 #ThemeBox {padding:0;margin:0;text-align:left;width: 170px;}
 #ThemeBoxPanel {width: 170px;padding:0;margin:0;}
