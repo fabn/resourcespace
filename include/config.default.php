@@ -787,9 +787,6 @@ $global_permissions="F51,F52";
 $user_account_auto_creation=false;
 $user_account_auto_creation_usergroup=2; # which user group for auto-created accounts? (see also $registration_group_select - allows users to select the group themselves).
 
-# Optional additional items added to the top navigation
-##    DUPLICATE ENTRY custom_top_nav deleted - SEE AROUND LINE 500
-
 # Display a larger preview image on the edit page?
 $edit_large_preview=false;
 

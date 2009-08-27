@@ -578,7 +578,6 @@ if ($k!="")
 <div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php echo $lang["items"]?></div>		
 <?php } ?>
 
-<div id="chromeFix"></div>
 
 </body>
 </html>
