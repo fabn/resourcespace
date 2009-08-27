@@ -866,6 +866,9 @@ $themes_in_my_collections=false;
 $top_nav_upload=true;
 $top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
 
+# Allow users to delete resources?
+# (Can also be controlled on a more granular level with the "D" restrictive permission.)
+$allow_resource_deletion = true;
 
 
 

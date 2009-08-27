@@ -4,6 +4,12 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 
+if ((isset($allow_resource_deletion) and !$allow_resource_deletion) or checkperm('D')){
+	include "../include/header.php";
+	echo "Error: Resource deletion is disabled.";
+	exit;
+} else {
+
 $ref=getval("ref","");
 $error="";
 
@@ -72,6 +78,9 @@ else
 
 <?php
 	}
+
+} // end of block to prevent deletion if disabled
 	
 include "../include/footer.php";
+
 ?>

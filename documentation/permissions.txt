@@ -51,6 +51,7 @@ J	Can only search for resources that belong to themes (not advisable!)
 Restrictive permissions
 -----------------------
 p	Can not change own password. Useful for shared user accounts.
+D	Can not delete resources.
 
 Administration
 --------------
