@@ -435,14 +435,27 @@ $contact_sheet_resource=false;
 # Ajax previews in contact sheet configuration. 
 $contact_sheet_previews=true;
 # Select a contact sheet font. Default choices are 
-# helvetica,times (pdf core fonts: not embedded, very small pdf file size but unpredictable results)
-# dejavusans (adds about 300K! to each file but covers a very large set of glyphs)
-# You can use fontforge to add or remove glyphs to a font for your purposes.
-# see tcpdf site for information on how to create new fonts for tcpdf.
+# helvetica,times (These are pdf core fonts: not embedded, very small pdf file size but unpredictable results. See $ttf_file for embedding option.)
 $contact_sheet_font="helvetica";
 # allow unicode filenames? (stripped out by default in tcpdf but since collection names may 
 # have special characters, probably want to try this on.)
 $contact_sheet_unicode_filenames=true;
+# Print title as well as ID on scontact sheet
+$print_contact_title = false;
+
+# Advanced Contact Sheet Font Management:
+# $ttf_file overrides $contact_sheet_font. A .ttf file should be installed in the lib/tcpdf/fonts directory, 
+# and it should be given an all-lowercase filename. No .ttf files are included!
+# Choose a font that contains the characters you need. Compound glyphs for asian languages may not work correctly.
+# On first usage, ttf file will be converted for TCPDF automatically. fonts directory must be made writable!
+# $ttf_file="dejavusans.ttf"; 
+# If using $ttf_file, optionally set $subsetting=true and set fontforge path to generate subset fonts on the fly (reduces PDF file size).
+# If using $subsetting, keep an eye on the fonts folder size as the subset fonts are saved to be reused to speed repeated generation.
+# $subsetting=true; 
+# $fontforge_path="/usr/bin";
+# Set font size for contactsheet (if using subsetted $ttf_file, sizes may need to be reduced significantly as the scale may be altered.) 
+$titlefontsize=10;
+$refnumberfontsize=8;
 
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);
@@ -819,9 +832,6 @@ $papersize_select = '
 <option value="tabloid">US Tabloid - 11" x 17"</option>
 <option value="a4">A4 - 210mm x 297mm</option>
 <option value="a3">A3 - 297mm x 420mm</option>';
-
-# Print title as well as ID on scontact sheet
-$print_contact_title = false;
 
 # If displaying a collection in search.php, display collection title at top.
 $display_collection_title = false;

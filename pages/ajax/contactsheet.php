@@ -38,8 +38,7 @@ if ($size == "tabloid") {$width=11;$height=17;}
 $pagewidth=$pagesize[0]=$width;
 $pageheight=$pagesize[1]=$height;
 $date= date("m-d-Y h:i a");
-$titlefontsize=10;
-$refnumberfontsize=8;
+
 if ($orientation=="landscape"){$pagewidth=$pagesize[0]=$height; $pageheight=$pagesize[1]=$width;}
 
 if ($sheetstyle=="thumbnails")
@@ -69,47 +68,71 @@ $result=do_search("!collection" . $collection);
 
 $user= get_user($collectiondata['user']);
 
-#Start PDF, set metadata, etc.
-$pdf = new TCPDF("P", "in", $pagesize, true, 'UTF-8', false); 
-$pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
-$pdf->SetTitle($collectiondata['name']." ".$date);
-$pdf->SetAuthor($user['fullname']." ".$user['email']);
-$pdf->SetSubject($applicationname." Contact Sheet");
-$pdf->SetMargins(1,1.2,.7);
-$pdf->SetAutoPageBreak(true,0);
-$pdf->AddPage();
+# Start PDF, set metadata, etc.
+# Store pdf code to be run later, so that we can optionally analyze which glyphs are needed.
+$pdfcode="";
+$characterset="0123456789-amp";
+$pdfcode="
+\$pdf = new TCPDF('P', 'in', \$pagesize, true, 'UTF-8', false); 
+\$pdf->setPrintHeader(false);
+\$pdf->setPrintFooter(false);
+\$pdf->SetTitle(\$collectiondata['name'].' '.\$date);
+
+\$pdf->SetAuthor(\$user['fullname'].' '.\$user['email']);
+\$pdf->SetSubject(\$applicationname.' Contact Sheet');
+\$pdf->SetMargins(1,1.2,.7);
+\$pdf->SetAutoPageBreak(true,0);
+\$pdf->AddPage(); ";
 
 #Title on sheet
-$pdf->SetFont($contact_sheet_font,'',$titlefontsize);
-$title = $applicationname." - ". $collectiondata['name']." - ".$date;
-$pagenumber = " - p.". $page;
-$pdf->Text(1,.8,$title.$pagenumber,0,0,"L");$pdf->ln();
-$pdf->SetFontSize($refnumberfontsize);
+$pdfcode.="\$pdf->SetFont(\$contact_sheet_font,'',\$titlefontsize);";
+
+$title = $applicationname.' - '. $collectiondata['name'].' - '.$date;
+$pdfcode.="\$title = \$applicationname.' - '. \$collectiondata['name'].' - '.\$date;";
+
+$pagenumber = ' - p.'. $page;
+$pdfcode.="\$pagenumber = ' - p.'. \$page;";
+
+# Whenever outputting text, add the text to the characterset string as well.
+$characterset.=$title.$pagenumber;
+$pdfcode.="\$pdf->Text(1,.8,\$title.\$pagenumber,0,0,'L');\$pdf->ln();
+\$pdf->SetFontSize(\$refnumberfontsize);";
 
 #Begin loop through resources, collecting Keywords too.
+$pdfcode.="\$i=0;";
 $i=0;
+$pdfcode.="\$j=0;";
 $j=0;
 
 
 for ($n=0;$n<count($result);$n++)			
 		{
 		$ref=$result[$n]["ref"];
+		$pdfcode.="\$ref='".$ref."';";
 		$preview_extension=$result[$n]["preview_extension"];
+		$pdfcode.="\$preview_extension='".$preview_extension."';";
 		$resourcetitle="";
-		if ($print_contact_title) {	$resourcetitle = " - " . $result[$n]["title"];}
+		if ($print_contact_title) {	
+			$resourcetitle = " - " . $result[$n]["title"];
+			$pdfcode.="\$resourcetitle='".$resourcetitle."';";
+			$characterset.=$resourcetitle;
+			}
     	$i++;
+		$pdfcode.="\$i++;";
 
 		if ($ref!==false)
 			{
 			# Find image
 			$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
+			$pdfcode.="\$imgpath = '".$imgpath."';";
 			
 			if (!file_exists($imgpath)){
 			$imgpath="../../gfx/".get_nopreview_icon($result[$n]['resource_type'],$result[$n]['file_extension'],false,true); 
+			$pdfcode.="\$imgpath = '".$imgpath."';";
 			    $preview_extension=explode(".",$imgpath);
 				if(count($preview_extension)>1){
 				$preview_extension=trim(strtolower($preview_extension[count($preview_extension)-1]));
+				$pdfcode.="\$preview_extension='".$preview_extension."';";
 				} 
 			}	
 			if (file_exists($imgpath))
@@ -121,16 +144,25 @@ for ($n=0;$n<count($result);$n++)
 					
 					if ($sheetstyle=="thumbnails")
 					{
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref.$resourcetitle);		
+						$characterset.=$ref.$resourcetitle;
+						$pdfcode.="\$pdf->Text(\$pdf->Getx(),\$pdf->Gety()-.05,\$ref.\$resourcetitle);\n";		
 					}
 					else if ($sheetstyle=="list")
 					{
-						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);	
-						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
-							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
+						$characterset.=$ref;
+						$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+0.2,\$ref);\n";	
+						for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
+							$pdfcode.="\$ff=".$ff.";";
+							$fielddata="";
+							$pdfcode.="\$fielddata='';";
+							$fielddata=get_data_by_field($ref,$config_sheetlist_fields[$ff]);
+							$pdfcode.="\$fielddata='".$fielddata."';";
+							$characterset.=$fielddata;
+							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
+						}		
 					}
-						$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),$imagesize,0,$preview_extension,$baseurl. "/?r=" . $ref);
-						$pdf->Cell($cellsize[0],$cellsize[1],"",0,0);
+						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY(),\$imagesize,0,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
+						$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);\n";
 					
 					}
 					
@@ -138,43 +170,52 @@ for ($n=0;$n<count($result);$n++)
 						
 					if ($sheetstyle=="thumbnails")
 					{
-						$pdf->Text($pdf->Getx(),$pdf->Gety()-.05,$ref.$resourcetitle);	
+						$pdfcode.="\$pdf->Text(\$pdf->Getx(),\$pdf->Gety()-.05,\$ref.\$resourcetitle);\n";
 					}
 					else if ($sheetstyle=="list")
 					{
-						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);			
-						for($ff=0; $ff<count($config_sheetlist_fields); $ff++)
-							$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),get_data_by_field($ref, $config_sheetlist_fields[$ff]));			
+						$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+0.2,\$ref);\n";			
+						for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
+							$pdfcode.="\$ff=".$ff.";";
+							$fielddata="";
+							$pdfcode.="\$fielddata='';";
+							$fielddata=get_data_by_field($ref,$config_sheetlist_fields[$ff]);
+							$pdfcode.="\$fielddata='".$fielddata."';";
+							$characterset.=$fielddata;
+							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
+						}			
 					}
-						$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY(),0,$imagesize,$preview_extension,$baseurl. "/?r=" . $ref);
-						$pdf->Cell($cellsize[0],$cellsize[1],"",0,0);
+						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY(),0,\$imagesize,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
+						$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);";
 						
 					}
 			$n=$n++;
 					if ($i == $columns){
 					
-						$pdf->ln(); $i=0;$j++;
-							
+						$pdfcode.="\$pdf->ln(); \$i=0;\$j++;";
+						$i=0;$j++;	
 							if ($j > $rowsperpage){
 						    $page = $page+1;
 							$j=0; 
+							
 							if (($preview==true) && ($page>1)){break;} else{
 							if ($n<count($result)-1){ //avoid making an additional page if it will be empty							
-								$pdf->AddPage();
+								$pdfcode.="\$pdf->AddPage();";
 								}
 							}
 							
 							if ($n<count($result)-1){// avoid adding header if this is the last page and the next would be empty
 								#When moving to a new page, get current coordinates, place a new page header.
-								$pagestartx=$pdf->GetX();
-								$pagestarty=$pdf->GetY();
-								$pdf->SetFont($contact_sheet_font,'',$titlefontsize);
+								$pdfcode.="\$pagestartx=\$pdf->GetX();\n";
+								$pdfcode.="\$pagestarty=\$pdf->GetY();\n";
+								$pdfcode.="\$pdf->SetFont(\$contact_sheet_font,'',\$titlefontsize);\n";
 								$pagenumber = " - p.". $page;
-								$pdf->Text(1,.8,$title.$pagenumber,0,0,"L");$pdf->ln();
+								$characterset.=$pagenumber;
+								$pdfcode.="\$pdf->Text(1,.8,\$title.\$pagenumber,0,0,'L');\$pdf->ln();\n";
 								#then restore the saved coordinates and fontsize to continue as usual.
-								$pdf->SetFontSize($refnumberfontsize);
-								$pdf->Setx($pagestartx);
-								$pdf->SetY($pagestarty);
+								$pdfcode.="\$pdf->SetFontSize(\$refnumberfontsize);
+								\$pdf->Setx(\$pagestartx);
+								\$pdf->SetY(\$pagestarty);";
 								}
 							}			
 					}
@@ -188,7 +229,8 @@ for ($n=0;$n<count($result);$n++)
 		if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 		if (file_exists($storagedir."/tmp/contactsheet.jpg")){unlink($storagedir."/tmp/contactsheet.jpg");}
 		if (file_exists($storagedir."/tmp/contactsheet.pdf")){unlink($storagedir."/tmp/contactsheet.pdf");}
-		$pdf->Output($storagedir."/tmp/contactsheet.pdf","F"); 
+		$pdfcode.="\$pdf->Output(\$storagedir.'/tmp/contactsheet.pdf','F');"; 
+		eval($pdfcode);
 		# Set up ImageMagick 
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
@@ -201,7 +243,7 @@ for ($n=0;$n<count($result);$n++)
 		shell_exec($command);
 		exit();
 		}
-	
+
 #check configs, decide whether PDF outputs to browser or to a new resource.
 if ($contact_sheet_resource==true){
 	$newresource=create_resource(1,0);
@@ -217,8 +259,9 @@ relate_to_collection($newresource,$collection);
 	
 	# Create the file in the new resource folder:
 	$path=get_resource_path($newresource,true,"",true,"pdf");
-	$pdf->Output($path,"F");
 	
+	$pdfcode.="\$pdf->Output(\$path,'F');";
+	eval($pdfcode);
 	#Create thumbnails and redirect browser to the new contact sheet resource
 	create_previews($newresource,true,"pdf");
 	redirect("pages/view.php?ref=" .$newresource);
@@ -226,8 +269,88 @@ relate_to_collection($newresource,$collection);
 
 else
 
-	#to browser
-	{$pdf->Output($collectiondata['name'].".pdf","D");}
+	#to browser and generate subsetted font
+	{
+	# if a ttf file is specified, use it, and optionally subset it.
+	if (isset($ttf_file)){
+		if (!isset($subsetting)){$subsetting=false;}
+		if ($subsetting){
+		function utf8_to_unicode_code($utf8_string)
+			{
+			$expanded = iconv("UTF-8", "UTF-32", $utf8_string);
+			return unpack("L*", $expanded);
+			}
+	
+			$characters=utf8_to_unicode_code($characterset);
+			$characters=array_unique($characters);
+			
+			#create a hashed name of the unique subsetted font
+			# include font name in case the font changes
+			$fonthash=md5($ttf_file.implode(",",$characters));
+			}
+		else 
+			{
+			# if not subsetting, fonthash is just the name of the font
+			$fonthash=str_replace(".ttf","",$ttf_file);
+			}
+	
+		$font=$storagedir."/../lib/tcpdf/fonts/".$fonthash.".ttf";
+
+		if ($subsetting)
+			#subsetting requires scripting fontforge to produce a custom font
+			{
+			$ff_script="import fontforge\r                               
+uf=fontforge.open(\"$storagedir/../lib/tcpdf/fonts/".$ttf_file."\")\r                                                  
+n=fontforge.font()\r"; 
+
+			foreach ($characters as $character)
+				{	
+				$ff_script.="
+uf.selection.select((\"unicode\",None),".$character.")\r  
+uf.copy()\r   
+n.createChar(".$character.")\r                       
+n.selection.select((\"unicode\",None),".$character.")\r      
+n.paste()\r";
+				} 
+
+			$ff_script.="
+n.fontname=\"".$fonthash."\"\r                       
+n.generate(\"".$font."\")\r ";
+
+			$pyfile=$storagedir."/tmp/".$fonthash;
+			if (!file_exists($fonthash)){
+				$openedfile = fopen($pyfile, "w");	
+				fwrite($openedfile,$ff_script);
+			}	
+		}
+	
+	#check if the font is already made for TCPDF
+	if (!file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".z")
+		|| !file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ctg.z")
+		|| !file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".php")){
+		#if subsetting, check for fontforge and the font needed
+		if ($subsetting)
+			{ 	
+			if (!file_exists($fontforge_path."/fontforge")){die ("Fontforge not found at $fontforge_path/fontforge");}	
+			if (!file_exists($storagedir."/../lib/tcpdf/fonts/".$ttf_file)){die ($ttf_file." not found at ".$storagedir."/../lib/tcpdf/fonts/".$ttf_file);}	
+			shell_exec ("/usr/bin/fontforge -lang=py -script $pyfile");
+			unlink ($pyfile);
+			}	
+			
+		shell_exec($storagedir."/../lib/tcpdf/fonts/utils/ttf2ufm -a -F -G afeU $font");
+
+		include($storagedir."/../lib/tcpdf/fonts/utils/makefont.php");
+
+		MakeFont($font,$storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm");
+		unlink($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm");
+		}
+
+	$pdfcode=str_replace("\$contact_sheet_font","'$fonthash'",$pdfcode);
+	}
+
+$pdfcode.="\$pdf->Output(\$collectiondata['name'].'.pdf','D');"; 
+#die($pdfcode);
+eval ($pdfcode);}
 
 
 ?>
