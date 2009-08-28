@@ -17,11 +17,11 @@ if (getval("newkeyword","")!="")
 	{
 	add_field_option($field,getvalescaped("newkeyword",""));
 	}
-	
-# Fetch option data.
-$options=get_field_options_with_stats($field);
 
 include "../../include/header.php";
+
+# Fetch option data.
+$options=get_field_options_with_stats($field);
 ?>
 
 <div class="BasicsBox"> 
