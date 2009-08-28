@@ -23,7 +23,6 @@ $column=getval("columns","");
 $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","");
 if(getval("preview","")!=""){$preview=true;} else {$preview=false;}
-
 $imgsize="pre";
 
 if ($preview==true){$imgsize="col";}
@@ -286,7 +285,8 @@ else
 			
 			#create a hashed name of the unique subsetted font
 			# include font name in case the font changes
-			$fonthash=md5($ttf_file.implode(",",$characters));
+			
+			$fonthash=strtoupper(str_replace(array(0,1,2,3,4,5,6,7,8,9),array("A","B","C","D","E","F","G","H","I","J"),substr(md5(implode(",",$characters)),0,6)))."+".str_replace(".ttf","",$ttf_file);
 			}
 		else 
 			{
@@ -314,7 +314,7 @@ n.paste()\r";
 				} 
 
 			$ff_script.="
-n.fontname=\"".$fonthash."\"\r                       
+n.fontname=\"".$fonthash."\"\r                    
 n.generate(\"".$font."\")\r ";
 
 			$pyfile=$storagedir."/tmp/".$fonthash;
@@ -338,6 +338,14 @@ n.generate(\"".$font."\")\r ";
 			}	
 			
 		shell_exec($storagedir."/../lib/tcpdf/fonts/utils/ttf2ufm -a -F -G afeU $font");
+		
+		
+		$str=implode("\n",file($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm"));
+		$fp=fopen($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm","w");
+		// use proper naming convention for subsetted font.
+		$incorrectsubsetname=str_replace("+","-",$fonthash);
+		$str=str_replace($incorrectsubsetname,$fonthash,$str);
+		fwrite($fp,$str,strlen($str));
 
 		include($storagedir."/../lib/tcpdf/fonts/utils/makefont.php");
 
@@ -352,5 +360,11 @@ $pdfcode.="\$pdf->Output(\$collectiondata['name'].'.pdf','D');";
 #die($pdfcode);
 eval ($pdfcode);}
 
-
+if ($subsetting){ 
+				#remove subset font files so they don't accumulate
+				unlink ($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ttf");
+				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".z");
+				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".ctg.z");
+				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".php");
+}
 ?>

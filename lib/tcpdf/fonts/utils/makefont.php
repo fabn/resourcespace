@@ -276,7 +276,7 @@ function ReadUFM($file, &$cidtogidmap) {
 			}
 		}
 		# Added the following line for ResourceSpace
-		if (!isset($gn)){$gn='.notdef';} if (!isset($w)){$w="'WX'";}
+		if (!isset($gn)){$gn='';} if (!isset($w)){$w="''";}
 		
 		if(($gn == '.notdef') AND (!isset($fm['MissingWidth']))) {
 			$fm['MissingWidth'] = $w;
