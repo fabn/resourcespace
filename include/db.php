@@ -90,6 +90,9 @@ if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
 # Fix due to rename of US English language file
 if ($language=="us") {$language="en-US";}
 
+# Make sure the provided language is a valid language
+if (!array_key_exists($language,$languages)) {$language=$defaultlanguage;}
+
 # Always include the english pack (in case items have not yet been translated)
 include dirname(__FILE__)."/../languages/en.php";
 if ($language!="en")
