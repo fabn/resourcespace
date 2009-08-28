@@ -810,6 +810,8 @@ function import_resource($path,$type,$title,$ingest=false)
 	# This is used by staticsync.php and Camillo's SOAP API
 	# Note that the file will be used at it's present location and will not be copied.
 
+	global $syncdir;
+
 	# Create resource
 	$r=create_resource($type);
 			
@@ -863,6 +865,10 @@ function import_resource($path,$type,$title,$ingest=false)
 	
 	# Ensure folder is created, then create previews.
 	get_resource_path($r,false,"pre",true,$extension);	
+
+	$filepath=get_resource_path($r,true,"",true,$extension);
+	copy($syncdir . "/" . $path , $filepath);	
+
 	create_previews($r,false,$extension);
 
 	# Pass back the newly created resource ID.

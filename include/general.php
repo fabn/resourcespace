@@ -28,7 +28,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 			if ($getfilepath)
 				{
 				global $syncdir;  
-            	return $syncdir . "/" . $fp;
+//            	return $syncdir . "/" . $fp;
 				}
 			else 
 				{
