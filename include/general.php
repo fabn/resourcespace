@@ -1195,6 +1195,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	mail ($email,$subject,$message,$headers);
 	}
 
+if (!function_exists("send_mail_phpmailer")){
 function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null)
 	{
 	
@@ -1387,6 +1388,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		exit;
 		}
 	hook("aftersendmailphpmailer","",$email);	
+}
 }
 
 if (!function_exists("quoted_printable_encode")) {function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
