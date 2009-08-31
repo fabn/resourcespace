@@ -32,7 +32,7 @@ for ($n=0;$n<count($log);$n++)
 	<tr>
 	<td><?php echo nicedate($log[$n]["date"],true)?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
-	<td><?php echo $lang["log-" . $log[$n]["type"]]?></td>
+	<td><?php echo $lang["log-" . $log[$n]["type"]]." ".$log[$n]["notes"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
 	</tr>
 	<?php

@@ -582,7 +582,7 @@ for ($n=0;$n<count($fields);$n++)
 			# Show inline help for this field.
 			# For certain field types that have no obvious focus, the help always appears.
 			?>
-			<div class="FormHelp" style="padding:0;<?php if (!in_array($fields[$n]["type"],array(2,6,7))) { ?> display:none;<?php } ?>" id="help_<?php echo $fields[$n]["ref"]?>"><div class="FormHelpInner"><?php echo nl2br(trim(htmlspecialchars(i18n_get_translated($fields[$n]["help_text"]))))?></div></div>
+			<div class="FormHelp" style="padding:0;<?php if (!in_array($fields[$n]["type"],array(2,6,7))) { ?> display:none;<?php } else { ?> clear:left;<?php } ?>" id="help_<?php echo $fields[$n]["ref"]?>"><div class="FormHelpInner"><?php echo nl2br(trim(htmlspecialchars(i18n_get_translated($fields[$n]["help_text"]))))?></div></div>
 			<?php
 			}
 

@@ -521,6 +521,10 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		# Build message and send.
 		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
 		send_mail($emails[$n],$subject,$body,"","","emailresource",$templatevars);
+		
+		# log this
+		resource_log($resource,"E","",$notes=$ulist[$n]);
+		
 		}
 		
 	# Return an empty string (all OK).
@@ -659,15 +663,15 @@ function copy_resource($from,$resource_type=-1)
 	return $to;
 	}
 	
-function resource_log($resource,$type,$field)
+function resource_log($resource,$type,$field,$notes="")
 	{
 	global $userref;
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type','$field')");
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type','$field','$notes')");
 	}
 
 function get_resource_log($resource)
 	{
-	return sql_query("select r.date,u.username,u.fullname,r.type,f.title from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
+	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
 	}
 	
 function get_resource_type_name($type)
