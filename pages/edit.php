@@ -599,7 +599,9 @@ for ($n=0;$n<count($fields);$n++)
 	}
 ?>
 
+<?php if(!hook("replacestatusandrelationshipsheader")){?>
 <?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
+<?php } /* end hook replacestatusandrelationshipsheader */ ?>
 
 	<!-- Archive Status -->
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
@@ -619,6 +621,7 @@ for ($n=0;$n<count($fields);$n++)
 		<?php
 		}
 	else { ?>
+	<?php if(!hook("replacestatusselector")){?>
 	<?php if ($multiple) { ?><div id="editmultiple_status"><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label id="editthis_status_label" for="editthis<?php echo $n?>"><?php echo $lang["status"]?></label></div><?php } ?>
 	<div class="Question" id="question_status" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="archive"><?php echo $lang["status"]?></label>
@@ -630,6 +633,7 @@ for ($n=0;$n<count($fields);$n++)
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
+	<?php } /* end hook replacestatusselector */?>
 
 <?php if (!hook("replaceaccessselector")){ ?>	
 	<!-- Access -->
