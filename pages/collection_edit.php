@@ -86,10 +86,12 @@ include "../include/header.php";
 </div>
 
 <?php if ($collection["public"]==0) { ?>
+<?php if (!hook("replaceuserselect")){?>
 <div class="Question">
 <label for="users"><?php echo $lang["attachedusers"]?></label><?php $userstring=htmlspecialchars($collection["users"]); include "../include/user_select.php"; ?>
 <div class="clearerleft"> </div>
 </div>
+<?php } /* end hook replaceuserselect */?>
 
 <?php } else { 
 if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can publish public collections as themes.
