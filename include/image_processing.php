@@ -114,6 +114,11 @@ function upload_file($ref)
 		{
 		create_previews($ref,false,$extension);
 		}
+	else
+		{
+		# Offline thumbnail generation is being used. Set 'has_image' to zero so the offline create_previews.php script picks this up.
+		sql_query("update resource set has_image=0 where ref='$ref'");
+		}
 	
     return $status;
     }}
