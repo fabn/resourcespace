@@ -32,16 +32,15 @@ $path=get_resource_path($ref,true,$size,false,$ext,-1,$page,(checkperm("w") || (
 
 if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page,false,"",$alternative);}
 
-if (!file_exists($path))
+if (!file_exists($path) && $noattach!="")
 	{
 	# Return icon for file (for previews)
 	$info=get_resource_data($ref);
-	$path="../gfx/type" . $info["resource_type"] . ".gif";
-	$ext="gif";
+	$path="../gfx/" . get_nopreview_icon($info["resource_type"],$ext,"thm");
 	}
 
 # writing RS metadata to files: exiftool
-if ($noattach=="") # Only for downloads (not previews)
+if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
 	{
 	$tmpfile=write_metadata($path,$ref);
 	if ($tmpfile!==false && file_exists($tmpfile)){$path=$tmpfile;}
@@ -129,7 +128,7 @@ set_time_limit(0);
 readfile($path);
 
 #Deleting Exiftool temp File:
-if ($noattach=="") # Only for downloads (not previews)
+if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
 	{
 	if (file_exists($tmpfile)){delete_exif_tmpfile($tmpfile);}
 	}

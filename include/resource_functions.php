@@ -869,11 +869,10 @@ function import_resource($path,$type,$title,$ingest=false)
 	
 	# Ensure folder is created, then create previews.
 	get_resource_path($r,false,"pre",true,$extension);	
-
-	$filepath=get_resource_path($r,true,"",true,$extension);
-	copy($syncdir . "/" . $path , $filepath);	
-
-	create_previews($r,false,$extension);
+	
+	# Generate previews/thumbnails (if configured i.e if not completed by offline process 'create_previews.php')
+	global $enable_thumbnail_creation_on_upload;
+	if ($enable_thumbnail_creation_on_upload) {create_previews($r,false,$extension);}
 
 	# Pass back the newly created resource ID.
 	return $r;
@@ -885,9 +884,9 @@ function get_alternative_files($resource)
 	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date from resource_alt_files where resource='$resource'");
 	}
 	
-function add_alternative_file($resource,$name)
+function add_alternative_file($resource,$name,$description="",$file_name="",$file_extension="",$file_size=0)
 	{
-	sql_query("insert into resource_alt_files(resource,name,creation_date) values ('$resource','$name',now())");
+	sql_query("insert into resource_alt_files(resource,name,creation_date,description,file_name,file_extension,file_size) values ('$resource','" . escape_check($name) . "',now(),'" . escape_check($description) . "','" . escape_check($file_name) . "','" . escape_check($file_extension) . "','" . escape_check($file_size) . "')");
 	return sql_insert_id();
 	}
 	

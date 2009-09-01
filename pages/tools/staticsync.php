@@ -86,7 +86,7 @@ function touch_category_tree_level($path_parts)
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path, $staticsync_ingest, $staticsync_mapfolders;
+	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path, $staticsync_ingest, $staticsync_mapfolders,$staticsync_alternatives_suffix;
 	
 	$collection=0;
 	
@@ -108,7 +108,7 @@ function ProcessFolder($folder)
 			}	
 		
 		# -----FOLDERS-------------
-		if ((($filetype=="dir") || $filetype=="link") && ($file!=".") && ($file!="..") && (strpos($nogo,"[" . $file . "]")===false))
+		if ((($filetype=="dir") || $filetype=="link") && ($file!=".") && ($file!="..") && (strpos($nogo,"[" . $file . "]")===false) && strpos($file,$staticsync_alternatives_suffix)===false)
 			{
 			# Recurse
 			#echo "\n$file : " . filemtime($folder . "/" . $file) . " > " . $lastsync;
@@ -211,6 +211,29 @@ function ProcessFolder($folder)
 									}
 								}
 							}
+						}
+					
+					# Add any alternative files
+					$altpath=$fullpath . $staticsync_alternatives_suffix;
+					if ($staticsync_ingest && file_exists($altpath))
+						{
+						$adh=opendir($altpath);
+						while (($altfile = readdir($adh)) !== false)
+							{
+							$filetype=filetype($altpath . "/" . $altfile);
+							if (($filetype=="file") && (substr($file,0,1)!=".") && (strtolower($file)!="thumbs.db"))
+								{
+								# Create alternative file
+								global $lang;
+								
+								# Find extension
+								$ext=explode(".",$altfile);$ext=$ext[count($ext)-1];
+								
+								$aref=add_alternative_file($r,$altfile,strtoupper($ext) . " " . $lang["file"],$altfile,$ext,filesize($altpath . "/" . $altfile));
+								$path=get_resource_path($r, true, "", true, $ext, -1, 1, false, "", $aref);
+								rename ($altpath . "/" . $altfile,$path); # Move alternative file
+								}
+							}	
 						}
 					
 					# Add to collection

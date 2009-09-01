@@ -143,7 +143,7 @@ foreach($resources as $resource) // For each resources
         }
       create_previews($resource['ref'], false, $resource['file_extension']);
 
-      echo sprintf("Processed resource n°%d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
+      echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
       // We exit in order to avoid fork bombing.
       exit(0);
       }

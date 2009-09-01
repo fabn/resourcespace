@@ -974,7 +974,7 @@ $use_phpmailer=false;
 
 # Allow to disable thumbnail generation during batch resource upload from FTP or local folder.
 # In addition to this option, a multi-thread thumbnail generation script is available in the batch
-# folder. You can use it as a cron job, or manually.
+# folder (create_previews.php). You can use it as a cron job, or manually.
 $enable_thumbnail_creation_on_upload = true;
 
 # Zip files - the contents of the zip file can be imported to a text field on upload.
@@ -1052,7 +1052,16 @@ $staticsync_ingest=false;
 #		"level"=>2
 #		);
 #
-#
+# Suffix to use for alternative files folder
+# If staticsync finds a folder in the same directory as a file with the same name as a file but with this suffix appended, then files in the folder will be treated as alternative files for the give file.
+# For example a folder/file structure might look like:
+# /staticsync_folder/myfile.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative1.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative2.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative3.jpg
+# NOTE: Alternative file processing only works when $staticsync_ingest is set to 'true'.
+$staticsync_alternatives_suffix="_alternatives";
+
 # End of StaticSync settings
 # ------------------------------------------------------------------------------------------------------------------
 	

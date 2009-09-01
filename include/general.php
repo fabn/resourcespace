@@ -968,9 +968,13 @@ function string_similar($string1,$string2)
 function formatfilesize($bytes)
 	{
 	# Return a human-readable string representing $bytes in either KB or MB.
-	if ($bytes<pow(1024,2))
+	if ($bytes<1024)
 		{
-		return number_format(floor($bytes/1024)) . "&nbsp;KB";
+		return number_format($bytes) . "&nbsp;B";		
+		}
+	elseif ($bytes<pow(1024,2))
+		{
+		return number_format(ceil($bytes/1024)) . "&nbsp;KB";
 		}
 	elseif ($bytes<pow(1024,3))
 		{
