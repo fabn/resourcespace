@@ -381,15 +381,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 	
 	global $config_search_for_number;
-	if ($config_search_for_number)
-	{
-		# Searching for a number - return just the matching resource
-		if (is_numeric($search)) 
-			{
-			return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where ref='$search' and $sql_filter group by r.ref");
-			}
-	}
-	
+	if (($config_search_for_number && is_numeric($search)) || substr($search,0,9)=="!resource")
+        {
+		$theref = escape_check($search);
+		$theref = preg_replace("/[^0-9]/","",$theref);
+		return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where ref='$theref' and $sql_filter group by r.ref");
+        }
+
 	# Searching for pending archive
 	if ($search=="!archivepending")
 		{

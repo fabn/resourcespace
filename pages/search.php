@@ -81,6 +81,12 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 	$day=getvalescaped("day","");
 	if ($day!="") {$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . "day:" . $day;}
 	}
+
+$searchresourceid = "";
+if (is_numeric(getval("searchresourceid",""))){
+	$searchresourceid = getval("searchresourceid","");
+	$search = "!resource$searchresourceid";
+}
 	
 hook("searchstringprocessing");
 
@@ -199,7 +205,7 @@ if (strpos($search,"!")!==false) {$restypes="";}
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset);
 
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
-if (is_numeric($search) && is_array($result) && count($result)==1)
+if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
 	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
 	}

@@ -307,6 +307,13 @@ if (!$basic_simple_search)
 	</select>
 	<?php } ?>
 
+       <?php if (isset($resourceid_simple_search) and $resourceid_simple_search){ ?>
+                <div class="SearchItem"><?php echo $lang["resourceid"]?><br />
+                <input id="searchresourceid" name="searchresourceid" type="text" class="SearchWidth" value="" />
+                </div>
+        <?php } ?>
+
+
 	</div>
 
 	<script type="text/javascript">
