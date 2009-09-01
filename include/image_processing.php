@@ -109,7 +109,10 @@ function upload_file($ref)
 		}	
     
 	# Create previews
-	create_previews($ref,false,$extension);
+	if ($enable_thumbnail_creation_on_upload)
+		{
+		create_previews($ref,false,$extension);
+		}
 	
     return $status;
     }}
