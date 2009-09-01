@@ -2160,7 +2160,44 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 	}
 	
 	
+function is_process_lock($name)
+	{
+	# Checks to see if a process lock exists for the given process name.
+	global $storagedir,$process_locks_max_seconds;
 	
+	# Check that tmp/process_locks exists, create if not.
+	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
+	if(!is_dir($storagedir . "/tmp/process_locks")){mkdir($storagedir . "/tmp/process_locks",0777);}	
+	
+	# No lock file? return false
+	if (!file_exists($storagedir . "/tmp/process_locks/" . $name)) {return false;}
+	
+	$time=trim(file_get_contents($storagedir . "/tmp/process_locks/" . $name));
+	if ((time()-$time)>$process_locks_max_seconds) {return false;} # Lock has expired
+	
+	return true; # Lock is valid
+	}
+	
+function set_process_lock($name)
+	{
+	# Set a process lock
+	global $storagedir;
+	
+	file_put_contents($storagedir . "/tmp/process_locks/" . $name,time());
+	return true;
+	}
+	
+function clear_process_lock($name)
+	{
+	# Clear a process lock
+	global $storagedir;
+	
+	unlink($storagedir . "/tmp/process_locks/" . $name);
+	return true;
+	}
+	
+	
+
 	
 	
 	

@@ -4,6 +4,10 @@ include(dirname(__FILE__) . "/../include/db.php");
 include(dirname(__FILE__) . "/../include/general.php");
 include(dirname(__FILE__) . "/../include/image_processing.php");
 
+# Check for a process lock
+if (is_process_lock("create_previews")) {exit("Process lock is in place. Deferring.");}
+set_process_lock("create_previews");
+
 // We store the start date.
 $global_start_time = microtime(true);
 
@@ -155,3 +159,4 @@ while(count($children))
 
 echo sprintf("Completed in %01.2f seconds.\n", microtime(true) - $global_start_time);
 
+clear_process_lock("create_previews");

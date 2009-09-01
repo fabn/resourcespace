@@ -878,7 +878,8 @@ $top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and 
 # (Can also be controlled on a more granular level with the "D" restrictive permission.)
 $allow_resource_deletion = true;
 
-
+# Offline processes (e.g. staticsync and create_previews.php) - for process locking, how old does a lock have to be before it is ignored?
+$process_locks_max_seconds=60*60*4; # 4 hours default.
 
 
 

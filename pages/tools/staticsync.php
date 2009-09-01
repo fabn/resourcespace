@@ -6,6 +6,10 @@ include "../../include/image_processing.php";
 
 set_time_limit(60*60*40);
 
+# Check for a process lock
+if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
+set_process_lock("staticsync");
+
 echo "Preloading data...";
 $max=10000;
 $count=0;
@@ -281,5 +285,8 @@ if (!$staticsync_ingest)
 	}
 
 sql_query("update sysvars set value=now() where name='lastsync'");
+
+clear_process_lock("staticsync");
+
 
 ?>
