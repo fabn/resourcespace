@@ -526,12 +526,17 @@ for ($n=0;$n<count($fields);$n++)
 		$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
 		if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
 		
-		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php
+		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>>
+		<option value=""></option>
+		<?php
 		for ($m=0;$m<count($options);$m++)
 			{
-			?>
-			<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (trim($options[$m])==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
-			<?php
+			if (trim($options[$m])!="")
+				{
+				?>
+				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (trim($options[$m])==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
+				<?php
+				}
 			}
 		?></select><?php
 		break;
