@@ -599,7 +599,7 @@ $about_link=true;
 
 # When uploading resources (batch upload) and editing the template, should the date be reset to today's date?
 # If set to false, the previously entered date is used.
-$reset_date_upload_template=false;
+$reset_date_upload_template=true;
 $reset_date_field=12; # Which date field to reset? (if using multiple date fields)
 
 # When uploading resources (batch upload) and editing the template, should all values be reset to blank every time?
