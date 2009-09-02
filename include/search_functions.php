@@ -718,7 +718,11 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 		if ($search!="") {$search.=", ";}
 		$search.="day:" . getval("day","");	
 		}
-		
+	if (getval("allfields","")!="")
+		{
+		if ($search!="") {$search.=", ";}
+		$search.=join(", ",explode(" ",getvalescaped("allfields",""))); # prepend 'all fields' option
+		}
 	for ($n=0;$n<count($fields);$n++)
 		{
 		switch ($fields[$n]["type"])
@@ -748,12 +752,15 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 				$value=getvalescaped($name,"");
 				if ($value!="")
 					{
+					/*
 					$vs=split_keywords($value);
 					for ($m=0;$m<count($vs);$m++)
 						{
 						if ($search!="") {$search.=", ";}
 						$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
 						}
+					*/
+					$search.=$fields[$n]["name"] . ":" . $value;					
 					}
 				}
 			else

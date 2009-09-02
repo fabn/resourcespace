@@ -17,10 +17,9 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		
 	# advanced search - build a search query and redirect
 	$fields=get_advanced_search_fields();
-	$search=join(", ",explode(" ",getvalescaped("allfields",""))); # prepend 'all fields' option
-	
+
 	# Build a search query from the search form
-	$search.=search_form_to_search_query($fields);
+	$search=search_form_to_search_query($fields);
 			
 	if (getval("countonly","")!="")
 		{
