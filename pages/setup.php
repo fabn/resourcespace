@@ -31,7 +31,11 @@ if ($develmode)
 	$outputfile = '../include/devel.config.php';
 else
 	$outputfile = '../include/config.php';
-	
+
+// Define some vars to prevent warnings (quick fix)
+$configstoragelocations=false;	
+$storageurl="";
+
 if (file_exists("../include/config.default.php")) {include "../include/config.default.php";}
 if (file_exists("../languages/en.php")) {include "../languages/en.php";}
 $defaultlanguage = get_post('defaultlanguage');
@@ -543,6 +547,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		}
 		else {
 			$storagedir = dirname(__FILE__)."/../filestore";
+			$configstoragelocations = false;
 		}
 		$ftp_server = get_post('ftp_server');
 		$ftp_username = get_post('ftp_username');
