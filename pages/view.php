@@ -587,7 +587,7 @@ for ($n=0;$n<count($fields);$n++)
 				# Draw this field normally.
 
 				# Extra word wrapping to break really large words (e.g. URLs)
-				$value=wordwrap($value,30,"<br />",true);
+				$value=wordwrap($value,20,"<br />",true);
 				
 				# Highlight keywords
 				$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);

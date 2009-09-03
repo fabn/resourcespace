@@ -650,7 +650,7 @@ $login_remember_username=true;
 $password_min_length=7; # Minimum length of password
 $password_min_alpha=1; # Minimum number of alphabetical characters (a-z, A-Z) in any case
 $password_min_numeric=1; # Minimum number of numeric characters (0-9)
-$password_min_uppercase=0; # Minimum number of upper case alphabetical characters (a-z, A-Z)
+$password_min_uppercase=0; # Minimum number of upper case alphabetical characters (A-Z)
 $password_min_special=0; # Minimum number of 'special' i.e. non alphanumeric characters (!@$%& etc.)
 
 # How often do passwords expire, in days? (set to zero for no expiry).
