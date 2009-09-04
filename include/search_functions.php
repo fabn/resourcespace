@@ -773,6 +773,7 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 						$search.=$fields[$n]["name"] . ":" . strtolower($vs[$m]);
 						}
 					*/
+					if ($search!="") {$search.=", ";}
 					$search.=$fields[$n]["name"] . ":" . $value;					
 					}
 				}
