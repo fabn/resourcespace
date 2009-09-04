@@ -555,18 +555,29 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		case 3:
 		# -------- Show a check list or dropdown for dropdowns and check lists?
 		# By default show a checkbox list for both (for multiple selections this enabled OR functionality)
+		
+		# Translate all options
+		$options=trim_array(explode(",",$field["options"]));
+		$option_trans=array();
+		for ($m=0;$m<count($options);$m++)
+			{
+			$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
+			}
+
+		if ($auto_order_checkbox) {asort($option_trans);}
+			
+		
 		if ($field["display_as_dropdown"])
 			{
 			# Show as a dropdown box
-			$options=explode(",",$field["options"]);
 			$set=trim_array(explode(";",cleanse_string($value,true)));
 			?><select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>><option value=""></option><?php
-			for ($m=0;$m<count($options);$m++)
+			foreach ($option_trans as $option=>$trans)
 				{
-				if (trim(i18n_get_translated($options[$m]))!="")
+				if (trim($trans)!="")
 					{
 					?>
-				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
+					<option value="<?php echo htmlspecialchars(trim($option))?>" <?php if (in_array(cleanse_string($trans,true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
 					<?php
 					}
 				}
@@ -575,17 +586,6 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		else
 			{
 			# Show as a checkbox list (default)
-
-			# Translate all options
-			$options=trim_array(explode(",",$field["options"]));
-			$option_trans=array();
-			for ($m=0;$m<count($options);$m++)
-				{
-				$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
-				}
-
-			if ($auto_order_checkbox) {asort($option_trans);}
-			
 			
 			$set=trim_array(explode(";",cleanse_string($value,true)));
 			$wrap=0;

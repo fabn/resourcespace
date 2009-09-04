@@ -530,20 +530,28 @@ for ($n=0;$n<count($fields);$n++)
 		break;
 
 		case 3: # -------- Drop down list
-		$options=explode(",",$fields[$n]["options"]);
+		# Translate all options
+		$options=trim_array(explode(",",$fields[$n]["options"]));
+		$option_trans=array();
+		for ($m=0;$m<count($options);$m++)
+			{
+			$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
+			}
+		if ($auto_order_checkbox) {asort($option_trans);}	
 		
-		$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
-		if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
+		# This hook will need modifying as the options list no longer works this way. Options are now translated first so the sort order is correct. ~DH
+		#$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
+		#if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
 		
 		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>>
 		<option value=""></option>
 		<?php
-		for ($m=0;$m<count($options);$m++)
+		foreach ($option_trans as $option=>$trans)
 			{
-			if (trim($options[$m])!="")
+			if (trim($option)!="")
 				{
 				?>
-				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (trim($options[$m])==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
+				<option value="<?php echo htmlspecialchars(trim($option))?>" <?php if (trim($option)==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
 				<?php
 				}
 			}
