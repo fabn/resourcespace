@@ -639,6 +639,7 @@ else{
 				?>
 					<p class="<?php echo ($result=='OK'?'':'failure');?>"><?php echo $lang["setup-checkconfigwrite"];?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
 				<?php
+					if (!file_exists($storagedir)) {@mkdir ($storagedir,0777);}
 					$success=is_writable($storagedir);
 					if ($success===false) {$result="WARN: '$storagedir' not writable. <br/> (Override location in 'Advanced Settings'.)";} else {$result="OK";}
 				?>
