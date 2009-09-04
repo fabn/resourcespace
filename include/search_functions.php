@@ -563,17 +563,30 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			?><select class="<?php echo $class ?>" name="field_<?php echo $field["ref"]?>" <?php if ($autoupdate) { ?>onChange="UpdateResultCount();"<?php } ?>><option value=""></option><?php
 			for ($m=0;$m<count($options);$m++)
 				{
-				?>
+				if (trim(i18n_get_translated($options[$m]))!="")
+					{
+					?>
 				<option value="<?php echo htmlspecialchars(trim($options[$m]))?>" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim(i18n_get_translated($options[$m])))?></option>
-				<?php
+					<?php
+					}
 				}
 			?></select><?php
 			}
 		else
 			{
 			# Show as a checkbox list (default)
+
+			# Translate all options
 			$options=trim_array(explode(",",$field["options"]));
-			if ($auto_order_checkbox) {sort($options);}
+			$option_trans=array();
+			for ($m=0;$m<count($options);$m++)
+				{
+				$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
+				}
+
+			if ($auto_order_checkbox) {asort($option_trans);}
+			
+			
 			$set=trim_array(explode(";",cleanse_string($value,true)));
 			$wrap=0;
 			$l=average_length($options);
@@ -582,14 +595,14 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			if ($l>15) {$cols=3;}
 			if ($l>25) {$cols=2;}
 			?><table cellpadding=2 cellspacing=0><tr><?php
-			for ($m=0;$m<count($options);$m++)
+			foreach ($option_trans as $option=>$trans)
 				{
 				$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
-				$name=$field["ref"] . "_" . $m;
-				if ($options[$m]!="")
+				$name=$field["ref"] . "_" . urlencode($option);
+				if ($option!="")
 					{
 					?>
-					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+					<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string(i18n_get_translated($option),true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
 					<?php
 					}
 				}
@@ -767,12 +780,11 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 				{
 				# Process checkbox list
 				$options=trim_array(explode(",",$fields[$n]["options"]));
-				if ($auto_order_checkbox) {sort($options);}
 				$p="";
 				$c=0;
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . $m;
+					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
 					$value=getvalescaped($name,"");
 					if ($value=="yes")
 						{

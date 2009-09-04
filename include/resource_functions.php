@@ -55,10 +55,10 @@ function save_resource_data($ref,$multi)
 				# construct the value from the ticked boxes
 				$val=","; # Note: it seems wrong to start with a comma, but this ensures it is treated as a comma separated list by split_keywords(), so if just one item is selected it still does individual word adding, so 'South Asia' is split to 'South Asia','South','Asia'.
 				$options=trim_array(explode(",",$fields[$n]["options"]));
-				if ($auto_order_checkbox) {sort($options);}
+
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . $m;
+					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
 					if (getval($name,"")=="yes")
 						{
 						if ($val!=",") {$val.=",";}

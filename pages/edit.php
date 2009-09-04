@@ -497,8 +497,16 @@ for ($n=0;$n<count($fields);$n++)
 		break;
 		
 		case 2: # -------- Check box list
+
+		# Translate all options
 		$options=trim_array(explode(",",$fields[$n]["options"]));
-		if ($auto_order_checkbox) {sort($options);}
+		$option_trans=array();
+		for ($m=0;$m<count($options);$m++)
+			{
+			$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
+			}
+		if ($auto_order_checkbox) {asort($option_trans);}		
+	
 		$set=trim_array(explode(",",$value));
 		$wrap=0;
 		$l=average_length($options);
@@ -509,12 +517,13 @@ for ($n=0;$n<count($fields);$n++)
 		?>
 		<table cellpadding=2 cellspacing=0><tr>
 		<?php
-		for ($m=0;$m<count($options);$m++)
+
+		foreach ($option_trans as $option=>$trans)
 			{
-			$name=$fields[$n]["ref"] . "_" . $m;
+			$name=$fields[$n]["ref"] . "_" . urlencode($option);
 			$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 			?>
-			<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($options[$m],$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars(i18n_get_translated($options[$m]))?>&nbsp;&nbsp;</td>
+			<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
 			<?php
 			}
 		?></tr></table><?php
