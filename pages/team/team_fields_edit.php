@@ -112,7 +112,7 @@ for ($n=0;$n<count($options);$n++)
 	<td align="right" valign="top"><?php echo $options[$n]["count"]?></td>
 	<td align="right" valign="top"><div class="ListTools">
 	<input type="submit" name="submit_field_<?php echo $n?>" value="<?php echo $lang["save"]?>" />
-	<input type="submit" name="delete_field_<?php echo $n?>" value="<?php echo $lang["delete"]?>" />
+	<input type="submit" name="delete_field_<?php echo $n?>" value="<?php echo $lang["delete"]?>" onClick="return confirm('<?php echo $lang["confirmdeletefieldoption"]?>');" />
 	</div></td>
 	</tr>
 	<?php
