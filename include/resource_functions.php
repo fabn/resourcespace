@@ -215,7 +215,7 @@ function save_resource_data_multi($collection)
 				
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . $m;
+					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
 					if (getval($name,"")=="yes")
 						{
 						if ($val!=",") {$val.=",";}
