@@ -1,4 +1,4 @@
-body {color:#737373;background: #F3F3F3 url(../gfx/whitegry/interface/back.gif) repeat-x fixed;}
+body,html {color:#737373;background: #F3F3F3 url(../gfx/whitegry/interface/back.gif) repeat-x fixed;}
 h2 {color: #000000;}
 h1 {color: #000000;}
 .CollectDivide {color:#FFFFFF;background: #000000 url(../gfx/whitegry/interface/CollectDivide.gif) repeat-x;}

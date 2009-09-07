@@ -1,4 +1,4 @@
-body {color:#CCC;background: #000 url(../gfx/black/interface/back.gif) repeat-x fixed;}
+body,html {color:#CCC;background: #000 url(../gfx/black/interface/back.gif) repeat-x fixed;}
 h2 {color: #FFFFFF;}
 h1 {color: #FFFFFF;}
 .CollectDivide {color:#CCC;background: #000000 url(../gfx/black/interface/CollectDivide.gif) repeat-x;}
