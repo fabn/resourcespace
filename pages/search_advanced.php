@@ -50,7 +50,6 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		parent.document.getElementById("dosearch").value="<?php echo $lang["view"]?> <?php echo number_format($count)?> <?php echo $lang["matchingresources"]?>";
 		parent.document.getElementById("dosearch").disabled=false;
 		<?php } ?>
-
 		</script>
 		</html>
 		<?php

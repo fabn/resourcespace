@@ -584,8 +584,18 @@ function get_field_options($ref)
 	{
 	# For the field with reference $ref, return a sorted array of options.
 	$options=sql_value("select options value from resource_type_field where ref='$ref'","");
+	
+	# Translate all options
 	$options=trim_array(explode(",",$options));
-	sort($options);
+	$option_trans=array();
+	for ($m=0;$m<count($options);$m++)
+		{
+		$options[$m]=i18n_get_translated($options[$m]);
+		}
+
+	global $auto_order_checkbox;
+	if ($auto_order_checkbox) {asort($option_trans);}
+	
 	return $options;
 	}
 	

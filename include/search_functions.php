@@ -577,7 +577,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				if (trim($trans)!="")
 					{
 					?>
-					<option value="<?php echo htmlspecialchars(trim($option))?>" <?php if (in_array(cleanse_string($trans,true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
+					<option value="<?php echo htmlspecialchars(trim($trans))?>" <?php if (in_array(cleanse_string($trans,true),$set)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
 					<?php
 					}
 				}
