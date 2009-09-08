@@ -87,6 +87,7 @@ $lang["comments"]="Comments";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="View User Contributed Resources Pending Review";
+$lang["viewuserpendingsubmission"]="View User Contributed Resources Pending Submission";
 $lang["searcharchivedresources"]="Search Archived Resources";
 $lang["viewresourcespendingarchive"]="View Resources Pending Archive";
 $lang["uploadresourcebatch"]="Upload Resource Batch";

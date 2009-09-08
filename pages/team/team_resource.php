@@ -40,6 +40,8 @@ include "../../include/header.php";
 		<li><a href="../upload_swf.php?replace=true"><?php echo $lang["replaceresourcebatch"]?></a></li>    
 
 		<li><a href="team_copy.php"><?php echo $lang["copyresource"]?></a></li>
+		
+		<li><a href="../search.php?search=&archive=-2"><?php echo $lang["viewuserpendingsubmission"]?></a></li>
 		<li><a href="../search.php?search=&archive=-1"><?php echo $lang["viewuserpending"]?></a></li>
 
 		<li><a href="../search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
