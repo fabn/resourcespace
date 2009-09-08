@@ -64,10 +64,15 @@ if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,check
 # Locate the resource
 
 $path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+$path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
 
-if (file_exists($path)&&resource_download_allowed($ref,"scr"))
+if (file_exists($path) && resource_download_allowed($ref,"scr"))
 	{
 	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+	}
+elseif (file_exists($path_orig) && resource_download_allowed($ref,""))
+	{
+	$url=get_resource_path($ref,false,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
 	}
 else
 	{
