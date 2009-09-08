@@ -34,6 +34,9 @@ $mysql_db="resourcespace";			# MySQL database name
 # (only needed if you plan to use the export tool)
 $mysql_bin_path="/usr/bin"; # Note: no trailing slash
 
+# Force MySQL Strict Mode? (regardless of existing setting) - This is useful for developers so that errors that might only occur when Strict Mode is enabled are caught. Strict Mode is enabled by default with some versions of MySQL. The typical error caused is when the empty string ('') is inserted into a numeric column when NULL should be inserted instead. With Strict Mode turned off, MySQL inserts NULL without complaining. With Strict Mode turned on, a warning/error is generated.
+$mysql_force_strict_mode=false;
+
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
 $baseurl="http://my.site/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash

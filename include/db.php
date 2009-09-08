@@ -74,6 +74,12 @@ if(isset($mysql_charset))
 		}
 	}
 
+# Set MySQL Strict Mode (if configured)
+if ($mysql_force_strict_mode)
+	{
+	sql_query("SET SESSION sql_mode='STRICT_ALL_TABLES'");	
+	}
+
 if (function_exists("set_magic_quotes_runtime")) {@set_magic_quotes_runtime(0);}
 
 # statistics
