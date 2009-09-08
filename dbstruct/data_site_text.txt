@@ -5,7 +5,7 @@ home,mycollections,"Organise, collaborate & share your resources. Use these tool
 home,help,"Help and advice to get the most out of ResourceSpace.",5,en,,,
 home,welcometitle,"Welcome to ResourceSpace",6,en,,,
 home,welcometext,"Your introductory text here.",7,en,,,
-themes,introtext,"Themes are groups of resources.",8,en,,,
+themes,introtext,"Themes are groups of resources that have been selected by the administrators to provide an example of the resources available in the system.",8,en,,,
 edit,multiple,"Please select which fields you wish to overwrite. Fields you do not select will be left untouched.",9,en,,,
 team_archive,introtext,"To edit individual archive resources, simply search for the resource, and click edit in the ‘Resource Tool’ panel on the resource screen. All resources that are ready to be archived are listed Resources Pending list. From this list it is possible to add further information and transfer the resource record into the archive. ",10,en,,,
 research_request,introtext,"Our professional researchers are here to assist you in finding the very best resources for your projects. Complete this form as thoroughly as possible so we’re able to meet your criteria accurately. <br><br>A member of the research team will be assigned to your request. We’ll keep in contact via email throughout the process, and once we’ve completed the research you’ll receive an email with a link to all the resources that we recommend.  ",11,en,,,
