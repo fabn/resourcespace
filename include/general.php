@@ -126,7 +126,7 @@ function get_resource_data($ref,$cache=true)
 	{
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
-	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads;
+	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads,$always_record_resource_creator;
 	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
 	$resource=sql_query("select ref, title, resource_type, has_image, is_transcoding, hit_count, new_hit_count, creation_date, rating, user_rating, user_rating_count, user_rating_total, country, file_extension, preview_extension, image_red, image_green, image_blue, thumb_width, thumb_height, archive, access, colour_key, created_by, file_path, file_modified, file_checksum, request_count from resource where ref='$ref'");
 	if (count($resource)==0) 
@@ -138,7 +138,13 @@ function get_resource_data($ref,$cache=true)
 		else
 			{
 			# For batch upload templates (negative reference numbers), generate a new resource.
-			sql_query("insert into resource (ref,resource_type) values ('$ref','$default_resource_type')");
+			if (isset($always_record_resource_creator) && $always_record_resource_creator)
+				{
+					global $userref;
+                			$user=$userref;
+                		} else {$user=-1;}
+
+			sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
 			$resource=sql_query("select * from resource where ref='$ref'");
 			}
 		}
@@ -2209,21 +2215,3 @@ function clear_process_lock($name)
 	unlink($storagedir . "/tmp/process_locks/" . $name);
 	return true;
 	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

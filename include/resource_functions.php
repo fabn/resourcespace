@@ -5,6 +5,7 @@
 function create_resource($resource_type,$archive=999,$user=-1)
 	{
 	# Create a new resource.
+	global $always_record_resource_creator;
 
 	if ($archive==999)
 		{
@@ -12,7 +13,7 @@ function create_resource($resource_type,$archive=999,$user=-1)
 		$archive=0;
 		if (!checkperm("e0")) {$archive=2;} # Can't create a resource in normal state? create in archive.
 		}
-	if ($archive==-2 || $archive==-1)
+	if ($archive==-2 || $archive==-1 || (isset($always_record_resource_creator) and $always_record_resource_creator))
 		{
 		# Work out user ref - note: only for content in status -2 and -1 (user submitted / pending review).
 		global $userref;
@@ -634,7 +635,8 @@ function copy_resource($from,$resource_type=-1)
 	# 1) The user does not have direct 'resource create' permissions and is therefore contributing using My Contributions directly into the live state
 	# 2) The user is contributiting via My Contributions to the standard User Contributed pre-live states.
 	global $userref;
-	if ((!checkperm("c")) || $archive<0)
+	global $always_record_resource_creator;
+	if ((!checkperm("c")) || $archive<0 || (isset($always_record_resource_creator) && $always_record_resource_creator))
 		{
 		# Update the user record
 		sql_query("update resource set created_by='$userref' where ref='$to'");
