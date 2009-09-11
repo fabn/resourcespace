@@ -799,4 +799,5 @@ $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field op
 
 $lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";
 
+$lang["requestall"]="Request all";
 ?>

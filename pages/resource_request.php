@@ -1,6 +1,6 @@
 <?php
 include "../include/db.php";
-include "../include/authenticate.php";
+$k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";}
 include "../include/general.php";
 
 $ref=getval("ref","");
@@ -32,21 +32,21 @@ include "../include/header.php";
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
-	<input name="fullname" class="stdwidth" value="<?php echo $userfullname?>">
+	<input name="fullname" class="stdwidth" value="">
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
 	<label><?php echo $lang["emailaddress"]?></label>
 	<input type="hidden" name="email_label" value="<?php echo $lang["emailaddress"]?>">
-	<input name="email" class="stdwidth" value="<?php echo $useremail?>">
+	<input name="email" class="stdwidth" value="">
 	<div class="clearerleft"> </div>
 	</div>
 
 	<div class="Question">
 	<label><?php echo $lang["contacttelephone"]?></label>
-	<input name="contact" class="stdwidth">
 	<input type="hidden" name="contact_label" value="<?php echo $lang["contacttelephone"]?>">
+	<input name="contact" class="stdwidth">
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>

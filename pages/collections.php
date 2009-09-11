@@ -278,7 +278,19 @@ if ($k!="")
 	<a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
-    <br/><br/><a href="collections.php?thumbs=hide&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a>
+    <?php if (count($result)>0 && checkperm("q"))
+    	{ 
+		# Ability to request a whole collection (only if user has restricted access to any of these resources)
+		$min_access=collection_min_access($usercollection);
+		if ($min_access!=0)
+			{
+		    ?>
+		    <br/><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>&k=<?php echo $k?>">&gt; <?php echo 	$lang["requestall"]?></a>
+		    <?php
+		    }
+	    }
+	?>
+    <br/><a href="collections.php?thumbs=hide&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a>
 </div>
 <?php 
 } else { 
@@ -347,14 +359,14 @@ if ($k!="")
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
     <?php } ?>
     
-    <?php if (count($result)>0 && $k=="" && checkperm("q"))
+    <?php if (count($result)>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
 		$min_access=collection_min_access($usercollection);
 		if ($min_access!=0)
 			{
 		    ?>
-		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>">&gt; <?php echo 	$lang["request"]?></a></li>
+		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>&k=<?php echo $k?>">&gt; <?php echo 	$lang["requestall"]?></a></li>
 		    <?php
 		    }
 	    }

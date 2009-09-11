@@ -1,6 +1,6 @@
 <?php
 include "../include/db.php";
-include "../include/authenticate.php";
+$k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";}
 include "../include/general.php";
 include "../include/collections_functions.php";
 include "../include/request_functions.php";
@@ -10,7 +10,7 @@ $cinfo=get_collection($ref);
 
 if (getval("save","")!="")
 	{
-	if ($userrequestmode==0)
+	if ($k!="" || $userrequestmode==0)
 		{
 		# Request mode 0 : Simply e-mail the request.
 		email_collection_request($ref,getvalescaped("request",""));
@@ -45,21 +45,21 @@ include "../include/header.php";
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
-	<input name="fullname" class="stdwidth" value="<?php echo $userfullname?>">
+	<input name="fullname" class="stdwidth" value="">
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
 	<label><?php echo $lang["emailaddress"]?></label>
 	<input type="hidden" name="email_label" value="<?php echo $lang["emailaddress"]?>">
-	<input name="email" class="stdwidth" value="<?php echo $useremail?>">
+	<input name="email" class="stdwidth" value="">
 	<div class="clearerleft"> </div>
 	</div>
 
 	<div class="Question">
 	<label><?php echo $lang["contacttelephone"]?></label>
 	<input name="contact" class="stdwidth">
-	<input type="hidden" name="contact_label" value="<?php echo $lang["contacttelephone"]?>">
+	<input type="hidden" name="contact_label" value="">
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
