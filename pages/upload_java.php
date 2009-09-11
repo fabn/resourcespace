@@ -188,7 +188,7 @@ foreach ($extensions as $allowed_extension){
 <h2>&nbsp;</h2>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?php echo text("introtext")?></p>
-<?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ".$allowed_extensions?></p><?php } ?>
+<?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions))?></p><?php } ?>
 
 <!---------------------------------------------------------------------------------------------------------
 -------------------     A SIMPLE AND STANDARD APPLET TAG, to call the JUpload applet  --------------------- 

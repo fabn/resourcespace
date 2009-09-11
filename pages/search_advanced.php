@@ -209,7 +209,7 @@ for ($n=0;$n<count($fields);$n++)
 	render_search_field($fields[$n],$value,true);
 	}
 ?>
-<iframe name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
+<iframe src="blank.html" name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
 <input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["viewmatchingresources"]?>" />

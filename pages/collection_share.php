@@ -36,6 +36,18 @@ if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower
 	exit();
 	}
 	
+if (count(get_collection_resources($ref))==0) # Sharing an empty collection?
+	{
+	?>
+	<script type="text/javascript">
+	alert("<?php echo $lang["cannotshareemptycollection"]?>");
+	history.go(-1);
+	</script>
+	<?php
+	exit();
+	}
+
+
 include "../include/header.php";
 ?>
 

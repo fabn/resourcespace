@@ -173,7 +173,7 @@ if ($infobox)
 	$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
 
 # Include function for reordering
-if ($allow_reorder)
+if ($allow_reorder && $display!="list")
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&offset=" . $offset;
 	?>
@@ -427,7 +427,7 @@ if (is_array($result))
 	</div>
 <div class="PanelShadow"></div>
 </div>
-<?php if ($allow_reorder) { 
+<?php if ($allow_reorder && $display!="list") { 
 # Javascript drag/drop enabling.
 ?>
 <script type="text/javascript">
@@ -455,7 +455,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php } /* end Renderimagesmallthumb */?>
 		<div class="ResourcePanelCountry">
 		<span class="IconPreview">
-		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
 		<?php if (!checkperm("b") && $k=="") { ?>
 		<span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
@@ -485,7 +485,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
 		($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
-		,$search,"","",1) ?></a></div></td>
+		,$search,"","",1) ?></a>&nbsp;</div></td>
 		<td><?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
 		<td><?php echo $result[$n]["ref"]?></td>
 		<td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td>

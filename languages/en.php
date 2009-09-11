@@ -797,4 +797,6 @@ $lang["alternativebatchupload"]="Batch upload alternative files (Java)";
 
 $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field option?";
 
+$lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";
+
 ?>

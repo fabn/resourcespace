@@ -28,7 +28,7 @@ if (getval("save","")!="")
 		# Log this			
 		daily_stat("E-mailed resource",$ref);
 
-		redirect("pages/done.php?text=resource_email");
+		redirect("pages/done.php?text=resource_email&resource=$ref");
 		}
 	}
 

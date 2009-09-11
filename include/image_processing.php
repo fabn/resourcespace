@@ -63,7 +63,7 @@ function upload_file($ref)
     	}
     	
     # Store extension in the database and update file modified time.
-    sql_query("update resource set file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$ref'");
+    sql_query("update resource set file_extension='$extension',preview_extension='$extension',file_modified=now(),has_image=0 where ref='$ref'");
 
 	# delete existing resource_dimensions
     sql_query("delete from resource_dimensions where resource='$ref'");
@@ -472,7 +472,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		{
 		# If using ImageMagick, call preview_preprocessing.php which makes use of ImageMagick and other tools
 		# to attempt to extract a preview.
-		if (isset($imagemagick_path))
+		global $no_preview_extensions;
+		if (isset($imagemagick_path) && !in_array(strtolower($extension),$no_preview_extensions))
 			{
       		include(dirname(__FILE__)."/preview_preprocessing.php");
 			}

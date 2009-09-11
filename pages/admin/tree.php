@@ -247,7 +247,7 @@ function PreviousInFolder(i)
 
 <div id="tree"></div>
 
-<iframe width="100%" height="100" frameborder=0 border=0 name="treeloader" id="treeloader" xstyle="visibility:hidden;"></iframe>
+<iframe src="../blank.html" width="100%" height="100" frameborder=0 border=0 name="treeloader" id="treeloader" xstyle="visibility:hidden;"></iframe>
 
 <script type="text/javascript">
 DrawTree();

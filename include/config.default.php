@@ -1028,6 +1028,9 @@ $ffmpeg_supported_extensions = array(
 		'xvid',
 	);
 
+# A list of file extensions for files which will not have previews automatically generated. This is to work around a problem with colour profiles whereby an image file is produced but is not a valid file format.
+$no_preview_extensions=array("icm","icc");
+
 # ------------------------------------------------------------------------------------------------------------------
 # StaticSync (staticsync.php)
 # The ability to synchronise ResourceSpace with a separate and stand-alone filestore.
