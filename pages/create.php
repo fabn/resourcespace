@@ -46,7 +46,8 @@ for ($n=0;$n<count($types);$n++){
 	?>
 	<div class="clearerleft"></div>
 	<div class="extensions" id="<?php echo $types[$n]["ref"]?>" <?php if ($n!=0){?>style="display:none;"<?php } ?>>
-	<?php if ($allowed_extensions!=""){echo $lang['allowedextensions'].": ".$allowed_extensions;}?></div>
+	<p><?php if ($allowed_extensions!=""){echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions));}?></p>
+	</div>
 <?php } ?>
 
 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" /></div>
