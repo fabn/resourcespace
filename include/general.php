@@ -429,8 +429,8 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 		
 		if (count($dimensions))
 			{
-			$sw = $dimensions[0]['width'];
-			$sh = $dimensions[0]['height'];
+			$sw = $dimensions[0]['width']; if ($sw==0) {$sw="?";}
+			$sh = $dimensions[0]['height']; if ($sh==0) {$sh="?";}
 			$filesize=$dimensions[0]['file_size'];
 			# resolution and unit are not necessarily available, set to empty string if so.
 			$resolution = ($dimensions[0]['resolution'])?$dimensions[0]['resolution']:"";
@@ -475,12 +475,15 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				# Use GD to calculate the size
 				if (!((@list($sw,$sh) = @getimagesize($file))===false)&& !$rawfile)
 				 	{		
-					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."',' ". $sw ."', '". $sh ."', '" . $filesize . "')");
+					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."', '". $sw ."', '". $sh ."', '" . $filesize . "')");
 					}
 				else
 					{
 					# Size cannot be calculated.
 					$sw="?";$sh="?";
+					
+					# Insert a dummy row to prevent recalculation on every view.
+					sql_query("insert into resource_dimensions (resource, width, height, file_size) values('". $ref ."','0', '0', '" . $filesize . "')");
 					}
 				}
 			}
@@ -496,7 +499,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	# loop through all image sizes
 	$sizes=sql_query("select * from preview_size order by width desc");
 	for ($n=0;$n<count($sizes);$n++)
-	{
+		{
 		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,"jpg");
 		if (file_exists($path) || (!$onlyifexists))
 			{
