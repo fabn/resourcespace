@@ -3,7 +3,7 @@ include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 include "include/header.php";
 ?>
-<body style="background-image: none;background-color: white;color: black;">
+<body style="background-image: none;background-color: white;color: black;padding-top:10px;margin:0;">
 <style>
 .backline
 	{

@@ -231,7 +231,7 @@ if (array_key_exists("delete",$_POST))
 
 include "include/header.php";
 ?>
-<body style="background-position:0px -80px;">
+<body style="background-position:0px -85px;margin:0;padding:10px;">
 <div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
 
 <div class="propbox">
