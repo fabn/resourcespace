@@ -515,7 +515,8 @@ for ($n=0;$n<count($fields);$n++)
 		$set=trim_array(explode(",",$value));
 		$wrap=0;
 		$l=average_length($options);
-		$cols=5;
+		$cols=10;
+		if ($l>5)  {$cols=6;}
 		if ($l>10) {$cols=4;}
 		if ($l>15) {$cols=3;}
 		if ($l>25) {$cols=2;}
@@ -532,7 +533,7 @@ for ($n=0;$n<count($fields);$n++)
 				for ($x=0;$x<$cols;$x++)
 					{
 					# Work out which option to fetch.
-					$o=($x*$height)+$y+1;
+					$o=($x*$height)+$y;
 					if ($o<count($options))
 						{
 						$option=$options[$o];

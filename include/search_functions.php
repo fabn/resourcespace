@@ -593,7 +593,8 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			$set=trim_array(explode(";",cleanse_string($value,true)));
 			$wrap=0;
 			$l=average_length($option_trans_simple);
-			$cols=5;
+			$cols=10;
+			if ($l>5)  {$cols=6;}
 			if ($l>10) {$cols=4;}
 			if ($l>15) {$cols=3;}
 			if ($l>25) {$cols=2;}
@@ -610,7 +611,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					for ($x=0;$x<$cols;$x++)
 						{
 						# Work out which option to fetch.
-						$o=($x*$height)+$y+1;
+						$o=($x*$height)+$y;
 						if ($o<count($options))
 							{
 							$option=$options[$o];
