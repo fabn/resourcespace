@@ -575,6 +575,9 @@ $autocomplete_search_items=15;
 # Automatically order checkbox lists (alphabetically)
 $auto_order_checkbox=true;
 
+# Order checkbox lists vertically (as opposed to horizontally, as HTML tables normally work)
+$checkbox_ordered_vertically=true;
+
 # When batch uploading, show the 'add resources to collection' selection box
 $enable_add_collection_on_upload=true;
 # Batch Uploads, default is "Add to New Collection". Turn off to default to "Do not Add to Collection"
