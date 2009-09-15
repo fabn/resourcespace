@@ -1191,8 +1191,8 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	$message.="\r\n\r\n\r\n" . $email_footer;
 	
 	if ($disable_quoted_printable_enc==false){
-	$message=quoted_printable_encode($message);
-	$subject=quoted_printable_encode_subject($subject);
+	$message=rs_quoted_printable_encode($message);
+	$subject=rs_quoted_printable_encode_subject($subject);
 	}
 	
 	global $email_from;
@@ -1414,7 +1414,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 }
 }
 
-if (!function_exists("quoted_printable_encode")) {function quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
+function rs_quoted_printable_encode($string, $linelen = 0, $linebreak="=\r\n", $breaklen = 0, $encodecrlf = false) {
         // Quoted printable encoding is rather simple.
         // Each character in the string $string should be encoded if:
         //  Character code is <0x20 (space)
@@ -1443,10 +1443,11 @@ if (!function_exists("quoted_printable_encode")) {function quoted_printable_enco
         }
         return $result;
 }
-}
 
-function quoted_printable_encode_subject($string, $encoding='UTF-8') {
-// use this function with headers, not with the email body as it misses word wrapping
+
+function rs_quoted_printable_encode_subject($string, $encoding='UTF-8')
+	{
+	// use this function with headers, not with the email body as it misses word wrapping
        $len = strlen($string);
        $result = '';
        $enc = false;
@@ -1465,7 +1466,7 @@ function quoted_printable_encode_subject($string, $encoding='UTF-8') {
        //L: so spam agents won't mark your email with QP_EXCESS
        if (!$enc) return $string;
        return '=?'.$encoding.'?q?'.$result.'?=';
-}
+	}
 
 function highlightkeywords($text,$search,$partial_index=false,$field_name="",$keywords_index=1)
 	{
