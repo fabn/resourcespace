@@ -43,10 +43,29 @@ include "../../include/header.php";
 <div class="Question"><label><?php echo $lang["status"]?></label>
 <div class="tickset">
 <?php for ($n=0;$n<=2;$n++) { ?>
-<div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>/><?php echo $lang["resourcerequeststatus" . $n]?></div>
+<div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>
+<?php if ($n==1) { ?> onChange="Effect.Appear('Expires',{duration:1});"<?php } else { ?>onClick="Effect.DropOut('Expires',{duration:1});"<?php } ?>
+
+/><?php echo $lang["resourcerequeststatus" . $n]?></div>
 <?php } ?>
 </div>
 <div class="clearerleft"> </div></div>
+</div>
+
+<div class="Question" id="Expires" <?php if ($request["status"]!=1) { ?>style="display:none;"<?php } ?>>
+<label><?php echo $lang["expires"]?></label>
+<select name="expires" class="stdwidth">
+<option value=""><?php echo $lang["never"]?></option>
+<?php for ($n=1;$n<=150;$n++)
+	{
+	$date=time()+(60*60*24*$n);
+	$dateval=date("Y-m-d",$date);
+	?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo $dateval ?>" <?php if ($dateval==$request["expires"]) { ?>selected<?php } ?>><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>
+	<?php
+	}
+?>
+</select>
+<div class="clearerleft"> </div>
 </div>
 
 <div class="Question"><label><?php echo $lang["deletethisrequest"]?></label>

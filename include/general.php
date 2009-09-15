@@ -2181,7 +2181,7 @@ function clear_process_lock($name)
 	}
 	
 	
-function open_access_to_user($user,$resource)
+function open_access_to_user($user,$resource,$expires)
 	{
 	# Give the user full access to the given resource.
 	# Used when approving requests.
@@ -2190,7 +2190,7 @@ function open_access_to_user($user,$resource)
 	sql_query("delete from resource_custom_access where user='$user' and resource='$resource'");
 	
 	# Insert new row
-	sql_query("insert into resource_custom_access(resource,access,user) values ('$resource','0','$user')");
+	sql_query("insert into resource_custom_access(resource,access,user,user_expires) values ('$resource','0','$user','$expires')");
 	
 	return true;
 	}

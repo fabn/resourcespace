@@ -813,7 +813,7 @@ $lang["requestdeclinedmail"]="Sorry, your request for the resources in the colle
 $lang["resourceexpirymail"]="The following resources have expired:";
 $lang["resourceexpiry"]="Resource Expiry";
 
-
+$lang["requestapprovedexpires"]="Your access to these resources will expire on";
 
 
 ?>

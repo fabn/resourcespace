@@ -4,7 +4,7 @@
 
 function get_request($request)
 	{
-	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments from request r left outer join user u  on r.user=u.ref where r.ref='$request'");
+	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments,r.expires from request r left outer join user u  on r.user=u.ref where r.ref='$request'");
 	if (count($result)==0)
 		{
 		return false;
@@ -20,26 +20,34 @@ function save_request($request)
 	# Use the posted form to update the request
 
 	$status=getvalescaped("status","");
+	$expires=getvalescaped("expires","");
 	$currentrequest=get_request($request);
 	$oldstatus=$currentrequest["status"];
 	
-	if ($oldstatus!=$status && $status==1)
+	# Has either the status or the expiry date changed?
+	if (($oldstatus!=$status || $expires!=$currentrequest["expires"]) && $status==1)
 		{
 		# --------------- APPROVED -------------
 		# Send approval e-mail
 
 		global $applicationname,$baseurl,$lang;
-		$message=$lang["requestapprovedmail"] . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
+		$message=$lang["requestapprovedmail"] . "\n\n";
+		$message.="$baseurl/?c=" . $currentrequest["collection"] . "\n";
+		if ($expires!="")
+			{
+			# Add expiry time to message.
+			$message.=$lang["requestapprovedexpires"] . " " . nicedate($expires) . "\n\n";
+			}
 		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus1"],$message);
 		
 		# Mark resources as full access for this user
 		foreach (get_collection_resources($currentrequest["collection"]) as $resource)
 			{
-			open_access_to_user($currentrequest["user"],$resource);
+			open_access_to_user($currentrequest["user"],$resource,$expires);
 			}
 		}
 
-	if ($oldstatus!=$status && $status==2)
+	if ($oldstatus!=$status && $status==2)	
 		{
 		# --------------- DECLINED -------------
 		# Send declined e-mail
@@ -56,9 +64,18 @@ function save_request($request)
 
 		}
 
+	if ($oldstatus!=$status && $status==0)
+		{
+		# --------------- PENDING -------------
+		# Moved back to pending. Delete any permissions set by a previous 'approve'.
+		foreach (get_collection_resources($currentrequest["collection"]) as $resource)
+			{
+			remove_access_to_user($currentrequest["user"],$resource);
+			}
+		}
 
 	# Save status
-	sql_query("update request set status='$status' where ref='$request'");
+	sql_query("update request set status='$status',expires=" . ($expires==""?"null":"'$expires'") . " where ref='$request'");
 
 	if (getval("delete","")!="")
 		{
