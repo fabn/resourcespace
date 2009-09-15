@@ -816,5 +816,6 @@ $lang["resourceexpiry"]="Resource Expiry";
 $lang["requestapprovedexpires"]="Your access to these resources will expire on";
 
 $lang["pleasewaitsmall"]="(please wait)";
+$lang["removethisfilter"]="(remove this filter)";
 
 ?>
