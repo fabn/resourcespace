@@ -1193,7 +1193,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	if ($disable_quoted_printable_enc==false){
 	$message=quoted_printable_encode($message);
 	$subject=quoted_printable_encode_subject($subject);
-	}exit($message);
+	}
 	
 	global $email_from;
 	if ($from=="") {$from=$email_from;}

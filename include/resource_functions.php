@@ -47,6 +47,8 @@ function save_resource_data($ref,$multi)
 	$errors=array();
 	$resource_sql="";
 	$fields=get_resource_field_data($ref,$multi);
+	$expiry_field_edited=false;
+	
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (!checkperm("F" . $fields[$n]["ref"]))
@@ -100,6 +102,9 @@ function save_resource_data($ref,$multi)
 				
 				# Write this edit to the log.
 				resource_log($ref,'e',$fields[$n]["ref"]);
+				
+				# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
+				if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
 				
 				# If 'resource_column' is set, then we need to add this to a query to back-update
 				# the related columns on the resource table
@@ -182,8 +187,12 @@ function save_resource_data($ref,$multi)
 		notify_user_contributed_unsubmitted(array($ref));
 		}	
 
+	# Expiry field(s) edited? Reset the notification flag so that warnings are sent again when the date is reached.
+	$expirysql="";
+	if ($expiry_field_edited) {$expirysql=",expiry_notification_sent=0";}
+
 	# Also update archive status and access level
-	sql_query("update resource set archive='" . getvalescaped("archive",0) . "',access='" . getvalescaped("access",0) . "' where ref='$ref'");
+	sql_query("update resource set archive='" . getvalescaped("archive",0) . "',access='" . getvalescaped("access",0) . "' $expirysql where ref='$ref'");
 	
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
@@ -202,7 +211,8 @@ function save_resource_data_multi($collection)
 	$ref=$list[0];
 	$fields=get_resource_field_data($ref,true);
 	global $auto_order_checkbox;
-	
+	$expiry_field_edited=false;
+
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (getval("editthis_field_" . $fields[$n]["ref"],"")!="")
@@ -286,6 +296,9 @@ function save_resource_data_multi($collection)
 					# Write this edit to the log.
 					resource_log($ref,'m',$fields[$n]["ref"]);
 		
+					# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
+					if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
+				
 					# If 'resource_column' is set, then we need to add this to a query to back-update
 					# the related columns on the resource table
 					if (strlen($fields[$n]["resource_column"])>0)
@@ -360,6 +373,15 @@ function save_resource_data_multi($collection)
 			{
 			# Notify the admin users of any submitted resources.
 			notify_user_contributed_submitted($notifyrefs);
+			}
+		}
+	
+	# Expiry field(s) edited? Reset the notification flag so that warnings are sent again when the date is reached.
+	if ($expiry_field_edited)
+		{
+		if (count($list)>0)
+			{
+			sql_query("update resource set expiry_notification_sent=0 where ref in (" . join(",",$list) . ")");
 			}
 		}
 	

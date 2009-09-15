@@ -891,6 +891,80 @@ $allow_resource_deletion = true;
 # Offline processes (e.g. staticsync and create_previews.php) - for process locking, how old does a lock have to be before it is ignored?
 $process_locks_max_seconds=60*60*4; # 4 hours default.
 
+# Zip files - the contents of the zip file can be imported to a text field on upload.
+# Requires 'unzip' on the command path.
+# If the below is not set, but unzip is available, the archive contents will be written to $extracted_text_field
+#
+# $zip_contents_field=18;
+$zip_contents_field_crop=1; # The number of lines to remove from the top of the zip contents output (in order to remove the filename field and other unwanted header information).
+
+# List of extensions that can be processed by ffmpeg.
+# Mostly video files.
+# @see http://en.wikipedia.org/wiki/List_of_file_formats#Video
+$ffmpeg_supported_extensions = array(
+		'aaf',
+		'3gp',
+		'asf',
+		'avchd',
+		'avi',
+		'cam',
+		'dat',
+		'dsh',
+		'flv',
+		'm1v',
+		'm2v',
+		'mkv',
+		'wrap',
+		'mov',
+		'mpeg',
+		'mpg',
+		'mpe',
+		'mp4',
+		'mxf',
+		'nsv',
+		'ogm',
+		'rm',
+		'ram',
+		'svi',
+		'smi',
+		'wmv',
+		'divx',
+		'xvid',
+	);
+
+# A list of extensions which will be ported to mp3 format for preview.
+# Note that if an mp3 file is uploaded, the original mp3 file will be used for preview.
+$ffmpeg_audio_extensions = array(
+	'wav',
+	'ogg',
+	'aiff',
+	'au',
+	'cdda',
+	'm4a',
+	'wma',
+	'mp2',
+	'aac',
+	'ra',
+	'rm',
+	'gsm'
+	);
+	
+# The audio settings for mp3 previews
+$ffmpeg_audio_params = "-ab 64k -ac 1"; # Default to 64Kbps mono
+
+# A list of file extensions for files which will not have previews automatically generated. This is to work around a problem with colour profiles whereby an image file is produced but is not a valid file format.
+$no_preview_extensions=array("icm","icc");
+
+# If set, send a notification when resources expire to this e-mail address.
+# This requires batch/expiry_notification.php to be executed periodically via a cron job or similar.
+# $expiry_notification_mail="myaddress@mydomain.example";
+
+
+
+
+
+
+
 
 
 
@@ -987,69 +1061,7 @@ $use_phpmailer=false;
 # folder (create_previews.php). You can use it as a cron job, or manually.
 $enable_thumbnail_creation_on_upload = true;
 
-# Zip files - the contents of the zip file can be imported to a text field on upload.
-# Requires 'unzip' on the command path.
-# If the below is not set, but unzip is available, the archive contents will be written to $extracted_text_field
-#
-# $zip_contents_field=18;
-$zip_contents_field_crop=1; # The number of lines to remove from the top of the zip contents output (in order to remove the filename field and other unwanted header information).
 
-# List of extensions that can be processed by ffmpeg.
-# Mostly video files.
-# @see http://en.wikipedia.org/wiki/List_of_file_formats#Video
-$ffmpeg_supported_extensions = array(
-		'aaf',
-		'3gp',
-		'asf',
-		'avchd',
-		'avi',
-		'cam',
-		'dat',
-		'dsh',
-		'flv',
-		'm1v',
-		'm2v',
-		'mkv',
-		'wrap',
-		'mov',
-		'mpeg',
-		'mpg',
-		'mpe',
-		'mp4',
-		'mxf',
-		'nsv',
-		'ogm',
-		'rm',
-		'ram',
-		'svi',
-		'smi',
-		'wmv',
-		'divx',
-		'xvid',
-	);
-
-# A list of extensions which will be ported to mp3 format for preview.
-# Note that if an mp3 file is uploaded, the original mp3 file will be used for preview.
-$ffmpeg_audio_extensions = array(
-	'wav',
-	'ogg',
-	'aiff',
-	'au',
-	'cdda',
-	'm4a',
-	'wma',
-	'mp2',
-	'aac',
-	'ra',
-	'rm',
-	'gsm'
-	);
-	
-# The audio settings for mp3 previews
-$ffmpeg_audio_params = "-ab 64k -ac 1"; # Default to 64Kbps mono
-
-# A list of file extensions for files which will not have previews automatically generated. This is to work around a problem with colour profiles whereby an image file is produced but is not a valid file format.
-$no_preview_extensions=array("icm","icc");
 
 # ------------------------------------------------------------------------------------------------------------------
 # StaticSync (staticsync.php)
