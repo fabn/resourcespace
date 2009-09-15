@@ -8,6 +8,7 @@ include "../../include/authenticate.php";
 include "../../include/general.php";
 
 $filter=getvalescaped("filter","");
+$nofilter=getvalescaped("nofilter","");
 
 # Build up a SQL query based on the current filtering options
 $s=explode(";",$filter);
@@ -37,9 +38,9 @@ for ($n=0;$n<count($s);$n++)
 for ($n=0;$n<count($s);$n++)
 	{
 	$e=explode(":",$s[$n]);
-	if (count($e)==2)
+	if (count($e)==2 && $n!=$nofilter)
 		{
-		$values=sql_array("select k.keyword value from resource r join resource_keyword rk on rk.resource=r.ref  and rk.resource_type_field='" . $field[$n]["ref"] . "' join keyword k on rk.keyword=k.ref " . $sql);
+		$values=sql_array("select distinct k.keyword value from resource r join resource_keyword rk on rk.resource=r.ref and r.archive=0 and r.ref>0 and rk.resource_type_field='" . $field[$n]["ref"] . "' join keyword k on rk.keyword=k.ref " . $sql);
 		#print_r($values);
 		
 		# Fetch the full list of available options
@@ -50,6 +51,7 @@ for ($n=0;$n<count($s);$n++)
 		# Remove existing options for this field
 		#echo "<h2>" . $field[$n]["title"] . "</h2><ul>";
 		$select="<option value=''>&nbsp;</option>";
+
 		for ($m=0;$m<count($options);$m++)
 			{
 			if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$values))
