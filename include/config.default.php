@@ -707,6 +707,8 @@ $user_rating=false;
 # as public as this is how themes are published.
 $enable_public_collections=true;
 
+# Custom User Registration Fields
+# -------------------------------
 # Additional custom fields that are collected and e-mailed when new users apply for an account
 # Uncomment the next line and set the field names, comma separated
 #$custom_registration_fields="Phone Number,Department";
@@ -725,6 +727,21 @@ $enable_public_collections=true;
 # in System Setup.
 # Only useful when $user_account_auto_creation=true;
 $registration_group_select=false;
+
+# Custom Resource/Collection Request Fields
+# -----------------------------------------
+# Additional custom fields that are collected and e-mailed when new resources or collections are requested.
+# Uncomment the next line and set the field names, comma separated
+#$custom_request_fields="Phone Number,Department";
+# Which of the custom fields are required?
+# $custom_request_required="Phone Number";
+# You can also set that particular fields are displayed in different ways as follows:
+# $custom_request_types["Department"]=1;
+# Types are as follows:
+# 	1: Normal text box (default)
+# 	2: Large text box
+#   3: Drop down box (set options using $custom_request_options["Field Name"]=array("Option 1","Option 2","Option 3");
+#   4: HTML block, e.g. help text paragraph (set HTML usign $custom_request_html="<b>Some HTML</b>";
 
 
 # Send an e-mail to the address set at $email_notify above when user contributed

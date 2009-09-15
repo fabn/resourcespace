@@ -77,7 +77,9 @@ function email_collection_request($ref,$details)
 	# Request mode 0
 	# E-mails a collection request (posted) to the team
 	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
-	$message=$lang["username"] . ": " . $username . "\n";
+	
+	$message="";
+	if (isset($username) && trim($username)!="") {$message.=$lang["username"] . ": " . $username . "\n\n";}
 	
 	# Create a copy of the collection which is the one sent to the team. This is so that the admin
 	# user can e-mail back an external URL to the collection if necessary, to 'unlock' full (open) access.
@@ -97,17 +99,40 @@ function email_collection_request($ref,$details)
 			$setting=trim($_POST[str_replace("_label","",$key)]);
 			if ($setting!="")
 				{
-				$message.=$value . ": " . $_POST[str_replace("_label","",$key)] . "\n";
+				$message.=$value . ": " . $_POST[str_replace("_label","",$key)] . "\n\n";
 				}
 			}
 		}
-		
 	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";}
+	
+	# Add custom fields
+	$c="";
+	global $custom_request_fields,$custom_request_required;
+	if (isset($custom_request_fields))
+		{
+		$custom=explode(",",$custom_request_fields);
+	
+		# Required fields?
+		if (isset($custom_request_required)) {$required=explode(",",$custom_request_required);}
+	
+		for ($n=0;$n<count($custom);$n++)
+			{
+			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
+				{
+				return false; # Required field was not set.
+				}
+			
+			$message.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
+			}
+		}
+	
 	$message.=$lang["viewcollection"] . ":\n$baseurl/?c=$ref";
 	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
+	
+	return true;
 	}
 
 function managed_collection_request($ref,$details,$ref_is_resource=false)
@@ -138,11 +163,32 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 			$setting=trim($_POST[str_replace("_label","",$key)]);
 			if ($setting!="")
 				{
-				$message.=$value . ": " . $setting . "\n";
+				$message.=$value . ": " . $setting . "\n\n";
 				}
 			}
 		}
 	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";}
+	
+	# Add custom fields
+	$c="";
+	global $custom_request_fields,$custom_request_required;
+	if (isset($custom_request_fields))
+		{
+		$custom=explode(",",$custom_request_fields);
+	
+		# Required fields?
+		if (isset($custom_request_required)) {$required=explode(",",$custom_request_required);}
+	
+		for ($n=0;$n<count($custom);$n++)
+			{
+			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
+				{
+				return false; # Required field was not set.
+				}
+			
+			$message.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
+			}
+		}
 	
 	# Create the request
 	sql_query("insert into request(user,collection,created,request_mode,status,comments) values ('$userref','$ref',now(),1,0,'" . escape_check($message) . "')");
@@ -155,7 +201,70 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
+	
+	return true;
 	}
 
+
+function email_resource_request($ref,$details)
+	{
+	# E-mails a basic resource request for a single resource (posted) to the team
+	# (not a managed request)
+	
+	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
+	
+	$templatevars['username']=$username . " (" . $useremail . ")";
+	$templatevars['url']=$baseurl."/?r=".$ref;
+	
+	$htmlbreak="";
+	global $use_phpmailer;
+	if ($use_phpmailer){$htmlbreak="<br><br>";}
+	
+	$list="";
+	reset ($_POST);
+	foreach ($_POST as $key=>$value)
+		{
+		if (strpos($key,"_label")!==false)
+			{
+			# Add custom field	
+			$data="";
+			$data=$_POST[str_replace("_label","",$key)];
+			$list.=$htmlbreak. $value . ": " . $data."\n";
+			}
+		}
+	$list.=$htmlbreak;		
+	$templatevars['list']=$list;
+
+	$templatevars['details']=stripslashes($details);
+	if ($templatevars['details']!=""){$adddetails=$lang["requestreason"] . ": " . newlines($templatevars['details'])."\n\n";} else { $adddetails="";}
+	
+	# Add custom fields
+	$c="";
+	global $custom_request_fields,$custom_request_required;
+	if (isset($custom_request_fields))
+		{
+		$custom=explode(",",$custom_request_fields);
+	
+		# Required fields?
+		if (isset($custom_request_required)) {$required=explode(",",$custom_request_required);}
+	
+		for ($n=0;$n<count($custom);$n++)
+			{
+			if (isset($required) && in_array($custom[$n],$required) && getval("custom" . $n,"")=="")
+				{
+				return false; # Required field was not set.
+				}
+			
+			$c.=i18n_get_translated($custom[$n]) . ": " . getval("custom" . $n,"") . "\n\n";
+			}
+		}
+	
+	$message=$lang["username"] . ": " . $username . " (" . $useremail . ")\n".$templatevars['list']."\n".$adddetails. $c . $lang["clicktoviewresource"] . "\n\n". $templatevars['url'];
+
+	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail,$useremail,"emailresourcerequest",$templatevars);
+	
+	# Increment the request counter
+	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
+	}
 
 ?>

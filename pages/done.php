@@ -17,7 +17,7 @@ include "../include/header.php";
     <p><?php echo text(getvalescaped("text",""))?></p>
 
    
-    <?php if (getval("user","")!="") { # User logged in? ?>
+    <?php if (getval("user","")!="" || getval("k","")!="") { # User logged in? ?>
  
  	<?php
  	# Ability to link back to a resource page
@@ -25,14 +25,17 @@ include "../include/header.php";
 	if ($resource!="")
 		{
 		?>
-	    <p><a href="view.php?ref=<?php echo $resource?>">&gt;&nbsp;<?php echo $lang["backtoresourceview"]?></a></p>
+	    <p><a href="view.php?ref=<?php echo $resource?>&k=<?php echo getval("k","") ?>">&gt;&nbsp;<?php echo $lang["backtoresourceview"]?></a></p>
 		<?php
 		}
 	?>
  
+	<?php if (getval("k","")=="") { ?>
+    <p><a href="search.php">&gt;&nbsp;<?php echo $lang["backtosearch"]?></a></p>
     <p><a href="<?php echo ($use_theme_as_home?'themes.php':$default_home_page)?>">&gt;&nbsp;<?php echo $lang["backtohome"]?></a></p>
 
-    <p><a href="search.php">&gt;&nbsp;<?php echo $lang["backtosearch"]?></a></p>
+    <?php } ?>
+    
     <?php hook("extra");?>
     <?php } else {?>
     <p><a href="../login.php">&gt;&nbsp;<?php echo $lang["backtouser"]?></a></p>

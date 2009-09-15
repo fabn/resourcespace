@@ -25,7 +25,7 @@ if (getval("save","")!="")
 		}
 	else
 		{
-		$error=$try;
+		$error=$lang["requiredfields"];
 		}
 	}
 include "../include/header.php";

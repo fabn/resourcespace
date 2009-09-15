@@ -347,7 +347,7 @@ if ($nodownloads || $counter==0)
 		{
 		?>
 		<?php if(!hook("resourcerequest")){?>
-		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>"><?php echo $lang["request"]?></a></td>
+		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo $k ?>"><?php echo $lang["request"]?></a></td>
 		<?php } ?>
 		<?php
 		}

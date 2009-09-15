@@ -7,21 +7,29 @@ include "../include/collections_functions.php";
 
 $ref=getval("ref","");
 $k=getval("k","");
+$error=false;
 
 if (getval("save","")!="")
 	{
 	if ($k!="" || $userrequestmode==0)
 		{
 		# Request mode 0 : Simply e-mail the request.
-		email_resource_request($ref,getvalescaped("request",""));
+		$result=email_resource_request($ref,getvalescaped("request",""));
 		}
 	else
 		{
 		# Request mode 1 : "Managed" mode via Manage Requests / Orders
-		managed_collection_request($ref,getvalescaped("request",""),true);
+		$result=managed_collection_request($ref,getvalescaped("request",""),true);
 		}
 	
-	redirect("pages/done.php?text=resource_request");
+	if ($result===false)
+		{
+		$error=$lang["requiredfields"];
+		}
+	else
+		{
+		redirect("pages/done.php?text=resource_request&resource=" . $ref . "&k=" . $k);
+		}
 	}
 include "../include/header.php";
 ?>
@@ -44,32 +52,90 @@ include "../include/header.php";
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
-	<input name="fullname" class="stdwidth" value="">
+	<input name="fullname" class="stdwidth" value="<?php echo getval("fullname","") ?>">
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
 	<label><?php echo $lang["emailaddress"]?></label>
 	<input type="hidden" name="email_label" value="<?php echo $lang["emailaddress"]?>">
-	<input name="email" class="stdwidth" value="">
+	<input name="email" class="stdwidth" value="<?php echo getval("email","") ?>">
 	<div class="clearerleft"> </div>
 	</div>
 
 	<div class="Question">
 	<label><?php echo $lang["contacttelephone"]?></label>
 	<input type="hidden" name="contact_label" value="<?php echo $lang["contacttelephone"]?>">
-	<input name="contact" class="stdwidth">
+	<input name="contact" class="stdwidth" value="<?php echo getval("contact","") ?>">
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } ?>
 
 	<div class="Question">
 	<label for="request"><?php echo $lang["requestreason"]?></label>
-	<textarea class="stdwidth" name="request" id="request" rows=5 cols=50></textarea>
+	<textarea class="stdwidth" name="request" id="request" rows=5 cols=50><?php echo getval("request","") ?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
 
+<?php # Add custom fields 
+if (isset($custom_request_fields))
+	{
+	$custom=explode(",",$custom_request_fields);
+	$required=explode(",",$custom_request_required);
+	
+	for ($n=0;$n<count($custom);$n++)
+		{
+		$type=1;
+		
+		# Support different question types for the custom fields.
+		if (isset($custom_request_types[$custom[$n]])) {$type=$custom_request_types[$custom[$n]];}
+		
+		if ($type==4)
+			{
+			# HTML type - just output the HTML.
+			echo $custom_request_html[$custom[$n]];
+			}
+		else
+			{
+			?>
+			<div class="Question">
+			<label for="custom<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($custom[$n]))?>
+			<?php if (in_array($custom[$n],$required)) { ?><sup>*</sup><?php } ?>
+			</label>
+			
+			<?php if ($type==1) {  # Normal text box
+			?>
+			<input type=text name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" value="<?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?>">
+			<?php } ?>
+
+			<?php if ($type==2) { # Large text box 
+			?>
+			<textarea name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth" rows="5"><?php echo htmlspecialchars(getvalescaped("custom" . $n,""))?></textarea>
+			<?php } ?>
+
+			<?php if ($type==3) { # Drop down box
+			?>
+			<select name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth">
+			<?php foreach ($custom_request_options[$custom[$n]] as $option)
+				{
+				?>
+				<option><?php echo htmlspecialchars(i18n_get_translated($option));?></option>
+				<?php
+				}
+			?>
+			</select>
+			<?php } ?>
+			
+			<div class="clearerleft"> </div>
+			</div>
+			<?php
+			}
+		}
+	}
+?>
+
 	<div class="QuestionSubmit">
+	<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!</div><?php } ?>
 	<label for="buttons"> </label>			
 	<input name="cancel" type="button" value="&nbsp;&nbsp;<?php echo $lang["cancel"]?>&nbsp;&nbsp;" onclick="document.location='view.php?ref=<?php echo $ref?>';"/>&nbsp;
 	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestresource"]?>&nbsp;&nbsp;" />
