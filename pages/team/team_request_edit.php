@@ -26,7 +26,7 @@ include "../../include/header.php";
 <form method=post>
 <input type=hidden name=ref value="<?php echo $ref?>">
 
-<div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["fullname"]?> (<?php echo $request["email"]?>)</div>
+<div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["fullname"]?> (<?php echo $request["username"]?> / <?php echo $request["email"]?>)</div>
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["date"]?></label><div class="Fixed"><?php echo nicedate($request["created"],true,true)?></div>

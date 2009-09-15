@@ -808,6 +808,7 @@ $lang["resourcerequesttype2"]="Payment - Immediate";
 $lang["resourcerequesttype3"]="Payment - Invoice";
 
 $lang["requestapprovedmail"]="Your request has been approved. Click the link below to view and download the requested resources.";
+$lang["requestdeclinedmail"]="Sorry, your request for the resources in the collection below has been declined.";
 
 $lang["resourceexpirymail"]="The following resources have expired:";
 $lang["resourceexpiry"]="Resource Expiry";

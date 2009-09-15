@@ -30,12 +30,12 @@ function save_request($request)
 
 		global $applicationname,$baseurl,$lang;
 		$message=$lang["requestapprovedmail"] . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
-		send_mail($currentrequest["email"],$applicationname . ": " . $lang["resourcerequeststatus1"],$message);
+		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus1"],$message);
 		
 		# Mark resources as full access for this user
-		foreach (get_collection_resources($request["collection"]) as $resource)
+		foreach (get_collection_resources($currentrequest["collection"]) as $resource)
 			{
-			open_access_to_user($request["user"],$resource);
+			open_access_to_user($currentrequest["user"],$resource);
 			}
 		}
 
@@ -44,11 +44,14 @@ function save_request($request)
 		# --------------- DECLINED -------------
 		# Send declined e-mail
 		
+		global $applicationname,$baseurl,$lang;
+		$message=$lang["requestdeclinedmail"] . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
+		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus2"],$message);
 
 		# Remove access that my have been granted by an inadvertant 'approved' command.
-		foreach (get_collection_resources($request["collection"]) as $resource)
+		foreach (get_collection_resources($currentrequest["collection"]) as $resource)
 			{
-			remove_access_to_user($request["user"],$resource);
+			remove_access_to_user($currentrequest["user"],$resource);
 			}
 
 		}
