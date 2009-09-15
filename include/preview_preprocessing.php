@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path,$pdf_dynamic_rip;
+global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path,$pdf_dynamic_rip,$ffmpeg_audio_extensions,$ffmpeg_audio_params;
 
 if (!$previewonly)
 	{
@@ -282,8 +282,12 @@ if ($extension=="txt")
    ----------------------------------------
 */
 global $ffmpeg_path, $ffmpeg_supported_extensions;
-$ffmpeg_path.="/ffmpeg";
-if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
+
+if (isset($ffmpeg_path))
+	{
+	$ffmpeg_path.="/ffmpeg";
+	if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
+	}
 
 if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
         {
@@ -344,6 +348,29 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
                 }
             } 
         } 
+
+
+/* ----------------------------------------
+	Try FFMPEG for audio files
+   ----------------------------------------
+*/
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ffmpeg_audio_extensions))
+	{
+	$ffmpeg_path=escapeshellarg($ffmpeg_path);
+	
+	# A work-around for Windows systems. Prefixing the command prevents a problem
+	# with double quotes.
+	global $config_windows;
+	if ($config_windows)
+		{
+	    $ffmpeg_path = "cd & " . $ffmpeg_path;
+		}
+	
+	# Produce the MP3 preview.
+	$mp3file=get_resource_path($ref,true,"",false,"mp3"); 
+	$output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " -acodec mp3 " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file)); 
+	}
+
 
 
 /* ----------------------------------------

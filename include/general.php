@@ -1193,7 +1193,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	if ($disable_quoted_printable_enc==false){
 	$message=quoted_printable_encode($message);
 	$subject=quoted_printable_encode_subject($subject);
-	}
+	}exit($message);
 	
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
@@ -2218,3 +2218,30 @@ function clear_process_lock($name)
 	unlink($storagedir . "/tmp/process_locks/" . $name);
 	return true;
 	}
+	
+	
+function open_access_to_user($user,$resource)
+	{
+	# Give the user full access to the given resource.
+	# Used when approving requests.
+	
+	# Delete any existing custom access
+	sql_query("delete from resource_custom_access where user='$user' and resource='$resource'");
+	
+	# Insert new row
+	sql_query("insert into resource_custom_access(resource,access,user) values ('$resource','0','$user')");
+	
+	return true;
+	}
+	
+function remove_access_to_user($user,$resource)
+	{
+	# Remove any user-specific access granted by an 'approve'.
+	# Used when declining requests.
+	
+	# Delete any existing custom access
+	sql_query("delete from resource_custom_access where user='$user' and resource='$resource'");
+	
+	return true;
+	}
+	

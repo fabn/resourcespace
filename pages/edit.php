@@ -514,7 +514,7 @@ for ($n=0;$n<count($fields);$n++)
 			
 		$set=trim_array(explode(",",$value));
 		$wrap=0;
-		$l=average_length($options);
+		$l=average_length($option_trans_simple);
 		$cols=10;
 		if ($l>5)  {$cols=6;}
 		if ($l>10) {$cols=4;}

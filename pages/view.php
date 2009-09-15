@@ -138,6 +138,7 @@ include "../include/header.php";
 <?php if (!hook("renderinnerresourceview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
+
 $download_multisize=true;
 
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
@@ -182,7 +183,7 @@ else
 	<img src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false)?>" alt="" class="Picture" style="border:none;" />
 	<?php
 	}
-	
+
 ?>
 <?php } /* End of renderinnerresourcepreview hook */ ?>
 
@@ -194,16 +195,6 @@ else
 <h2><?php echo $lang["resourcetools"]?></h2>
 
 <?php 
-
-if ($mp3_player){
-	//check for mp3 file and allow optional player
-	$mp3path=get_resource_path($ref,false,"",false,"mp3");
-	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
-	
-	if (file_exists($mp3realpath)){
-		include "mp3_play.php";
-	}
-}
 
 # Look for a viewer to handle the right hand panel. If not, display the standard photo download / file download boxes.
 if (file_exists("../viewers/type" . $resource["resource_type"] . ".php"))
@@ -414,6 +405,17 @@ if ($access==0) # open access only (not restricted)
 		}
 	}
 # --- end of alternative files listing
+
+if ($mp3_player){
+	//check for mp3 file and allow optional player
+	$mp3path=get_resource_path($ref,false,"",false,"mp3");
+	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+	
+	if (file_exists($mp3realpath)){
+		include "mp3_play.php";
+	}
+}
+
 ?>
 
 
@@ -422,7 +424,12 @@ if ($access==0) # open access only (not restricted)
 <?php } ?>
 <br />
 <ul>
-<?php hook ("resourceactions") ?>
+<?php 
+
+
+
+# ----------------------------- Resource Actions -------------------------------------
+hook ("resourceactions") ?>
 <?php if ($k=="") { ?>
 <?php if (!hook("replaceresourceactions")) {?>
 	<?php if (!checkperm("b")) { ?><li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["addtocollection"]?></a></li><?php } ?>
@@ -445,6 +452,8 @@ if (!hook("replaceuserratingsbox")){
 # Include user rating box, if enabled and the user is not external.
 if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 } /* end hook replaceuserratingsbox */
+
+
 ?>
 
 

@@ -732,9 +732,6 @@ $registration_group_select=false;
 $notify_user_contributed_submitted=true;
 $notify_user_contributed_unsubmitted=false;
 
-# Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
-$frameless_collections=false;
-
 # When requesting feedback, allow the user to select resources (e.g. pick preferred photos from a photo shoot).
 $feedback_resource_select=false;
 
@@ -978,7 +975,7 @@ $use_checkboxes_for_selection=false;
 
 # allow player for mp3 files
 # player docs at http://flash-mp3-player.net/players/maxi/
-$mp3_player=false;
+$mp3_player=true;
 
 # Show the performance metrics in the footer (for debug)
 $config_show_performance_footer=false;
@@ -1030,6 +1027,26 @@ $ffmpeg_supported_extensions = array(
 		'divx',
 		'xvid',
 	);
+
+# A list of extensions which will be ported to mp3 format for preview.
+# Note that if an mp3 file is uploaded, the original mp3 file will be used for preview.
+$ffmpeg_audio_extensions = array(
+	'wav',
+	'ogg',
+	'aiff',
+	'au',
+	'cdda',
+	'm4a',
+	'wma',
+	'mp2',
+	'aac',
+	'ra',
+	'rm',
+	'gsm'
+	);
+	
+# The audio settings for mp3 previews
+$ffmpeg_audio_params = "-ab 64k -ac 1"; # Default to 64Kbps mono
 
 # A list of file extensions for files which will not have previews automatically generated. This is to work around a problem with colour profiles whereby an image file is produced but is not a valid file format.
 $no_preview_extensions=array("icm","icc");
@@ -1086,5 +1103,9 @@ $staticsync_alternatives_suffix="_alternatives";
 # that you want available for other, typically plugin, purposes, in order to avoid an excessive query count.
 # ex. $data_joins=array(13); to add the expiry date to the general search query result.  
 $data_joins=array();
+
+# Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
+$frameless_collections=false;
+
 
 ?>

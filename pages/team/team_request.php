@@ -54,9 +54,9 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo $requests[$n]["username"] ?></td>
 	<td><?php echo $requests[$n]["fullname"] ?></td>
 	<td><?php echo nicedate($requests[$n]["created"],true)?></td>
-	<td> </td>
-	<td><?php echo $requesttypes[$requests[$n]["request_mode"]]?></td>
-	<td><?php echo $statusname[$requests[$n]["status"]]?></td>
+	<td><?php echo $requests[$n]["c"] ?></td>
+	<td><?php echo $lang["resourcerequesttype" . $requests[$n]["request_mode"]] ?></td>
+	<td><?php echo $lang["resourcerequeststatus" . $requests[$n]["status"]] ?></td>
 	<td><div class="ListTools"><a href="team_request_edit.php?ref=<?php echo $requests[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["edit"]?></a></a></div></td>
 	</tr>
 	<?php

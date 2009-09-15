@@ -2,13 +2,25 @@
 include "../include/db.php";
 $k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";}
 include "../include/general.php";
+include "../include/request_functions.php";
+include "../include/collections_functions.php";
 
 $ref=getval("ref","");
 $k=getval("k","");
 
 if (getval("save","")!="")
 	{
-	email_resource_request($ref,getvalescaped("request",""));
+	if ($k!="" || $userrequestmode==0)
+		{
+		# Request mode 0 : Simply e-mail the request.
+		email_resource_request($ref,getvalescaped("request",""));
+		}
+	else
+		{
+		# Request mode 1 : "Managed" mode via Manage Requests / Orders
+		managed_collection_request($ref,getvalescaped("request",""),true);
+		}
+	
 	redirect("pages/done.php?text=resource_request");
 	}
 include "../include/header.php";

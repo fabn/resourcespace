@@ -16,6 +16,7 @@ if (getval("save","")!="")
 
 # Fetch research request data
 $request=get_request($ref);
+if ($request===false) {exit("Request $ref not found.");}
 	
 include "../../include/header.php";
 ?>
@@ -25,19 +26,24 @@ include "../../include/header.php";
 <form method=post>
 <input type=hidden name=ref value="<?php echo $ref?>">
 
-<div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["username"]?></div>
+<div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["fullname"]?> (<?php echo $request["email"]?>)</div>
 <div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["date"]?></label><div class="Fixed"><?php echo nicedate($request["created"],false,true)?></div>
+<div class="Question"><label><?php echo $lang["date"]?></label><div class="Fixed"><?php echo nicedate($request["created"],true,true)?></div>
 <div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["comments"]?></label><div class="Fixed"><?php echo $request["comments"]?></div>
+<div class="Question"><label><?php echo $lang["comments"]?></label><div class="Fixed"><?php echo nl2br($request["comments"]) ?></div>
 <div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?php echo $lang["requesteditems"]?></label><div class="Fixed"><a <?php if ($frameless_collections) { ?>href="../search.php?search=<?php echo urlencode("!collection" . $request["collection"]) ?>"
+<?php } else {?>href="../collections.php?collection=<?php echo $request["collection"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a></div>
+<div class="clearerleft"> </div></div>
+
 
 <div class="Question"><label><?php echo $lang["status"]?></label>
 <div class="tickset">
-<?php for ($n=0;$n<=1;$n++) { ?>
-<div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>/><?php echo $lang["resourcerequeststatus0" . $n]?></div>
+<?php for ($n=0;$n<=2;$n++) { ?>
+<div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>/><?php echo $lang["resourcerequeststatus" . $n]?></div>
 <?php } ?>
 </div>
 <div class="clearerleft"> </div></div>

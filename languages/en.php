@@ -352,6 +352,7 @@ $lang["requeststatus2"]="Complete";
 $lang["copyexistingresources"]="Copy the resources in an existing collection to this research brief";
 $lang["deletethisrequest"]="Delete this request?";
 $lang["requestedby"]="Requested by";
+$lang["requesteditems"]="Requested items";
 $lang["assignedtoteammember"]="Assigned to team member";
 $lang["unassigned"]="unassigned";
 $lang["typecollectionid"]="(Type collection ID below)";
@@ -770,8 +771,9 @@ $lang["requestorderid"]="Request / Order ID";
 $lang["viewrequesturl"]="To view this request, click the link below:";
 $lang["requestreason"]="Reason for request";
 
-$lang["resourcerequeststatus0"]="Open";
-$lang["resourcerequeststatus1"]="Closed";
+$lang["resourcerequeststatus0"]="Pending";
+$lang["resourcerequeststatus1"]="Approved";
+$lang["resourcerequeststatus2"]="Declined";
 
 $lang["ppi"]="PPI"; # (Pixels Per Inch - used on the resource download options list).
 
@@ -800,4 +802,11 @@ $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field op
 $lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";
 
 $lang["requestall"]="Request all";
+$lang["resourcerequesttype0"]="Email Only";
+$lang["resourcerequesttype1"]="Managed Request";
+$lang["resourcerequesttype2"]="Payment - Immediate";
+$lang["resourcerequesttype3"]="Payment - Invoice";
+
+$lang["requestapprovedmail"]="Your request has been approved. Click the link below to view and download the requested resources.";
+
 ?>
