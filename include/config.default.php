@@ -797,7 +797,7 @@ $default_user_select="";
 
 # When multiple dropdowns are used on the simple search box, should selecting something from one or more dropdowns
 # limit the options available in the other dropdowns automatically? This adds a performance penalty so is off by default.
-$simple_search_dropdown_filtering=false;
+$simple_search_dropdown_filtering=true;
 
 
 # When searching, also include themes/public collections at the top?
