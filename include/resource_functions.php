@@ -1284,7 +1284,7 @@ function get_resource_access($resource)
 	
 function get_custom_access_user($resource,$user)
 	{
-	return sql_value("select access value from resource_custom_access where resource='$resource' and user='$user' and user_expires>now()",false);
+	return sql_value("select access value from resource_custom_access where resource='$resource' and user='$user' and (user_expires is null or user_expires>now())",false);
 	}
 
 function resource_download_allowed($resource,$size)

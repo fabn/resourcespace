@@ -2190,7 +2190,7 @@ function open_access_to_user($user,$resource,$expires)
 	sql_query("delete from resource_custom_access where user='$user' and resource='$resource'");
 	
 	# Insert new row
-	sql_query("insert into resource_custom_access(resource,access,user,user_expires) values ('$resource','0','$user','$expires')");
+	sql_query("insert into resource_custom_access(resource,access,user,user_expires) values ('$resource','0','$user'," . ($expires==""?"null":"'$expires'") . ")");
 	
 	return true;
 	}
