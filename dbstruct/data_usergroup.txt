@@ -1,8 +1,8 @@
-1,Administrators,"s,c,e,t,h,r,u,i,e-2,e-1,e0,e1,v,o,m,q,n,f*,j*,k,R",,0,,,,,,0,0
-2,"General Users","s,e-1,e-2,g,d,q,n,f*,j*",,0,,,,,,0,1
-3,"Super Admin","s,c,e,a,t,h,u,r,i,e-2,e-1,e0,e1,e2,o,m,g,v,q,n,f*,j*,k,R",,0,,,,,,0,0
-4,Archivists,"s,c,e,t,h,r,u,i,e1,e2,v,q,n,f*,j*",,0,,,,,,0,0
-5,"Restricted User - Requests Emailed","s,f*,j*,q",,,,,,,,0,0
-6,"Restricted User - Requests Managed","s,f*,j*,q",,,,,,,,1,0
-7,"Restricted User - Payment Immediate","s,f*,j*,q",,,,,,,,2,0
-8,"Restricted User - Payment Invoice","s,f*,j*,q",,,,,,,,3,0
+1,Administrators,"s,c,e,t,h,r,u,i,e-2,e-1,e0,e1,v,o,m,q,n,f*,j*,k,R",,0,,,,,,,0,0
+2,"General Users","s,e-1,e-2,g,d,q,n,f*,j*",,0,,,,,,,0,1
+3,"Super Admin","s,c,e,a,t,h,u,r,i,e-2,e-1,e0,e1,e2,o,m,g,v,q,n,f*,j*,k,R",,0,,,,,,,0,0
+4,Archivists,"s,c,e,t,h,r,u,i,e1,e2,v,q,n,f*,j*",,0,,,,,,,0,0
+5,"Restricted User - Requests Emailed","s,f*,j*,q",,,,,,,,,0,0
+6,"Restricted User - Requests Managed","s,f*,j*,q",,,,,,,,,1,0
+7,"Restricted User - Payment Immediate","s,f*,j*,q",,,,,,,,,2,0
+8,"Restricted User - Payment Invoice","s,f*,j*,q",,,,,,,,,3,0
