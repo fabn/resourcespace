@@ -1322,4 +1322,69 @@ function resource_download_allowed($resource,$size)
 	
 	}
 
+function get_edit_access($resource,$status,$metadata=false)
+	{
+	# For the provided resource and metadata, does the  edit access does the current user have to this resource?
+	# Checks the edit permissions (e0, e-1 etc.) and also the group edit filter which filters edit access based on resource metadata.
+	
+	global $userref,$usereditfilter;
+	
+	if ($resource==0-$userref) {return true;} # Can always edit their own user template.
+
+	if (!checkperm("e" . $status)) {return false;} # Must have edit permission to this resource first and foremost, before checking the filter.
+	
+	$gotmatch=false;
+	if (trim($usereditfilter)!="")
+		{
+		# An edit filter has been set. Perform edit filter processing to establish if the user can edit this resource.
+		
+		# Metadata not provided? Load metadata.
+		if ($metadata===false) {$metadata=get_resource_field_data($resource);}
+		
+		for ($n=0;$n<count($metadata);$n++)
+			{
+			$name=$metadata[$n]["name"];
+			$value=$metadata[$n]["value"];			
+			if ($name!="")
+				{
+				$match=filter_match($usereditfilter,$name,$value);
+				if ($match==1) {return false;} # The match for this field was incorrect, always fail in this event.
+				if ($match==2) {$gotmatch=true;} # The match for this field was correct.
+				}
+			}
+		}
+	
+	# Default after all filter operations, allow edit.
+	return $gotmatch;
+	}
+
+
+function filter_match($filter,$name,$value)
+	{
+	# In the given filter string, does name/value match?
+	# Returns:
+	# 0 = no match for name
+	# 1 = matched name but value was not present
+	# 2 = matched name and value was correct
+	$s=explode(";",$filter);
+	foreach ($s as $condition)
+		{
+		$s=explode("=",$condition);
+		$checkname=$s[0];
+		if ($checkname==$name)
+			{
+			$checkvalues=$s[1];
+			
+			$s=explode("|",strtoupper($checkvalues));
+			$v=trim_array(explode(",",strtoupper($value)));
+			foreach ($s as $checkvalue)
+				{
+				if (in_array($checkvalue,$v)) {return 2;}
+				}
+			return 1;
+			}
+		}
+	return 0;
+	}
+
 ?>

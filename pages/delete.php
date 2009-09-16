@@ -10,8 +10,13 @@ if ((isset($allow_resource_deletion) and !$allow_resource_deletion) or checkperm
 	exit;
 } else {
 
-$ref=getval("ref","");
+$ref=getvalescaped("ref","");
+$resource=get_resource_data($ref);
+
 $error="";
+
+# Not allowed to edit this resource? They shouldn't have been able to get here.
+if (!get_edit_access($ref,$resource["archive"])) {exit ("Permission denied.");}
 
 if (getval("save","")!="")
 	{
@@ -32,7 +37,6 @@ if (getval("save","")!="")
 	}
 include "../include/header.php";
 
-$resource=get_resource_data($ref);
 if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1)
 	{
 ?>

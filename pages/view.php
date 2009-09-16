@@ -106,7 +106,15 @@ if ($metadata_report && isset($exiftool_path)){
 	";
 	}
 	
+# Show the header/sidebar
 include "../include/header.php";
+
+# Load resource field data
+$fields=get_resource_field_data($ref);
+
+# Load edit access level (checking edit permissions - e0,e-1 etc. and also the group 'edit filter')
+$edit_access=get_edit_access($ref,$resource["archive"],$fields);
+
 ?>
 
 <!--Panel for record and details-->
@@ -436,7 +444,7 @@ hook ("resourceactions") ?>
 	<?php if ($allow_share && ($access==0 || ($access==1 && $restricted_share))) { ?>
 		<li><a href="resource_email.php?ref=<?php echo $ref?>" target="main">&gt; <?php echo $lang["emailresource"]?></a></li>
 		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>
-	<?php if (checkperm("e" . $resource["archive"])) { ?>
+	<?php if ($edit_access) { ?>
 		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>">&gt; 
 			<?php echo $lang["edit"]?></a>
 	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["delete"]?></a><?php } ?></li><?php } ?>
@@ -467,8 +475,6 @@ if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 
 <?php
 $extra="";
-$fields=get_resource_field_data($ref);
-
 
 #  -----------------------------  Draw tabs ---------------------------
 $tabname="";
