@@ -1334,7 +1334,11 @@ function get_edit_access($resource,$status,$metadata=false)
 	if (!checkperm("e" . $status)) {return false;} # Must have edit permission to this resource first and foremost, before checking the filter.
 	
 	$gotmatch=false;
-	if (trim($usereditfilter)!="")
+	if (trim($usereditfilter)=="")
+		{
+		return true;
+		}
+	else
 		{
 		# An edit filter has been set. Perform edit filter processing to establish if the user can edit this resource.
 		
