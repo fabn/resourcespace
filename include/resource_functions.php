@@ -437,7 +437,7 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 			if ($keyword===false)
 				{
 				# This is a new keyword. Create and discover the new keyword ref.
-				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keywords[$n]) . 	"',soundex('" . escape_check($keywords[$n]) . "'),0)");
+				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keywords[$n]) . 	"',left(soundex('" . escape_check($keywords[$n]) . "'),10),0)");
 				$keyword=sql_insert_id();
 				#echo "<li>New keyword.";
 				}
@@ -773,7 +773,7 @@ function relate_to_array($ref,$array)
 function get_exiftool_fields($resource_type)
 	{
 	# Returns a list of exiftool fields, which are basically fields with an 'exiftool field' set.
-	return sql_query("select ref,type,exiftool_field from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
+	return sql_query("select ref,type,exiftool_field,options from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
 	}
 
 function write_metadata($path,$ref)
@@ -806,6 +806,10 @@ function write_metadata($path,$ref)
 						# write datetype fields as ISO 8601 date ("c") 
 						if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
 						else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
+						
+						# Remove initial comma (for checkbox lists)
+						if (substr($writevalue,0,1)==",") {$writevalue=substr($writevalue,1);}
+						
 						foreach ($field as $field)
 							{
 							$command.="-".$field."=\"". str_replace("\"","\\\"",$writevalue) . "\" " ;

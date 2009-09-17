@@ -193,7 +193,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 

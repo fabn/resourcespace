@@ -139,12 +139,12 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
 			{	
-			
 			$resource=get_resource_data($ref);
 			
 			hook("beforeexiftoolextraction");
 			
-			if ($exiftool_resolution_calc){
+			if ($exiftool_resolution_calc)
+				{
 				# see if we can use exiftool to get resolution/units, and dimensions here.
 				# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
 				# and exiftool can provide more data. 
@@ -179,24 +179,23 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			# occurrance of ": ".  The keys in the associative array is converted
 			# into uppercase for easier lookup later
 			foreach($metalines as $metaline)
-			{
-			
-			# Use stripos() if available, but support earlier PHP versions if not.
-			if (function_exists("stripos"))
 				{
-				$pos=stripos($metaline, ": ");
+				# Use stripos() if available, but support earlier PHP versions if not.
+				if (function_exists("stripos"))
+					{
+					$pos=stripos($metaline, ": ");
+					}
+				else
+					{
+					$pos=strpos($metaline, ": ");
+					}
+	
+				if ($pos) #get position of first ": ", return false if not exist
+					{
+					# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
+					$metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
+					}
 				}
-			else
-				{
-				$pos=strpos($metaline, ": ");
-				}
-
-			if ($pos) #get position of first ": ", return false if not exist
-				{
-				# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
-				$metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
-				}
-			}
 
 		// We try to fetch the original filename from database.
 		$resources = sql_query("SELECT resource.file_path FROM resource WHERE resource.ref = " . $ref);
@@ -213,16 +212,34 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
 
 		# now we lookup fields from the database to see if a corresponding value
-		# exist in the uploaded file
+		# exists in the uploaded file
 		for($i=0;$i< count($read_from);$i++)
 			{
 			$field=explode(",",$read_from[$i]['exiftool_field']);
 			foreach ($field as $subfield)
 				{
 				$subfield = strtoupper($subfield); // convert to upper case for easier comparision
-				if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-")
+				if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-" && trim($metadata[$subfield])!="")
 					{
-					update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));
+					$read=true;
+										
+					# Dropdown box or checkbox list?
+					if ($read_from[$i]["type"]==2 || $read_from[$i]["type"]==3)
+						{
+						# Check that the value is one of the options and only insert if it is an exact match.
+	
+						# The use of safe_file_name and strtolower ensures matching takes place on alphanumeric characters only and ignores case.
+						
+						# First fetch all options in all languages
+						$options=trim_array(explode(",",strtolower(i18n_get_indexable($read_from[$i]["options"]))));
+						for ($n=0;$n<count($options);$n++)	{$options[$n]=safe_file_name($options[$n]);}
+
+						# If not in the options list, do not read this va;ie
+						if (!in_array(safe_file_name(strtolower($metadata[$subfield])),$options)) {$read=false;}
+						}
+					
+					# Read the data.				
+					if ($read) {update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));}
 					}
 				}
 			}
