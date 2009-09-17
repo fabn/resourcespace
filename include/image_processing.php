@@ -234,8 +234,13 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 						$options=trim_array(explode(",",strtolower(i18n_get_indexable($read_from[$i]["options"]))));
 						for ($n=0;$n<count($options);$n++)	{$options[$n]=safe_file_name($options[$n]);}
 
-						# If not in the options list, do not read this va;ie
-						if (!in_array(safe_file_name(strtolower($metadata[$subfield])),$options)) {$read=false;}
+						# If not in the options list, do not read this value
+						$s=trim_array(explode(",",$metadata[$subfield]));
+						for ($n=0;$n<count($s);$n++)
+							{
+							if (trim($s[0])!="" && (!in_array(safe_file_name(strtolower($s[$n])),$options))) {$read=false;} 							
+							}
+
 						}
 					
 					# Read the data.				
