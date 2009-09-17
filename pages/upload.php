@@ -19,7 +19,7 @@ if (array_key_exists("userfile",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 
-		$status=upload_file($ref);
+		$status=upload_file($ref,(getval("no_exif","")!=""));
 		redirect("pages/edit.php?refreshcollectionframe=true&ref=" . $ref);
 		}	
 	}
@@ -51,6 +51,11 @@ function check(filename) {
 <div class="Question">
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
 <input type=file name=userfile id=userfile>
+<div class="clearerleft"> </div>
+</div>
+
+<div class="Question">
+<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes">
 <div class="clearerleft"> </div>
 </div>
 

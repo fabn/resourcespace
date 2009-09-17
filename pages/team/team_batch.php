@@ -11,6 +11,7 @@ $resource_type=getvalescaped('resource_type','');
 	<p><?php echo text("introtext")?></p>
 
 	<form method="post" action="team_batch_select.php?resource_type=<?php echo $resource_type?>">
+	<input type="hidden" name="no_exif" value="<?php echo getval("no_exif","")?>">
 
 		<div class="Question"><label><?php echo $lang["ftpserver"]?></label><input name="ftp_server" type="text" class="stdwidth" value="<?php echo $ftp_server?>"><div class="clearerleft"> </div></div>
 

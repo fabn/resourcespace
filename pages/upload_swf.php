@@ -41,7 +41,7 @@ if (array_key_exists("Filedata",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 	
-		$status=upload_file($ref);
+		$status=upload_file($ref,(getval("no_exif","")!=""));
 		
 		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
@@ -66,7 +66,7 @@ if (array_key_exists("Filedata",$_FILES))
 			$ref=trim($s[0]);
 			if (is_numeric($ref)) # is the first part of the filename numeric?
 				{
-				$status=upload_file($ref); # Upload to the specified ref.
+				$status=upload_file($ref,(getval("no_exif","")!="")); # Upload to the specified ref.
 				}
 			}
 		$thumb=get_resource_path($ref,true,"col",false);

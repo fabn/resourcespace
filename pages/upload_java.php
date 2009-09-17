@@ -144,7 +144,7 @@ if (array_key_exists("File0",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 	
-		$status=upload_file($ref,true);
+		$status=upload_file($ref,(getval("no_exif","")!=""));
 		
 		echo "SUCCESS";
 		exit();

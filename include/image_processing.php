@@ -4,7 +4,7 @@
 # Functions to allow upload and resizing of images
 
 if (!function_exists("upload_file")){
-function upload_file($ref)
+function upload_file($ref,$no_exif=false)
 	{
 	# Process file upload for resource $ref
 	
@@ -69,11 +69,11 @@ function upload_file($ref)
     sql_query("delete from resource_dimensions where resource='$ref'");
 	# get file metadata 
     global $exiftool_path;
-    extract_exif_comment($ref,$extension);
+    if (!$no_exif) {extract_exif_comment($ref,$extension);}
 
 	# extract text from documents (e.g. PDF, DOC).
 	global $extracted_text_field;
-	if (isset($extracted_text_field)) {extract_text($ref,$extension);}
+	if (isset($extracted_text_field) && !$no_exif) {extract_text($ref,$extension);}
 
 	# Store original filename in field, if set
 	global $filename_field;

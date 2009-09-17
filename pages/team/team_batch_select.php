@@ -54,6 +54,7 @@ include "../../include/header.php";
 <input type="hidden" name="ftp_password" value="<?php echo getval("ftp_password","")?>">
 <input type="hidden" name="ftp_folder" value="<?php echo getval("ftp_folder","")?>">
 <input type="hidden" name="use_local" value="<?php echo getval("use_local","")?>">
+<input type="hidden" name="no_exif" value="<?php echo getval("no_exif","")?>">
 
 <div class="Question">
 <label for="collection"><?php echo $lang["addtocollection"]?></label>

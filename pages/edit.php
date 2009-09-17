@@ -95,7 +95,8 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 			}		
 
 		$save_errors=save_resource_data($ref,$multiple);
-	
+		$no_exif=getval("no_exif","");
+		
 		if (($save_errors===true)&&(getval("tweak","")==""))
 			{
 			if ($ref>0)
@@ -109,22 +110,22 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type);}
+					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				elseif (getval("java","")!="") // Test if in browser java upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type);}
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				else
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch.php&resource_type=".$resource_type);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch.php?resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				}
 			}
@@ -369,6 +370,11 @@ if ($enable_add_collection_on_upload)
 
 
 <?php } ?>
+
+<div class="Question">
+<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
+<div class="clearerleft"> </div>
+</div>
 
 <?php } ?>
 

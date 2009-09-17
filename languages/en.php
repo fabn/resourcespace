@@ -818,4 +818,7 @@ $lang["requestapprovedexpires"]="Your access to these resources will expire on";
 $lang["pleasewaitsmall"]="(please wait)";
 $lang["removethisfilter"]="(remove this filter)";
 
+$lang["no_exif"]="Do not import embedded EXIF/IPTC/XMP metadata for this upload";
+
+
 ?>

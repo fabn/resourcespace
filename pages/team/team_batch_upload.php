@@ -127,7 +127,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 
 		# get file metadata 
 		global $exiftool_path;
-		extract_exif_comment($ref,$extension);
+		if (getval("no_exif","")=="") {extract_exif_comment($ref,$extension);}
 
 		$status=$lang["uploaded"] . " " . ($n+1) . " " . $lang["of"] . " " . count($uploadfiles);
 		$status.= " - ".$path;
