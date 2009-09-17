@@ -44,7 +44,7 @@ include "../../include/header.php";
 <div class="tickset">
 <?php for ($n=0;$n<=2;$n++) { ?>
 <div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>
-<?php if ($n==1) { ?> onChange="Effect.Appear('Expires',{duration:1});"<?php } else { ?>onClick="Effect.DropOut('Expires',{duration:1});"<?php } ?>
+<?php if ($n==1) { ?> onClick="Effect.Appear('Expires',{duration:1});"<?php } else { ?>onClick="Effect.DropOut('Expires',{duration:1});"<?php } ?>
 
 /><?php echo $lang["resourcerequeststatus" . $n]?></div>
 <?php } ?>
