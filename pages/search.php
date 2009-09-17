@@ -61,6 +61,12 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 				
 				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . str_replace("_year","",substr($key,6)) . ":" . $value;
 				}
+			elseif (strpos($key,"_drop_")!==false)
+				{
+				# Dropdown field
+				# Add keyword exactly as it is as the full value is indexed as a single keyword for dropdown boxes.
+				$search=(($search=="")?"":$search . ", ") . substr($key,11) . ":" . $value;
+				}		
 			elseif (strpos($key,"_month")===false && strpos($key,"_day")===false)
 				{
 				# Standard field

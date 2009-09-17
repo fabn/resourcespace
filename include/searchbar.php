@@ -173,7 +173,7 @@ if (!$basic_simple_search)
 			
 			$optionfields[]=$fields[$n]["name"]; # Append to the option fields array, used by the AJAX dropdown filtering
 			?>
-			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions('<?php echo $fields[$n]["name"]?>');">
+			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_drop_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions('<?php echo $fields[$n]["name"]?>');">
 			  <option selected="selected" value="">&nbsp;</option>
 			  <?php
 			  for ($m=0;$m<count($options);$m++)
