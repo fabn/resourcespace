@@ -219,10 +219,12 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			foreach ($field as $subfield)
 				{
 				$subfield = strtoupper($subfield); // convert to upper case for easier comparision
+				
 				if (in_array($subfield, array_keys($metadata)) && $metadata[$subfield] != "-" && trim($metadata[$subfield])!="")
 					{
 					$read=true;
-										
+					$value=$metadata[$subfield];
+					
 					# Dropdown box or checkbox list?
 					if ($read_from[$i]["type"]==2 || $read_from[$i]["type"]==3)
 						{
@@ -235,16 +237,17 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 						for ($n=0;$n<count($options);$n++)	{$options[$n]=safe_file_name($options[$n]);}
 
 						# If not in the options list, do not read this value
-						$s=trim_array(explode(",",$metadata[$subfield]));
+						$s=trim_array(explode(",",$value));
+						$value=""; # blank value
 						for ($n=0;$n<count($s);$n++)
 							{
-							if (trim($s[0])!="" && (!in_array(safe_file_name(strtolower($s[$n])),$options))) {$read=false;} 							
+							if (trim($s[0])!="" && (in_array(safe_file_name(strtolower($s[$n])),$options))) {$value.="," . $s[$n];} 							
 							}
-
+						#echo($read_from[$i]["ref"] . " = " . $value . "<br>");
 						}
 					
 					# Read the data.				
-					if ($read) {update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($metadata[$subfield]));}
+					if ($read) {update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($value));}
 					}
 				}
 			}
