@@ -368,7 +368,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ff
 	
 	# Produce the MP3 preview.
 	$mp3file=get_resource_path($ref,true,"",false,"mp3"); 
-	$output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " -acodec mp3 " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file)); 
+	$output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file)); 
 	}
 
 

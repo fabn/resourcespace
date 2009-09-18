@@ -967,7 +967,7 @@ $ffmpeg_audio_extensions = array(
 	);
 	
 # The audio settings for mp3 previews
-$ffmpeg_audio_params = "-ab 64k -ac 1"; # Default to 64Kbps mono
+$ffmpeg_audio_params = "-acodec mp3 -ab 64k -ac 1"; # Default to 64Kbps mono
 
 # A list of file extensions for files which will not have previews automatically generated. This is to work around a problem with colour profiles whereby an image file is produced but is not a valid file format.
 $no_preview_extensions=array("icm","icc");
