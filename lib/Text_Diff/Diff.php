@@ -26,7 +26,7 @@ class Text_Diff {
      *
      * @var array
      */
-    var $_edits;
+    public $_edits;
 
     /**
      * Computes diffs between sequences of strings.
@@ -343,8 +343,8 @@ class Text_MappedDiff extends Text_Diff {
  */
 class Text_Diff_Op {
 
-    var $orig;
-    var $final;
+    public $orig;
+    public $final;
 
     function &reverse()
     {
