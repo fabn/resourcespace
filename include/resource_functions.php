@@ -96,7 +96,7 @@ function save_resource_data($ref,$multi)
 				# Set the value exactly as sent.
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 				}
-			if ($fields[$n]["value"]!=$val)
+			if ($fields[$n]["value"]!=str_replace("\\","",$val))
 				{
 				# This value is different from the value we have on record.
 				
@@ -289,7 +289,7 @@ function save_resource_data_multi($collection)
 					}
 					
 				#echo "<li>existing=$existing, new=$val";
-				if ($existing!=$val)
+				if ($existing!=str_replace("\\","",$val))
 					{
 					# This value is different from the value we have on record.
 		
@@ -1407,6 +1407,10 @@ function log_diff($fromvalue,$tovalue)
 	{
 	# Forumlate descriptive text to describe the change made to a metadata field.
 	
+	# Remove any database escaping
+	$fromvalue=str_replace("\\","",$fromvalue);
+	$tovalue=str_replace("\\","",$tovalue);
+	
 	if (substr($fromvalue,0,1)==",")
 		{
 		# Work a different way for checkbox lists.
@@ -1457,7 +1461,7 @@ function log_diff($fromvalue,$tovalue)
 			{
 			$t=explode("</del>",$s[$n]);
 			if ($return!="") {$return.="\n";}
-			$return.="- " . i18n_get_translated($t[0]);
+			$return.="- " . trim(i18n_get_translated($t[0]));
 			}
 		}
 	# Handle inserts
@@ -1468,7 +1472,7 @@ function log_diff($fromvalue,$tovalue)
 			{
 			$t=explode("</ins>",$s[$n]);
 			if ($return!="") {$return.="\n";}
-			$return.="+ " . i18n_get_translated($t[0]);
+			$return.="+ " . trim(i18n_get_translated($t[0]));
 			}
 		}
 
