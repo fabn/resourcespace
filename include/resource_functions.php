@@ -1516,7 +1516,7 @@ function update_xml_metadump($resource)
 	$path=dirname(get_resource_path($resource,true,"",true)) . "/metadump.xml";
 	$f=fopen($path,"w");
 	fwrite($f,"<?xml version=\"1.0\"?>\n");
-	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" rspace:resourceid=\"$resource\">\n\n");
+	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" resourcespace:resourceid=\"$resource\">\n\n");
   
   	$data=get_resource_field_data($resource,false,false); # Get field data ignoring permissions
   	for ($n=0;$n<count($data);$n++)
