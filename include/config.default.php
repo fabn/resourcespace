@@ -905,6 +905,20 @@ $top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and 
 # (Can also be controlled on a more granular level with the "D" restrictive permission.)
 $allow_resource_deletion = true;
 
+# Resource deletion state
+# When resources are deleted, the variable below can be set to move the resources into an alternative state instead of removing the resource and its files from the system entirely.
+# 
+# The resource will still be removed from any collections it has been added to.
+#
+# Possible options are:
+#
+# -2	User Contributed Pending Review (not useful unless deleting user-contributed resources)
+# -1	User Contributed Pending Submission (not useful unless deleting user-contributed resources) 
+# 1		Waiting to be archived
+# 2 	Archived
+# 3		Deleted (recommended)
+# $resource_deletion_state=3;
+
 # Offline processes (e.g. staticsync and create_previews.php) - for process locking, how old does a lock have to be before it is ignored?
 $process_locks_max_seconds=60*60*4; # 4 hours default.
 
@@ -1135,6 +1149,8 @@ $data_joins=array();
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
 $frameless_collections=false;
+
+
 
 
 ?>

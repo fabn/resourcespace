@@ -557,8 +557,21 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 
 function delete_resource($ref)
 	{
-	if ($ref<0) {return false;} # Can't delete the template
 	# Delete the resource, all related entries in tables and all files on disk
+	
+	if ($ref<0) {return false;} # Can't delete the template
+
+	global $resource_deletion_state;
+	if (isset($resource_deletion_state))
+		{
+		# $resource_deletion_state is set. Do not delete this resource, instead move it to the specified state.
+		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
+		
+		# Remove the resource from any collections
+		sql_query("delete from collection_resource where resource='$ref'");
+			
+		return true;
+		}
 	
 	# Get info
 	$resource=sql_query("select is_transcoding, file_extension, preview_extension from resource where ref='$ref'","jpg");
@@ -611,7 +624,8 @@ function delete_resource($ref)
 	sql_query("delete from collection_resource where resource='$ref'");
 	sql_query("delete from resource_custom_access where resource='$ref'");
 	sql_query("delete from external_access_keys where resource='$ref'");
-	
+	sql_query("delete from resource_alt_files where resource='$ref'");
+		
 	hook("afterdeleteresource","all",$ref);
 	
 	return true;

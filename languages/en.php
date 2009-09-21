@@ -284,6 +284,7 @@ $lang["status-1"]="Pending Review";
 $lang["status0"]="Active";
 $lang["status1"]="Waiting to be archived";
 $lang["status2"]="Archived";
+$lang["status3"]="Deleted";
 
 # Charts
 $lang["activity"]="Activity";
