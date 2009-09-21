@@ -715,7 +715,7 @@ function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue=""
 	global $userref;
 	
 	# Do not log edits to user templates.
-	if ($resource<0) {exit();}
+	if ($resource<0) {return false;}
 	
 	# Add difference to file.
 	$diff="";
