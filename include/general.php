@@ -158,7 +158,7 @@ function get_resource_data($ref,$cache=true)
 	return $resource[0];
 	}
 
-function get_resource_field_data($ref,$multi=false)
+function get_resource_field_data($ref,$multi=false,$use_permissions=true)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
@@ -171,8 +171,8 @@ function get_resource_field_data($ref,$multi=false)
 
 	for ($n=0;$n<count($fields);$n++)
 		{
-		if ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
-		!checkperm("f-" . $fields[$n]["fref"])
+		if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
+		!checkperm("f-" . $fields[$n]["fref"])))
 		&& in_array($fields[$n]["resource_type"],$validtypes)) {$return[]=$fields[$n];}
 		}
 	return $return;

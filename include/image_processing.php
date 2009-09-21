@@ -340,6 +340,9 @@ elseif (isset($exif_comment))
 			}
 		}
 	}
+	
+	# Update the XML metadata dump file.
+	update_xml_metadump($ref);
 	}
 
 function iptc_return_utf8($text)
@@ -1071,6 +1074,9 @@ function extract_text($ref,$extension)
 		{
 		# Save text
 		update_field($ref,$extracted_text_field,$text);
+		
+		# Update XML metadata dump file.
+		update_xml_metadump($ref);
 		}
 	
 	}
