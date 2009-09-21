@@ -97,13 +97,30 @@ else
 ?><tr><td colspan="2">Blocked browsing of 'filestore' directory</td><td><b><?php echo $result?></b></td></tr>
 
 <?php
+$imagemagick_version="";
 function CheckImagemagick()
-{
+	{
  	global $imagemagick_path;
-	if (file_exists($imagemagick_path . "/convert")) return true;
-	if (file_exists($imagemagick_path . "/convert.exe")) return true;	
-	return false;
-}
+ 	
+ 	# Check for path
+ 	$path=$imagemagick_path . "/convert";
+	if (!file_exists($path)) {$path=$imagemagick_path . "/convert.exe";}
+	if (!file_exists($path)) {return false;}
+	
+	# Check execution and return version
+	$version=@shell_exec(escapeshellcmd($path) . " -version");
+	if (strpos($version,"ImageMagick")===false && strpos($version,"GraphicsMagick")===false)
+		{
+		return "Execution failed; unexpected output when executing convert command. Output was '$version'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki.";
+		}	
+		
+	# Set version
+	$s=explode("\n",$version);
+	global $imagemagick_version;$imagemagick_version=$s[0];
+	
+	return true;
+	}
+	
 function CheckFfmpeg()
 {
  	global $ffmpeg_path;
@@ -129,20 +146,23 @@ function CheckExiftool()
 # Check ImageMagick path
 if (isset($imagemagick_path))
 	{	 
-	if (CheckImagemagick())
+	$result=CheckImagemagick();
+	if ($result===true)
 		{
 		$result="OK";
 		}
 	else
 		{
-		$result="FAIL: '$imagemagick_path/convert' not found";
+		$result="FAIL: " . $result;
 		}
 	}
 else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">ImageMagick</td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td <?php if ($imagemagick_version=="") { ?>colspan="2"<?php } ?>>ImageMagick</td>
+<?php if ($imagemagick_version!="") { ?><td><?php echo $imagemagick_version ?></td><?php } ?>
+<td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check FFmpeg path
