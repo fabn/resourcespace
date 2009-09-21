@@ -21,6 +21,7 @@ include "../include/header.php";
 <td><?php echo $lang["user"]?></td>
 <td><?php echo $lang["action"]?></td>
 <td><?php echo $lang["field"]?></td>
+<td><?php echo $lang["difference"]?></td>
 </tr>
 
 <?php
@@ -30,10 +31,11 @@ for ($n=0;$n<count($log);$n++)
 	?>
 	<!--List Item-->
 	<tr>
-	<td><?php echo nicedate($log[$n]["date"],true)?></td>
+	<td><?php echo nicedate($log[$n]["date"],true,false)?></td>
 	<td><?php echo $log[$n]["username"]?> (<?php echo $log[$n]["fullname"]?>)</td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]]." ".$log[$n]["notes"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
+	<td><?php echo nl2br(htmlspecialchars($log[$n]["diff"]))?></td>
 	</tr>
 	<?php
 	}

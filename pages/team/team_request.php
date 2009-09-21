@@ -36,7 +36,7 @@ $jumpcount=1;
 <td><?php echo $lang["username"]?></td>
 <td><?php echo $lang["fullname"]?></td>
 <td><?php echo $lang["date"]?></td>
-<td><?php echo $lang["items"]?></td>
+<td><?php echo $lang["itemstitle"]?></td>
 <td><?php echo $lang["type"]?></td>
 <td><?php echo $lang["status"]?></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>

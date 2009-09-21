@@ -12,7 +12,7 @@ Search
 ------
 s	Can search for resources
 v	Can view restricted (admin only) resources, also download 'confidential' resources
-g	Can download the higher resolution resources (anything above 'screen').
+g	Without this permission, the users in the group will have 'restricted' access to any 'restricted/open' resources.
 q	Can make resource requests.
 w	Show watermarked previews/thumbnails ($watermark must be set in config.php prior to resource upload in order for watermarks to be created.)
 

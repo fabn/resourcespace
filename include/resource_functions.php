@@ -100,8 +100,8 @@ function save_resource_data($ref,$multi)
 				{
 				# This value is different from the value we have on record.
 				
-				# Write this edit to the log.
-				resource_log($ref,'e',$fields[$n]["ref"]);
+				# Write this edit to the log (including the diff)
+				resource_log($ref,'e',$fields[$n]["ref"],"",$fields[$n]["value"],$val);
 				
 				# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 				if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
@@ -294,7 +294,7 @@ function save_resource_data_multi($collection)
 					# This value is different from the value we have on record.
 		
 					# Write this edit to the log.
-					resource_log($ref,'m',$fields[$n]["ref"]);
+					resource_log($ref,'m',$fields[$n]["ref"],"",$existing,$val);
 		
 					# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 					if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
@@ -687,15 +687,23 @@ function copy_resource($from,$resource_type=-1)
 	return $to;
 	}
 	
-function resource_log($resource,$type,$field,$notes="")
+function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="")
 	{
 	global $userref;
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'$notes')");
+	
+	# Add difference to file.
+	$diff="";
+	if ($field!="" && ($fromvalue!=$tovalue))
+		{
+		$diff=log_diff($fromvalue,$tovalue);
+		}
+	
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "')");
 	}
 
 function get_resource_log($resource)
 	{
-	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
+	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
 	}
 	
 function get_resource_type_name($type)
@@ -1394,5 +1402,81 @@ function filter_match($filter,$name,$value)
 		}
 	return 0;
 	}
+	
+function log_diff($fromvalue,$tovalue)	
+	{
+	# Forumlate descriptive text to describe the change made to a metadata field.
+	
+	if (substr($fromvalue,0,1)==",")
+		{
+		# Work a different way for checkbox lists.
+		$fromvalue=explode(",",i18n_get_translated($fromvalue));
+		$tovalue=explode(",",i18n_get_translated($tovalue));
+		
+		# Get diffs
+		$inserts=array_diff($tovalue,$fromvalue);
+		$deletes=array_diff($fromvalue,$tovalue);
+
+		# Process array diffs into meaningful strings.
+		$return="";
+		if (count($deletes)>0)
+			{
+			$return.="- " . join("\n- " , $deletes);
+			}
+		if (count($inserts)>0)
+			{
+			if ($return!="") {$return.="\n";}
+			$return.="+ " . join("\n+ ", $inserts);
+			}
+		
+		#debug($return);
+		return $return;
+		}
+
+	# For standard strings, use Text_Diff
+		
+	require_once '../lib/Text_Diff/Diff.php';
+	require_once '../lib/Text_Diff/Diff/Renderer/inline.php';
+
+	$lines1 = explode("\n",$fromvalue);
+	$lines2 = explode("\n",$tovalue);
+
+	$diff     = new Text_Diff('auto', array($lines1, $lines2));
+	$renderer = new Text_Diff_Renderer_inline();
+	$diff=$renderer->render($diff);
+	
+	$return="";
+
+	# The inline diff syntax places inserts within <ins></ins> tags and deletes within <del></del> tags.
+
+	# Handle deletes
+	if (substr($diff,"<del>")!==false)
+		{
+		$s=explode("<del>",$diff);
+		for ($n=1;$n<count($s);$n++)
+			{
+			$t=explode("</del>",$s[$n]);
+			if ($return!="") {$return.="\n";}
+			$return.="- " . i18n_get_translated($t[0]);
+			}
+		}
+	# Handle inserts
+	if (substr($diff,"<ins>")!==false)
+		{
+		$s=explode("<ins>",$diff);
+		for ($n=1;$n<count($s);$n++)
+			{
+			$t=explode("</ins>",$s[$n]);
+			if ($return!="") {$return.="\n";}
+			$return.="+ " . i18n_get_translated($t[0]);
+			}
+		}
+
+
+	#debug ($return);
+	return $return;
+	}
+	
+
 
 ?>

@@ -8,11 +8,12 @@ if (getval("save","")!="")
 	{
 	$ref=getvalescaped("ref","");
 	$keywords=getvalescaped("keywords","");
-
+	$oldval=get_data_by_field($ref,$speedtaggingfield);
+	
 	update_field($ref,$speedtaggingfield,$keywords);
 	
 	# Write this edit to the log.
-	resource_log($ref,'e',$speedtaggingfield);
+	resource_log($ref,'e',$speedtaggingfield,"",$oldval,$keywords);
 	}
 
 # Fetch a resource

@@ -819,6 +819,6 @@ $lang["pleasewaitsmall"]="(please wait)";
 $lang["removethisfilter"]="(remove this filter)";
 
 $lang["no_exif"]="Do not import embedded EXIF/IPTC/XMP metadata for this upload";
-
+$lang["difference"]="Difference";
 
 ?>

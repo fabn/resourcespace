@@ -2206,3 +2206,13 @@ function remove_access_to_user($user,$resource)
 	return true;
 	}
 	
+function debug($text)
+	{
+	# Output some text to a debug file.
+	# For developers only.
+	global $storagedir;
+	$f=fopen($storagedir . "/tmp/debug.txt","a");
+	fwrite($f,$text . "\n");
+	fclose ($f);
+	return true;
+	}
