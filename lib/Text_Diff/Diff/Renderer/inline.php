@@ -29,43 +29,43 @@ class Text_Diff_Renderer_inline extends Text_Diff_Renderer {
     /**
      * Number of leading context "lines" to preserve.
      */
-    var $_leading_context_lines = 10000;
+    public $_leading_context_lines = 10000;
 
     /**
      * Number of trailing context "lines" to preserve.
      */
-    var $_trailing_context_lines = 10000;
+    public $_trailing_context_lines = 10000;
 
     /**
      * Prefix for inserted text.
      */
-    var $_ins_prefix = '<ins>';
+    public $_ins_prefix = '<ins>';
 
     /**
      * Suffix for inserted text.
      */
-    var $_ins_suffix = '</ins>';
+    public $_ins_suffix = '</ins>';
 
     /**
      * Prefix for deleted text.
      */
-    var $_del_prefix = '<del>';
+    public $_del_prefix = '<del>';
 
     /**
      * Suffix for deleted text.
      */
-    var $_del_suffix = '</del>';
+    public $_del_suffix = '</del>';
 
     /**
      * Header for each change block.
      */
-    var $_block_header = '';
+    public $_block_header = '';
 
     /**
      * What are we currently splitting on? Used to recurse to show word-level
      * changes.
      */
-    var $_split_level = 'lines';
+    public $_split_level = 'lines';
 
     function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
     {

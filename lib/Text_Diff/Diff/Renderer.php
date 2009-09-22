@@ -22,7 +22,7 @@ class Text_Diff_Renderer {
      * This should be left at zero for this class, but subclasses may want to
      * set this to other values.
      */
-    var $_leading_context_lines = 0;
+    public $_leading_context_lines = 0;
 
     /**
      * Number of trailing context "lines" to preserve.
@@ -30,7 +30,7 @@ class Text_Diff_Renderer {
      * This should be left at zero for this class, but subclasses may want to
      * set this to other values.
      */
-    var $_trailing_context_lines = 0;
+    public $_trailing_context_lines = 0;
 
     /**
      * Constructor.
@@ -85,7 +85,7 @@ class Text_Diff_Renderer {
             /* If these are unchanged (copied) lines, and we want to keep
              * leading or trailing context lines, extract them from the copy
              * block. */
-            if (is_a($edit, 'Text_Diff_Op_copy')) {
+            if (@is_a($edit, 'Text_Diff_Op_copy')) {
                 /* Do we have any diff blocks yet? */
                 if (is_array($block)) {
                     /* How many lines to keep as context from the copy
