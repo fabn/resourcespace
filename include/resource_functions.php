@@ -1523,7 +1523,7 @@ function update_xml_metadump($resource)
 	{
 	# Updates the XML metadata dump file when the resource has been altered.
 	global $xml_metadump,$xml_metadump_dc_map;
-	if (!$xml_metadump) {return true;} # Only execute when configured
+	if (!$xml_metadump || $resource < 0) {return true;} # Only execute when configured and when not a template
 	
 	$path=dirname(get_resource_path($resource,true,"",true)) . "/metadump.xml";
 	$f=fopen($path,"w");
