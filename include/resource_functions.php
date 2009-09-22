@@ -498,7 +498,8 @@ function update_field($resource,$field,$value)
 	$column=$fieldinfo["resource_column"];
 	if (strlen($column)>0)
 		{
-		sql_query("update resource set $column = '$value' where ref='$resource'");
+		if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
+		sql_query("update resource set $column = $value where ref='$resource'");
 		}
 	}
 
