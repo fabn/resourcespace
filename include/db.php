@@ -34,8 +34,6 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 		<hr style="margin-top:20px;"><p style="font-size:11px;color:black;"><?php echo "$errfile line $errline: $errstr"; ?></p>
 		</div>
 		<?php
-		# Uncomment next line to send e-mail with error details. Useful for debug.
-		# mail ("errors@montala.net","Error", $_SERVER["REQUEST_URI"] . "\n$errfile line $errline: $errstr\n\n\nDumping SERVER:\n" . print_r($_SERVER,true) . "\n\nDumping ENVIRONMENT:\n" . print_r($_ENV,true) . "\n\nDumping GET:\n" . print_r($_GET,true) . "\n\nDumping POST:\n" . print_r($_POST,true));
 		exit();
 		}
 	}

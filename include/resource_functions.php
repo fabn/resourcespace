@@ -75,7 +75,18 @@ function save_resource_data($ref,$multi)
 				$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
 				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-m","");
 				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
-				if (strlen($val)!=10) {$val="";}
+				
+				# Add time?
+				if (getval("field_" . $fields[$n]["ref"] . "-h","")!="")
+					{
+					$val.=" " . getvalescaped("field_" . $fields[$n]["ref"] . "-h","");
+					$val.=":" . getvalescaped("field_" . $fields[$n]["ref"] . "-i","");
+					}
+				else
+					{
+					# Blank date/time for invalid values.
+					if (strlen($val)!=10) {$val="";}
+					}
 				}
 			elseif ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
 				{
@@ -1480,7 +1491,7 @@ function log_diff($fromvalue,$tovalue)
 	# The inline diff syntax places inserts within <ins></ins> tags and deletes within <del></del> tags.
 
 	# Handle deletes
-	if (substr($diff,"<del>")!==false)
+	if (strpos($diff,"<del>")!==false)
 		{
 		$s=explode("<del>",$diff);
 		for ($n=1;$n<count($s);$n++)
@@ -1491,7 +1502,7 @@ function log_diff($fromvalue,$tovalue)
 			}
 		}
 	# Handle inserts
-	if (substr($diff,"<ins>")!==false)
+	if (strpos($diff,"<ins>")!==false)
 		{
 		$s=explode("<ins>",$diff);
 		for ($n=1;$n<count($s);$n++)

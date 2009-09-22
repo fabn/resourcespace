@@ -17,7 +17,7 @@
  * @package Text_Diff
  * @author  Geoffrey T. Dairiki <dairiki@dairiki.org>
  */
-error_reporting(0);
+#error_reporting(0);
 
 class Text_Diff {
 
