@@ -1483,7 +1483,7 @@ function log_diff($fromvalue,$tovalue)
 	$lines1 = explode("\n",$fromvalue);
 	$lines2 = explode("\n",$tovalue);
 
-	$diff     = new Text_Diff('auto', array($lines1, $lines2));
+	$diff     = new Text_Diff('native', array($lines1, $lines2));
 	$renderer = new Text_Diff_Renderer_inline();
 	$diff=$renderer->render($diff);
 	
