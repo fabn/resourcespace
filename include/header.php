@@ -119,10 +119,10 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <?php } ?>
 
 		<ul>
-		<?php if (!$use_theme_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php"<?php if (!checkperm("b")) { ?> target="main"<?php } ?>><?php echo $lang["home"]?></a></li><?php }  
+		<?php if (!$use_theme_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
 		hook("topnavlinksafterhome");
 		?>
-		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php" <?php if (!checkperm("b")) { ?>target="main"<?php } ?>><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
+		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php" target="<?php echo $target?>"><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
 		<?php if 	(
 			(checkperm("s"))  && (! $disable_searchresults )
 		&&
@@ -133,7 +133,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 			)
 		)
 		{?>
-		<?php if ($search_results_link){?><li><a<?php if (!checkperm("b")) { ?> target="main"<?php } ?> href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
+		<?php if ($search_results_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
 		<?php if (checkperm("s") && $enable_themes) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/themes.php"><?php echo $lang["themes"]?></a></li><?php } ?>
 		<?php if (!hook("replacerecentlink")) { ?>
 		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last1000")?>"><?php echo $lang["recent"]?></a></li><?php } ?>
