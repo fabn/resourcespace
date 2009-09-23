@@ -72,7 +72,7 @@ include "../include/header.php";
 	<?php } ?>
 
 	<div class="Question">
-	<label for="request"><?php echo $lang["requestreason"]?></label>
+	<label for="request"><?php echo $lang["requestreason"]?> <sup>*</sup></label>
 	<textarea class="stdwidth" name="request" id="request" rows=5 cols=50><?php echo getval("request","") ?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
@@ -118,8 +118,9 @@ if (isset($custom_request_fields))
 			<select name="custom<?php echo $n?>" id="custom<?php echo $n?>" class="stdwidth">
 			<?php foreach ($custom_request_options[$custom[$n]] as $option)
 				{
+				$val=i18n_get_translated($option);
 				?>
-				<option><?php echo htmlspecialchars(i18n_get_translated($option));?></option>
+				<option <?php if (getval("custom" . $n,"")==$val) { ?>selected<?php } ?>><?php echo htmlspecialchars($val);?></option>
 				<?php
 				}
 			?>

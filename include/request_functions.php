@@ -123,7 +123,7 @@ function email_collection_request($ref,$details)
 				}
 			}
 		}
-	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";}
+	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";} else {return false;}
 	
 	# Add custom fields
 	$c="";
@@ -187,7 +187,7 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 				}
 			}
 		}
-	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";}
+	if (trim($details)!="") {$message.=$lang["requestreason"] . ": " . newlines($details) . "\n\n";} else {return false;}
 	
 	# Add custom fields
 	$c="";
@@ -256,7 +256,7 @@ function email_resource_request($ref,$details)
 	$templatevars['list']=$list;
 
 	$templatevars['details']=stripslashes($details);
-	if ($templatevars['details']!=""){$adddetails=$lang["requestreason"] . ": " . newlines($templatevars['details'])."\n\n";} else { $adddetails="";}
+	if ($templatevars['details']!=""){$adddetails=$lang["requestreason"] . ": " . newlines($templatevars['details'])."\n\n";} else {return false;}
 	
 	# Add custom fields
 	$c="";
