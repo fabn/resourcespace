@@ -212,6 +212,9 @@ foreach ($extensions as $allowed_extension){
             <param name="showLogWindow" value="false">
             <param name="lang" value="<?php echo $language?>">
             <param name="maxChunkSize" value="<?php echo $jupload_chunk_size ?>">
+         <?php if (isset($jupload_look_and_feel)){ ?>
+	    <param name="lookAndFeel" value="<?php echo $jupload_look_and_feel ?>">
+	<?php } ?>
             
             <?php if (!$frameless_collections) { 
             # If not using frameless collections, refresh the bottom frame after upload.
