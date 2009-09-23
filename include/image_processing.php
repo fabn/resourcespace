@@ -100,6 +100,10 @@ function upload_file($ref,$no_exif=false)
 		$path=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);
 		if (file_exists($path)) {unlink($path);}
 		}
+	# Remove any FLV preview-only file
+	$path=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
+	if (file_exists($path)) {unlink($path);}
+
 	
 	# Remove any MP3 (except if the actual resource is an MP3 file).
 	if ($extension!="mp3")
