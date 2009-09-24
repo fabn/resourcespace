@@ -29,7 +29,10 @@ function create_resource($resource_type,$archive=999,$user=-1)
 		{
 		notify_user_contributed_submitted(array($insert));
 		}
-	
+
+	# set defaults for resource here (in case there are edit filters that depend on them)
+	set_resource_defaults($insert);	
+
 	# Log this			
 	daily_stat("Create resource",$insert);
 	resource_log($insert,'c',0);
@@ -160,24 +163,9 @@ function save_resource_data($ref,$multi)
 				}
 			}
 		}
-		
-	# Save all the resource defaults
-	global $userresourcedefaults;
-	if ($userresourcedefaults!="")
-		{
-		$s=explode(";",$userresourcedefaults);
-		for ($n=0;$n<count($s);$n++)
-			{
-			$e=explode("=",$s[$n]);
-			# Find field(s) - multiple fields can be returned to support several fields with the same name.
-			$f=sql_array("select ref value from resource_type_field where name='" . escape_check($e[0]) . "'");
-			if (count($f)==0) {exit ("Field(s) with short name '" . $e[0] . "' not found in resource defaults for this user group.");}
-			for ($m=0;$m<count($f);$m++)
-				{
-				update_field($ref,$f[$m],$e[1]);
-				}
-			}
-		}
+	
+	# save resource defaults
+	set_resource_defaults($ref);	 
 		
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
@@ -216,6 +204,28 @@ function save_resource_data($ref,$multi)
 	if (count($errors)==0) {return true;} else {return $errors;}
 	}
 	
+
+
+function set_resource_defaults($ref) 
+	{	
+	# Save all the resource defaults
+	global $userresourcedefaults;
+	if ($userresourcedefaults!="")
+		{
+		$s=explode(";",$userresourcedefaults);
+		for ($n=0;$n<count($s);$n++)
+			{
+			$e=explode("=",$s[$n]);
+			# Find field(s) - multiple fields can be returned to support several fields with the same name.
+			$f=sql_array("select ref value from resource_type_field where name='" . escape_check($e[0]) . "'");
+			if (count($f)==0) {exit ("Field(s) with short name '" . $e[0] . "' not found in resource defaults for this user group.");}
+			for ($m=0;$m<count($f);$m++)
+				{
+				update_field($ref,$f[$m],$e[1]);
+				}
+			}
+		}
+	}
 
 function save_resource_data_multi($collection)
 	{
