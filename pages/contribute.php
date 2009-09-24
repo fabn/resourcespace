@@ -14,10 +14,36 @@ include "../include/header.php";
 
 	<div class="VerticalNav">
 	<ul>
-	
-	<?php if ($usercontribute_swfupload) { ?>
-	<li><a href="edit.php?ref=-<?php echo $userref?>&swf=true"><?php echo $lang["contributenewresource"]?></a></li>
-	<?php }  else { ?>
+
+	<?php 
+	$batchenabled = false;
+	if (isset($usercontribute_javaupload) && $usercontribute_javaupload) { 
+		$batchenabled=true; ?>
+		<li><a href="edit.php?ref=-<?php echo $userref?>&java=true">
+		<?php 
+			if (isset($usercontribute_swfupload) && $usercontribute_swfupload) { 
+				echo $lang["addresourcebatchbrowserjava"]; 
+			} else { 
+				echo $lang["contributenewresource"]; 
+			} 
+		?>
+		</a></li>
+	<?php } ?>
+
+	<?php if (isset($usercontribute_swfupload) && $usercontribute_swfupload) { 
+		$batchenabled=true; ?>
+		<li><a href="edit.php?ref=-<?php echo $userref?>&swf=true">
+		<?php 
+			if (isset($usercontribute_javaupload) && $usercontribute_javaupload) { 
+				echo $lang["addresourcebatchbrowser"]; 
+			} else { 
+				echo $lang["contributenewresource"]; 
+			} 
+		?>
+		</a></li>
+	<?php }  ?>
+
+	<?php if (!$batchenabled){ ?>
 	<li><a href="create.php?archive=<?php echo (checkperm("e-2")?-2:-1) ?>"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php } ?>
 

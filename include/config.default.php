@@ -464,8 +464,13 @@ $refnumberfontsize=8;
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);
 
-# Use SWFUpload (in browser batch upload) for user contributions as opposed to standard single uploads
+
+# Options below control the batch uploader used in user contributions. If both set to true,
+# the user will be given a choice. If both set to false, the standard single upload will be used.
+# Use SWFUpload (Flash) for user contributions
 $usercontribute_swfupload=true;
+# Use JUpload Java uploader for user contributions
+$usercontribute_javaupload=false;
 
 # Show related themes and public collections panel on Resource View page.
 $show_related_themes=true;
