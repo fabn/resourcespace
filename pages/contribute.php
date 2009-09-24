@@ -1,6 +1,6 @@
 <?php
 require_once "../include/db.php";
-require_once "../include/authenticate.php";if (!checkperm("d")) {exit ("Permission denied.");}
+require_once "../include/authenticate.php";if (!checkperm("d")&&!(checkperm('c') && checkperm('e0'))) {exit ("Permission denied.");}
 require_once "../include/general.php";
 
 include "../include/header.php";
@@ -44,7 +44,18 @@ include "../include/header.php";
 	<?php }  ?>
 
 	<?php if (!$batchenabled){ ?>
-	<li><a href="create.php?archive=<?php echo (checkperm("e-2")?-2:-1) ?>"><?php echo $lang["contributenewresource"]?></a></li>
+	<li><a href="create.php<?php
+		if (checkperm('e-2')){
+			// resources go into submitted first
+			echo '?archive=-2';
+		} elseif (checkperm('e0')&&checkperm('c')){
+			// user can edit/create in live state
+			// use without archive parameter
+		} else {
+			// default to waiting for review
+			echo '?archive=-1';
+		} 
+	?>"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php } ?>
 
 	<?php if (checkperm("e-2")) { ?>
