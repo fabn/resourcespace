@@ -353,6 +353,10 @@ $view_new_material=false;
 # Display a 'My Collections' link in the top navigation
 $mycollections_link=false;
 
+# Display a 'My Contributions' link in the top navigation for all users, even if they have team center access
+# (Displays automatically for regular users)
+$mycontributions_link=false;
+
 # Require terms for download?
 $terms_download=false;
 
