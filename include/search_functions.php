@@ -409,7 +409,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
 		
 		if ($userref==$cuser) {$sql_filter="archive='$archive'";$sql_join="";} # Disable permissions when viewing your own contributions - only restriction is the archive status
-		return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where created_by='" . $cuser . "' and $sql_filter group by r.ref order by $order_by",false,$fetchrows);
+		return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where created_by='" . $cuser . "' and r.ref > 0 and $sql_filter group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
 	# Search for resources with images
