@@ -43,8 +43,12 @@ include "../../include/header.php";
 		
 		<li><a href="../search.php?search=&archive=-2"><?php echo $lang["viewuserpendingsubmission"]?></a></li>
 		<li><a href="../search.php?search=&archive=-1"><?php echo $lang["viewuserpending"]?></a></li>
-
 		<li><a href="../search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
+
+		<?php
+		# If deleting resources is configured AND the deletion state is '3' (deleted) AND the user has permission to edit resources in this state, then show a link to list deleted resources.
+		if (isset($resource_deletion_state) && $resource_deletion_state==3 && checkperm("e3")) { ?><li><a href="../search.php?search=&archive=3"><?php echo $lang["viewdeletedresources"]?></a></li>
+		<?php } ?>
 
 		<!--<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>-->
 		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>

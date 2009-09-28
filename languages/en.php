@@ -134,7 +134,7 @@ $lang["multieditnotallowed"]="Mult-edit not allowed - all the resources are not 
 $lang["emailcollection"]="E-mail Collection";
 $lang["collectionname"]="Collection Name";
 $lang["collectionid"]="Collection ID";
-$lang["emailtousers"]="E-mail to users<br />(use e-mail addresses for non-users)";
+$lang["emailtousers"]="E-mail to users<br><br><b>For existing users</b> start typing the user's name to search, click the user when found and then click plus<br><br><b>For non-registered users</b> type the e-mail address then click plus";
 $lang["emailcollection"]="E-mail Collection";
 $lang["removecollectionareyousure"]="Are you sure you wish to remove this collection from your list?";
 $lang["managemycollections"]="Manage 'My Collections'";
@@ -823,5 +823,8 @@ $lang["removethisfilter"]="(remove this filter)";
 
 $lang["no_exif"]="Do not import embedded EXIF/IPTC/XMP metadata for this upload";
 $lang["difference"]="Difference";
+$lang["viewdeletedresources"]="View Deleted Resources";
+$lang["finaldeletion"]="This resources is already in the 'deleted' state. This action will completely remove the resource from the system.";
+
 
 ?>

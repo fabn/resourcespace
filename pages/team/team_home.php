@@ -64,7 +64,7 @@ include "../../include/header.php";
 	<?php } ?>
 	
 	<?php if (checkperm("a")) { ?>
-	<li><a target="main" href="../admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
+	<li><a href="../admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
 
 	<?php hook("customteamfunctionadmin")?>
 	<?php } ?>

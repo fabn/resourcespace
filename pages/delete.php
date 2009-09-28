@@ -20,7 +20,7 @@ if (!get_edit_access($ref,$resource["archive"])) {exit ("Permission denied.");}
 
 if (getval("save","")!="")
 	{
-	if (md5("RS" . $username . getvalescaped("password",""))!=$userpassword)
+	if ($delete_requires_password && md5("RS" . $username . getvalescaped("password",""))!=$userpassword)
 		{
 		$error=$lang["wrongpassword"];
 		}
@@ -56,6 +56,8 @@ else
   <h1><?php echo $lang["deleteresource"]?></h1>
   <p><?php echo text("introtext")?></p>
   
+  <?php if ($resource["archive"]==3) { ?><p><strong><?php echo $lang["finaldeletion"] ?></strong></p><?php } ?>
+  
 	<form method="post">  
 	<input type=hidden name=ref value="<?php echo $ref?>">
 	
@@ -65,12 +67,14 @@ else
 	<div class="clearerleft"> </div>
 	</div>
 	
+	<?php if ($delete_requires_password) { ?>
 	<div class="Question">
 	<label for="password"><?php echo $lang["yourpassword"]?></label>
 	<input type=password class="shrtwidth" name="password" id="password" />
 	<div class="clearerleft"> </div>
 	<?php if ($error!="") { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>
 	</div>
+	<?php } ?>
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>			

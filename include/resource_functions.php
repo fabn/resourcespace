@@ -592,10 +592,13 @@ function delete_resource($ref)
 	
 	if ($ref<0) {return false;} # Can't delete the template
 
+	$current_state=sql_value("select archive value from resource where ref='$ref'",0);
+
 	global $resource_deletion_state;
-	if (isset($resource_deletion_state))
+	if (isset($resource_deletion_state) && $current_state!=3) # Really delete if already in the 'deleted' state.
 		{
 		# $resource_deletion_state is set. Do not delete this resource, instead move it to the specified state.
+		
 		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
 		
 		# Remove the resource from any collections

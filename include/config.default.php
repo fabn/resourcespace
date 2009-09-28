@@ -932,6 +932,10 @@ $allow_resource_deletion = true;
 # 3		Deleted (recommended)
 # $resource_deletion_state=3;
 
+# Does deleting resources require password entry? (single resource delete)
+$delete_requires_password=true;
+
+
 # Offline processes (e.g. staticsync and create_previews.php) - for process locking, how old does a lock have to be before it is ignored?
 $process_locks_max_seconds=60*60*4; # 4 hours default.
 
