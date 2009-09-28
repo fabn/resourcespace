@@ -125,7 +125,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	</div>
 <?php } ?>
 
-<?php if ($home_mycontributions && checkperm("d")) { ?>
+<?php if ($home_mycontributions && (checkperm("d") || (checkperm("c") && checkperm("e0")))) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
 	<h2><a href="contribute.php"><?php echo $lang["mycontributions"]?></a></h2>
 	<?php echo text("mycontributions")?>
