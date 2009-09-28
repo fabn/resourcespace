@@ -214,7 +214,7 @@ function get_resource_types()
 	# Translate names and check permissions
 	for ($n=0;$n<count($r);$n++)
 		{
-		if (!checkperm("T" . $r[$n]["ref"]))
+		if (!checkperm('T' . $r[$n]['ref']) && !checkperm('X' . $r[$n]['ref']))
 			{
 			$r[$n]["name"]=i18n_get_translated($r[$n]["name"]);	# Translate name
 			$return[]=$r[$n]; # Add to return array
