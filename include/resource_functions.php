@@ -1340,6 +1340,11 @@ function get_resource_access($resource)
 		# User does not have the 'g' permission. Always return restricted for live resources.
 		return 1; 
 		}
+	
+	if (checkperm('X'.$resourcedata['resource_type'])){
+		// this resource type is always restricted for this user group
+		return 1;
+	}
 
 	return $access;	
 	}

@@ -23,6 +23,7 @@ f?	Can see field with reference ? e.g. f1,f2,f3 (applies to editing, advanced se
 f-? Can not see the field with reference ? e.g. f*,f-3 means see all fields except field 3.
 F?	DENY write access to the field. The field will not appear on edit or edit all.
 T?  DENY access to resources with the given resource type ID, also hide this resource type when editing/searching
+X?  RESTRICT access to resources with the given resource type ID.
 
 Resource creation
 -----------------
