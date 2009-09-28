@@ -733,7 +733,7 @@ for ($n=0;$n<count($fields);$n++)
 	<div class="Question" id="question_status" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="archive"><?php echo $lang["status"]?></label>
 	<select class="stdwidth" name="archive" id="archive">
-	<?php for ($n=-2;$n<=2;$n++) { ?>
+	<?php for ($n=-2;$n<=3;$n++) { ?>
 	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
 	<?php } ?>
 	</select>
