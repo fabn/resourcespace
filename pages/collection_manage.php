@@ -152,11 +152,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	if($video_playlists){$videocount=get_collection_videocount($collections[$n]["ref"]);}else{$videocount="";}		
 	?><tr>
 	<td><div class="ListTitle">
-    <a <?php if  ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> <?php if ($frameless_collections && !checkperm("b")){ ?> href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
-		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
-		href="collections.php?collection=<?php echo $collections[$n]["ref"]?>&amp;thumbs=show" target="collections"
-		<?php } else {?>href="collections.php?collection=<?php echo $collections[$n]["ref"]?>" target="collections"<?php }?>><?php echo highlightkeywords($collections[$n]["name"],$find)?>
-	</a></div></td>
+    <a <?php if ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
 	<td><?php echo highlightkeywords($collection_prefix . $collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
