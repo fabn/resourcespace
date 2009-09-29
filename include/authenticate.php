@@ -2,6 +2,7 @@
 # authenticate user based on cookie
 $valid=true;
 $autologgedout=false;
+$nocookies=false;
 
 if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login))
     {
@@ -114,6 +115,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 else
     {
     $valid=false;
+    $nocookies=true;
     }
   
 if (!$valid)
@@ -124,7 +126,7 @@ if (!$valid)
     $path=$_SERVER["REQUEST_URI"];
 	?>
 	<script type="text/javascript">
-	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?><?php if ($autologgedout) { ?>&auto=true<?php } ?>";
+	top.location.href="<?php echo $baseurl?>/login.php?url=<?php echo urlencode($path)?><?php if ($autologgedout) { ?>&auto=true<?php } ?><?php if ($nocookies) { ?>&nocookies=true<?php } ?>";
 	</script>
 	<?php
     exit();

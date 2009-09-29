@@ -12,6 +12,9 @@ $error="";
 # Auto logged out? Set error message.
 if (getval("auto","")!="") {$error=str_replace("30",$session_length,$lang["sessionexpired"]);}
 
+# Display a no-cookies message
+if (getval("nocookies","")!="") {$error=$lang["nocookies"];}
+
 # First check that this IP address has not been locked out due to excessive attempts.
 $ip=get_ip();
 $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
@@ -181,6 +184,8 @@ if (getval("langupdate","")!="")
 	setcookie("language",$language,time()+(3600*24*1000),$baseurl_short . "pages/");
 	redirect("login.php?username=" . urlencode(getval("username","")));
 	}
+
+
 
 
 include "include/header.php";
