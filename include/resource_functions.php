@@ -495,7 +495,7 @@ function update_field($resource,$field,$value)
 		$existing=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 		remove_keyword_mappings($resource,i18n_get_indexable($existing),$field,$fieldinfo["partial_index"]);
 		
-		if ($fieldinfo['type'] == 3){
+		if ($fieldinfo['type'] == 3 && substr($value,0,1) <> ','){
 			$value = ','.$value;
 		}
 		
