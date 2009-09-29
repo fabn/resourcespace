@@ -590,7 +590,9 @@ for ($n=0;$n<count($fields);$n++)
 		# This hook will need modifying as the options list no longer works this way. Options are now translated first so the sort order is correct. ~DH
 		#$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
 		#if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
-		
+
+		if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
+
 		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>>
 		<option value=""></option>
 		<?php
