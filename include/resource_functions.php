@@ -486,7 +486,7 @@ function update_field($resource,$field,$value)
 	# Updates a field. Works out the previous value, so this is not efficient if we already know what this previous value is (hence it is not used for edit where multiple fields are saved)
 
 	# Fetch some information about the field
-	$fieldinfo=sql_query("select keywords_index,resource_column,partial_index from resource_type_field where ref='$field'");
+	$fieldinfo=sql_query("select keywords_index,resource_column,partial_index,type from resource_type_field where ref='$field'");
 	if (count($fieldinfo)==0) {return false;} else {$fieldinfo=$fieldinfo[0];}
 	
 	if ($fieldinfo["keywords_index"])
@@ -494,6 +494,10 @@ function update_field($resource,$field,$value)
 		# Fetch previous value and remove the index for those keywords
 		$existing=sql_value("select value from resource_data where resource='$resource' and resource_type_field='$field'","");
 		remove_keyword_mappings($resource,i18n_get_indexable($existing),$field,$fieldinfo["partial_index"]);
+		
+		if ($fieldinfo['type'] == 3){
+			$value = ','.$value;
+		}
 		
 		# Index the new value
 		add_keyword_mappings($resource,i18n_get_indexable($value),$field,$fieldinfo["partial_index"]);
