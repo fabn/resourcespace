@@ -805,10 +805,10 @@ function send_collection_feedback($collection,$comment)
 				$file_list.=$s[0];
 				}
 			}
+		# Append Lightroom compatible summary.
+		$body.="\n\n" . $lang["selectedresourceslightroom"] . "\n" . $file_list;
 		}	
 	
-	# Append Lightroom compatible summary.
-	$body.="\n\n" . $lang["selectedresourceslightroom"] . "\n" . $file_list;
 	
 	send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
 	
