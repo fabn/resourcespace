@@ -789,6 +789,7 @@ function send_collection_feedback($collection,$comment)
 	if ($feedback_resource_select)
 		{
 		$body.="\n\n" . $lang["selectedresources"] . ": ";
+		$file_list="";
 		$result=do_search("!collection" . $collection);
 		for ($n=0;$n<count($result);$n++)
 			{
@@ -797,10 +798,18 @@ function send_collection_feedback($collection,$comment)
 				{
 				$info=get_resource_data($ref);
 				$body.="\n" . $ref . " : " . $info["file_path"];
+
+				# Append to a file list that is compatible with Adobe Lightroom
+				if ($file_list!="") {$file_list.=", ";}
+				$s=explode(".",$info["file_path"]);
+				$file_list.=$s[0];
 				}
 			}
 		}	
-		
+	
+	# Append Lightroom compatible summary.
+	$body.="\n\n" . $lang["selectedresourceslightroom"] . "\n" . $file_list;
+	
 	send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
 	
 	# Cancel the feedback request for this resource.

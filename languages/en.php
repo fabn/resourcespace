@@ -828,5 +828,6 @@ $lang["finaldeletion"]="This resources is already in the 'deleted' state. This a
 
 $lang["nocookies"]="A cookie could not be set correctly. Please make sure you have cookies enabled in your browser settings.";
 
+$lang["selectedresourceslightroom"]="Selected resources (Lightroom compatible list):";
 
 ?>
