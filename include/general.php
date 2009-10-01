@@ -615,7 +615,7 @@ function get_field_options($ref)
 		}
 
 	global $auto_order_checkbox;
-	if ($auto_order_checkbox) {asort($option_trans);}
+	if ($auto_order_checkbox) {asort($options);}
 	
 	return $options;
 	}
