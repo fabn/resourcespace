@@ -608,14 +608,13 @@ function get_field_options($ref)
 	
 	# Translate all options
 	$options=trim_array(explode(",",$options));
-	$option_trans=array();
 	for ($m=0;$m<count($options);$m++)
 		{
 		$options[$m]=i18n_get_translated($options[$m]);
 		}
 
 	global $auto_order_checkbox;
-	if ($auto_order_checkbox) {asort($options);}
+	if ($auto_order_checkbox) {sort($options);}
 	
 	return $options;
 	}
