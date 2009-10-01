@@ -24,6 +24,7 @@ f-? Can not see the field with reference ? e.g. f*,f-3 means see all fields exce
 F?	DENY write access to the field. The field will not appear on edit or edit all.
 T?  DENY access to resources with the given resource type ID, also hide this resource type when editing/searching
 X?  RESTRICT access to resources with the given resource type ID.
+X?_$	RESTRICT access to resources with the given resource type ID AND the given download size ID, for example X1_scr restricts access to the screen size download for photo resources.
 
 Resource creation
 -----------------

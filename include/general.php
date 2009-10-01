@@ -508,7 +508,19 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$returnline=array();
 				$returnline["name"]=$sizes[$n]["name"];
 				$returnline["allow_preview"]=$sizes[$n]["allow_preview"];
-				$returnline["allow_restricted"]=$sizes[$n]["allow_restricted"];
+
+				# The ability to restrict download size by user group and resource type.
+				$resource_type=sql_value("select resource_type value from resource where ref='$ref'","");
+				if (checkperm("X" . $resource_type . "_" . $sizes[$n]["id"]))
+					{
+					# Permission set. Always restrict this download if this resource is restricted.
+					$returnline["allow_restricted"]=false;
+					}
+				else
+					{
+					# Take the restriction from the settings for this download size.
+					$returnline["allow_restricted"]=$sizes[$n]["allow_restricted"];
+					}
 				$returnline["path"]=$path;
 				$returnline["id"]=$sizes[$n]["id"];
 				if ((list($sw,$sh) = @getimagesize($path))===false) {$sw=0;$sh=0;}

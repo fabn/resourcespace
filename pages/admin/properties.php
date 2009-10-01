@@ -163,7 +163,10 @@ elseif (array_key_exists("submit",$_POST))
         $history.="&$key=" . urlencode($value);
         }
     #echo "<li>$parentid<li>$query";
-
+	
+	# Handle null values.
+	$query=str_replace("''","null",$query);
+	
     sql_query($query);
     
     if (array_key_exists("newredirect",$_POST))
