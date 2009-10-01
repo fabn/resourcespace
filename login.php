@@ -13,7 +13,7 @@ $error="";
 if (getval("auto","")!="") {$error=str_replace("30",$session_length,$lang["sessionexpired"]);}
 
 # Display a no-cookies message
-if (getval("nocookies","")!="") {$error=$lang["nocookies"];}
+if (getval("nocookies","")!="" && getval("cookiecheck","")=="") {$error=$lang["nocookies"];}
 
 # First check that this IP address has not been locked out due to excessive attempts.
 $ip=get_ip();
