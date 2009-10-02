@@ -68,6 +68,11 @@ if ($resource===false) {exit("Resource not found.");}
 # Load access level
 $access=get_resource_access($ref);
 
+# load custom access level so that we can verify if individual size restrictions
+# should be overridden
+$usercustomaccess = get_custom_access_user($ref,$userref);
+
+
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
 		{
@@ -280,6 +285,13 @@ if ($resource["has_image"]==1 && $download_multisize)
 		# For restricted access, only show sizes that are available for the restricted view.
 		# This depends on "allow restricted download" in Downloads/Preview Sizes and, for the original file, $restricted_full_download in config.php.
 		$downloadthissize=($access==0 || ($access==1 && $sizes[$n]["allow_restricted"])|| ($access==1 && $fulldownload &&$restricted_full_download));
+		
+		# has this user group been prohibited from this image size for this resource type?
+		# if so block download unless they have been given custom access.
+		if (checkperm('X'.$resource['resource_type'].'_'.$sizes[$n]['id']) && ($usercustomaccess === false || !$usercustomaccess==='0') )
+			{
+				$downloadthissize=false;
+			}
 		
 		# If the download is allowed, show a download button, otherwise show a request button.
 		if ($downloadthissize)
