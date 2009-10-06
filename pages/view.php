@@ -70,7 +70,13 @@ $access=get_resource_access($ref);
 
 # load custom access level so that we can verify if individual size restrictions
 # should be overridden
-$usercustomaccess = get_custom_access_user($ref,$userref);
+# but... don't do this if user is not set - presume their access is controlled another way.
+if (isset($userref))
+	{
+	$usercustomaccess = get_custom_access_user($ref,$userref);
+	} else {
+	$usercustomaccess = false;
+	}
 
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
