@@ -46,6 +46,12 @@ function save_resource_data($ref,$multi)
 	# Also re-index all keywords from indexable fields.
 		
 	global $auto_order_checkbox,$userresourcedefaults,$multilingual_text_fields,$languages,$language;
+
+	# save resource defaults - do this first so that they can be overridden if needed
+	# and so that when we grab the current values they will already reflect the defaults
+	set_resource_defaults($ref);	 
+
+
 	# Loop through the field data and save (if necessary)
 	$errors=array();
 	$resource_sql="";
@@ -105,21 +111,30 @@ function save_resource_data($ref,$multi)
 						}
 					}
 				}
+			elseif ($fields[$n]["type"] == 3)
+				{
+				$val=getvalescaped("field_" . $fields[$n]["ref"],"");				
+				// if it doesn't already start with a comma, add one
+				if (substr($val,0,1) != ',')
+					{
+					$val = ','.$val;
+					}
+				}
 			else
 				{
 				# Set the value exactly as sent.
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
-				}
+				} 
 			if ($fields[$n]["value"]!=str_replace("\\","",$val))
 				{
 				# This value is different from the value we have on record.
-				
+
 				# Write this edit to the log (including the diff)
 				resource_log($ref,'e',$fields[$n]["ref"],"",$fields[$n]["value"],$val);
 				
 				# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 				if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
-				
+
 				# If 'resource_column' is set, then we need to add this to a query to back-update
 				# the related columns on the resource table
 				if (strlen($fields[$n]["resource_column"])>0)
@@ -135,10 +150,9 @@ function save_resource_data($ref,$multi)
 	
 				$oldval=$fields[$n]["value"];
 				
-				if ($fields[$n]["type"]==3)
+				if ($fields[$n]["type"]==3 && substr($oldval,0,1) != ',')
 					{
 					# Prepend a comma when indexing dropdowns
-					$val="," . getvalescaped("field_" . $fields[$n]["ref"],"");
 					$oldval="," . $oldval;
 					}
 				
@@ -164,8 +178,6 @@ function save_resource_data($ref,$multi)
 			}
 		}
 	
-	# save resource defaults
-	set_resource_defaults($ref);	 
 		
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
