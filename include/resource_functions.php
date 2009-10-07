@@ -47,11 +47,6 @@ function save_resource_data($ref,$multi)
 		
 	global $auto_order_checkbox,$userresourcedefaults,$multilingual_text_fields,$languages,$language;
 
-	# save resource defaults - do this first so that they can be overridden if needed
-	# and so that when we grab the current values they will already reflect the defaults
-	set_resource_defaults($ref);	 
-
-
 	# Loop through the field data and save (if necessary)
 	$errors=array();
 	$resource_sql="";
@@ -177,7 +172,9 @@ function save_resource_data($ref,$multi)
 				}
 			}
 		}
-	
+
+	# save resource defaults
+	set_resource_defaults($ref);	 
 		
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
