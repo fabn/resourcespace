@@ -466,8 +466,6 @@ $lang["stat-search"]="Search";
 $lang["stat-usersession"]="User session";
 
 # Access
-$lang["access-2"]="User Contributed - Pending Submission";
-$lang["access-1"]="User Contributed - Pending Review";
 $lang["access0"]="Open";
 $lang["access1"]="Restricted";
 $lang["access2"]="Confidential";
