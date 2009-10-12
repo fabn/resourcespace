@@ -596,7 +596,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 
-			if ((!$highestsize && !($extension=="jpg" || $extension=="jpeg")) || ($sw>=$tw) || ($sh>=$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
+			if ((!$highestsize && !($extension=="jpg" || $extension=="jpeg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
 				{
 				if (($sw<$tw) && ($sh<$th))
 					{
@@ -604,6 +604,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					}
 				# Find the target path
 				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
+				if (file_exists($path)){unlink($path);}
+
 				# Also try the watermarked version.
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
 				if (file_exists($wpath)){unlink($wpath);}

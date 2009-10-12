@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality,$pdf_pages,$antiword_path,$unoconv_path,$pdf_dynamic_rip,$ffmpeg_audio_extensions,$ffmpeg_audio_params;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions;
 
 if (!$previewonly)
 	{
@@ -40,11 +40,24 @@ if (file_exists($target)) {unlink($target);}
 hook("metadata");
 
 /* ----------------------------------------
+	QuickLook Previews (Mac only)
+	For everything except Audio/Video files, attempt to generate a QuickLook preview first.
+   ----------------------------------------
+*/
+if (isset($qlpreview_path) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions))
+	{
+	$output=shell_exec($qlpreview_path."/qlpreview -imageType jpg -width 800 -height 800 -asIcon no -preferFileIcon no -inPath " . escapeshellarg($file) . " -outPath " . escapeshellarg($target));
+	sleep(4);
+	if (file_exists($target)){$newfile = $target;}	
+	}
+
+
+/* ----------------------------------------
 	Try InDesign
    ----------------------------------------
 */
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
-if ($extension=="indd")
+if ($extension=="indd" && !isset($newfile))
 	{
 	$indd_thumb = extract_indd_thumb ($file);
 	if ($indd_thumb!="no")
@@ -62,7 +75,7 @@ if ($extension=="indd")
    ----------------------------------------
 */
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
-if ($extension=="psd")
+if ($extension=="psd" && !isset($newfile))
 	{
 	global $photoshop_thumb_extract;
 	if ($photoshop_thumb_extract)
@@ -85,7 +98,7 @@ if ($extension=="psd")
    ----------------------------------------
 */
 
-if ($extension=="cr2")
+if ($extension=="cr2" && !isset($newfile))
 	{
 	global $cr2_thumb_extract;
 	if ($cr2_thumb_extract)
@@ -108,7 +121,7 @@ if ($extension=="cr2")
    ----------------------------------------
 */
 
-if ($extension=="nef")
+if ($extension=="nef" && !isset($newfile))
 	{
 	global $nef_thumb_extract;
 	if ($nef_thumb_extract)
@@ -135,7 +148,7 @@ if ($extension=="nef")
    ----------------------------------------
 */
 global $unoconv_extensions;
-if (in_array($extension,$unoconv_extensions) && isset($unoconv_path))
+if (in_array($extension,$unoconv_extensions) && isset($unoconv_path) && !isset($newfile))
 	{
 	$unocommand=$unoconv_path . "/unoconv";
 	if (!file_exists($unocommand)) {exit("Unoconv executable not found at '$unoconv_path'");}
@@ -163,7 +176,7 @@ if (in_array($extension,$unoconv_extensions) && isset($unoconv_path))
 	Try OpenDocument Format
    ----------------------------------------
 */
-if (($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth"))
+if ((($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth")) && !isset($newfile))
 
 	{
 shell_exec("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
@@ -178,7 +191,7 @@ $odcommand=$command . " \"$target\"[0]  \"$target\"";
 	so it will likely work in most cases, but I think the specs allow it to go anywhere.
    ----------------------------------------
 */
-if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($extension=="xps"))
+if ((($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($extension=="xps")) && !isset($newfile))
 	{
 	shell_exec("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $target;
 	}
@@ -190,7 +203,7 @@ if (($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($ex
    ----------------------------------------
 */
 
-if ($extension=="blend")
+if ($extension=="blend" && !isset($newfile))
 	{
 	$blendercommand="blender";	
 	if (!file_exists($blendercommand)) {$blendercommand="/Applications/blender.app/Contents/MacOS/blender";}
@@ -211,7 +224,7 @@ if ($extension=="blend")
 	(note: this is very basic)
    ----------------------------------------
 */
-if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
+if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !isset($newfile))
 	{
 	$command=$antiword_path . "/antiword";
 	if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
@@ -242,7 +255,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path))
    ----------------------------------------
 */
 
-if ($extension=="mp3")
+if ($extension=="mp3" && !isset($newfile))
 	{
 	global $exiftool_path;
 	if (isset($exiftool_path))
@@ -262,7 +275,7 @@ if ($extension=="mp3")
    ----------------------------------------
 */
 # Support text files simply by rendering them on a JPEG.
-if ($extension=="txt")
+if ($extension=="txt" && !isset($newfile))
 	{
 	$text=wordwrap(file_get_contents($file),90);
 	$width=650;$height=850;
@@ -281,8 +294,6 @@ if ($extension=="txt")
 	Try FFMPEG for video files
    ----------------------------------------
 */
-global $ffmpeg_path, $ffmpeg_supported_extensions;
-
 if (isset($ffmpeg_path))
 	{
 	$ffmpeg_path.="/ffmpeg";
@@ -354,7 +365,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
 	Try FFMPEG for audio files
    ----------------------------------------
 */
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ffmpeg_audio_extensions))
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
 	{
 	$ffmpeg_path=escapeshellarg($ffmpeg_path);
 	

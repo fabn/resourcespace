@@ -9,6 +9,8 @@ include(dirname(__FILE__) . "/../include/resource_functions.php");
 if (is_process_lock("create_previews")) {exit("Process lock is in place. Deferring.");}
 set_process_lock("create_previews");
 
+if (function_exists("pcntl_signal")) {$multiprocess=true;} else {$multiprocess=false;}
+
 // We store the start date.
 $global_start_time = microtime(true);
 
@@ -87,9 +89,11 @@ function sigint_handler()
 
 
 // We define the functions to use for signal handling.
-pcntl_signal(SIGALRM, 'sigalrm_handler');
-pcntl_signal(SIGCHLD, 'sigchld_handler');
-
+if ($multiprocess)
+	{
+	pcntl_signal(SIGALRM, 'sigalrm_handler');
+	pcntl_signal(SIGCHLD, 'sigchld_handler');
+	}
 
 
 // We fetch the list of resources to process.
@@ -99,16 +103,22 @@ foreach($resources as $resource) // For each resources
   {
 
   // We wait for a fork emplacement to be freed.
-  while(count($children) >= $max_forks)
+  if ($multiprocess)
+	{
+	  	while(count($children) >= $max_forks)
+	    {
+	    // We clean children list.
+	    reap_children();
+	    sleep(1);
+	    }
+	}
+	
+  if (!$multiprocess || count($children) < $max_forks) // Test if we can create a new fork.
     {
-    // We clean children list.
-    reap_children();
-    sleep(1);
-    }
-
-  if(count($children) < $max_forks) // Test if we can create a new fork.
-    {
-    $pid = pcntl_fork();
+    
+    // fork
+    if (!$multiprocess) {$pid=false;} else {$pid = pcntl_fork();}
+    
     if ($pid == -1)
       {
       die("fork failed!\n");
@@ -120,8 +130,11 @@ foreach($resources as $resource) // For each resources
       }
     else
       {
-      pcntl_signal(SIGCHLD, SIG_IGN);
-      pcntl_signal(SIGINT, SIG_DFL);
+      if ($multiprocess)
+      	{
+	      pcntl_signal(SIGCHLD, SIG_IGN);
+	      pcntl_signal(SIGINT, SIG_DFL);
+	    }
 
       // Processing resource.
       echo sprintf("Processing resource n°%d.\n", $resource['ref']);
@@ -144,20 +157,27 @@ foreach($resources as $resource) // For each resources
       create_previews($resource['ref'], false, $resource['file_extension']);
 
       echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
-      // We exit in order to avoid fork bombing.
-      exit(0);
+
+	  if ($multiprocess)
+	  	{
+	      // We exit in order to avoid fork bombing.
+	      exit(0);
+	    }
       }
     } // Test if we can create a new fork
   } // For each resources
 
 // We wait for all forks to exit.
-while(count($children))
-  {
-  // We clean children list.
-  reap_children();
-  sleep(1);
-  }
-
+if ($multiprocess)
+	{
+	while(count($children))
+	  {
+	  // We clean children list.
+	  reap_children();
+	  sleep(1);
+	  }
+	}
+	
 echo sprintf("Completed in %01.2f seconds.\n", microtime(true) - $global_start_time);
 
 clear_process_lock("create_previews");
