@@ -250,6 +250,40 @@ function remove_collection($user,$collection)
 	collection_log($collection,"T",0, sql_value ("select username as value from user where ref = $user",""));
 	}
 
+function index_collection($ref,$index_string='')
+	{
+	# Update the keywords index for this collection
+	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
+	# Define an indexable string from the name, themes and keywords.
+
+	global $index_collection_titles;
+
+	if ($index_collection_titles)
+		{
+			$indexfields = 'name,keywords';
+		} else {
+			$indexfields = 'keywords';
+		}
+
+	// if an index string wasn't supplied, generate one
+	if (!strlen($index_string) > 0){
+		$indexarray = sql_query("select $indexfields from collection where ref = '$ref'");
+		for ($i=0; $i<count($indexarray); $i++){
+			$index_string = implode(' ',$indexarray[$i]);
+		} 
+	}
+
+	$keywords=split_keywords($index_string,true);
+	for ($n=0;$n<count($keywords);$n++)
+		{
+		$keyref=resolve_keyword($keywords[$n],true);
+		sql_query("insert into collection_keyword values ('$ref','$keyref')");
+		}
+	// return the number of keywords indexed
+	return $n;
+	}
+
+
 function save_collection($ref)
 	{
 	$theme=getvalescaped("theme","");
@@ -277,16 +311,14 @@ function save_collection($ref)
 				allow_changes='" . $allow_changes . "'
 	where ref='$ref'");
 	
-	# Update the keywords index for this collection
-	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
-	# Define an indexable string from the name, themes and keywords.
-	$index_string=getvalescaped("keywords","");
-	$keywords=split_keywords($index_string,true);
-	for ($n=0;$n<count($keywords);$n++)
-		{
-		$keyref=resolve_keyword($keywords[$n],true);
-		sql_query("insert into collection_keyword values ('$ref','$keyref')");
-		}
+    	$index_string=getvalescaped("keywords","");
+	
+	global $index_collection_titles;
+	if ($index_collection_titles){
+		$index_string .= ' '.getvalescaped('name','');
+	}
+
+	index_collection($ref,$index_string);
 	
 	# Reset archive status if specified
 	if (getval("archive","")!="")

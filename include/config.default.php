@@ -813,6 +813,9 @@ $simple_search_dropdown_filtering=false;
 $search_includes_themes=true;
 $search_includes_public_collections=false;
 
+# include keywords from collection titles when indexing collections
+$index_collection_titles = false;
+
 # Default home page (when not using themes as the home page).
 # You can set other pages, for example search results, as the home page e.g.
 # $default_home_page="search.php?search=example";

@@ -19,23 +19,10 @@ echo "<pre>";
 $collections=sql_query("select * from collection where public=1 order by ref");
 for ($n=0;$n<count($collections);$n++)
 	{
-	$ref=$collections[$n]["ref"];
+		$ref=$collections[$n]["ref"];
 
+		$words = index_collection($ref);
 
-	# Update the keywords index for this collection
-	sql_query("delete from collection_keyword where collection='$ref'"); # Remove existing keywords
-	
-	# Define an indexable string from the keywords.
-	$index_string=$collections[$n]["keywords"];
-	$keywords=split_keywords($index_string,true);
-	$words=count($keywords);
-	for ($m=0;$m<count($keywords);$m++)
-		{
-		$keyref=resolve_keyword($keywords[$m],true);
-		sql_query("insert into collection_keyword values ('$ref','$keyref')");
-		}
-	
-
-	echo "Done $ref (" . ($n+1) . "/" . count($collections) . ") - $words words<br />\n";
+		echo "Done $ref (" . ($n+1) . "/" . count($collections) . ") - $words words<br />\n";
 	}
 ?>
