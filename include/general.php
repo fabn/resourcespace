@@ -236,6 +236,8 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 	{
 	# Takes $search and returns an array of individual keywords.
 
+	global $config_trimchars;
+
 	if ($index && $is_date)
 		{
 		# Date handling... index a little differently to support various levels of date matching (Year, Year+Month, Year+Month+Day).
@@ -285,11 +287,11 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 				}
 
 			if ($partial_index) {$return2=add_partial_index($return2);}
-			return trim_array($return2);
+			return trim_array($return2,$config_trimchars);
 			}
 		else
 			{
-			return trim_array($return);
+			return trim_array($return,$config_trimchars);
 			}
 		}
 	else
@@ -297,7 +299,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 		# split using spaces and similar chars (according to configured whitespace characters)
 		$ns=explode(" ",cleanse_string($ns,false));
 		if ($index && $partial_index) {$ns=add_partial_index($ns);}
-		return trim_array($ns);
+		return trim_array($ns,$config_trimchars);
 		}
 
 	}
@@ -540,12 +542,19 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	return $return;
 	}
 
-function trim_array($array)
+function trim_array($array,$trimchars='')
 	{
 	# removes whitespace from the beginning/end of all elements in an array
+	
+
 	for ($n=0;$n<count($array);$n++)
 		{
 		$array[$n]=trim($array[$n]);
+		if (strlen($trimchars) > 0)
+			{
+			// also trim off extra characters they want gone
+			$array[$n]=trim($array[$n],$trimchars);
+			}
 		}
 	return $array;
 	}
