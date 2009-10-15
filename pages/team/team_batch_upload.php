@@ -10,7 +10,7 @@ set_time_limit(60*60*4);
 
 $use_local = getvalescaped('use_local', '') !== '';
 
-$collection=getvalescaped("collection","");
+$collection=getvalescaped("collection","",true);
 
 # Create a new collection?
 if ($collection==-1)

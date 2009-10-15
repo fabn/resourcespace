@@ -3,7 +3,7 @@ include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("u")) {exit ("Permission denied.");}
 include "../../include/general.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 if ((getval("save","")!="") || (getval("suggest","")!=""))
 	{

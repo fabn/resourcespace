@@ -4,7 +4,7 @@ include "../../include/authenticate.php"; if (!checkperm("r")) {exit ("Permissio
 include "../../include/general.php";
 include "../../include/research_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 if (getval("save","")!="")
 	{

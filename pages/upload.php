@@ -4,7 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 $status="";
 
 $allowed_extensions=get_allowed_extensions($ref);

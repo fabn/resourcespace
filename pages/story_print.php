@@ -4,7 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/search_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 $resource=get_resource_data($ref);
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)

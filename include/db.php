@@ -104,11 +104,31 @@ if ($language!="en")
 	}
 
 # Register all plugins
+if ($use_plugins_manager){
+	#Check that manually (via config.php) activated plugins are included in the plugins table.
+	foreach($plugins as $plugin_name){
+		if ($plugin_name!=''){
+			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='".$plugin_name."'",'')==''){
+				#Installed plugin isn't marked as installed in the DB.  Update it now.
+				#Check if there's a plugin.yaml file to get version and author info.
+				$plugin_yaml_path = dirname(__FILE__)."/../plugins/".$plugin_name."/".$plugin_name.".yaml"; 
+				$p_yaml = get_plugin_yaml($plugin_yaml_path, false);
+				#Write what information we have to the plugin DB.
+				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url) VALUES ('".$p_yaml['version']."','".$p_yaml['author']."','".$p_yaml['desc']."','".$p_name."','".$p_yaml['info_url']."','".$p_yaml['update_url']."')");
+			}
+		}
+	}
+	$active_plugins = (sql_query("SELECT name FROM plugins WHERE inst_version>=0"));
+	foreach($active_plugins as $plugin){
+		register_plugin($plugin['name']);
+	}
+}
+else {
 for ($n=0;$n<count($plugins);$n++)
 	{
 	register_plugin($plugins[$n]);
 	}
-
+}
 
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
@@ -161,7 +181,42 @@ function hook($name,$pagename="",$params=array())
 		}
 	return $found;
 	}
-
+function get_plugin_yaml($path, $validate=true){
+	#We're not using a full YAML structure, so this parsing function will do
+	#If validate is false, this function will return an array of blank values if a yaml isn't available
+	$yaml_file_ptr = @fopen($path, 'r');
+	$plugin_yaml = array();
+	if ($yaml_file_ptr!=false){
+		while (($line = fgets($yaml_file_ptr))!=''){
+			if($line[0]!='#'){ #Exclude comments from parsing
+				if (($pos=strpos($line,':'))!=false){
+					$plugin_yaml[trim(substr($line,0,$pos))] = trim(substr($line, $pos+1));
+				}
+			}
+		}
+		fclose($yaml_file_ptr);
+		if ($validate){
+			if (isset($plugin_yaml['name']) && $plugin_yaml['name']==basename($path,'.yaml') && isset($plugin_yaml['version']))
+				return $plugin_yaml;
+			else return false;
+		}	
+	}
+	elseif ($validate)
+		return false;
+	if (!isset($plugin_yaml['name']))
+		$plugin_yaml['name'] = basename($path,'.yaml');
+	if (!isset($plugin_yaml['desc']))
+		$plugin_yaml['desc'] = '';
+	if (!isset($plugin_yaml['version']))
+		$plugin_yaml['version'] = '0';
+	if (!isset($plugin_yaml['author']))
+		$plugin_yaml['author'] = '';
+	if (!isset($plugin_yaml['info_url']))
+		$plugin_yaml['info_url'] = '';
+	if (!isset($plugin_yaml['update_url']))
+		$plugin_yaml['update_url'] = '';
+	return $plugin_yaml;
+}
 function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     {
     # sql_query(sql) - execute a query and return the results as an array.
@@ -414,19 +469,24 @@ function CheckDBStruct($path)
 
 
 	
-function getval($val,$default)
+function getval($val,$default,$force_numeric=false)
     {
     # return a value from POST, GET or COOKIE (in that order), or $default if none set
-    if (array_key_exists($val,$_POST)) {return $_POST[$val];}
-    if (array_key_exists($val,$_GET)) {return $_GET[$val];}
-    if (array_key_exists($val,$_COOKIE)) {return $_COOKIE[$val];}
+    if (array_key_exists($val,$_POST)) {return ($force_numeric && !is_numeric($_POST[$val])?$default:$_POST[$val]);}
+    if (array_key_exists($val,$_GET)) {return ($force_numeric && !is_numeric($_GET[$val])?$default:$_GET[$val]);}
+    if (array_key_exists($val,$_COOKIE)) {return ($force_numeric && !is_numeric($_COOKIE[$val])?$default:$_COOKIE[$val]);}
     return $default;
     }
 
-function getvalescaped($val,$default)
+function getvalescaped($val,$default,$force_numeric=false)
     {
     # return a value from get/post, escaped and SQL-safe
-    return escape_check(getval($val,$default));
+    $value=escape_check(getval($val,$default,$force_numeric));
+    
+    # XSS vulnerability checking
+    if (strpos(strtolower($value),"<script")!==false) {return $default;}
+    
+    return $value;
     }
     
 function getuid()

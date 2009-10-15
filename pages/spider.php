@@ -7,7 +7,7 @@ include "../include/resource_functions.php";
 # search engines / appliances.
 
 $password=getvalescaped("password",""); if ($password!=$spider_password) {exit ("Incorrect password.");}
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 $higher=getvalescaped("higher","");
 $lower=getvalescaped("lower","");
 

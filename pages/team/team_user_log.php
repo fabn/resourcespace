@@ -4,7 +4,7 @@ include "../../include/authenticate.php";
 include "../../include/general.php";
 include "../../include/resource_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 $userdata=get_user($ref);
 
 include "../../include/header.php";

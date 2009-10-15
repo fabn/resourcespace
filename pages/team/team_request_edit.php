@@ -5,7 +5,7 @@ include "../../include/general.php";
 include "../../include/request_functions.php";
 include "../../include/collections_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 if (getval("save","")!="")
 	{

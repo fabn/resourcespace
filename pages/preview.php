@@ -3,7 +3,7 @@ include "../include/db.php";
 include "../include/general.php";
 
 # External access support (authenticate only if no key provided, or if invalid access key provided)
-$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../include/authenticate.php";}
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref","",true),$k))) {include "../include/authenticate.php";}
 
 include "../include/search_functions.php";
 include "../include/collections_functions.php";
@@ -16,9 +16,9 @@ $border=true;
 if ($ext!="" && $ext!="gif" && $ext!="jpg" && $ext!="png") {$ext="jpg";$border=false;} # Supports types that have been created using ImageMagick
 
 $search=getvalescaped("search","");
-$offset=getvalescaped("offset","");
+$offset=getvalescaped("offset","",true);
 $order_by=getvalescaped("order_by","");
-$archive=getvalescaped("archive","");
+$archive=getvalescaped("archive","",true);
 $restypes=getvalescaped("restypes","");
 $page=getvalescaped("page",1);
 if (strpos($search,"!")!==false) {$restypes="";}

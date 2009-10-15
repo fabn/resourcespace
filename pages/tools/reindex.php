@@ -13,7 +13,7 @@ include "../../include/resource_functions.php";
 include "../../include/image_processing.php";
 
 $sql="";
-if (getval("ref","")!="") {$sql="where r.ref='" . getvalescaped("ref","") . "'";}
+if (getval("ref","")!="") {$sql="where r.ref='" . getvalescaped("ref","",true) . "'";}
 
 set_time_limit(60*60*5);
 echo "<pre>";

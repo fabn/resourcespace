@@ -7,7 +7,7 @@ include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 
 # Fetch vars
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 # if bypass sharing page option is on, redirect to e-mail
 if ($bypass_share_screen)
 	{

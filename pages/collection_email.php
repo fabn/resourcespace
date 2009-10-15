@@ -6,7 +6,7 @@ include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 # Fetch collection data
 if (!is_numeric($ref)) ##  multiple collections may be referenced
 	{

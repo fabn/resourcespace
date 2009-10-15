@@ -65,7 +65,9 @@ include "../../include/header.php";
 	
 	<?php if (checkperm("a")) { ?>
 	<li><a href="../admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
-
+	<?php if ($use_plugins_manager == true){ ?>
+	<li><a href="../admin/plugins.php"><?php echo $lang["pluginssetup"]?></a></li>
+	<?php } ?>
 	<?php hook("customteamfunctionadmin")?>
 	<?php } ?>
 	

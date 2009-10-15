@@ -42,7 +42,7 @@ for ($n=0;$n<count($plugins);$n++)
 ?>
 
 <?php
-$collection=getvalescaped("collection","");
+$collection=getvalescaped("collection","",true);
 $entername=getvalescaped("entername","");
 
 if ($collection!="")

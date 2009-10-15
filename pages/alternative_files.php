@@ -4,7 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 # Fetch resource data.
 $resource=get_resource_data($ref);

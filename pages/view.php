@@ -7,7 +7,7 @@ include "../include/search_functions.php";
 include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 # Reindex the exif headers, really for debug
 if (getval("exif","")!="")
@@ -21,10 +21,10 @@ if (getval("exif","")!="")
 # fetch the current search (for finding simlar matches)
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
-$offset=getvalescaped("offset",0);
+$offset=getvalescaped("offset",0,true);
 $restypes=getvalescaped("restypes","");
 if (strpos($search,"!")!==false) {$restypes="";}
-$archive=getvalescaped("archive",0);
+$archive=getvalescaped("archive",0,true);
 
 # next / previous resource browsing
 $go=getval("go","");

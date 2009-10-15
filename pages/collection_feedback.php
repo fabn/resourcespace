@@ -4,12 +4,12 @@ include "../include/general.php";
 
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
-$k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("collection",""),$k))) {include "../include/authenticate.php";}
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("collection","",true),$k))) {include "../include/authenticate.php";}
 
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
-$collection=getvalescaped("collection","");
+$collection=getvalescaped("collection","",true);
 $errors="";
 $done=false;
 

@@ -8,15 +8,15 @@ include "../include/search_functions.php";
 include "../include/image_processing.php";
 
 # Editing resource or collection of resources (multiple)?
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 
 # Fetch search details (for next/back browsing and forwarding of search params)
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
-$offset=getvalescaped("offset",0);
+$offset=getvalescaped("offset",0,true);
 $restypes=getvalescaped("restypes","");
 if (strpos($search,"!")!==false) {$restypes="";}
-$archive=getvalescaped("archive",0);
+$archive=getvalescaped("archive",0,true);
 $errors=array(); # The results of the save operation (e.g. required field messages)
 
 # next / previous resource browsing

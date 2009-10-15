@@ -270,7 +270,7 @@ function save_collection($ref)
 	sql_query("update collection set
 				name='" . getvalescaped("name","") . "',
 				keywords='" . getvalescaped("keywords","") . "',
-				public='" . getvalescaped("public","") . "',
+				public='" . getvalescaped("public","",true) . "',
 				theme='" . $theme . "',
 				theme2='" . $theme2 . "',
 				theme3='" . $theme3 . "',

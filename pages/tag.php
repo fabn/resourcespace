@@ -6,7 +6,7 @@ include "../include/resource_functions.php";
 
 if (getval("save","")!="")
 	{
-	$ref=getvalescaped("ref","");
+	$ref=getvalescaped("ref","",true);
 	$keywords=getvalescaped("keywords","");
 	$oldval=get_data_by_field($ref,$speedtaggingfield);
 	

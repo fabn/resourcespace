@@ -10,7 +10,7 @@ if ((isset($allow_resource_deletion) and !$allow_resource_deletion) or checkperm
 	exit;
 } else {
 
-$ref=getvalescaped("ref","");
+$ref=getvalescaped("ref","",true);
 $resource=get_resource_data($ref);
 
 $error="";

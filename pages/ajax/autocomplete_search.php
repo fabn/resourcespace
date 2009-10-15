@@ -6,7 +6,7 @@ include "../../include/authenticate.php";
 include "../../include/general.php";
 
 $field=getval("field",""); # get field name if doing a simple search completion (to get it easily from $_GET)
-$ref=getvalescaped("fieldref",""); #get field ref if doing simple search completion (for get_suggested_keywords())
+$ref=getvalescaped("fieldref","",true); #get field ref if doing simple search completion (for get_suggested_keywords())
 
 $search=getvalescaped("search","");
 
