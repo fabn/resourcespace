@@ -1117,6 +1117,9 @@ $xml_metadump_dc_map=array
 	"caption" => "description",
 	"date" => "date"
 	);
+	
+# Use Plugins Manager
+$use_plugins_manager = false;
 
 # ------------------------------------------------------------------------------------------------------------------
 # StaticSync (staticsync.php)

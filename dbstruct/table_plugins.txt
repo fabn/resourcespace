@@ -1,0 +1,8 @@
+name,varchar(20),YES,PRI,,
+descrip,varchar(100),NO,,,
+author,varchar(100),NO,,,
+update_url,varchar(100),YES,,,
+info_url,varchar(100),YES,,,
+inst_version,float,NO,,,
+config,longblob,YES,,,
+config_url,varchar(100),NO,,,

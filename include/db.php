@@ -108,13 +108,13 @@ if ($use_plugins_manager){
 	#Check that manually (via config.php) activated plugins are included in the plugins table.
 	foreach($plugins as $plugin_name){
 		if ($plugin_name!=''){
-			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='".$plugin_name."'",'')==''){
+			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='$plugin_name'",'')==''){
 				#Installed plugin isn't marked as installed in the DB.  Update it now.
 				#Check if there's a plugin.yaml file to get version and author info.
-				$plugin_yaml_path = dirname(__FILE__)."/../plugins/".$plugin_name."/".$plugin_name.".yaml"; 
-				$p_yaml = get_plugin_yaml($plugin_yaml_path, false);
+				$plugin_yaml_path = dirname(__FILE__)."/../plugins/{$plugin_name}/{$plugin_name}.yaml"; 
+				$p_y = get_plugin_yaml($plugin_yaml_path, false);
 				#Write what information we have to the plugin DB.
-				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url) VALUES ('".$p_yaml['version']."','".$p_yaml['author']."','".$p_yaml['desc']."','".$p_name."','".$p_yaml['info_url']."','".$p_yaml['update_url']."')");
+				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url) VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$p_name}','{$p_y['info_url']}','{$p_y['update_url']}')");
 			}
 		}
 	}
@@ -215,8 +215,23 @@ function get_plugin_yaml($path, $validate=true){
 		$plugin_yaml['info_url'] = '';
 	if (!isset($plugin_yaml['update_url']))
 		$plugin_yaml['update_url'] = '';
+	if (!isset($plugin_yaml['config_url']))
+		$plugin_yaml['config_url'] = '';
 	return $plugin_yaml;
 }
+function get_plugin_config($plugin_name){
+    $config = sql_value("SELECT config as value from plugins where name='$plugin_name'",'');
+    if ($config=='')
+        return null;
+    else
+    	return unserialize($config);
+}
+function set_plugin_config($plugin_name, $config){
+	$config_ser = serialize($config);
+	sql_query("UPDATE plugins SET config='$config_ser' WHERE name='$plugin_name'");
+	return true;
+}
+
 function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     {
     # sql_query(sql) - execute a query and return the results as an array.
