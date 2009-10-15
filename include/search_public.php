@@ -1,7 +1,14 @@
 <?php
 
-# Perform the search
-$collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
+if (isset($search_public_collections_array) && count($search_public_collections_array) > 0)
+	{
+	// if someone already ran the search, don't have to do it again, just use the existing one
+	$collections = $search_public_collections_array;
+} else {
+	# Perform the search
+	$collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
+	}
+
 for ($n=0;$n<count($collections);$n++)
 	{
 	$pub_url="search.php?search=" . urlencode("!collection" . $collections[$n]["ref"]);
