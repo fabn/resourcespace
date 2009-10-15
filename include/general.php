@@ -1883,7 +1883,7 @@ function auto_create_user_account()
 	$usergroup=$user_account_auto_creation_usergroup;
 	if ($registration_group_select)
 		{
-		$usergroup=getvalescaped("usergroup","");
+		$usergroup=getvalescaped("usergroup","",true);
 		# Check this is a valid selectable usergroup (should always be valid unless this is a hack attempt)
 		if (sql_value("select allow_registration_selection value from usergroup where ref='$usergroup'",0)!=1) {exit("Invalid user group selection");}
 		}

@@ -49,7 +49,7 @@ if ($go!="")
 		}
 	}
 
-$collection=getvalescaped("collection","");
+$collection=getvalescaped("collection","",true);
 if ($collection!="") 
 	{
 	# If editing multiple items, use the first resource as the template

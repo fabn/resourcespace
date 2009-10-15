@@ -12,7 +12,7 @@ function send_research_request()
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++) {if (getval("resource" . $types[$n]["ref"],"")!="") {if ($rt!="") {$rt.=", ";} $rt.=$types[$n]["ref"];}}
 	
 	global $userref;
-	$as_user=getvalescaped("as_user",$userref); # If userref submitted, use that, else use this user
+	$as_user=getvalescaped("as_user",$userref,true); # If userref submitted, use that, else use this user
 	
 	# Insert the request
 	sql_query("insert into research_request(created,user,name,description,deadline,contact,finaluse,resource_types,noresources,shape)

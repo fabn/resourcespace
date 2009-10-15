@@ -3,13 +3,13 @@ include "../../include/db.php";
 include "../../include/general.php";
 include "../../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
-$k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("collection",""),$k))) {include "../../include/authenticate.php";}
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("collection","",true),$k))) {include "../../include/authenticate.php";}
 
 include "../../include/research_functions.php";
 include "../../include/resource_functions.php";
 include "../../include/search_functions.php";
 	
-$collection=getvalescaped("collection","");
+$collection=getvalescaped("collection","",true);
 if ($collection!="")
 	{
 	hook("prechangecollection");

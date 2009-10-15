@@ -19,7 +19,7 @@ function save_request($request)
 	{
 	# Use the posted form to update the request
 
-	$status=getvalescaped("status","");
+	$status=getvalescaped("status","",true);
 	$expires=getvalescaped("expires","");
 	$currentrequest=get_request($request);
 	$oldstatus=$currentrequest["status"];

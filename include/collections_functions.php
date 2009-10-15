@@ -608,7 +608,7 @@ function get_saved_searches($collection)
 
 function add_saved_search($collection)
 	{
-	sql_query("insert into collection_savedsearch(collection,search,restypes,archive) values ('$collection','" . getvalescaped("addsearch","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","") . "')");
+	sql_query("insert into collection_savedsearch(collection,search,restypes,archive) values ('$collection','" . getvalescaped("addsearch","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "')");
 	}
 
 function remove_saved_search($collection,$search)
@@ -618,7 +618,7 @@ function remove_saved_search($collection,$search)
 
 function add_saved_search_items($collection)
 	{
-	$results=do_search(getvalescaped("addsearch",""), getvalescaped("restypes",""), "relevance", getvalescaped("archive",""));
+	$results=do_search(getvalescaped("addsearch",""), getvalescaped("restypes",""), "relevance", getvalescaped("archive","",true));
 	if (is_array($results))
 		{
 		for ($n=0;$n<count($results);$n++)

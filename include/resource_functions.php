@@ -200,7 +200,7 @@ function save_resource_data($ref,$multi)
 	if ($expiry_field_edited) {$expirysql=",expiry_notification_sent=0";}
 
 	# Also update archive status and access level
-	sql_query("update resource set archive='" . getvalescaped("archive",0) . "',access='" . getvalescaped("access",0) . "' $expirysql where ref='$ref'");
+	sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
 	
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
