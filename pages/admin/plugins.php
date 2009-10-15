@@ -77,8 +77,8 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin tar.gz file.
 	    	                 break;
 	    	             }
 	    	             # TODO: This should be a regex to make sure the file is in the right position (<pluginname>/<pluginname>.yaml)
-	    	             if (strpos($value,$u_plugin_name.'.yaml')){
-	    	                 $yaml_index = $i;
+	    	             if (strpos($value,$u_plugin_name.'.yaml')!==false){
+	    	                 $yaml_index = $key;
 	    	             }
 	    	         }
 	    	         # TODO: We should extract the yaml file if it exists and validate it.
@@ -87,8 +87,12 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin tar.gz file.
 	    	             $rej_reason = 'Archive does not contain a meta file.  Not valid for automated installation.';
 	    	         }
 	    	         if (!$rejected){
-	    	             if (PclTarExtract($tmp_dir.$_FILES['pfile']['name'], '../../plugins/')!=1){
-	    	                 echo PclErrorString(PclErrorCode());
+	    	             if (PclTarExtract($tmp_dir.$_FILES['pfile']['name'], '../../plugins/')!='1'){
+	    	                #TODO: Problem with PclTar library.  Not sure what's happening
+	    	                /* $rejected = true;
+	    	                 echo $error;
+	    	             	$rej_reason = 'There was a problem extracting the archive:'.PclErrorString(PclErrorCode());
+	    	             	*/
 	    	             }
 	    	         }
 	    	         
