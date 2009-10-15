@@ -823,6 +823,10 @@ $default_home_page="home.php";
 # 'Space' is included by default and does not need to be specified below.
 $config_separators=array("/","_",".","; ","-","(",")","'","\"","\\", "?");
 
+# trim characters - will be removed from the beginning or end of the string, but not the middle
+# when indexing. Format for this argument is as described in PHP trim() documentation.
+# leave blank for no extra trimming.
+$config_trimchars="";
 
 # Global permissions
 # Permissions that will be prefixed to all user group permissions
@@ -1180,6 +1184,9 @@ $frameless_collections=false;
 #
 # $qlpreview_path="/usr/bin";
 
+
+// not sure what this is, but fixes undefined variable introduced in rev. 1412
+$use_plugins_manager = false;
 
 
 ?>
