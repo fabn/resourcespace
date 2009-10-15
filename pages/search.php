@@ -339,7 +339,8 @@ if (is_array($result)||count($search_public_collections_array) > 0)
 		{
 		include "../include/search_public.php";
 		}
-
+    if (is_array($result))
+    {
 	# work out common keywords among the results
 	if ((count($result)>$suggest_threshold) && (strpos($search,"!")===false) && ($suggest_threshold!=-1))
 		{
@@ -550,33 +551,37 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php }/*end replacesearchkey */?>
 		<?php
 		}
+
 	}
 else
 	{
+		if (count($search_public_collections_array) == 0){
 	?>
-	<div class="BasicsBox"> 
-	  <div class="NoFind">
-		<p><?php echo $lang["searchnomatches"]?></p>
-		<?php if ($result!="")
-		{
-		?>
-		<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
-		<?php
-		}
-		else
-		{
-		?>
-		<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
-		elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
-		elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
-		else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
-		<?php
-		}
-	  ?>
-	  </div>
-	</div>
+		<div class="BasicsBox"> 
+		  <div class="NoFind">
+			<p><?php echo $lang["searchnomatches"]?></p>
+			<?php if ($result!="")
+			{
+			?>
+			<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
+			<?php
+			}
+			else
+			{
+			?>
+			<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
+			elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
+			elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
+			else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
+			<?php
+			}
+		  ?>
+		  </div>
+		</div>
 	<?php
-	}
+		} // end of if search public collections > 0
+      } // end of if is array result
+    } // end of if is array result or collection search returned results
 ?>
 <!--Bottom Navigation - Archive, Saved Search plus Collection-->
 <div class="BottomInpageNav">
