@@ -1188,8 +1188,5 @@ $frameless_collections=false;
 # $qlpreview_path="/usr/bin";
 
 
-// not sure what this is, but fixes undefined variable introduced in rev. 1412
-$use_plugins_manager = false;
-
 
 ?>
