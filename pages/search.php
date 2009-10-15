@@ -220,14 +220,7 @@ if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count
 # Include the page header to and render the search results
 include "../include/header.php";
 
-
-if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0){
-	$search_public_collections_array = search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
-} else {
-	$search_public_collections_array = array();
-}
-
-if (is_array($result)||count($search_public_collections_array) > 0)
+if (is_array($result))
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive;
 	?>
@@ -309,7 +302,7 @@ if (is_array($result)||count($search_public_collections_array) > 0)
 	<?php echo $collection_title ?>
 	<?php		
 	hook("beforesearchresults");
-
+	
 	if ($display=="list")
 		{
 		?>
@@ -333,14 +326,13 @@ if (is_array($result)||count($search_public_collections_array) > 0)
 		<?php } ?> <!--end hook replace listviewtitlerow-->
 		<?php
 		}
-
+		
 	# Include public collections and themes in the main search, if configured.		
 	if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
 		{
 		include "../include/search_public.php";
 		}
-    if (is_array($result))
-    {
+	
 	# work out common keywords among the results
 	if ((count($result)>$suggest_threshold) && (strpos($search,"!")===false) && ($suggest_threshold!=-1))
 		{
@@ -551,37 +543,33 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php }/*end replacesearchkey */?>
 		<?php
 		}
-
 	}
 else
 	{
-		if (count($search_public_collections_array) == 0){
 	?>
-		<div class="BasicsBox"> 
-		  <div class="NoFind">
-			<p><?php echo $lang["searchnomatches"]?></p>
-			<?php if ($result!="")
-			{
-			?>
-			<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
-			<?php
-			}
-			else
-			{
-			?>
-			<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
-			elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
-			elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
-			else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
-			<?php
-			}
-		  ?>
-		  </div>
-		</div>
+	<div class="BasicsBox"> 
+	  <div class="NoFind">
+		<p><?php echo $lang["searchnomatches"]?></p>
+		<?php if ($result!="")
+		{
+		?>
+		<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
+		<?php
+		}
+		else
+		{
+		?>
+		<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
+		elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
+		elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
+		else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
+		<?php
+		}
+	  ?>
+	  </div>
+	</div>
 	<?php
-		} // end of if search public collections > 0
-      } // end of if is array result
-    } // end of if is array result or collection search returned results
+	}
 ?>
 <!--Bottom Navigation - Archive, Saved Search plus Collection-->
 <div class="BottomInpageNav">
