@@ -380,7 +380,7 @@ if (!defined("PCL_TAR"))
     }
 
     // ----- Call the extracting fct
-    if (($v_result = PclTarHandleExtract($p_tarname, 0, &$p_list, "complete", $p_path, $p_mode, $p_remove_path)) != 1)
+    if (($v_result = PclTarHandleExtract($p_tarname, 0, $p_list, "complete", $p_path, $p_mode, $p_remove_path)) != 1)
     {
       TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
       return(0);
@@ -442,7 +442,7 @@ if (!defined("PCL_TAR"))
     if (is_array($p_filelist))
     {
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleExtract($p_tarname, $p_filelist, &$p_list, "partial", $p_path, $v_tar_mode, $p_remove_path)) != 1)
+      if (($v_result = PclTarHandleExtract($p_tarname, $p_filelist, $p_list, "partial", $p_path, $v_tar_mode, $p_remove_path)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -456,7 +456,7 @@ if (!defined("PCL_TAR"))
       $v_list = explode(" ", $p_filelist);
 
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleExtract($p_tarname, $v_list, &$p_list, "partial", $p_path, $v_tar_mode, $p_remove_path)) != 1)
+      if (($v_result = PclTarHandleExtract($p_tarname, $v_list, $p_list, "partial", $p_path, $v_tar_mode, $p_remove_path)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -531,7 +531,7 @@ if (!defined("PCL_TAR"))
     if (is_integer($p_index))
     {
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleExtractByIndexList($p_tarname, "$p_index", &$p_list, $p_path, $p_remove_path, $v_tar_mode)) != 1)
+      if (($v_result = PclTarHandleExtractByIndexList($p_tarname, "$p_index", $p_list, $p_path, $p_remove_path, $v_tar_mode)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -542,7 +542,7 @@ if (!defined("PCL_TAR"))
     else if (is_string($p_index))
     {
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleExtractByIndexList($p_tarname, $p_index, &$p_list, $p_path, $p_remove_path, $v_tar_mode)) != 1)
+      if (($v_result = PclTarHandleExtractByIndexList($p_tarname, $p_index, $p_list, $p_path, $p_remove_path, $v_tar_mode)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -600,7 +600,7 @@ if (!defined("PCL_TAR"))
     if (is_array($p_filelist))
     {
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleDelete($p_tarname, $p_filelist, &$p_list, $p_mode)) != 1)
+      if (($v_result = PclTarHandleDelete($p_tarname, $p_filelist, $p_list, $p_mode)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -614,7 +614,7 @@ if (!defined("PCL_TAR"))
       $v_list = explode(" ", $p_filelist);
 
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleDelete($p_tarname, $v_list, &$p_list, $p_mode)) != 1)
+      if (($v_result = PclTarHandleDelete($p_tarname, $v_list, $p_list, $p_mode)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -673,7 +673,7 @@ if (!defined("PCL_TAR"))
     if (is_array($p_filelist))
     {
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleUpdate($p_tarname, $p_filelist, &$p_list, $p_mode, $p_add_dir, $p_remove_dir)) != 1)
+      if (($v_result = PclTarHandleUpdate($p_tarname, $p_filelist, $p_list, $p_mode, $p_add_dir, $p_remove_dir)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -687,7 +687,7 @@ if (!defined("PCL_TAR"))
       $v_list = explode(" ", $p_filelist);
 
       // ----- Call the extracting fct
-      if (($v_result = PclTarHandleUpdate($p_tarname, $v_list, &$p_list, $p_mode, $p_add_dir, $p_remove_dir)) != 1)
+      if (($v_result = PclTarHandleUpdate($p_tarname, $v_list, $p_list, $p_mode, $p_add_dir, $p_remove_dir)) != 1)
       {
         TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
@@ -2716,7 +2716,7 @@ if (!defined("PCL_TAR"))
         $v_binary_data = gzread($v_tar, 512);
 
       // ----- Read the header properties
-      if (($v_result = PclTarHandleReadHeader($v_binary_data, &$v_header)) != 1)
+      if (($v_result = PclTarHandleReadHeader($v_binary_data, $v_header)) != 1)
       {
         // ----- Close the archive file
         if ($p_tar_mode == "tar")
@@ -3008,7 +3008,7 @@ if (!defined("PCL_TAR"))
         $v_binary_data = gzread($v_tar, 512);
 
       // ----- Read the header properties
-      if (($v_result = PclTarHandleReadHeader($v_binary_data, &$v_header)) != 1)
+      if (($v_result = PclTarHandleReadHeader($v_binary_data, $v_header)) != 1)
       {
         // ----- Close the archive file
         if ($p_tar_mode == "tar")

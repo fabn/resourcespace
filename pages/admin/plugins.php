@@ -20,7 +20,7 @@ if (isset($_REQUEST['i'])){ # Activate a plugin
                 sql_query("INSERT INTO plugins(name) VALUE ('$new_inst')");
             }
             sql_query("UPDATE plugins SET config_url='{$plugin_yaml['config_url']}', descrip='{$plugin_yaml['desc']}', author='{$plugin_yaml['author']}', inst_version='{$plugin_yaml['version']}', update_url='{$plugin_yaml['update_url']}', info_url='{$plugin_yaml['info_url']}' WHERE name='{$plugin_yaml['name']}'");
-            redirect('/pages/admin/plugins.php');    # Redirect back to the plugin page    
+            redirect('pages/admin/plugins.php');    # Redirect back to the plugin page    
         }
     }
 }
@@ -32,7 +32,7 @@ elseif (isset($_REQUEST['r'])){ # Deactivate a plugin
         if ($inst_version>=0){
             # Remove the version field. Leaving the rest of the plugin information.  This allows for a config column to remain (future).
             sql_query("UPDATE plugins set inst_version=NULL WHERE name='$remove_name'");
-            redirect('/pages/admin/plugins.php');    # Redirect back to the plugin page.
+            redirect('pages/admin/plugins.php');    # Redirect back to the plugin page.
         }
     }
 }
