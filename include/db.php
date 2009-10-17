@@ -1,4 +1,12 @@
 <?php
+/**
+ * Database functions, data manipulation functions
+ * and generic post/get handling
+ * 
+ * @author Dan Huby <dan@montala.net> for Oxfam, April 2006
+ * @package ResourceSpace
+ * @subpackage Includes
+ */
 #
 # db.php - Database functions, data manipulation functions
 # and generic post/get handling
@@ -105,6 +113,7 @@ if ($language!="en")
 
 # Register all plugins
 if ($use_plugins_manager){
+	include "plugin_functions.php";
 	#Check that manually (via config.php) activated plugins are included in the plugins table.
 	foreach($plugins as $plugin_name){
 		if ($plugin_name!=''){
@@ -181,56 +190,7 @@ function hook($name,$pagename="",$params=array())
 		}
 	return $found;
 	}
-function get_plugin_yaml($path, $validate=true){
-	#We're not using a full YAML structure, so this parsing function will do
-	#If validate is false, this function will return an array of blank values if a yaml isn't available
-	$yaml_file_ptr = @fopen($path, 'r');
-	$plugin_yaml = array();
-	if ($yaml_file_ptr!=false){
-		while (($line = fgets($yaml_file_ptr))!=''){
-			if($line[0]!='#'){ #Exclude comments from parsing
-				if (($pos=strpos($line,':'))!=false){
-					$plugin_yaml[trim(substr($line,0,$pos))] = trim(substr($line, $pos+1));
-				}
-			}
-		}
-		fclose($yaml_file_ptr);
-		if ($validate){
-			if (isset($plugin_yaml['name']) && $plugin_yaml['name']==basename($path,'.yaml') && isset($plugin_yaml['version']))
-				return $plugin_yaml;
-			else return false;
-		}	
-	}
-	elseif ($validate)
-		return false;
-	if (!isset($plugin_yaml['name']))
-		$plugin_yaml['name'] = basename($path,'.yaml');
-	if (!isset($plugin_yaml['desc']))
-		$plugin_yaml['desc'] = '';
-	if (!isset($plugin_yaml['version']))
-		$plugin_yaml['version'] = '0';
-	if (!isset($plugin_yaml['author']))
-		$plugin_yaml['author'] = '';
-	if (!isset($plugin_yaml['info_url']))
-		$plugin_yaml['info_url'] = '';
-	if (!isset($plugin_yaml['update_url']))
-		$plugin_yaml['update_url'] = '';
-	if (!isset($plugin_yaml['config_url']))
-		$plugin_yaml['config_url'] = '';
-	return $plugin_yaml;
-}
-function get_plugin_config($plugin_name){
-    $config = sql_value("SELECT config as value from plugins where name='$plugin_name'",'');
-    if ($config=='')
-        return null;
-    else
-    	return unserialize($config);
-}
-function set_plugin_config($plugin_name, $config){
-	$config_ser = serialize($config);
-	sql_query("UPDATE plugins SET config='$config_ser' WHERE name='$plugin_name'");
-	return true;
-}
+
 
 function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     {
@@ -781,5 +741,34 @@ function register_plugin($plugin)
 
 	return true;	
 	}
-
+	
+/**
+ * Recursively removes a directory.
+ * 
+ * Recursively removes a directory.  Currently this is only used by the plugin
+ * management interface to permanently delete a plugin.  This function does
+ * not check to see that php is <em>allowed</em> to delete the specified
+ * path currently.
+ * 
+ * @todo ADD - Check that PHP has permissions to delete $path
+ * @param string $path Directory path to remove.
+ */
+function rcRmdir ($path){ # Recursive rmdir function.
+	if (is_dir($path)){
+	    $dirh = opendir($path);
+	    while (false !== ($file = readdir($dirh))){
+	        if (is_dir($path.'/'.$file)){
+	        	if (!((strlen($file)==1 && $file[0]=='.') || (substr($file,0,2)=='..'))){
+	        		rcRmdir($path.'/'.$file);
+	        	}
+	        }
+	        else {
+	            unlink($path.'/'.$file);
+	        }
+		}
+		closedir($dirh);
+		rmdir($path);
+	}
+}
+    
 	
