@@ -114,6 +114,7 @@ if ($language!="en")
 # Register all plugins
 if ($use_plugins_manager){
 	include "plugin_functions.php";
+	$legacy_plugins = $plugins; # Make a copy of plugins activated via config.php
 	#Check that manually (via config.php) activated plugins are included in the plugins table.
 	foreach($plugins as $plugin_name){
 		if ($plugin_name!=''){

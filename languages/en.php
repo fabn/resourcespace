@@ -855,4 +855,5 @@ $lang['plugins-rejfileprob'] = 'Uploaded plugin must be a .rsp file.';
 $lang['plugins-rejremedy'] = 'If you trust this plugin you can install it manually by expanding the archive into your plugins directory.';
 $lang['plugins-uploadsuccess'] = 'Plugin uploaded succesfully.';
 $lang['plugins-headertext'] = 'Plugins extend the functionality of ResourceSpace.';
+$lang['plugins-legacyinst'] = 'Activated via config.php';
 ?>

@@ -5,7 +5,9 @@
  * @package ResourceSpace
  * @subpackage Pages_Team
  * @author Brian Adams <wreality@gmail.com>
- * @todo Manually activated plugins can't be deactivated
+ * @todo Link to wiki page for config.php activated plugins. (Help text)
+ * @todo Fortify plugin delete code
+ * @todo Update plugin DB if uploaded plugin is installed (upgrade functionality)
  */
 include "../../include/db.php";
 /**
@@ -18,8 +20,7 @@ $plugins_dir = dirname(__FILE__)."/../../plugins/";
 
 $avail_plugins = array();
 if (isset($_REQUEST['activate'])){ # Activate a plugin
-    $inst_name = getvalescaped('activate','');
-    $inst_name = trim($inst_name, '#');
+    $inst_name = trim(getvalescaped('activate',''), '#');
     if ($inst_name!=''){
         activate_plugin($inst_name);   
     }
@@ -27,18 +28,16 @@ if (isset($_REQUEST['activate'])){ # Activate a plugin
     
 }
 elseif (isset($_REQUEST['deactivate'])){ # Deactivate a plugin
-    $remove_name = getvalescaped('deactivate','');
     # Strip the leading hash mark added by javascript.
-    $remove_name = trim($remove_name, "#");
+    $remove_name = trim(getvalescaped('deactivate',''), "#");
     if ($remove_name!=''){
         deactivate_plugin($remove_name); 
     }
     redirect('pages/team/team_plugins.php');    # Redirect back to the plugin page so plugin is actually deactivated.
 }
 elseif (isset($_REQUEST['purge'])){ # Purge a plugin's configuration (if stored in DB)
-    $purge_name = getvalescaped('purge','');
     # Strip the leading hash mark added by javascript.
-    $purge_name = trim($purge_name, '#');
+    $purge_name = trim(getvalescaped('purge',''), '#');
     if ($purge_name!=''){
         purge_plugin_config($purge_name);
     }
@@ -51,8 +50,7 @@ elseif (isset($_REQUEST['purge'])){ # Purge a plugin's configuration (if stored 
  ****/
 /*
 elseif (isset($_REQUEST['delete'])){ # Delete a plugin from the plugins directory.
-    $delete_name = getvalescaped('delete','');
-    $delete_name = trim($delete_name, '#');
+    $delete_name = trim(getvalescaped('delete',''), '#');
     if ($delete_name!='' && $delete_name!='.' && $delete_name!='..' && strpos($delete_name, '/')===false && strpos($delete_name, '\\')===false){ # Prevent this script being used to delete anything else.
         #Check that the plugin is not activated.
         $c = sql_value("SELECT inst_version as value from plugins WHERE name='$delete_name'",'');
@@ -130,10 +128,16 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file.
 	    $rej_reason  = $lang['plugins-rejfileprob'];
 	}
 }
+
 $inst_plugins = sql_query('SELECT name, config_url, descrip, author, '.
 						  'inst_version, update_url, info_url '.
 						  'FROM plugins WHERE inst_version>=0');
-
+function legacy_check(&$i_plugin, $key){
+    global $legacy_plugins;
+    if (array_search($i_plugin['name'], $legacy_plugins)!==false)
+        $i_plugin['legacy_inst'] = true;
+}
+array_walk($inst_plugins, 'legacy_check');
 # Build an array of available plugins.
 $dirh = opendir($plugins_dir);
 $plugins_avail = array();
@@ -152,7 +156,8 @@ while (false !== ($file = readdir($dirh))) {
            	else
            		$plugins_avail[$file]['config']=false;
            		
-           	# If no yaml, or yaml file but no description present, attempt to read an 'about.txt' file
+           	# If no yaml, or yaml file but no description present, 
+           	# attempt to read an 'about.txt' file
            	if ($plugins_avail[$file]["desc"]=="")
            		{
            		$about=$plugins_dir.$file.'/about.txt';
@@ -167,41 +172,28 @@ closedir($dirh);
 <?php include "../../include/header.php"; ?>
 <script src="../../lib/js/jquery-1.3.1.min.js" type="text/javascript"> </script>
 <script type="text/javascript">
+        function actionPost(action, value){
+                $('input#anc-input').attr({
+                    name: action,
+                    value: value});
+                $('form#anc-post').submit();
+            }
     	$(document).ready(function() {
     		$('a.p-deactivate').click(function() {
-    		    var pname = $(this).attr('href');
-    		    $('input#anc-input').attr({
-    		    						   name: 'deactivate',
-    		    						   value: pname
-    		    						  });
-    		    $('form#anc-post').submit();
+    		    actionPost('deactivate', $(this).attr('href'));
     		    return false;
     		});
     		$('a.p-activate').click(function() {
     		    var pname = $(this).attr('href');
-    		    $('input#anc-input').attr({
-    		        					  name: 'activate',
-    		        					  value: pname
-    		    						  });
-    		   $('form#anc-post').submit();
+    		    actionPost('activate', $(this).attr('href'));
     		   return false;
     		});
     		$('a.p-purge').click(function() {
-    		    var pname = $(this).attr('href');
-    		    $('input#anc-input').attr({
-    		        					  name: 'purge',
-    		        					  value: pname
-    		    						  });
-    		    $('form#anc-post').submit();
+    			actionPost('purge', $(this).attr('href'));
     		    return false;						  
     		});
     		$('a.p-delete').click(function() {
-    		    var pname = $(this).attr('href');
-    		    $('input#anc-input').attr({
-    		        					  name: 'delete',
-    		        					  value: pname
-    		    						  });
-    		    $('form#anc-post').submit();
+    			actionPost('delete', $(this).attr('href'));
     		    return false;
     		});
     	});
@@ -228,7 +220,10 @@ closedir($dirh);
         echo '<tr>';
         echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".sprintf("%.1f",$p['inst_version'])."</td>";
         echo '<td>';
-        echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
+        if (isset($p['legacy_inst']))
+            echo '<a href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
+        else
+            echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
         if ($p['info_url']!='')
             echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config_url']!='')
