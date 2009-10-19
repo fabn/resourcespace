@@ -1,20 +1,19 @@
 <?php
-
-/* ---------------------------------------------------
-config.default.php
-
-This file contains the default configuration settings.
-
-      **** DO NOT ALTER THIS FILE! ****
-
-If you need to change any of the below values, copy 
-them to config.php and change them there.
-
-This file will be overwritten when you upgrade and
-ensures that any new configuration options are set to
-a sensible default value.
-
------------------------------------------------------- */
+/**
+ * This file contains the default configuration settings.
+ * 
+ * **** DO NOT ALTER THIS FILE! ****
+ * 
+ * If you need to change any of the below values, copy
+ * them to config.php and change them there.
+ * 
+ * This file will be overwritten when you upgrade and
+ * ensures that any new configuration options are set to
+ * a sensible default value.
+ * 
+ * @package ResourceSpace
+ * @subpackage Configuration
+ */
 
 
 
@@ -22,8 +21,6 @@ a sensible default value.
 BASIC PARAMETERS
 
 ------------------------------------------------------ */
-
-
 $mysql_server="localhost";	# Use 'localhost' if MySQL is installed on the same server as your web server.
 $mysql_username="root";		# MySQL username
 $mysql_password="";			# MySQL password

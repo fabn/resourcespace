@@ -28,7 +28,11 @@ function activate_plugin($name){
         if ($c == ''){
             sql_query("INSERT INTO plugins(name) VALUE ('$name')");
         }
-        sql_query("UPDATE plugins SET config_url='{$plugin_yaml['config_url']}', descrip='{$plugin_yaml['desc']}', author='{$plugin_yaml['author']}', inst_version='{$plugin_yaml['version']}', update_url='{$plugin_yaml['update_url']}', info_url='{$plugin_yaml['info_url']}' WHERE name='{$plugin_yaml['name']}'");
+        sql_query("UPDATE plugins SET config_url='{$plugin_yaml['config_url']}', " .
+        		  "descrip='{$plugin_yaml['desc']}', author='{$plugin_yaml['author']}', " .
+        		  "inst_version='{$plugin_yaml['version']}', " .
+        		  "update_url='{$plugin_yaml['update_url']}', info_url='{$plugin_yaml['info_url']}' " .
+        		  "WHERE name='{$plugin_yaml['name']}'");
         return true;
     }
     else {
@@ -121,7 +125,6 @@ function get_plugin_yaml($path, $validate=true){
  * 
  * @param string $name Plugin name
  * @return mixed|null Returns config data or null if no config.
- * @category PluginAuthors
  * @see set_plugin_config
  */
 function get_plugin_config($name){
@@ -146,7 +149,6 @@ function get_plugin_config($name){
  * 
  * @param string $plugin_name Plugin name
  * @param mixed $config Configuration variable to store.
- * @category PluginAuthors
  * @see get_plugin_config
  */
 function set_plugin_config($plugin_name, $config){

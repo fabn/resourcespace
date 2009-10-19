@@ -123,7 +123,9 @@ if ($use_plugins_manager){
 				$plugin_yaml_path = dirname(__FILE__)."/../plugins/{$plugin_name}/{$plugin_name}.yaml"; 
 				$p_y = get_plugin_yaml($plugin_yaml_path, false);
 				#Write what information we have to the plugin DB.
-				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url) VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$plugin_name}','{$p_y['info_url']}','{$p_y['update_url']}')");
+				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url) ".
+						  "VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$plugin_name}'," .
+						  "'{$p_y['info_url']}','{$p_y['update_url']}')");
 			}
 		}
 	}

@@ -832,4 +832,27 @@ $lang["nocookies"]="A cookie could not be set correctly. Please make sure you ha
 
 $lang["selectedresourceslightroom"]="Selected resources (Lightroom compatible list):";
 
+# Plugins Manager
+$lang['plugins-noneinstalled'] = "No plugins currently activated.";
+$lang['plugins-noneavailable'] = "No plugins currently available.";
+$lang['plugins-availableheader'] = 'Available Plugins';
+$lang['plugins-installedheader'] = 'Currently Activated Plugins';
+$lang['plugins-author'] = 'Author';
+$lang['plugins-version'] = 'Version';
+$lang['plugins-instversion'] = 'Installed Version';
+$lang['plugins-uploadheader'] = 'Upload Plugin';
+$lang['plugins-uploadtext'] = 'Select a .rsp file to install.';
+$lang['plugins-deactivate'] = 'Deactivate';
+$lang['plugins-moreinfo'] = 'More Info';
+$lang['plugins-activate'] = 'Activate';
+$lang['plugins-purge'] = 'Purge Configuration';
+$lang['plugins-rejmultpath'] = 'Archive contains multiple paths. (Security Risk)';
+$lang['plugins-rejrootpath'] = 'Archive contains absolute paths. (Security Risk)';
+$lang['plugins-rejparentpath'] = 'Archive contain parent paths (../). (Security Risk)';
+$lang['plugins-rejmetadata'] = 'Archive description file not found.';
+$lang['plugins-rejarchprob'] = 'There was a problem extracting the archive:';
+$lang['plugins-rejfileprob'] = 'Uploaded plugin must be a .rsp file.';
+$lang['plugins-rejremedy'] = 'If you trust this plugin you can install it manually by expanding the archive into your plugins directory.';
+$lang['plugins-uploadsuccess'] = 'Plugin uploaded succesfully.';
+$lang['plugins-headertext'] = 'Plugins extend the functionality of ResourceSpace.';
 ?>
