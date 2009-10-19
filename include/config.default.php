@@ -1011,7 +1011,8 @@ $no_preview_extensions=array("icm","icc");
 # This requires batch/expiry_notification.php to be executed periodically via a cron job or similar.
 # $expiry_notification_mail="myaddress@mydomain.example";
 
-
+# What is the default display mode for search results? (smallthumbs/thumbs/list)
+$default_display="thumbs";
 
 
 

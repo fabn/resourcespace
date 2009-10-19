@@ -102,7 +102,7 @@ if (strpos($search,"!")===false) {setcookie("search",$search);} # store the sear
 $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}
 $order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}
-$display=getvalescaped("display","thumbs");setcookie("display",$display);
+$display=getvalescaped("display",$default_display);setcookie("display",$display);
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
