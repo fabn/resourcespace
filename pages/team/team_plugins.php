@@ -151,6 +151,13 @@ while (false !== ($file = readdir($dirh))) {
             	$plugins_avail[$file]['config']=true;
            	else
            		$plugins_avail[$file]['config']=false;
+           		
+           	# If no yaml, or yaml file but no description present, attempt to read an 'about.txt' file
+           	if ($plugins_avail[$file]["desc"]=="")
+           		{
+           		$about=$plugins_dir.$file.'/about.txt';
+           		if (file_exists($about)) {$plugins_avail[$file]["desc"]=substr(file_get_contents($about),0,95) . "...";}
+           		}
         }        
     }
 }

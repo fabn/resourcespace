@@ -14,6 +14,8 @@ else
 
 $tree=file("data/tree.txt");
 
+hook("treealter");
+
 ## one main plugin can replace the System Setup tree completely, with a file in the plugin called: admin/data/tree.txt.
 for ($n=0;$n<count($plugins);$n++)
     {

@@ -71,7 +71,7 @@ $lang["searchcontenteg"]="(page, name or text)";
 $lang["copyresource"]="Copy Resource";
 $lang["resourceidnotfound"]="The resource ID was not found";
 $lang["inclusive"]="(inclusive)";
-$lang["pluginssetup"]="Add/Remove/Configure Plugins";
+$lang["pluginssetup"]="Manage Plugins";
 $lang["pluginmanager"]="Plugin Manager";
 
 

@@ -22,6 +22,14 @@ function activate_plugin($name){
     $plugin_dir = $plugins_dir.$name;
     if (file_exists($plugin_dir)){
         $plugin_yaml = get_plugin_yaml("$plugin_dir/$name.yaml", false);
+        
+  		# If no yaml, or yaml file but no description present, attempt to read an 'about.txt' file
+       	if ($plugin_yaml["desc"]=="")
+       		{
+       		$about=$plugins_dir . $name.'/about.txt';
+       		if (file_exists($about)) {$plugin_yaml["desc"]=substr(file_get_contents($about),0,95) . "...";}
+       		}
+        
         # Add/Update plugin information.
         # Check if the plugin is already in the table.
         $c = sql_value("SELECT name as value FROM plugins WHERE name='$name'",'');
