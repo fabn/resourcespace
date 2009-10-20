@@ -1122,6 +1122,14 @@ $xml_metadump_dc_map=array
 # Use Plugins Manager
 $use_plugins_manager = false;
 
+#Disable geocoding features?
+$disable_geocoding = true;
+
+# To enable Google Maps Geolocation displays, uncomment the following line and 
+# add your Google Maps API Key. Requires exiftool.
+# Get an api key at: http://code.google.com/apis/maps/signup.html
+#$gmaps_apikey = '';
+
 # ------------------------------------------------------------------------------------------------------------------
 # StaticSync (staticsync.php)
 # The ability to synchronise ResourceSpace with a separate and stand-alone filestore.

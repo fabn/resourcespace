@@ -1,7 +1,13 @@
 <?php
-
-# Image processing functions
-# Functions to allow upload and resizing of images
+/**
+ * Image processing functions
+ * 
+ * Functions to allow upload and resizing of images.
+ * 
+ * @package ResourceSpace
+ * @subpackage Includes
+ * @todo Document
+ */
 
 if (!function_exists("upload_file")){
 function upload_file($ref,$no_exif=false)
@@ -138,7 +144,7 @@ function extract_exif_comment($ref,$extension)
 	if (!file_exists($image)) {return false;}
 	
 
-global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc;
+global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
 if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 	{
 	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
@@ -214,7 +220,23 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			}
 
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
-
+		if (!$disable_geocoding && isset($metadata['GPSLATITUDE'])){
+            #Convert latititude to decimal.
+            if (preg_match("/^(?<degrees>\d+[\.\d]+) deg (?<minutes>\d+[\.\d]+)' (?<seconds>\d+[\.\d]+)\"/", $metadata['GPSLATITUDE'], $latitude)){
+                $dec_lat = $latitude['degrees'] + $latitude['minutes']/60 + $latitude['seconds']/(60*60);
+            }
+            if (preg_match("/^(?<degrees>\d+[\.\d]+) deg (?<minutes>\d+[\.\d]+)' (?<seconds>\d+[\.\d]+)\"/", $metadata['GPSLONGITUDE'], $longitude)){
+                $dec_long = $longitude['degrees'] + $longitude['minutes']/60 + $longitude['seconds']/(60*60);           
+            }
+            if ($metadata['GPSLATITUDEREF']=='S')
+                $dec_lat = -1 * $dec_lat;
+            if ($metadata['GPSLONGITUDERED']='W')
+                $dec_long = -1 * $dec_long;
+            $gps_field_ref = sql_value('SELECT ref as value FROM resource_type_field WHERE name="geolocation"', '');
+            if ($gps_field_ref!=''){
+                update_field($ref, $gps_field_ref, $dec_lat.','.$dec_long);
+            }
+        }
 		# now we lookup fields from the database to see if a corresponding value
 		# exists in the uploaded file
 		for($i=0;$i< count($read_from);$i++)
@@ -271,7 +293,7 @@ elseif (isset($exif_comment))
 	if ($data!==false)
 		{
 		$comment="";
-		#echo "<pre>EXIF\n";print_r($data);exit();
+		echo "<pre>EXIF\n";print_r($data);exit();
 
 		if (isset($data["ImageDescription"])) {$comment=$data["ImageDescription"];}
 		if (($comment=="") && (isset($data["COMPUTED"]["UserComment"]))) {$comment=$data["COMPUTED"]["UserComment"];}

@@ -1,4 +1,11 @@
 <?php
+/**
+ * View resource page
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages
+ * @todo CSS problem with geo location section.
+ */
 include "../include/db.php";
 include "../include/general.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
@@ -654,7 +661,44 @@ if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_repo
 </div>
 <?php } ?>
 <?php } ?>
+<?php 
+$gps_field = sql_value('SELECT ref as value from resource_type_field where name="geolocation"','');
+if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
+<div class="RocordBox">
+<div class="RecordPanel">
+<div class="Title"><?php echo 'Location Information'; ?></div>
+<?php 
 
+    $ll_field = get_data_by_field($ref, $gps_field);
+    if ($ll_field!=''){
+        $lat_long = explode(',', get_data_by_field($ref,$gps_field));
+    ?>
+    <a href="#">&gt; Edit Location Information</a>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+
+    function initialize() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 13);
+        map.setUIToDefault();
+        map.addOverlay(new GMarker(new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>)));
+      }
+    }
+
+</script>
+<?php # This is a bad hack right now to add the maps script to the onload attr of the body tag. (Need to see what prototype has to offer. ?>
+<?php # There's also a CSS problem here... ?>
+<body onload="initialize()" onunload="GUnload()">
+<div id="map_canvas" style="width: 500px; height: 300px" ></div>
+<?php } else {?>
+<a href="#">&gt; Add Location Information</a>
+<?php }?>
+</div>
+</div>
+</div><div class="PanelShadow"></div>
+<?php } ?>
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
 <?php
 # -------- Related Resources (must be able to search for this to work)
