@@ -662,18 +662,19 @@ if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_repo
 <?php } ?>
 <?php } ?>
 <?php 
-$gps_field = sql_value('SELECT ref as value from resource_type_field where name="geolocation"','');
+$gps_field = sql_value('SELECT ref as value from resource_type_field '. 
+                       'where name="geolocation" AND resource_type="'.$resource['resource_type'].'"','');
 if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
 <div class="RecordBox">
 <div class="RecordPanel">
-<div class="Title"><?php echo 'Location Information'; ?></div>
+<div class="Title"><?php echo $lang['location-title']; ?></div>
 <?php 
 
     $ll_field = get_data_by_field($ref, $gps_field);
     if ($ll_field!=''){
         $lat_long = explode(',', get_data_by_field($ref,$gps_field));
     ?>
-    <a href="#">&gt; Edit Location Information</a>
+    <a href="#">&gt; <?php echo $lang['location-edit']; ?></a>
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
             type="text/javascript"></script>
     <script type="text/javascript">
@@ -692,7 +693,7 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
 <body onload="initialize()" onunload="GUnload()">
 <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
 <?php } else {?>
-<a href="#">&gt; Add Location Information</a>
+<a href="#">&gt; <?php echo $lang['location-add'];?></a>
 <?php }?>
 </div>
 <div class="PanelShadow"></div>

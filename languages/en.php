@@ -856,4 +856,10 @@ $lang['plugins-rejremedy'] = 'If you trust this plugin you can install it manual
 $lang['plugins-uploadsuccess'] = 'Plugin uploaded succesfully.';
 $lang['plugins-headertext'] = 'Plugins extend the functionality of ResourceSpace.';
 $lang['plugins-legacyinst'] = 'Activated via config.php';
+
+#Location Data
+$lang['location-title'] = 'Location Data';
+$lang['location-add'] = 'Add Location Data';
+$lang['location-edit'] = 'Edit Location Data';
+
 ?>
