@@ -4,7 +4,7 @@
  * 
  * @package ResourceSpace
  * @subpackage Pages
- * @todo CSS problem with geo location section.
+ * @todo Body onload fix
  */
 include "../include/db.php";
 include "../include/general.php";
@@ -664,7 +664,7 @@ if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_repo
 <?php 
 $gps_field = sql_value('SELECT ref as value from resource_type_field where name="geolocation"','');
 if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
-<div class="RocordBox">
+<div class="RecordBox">
 <div class="RecordPanel">
 <div class="Title"><?php echo 'Location Information'; ?></div>
 <?php 
@@ -689,15 +689,14 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
 
 </script>
 <?php # This is a bad hack right now to add the maps script to the onload attr of the body tag. (Need to see what prototype has to offer. ?>
-<?php # There's also a CSS problem here... ?>
 <body onload="initialize()" onunload="GUnload()">
-<div id="map_canvas" style="width: 500px; height: 300px" ></div>
+<div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
 <?php } else {?>
 <a href="#">&gt; Add Location Information</a>
 <?php }?>
 </div>
+<div class="PanelShadow"></div>
 </div>
-</div><div class="PanelShadow"></div>
 <?php } ?>
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
 <?php
