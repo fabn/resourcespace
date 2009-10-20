@@ -132,6 +132,16 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file.
 $inst_plugins = sql_query('SELECT name, config_url, descrip, author, '.
 						  'inst_version, update_url, info_url '.
 						  'FROM plugins WHERE inst_version>=0');
+/**
+ * Ad hoc function for array_walk through plugins array.
+ * 
+ * When called from array_walk, steps through each element of the installed 
+ * plugins array and checks to see if it was installed via config.php (legacy).
+ * If so, sets an addition array key for template to display the link correctly.
+ * 
+ * @param array $i_plugin Plugin array element. 
+ * @param string $key Array key. 
+ */
 function legacy_check(&$i_plugin, $key){
     global $legacy_plugins;
     if (array_search($i_plugin['name'], $legacy_plugins)!==false)

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Edit field options page (part of Team Center)
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("o")) {exit ("Permission denied.");}
 include "../../include/general.php";
@@ -79,7 +85,7 @@ for ($n=0;$n<count($options);$n++)
 	<td><input type="text" name="field_<?php echo $defaultlanguage?>_<?php echo $n?>" class="medwidth" value="<?php echo $var?>" /></td>
 	</tr>
 	<?php
-	# Also list all other languages
+	#ï¿½Also list all other languages
 	foreach ($languages as $langcode=>$langname)
 		{
 		if ($langcode!=$defaultlanguage)

@@ -1,4 +1,10 @@
 <?php
+/**
+ * User log display page (part of Team Center)
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php";
 include "../../include/general.php";

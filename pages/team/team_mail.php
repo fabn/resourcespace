@@ -1,4 +1,10 @@
 <?php
+/**
+ * Create bulk mail page (part of Team Center)
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("m")) {exit ("Permission denied.");}
 include "../../include/general.php";

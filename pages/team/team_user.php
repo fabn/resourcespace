@@ -1,4 +1,10 @@
 <?php
+/**
+ * User management start page (part of team center)
+ * 
+ * @Package ResourceSpace
+ * @Subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("u")) {exit ("Permission denied.");}
 include "../../include/general.php";

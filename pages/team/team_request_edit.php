@@ -1,4 +1,10 @@
 <?php
+/**
+ * Edit resource request page (part of Team Center)
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("R")) {exit ("Permission denied.");}
 include "../../include/general.php";

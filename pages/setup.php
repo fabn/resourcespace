@@ -1,29 +1,169 @@
 <?php
-
+/**
+ * Initial setup page.
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Misc
+ */
 if (!function_exists('filter_var')){  //If running on PHP without filter_var, define a do-fer function, otherwise use php's filter_var (PHP > 5.2.0)
 echo "!!!";
-	define(FILTER_SANITIZE_STRING, 1);
-	define(FILTER_SANITIZE_EMAIL, 2);
-	define(FILTER_VALIDATE_EMAIL, 3);
-	define(FILTER_VALIDATE_URL, 4);
-	function filter_var($data, $filter){
-		switch ($filter){
-		case FILTER_VALIDATE_EMAIL:
-			if(preg_match('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/',$data, $output)>0)
-				return true;
-			else return false;
-			break;
-		case FILTER_SANITIZE_STRING:
-			return addslashes($data); //Just do an escape quotes.  We're not doing anything too dangerous here after all
-			break;
-		case FILTER_VALIDATE_URL:		
-			//Rely on checking the license.txt file to validate URL.  
-			//This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
-			return true;
-			break;
-		}
-	}
+    define(FILTER_SANITIZE_STRING, 1);
+    define(FILTER_SANITIZE_EMAIL, 2);
+    define(FILTER_VALIDATE_EMAIL, 3);
+    define(FILTER_VALIDATE_URL, 4);
+    /****
+     * Ad Hoc Function to replace filter_var on version of PHP prior to 5.2.0
+     * 
+     * @param string $data Data to sanitize.
+     * @param int $filter Constant indicating filter type.
+     * @return string Filtered data.
+     */
+    function filter_var($data, $filter){
+        switch ($filter){
+        case FILTER_VALIDATE_EMAIL:
+            if(preg_match('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/',$data, $output)>0)
+                return true;
+            else return false;
+            break;
+        case FILTER_SANITIZE_STRING:
+            return addslashes($data); //Just do an escape quotes.  We're not doing anything too dangerous here after all
+            break;
+        case FILTER_VALIDATE_URL:       
+            //Rely on checking the license.txt file to validate URL.  
+            //This leaves a minor risk of the script being used to do bad things to other hosts if it is left available (i.e. RS is installed, but never configured)
+            return true;
+            break;
+        }
+    }
 }
+/**
+ * Ad Hoc Function to support setup page
+ * 
+ * Copied from includes/db.php
+ * 
+ * @param string $value String representaion of byte size (including K, M, or G
+ * @return int Number of KB
+ */
+function ResolveKB($value) { //Copied from includes/db.php
+    $value=trim(strtoupper($value));
+    if (substr($value,-1,1)=="K")
+        {
+        return substr($value,0,strlen($value)-1);
+        }
+    if (substr($value,-1,1)=="M")
+        {
+        return substr($value,0,strlen($value)-1) * 1024;
+        }
+    if (substr($value,-1,1)=="G")
+        {
+        return substr($value,0,strlen($value)-1) * 1024 * 1024;
+        }
+    return $value;
+}
+/**
+ * Generates a random string of requested length.
+ * 
+ * Used to generate initial spider and scramble keys.
+ * 
+ * @param int $length Optional, default=12
+ * @return string Random character string.
+ */
+function generatePassword($length=12) { 
+    $vowels = 'aeuyAEUY';
+    $consonants = 'bdghjmnpqrstvzBDGHJLMNPQRSTVWXZ23456789';
+    $password = '';
+    $alt = time() % 2;
+    for ($i = 0; $i < $length; $i++) {
+        if ($alt == 1) {
+            $password .= $consonants[(rand() % strlen($consonants))];
+            $alt = 0;
+        } else {
+            $password .= $vowels[(rand() % strlen($vowels))];
+            $alt = 1;
+        }
+    }
+    return $password;
+}
+/**
+ * Santitizes input from a given request key.
+ * 
+ * Uses filter_var if available, or uses an ad hoc version if filter_var is
+ * not available. (PHP 4)
+ * 
+ * @param string $key _REQUEST key to sanitize and return
+ * @return string Santized _REQUEST key.
+ **/
+function get_post($key){ 
+    return filter_var(@$_REQUEST[$key], FILTER_SANITIZE_STRING);
+}
+/**
+ * Returns true if a given $_REQUEST key is set.
+ * 
+ * @param string $key _REQUEST key to test.
+ * @return bool
+ */
+
+function get_post_bool($key){ 
+    if (isset($_REQUEST[$key]))
+        return true;
+    else
+        return false;
+}
+/**
+ * Trims whitespace and trailing slash.
+ * 
+ * @param string $data
+ * @return string
+ */
+
+function sslash($data){ 
+    $stripped = rtrim($data);
+    $stripped = rtrim($data, '/');
+    return $stripped;
+}
+/**
+ * Opens an HTTP request to a host to determine if the url is reachable.
+ * 
+ * Returns true if url is reachable.
+ * 
+ * @param string $url
+ * @return bool
+ */
+
+function url_exists($url) 
+{
+    $parsed_url = parse_url($url);
+    $host = @$parsed_url['host'];
+    $path = @$parsed_url['path'];
+    $port = @$parsed_url['port'];
+    if (empty($path)) $path = "/";
+    if (!isset($port)) {$port=0;}
+    if ($port==0) {$port=80;}
+    // Build HTTP 1.1 request header.
+    $headers =  "GET $path HTTP/1.1\r\n" .
+                "Host: $host\r\n" .
+                "User-Agent: RS-Installation/1.0\r\n\r\n";
+    $fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Assume that if we can't open the socket connection quickly the host or port are probably wrong.
+    if (!$fp) {
+        return false;
+    }
+    fwrite($fp, $headers);
+    while(!feof($fp)) {
+        $resp = fgets($fp, 4096);
+        if(strstr($resp, 'HTTP/1.')){
+            fclose($fp);
+            $tmp = explode(' ',$resp);
+            $response_code = $tmp[1];
+            if ($response_code == 200)
+                return true;
+            else
+                return false;
+        }
+    }
+    fclose($fp);
+    return false;
+}   
+
 
 //Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
 $develmode = false;
@@ -236,90 +376,6 @@ h2#dbaseconfig{  min-height: 32px;}
 <div id="wrapper">
 <?php
 
-	function ResolveKB($value) { //Copied from includes/db.php
-		$value=trim(strtoupper($value));
-		if (substr($value,-1,1)=="K")
-			{
-			return substr($value,0,strlen($value)-1);
-			}
-		if (substr($value,-1,1)=="M")
-			{
-			return substr($value,0,strlen($value)-1) * 1024;
-			}
-		if (substr($value,-1,1)=="G")
-			{
-			return substr($value,0,strlen($value)-1) * 1024 * 1024;
-			}
-		return $value;
-	}
-
-	function generatePassword($length=12) { //Generate a random string for scramble_key and spider_password
-	    $vowels = 'aeuyAEUY';
-	    $consonants = 'bdghjmnpqrstvzBDGHJLMNPQRSTVWXZ23456789';
-	    $password = '';
-	    $alt = time() % 2;
-	    for ($i = 0; $i < $length; $i++) {
-	        if ($alt == 1) {
-	            $password .= $consonants[(rand() % strlen($consonants))];
-	            $alt = 0;
-	        } else {
-	            $password .= $vowels[(rand() % strlen($vowels))];
-	            $alt = 1;
-	        }
-	    }
-		return $password;
-	}
-
-	function get_post($key){ //Return santizied input for a given $_REQUEST key
-		return filter_var(@$_REQUEST[$key], FILTER_SANITIZE_STRING);
-	}
-
-	function get_post_bool($key){ // Return true or false for a given $_REQUEST key
-		if (isset($_REQUEST[$key]))
-			return true;
-		else
-			return false;
-	}
-	
-	function sslash($data){ //Trim whitespace and trailing slash from a string.
-		$stripped = rtrim($data);
-		$stripped = rtrim($data, '/');
-		return $stripped;
-	}	
-
-	function url_exists($url) //Open a HTTP request to a host to see if an is url reachable.
-	{
-		$parsed_url = parse_url($url);
-		$host = @$parsed_url['host'];
-		$path = @$parsed_url['path'];
-		$port = @$parsed_url['port'];
-		if (empty($path)) $path = "/";
-		if (!isset($port)) {$port=0;}
-		if ($port==0) {$port=80;}
-		// Build HTTP 1.1 request header.
-		$headers = 	"GET $path HTTP/1.1\r\n" .
-					"Host: $host\r\n" .
-					"User-Agent: RS-Installation/1.0\r\n\r\n";
-		$fp = fsockopen($host, $port, $errno, $errmsg, 5); //5 second timeout.  Assume that if we can't open the socket connection quickly the host or port are probably wrong.
-		if (!$fp) {
-			return false;
-		}
-		fwrite($fp, $headers);
-		while(!feof($fp)) {
-			$resp = fgets($fp, 4096);
-			if(strstr($resp, 'HTTP/1.')){
-				fclose($fp);
-				$tmp = explode(' ',$resp);
-				$response_code = $tmp[1];
-				if ($response_code == 200)
-					return true;
-				else
-					return false;
-			}
-		}
-		fclose($fp);
-		return false;
-	}	
 
 	//Check if config file already exists and die with an error if it does.
 	if (file_exists($outputfile)){

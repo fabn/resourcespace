@@ -1,4 +1,10 @@
 <?php
+/**
+ * Manage field options page (part of Team Center)
+ * 
+ * @package ResourceSpace
+ * @subpackage Pages_Team
+ */
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("k")) {exit ("Permission denied.");}
 include "../../include/general.php";
