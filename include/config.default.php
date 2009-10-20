@@ -110,6 +110,7 @@ $applicationname="ResourceSpace"; # The name of your implementation / installati
 $defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
 $languages["en"]="British English";
 $languages["en-US"]="American English";
+$languages["ar"]="العربية";
 $languages["id"]="Bahasa Indonesia"; # Indonesian
 $languages["zh-CN"]="简化字"; # Simplified Chinese
 $languages["da"]="Dansk"; # Danish
