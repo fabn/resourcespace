@@ -4,7 +4,6 @@
  * 
  * @package ResourceSpace
  * @subpackage Pages
- * @todo Body onload fix
  */
 include "../include/db.php";
 include "../include/general.php";
@@ -651,55 +650,58 @@ for ($n=0;$n<count($fields);$n++)
 <?php 
 // include optional ajax metadata report
 if ($metadata_report && isset($exiftool_path) && $k==""){
-if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_report)) { ?>
-<div class="RecordBox">
-<div class="RecordPanel">  
-<div class="Title"><?php echo $lang['metadata-report']?></div>
-<div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>);return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br>
-</div></div>
-<div class="PanelShadow"></div>
-</div>
-<?php } ?>
+    if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_report)) { ?>
+        <div class="RecordBox">
+        <div class="RecordPanel">  
+        <div class="Title"><?php echo $lang['metadata-report']?></div>
+        <div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>);return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br></div>
+        </div>
+        <div class="PanelShadow"></div>
+        </div>
+
+    <?php } ?>
 <?php } ?>
 <?php 
 $gps_field = sql_value('SELECT ref as value from resource_type_field '. 
-                       'where name="geolocation" AND resource_type="'.$resource['resource_type'].'"','');
+                       'where name="geolocation" AND (resource_type="'.$resource['resource_type'].'" OR resource_type="0")','');
 if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
-<div class="RecordBox">
-<div class="RecordPanel">
-<div class="Title"><?php echo $lang['location-title']; ?></div>
-<?php 
-
-    $ll_field = get_data_by_field($ref, $gps_field);
-    if ($ll_field!=''){
-        $lat_long = explode(',', get_data_by_field($ref,$gps_field));
-    ?>
-    <a href="#">&gt; <?php echo $lang['location-edit']; ?></a>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
-            type="text/javascript"></script>
-    <script type="text/javascript">
-
-    function initialize() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map_canvas"));
-        map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 13);
-        map.setUIToDefault();
-        map.addOverlay(new GMarker(new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>)));
-      }
-    }
-
-</script>
-<?php # This is a bad hack right now to add the maps script to the onload attr of the body tag. (Need to see what prototype has to offer. ?>
-<body onload="initialize()" onunload="GUnload()">
-<div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
-<?php } else {?>
-<a href="#">&gt; <?php echo $lang['location-add'];?></a>
-<?php }?>
-</div>
-<div class="PanelShadow"></div>
-</div>
+    <!-- Begin Geolocation Section -->
+    <div class="RecordBox">
+    <div class="RecordPanel">
+    <div class="Title"><?php echo $lang['location-title']; ?></div>
+    <?php 
+    
+        $ll_field = get_data_by_field($ref, $gps_field);
+        if ($ll_field!=''){
+            $lat_long = explode(',', get_data_by_field($ref,$gps_field));
+        ?>
+            <a href="#">&gt; <?php echo $lang['location-edit']; ?></a>
+            <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
+                    type="text/javascript"></script>
+            <script type="text/javascript">
+                function geo_loc_initialize() {
+                  if (GBrowserIsCompatible()) {
+                    var map = new GMap2(document.getElementById("map_canvas"));
+                    map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 13);
+                    map.setUIToDefault();
+                    map.addOverlay(new GMarker(new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>)));
+                  }
+                }
+                Event.observe(window, 'load', geo_loc_initialize);
+                Event.observe(window, 'unload', GUnload);
+            </script>
+            <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
+    <?php } else {?>
+        <a href="#">&gt; <?php echo $lang['location-add'];?></a>
+    <?php }?>
+    </div>
+    <div class="PanelShadow"></div>
+    </div>
+    <!-- End Geolocation Section -->
 <?php } ?>
+
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
+
 <?php
 # -------- Related Resources (must be able to search for this to work)
 if (checkperm("s") && ($k=="")) {
