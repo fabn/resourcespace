@@ -221,6 +221,10 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
 		if (!$disable_geocoding && isset($metadata['GPSLATITUDE'])){
+			
+			# Set vars
+            $dec_long=0;$dec_lat=0;
+
             #Convert latititude to decimal.
             if (preg_match("/^(?<degrees>\d+[\.\d]+) deg (?<minutes>\d+[\.\d]+)' (?<seconds>\d+[\.\d]+)\"/", $metadata['GPSLATITUDE'], $latitude)){
                 $dec_lat = $latitude['degrees'] + $latitude['minutes']/60 + $latitude['seconds']/(60*60);
@@ -233,7 +237,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             if ($metadata['GPSLONGITUDERED']='W')
                 $dec_long = -1 * $dec_long;
             $gps_field_ref = sql_value('SELECT ref as value FROM resource_type_field WHERE name="geolocation"', '');
-            if ($gps_field_ref!=''){
+            if ($gps_field_ref!='' && $dec_long!=0 && $dec_lat!=0){
                 update_field($ref, $gps_field_ref, $dec_lat.','.$dec_long);
             }
         }
