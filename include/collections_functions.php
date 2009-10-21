@@ -228,7 +228,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 		$groups=array_merge($groups,sql_array("select parent value from usergroup where ref='$usergroup'")); # Parent
 		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent=(select parent from usergroup where ref='$usergroup')")); # Siblings (same parent)
 		
-		$sql.="and u.usergroup in ('" . join ("','",$groups) . "')";
+		$sql.=" and u.usergroup in ('" . join ("','",$groups) . "')";
 		}
 	
 	# Run the query
