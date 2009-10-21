@@ -23,8 +23,13 @@ else
 putenv("MAGICK_HOME=" . $imagemagick_path); 
 putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
-$imagemagick_path . "/bin"); # Path 
-sql_query("update resource set has_image=0 where ref='$ref'"); 
+$imagemagick_path . "/bin"); # Path
+
+if ($alternative==-1)
+	{
+	# Reset the 'has thumbnail image' status in case previewing fails with this new file. 
+	sql_query("update resource set has_image=0 where ref='$ref'"); 
+	}
 
 
 # Set up target file

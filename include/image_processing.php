@@ -539,7 +539,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 					}
 				}
 			# flag database so a thumbnail appears on the site
-			sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
+			if ($alernative==-1) # not for alternatives
+				{
+				sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
+				}
 			}
 		}
 	else

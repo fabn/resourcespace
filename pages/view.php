@@ -420,20 +420,26 @@ if ($access==0) # open access only (not restricted)
 			</tr>
 			<?php
 			}	
-		$alt_thm="";
+		$alt_thm="";$alt_pre="";
 		if ($alternative_file_previews)
 			{
 			$alt_thm=get_resource_path($ref,true,"col",false,"jpg",-1,1,false,"",$altfiles[$n]["ref"]);
 			if (file_exists($alt_thm))
 				{
-				# Get web path
-				$alt_thm=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,"",$altfiles[$n]["ref"]);
+				# Get web path for thumb (pass creation date to help cache refresh)
+				$alt_thm=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,$altfiles[$n]["creation_date"],$altfiles[$n]["ref"]);
+				}
+			$alt_pre=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"",$altfiles[$n]["ref"]);
+			if (file_exists($alt_pre))
+				{
+				# Get web path for preview (pass creation date to help cache refresh)
+				$alt_pre=get_resource_path($ref,false,"pre",false,"jpg",-1,1,false,$altfiles[$n]["creation_date"],$altfiles[$n]["ref"]);
 				}
 			}
 		?>
-		<tr class="DownloadDBlend">
+		<tr class="DownloadDBlend" <?php if ($alt_pre!="") { ?>onMouseOver="orig_preview=$('previewimage').src;$('previewimage').src='<?php echo $alt_pre ?>';" onMouseOut="$('previewimage').src=orig_preview;"<?php } ?>>
 		<td>
-		<?php if ($alt_thm!="") { ?><img src="<?php echo $alt_thm?>" class="AltThumb"><?php } ?>
+		<?php if ($alt_thm!="") { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $altfiles[$n]["ref"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><img src="<?php echo $alt_thm?>" class="AltThumb"></a><?php } ?>
 		<h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
 		<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>

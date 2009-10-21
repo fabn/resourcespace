@@ -21,6 +21,7 @@ $order_by=getvalescaped("order_by","");
 $archive=getvalescaped("archive","",true);
 $restypes=getvalescaped("restypes","");
 $page=getvalescaped("page",1);
+$alternative=getvalescaped("alternative",-1);
 if (strpos($search,"!")!==false) {$restypes="";}
 
 # Load access level
@@ -63,23 +64,23 @@ if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,check
 
 # Locate the resource
 
-$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
-$path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+$path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
 
 if (file_exists($path) && resource_download_allowed($ref,"scr"))
 	{
-	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
 	}
 elseif (file_exists($path_orig) && resource_download_allowed($ref,""))
 	{
-	$url=get_resource_path($ref,false,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+	$url=get_resource_path($ref,false,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
 	}
 else
 	{
-	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
 	if (file_exists($path))
 		{
-		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
 		}
 	 }	
 if (!isset($url))
