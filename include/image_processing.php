@@ -226,15 +226,16 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             $dec_long=0;$dec_lat=0;
 
             #Convert latititude to decimal.
-            if (preg_match("/^(?<degrees>\d+[\.\d]+) deg (?<minutes>\d+[\.\d]+)' (?<seconds>\d+[\.\d]+)\"/", $metadata['GPSLATITUDE'], $latitude)){
+            if (preg_match("/^(?<degrees>\d?[\.\d]?) deg (?<minutes>\d?[\.\d]?)' (?<seconds>\d?[\.\d]+)\"/", $metadata['GPSLATITUDE'], $latitude)){
                 $dec_lat = $latitude['degrees'] + $latitude['minutes']/60 + $latitude['seconds']/(60*60);
             }
-            if (preg_match("/^(?<degrees>\d+[\.\d]+) deg (?<minutes>\d+[\.\d]+)' (?<seconds>\d+[\.\d]+)\"/", $metadata['GPSLONGITUDE'], $longitude)){
+            if (preg_match("/^(?<degrees>\d?[\.\d]?) deg (?<minutes>\d?[\.\d]?)' (?<seconds>\d?[\.\d]+)\"/", $metadata['GPSLONGITUDE'], $longitude)){
                 $dec_long = $longitude['degrees'] + $longitude['minutes']/60 + $longitude['seconds']/(60*60);           
             }
-            if ($metadata['GPSLATITUDEREF']=='S')
+            
+            if (substr($metadata['GPSLATITUDEREF'],0,1)=='S')
                 $dec_lat = -1 * $dec_lat;
-            if ($metadata['GPSLONGITUDERED']='W')
+            if (substr($metadata['GPSLONGITUDEREF'],0,1)=='W') # Support iPhone 3GS which uses 'West' not 'W'.
                 $dec_long = -1 * $dec_long;
             $gps_field_ref = sql_value('SELECT ref as value FROM resource_type_field WHERE name="geolocation"', '');
             if ($gps_field_ref!='' && $dec_long!=0 && $dec_lat!=0){
