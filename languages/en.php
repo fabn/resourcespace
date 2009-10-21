@@ -862,4 +862,8 @@ $lang['location-title'] = 'Location Data';
 $lang['location-add'] = 'Add Location';
 $lang['location-edit'] = 'Edit Location';
 $lang['location-details'] = 'Double-click map to place pin.';
+
+$lang["publiccollections"]="Public Collections";
+$lang["viewmygroupsonly"]="View my groups only";
+
 ?>

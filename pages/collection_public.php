@@ -7,6 +7,7 @@ include "../include/collections_functions.php";
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
 $order_by=getvalescaped("order_by","created");
+$override_group_restrict=getvalescaped("override_group_restrict","false");
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
@@ -42,7 +43,7 @@ include "../include/header.php";
 	</form>
 </div>
 <?php
-$collections=search_public_collections($find,$order_by,$sort);
+$collections=search_public_collections($find,$order_by,$sort,true,false,false,$override_group_restrict=="true");
 
 # pager
 $per_page=15;
@@ -54,7 +55,18 @@ $jumpcount=1;
 # Create an a-z index
 $atoz="<div class=\"InpageNavLeftBlock\">";
 if ($find=="") {$atoz.="<span class='Selected'>";}
-$atoz.="<a href=\"collection_public.php?order_by=name&find=\">" . $lang["viewall"] . "</a>";
+
+if ($public_collections_confine_group)
+	{
+	$atoz.="<a href=\"collection_public.php?order_by=name&override_group_restrict=false&find=\">" . $lang["viewmygroupsonly"] . "</a> &nbsp; | &nbsp;";	
+	$atoz.="<a href=\"collection_public.php?order_by=name&override_group_restrict=true&find=\">" . $lang["viewall"] . "</a> &nbsp;&nbsp;&nbsp;";	
+	}
+else
+	{
+	$atoz.="<a href=\"collection_public.php?order_by=name&find=\">" . $lang["viewall"] . "</a>";
+	}
+
+
 if ($find=="") {$atoz.="</span>";}
 $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)

@@ -1018,9 +1018,12 @@ $default_display="thumbs";
 # Generate thumbs/previews for alternative files?
 $alternative_file_previews=false;
 
+# Confine public collections display to the collections posted by the user's own group, sibling groups, parent group and children groups.
+# All collections can be accessed via a new 'view all' link.
+$public_collections_confine_group=false;
 
-
-
+# Show public collections in the top nav?
+$public_collections_top_nav=false;
 
 
 

@@ -177,7 +177,7 @@ function refresh_collection_frame($collection="")
 		}
 	}
 	
-function search_public_collections($search="", $order_by="name", $sort="ASC", $exclude_themes=true, $exclude_public=false, $include_resources=false)
+function search_public_collections($search="", $order_by="name", $sort="ASC", $exclude_themes=true, $exclude_public=false, $include_resources=false, $override_group_restrict=false)
 	{
 	# Performs a search for themes / public collections.
 	# Returns a comma separated list of resource refs in each collection, used for thumbnail previews.
@@ -218,6 +218,19 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 		$sql.=" and length(c.theme)>0";
 		}
 		
+	# Restrict to parent, child and sibling groups?
+	global $public_collections_confine_group,$userref,$usergroup;
+	if ($public_collections_confine_group && !$override_group_restrict)
+		{
+		# Form a list of all applicable groups
+		$groups=array($usergroup); # Start with user's own group
+		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent='$usergroup'")); # Children
+		$groups=array_merge($groups,sql_array("select parent value from usergroup where ref='$usergroup'")); # Parent
+		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent=(select parent from usergroup where ref='$usergroup')")); # Siblings (same parent)
+		
+		$sql.="and u.usergroup in ('" . join ("','",$groups) . "')";
+		}
+	
 	# Run the query
 	if ($include_resources)
 		{
