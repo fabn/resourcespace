@@ -30,8 +30,9 @@ if (!function_exists('mysql_set_charset'))
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
 	{
-	global $baseurl;
-	if (error_reporting())
+	global $baseurl,$pagename;
+	if (!error_reporting()) {return true;}
+	if (!isset($pagename) || $pagename!="upload_java")
 		{
 		?>
 		</select></table></table></table>
@@ -43,6 +44,11 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 		</div>
 		<?php
 		exit();
+		}
+	else
+		{
+		# Special error message format for Java uploader, so the error is correctly displayer
+		exit("ERROR: Error processing file\\n\\n $errfile line $errline\\n$errstr");
 		}
 	}
 error_reporting(E_ALL);
@@ -85,7 +91,7 @@ if ($mysql_force_strict_mode)
 	sql_query("SET SESSION sql_mode='STRICT_ALL_TABLES'");	
 	}
 
-if (function_exists("set_magic_quotes_runtime")) {@set_magic_quotes_runtime(0);}
+#if (function_exists("set_magic_quotes_runtime")) {@set_magic_quotes_runtime(0);}
 
 # statistics
 $querycount=0;

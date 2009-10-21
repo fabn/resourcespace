@@ -1,7 +1,7 @@
 <?php
 # pull values from cookies if necessary, for non-search pages where this info hasn't been submitted
 if (!isset($restypes)) {$restypes=@$_COOKIE["restypes"];}
-if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=@$_COOKIE["search"];} else {$quicksearch=$search;}
+if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=(isset($_COOKIE["search"])?$_COOKIE["search"]:"");} else {$quicksearch=$search;}
 
 # Load the basic search fields, so we know which to strip from the search string
 $fields=get_simple_search_fields();

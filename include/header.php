@@ -127,9 +127,9 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 			(checkperm("s"))  && (! $disable_searchresults )
 		&&
 			(
-				(strlen(@$_COOKIE["search"])>0)
+				(isset($_COOKIE["search"]) && strlen($_COOKIE["search"])>0)
 			||
-				((strlen(@$search)>0) && (strpos($search,"!")===false))
+				(isset($search) && (strlen($search)>0) && (strpos($search,"!")===false))
 			)
 		)
 		{?>
