@@ -96,6 +96,9 @@ if ($noattach=="")
 			}
 		}
 	
+	# Remove critical characters from filename
+	$filename = preg_replace(':', '_', $filename);
+		
 	# We use quotes around the filename to handle filenames with spaces.
 	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
 	}
