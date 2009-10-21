@@ -1015,6 +1015,22 @@ $no_preview_extensions=array("icm","icc");
 # What is the default display mode for search results? (smallthumbs/thumbs/list)
 $default_display="thumbs";
 
+# Generate thumbs/previews for alternative files?
+$alternative_file_previews=false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #
@@ -1197,6 +1213,9 @@ $frameless_collections=false;
 #
 # $qlpreview_path="/usr/bin";
 
+
+# Log developer debug information to the debug log (filestore/tmp/debug.txt)?
+$debug_log=false;
 
 
 ?>

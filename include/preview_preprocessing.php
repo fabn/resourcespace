@@ -9,8 +9,8 @@ global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, 
 
 if (!$previewonly)
 	{
-	$file=get_resource_path($ref,true,"",false,$extension); 
-	$target=get_resource_path($ref,true,"",false,"jpg"); 
+	$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative); 
+	$target=get_resource_path($ref,true,"",false,"jpg",-1,1,false,"",$alternative); 
 	}
 else
 	{
@@ -36,6 +36,8 @@ if (file_exists($target)) {unlink($target);}
  if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
  if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
  if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
+
+debug ("Starting preview preprocessing. File extension is $extension.");
 
 hook("metadata");
 
@@ -390,7 +392,6 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ff
 */
 if (!isset($newfile))
 	{
-
     $prefix="";
 
 	# Preserve colour profiles?    
@@ -441,6 +442,8 @@ if (!isset($newfile))
 
    if (($extension=="pdf") || (($extension=="eps") && !$photoshop_eps) || ($extension=="ai") || ($extension=="ps")) 
     	{
+    	debug("PDF multi page preview generation starting");
+    	
    	  # For EPS/PS/PDF files, use GS directly and allow multiple pages.
 	# EPS files are always single pages:
 	if ($extension=="eps") {$pdf_pages=1;}
@@ -495,16 +498,20 @@ if (!isset($newfile))
 		{
 		# Set up target file
 		$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
-		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n); 
+		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n,false,"",$alternative); 
 		if (file_exists($target)) {unlink($target);}
 
 		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
  		$output=shell_exec($gscommand2); 
+
+    	debug("PDF multi page preview: page $n, executing " . $gscommand2);
+
 	
 		# Set that this is the file to be used.
 		if (file_exists($target) && $n==1)
 			{
 			$newfile=$target;
+	    	debug("Page $n generated successfully");
 			}
 			
 		# resize directly to the screen size (no other sizes needed)
@@ -517,7 +524,7 @@ if (!isset($newfile))
 			global $watermark;
     			if (isset($watermark))
     				{
-				$path=get_resource_path($ref,true,$size,false,"",-1,$n,true);
+				$path=get_resource_path($ref,true,$size,false,"",-1,$n,true,"",$alternative);
 				if (file_exists($path)) {unlink($path);}
     				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
@@ -531,7 +538,7 @@ if (!isset($newfile))
     else
     	{
     	# Not a PDF file, so single extraction only.
-			create_previews_using_im($ref,false,$extension,$previewonly);
+			create_previews_using_im($ref,false,$extension,$previewonly,false,$alternative);
 			}
 	}
 	
@@ -539,7 +546,7 @@ if (!isset($newfile))
 # If a file has been created, generate previews just as if a JPG was uploaded.
 if (isset($newfile))
 	{
-	create_previews($ref,false,"jpg",$previewonly);	
+	create_previews($ref,false,"jpg",$previewonly,false,$alternative);	
 	}
 
 ?>

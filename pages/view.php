@@ -198,14 +198,14 @@ elseif ($resource["has_image"]==1)
 	<?php
 	if (file_exists($imagepath))
 		{ 
-		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" /><?php 
+		?><img src="<?php echo $imageurl?>" alt="<?php echo $lang["fullscreenpreview"]?>" class="Picture" GALLERYIMG="no" id="previewimage" /><?php 
 		} 
 	?></a><?php
 	}
 else
 	{
 	?>
-	<img src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false)?>" alt="" class="Picture" style="border:none;" />
+	<img src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false)?>" alt="" class="Picture" style="border:none;" id="previewimage" />
 	<?php
 	}
 
@@ -420,9 +420,21 @@ if ($access==0) # open access only (not restricted)
 			</tr>
 			<?php
 			}	
+		$alt_thm="";
+		if ($alternative_file_previews)
+			{
+			$alt_thm=get_resource_path($ref,true,"col",false,"jpg",-1,1,false,"",$altfiles[$n]["ref"]);
+			if (file_exists($alt_thm))
+				{
+				# Get web path
+				$alt_thm=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,"",$altfiles[$n]["ref"]);
+				}
+			}
 		?>
 		<tr class="DownloadDBlend">
-		<td><h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
+		<td>
+		<?php if ($alt_thm!="") { ?><img src="<?php echo $alt_thm?>" class="AltThumb"><?php } ?>
+		<h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
 		<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>

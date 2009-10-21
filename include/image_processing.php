@@ -42,6 +42,15 @@ function upload_file($ref,$no_exif=false)
     $status="Please provide a file name.";
     $filepath=get_resource_path($ref,true,"",true,$extension);
 
+    # Remove existing file, if present
+    $old_extension=sql_value("select file_extension value from resource where ref='$ref'","");
+    if ($old_extension!="")	
+    	{
+    	$old_path=get_resource_path($ref,true,"",true,$old_extension);
+    	if (file_exists($old_path)) {unlink($old_path);}
+    	}
+
+
     if ($filename!="")
     	{
     	global $jupload_alternative_upload_location;
@@ -397,9 +406,12 @@ function iptc_return_utf8($text)
 	return $text;
 	}
 	
-function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false)
+function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
 	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
+
+	# Debug
+	debug("create_previews(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
 
 	# File checksum (experimental) - disabled for now
 	# if (!$previewonly) {generate_file_checksum($ref,$extension);}
@@ -409,25 +421,28 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	# when regenerating previews (i.e. for watermarks)
 	if($previewbased)
 		{
-		$file=get_resource_path($ref,true,"lpr",false,"jpg");	
+		$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"",$alternative);	
 		if (!file_exists($file))
 			{
-			$file=get_resource_path($ref,true,"scr",false,"jpg");		
+			$file=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"",$alternative);		
 			if (!file_exists($file))
 				{
-				$file=get_resource_path($ref,true,"pre",false,"jpg");		
+				$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"",$alternative);		
 				}
 			}
 		}
 	else if (!$previewonly)
 		{
-		$file=get_resource_path($ref,true,"",false,$extension);	
+		$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative);
 		}
 	else
 		{
 		# We're generating based on a new preview (scr) image.
 		$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 		}
+	
+	# Debug
+	debug("File source is $file");
 	
 	# Make sure the file exists
 	if (!file_exists($file)) {return false;}
@@ -444,7 +459,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		{
 		if (isset($imagemagick_path))
 			{
-			create_previews_using_im($ref,$thumbonly,$extension,$previewonly,$previewbased);
+			create_previews_using_im($ref,$thumbonly,$extension,$previewonly,$previewbased,$alternative);
 			}
 		else
 			{
@@ -472,10 +487,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$id=$ps[$n]["id"];
 			
 				# Find the target path 
-				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
+				$path=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,false,"",$alternative);
 				if (file_exists($path) && !$previewbased) {unlink($path);}
 				# Also try the watermarked version.
-				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
+				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
 				if (file_exists($wpath)) {unlink($wpath);}
 
 	      # only create previews where the target size IS LESS THAN OR EQUAL TO the source size.
@@ -519,7 +534,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				elseif (($id=="pre") || ($id=="thm") || ($id=="col"))	
 					{
 					# If the source is smaller than the pre/thm/col, we still need these sizes; just copy the file
-					copy($file,get_resource_path($ref,true,$id,false,$extension));
+					copy($file,get_resource_path($ref,true,$id,false,$extension,-1,1,false,"",$alternative));
 					if ($id=="thm") {sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");}
 					}
 				}
@@ -540,9 +555,11 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	return true;
 	}
 
-function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false)
+function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
 	global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
+
+	debug("create_previews_using_im(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
 
 	if (isset($imagemagick_path))
 		{
@@ -555,19 +572,19 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Set thumbonly=true to (re)generate thumbnails only.
 		if($previewbased)
 			{
-			$file=get_resource_path($ref,true,"lpr",false,"jpg");	
+			$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"",$alternative);	
 			if (!file_exists($file))
 				{
-				$file=get_resource_path($ref,true,"scr",false,"jpg");		
+				$file=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"",$alternative);		
 				if (!file_exists($file))
 					{
-					$file=get_resource_path($ref,true,"pre",false,"jpg");		
+					$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"",$alternative);		
 					}
 				}
 			}
 		else if (!$previewonly)
 			{
-			$file=get_resource_path($ref,true,"",false,$extension);	
+			$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative);	
 			}
 		else
 			{
@@ -575,13 +592,13 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$file=get_resource_path($ref,true,"tmp",false,"jpg");	
 			}
 
-		$hpr_path=get_resource_path($ref,true,"hpr",false);	
+		$hpr_path=get_resource_path($ref,true,"hpr",false,"jpg",-1,1,false,"",$alternative);	
 		if (file_exists($hpr_path) && !$previewbased) {unlink($hpr_path);}	
-		$lpr_path=get_resource_path($ref,true,"lpr",false);	
+		$lpr_path=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"",$alternative);	
 		if (file_exists($lpr_path) && !$previewbased) {unlink($lpr_path);}	
-		$scr_path=get_resource_path($ref,true,"scr",false);	
+		$scr_path=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"",$alternative);	
 		if (file_exists($scr_path) && !$previewbased) {unlink($scr_path);}
-		$scr_wm_path=get_resource_path($ref,true,"scr",false,"jpg",-1,1,true);	
+		$scr_wm_path=get_resource_path($ref,true,"scr",false,"jpg",-1,1,true,"",$alternative);	
 		if (file_exists($scr_wm_path) && !$previewbased) {unlink($scr_wm_path);}
 		
 		$prefix = '';
@@ -605,9 +622,10 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if ($previewonly) {$sizes=" where id='thm' or id='col' or id='pre' or id='scr'";}
 
 		$ps=sql_query("select * from preview_size $sizes order by width desc, height desc");
-		$highestsize = false;
 		for ($n=0;$n<count($ps);$n++)
 			{
+			# If we've already made the LPR or SCR then use those for the remaining previews.
+			# As we start with the large and move to the small, this will speed things up.
 			if(file_exists($lpr_path)){$file=$lpr_path;}
 			if(file_exists($scr_path)){$file=$scr_path;}
 			
@@ -623,18 +641,29 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
 
-			if ((!$highestsize && !($extension=="jpg" || $extension=="jpeg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
+			# Debug
+			debug("Contemplating " . $ps[$n]["id"] . " (sw=$sw, tw=$tw, sh=$sh, th=$th, extension=$extension)");
+
+			# Always make a screen size for non-JPEG extensions regardless of actual image size
+			# This is because the original file itself is not suitable for full screen preview, as it is with JPEG files.
+			#
+			# Always make preview sizes for smaller file sizes.
+			#
+			# Always make pre/thm/col sizes regardless of source image size.
+			if (($id == "scr" && !($extension=="jpg" || $extension=="jpeg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
 				{
-				if (($sw<$tw) && ($sh<$th))
-					{
-					$highestsize = true;
-					}
+					
 				# Find the target path
-				$path=get_resource_path($ref,true,$ps[$n]["id"],false);
+				$path=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,false,"",$alternative);
+				
+				# Debug
+				debug("Generating preview size " . $ps[$n]["id"] . " to " . $path);
+
+				# Delete any file at the target path.				
 				if (file_exists($path)){unlink($path);}
 
 				# Also try the watermarked version.
-				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true);
+				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
 				if (file_exists($wpath)){unlink($wpath);}
 	
 				# Preserve colour profiles? (omit for smaller sizes)   
@@ -662,8 +691,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				}
 			}
 		# For the thumbnail image, call extract_mean_colour() to save the colour/size information
-		$target=@imagecreatefromjpeg(get_resource_path($ref,true,"thm",false));
-		if ($target) 
+		$target=@imagecreatefromjpeg(get_resource_path($ref,true,"thm",false,"jpg",-1,1,false,"",$alternative));
+		if ($target && $alternative==-1) # Do not run for alternative uploads 
 			{
 			extract_mean_colour($target,$ref);
 			# flag database so a thumbnail appears on the site
