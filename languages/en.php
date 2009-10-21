@@ -861,7 +861,7 @@ $lang['plugins-legacyinst'] = 'Activated via config.php';
 $lang['location-title'] = 'Location Data';
 $lang['location-add'] = 'Add Location';
 $lang['location-edit'] = 'Edit Location';
-$lang['location-details'] = 'Double-click map to place pin.';
+$lang['location-details'] = 'Double-click map to place pin.  Once the pin has been placed, you can drag the pin to refine the location.';
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";

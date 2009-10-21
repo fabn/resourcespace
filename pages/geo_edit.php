@@ -41,7 +41,12 @@ $ll_field = get_data_by_field($ref, $gps_field);
             <script type="text/javascript">
                 function geo_loc_initialize() {
                   if (GBrowserIsCompatible()) {
-                    var map = new GMap2(document.getElementById("map_canvas"));
+                    var mapOptions = {
+                    		   googleBarOptions : {
+                                    style: 'new',
+                                    }
+                    }
+                    map = new GMap2(document.getElementById("map_canvas"),mapOptions);
                     <?php if ($lat_long!==false) {?>
                     map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 8);
                     geo_mark = new GMarker(map.getCenter(), {draggable: true})
@@ -51,6 +56,7 @@ $ll_field = get_data_by_field($ref, $gps_field);
                     map.setCenter(new GLatLng(0,0),1);
                     <?php } ?>
                     map.setUIToDefault();
+                    map.enableGoogleBar();
                     GEvent.addListener(map, "dblclick", function(overlay, latlng) {
                         if (geo_mark==false){
                             geo_mark = new GMarker(latlng, {draggable: true});
