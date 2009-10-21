@@ -675,7 +675,8 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
         if ($ll_field!=''){
             $lat_long = explode(',', get_data_by_field($ref,$gps_field));
         ?>
-            <a href="#">&gt; <?php echo $lang['location-edit']; ?></a>
+            <?php if ($edit_access) { ?>
+            <ul class="HorizontalNav"><li><a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></li></ul><?php } ?>
             <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
                     type="text/javascript"></script>
             <script type="text/javascript">
@@ -692,7 +693,7 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
             </script>
             <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
     <?php } else {?>
-        <a href="#">&gt; <?php echo $lang['location-add'];?></a>
+        <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>
     <?php }?>
     </div>
     <div class="PanelShadow"></div>
