@@ -72,13 +72,13 @@ $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"collection_public.php?order_by=name&find=" . chr($n) . "\">" . chr($n) . "</a> ";
+	$atoz.="<a href=\"collection_public.php?order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\">" . chr($n) . "</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
 $atoz.="</div>";
 
-$url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
+$url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."&override_group_restrict=" . $override_group_restrict;
 ?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div>
 
 <form method=post id="collectionform">
