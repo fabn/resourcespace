@@ -701,11 +701,30 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
                 function geo_loc_initialize() {
                   if (GBrowserIsCompatible()) {
                     var map = new GMap2(document.getElementById("map_canvas"));
-                    map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 13);
+                    latlng = new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>);
+                    marker = new GMarker(latlng)
+                    map.setCenter(marker.getLatLng(), 13);
                     map.setUIToDefault();
-                    map.addOverlay(new GMarker(new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>)));
+                    map.addOverlay(marker);
+                    geocoder = new GClientGeocoder;
+                    geocoder.getLocations(latlng, function(response){
+                        if (!response || response.Status.code != 200){
+                            alert("Status Code:" + response.Status.code);
+                            }
+                        else {
+                            place = response.Placemark[0];
+                            marker.bindInfoWindowHtml(
+                                    '<b>Latitude:</b> '+place.Point.coordinates[1]+'<br />' +
+                                    '<b>Longitude:</b> '+place.Point.coordinates[0]+'<br />' +
+                                    '<b>Address:</b> '+place.address+'<br />'+
+                                    '<b>Country Code:</b> '+place.AddressDetails.Country.CountryNameCode);
+                        }
+                    });
+                            
+                       
                   }
                 }
+               
                 Event.observe(window, 'load', geo_loc_initialize);
                 Event.observe(window, 'unload', GUnload);
             </script>
