@@ -1018,6 +1018,9 @@ $default_display="thumbs";
 # Generate thumbs/previews for alternative files?
 $alternative_file_previews=false;
 
+# For alternative file previews... enable a thumbnail mouseover to see the preview image?
+$alternative_file_previews_mouseover=false;
+
 # Confine public collections display to the collections posted by the user's own group, sibling groups, parent group and children groups.
 # All collections can be accessed via a new 'view all' link.
 $public_collections_confine_group=false;
