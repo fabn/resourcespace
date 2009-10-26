@@ -65,10 +65,14 @@ $lang["editresearch"]="rediger forespørsel";
 $lang["editproperties"]="rediger egenskaper";
 $lang["selectfiles"]="Velg filer";
 $lang["searchcontent"]="Søk tekster";
+$lang["ticktodeletehelp"]="Kryss av for å slette dette valget";
+$lang["createnewhelp"]="Lag en ny hjelp-seksjon";
 $lang["searchcontenteg"]="(side, navn eller tekst)";
 $lang["copyresource"]="Kopier materiale";
 $lang["resourceidnotfound"]="Material-ID'et ikke funnet";
 $lang["inclusive"]="(inkluder)";
+$lang["pluginssetup"]="Administrer plugins";
+$lang["pluginmanager"]="Programtillegg-administrator";
 
 
 # Team Centre - Bulk E-mails
@@ -85,6 +89,7 @@ $lang["comments"]="Kommentarer";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="Gjennomgå brukerbidrag til godkjenning";
+$lang["viewuserpendingsubmission"]="Gjennomgå brukerbidrag til innsending";
 $lang["searcharchivedresources"]="Søk i arkivmateriale";
 $lang["viewresourcespendingarchive"]="Vis materiale til arkivering";
 $lang["uploadresourcebatch"]="Last opp filer - Batch";
@@ -110,8 +115,8 @@ $lang["uselocalupload"]="ELLER: Bruk lokal opplastingsfolder istedet for en FTP-
 
 # User contributions
 $lang["contributenewresource"]="Legg til nytt materiale";
-$lang["viewcontributedps"]="Vis mine materiellbidrag til godkjenning";
-$lang["viewcontributedpr"]="Vis mine materiellbidrag til godkjenning av bildedesken";
+$lang["viewcontributedps"]="Vis mine materialbidrag til godkjenning";
+$lang["viewcontributedpr"]="Vis mine materialbidrag til godkjenning av bildedesken";
 $lang["viewcontributedsubittedl"]="Vis mine bidrag - Live";
 
 # Collections
@@ -140,6 +145,7 @@ $lang["findpubliccollection"]="Finn et åpent lysbord";
 $lang["searchpubliccollections"]="Søk i åpne lysbord";
 $lang["addtomycollections"]="Legg til mine lysbord";
 $lang["action-addtocollection"]="Legg til lysbord";
+$lang["action-removefromcollection"]="Fjern fra lysbord";
 $lang["addtocollection"]="Legg til lysbord";
 $lang["cantmodifycollection"]="Du kan ikke endre dette lysbordet";
 $lang["currentcollection"]="Aktivt lysbord";
@@ -177,6 +183,7 @@ $lang["previewimage"]="Forhåndsvis bilde";
 $lang["file"]="Fil";
 $lang["upload"]="Last opp";
 $lang["uploadafile"]="Last opp fil";
+$lang["replacefile"]="Erstatt fil";
 $lang["imagecorrection"]="Bildekorrigering";
 $lang["previewthumbonly"]="(kun forhåndsvisning / miniatyrbilde)";
 $lang["rotateclockwise"]="Roter med klokka";
@@ -184,7 +191,7 @@ $lang["rotateanticlockwise"]="Roter mot klokka";
 $lang["increasegamma"]="Øke gamma (lysere)";
 $lang["decreasegamma"]="Redusere gamma (mørkere)";
 $lang["restoreoriginal"]="Gjenopprett originalen";
-$lang["specifydefaultcontent"]="Definer forhåndsinnstilt innhold for det nye materiellet";
+$lang["specifydefaultcontent"]="Definer forhåndsinnstilt innhold for det nye materialet";
 $lang["properties"]="egenskaper";
 $lang["relatedresources"]="Beslektet materiale";
 $lang["indexedsearchable"]="Indekserte, søkbare felter";
@@ -266,8 +273,9 @@ $lang["log-c"]="Opprettede filer";
 $lang["log-d"]="Nedlastet fil";
 $lang["log-e"]="Redigerte materiell-felt";
 $lang["log-m"]="Masseredigerte materiell-felt";
-$lang["log-v"]="Viewed resource";
-$lang["log-l"]="Logged in"; # For user entries only.
+$lang["log-E"]="Delt materiell via e-post til ";//  + notes field
+$lang["log-v"]="Vist materiell";
+$lang["log-l"]="Innlogget"; # For user entries only.
 
 $lang["backtoresourceview"]="Tilbake til materialvisning";
 
@@ -278,6 +286,7 @@ $lang["status-1"]="Brukerbidrag: Venter på gjennomsyn";
 $lang["status0"]="Aktiv";
 $lang["status1"]="Venter på arkivering";
 $lang["status2"]="Arkivert";
+$lang["status3"]="Slettet";
 
 # Charts
 $lang["activity"]="Aktivitet";
@@ -300,7 +309,8 @@ $lang["password"]="Passord";
 $lang["login"]="Logg in";
 $lang["loginincorrect"]="Feil brukernavn eller passord, vennligst prøv igjen";
 $lang["accountexpired"]="Din konto har utgått på dato. Vennligst ta kontakt med administrator for å fornye din tilgang.";
-$lang["useralreadyexists"]="En brukerkonto med samme navn eller passord eksisterer allerede, endringene ble ikke lagret.";
+$lang["useralreadyexists"]="En brukerkonto med samme navn eller passord finnes allerede, endringene ble ikke lagret.";
+$lang["useremailalreadyexists"]="En konto med samme e-postadresse finnes allerede.";
 $lang["ticktoemail"]="Kryss av for å sende brukerens brukernavn og passord per e-post";
 $lang["ticktodelete"]="Kryss av for å slette denne brukeren";
 $lang["edituser"]="Rediger bruker";
@@ -317,6 +327,7 @@ $lang["emailnotfound"]="Den oppgitte e-postadressen ble ikke funnet.";
 $lang["yourname"]="Ditt navn";
 $lang["youremailaddress"]="Din e-postadresse";
 $lang["sendreminder"]="Send påminnelse";
+$lang["sendnewpassword"]="Send nytt passord";
 $lang["passwordreminder"]="Passordpåminnelse";
 $lang["requestuserlogin"]="Bestill brukerkonto";
 
@@ -344,6 +355,7 @@ $lang["requeststatus2"]="Ferdig";
 $lang["copyexistingresources"]="Kopier filene i en eksisterende lysbord som svar på denne bildeforespørselen";
 $lang["deletethisrequest"]="Slett denne forespørselen?";
 $lang["requestedby"]="Forespurt av";
+$lang["requesteditems"]="Forespurt materiell";
 $lang["assignedtoteammember"]="Oppdrag gitt til";
 $lang["unassigned"]="Ikke tildelt";
 $lang["typecollectionid"]="(Skriv lysbord-ID nedenfor)";
@@ -376,6 +388,8 @@ $lang["fromdate"]="Fra dato";
 $lang["day"]="Dag";
 $lang["month"]="Måned";
 $lang["year"]="År";
+$lang["hour-abbreviated"]="TT";
+$lang["minute-abbreviated"]="MM";
 $lang["itemstitle"]="Filer";
 $lang["tools"]="Verktøy";
 $lang["created"]="Opprettet";
@@ -482,6 +496,10 @@ $lang["existingkeywords"]="Eksisterende nøkkelord:";
 $lang["extrakeywords"]="Ekstra nøkkelord";
 $lang["leaderboard"]="Tabell";
 $lang["confirmeditall"]="Er du sikker på at du vil lagre? Dette vil overskrive eksisterende verdier i de valgte feltene for alle filer i ditt nåværende lysbord.";
+$lang["confirmsubmitall"]="Er du sikker på at du vil sende alle inn til gjennomgang? Dette vil overskrive de eksisterende verdien(e) for de valgte feltene for alt materiell i ditt nåværende lysbord og sende dem inn til gjennomgang.";
+$lang["confirmunsubmitall"]="Er du sikker på at du ønsker å trekke tilbake alle fra gjennomgangsprosessen? Dette vil overskrive de eksisterende verdien(e) for de valgte feltene for alt materiell i ditt nåværende lysbord og trekke dem fra gjennomgangsprosessen.";
+$lang["confirmpublishall"]="Er du sikker på at du vil publisere? Dette vil Dette vil overskrive de eksisterende verdien(e) for de valgte feltene for alt materiell i ditt nåværende lysbord og publisere alle for offentlig visning.";
+$lang["confirmunpublishall"]="Er du sikker på at du vil avpublisere? Dette vil overskrive de eksisterende verdien(e) for de valgte feltene for alt materiell i ditt nåværende lysbord og fjerne dem fra offentlig visning.";
 $lang["collectiondeleteconfirm"]="Er du sikker på at du vil slette lysbordet?";
 $lang["hidden"]="(skjult)";
 $lang["requestnewpassword"]="Be om nytt passord";
@@ -504,7 +522,8 @@ $lang["replaceresourcebatch"]="Erstatt filer - Batch";
 $lang["editmode"]="Redigeringsmodus";
 $lang["replacealltext"]="Erstatt all tekst";
 $lang["findandreplace"]="Søk og erstatt";
-$lang["appendtext"]="Legg til tekst";
+$lang["appendtext"]="Legg til tekst / valg";
+$lang["removetext"]="Fjern tekst / valg";
 $lang["find"]="Søk";
 $lang["andreplacewith"]="...og erstatt med...";
 $lang["relateallresources"]="Gjør filene i dette lysbordet beslektet";
@@ -546,7 +565,7 @@ $lang["share"]="Dele";
 $lang["sharecollection"]="Del lysbordet";
 $lang["generateurl"]="Lag nettlenke";
 $lang["generateurlinternal"]="Nettlenken nedenfor gjelder kun for innloggede brukere.";
-$lang["generateurlexternal"]="Nettlenken nedenfor gjelder for ALLE og krever ikke innlogging. <strong>Hvis flere filer legges til lysbordet vil nettlenken opphøre av sikkerhetshensyn og en ny nettlenke må lages.</strong>";
+$lang["generateurlexternal"]="Nettlenken nedenfor gjelder for ALLE og krever ikke innlogging.";
 $lang["archive"]="Arkiv";
 $lang["collectionviewhover"]="Klikk for å se filene i dette lysbordet";
 $lang["collectioncontacthover"]="Lag et oversiktsark med filene i dette lysbordet";
@@ -609,6 +628,7 @@ $lang["userrequestnotification1"]="Bestillingsskjemaet for brukerinnlogging er f
 $lang["userrequestnotification2"]="Hvis dette er en gyldig forespørsel så vennligst opprett en brukerkonto for denne brukeren på nettadressen nedenfor.";
 $lang["ipaddress"]="IP-adresse";
 $lang["userresourcessubmitted"]="Følgende brukerbidrag har blitt lastet opp for gjennomgang:";
+$lang["userresourcesunsubmitted"]="Følgende brukerbidrag har blitt trukket tilbake og trenger ikke lenger gjennomgås:";
 $lang["viewalluserpending"]="Se gjennom alle brukerbidrag som venter på gjennomgang:";
 
 # New for 1.7
@@ -704,6 +724,13 @@ $lang["collectionlog-a"]="Lagt til fil";
 $lang["collectionlog-c"]="Lagt til fil (kopiert)";
 $lang["collectionlog-m"]="Lagt til filkommentar";
 $lang["collectionlog-*"]="Lagt til filrangering";
+$lang["collectionlog-S"]="Delt lysbord med "; //  + notes field
+$lang["collectionlog-E"]="Sendt lysbord med e-post til ";//  + notes field
+$lang["collectionlog-s"]="Delt materiell med ";//  + notes field
+$lang["collectionlog-T"]="Sluttet å dele lysbord med ";//  + notes field
+$lang["collectionlog-t"]="Stoppet tilgang til materiell ved ";//  + notes field
+$lang["collectionlog-X"]="Lysbord slettet";
+
 
 $lang["viewuncollectedresources"]="Vis filer som ikke er brukt i noen lysbord";
 
@@ -718,7 +745,125 @@ $lang["videoplaylist"]="Video-spilleliste";
 
 $lang["restrictedsharecollection"]="Du har begrenset tilgang til en eller flere filer i dette lysbordet og deling er derfor ikke tilatt.";
 
+$lang["collection"]="Lysbord";
+$lang["idecline"]="Ikke godta"; # For terms and conditions
+
+$lang["mycollection_notpublic"]="Du kan ikke gjøre om 'Mitt lysbord' til et åpent lysbord eller kategori. Vennligst lag et nytt lysbord for dette formålet.";
+
 $lang["resourcemetadata"]="Material-metadata";
 
+$lang["selectgenerateurlexternal"]="Velg tilgangsnivå for den eksterne nettlenken (for brukere uten konto).";
+
+$lang["externalselectresourceaccess"]="Hvis du sender e-post til ekserne brukere, velg tilgangsnivået du vil gi dem til dette materialet.";
+
+$lang["externalselectresourceexpires"]="Hvis du sender e-post til ekserne brukere, velg en utløpsdato for nettlenken.";
+
+$lang["externalshareexpired"]="Beklager, denne nedlastingen har utgått på dato og er ikke lenger tilgjengelig.";
+
+$lang["expires"]="Utgår";
+$lang["never"]="Aldri";
+
+$lang["approved"]="Godkjent";
+$lang["notapproved"]="Ikke godkjent";
+
+$lang["userrequestnotification3"]="Hvis dette er en gyldig forespørsel, vennligst klikk på nettlenken nedenfor for å gjennomgå detaljene og godkjenne brukerkontoen.";
+
+$lang["ticktoapproveuser"]="Du må krysse av i boksen for å godkjenne brukeren hvis du vil aktivere brukerkontoen.";
+
+$lang["managerequestsorders"]="Administrer forespørsler / bestillinger";
+$lang["editrequestorder"]="Rediger forespørsler / bestillinger";
+$lang["requestorderid"]="Forespørsels- / bestillings-ID";
+$lang["viewrequesturl"]="For å gjennomgå denne forespørselen, klikk på nettlenken nedenfor:";
+$lang["requestreason"]="Bakgrunn for bestilling";
+
+$lang["resourcerequeststatus0"]="Ikke avgjort";
+$lang["resourcerequeststatus1"]="Godkjent";
+$lang["resourcerequeststatus2"]="Avslått";
+
+$lang["ppi"]="PPI"; # (Pixels Per Inch - used on the resource download options list).
+
+$lang["useasthemethumbnail"]="Vil du bruke materialet som miniatyrbilde for denne kategorien?";
+$lang["sessionexpired"]="Du har blitt logget av fordi du var inaktiv i mer enn 30 minutter. Vennligst legg logg inn igjen for å fortsette.";
+
+$lang["resourcenotinresults"]="Dette materialet er ikke lenger inkludert i søket ditt, så navigering mellom neste/forrige er ikke lenger mulig.";
+$lang["publishstatus"]="Lagre med publiseringsstatus:";
+$lang["addnewcontent"]="Nytt innhold (side, navn)";
+$lang["hitcount"]="Antall treff";
+$lang["downloads"]="Nedlastinger";
+
+$lang["addremove"]="Legg til/fjern";
+
+##  Translations for standard log entries
+$lang["all_users"]="alle brukere";
+$lang["new_resource"]="nytt materiale";
+
+$lang["invalidextension_mustbe"]="Ugyldig tillegg, må være";
+$lang["allowedextensions"]="Gyldige tillegg";
+
+$lang["alternativebatchupload"]="Batch-opplast alternative filer (Java)";
+
+$lang["confirmdeletefieldoption"]="Er du sikker på at du vil SLETTE dette feltvalget?";
+
+$lang["cannotshareemptycollection"]="Dette lysbordet er tomt og kan ikke deles.";
+
+$lang["requestall"]="Forespørr alle";
+$lang["resourcerequesttype0"]="Kun e-post";
+$lang["resourcerequesttype1"]="Behandlet bestilling";
+$lang["resourcerequesttype2"]="Betaling - Nå";
+$lang["resourcerequesttype3"]="Betaling - Faktura";
+
+$lang["requestapprovedmail"]="Din forespørsel har blitt godkjent. Klikk på lenken nedenfor for å se gjennom og laste ned materialet.";
+$lang["requestdeclinedmail"]="Beklager, din forespørsel etter materialet i lysbordet nedenfor har blitt avslått.";
+
+$lang["resourceexpirymail"]="Følgende materiale har utgått på dato:";
+$lang["resourceexpiry"]="Materialets utløpsdato";
+
+$lang["requestapprovedexpires"]="Din tilgang til dette materialet går ut på dato den";
+
+$lang["pleasewaitsmall"]="(vennligst vent)";
+$lang["removethisfilter"]="(fjern dette filteret)";
+
+$lang["no_exif"]="Ikke importer EXIF/IPTC/XMP metadata for denne opplastingen";
+$lang["difference"]="Avvik";
+$lang["viewdeletedresources"]="Se gjennom slettet materiell";
+$lang["finaldeletion"]="Denne filen har allerede status som 'slettet'. Denne handlingen vil fjerne filen fullstendig fra systemet.";
+
+$lang["nocookies"]="En informasjonskapsel (cookie) kunne ikke settes på riktig måte. Sjekk at informasjonskapsler er slått på i din nettleser.";
+
+$lang["selectedresourceslightroom"]="Valgte filer (søkeliste for bl.a. Adobe Lightroom):";
+
+# Plugins Manager
+$lang['plugins-noneinstalled'] = "Ingen programtillegg er aktivert";
+$lang['plugins-noneavailable'] = "Ingen programtillegg er tilgjengelige.";
+$lang['plugins-availableheader'] = 'Tilgjengelige programtillegg';
+$lang['plugins-installedheader'] = 'Aktiverte programtillegg';
+$lang['plugins-author'] = 'Forfatter';
+$lang['plugins-version'] = 'Versjon';
+$lang['plugins-instversion'] = 'Installert versjon';
+$lang['plugins-uploadheader'] = 'Last opp programtillegg';
+$lang['plugins-uploadtext'] = 'Velg en .rsp-fil å installere.';
+$lang['plugins-deactivate'] = 'Deaktiver';
+$lang['plugins-moreinfo'] = 'Mer informasjon';
+$lang['plugins-activate'] = 'Aktiver';
+$lang['plugins-purge'] = 'Gjenoppfrisk programtillegg';
+$lang['plugins-rejmultpath'] = 'Arkivet inneholder flere stier. (Sikkerhetsrisiko)';
+$lang['plugins-rejrootpath'] = 'Arkivet inneholder absolutte stier. (Sikkerhetsrisiko)';
+$lang['plugins-rejparentpath'] = 'Arkivet inneholder overliggende stier (../). (Sikkerhetsrisiko)';
+$lang['plugins-rejmetadata'] = 'Arkivets dokumentasjonsfil ble ikke funnet.';
+$lang['plugins-rejarchprob'] = 'Det oppstod et problem under filutpakkingen:';
+$lang['plugins-rejfileprob'] = 'Programtillegget må være en .rsp-fil.';
+$lang['plugins-rejremedy'] = 'Hvis du stoler på dette programtillegget kan du installere det manuelt ved å pakke ut arkivet direkte i din programtilleggsmappe.';
+$lang['plugins-uploadsuccess'] = 'Opplastingen av programtillegget var vellykket';
+$lang['plugins-headertext'] = 'Programtillegget utvider fuksjonaliteten til mediearkivet.';
+$lang['plugins-legacyinst'] = 'Aktivert via config.php';
+
+#Location Data
+$lang['location-title'] = 'Stedsdata';
+$lang['location-add'] = 'Legg til sted';
+$lang['location-edit'] = 'Rediger sted';
+$lang['location-details'] = 'Dobbelt-klikk på kartet for å plassere nål. Når nålen er plassert kan du dra den rundt for å justere plasseringen.';
+
+$lang["publiccollections"]="Åpne lysbord";
+$lang["viewmygroupsonly"]="Vis kun mine grupper";
 
 ?>
