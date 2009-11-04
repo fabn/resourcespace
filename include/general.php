@@ -162,8 +162,21 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
+
+	# Find the resource type
+	$rtype=sql_value("select resource_type value from resource where ref='$ref'",0);
+
+	# If using metadata templates, 
+	$templatesql="";
+	global $metadata_template_resource_type;
+	if (isset($metadata_template_resource_type) && $metadata_template_resource_type==$rtype)
+		{
+		# Show all resource fields, just as with editing multiple resources.
+		$multi=true;
+		}
+
 	$return=array();
-	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type in (select resource_type from resource where ref='$ref')") . ") order by f.resource_type,f.order_by,f.ref");
+	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
 	
 	# Build an array of valid types and only return fields of this type.
 	$validtypes=sql_array("select ref value from resource_type");
