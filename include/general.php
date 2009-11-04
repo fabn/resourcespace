@@ -158,13 +158,14 @@ function get_resource_data($ref,$cache=true)
 	return $resource[0];
 	}
 
-function get_resource_field_data($ref,$multi=false,$use_permissions=true)
+function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
 
 	# Find the resource type
-	$rtype=sql_value("select resource_type value from resource where ref='$ref'",0);
+	if ($originalref==-1) {$originalref=$ref;} # When a template has been selected, only show fields for the type of the original resource ref, not the template (which shows fields for all types)
+	$rtype=sql_value("select resource_type value from resource where ref='$originalref'",0);
 
 	# If using metadata templates, 
 	$templatesql="";

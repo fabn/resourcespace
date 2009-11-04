@@ -417,16 +417,18 @@ if (isset($metadata_template_resource_type))
 	}
 
 $use=$ref;
-# 'Copy from' been supplied? Load data from this resource instead.
-if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
 
+# Resource aliasing.
+# 'Copy from' or 'Metadata template' been supplied? Load data from this resource instead.
+$originalref=$use;
+if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
 if (getval("metadatatemplate","")!="") {$use=getvalescaped("metadatatemplate","");}
 
 ?>
 <br /><br /><h1><?php echo $lang["resourcemetadata"]?></h1>
 <?php
 
-$fields=get_resource_field_data($use,$multiple);
+$fields=get_resource_field_data($use,$multiple,true,$originalref);
 for ($n=0;$n<count($fields);$n++)
 	{
 	# Should this field be displayed?
