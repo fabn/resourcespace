@@ -1227,4 +1227,13 @@ $frameless_collections=false;
 $debug_log=false;
 
 
+# Enable Metadata Templates. This should be set to the ID of the resource type that you intend to use for metadata templates.
+# Metadata templates can be selected on the resource edit screen to pre-fill fields.
+# The intention is that you will create a new resource type named "Metadata Template" and enter it's ID below.
+# This resource type can be hidden from view if necessary, using the restrictive resource type permission.
+#
+# $metadata_template_resource_type=5;
+
+
+
 ?>

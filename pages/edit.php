@@ -393,10 +393,34 @@ if ($enable_copy_data_from && !$multiple)
 	<?php
 	}
 
+if (isset($metadata_template_resource_type))
+	{
+	# Show metadata templates here
+	?>
+	<div class="Question">
+	<label for="metadatatemplate"><?php echo $lang["usemetadatatemplate"]?></label>
+	<select name="metadatatemplate" class="stdwidth" style="width:310px;">
+	<option value=""><?php echo (getval("metadatatemplate","")=="")?$lang["select"]:$lang["undometadatatemplate"] ?></option>
+	<?php
+	$templates=get_metadata_templates();
+	foreach ($templates as $template)
+		{
+		?>
+		<option value="<?php echo $template["ref"] ?>"><?php echo $template["title"] ?></option>
+		<?php	
+		}
+	?>
+	</select>
+	<input type="submit" name="copyfromsubmit" value="<?php echo $lang["action-select"]?>">
+	</div>
+	<?php
+	}
 
 $use=$ref;
 # 'Copy from' been supplied? Load data from this resource instead.
 if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
+
+if (getval("metadatatemplate","")!="") {$use=getvalescaped("metadatatemplate","");}
 
 ?>
 <br /><br /><h1><?php echo $lang["resourcemetadata"]?></h1>

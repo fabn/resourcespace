@@ -1599,5 +1599,11 @@ function update_xml_metadump($resource)
 	fclose($f);
 	}
 
+function get_metadata_templates()
+	{
+	# Returns a list of all metadata templates; i.e. resources that have been set to the resource type specified via '$metadata_template_resource_type'.
+	global $metadata_template_resource_type;
+	return sql_query("select ref,title from resource where resource_type='$metadata_template_resource_type' order by title");
+	}
 
 ?>

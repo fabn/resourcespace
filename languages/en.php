@@ -865,5 +865,6 @@ $lang['location-details'] = 'Double-click map to place pin.  Once the pin has be
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
-
+$lang["usemetadatatemplate"]="Use metadata template";
+$lang["undometadatatemplate"]="(undo template selection)";
 ?>
