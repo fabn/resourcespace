@@ -189,7 +189,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			# run exiftool to get all the valid fields. Use -s -s option so that
 			# the command result isn't printed in columns, which will help in parsing
 			# We then split the lines in the result into an array
-			$command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" " . escapeshellarg($image);
+			$command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" -G " . escapeshellarg($image);
 			$metalines = explode("\n", shell_exec($command));
 
 			$metadata = array(); # an associative array to hold metadata field/value pairs
@@ -212,7 +212,23 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				if ($pos) #get position of first ": ", return false if not exist
 					{
 					# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
-					$metadata[strtoupper(substr($metaline, 0, $pos))] = trim(trim(substr($metaline,$pos+2)),"'");
+					
+					# Extract group name and tag name.
+					$s=explode("]",substr($metaline, 0, $pos));
+					if (count($s)>1 && strlen($s[0])>1)
+						{
+						# Extract value
+						$value=trim(substr($metaline,$pos+2));
+						
+						# Extract group name and tag name
+						$groupname=strtoupper(substr($s[0],1));
+						$tagname=strtoupper(trim($s[1]));
+						
+						# Store both tag data under both tagname and groupname:tagname, to support both formats when mapping fields. 
+						$metadata[$tagname] = $value;
+						$metadata[$groupname . ":" . $tagname] = $value;
+						debug("Exiftool: extracted field '$groupname:$tagname', value is '$value'");
+						}
 					}
 				}
 

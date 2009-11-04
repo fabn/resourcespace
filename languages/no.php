@@ -161,7 +161,7 @@ $lang["savedsearch"]="Lagret søk";
 $lang["findapubliccollection"]="Finn et åpent lysbord";
 $lang["mustspecifyoneusername"]="Du må oppgi minst ett brukernavn";
 $lang["couldnotmatchallusernames"]="Kunne ikke finne alle brukernavnene";
-$lang["emailcollectionmessage"]="har sendt deg en e-post fra $applicationname som har blitt lagt til din 'Mine lysbord'-side."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
+$lang["emailcollectionmessage"]="har sendt deg en e-post fra $applicationname."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Klikk på lenken nedenfor for å se lysbordet.";
 $lang["collection_download_original"]="Original fil";
 $lang["zippedcollectiontextfile"]="Inkluder tekstfil med fil- eller lysbord-data.";
@@ -754,9 +754,9 @@ $lang["resourcemetadata"]="Material-metadata";
 
 $lang["selectgenerateurlexternal"]="Velg tilgangsnivå for den eksterne nettlenken (for brukere uten konto).";
 
-$lang["externalselectresourceaccess"]="Hvis du sender e-post til ekserne brukere, velg tilgangsnivået du vil gi dem til dette materialet.";
+$lang["externalselectresourceaccess"]="Hvis du sender e-post til eksterne brukere, velg tilgangsnivået du vil gi dem til dette materialet.";
 
-$lang["externalselectresourceexpires"]="Hvis du sender e-post til ekserne brukere, velg en utløpsdato for nettlenken.";
+$lang["externalselectresourceexpires"]="Hvis du sender e-post til eksterne brukere, velg en utløpsdato for nettlenken.";
 
 $lang["externalshareexpired"]="Beklager, denne nedlastingen har utgått på dato og er ikke lenger tilgjengelig.";
 
