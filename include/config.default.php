@@ -1232,6 +1232,9 @@ $debug_log=false;
 # The intention is that you will create a new resource type named "Metadata Template" and enter it's ID below.
 # This resource type can be hidden from view if necessary, using the restrictive resource type permission.
 #
+# Metadata template resources act a little differently in that they have editable fields for all resource types. This is so they can be used with any 
+# resource type, e.g. if you complete the photo fields then these will be copied when using this template for a photo resource.
+# 
 # $metadata_template_resource_type=5;
 
 
