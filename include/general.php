@@ -2152,6 +2152,10 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 	$folder="../gfx/";
 	if ($contactsheet){$folder="../../gfx/";}
 	
+	# Metadata template? Always use icon for 'mdtr', although typically no file will be attached.
+	global $metadata_template_resource_type;
+	if (isset($metadata_template_resource_type) && $metadata_template_resource_type==$resource_type) {$extension="mdtr";}
+
 	# Try extension
 	$try="no_preview/extension/" . $extension . $col . ".png";
 	if (file_exists($folder . $try))
