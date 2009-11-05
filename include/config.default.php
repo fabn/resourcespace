@@ -1229,7 +1229,7 @@ $debug_log=false;
 
 # Enable Metadata Templates. This should be set to the ID of the resource type that you intend to use for metadata templates.
 # Metadata templates can be selected on the resource edit screen to pre-fill fields.
-# The intention is that you will create a new resource type named "Metadata Template" and enter it's ID below.
+# The intention is that you will create a new resource type named "Metadata Template" and enter its ID below.
 # This resource type can be hidden from view if necessary, using the restrictive resource type permission.
 #
 # Metadata template resources act a little differently in that they have editable fields for all resource types. This is so they can be used with any 
