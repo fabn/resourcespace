@@ -1,0 +1,4 @@
+name    : transform
+author  : David Dwiggins
+version : 1.1
+desc    : Enables creation of cropped and scaled alternative images.
