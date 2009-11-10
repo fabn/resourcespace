@@ -73,21 +73,11 @@ include "../include/header.php";
 				}
 			else if (!file_exists($path))
 				{
-				# Attempt pre
-				$path=get_resource_path ($ref, false,"pre",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
-				}
-			else if (!file_exists($path))
-				{
-				# Attempt pre
-				$path=get_resource_path ($ref, false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
-				}	
-			else	
-				{
-				# Use original.
+				# Attempt original file if jpeg
 				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
-				}	
+				}
 		
-		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,$collection_feedback_preview_size,false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<?php } else { ?>		<img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>"/><?php } ?>
 
 		
