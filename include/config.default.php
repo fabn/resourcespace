@@ -1143,7 +1143,7 @@ $xml_metadump_dc_map=array
 	);
 	
 # Use Plugins Manager
-$use_plugins_manager = false;
+$use_plugins_manager = true;
 
 #Disable geocoding features?
 $disable_geocoding = true;
