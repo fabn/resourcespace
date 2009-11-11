@@ -1017,7 +1017,7 @@ $no_preview_extensions=array("icm","icc");
 $default_display="thumbs";
 
 # Generate thumbs/previews for alternative files?
-$alternative_file_previews=false;
+$alternative_file_previews=true;
 
 # For alternative file previews... enable a thumbnail mouseover to see the preview image?
 $alternative_file_previews_mouseover=false;
