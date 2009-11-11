@@ -113,7 +113,12 @@ if (isset($_REQUEST['new_ext']) && strlen($_REQUEST['new_ext']) == 3){
 	$new_ext = strtolower($orig_ext);
 }
 
-$mytitle = mysql_real_escape_string("$verb " . strtoupper($new_ext) . ' ' . $lang['file']);
+if ( $cropper_custom_filename && strlen($filename) > 0){
+	$mytitle = $filename;
+} else{
+	$mytitle = mysql_real_escape_string("$verb " . strtoupper($new_ext) . ' ' . $lang['file']);
+}
+
 $mydesc = mysql_real_escape_string($description);
 
 $newfile=add_alternative_file($ref,$mytitle,$mydesc);
@@ -191,7 +196,10 @@ if ($cropper_debug){
 }
 
 // fixme -- do we need to trap for errors from imagemagick?
-shell_exec($command);
+$shell_result = shell_exec($command);
+if ($cropper_debug){
+	error_log("SHELL RESULT: $shell_result");
+}
 
 // generate previews if needed
 global $alternative_file_previews;
