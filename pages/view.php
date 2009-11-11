@@ -667,8 +667,7 @@ for ($n=0;$n<count($fields);$n++)
 
 <?php 
 // include optional ajax metadata report
-if ($metadata_report && isset($exiftool_path) && $k==""){
-    if (($restricted_metadata_report && checkperm("a"))||(!$restricted_metadata_report)) { ?>
+if ($metadata_report && isset($exiftool_path) && $k==""){?>
         <div class="RecordBox">
         <div class="RecordPanel">  
         <div class="Title"><?php echo $lang['metadata-report']?></div>
@@ -677,7 +676,6 @@ if ($metadata_report && isset($exiftool_path) && $k==""){
         <div class="PanelShadow"></div>
         </div>
 
-    <?php } ?>
 <?php } ?>
 <?php 
 $gps_field = sql_value('SELECT ref as value from resource_type_field '. 
