@@ -870,11 +870,11 @@ $show_edit_all_link = false;
 
 ##  Contact Print settings - paper size options
 $papersize_select = '
+<option value="a4">A4 - 210mm x 297mm</option>
+<option value="a3">A3 - 297mm x 420mm</option>
 <option value="letter">US Letter - 8.5" x 11"</option>
 <option value="legal">US Legal - 8.5" x 14"</option>
-<option value="tabloid">US Tabloid - 11" x 17"</option>
-<option value="a4">A4 - 210mm x 297mm</option>
-<option value="a3">A3 - 297mm x 420mm</option>';
+<option value="tabloid">US Tabloid - 11" x 17"</option>';
 
 # If displaying a collection in search.php, display collection title at top.
 $display_collection_title = false;
