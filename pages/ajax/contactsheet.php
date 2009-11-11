@@ -89,8 +89,9 @@ $pdfcode.="\$pdf->SetFont(\$contact_sheet_font,'',\$titlefontsize);";
 $title = $applicationname.' - '. $collectiondata['name'].' - '.$date;
 $pdfcode.="\$title = \$applicationname.' - '. \$collectiondata['name'].' - '.\$date;";
 
-$pagenumber = ' - p.'. $page;
-$pdfcode.="\$pagenumber = ' - p.'. \$page;";
+$pagenumber = $page;
+$pdfcode.="\$pagecount=\$page;";
+$pdfcode.="\$pagenumber = '   $page of '.\$pagecount;";
 
 # Whenever outputting text, add the text to the characterset string as well.
 $characterset.=$title.$pagenumber;
@@ -208,9 +209,9 @@ for ($n=0;$n<count($result);$n++)
 								$pdfcode.="\$pagestartx=\$pdf->GetX();\n";
 								$pdfcode.="\$pagestarty=\$pdf->GetY();\n";
 								$pdfcode.="\$pdf->SetFont(\$contact_sheet_font,'',\$titlefontsize);\n";
-								$pagenumber = " - p.". $page;
+								$pagenumber = $page;
 								$characterset.=$pagenumber;
-								$pdfcode.="\$pdf->Text(1,.8,\$title.\$pagenumber,0,0,'L');\$pdf->ln();\n";
+								$pdfcode.="\$pdf->Text(1,.8,\$title.'   $pagenumber of '.\$pagecount,0,0,'L');\$pdf->ln();\n";
 								#then restore the saved coordinates and fontsize to continue as usual.
 								$pdfcode.="\$pdf->SetFontSize(\$refnumberfontsize);
 								\$pdf->Setx(\$pagestartx);
