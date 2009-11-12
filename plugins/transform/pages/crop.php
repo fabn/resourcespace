@@ -519,8 +519,13 @@ if ($cropper_debug){
 
 		# MP calculation
 		$mp=round(($origwidth*$origheight)/1000000,1);
+		if ($mp > 0){
+			$orig_mptext = "($mp MP)";
+		} else {
+			$orig_mptext = '';
+		}
 		
-		echo "Original size: $origwidth x $origheight pixels ($mp MP)";
+		echo "Original size: $origwidth x $origheight pixels $orig_mptext";
 
 		?>
   </p>
