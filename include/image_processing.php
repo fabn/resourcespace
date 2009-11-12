@@ -323,7 +323,7 @@ elseif (isset($exif_comment))
 	if ($data!==false)
 		{
 		$comment="";
-		echo "<pre>EXIF\n";print_r($data);exit();
+		#echo "<pre>EXIF\n";print_r($data);exit();
 
 		if (isset($data["ImageDescription"])) {$comment=$data["ImageDescription"];}
 		if (($comment=="") && (isset($data["COMPUTED"]["UserComment"]))) {$comment=$data["COMPUTED"]["UserComment"];}
