@@ -525,11 +525,16 @@ if ($cropper_debug){
 			$orig_mptext = '';
 		}
 		
-		echo "Original size: $origwidth x $origheight pixels $orig_mptext";
+		echo $lang['original'] . ' ' . $lang['size'];
+		echo ": $origwidth x $origheight ";
+		echo $lang['pixels'];
+		echo " $orig_mptext";
 
 		?>
   </p>
 </div>
+
+
 <?php
 
 
