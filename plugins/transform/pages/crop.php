@@ -136,33 +136,34 @@ if ($crop_necessary){
 if (is_numeric($new_width)||is_numeric($new_height)){
 	
 	
-
-	$scaleheight = true;
-	$scalewidth = true;
+	$scalewidth = is_numeric($new_width)?true:false;
+	$scaleheight = is_numeric($new_height)?true:false;
 	
-	// sanity checks
-	// don't allow a specified size larger than the natural crop size
-	// or the original size of the image
-	if ($crop_necessary) {
-		$checkwidth = $finalwidth;
-		$checkheight = $finalheight;
-	} else {
-		$checkwidth = $orig_width;
-		$checkheight = $orig_height;
+	if (!$cropper_allow_scale_up){
+		// sanity checks
+		// don't allow a specified size larger than the natural crop size
+		// or the original size of the image
+		if ($crop_necessary) {
+			$checkwidth = $finalwidth;
+			$checkheight = $finalheight;
+		} else {
+			$checkwidth = $orig_width;
+			$checkheight = $orig_height;
+		}
+		
+		if (is_numeric($new_width) && $new_width > $checkwidth){
+			// if the requested width is greater than the original or natural size, ignore
+			$new_width = '';
+			$scalewidth = false;
+		}
+	
+		if (is_numeric($new_height) && $new_height > $checkheight){
+			// if the requested height is greater than original or natural size, ignore
+			$new_height = '';
+			$scaleheight = false;
+		}
+	
 	}
-	
-	if (is_numeric($new_width) && $new_width > $checkwidth){
-		// if the requested width is greater than the original or natural size, ignore
-		$new_width = '';
-		$scalewidth = false;
-	}
-	
-	if (is_numeric($new_height) && $new_height > $checkheight){
-		// if the requested height is greater than original or natural size, ignore
-		$new_height = '';
-		$scaleheight = false;
-	}
-	
 
 	if ($scalewidth || $scaleheight){
 		// add scaling command
