@@ -429,21 +429,19 @@ include "../../../include/header.php";
 		
 		function validate_transform(theform){
 			// make sure that this is a reasonable transformation before we submit the form.
-			// fixme - could add more sophisticated validation here to verify
-			// whether requested scale is valid.
-			// right now just makes sure values are less than original size.
-			// and then on the server side ignores values that would cause upscaling
+			// fixme - could add more sophisticated validation here
 			
 			if (theform.xcoord.value == 0 && theform.ycoord.value == 0 && theform.new_width.value == '' && theform.new_height.value == ''){
 				alert('<?php echo addslashes($lang['errormustchoosecropscale']); ?>');
 				return false;
 			}
 			
-			if (Number(theform.new_width.value) > Number(theform.origwidth.value) || Number(theform.new_height.value) > Number(theform.origheight.value)){
-				alert('<?php echo addslashes($lang['errorspecifiedbiggerthanoriginal']); ?>');
-				return false;
-			}
-			
+			<?php if (!$cropper_allow_scale_up) { ?>
+				if (Number(theform.new_width.value) > Number(theform.origwidth.value) || Number(theform.new_height.value) > Number(theform.origheight.value)){
+					alert('<?php echo addslashes($lang['errorspecifiedbiggerthanoriginal']); ?>');
+					return false;
+				}
+			<?php } ?>
 			return true;
 		
 		}
