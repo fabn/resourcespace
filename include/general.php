@@ -2256,3 +2256,10 @@ function debug($text)
 	fclose ($f);
 	return true;
 	}
+	
+function user_email_exists($email)
+	{
+	# Returns true if a user account exists with e-mail address $email
+	$email=escape_check(trim(strtolower($email)));
+	return (sql_value("select count(*) value from user where email like '$email'",0)>0);
+	}

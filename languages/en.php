@@ -867,4 +867,7 @@ $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
 $lang["usemetadatatemplate"]="Use metadata template";
 $lang["undometadatatemplate"]="(undo template selection)";
+
+$lang["accountemailalreadyexists"]="An account with that e-mail address already exists";
+
 ?>

@@ -4,28 +4,41 @@ include "../include/general.php";
 
 
 $error=false;
+$error_extra="";
+
 $user_email=getval("email","");
 hook("preuserrequest");
 
 if (getval("save","")!="")
 	{
-	if ($user_account_auto_creation)
-		{	
-		# Automatically create a new user account
-		$try=auto_create_user_account();
+	# Check that the e-mail address doesn't already exist in the system
+	if (user_email_exists(getval("email","")))
+		{
+		# E-mail already exists
+		$error=$lang["accountemailalreadyexists"];$error_extra="<br/><a href=\"user_password.php\">" . $lang["forgottenpassword"] . "</a>";
 		}
 	else
 		{
-		$try=email_user_request();
-		}
+		# E-mail is unique
 		
-	if ($try===true)
-		{
-		redirect("pages/done.php?text=user_request");
-		}
-	else
-		{
-		$error=$lang["requiredfields"];
+		if ($user_account_auto_creation)
+			{	
+			# Automatically create a new user account
+			$try=auto_create_user_account();
+			}
+		else
+			{
+			$try=email_user_request();
+			}
+			
+		if ($try===true)
+			{
+			redirect("pages/done.php?text=user_request");
+			}
+		else
+			{
+			$error=$lang["requiredfields"];
+			}
 		}
 	}
 include "../include/header.php";
@@ -141,7 +154,7 @@ $groups=get_registration_selectable_usergroups();
 <?php hook("userrequestadditional");?>
 
 <div class="QuestionSubmit">
-<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!</div><?php } ?>
+<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!<?=$error_extra?></div><br /><?php } ?>
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
