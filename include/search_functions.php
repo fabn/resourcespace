@@ -511,7 +511,7 @@ function get_advanced_search_fields($archive=false)
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
-		&& !checkperm("f-" . $fields[$n]["ref"]))
+		&& !checkperm("f-" . $fields[$n]["ref"]) && !checkperm("T" . $fields[$n]["resource_type"]))
 		{$return[]=$fields[$n];}
 		}
 	return $return;
