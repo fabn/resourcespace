@@ -20,8 +20,6 @@ function get_cookie ( cookie_name )
 <div id="ThemeBoxPanel">
 
 	<div class="SearchSpace">
-				<?php if ($pagename=="team_home"||$pagename=="team_related_keywords"||$pagename=="team_research"||$pagename=="team_export"||$pagename=="team_mail"||$pagename=="team_report"||$pagename=="team_stats"||$pagename=="team_content"||$pagename=="team_user"||$pagename=="team_research"||$pagename=="team_archive"||$pagename=="team_resource"||$pagename=="user_password"){$cd="../";}else{$cd="";}?>
-
 
 <h2><?php echo $lang["themes"] ?></h2>
 <?php
@@ -111,7 +109,7 @@ return false;">
 				?>
 				<br>
 
-				<?php echo $indent?>&nbsp;<a href="<?php echo $cd?>search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a><?php echo $indent?>
+				<?php echo $indent?>&nbsp;<a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a><?php echo $indent?>
 				<?php
 				}
 			?><br><br>
