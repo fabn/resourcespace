@@ -15,7 +15,7 @@ if (getval("save","")!="")
 	if (user_email_exists(getval("email","")))
 		{
 		# E-mail already exists
-		$error=$lang["accountemailalreadyexists"];$error_extra="<br/><a href=\"user_password.php\">" . $lang["forgottenpassword"] . "</a>";
+		$error=$lang["accountemailalreadyexists"];$error_extra="<br/><a href=\"user_password.php?email=" . urlencode(getval("email","")) . "\">" . $lang["forgottenpassword"] . "</a>";
 		}
 	else
 		{
@@ -154,7 +154,7 @@ $groups=get_registration_selectable_usergroups();
 <?php hook("userrequestadditional");?>
 
 <div class="QuestionSubmit">
-<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!<?=$error_extra?></div><br /><?php } ?>
+<?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!<?php echo $error_extra?></div><br /><?php } ?>
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["requestuserlogin"]?>&nbsp;&nbsp;" />
 </div>
