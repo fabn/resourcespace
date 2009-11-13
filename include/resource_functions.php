@@ -466,17 +466,20 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 	# Store the position and field the string was entered against for advanced searching.
 	if (trim($string)=="") {return false;}
 	$keywords=split_keywords($string,true,$partial_index,$is_date);
+
 	for ($n=0;$n<count($keywords);$n++)
 		{
+		$kw=substr($keywords[$n],0,100); # Trim keywords to 100 chars as this is the length of the keywords column.
+		
 		global $noadd;
-		if ((!(in_array($keywords[$n],$noadd))) && (strlen($keywords[$n])<=50))
+		if (!(in_array($kw,$noadd)))
 			{
 			#echo "<li>adding " . $keywords[$n];
-			$keyword=resolve_keyword($keywords[$n]);
+			$keyword=resolve_keyword($kw);
 			if ($keyword===false)
 				{
 				# This is a new keyword. Create and discover the new keyword ref.
-				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($keywords[$n]) . 	"',left(soundex('" . escape_check($keywords[$n]) . "'),10),0)");
+				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($kw) . 	"',left(soundex('" . escape_check($kw) . "'),10),0)");
 				$keyword=sql_insert_id();
 				#echo "<li>New keyword.";
 				}
