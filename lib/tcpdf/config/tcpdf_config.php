@@ -78,7 +78,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	 * path for PDF fonts
 	 * use K_PATH_MAIN.'fonts/old/' for old non-UTF8 fonts
 	 */
-	define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+	define ('K_PATH_FONTS', $storagedir.'/fonts/');
 	
 	/**
 	 * cache directory for temporary files (full path)

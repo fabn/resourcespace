@@ -453,12 +453,12 @@ $print_contact_title = false;
 
 # Contact Sheet Font Embedding:
 # $ttf_file overrides $contact_sheet_font. 
-# A .ttf file should be installed in the lib/tcpdf/fonts directory, and it should be given an all-lowercase filename.
-# Fonts directory must be made writable!
+# A .ttf file should be installed in the filestore/fonts directory (folder created on first use of the contact sheet), 
 # $ttf_file="dejavusans.ttf"; 
 # If using $ttf_file, optionally set $subsetting=true and set fontforge path to generate subset fonts on the fly (reduces PDF file size).
 # $subsetting=true; 
 # $fontforge_path="/usr/bin";
+
 # Set font size for contactsheet (if using subsetted $ttf_file, sizes may need to be reduced significantly as the scale may be altered.) 
 $titlefontsize=10;
 $refnumberfontsize=8;

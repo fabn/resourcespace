@@ -172,12 +172,12 @@ function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=arra
 		}
 		$basename = strtolower($basename);
 		if (function_exists('gzcompress')) {
-			$cmp = $storagedir."/../lib/tcpdf/fonts/".$basename.'.z';
+			$cmp = $storagedir."/fonts/".$basename.'.z';
 			SaveToFile($cmp, gzcompress($file, 9), 'b');
 			$s .= '$file=\''.$cmp."';\n";
 			#print "Font file compressed (".$cmp.")\n";
 			if (!empty($cidtogidmap)) {
-				$cmp = $storagedir."/../lib/tcpdf/fonts/".$basename.'.ctg.z';
+				$cmp = $storagedir."/fonts/".$basename.'.ctg.z';
 				SaveToFile($cmp, gzcompress($cidtogidmap, 9), 'b');
 				#print "CIDToGIDMap created and compressed (".$cmp.")\n";
 				$s .= '$ctg=\''.$cmp."';\n";
@@ -205,7 +205,7 @@ function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=arra
 		$s .= '$file='."'';\n";
 	}
 	$s .= "?>";
-	SaveToFile($storagedir."/../lib/tcpdf/fonts/".$basename.'.php',$s);
+	SaveToFile($storagedir."/fonts/".$basename.'.php',$s);
 	#print "Font definition file generated (".$basename.".php)\n";
 }
 

@@ -4,8 +4,6 @@
 # Contributed by Tom Gleason
 #
 foreach ($_GET as $key => $value) {$$key = stripslashes(utf8_decode(trim($value)));}
-#require_once('../../lib/tcpdf/config/lang/eng.php');
-require_once('../../lib/tcpdf/tcpdf.php');
 
 // create new PDF document
 include('../../include/db.php');
@@ -15,6 +13,29 @@ include('../../include/search_functions.php');
 include('../../include/resource_functions.php');
 include('../../include/collections_functions.php');
 include('../../include/image_processing.php');
+
+require_once('../../lib/tcpdf/tcpdf.php');
+
+// install default fonts folder and default font definitions
+
+if(!is_dir($storagedir."/fonts")){
+    mkdir($storagedir."/fonts",0777); 
+	}
+	
+if(!is_dir($storagedir."/fonts/utils")){
+    mkdir($storagedir."/fonts/utils",0777);
+    }
+
+ if(!file_exists($storagedir."/fonts/helvetica.php")){ 
+    copy("../../lib/tcpdf/fonts/helvetica.php",$storagedir."/fonts/helvetica.php");
+    }
+    
+ if(!file_exists($storagedir."/fonts/times.php")){ 
+    copy("../../lib/tcpdf/fonts/times.php",$storagedir."/fonts/times.php");
+    }
+    
+ if (!file_exists($storagedir."fonts/utils/ttf2ufm")){   
+ copy("../../lib/tcpdf/fonts/utils/ttf2ufm",$storagedir."/fonts/utils/ttf2ufm"); chmod($storagedir."/fonts/utils/ttf2ufm",0777);}
 
 # Still making variables manually when not using Prototype: 
 $collection=getval("c","");
@@ -287,7 +308,7 @@ else
 			#create a hashed name of the unique subsetted font
 			# include font name in case the font changes
 			
-			$fonthash=strtoupper(str_replace(array(0,1,2,3,4,5,6,7,8,9),array("A","B","C","D","E","F","G","H","I","J"),substr(md5(implode(",",$characters)),0,6)))."+".str_replace(".ttf","",$ttf_file);
+			$fonthash=strtoupper(str_replace(array(0,1,2,3,4,5,6,7,8,9),array("A","B","C","D","E","F","G","H","I","J"),substr(md5(implode(",",$characters)),0,6)))."+".str_replace(".ttf","",strtolower($ttf_file));
 			}
 		else 
 			{
@@ -295,13 +316,13 @@ else
 			$fonthash=str_replace(".ttf","",$ttf_file);
 			}
 	
-		$font=$storagedir."/../lib/tcpdf/fonts/".$fonthash.".ttf";
+		$font=$storagedir."/fonts/".$fonthash.".ttf";
 
 		if ($subsetting)
 			#subsetting requires scripting fontforge to produce a custom font
 			{
 			$ff_script="import fontforge\r                               
-uf=fontforge.open(\"$storagedir/../lib/tcpdf/fonts/".$ttf_file."\")\r                                                  
+uf=fontforge.open(\"$storagedir/fonts/".$ttf_file."\")\r                                                  
 n=fontforge.font()\r"; 
 
 			foreach ($characters as $character)
@@ -325,24 +346,29 @@ n.generate(\"".$font."\")\r ";
 			}	
 		}
 	
+	# in case former installs had a font in the tcpdf directory, move it to filestore
+	if (file_exists($storagedir."/../lib/tcpdf/fonts/".$ttf_file)){
+		copy ($storagedir."/../lib/tcpdf/fonts/".$ttf_file,$storagedir."/fonts/".$ttf_file);
+		}
+	
 	#check if the font is already made for TCPDF
-	if (!file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".z")
-		|| !file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ctg.z")
-		|| !file_exists($storagedir."/../lib/tcpdf/fonts/".$fonthash.".php")){
+	if (!file_exists($storagedir."/fonts/".$fonthash.".z")
+		|| !file_exists($storagedir."/fonts/".$fonthash.".ctg.z")
+		|| !file_exists($storagedir."/fonts/".$fonthash.".php")){
 		#if subsetting, check for fontforge and the font needed
 		if ($subsetting)
 			{ 	
 			if (!file_exists($fontforge_path."/fontforge")){die ("Fontforge not found at $fontforge_path/fontforge");}	
-			if (!file_exists($storagedir."/../lib/tcpdf/fonts/".$ttf_file)){die ($ttf_file." not found at ".$storagedir."/../lib/tcpdf/fonts/".$ttf_file);}	
+			if (!file_exists($storagedir."/fonts/".$ttf_file)){die ($ttf_file." not found at ".$storagedir."/fonts/".$ttf_file);}	
 			shell_exec ("/usr/bin/fontforge -lang=py -script $pyfile");
 			unlink ($pyfile);
 			}	
-			
-		shell_exec($storagedir."/../lib/tcpdf/fonts/utils/ttf2ufm -a -F -G afeU $font");
+
+		shell_exec($storagedir."/fonts/utils/ttf2ufm -a -F -G afeU $font");
 		
 		
-		$str=implode("\n",file($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm"));
-		$fp=fopen($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm","w");
+		$str=implode("\n",file($storagedir."/fonts/".$fonthash.".ufm"));
+		$fp=fopen($storagedir."/fonts/".$fonthash.".ufm","w");
 		// use proper naming convention for subsetted font.
 		$incorrectsubsetname=str_replace("+","-",$fonthash);
 		$str=str_replace($incorrectsubsetname,$fonthash,$str);
@@ -350,8 +376,8 @@ n.generate(\"".$font."\")\r ";
 
 		include($storagedir."/../lib/tcpdf/fonts/utils/makefont.php");
 
-		MakeFont($font,$storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm");
-		unlink($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ufm");
+		MakeFont($font,$storagedir."/fonts/".$fonthash.".ufm");
+		unlink($storagedir."/fonts/".$fonthash.".ufm");
 		}
 
 	$pdfcode=str_replace("\$contact_sheet_font","'$fonthash'",$pdfcode);
@@ -363,9 +389,9 @@ eval ($pdfcode);}
 
 if ($subsetting){ 
 				#remove subset font files so they don't accumulate
-				unlink ($storagedir."/../lib/tcpdf/fonts/".$fonthash.".ttf");
-				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".z");
-				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".ctg.z");
-				unlink ($storagedir."/../lib/tcpdf/fonts/".strtolower($fonthash).".php");
+				unlink ($storagedir."/fonts/".$fonthash.".ttf");
+				unlink ($storagedir."/fonts/".strtolower($fonthash).".z");
+				unlink ($storagedir."/fonts/".strtolower($fonthash).".ctg.z");
+				unlink ($storagedir."/fonts/".strtolower($fonthash).".php");
 }
 ?>
