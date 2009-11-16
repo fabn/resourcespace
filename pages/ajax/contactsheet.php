@@ -94,7 +94,7 @@ $pdfcode.="\$pagecount=\$page;";
 $pdfcode.="\$pagenumber = '   $page of '.\$pagecount;";
 
 # Whenever outputting text, add the text to the characterset string as well.
-$characterset.=$title.$pagenumber;
+$characterset.=$title."of";
 $pdfcode.="\$pdf->Text(1,.8,\$title.\$pagenumber,0,0,'L');\$pdf->ln();
 \$pdf->SetFontSize(\$refnumberfontsize);";
 
