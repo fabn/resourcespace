@@ -1029,7 +1029,8 @@ $public_collections_confine_group=false;
 # Show public collections in the top nav?
 $public_collections_top_nav=false;
 
-
+# Display theme categories as links, and themes on separate pages?
+$themes_category_split_pages=false;
 
 
 

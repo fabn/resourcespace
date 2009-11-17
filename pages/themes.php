@@ -8,6 +8,7 @@ $header=getvalescaped("header","");
 $theme1=getvalescaped("theme1","");
 $theme2=getvalescaped("theme2","");
 $theme3=getvalescaped("theme3","");
+$smart_theme=getvalescaped("smart_theme","");
 
 # When changing higher levels, deselect the lower levels.
 $lastlevelchange=getvalescaped("lastlevelchange","");
@@ -22,169 +23,239 @@ include "../include/header.php";
 <form method=get id="themeform">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
+<?php if (!$themes_category_split_pages) { ?>
   <h1><?php echo getval("title",$lang["themes"])?></h1>
   <p><?php echo text("introtext")?></p>
+<?php } ?>
+
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
+
 <?php
-if ($theme_category_levels>1)
+
+
+if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
 	{
-	# Display dropdown box for multiple theme selection levels.
+	# --------------- Split theme categories on to separate pages -------------------
 	?>
 	<div class="RecordBox">
 	<div class="RecordPanel">  
 	
-	<div class="Question" style="border-top:none;">
-	<label for="theme1"><?php echo $lang["themecategory"] . " 1" ?></label>
-	<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
-	<?php
-	if ($theme1=="")
-		{
-		?><option value=""><?php echo $lang["select"]?></option><?php
-		}
+	<div class="RecordHeader">
+	<h1 style="margin-top:5px;"><?php echo $lang["themes"] ?></h1>
+	</div>
 	
-	# ----------------- Level 1 headers -------------------------
+	<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
+	<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+	<tr class="ListviewBoxedTitleStyle">
+	<td><?php echo $lang["name"]?></td>
+	<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+	</tr>
+	<?php
+	
+	# Theme headers
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+		?>
+		<tr>
+		<td><div class="ListTitle"><a href="themes.php?theme1=<?php echo urlencode($headers[$n])?>"><?php echo str_replace("*","",$headers[$n])?></a></div></td>
+		<td><div class="ListTools"><a href="themes.php?theme1=<?php echo urlencode($headers[$n])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
+		</tr>
+		<?php
 		}
-	?>
-	</select>
-	<div class="clearerleft"> </div>
-	</div>
-	
-	<?php
-	# ----------------- Level 2 headers -------------------------
-	if ($theme1!="" && $theme_category_levels>1)
-		{
-		$headers=get_theme_headers($theme1);
-		if (count($headers)>0)
-			{
-			?>
-			<div class="Question" style="border-top:none;">
-			<label for="theme2"><?php echo $lang["themecategory"] . " 2" ?></label>
-	
-			<select class="stdwidth" name="theme2" id="theme2" onchange="document.getElementById('lastlevelchange').value='2';document.getElementById('themeform').submit();">
-			<?php
-			if ($theme2=="")
-				{
-				?><option value=""><?php echo $lang["select"]?></option><?php
-				}
-			for ($n=0;$n<count($headers);$n++)
-				{
-				?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
-				}
-			?>
-			</select>
-			<div class="clearerleft"> </div>
-			</div>
-			<?php
-			}
-		}
-	
-	# ----------------- Level 3 headers -------------------------
-	if ($theme2!="" && $theme_category_levels>2)
-		{
-		$headers=get_theme_headers($theme1,$theme2);
-		if (count($headers)>0)
-			{
-			?>
-			<div class="Question" style="border-top:none;">
-			<label for="theme3"><?php echo $lang["themecategory"] . " 3" ?></label>
-			<select class="stdwidth" name="theme3" id="theme3" onchange="document.getElementById('lastlevelchange').value='3';document.getElementById('themeform').submit();">
-			<?php
-			if ($theme3=="")
-				{
-				?><option value=""><?php echo $lang["select"]?></option><?php
-				}
-			for ($n=0;$n<count($headers);$n++)
-				{
-				?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
-				}
-			?>
-			</select>
-			<div class="clearerleft"> </div>
-			</div>
-			<?php
-			}
-		}
-	?>
-	</div>
-	</div>
-	<?php
-	}
-
-# Display Themes
-
-if ($theme1!="")
-	{
-	# Display just the selected theme
-	DisplayTheme($theme1,$theme2,$theme3);
-	}
-elseif ($theme_category_levels==1)
-	{
-	# Display all themes
-	$headers=get_theme_headers();
-	for ($n=0;$n<count($headers);$n++)
-		{
-		if ($header=="" || $header==$headers[$n])
-			{
-			DisplayTheme($headers[$n]);
-			}
-		}
-	}
-?>
-
-<?php
-# ------- Smart Themes -------------
-if ($header=="")
-	{
+	# Smart theme headers
 	$headers=get_smart_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
-		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
-		&& !checkperm("f-" . $headers[$n]["ref"]))
-			{
-			?>
-			<div class="RecordBox">
-			<div class="RecordPanel">  
-
-			<div class="RecordHeader">
-			<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
-			</div>
+		?>
+		<tr>
+		<td><div class="ListTitle"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>"><?php echo $headers[$n]["smart_theme_name"]?></a></div></td>
+		<td><div class="ListTools"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
+		</tr>
+		<?php
+		}
 		
-			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
-			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-			<tr class="ListviewBoxedTitleStyle">
-			<td><?php echo $lang["name"]?></td>
-			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
-			</tr>
-			
-			<?php
-			$themes=get_smart_themes($headers[$n]["ref"]);
-			for ($m=0;$m<count($themes);$m++)
+	?>
+	</table>
+	</div>
+	
+	</div>
+	<div class="PanelShadow"> </div>
+	</div>
+	<?php	
+	}
+else
+	{
+	# --------------- All theme categories on one page, OR multi level browsing via dropdowns. -------------------
+	
+	if ($themes_category_split_pages)
+		{
+		# Display back link
+		?>
+		<p><a href="themes.php">&lt;&lt; <?php echo $lang["backtothemes"]?></a></p>
+		<?php
+		}
+	
+	if ($theme_category_levels>1)
+		{
+		# Display dropdown box for multiple theme selection levels.
+		?>
+		<div class="RecordBox">
+		<div class="RecordPanel">  
+		
+		<div class="Question" style="border-top:none;">
+		<label for="theme1"><?php echo $lang["themecategory"] . " 1" ?></label>
+		<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
+		<?php
+		if ($theme1=="")
+			{
+			?><option value=""><?php echo $lang["select"]?></option><?php
+			}
+		
+		# ----------------- Level 1 headers -------------------------
+		$headers=get_theme_headers();
+		for ($n=0;$n<count($headers);$n++)
+			{
+			?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+			}
+		?>
+		</select>
+		<div class="clearerleft"> </div>
+		</div>
+		
+		<?php
+		# ----------------- Level 2 headers -------------------------
+		if ($theme1!="" && $theme_category_levels>1)
+			{
+			$headers=get_theme_headers($theme1);
+			if (count($headers)>0)
 				{
-				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
-
-				# Indent this item?				
-				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
-				$indent=str_replace(" ","&nbsp;",$indent);
-
 				?>
-				<tr>
-				<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
-				<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
-				</tr>
+				<div class="Question" style="border-top:none;">
+				<label for="theme2"><?php echo $lang["themecategory"] . " 2" ?></label>
+		
+				<select class="stdwidth" name="theme2" id="theme2" onchange="document.getElementById('lastlevelchange').value='2';document.getElementById('themeform').submit();">
+				<?php
+				if ($theme2=="")
+					{
+					?><option value=""><?php echo $lang["select"]?></option><?php
+					}
+				for ($n=0;$n<count($headers);$n++)
+					{
+					?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
+					}
+				?>
+				</select>
+				<div class="clearerleft"> </div>
+				</div>
 				<?php
 				}
-			?>
-			</table>
-			</div>
+			}
+		
+		# ----------------- Level 3 headers -------------------------
+		if ($theme2!="" && $theme_category_levels>2)
+			{
+			$headers=get_theme_headers($theme1,$theme2);
+			if (count($headers)>0)
+				{
+				?>
+				<div class="Question" style="border-top:none;">
+				<label for="theme3"><?php echo $lang["themecategory"] . " 3" ?></label>
+				<select class="stdwidth" name="theme3" id="theme3" onchange="document.getElementById('lastlevelchange').value='3';document.getElementById('themeform').submit();">
+				<?php
+				if ($theme3=="")
+					{
+					?><option value=""><?php echo $lang["select"]?></option><?php
+					}
+				for ($n=0;$n<count($headers);$n++)
+					{
+					?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+					}
+				?>
+				</select>
+				<div class="clearerleft"> </div>
+				</div>
+				<?php
+				}
+			}
+		?>
+		</div>
+		</div>
+		<?php
+		}
+	
+	# Display Themes
+	
+	if ($theme1!="")
+		{
+		# Display just the selected theme
+		DisplayTheme($theme1,$theme2,$theme3);
+		}
+	elseif ($theme_category_levels==1 && $smart_theme=="")
+		{
+		# Display all themes
+		$headers=get_theme_headers();
+		for ($n=0;$n<count($headers);$n++)
+			{
+			if ($header=="" || $header==$headers[$n])
+				{
+				DisplayTheme($headers[$n]);
+				}
+			}
+		}
+	?>
+	
+	<?php
+	# ------- Smart Themes -------------
+	if ($header=="" && $theme1=="")
+		{
+		$headers=get_smart_theme_headers();
+		for ($n=0;$n<count($headers);$n++)
+			{
+			if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
+			&& !checkperm("f-" . $headers[$n]["ref"]) && ($smart_theme=="" || $smart_theme==$headers[$n]["ref"]))
+				{
+				?>
+				<div class="RecordBox">
+				<div class="RecordPanel">  
+	
+				<div class="RecordHeader">
+				<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
+				</div>
 			
-			</div>
-			<div class="PanelShadow"> </div>
-			</div>
-			<?php
+				<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
+				<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+				<tr class="ListviewBoxedTitleStyle">
+				<td><?php echo $lang["name"]?></td>
+				<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+				</tr>
+				
+				<?php
+				$themes=get_smart_themes($headers[$n]["ref"]);
+				for ($m=0;$m<count($themes);$m++)
+					{
+					$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
+	
+					# Indent this item?				
+					$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
+					$indent=str_replace(" ","&nbsp;",$indent);
+	
+					?>
+					<tr>
+					<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
+					<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
+					</tr>
+					<?php
+					}
+				?>
+				</table>
+				</div>
+				
+				</div>
+				<div class="PanelShadow"> </div>
+				</div>
+				<?php
+				}
 			}
 		}
 	}
