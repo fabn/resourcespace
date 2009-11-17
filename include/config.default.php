@@ -452,6 +452,7 @@ $contact_sheet_unicode_filenames=true;
 $print_contact_title = false;
 
 # Contact Sheet Font Embedding:
+# Note: this has only been developed for Linux so far. It relies on the ttf2ufm program included with tcpdf, and there is a compiled version included for windows, but it may need further dev on the paths to work. I don't think the linux compile works on the mac. -Tom G
 # $ttf_file overrides $contact_sheet_font. 
 # A .ttf file should be installed in the filestore/fonts directory (folder created on first use of the contact sheet), 
 # $ttf_file="dejavusans.ttf"; 
