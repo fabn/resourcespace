@@ -36,6 +36,7 @@ if(!is_dir($storagedir."/fonts/utils")){
     
  if (!file_exists($storagedir."fonts/utils/ttf2ufm")){   
  copy("../../lib/tcpdf/fonts/utils/ttf2ufm",$storagedir."/fonts/utils/ttf2ufm"); chmod($storagedir."/fonts/utils/ttf2ufm",0777);}
+if (!isset($subsetting)){$subsetting=false;}
 
 # Still making variables manually when not using Prototype: 
 $collection=getval("c","");
@@ -294,7 +295,6 @@ else
 	{
 	# if a ttf file is specified, use it, and optionally subset it.
 	if (isset($ttf_file)){
-		if (!isset($subsetting)){$subsetting=false;}
 		if ($subsetting){
 		function utf8_to_unicode_code($utf8_string)
 			{
