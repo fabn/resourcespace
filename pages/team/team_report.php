@@ -14,10 +14,12 @@ $report=getvalescaped("report","");
 
 $from=getvalescaped("from","");
 $to=getvalescaped("to","");
+$output="";
 
 if ($report!="")
 	{
-	do_report($report, getvalescaped("from-y",""), getvalescaped("from-m",""), getvalescaped("from-d",""), getvalescaped("to-y",""), getvalescaped("to-m",""), getvalescaped("to-d",""));
+	$download=getval("download","")!="";
+	$output=do_report($report, getvalescaped("from-y",""), getvalescaped("from-m",""), getvalescaped("from-d",""), getvalescaped("to-y",""), getvalescaped("to-m",""), getvalescaped("to-d",""),$download);
 	}
 include "../../include/header.php";
 ?>
@@ -80,8 +82,11 @@ $dd=getval($name . "-d",date("d"));
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"]?>&nbsp;&nbsp;" />
+<input name="download" type="submit" value="&nbsp;&nbsp;<?php echo "Download Report" ?>&nbsp;&nbsp;" />
 </div>
 </form>
+
+<?php echo $output; ?>
 
 </div>
 
