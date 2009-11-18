@@ -48,31 +48,16 @@ or
 
 group by k.ref order by Searches desc
 "
-3,"Resource downloads","select r.ref 'Resource ID',r.title 'Title',sum(count) Downloads from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource download'
+3,"Resource download summary","select r.ref 'Resource ID',r.title 'Title',count(*) Downloads 
 
-# --- date ranges
-# Make sure date is greater than FROM date
-and 
-(
-d.year>[from-y]
-or 
-(d.year=[from-y] and d.month>[from-m])
-or
-(d.year=[from-y] and d.month=[from-m] and d.day>=[from-d])
-)
-# Make sure date is less than TO date
-and
-(
-d.year<[to-y]
-or 
-(d.year=[to-y] and d.month<[to-m])
-or
-(d.year=[to-y] and d.month=[to-m] and d.day<=[to-d])
-)
+from
 
-
-group by r.ref order by Downloads desc;
-"
+resource_log rl
+join resource r on rl.resource=r.ref
+where
+rl.type='d'
+and rl.date>=date('[from-y]-[from-m]-[from-d]') and rl.date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)
+group by r.ref order by 'Downloads' desc"
 4,"Resource views","select r.ref 'Resource ID',r.title 'Title',sum(count) Views from resource r,daily_stat d where r.ref=d.object_ref and d.activity_type='Resource view'
 
 # --- date ranges
@@ -206,3 +191,32 @@ or
 
 group by r.ref
 )"
+10, "Resource downloads by group","select
+g.name 'Group Name',
+count(rl.resource) 'Resource Downloads'
+
+from
+resource_log rl
+left outer join user u on rl.user=u.ref
+left outer join usergroup g on u.usergroup=g.ref
+where
+rl.type='d'
+and rl.date>=date('[from-y]-[from-m]-[from-d]') and rl.date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)
+group by g.ref order by 'Resource Downloads' desc"
+11, "Resource download detail","select
+rl.date 'Date / Time',
+concat(u.username,' (',u.fullname,' )') 'Downloaded By User',
+g.name 'User Group',
+r.ref 'Resource ID',
+r.title 'Resource Title'
+
+from
+resource_log rl
+join resource r on r.ref=rl.resource
+left outer join user u on rl.user=u.ref
+left outer join usergroup g on u.usergroup=g.ref
+where
+rl.type='d'
+and
+rl.date>=date('[from-y]-[from-m]-[from-d]') and rl.date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)
+order by rl.date"

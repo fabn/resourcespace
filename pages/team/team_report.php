@@ -81,8 +81,8 @@ $dd=getval($name . "-d",date("d"));
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"]?>&nbsp;&nbsp;" />
-<input name="download" type="submit" value="&nbsp;&nbsp;<?php echo "Download Report" ?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"] ?>&nbsp;&nbsp;" />
+<input name="download" type="submit" value="&nbsp;&nbsp;<?php echo $lang["downloadreport"] ?>&nbsp;&nbsp;" />
 </div>
 </form>
 

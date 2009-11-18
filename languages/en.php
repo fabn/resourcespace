@@ -871,6 +871,6 @@ $lang["undometadatatemplate"]="(undo template selection)";
 $lang["accountemailalreadyexists"]="An account with that e-mail address already exists";
 
 $lang["backtothemes"]="Back to Themes";
-
+$lang["downloadreport"]="Download Report";
 
 ?>
