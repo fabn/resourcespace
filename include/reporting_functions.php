@@ -59,7 +59,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 	else
 		{
 		# Not downloading - output a table
-		$output="<table border>";
+		$output="<br /><style>.InfoTable td {padding:5px;}</style><table class=\"InfoTable\">";
 		for ($n=0;$n<count($results);$n++)
 			{
 			$result=$results[$n];
