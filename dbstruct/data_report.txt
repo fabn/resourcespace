@@ -220,3 +220,13 @@ rl.type='d'
 and
 rl.date>=date('[from-y]-[from-m]-[from-d]') and rl.date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)
 order by rl.date"
+12, "User details including group allocation", "select 
+u.username 'Username',
+u.email 'E-mail address',
+u.fullname 'Full Name',
+u.last_active 'Last Seen',
+g.name 'Group name'
+
+from user u join usergroup g on u.usergroup=g.ref
+
+order by username;"
