@@ -221,7 +221,7 @@ if ($submitted != "")
 	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
 	
 	# Get the file size of the zip.
-	$filesize=filesize($storagedir . "/tmp/" . $file);
+	$filesize=@filesize($storagedir . "/tmp/" . $file);
 	
 	if ($use_collection_name_in_zip_name)
 		{
