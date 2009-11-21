@@ -40,6 +40,7 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 		<table cellpadding=5 cellspacing=0><tr><td valign=middle><img src="<?php echo $baseurl?>/pages/admin/gfx/cherrybomb.gif" width="48" height="48"></td><td valign=middle align=left><span style="font-size:22px;">Sorry, an error has occured.</span></td></tr></table>
 		<p style="font-size:11px;color:black;margin-top:20px;">Please <a href="#" onClick="history.go(-1)">go back</a> and try something else.</p>
 		<p style="font-size:11px;color:black;">You can <a href="<?php echo $baseurl?>/pages/check.php">check</a> your installation configuration.</p>
+		<p style="font-size:11px;color:black;">If this problem persits you can <a href="<?php echo $baseurl?>/pages/team/team_reportbug.php?errortext=<?php echo urlencode("$errfile line $errline: $errstr");?>">submit a bug report.</a><br/>(Login to <a href="http://bugs.resourcespace.org/">http://bugs.resourcespace.com/</a> first.)</p>
 		<hr style="margin-top:20px;"><p style="font-size:11px;color:black;"><?php echo "$errfile line $errline: $errstr"; ?></p>
 		</div>
 		<?php
