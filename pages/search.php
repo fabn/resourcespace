@@ -209,7 +209,12 @@ if (strpos($search,"!")!==false) {$restypes="";}
 
 # Do the search!
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset);
+# Do the public collection search if configured.
 
+if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
+{
+    $collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
+}
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
@@ -220,12 +225,12 @@ if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count
 # Include the page header to and render the search results
 include "../include/header.php";
 
-if (is_array($result))
+if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive;
 	?>
 	<div class="TopInpageNav">
-	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(count($result))?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
+	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
 	<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
 	<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
 		<?php if ($smallthumbs==true) { ?>		
@@ -328,7 +333,7 @@ if (is_array($result))
 		}
 		
 	# Include public collections and themes in the main search, if configured.		
-	if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
+	if (isset($collections))
 		{
 		include "../include/search_public.php";
 		}
@@ -356,7 +361,7 @@ if (is_array($result))
 	$rtypes=array();
 	$types=get_resource_types();
 	for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
-
+	if (is_array($result)){
 	# loop and display the results
 	for ($n=$offset;(($n<count($result)) && ($n<($offset+$per_page)));$n++)			
 		{
@@ -513,7 +518,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	hook("customdisplaymode");
 	
 		}
-		
+    }
 	if ($display=="list")
 		{
 		?>
