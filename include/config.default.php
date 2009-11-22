@@ -54,14 +54,6 @@ $scramble_key="abcdef123";
 # global number of installations, users and resources.
 $send_statistics=true;
 
-# Allow administrators to send bug reports to http://bugs.resourcespace.org/
-# from the error (bomb) page?
-# Note that this only effects display of the link on the bomb page, the link in
-# the Team Center Advanced configuration page (forthcoming) will still exist.
-# In any case, only users with the 'a' permission can access the report bug
-# page.
-$show_report_bug_link=true;
-
 # Enable work-arounds required when installed on Microsoft Windows systems
 $config_windows=false;
 

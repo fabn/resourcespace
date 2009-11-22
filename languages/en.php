@@ -873,4 +873,9 @@ $lang["accountemailalreadyexists"]="An account with that e-mail address already 
 $lang["backtothemes"]="Back to Themes";
 $lang["downloadreport"]="Download Report";
 
+#Bug Report Page
+$lang['reportbug']="Prepare bug report for ResourceSpace team";
+$lang['reportbug-detail']="The following information has been compiled for inclusion in the bug report.  You'll be able to change all values before submitting a report.";
+$lang['reportbug-login']="NOTE: Click here to login to the bug tracker BEFORE clicking prepare.";
+
 ?>

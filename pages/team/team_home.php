@@ -74,7 +74,7 @@ include "../../include/header.php";
 	<li><a href="team_plugins.php"><?php echo $lang["pluginssetup"]?></a></li>
 	<?php } ?>
 	<li><a href="../admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
-
+    <li><a href="team_reportbug.php"><?php echo $lang["reportbug"]?></a></li>
 	<?php hook("customteamfunctionadmin")?>
 	<?php } ?>
 	
