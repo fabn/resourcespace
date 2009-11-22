@@ -28,6 +28,12 @@ if ($productversion == 'SVN'){
         }
     }
 }
+else {
+    #Extract build number from productversion
+    if (preg_match('/^(\d+)\.(\d+)\.(\d+)/', $productversion, $matches)!=0){
+        $build = $matches[3];
+    }
+} 
 $p_version = $productversion == 'SVN'?'Trunk (SVN)':$productversion;
 $custom_field_2 = $_SERVER['HTTP_USER_AGENT'];
 $custom_field_4 = 'N/A';
@@ -72,7 +78,7 @@ else {
         <p><?php echo $lang['reportbug-detail']?></p>
         <table class="InfoTable">
         <tr><td>ResourceSpace Version</td><td><?php echo $p_version?></td></tr>
-        <tr><td>ResourceSpace Build (if SVN)</td><td><?php echo $build?></td></tr>
+        <tr><td>ResourceSpace Build</td><td><?php echo $build?></td></tr>
         <tr><td>Server Platform</td><td><?php echo $serverversion?></td></tr>
         <tr><td>PHP Version</td><td><?php echo $custom_field_3?></td></tr>
         <tr><td>exiftool Version</td><td><?php echo $custom_field_5?></td></tr>
