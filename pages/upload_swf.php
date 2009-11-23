@@ -8,6 +8,7 @@ include "../include/collections_functions.php";
 $status="";
 $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
+$collectionname=getvalescaped("entercolname","");
 
 $allowed_extensions=get_allowed_extensions_by_type($resource_type);
 
@@ -15,7 +16,8 @@ $allowed_extensions=get_allowed_extensions_by_type($resource_type);
 if ($collection_add==-1)
 	{
 	# The user has chosen Create New Collection from the dropdown.
-	$collection_add=create_collection($userref,$lang["upload"] . " " . date("ymdHis"));
+	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
+	$collection_add=create_collection($userref,$collectionname);
 	set_user_collection($userref,$collection_add);
 	refresh_collection_frame($collection_add);
 	}

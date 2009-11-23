@@ -58,9 +58,9 @@ include "../../include/header.php";
 
 <div class="Question">
 <label for="collection"><?php echo $lang["addtocollection"]?></label>
-<select name="collection" id="collection" class="shrtwidth">
-<option value="-1" selected>(<?php echo $lang["createnewcollection"]?>)</option>
-<option value=""><?php echo $lang["batchdonotaddcollection"]?></option>
+<select name="collection" id="collection" class="stdwidth"  onchange="if($(this).value==-1){$('collectionname').style.display='block';} else {$('collectionname').style.display='none';}">
+	<option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option>
+	<option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option>
 <?php
 $list=get_user_collections($userref);
 for ($n=0;$n<count($list);$n++)
@@ -70,6 +70,10 @@ for ($n=0;$n<count($list);$n++)
 	<?php
 	}?></select>
 <div class="clearerleft"> </div>
+<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
+	<label for="collection_add"><?php echo $lang["collectionname"]?></label>
+	<input type=text id="entercolname" name="entercolname" class="stdwidth">
+	</div>
 </div>
 
 <div class="Question"><label><?php echo $lang["selectfiles"]?></label>

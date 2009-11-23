@@ -11,12 +11,14 @@ set_time_limit(60*60*4);
 $use_local = getvalescaped('use_local', '') !== '';
 
 $collection=getvalescaped("collection","",true);
+$collectionname=getvalescaped("entercolname","");
 
 # Create a new collection?
 if ($collection==-1)
 	{
 	# The user has chosen Create New Collection from the dropdown.
-	$collection=create_collection($userref,$lang["upload"] . " " . date("ymdHis"));
+	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
+	$collection=create_collection($userref,$collectionname);
 	set_user_collection($userref,$collection);
 	refresh_collection_frame();
 	}

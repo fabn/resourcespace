@@ -110,12 +110,12 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".getval("entercolname","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				elseif (getval("java","")!="") // Test if in browser java upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".getval("entercolname","")."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
@@ -336,9 +336,9 @@ if ($enable_add_collection_on_upload)
 	?>
 	<div class="Question">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
-	<select name="collection_add" id="collection_add" class="stdwidth">
-	<option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected<?php }?>>(<?php echo $lang["createnewcollection"]?>)</option>
-	<option value="" <?php if (!$upload_add_to_new_collection){ ?>selected<?php }?>><?php echo $lang["batchdonotaddcollection"]?></option>
+	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if($(this).value==-1){$('collectionname').style.display='block';} else {$('collectionname').style.display='none';}">
+	<option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option>
+	<option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option>
 	<?php
 	$list=get_user_collections($userref);
 	$currentfound=false;
@@ -363,6 +363,10 @@ if ($enable_add_collection_on_upload)
 	?>
 	</select>
 	<div class="clearerleft"> </div>
+	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
+	<label for="collection_add"><?php echo $lang["collectionname"]?></label>
+	<input type=text id="entercolname" name="entercolname" class="stdwidth">
+	</div>
 	</div>
 	<?php 
 }
