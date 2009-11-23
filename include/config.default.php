@@ -19,7 +19,6 @@
 
 /* ---------------------------------------------------
 BASIC PARAMETERS
-
 ------------------------------------------------------ */
 $mysql_server="localhost";	# Use 'localhost' if MySQL is installed on the same server as your web server.
 $mysql_username="root";		# MySQL username
