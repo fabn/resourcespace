@@ -1041,6 +1041,67 @@ $themes_category_split_pages=false;
 
 
 
+
+# ------------------------------------------------------------------------------------------------------------------
+# StaticSync (staticsync.php)
+# The ability to synchronise ResourceSpace with a separate and stand-alone filestore.
+# ------------------------------------------------------------------------------------------------------------------
+$syncdir="/path/to/static/files"; # The sync folder
+$nogo="[folder1]"; # A list of folders to ignore within the sign folder.
+$staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
+# Mapping extensions to resource types for sync'd files
+# Format: staticsync_extension_mapping[resource_type]=array("extension 1","extension 2");
+$staticsync_extension_mapping_default=1;
+$staticsync_extension_mapping[3]=array("mov","3gp","avi","mpg","mp4","flv"); # Video
+$staticsync_extension_mapping[4]=array("flv");
+# Uncomment and set the next line to specify a category tree field to use to store the retieved path information for each file. The tree structure will be automatically modified as necessary to match the folder strucutre within the sync folder.
+# $staticsync_mapped_category_tree=50;
+# Should the generated resource title include the sync folder path?
+$staticsync_title_includes_path=true;
+# Should the sync'd resource files be 'ingested' i.e. moved into ResourceSpace's own filestore structure?
+# In this scenario, the sync'd folder merely acts as an upload mechanism. If path to metadata mapping is used then this allows metadata to be extracted based on the file's location.
+$staticsync_ingest=false;
+#
+# StaticSync Path to metadata mapping
+# ------------------------
+# It is possible to take path information and map selected parts of the path to metadata fields.
+# For example, if you added a mapping for '/projects/' and specified that the second level should be 'extracted' means that 'ABC' would be extracted as metadata into the specified field if you added a file to '/projects/ABC/'
+# Hence meaningful metadata can be specified by placing the resource files at suitable positions within the static
+# folder heirarchy.
+# Use the line below as an example. Repeat this for every mapping you wish to set up
+#	$staticsync_mapfolders[]=array
+#		(
+#		"match"=>"/projects/",
+#		"field"=>10,
+#		"level"=>2
+#		);
+#
+# Suffix to use for alternative files folder
+# If staticsync finds a folder in the same directory as a file with the same name as a file but with this suffix appended, then files in the folder will be treated as alternative files for the give file.
+# For example a folder/file structure might look like:
+# /staticsync_folder/myfile.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative1.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative2.jpg
+# /staticsync_folder/myfile.jpg_alternatives/alternative3.jpg
+# NOTE: Alternative file processing only works when $staticsync_ingest is set to 'true'.
+$staticsync_alternatives_suffix="_alternatives";
+
+# End of StaticSync settings
+# ------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #
 # ------------------------- Development Items -------------------------
 #
@@ -1155,52 +1216,7 @@ $disable_geocoding = true;
 # Get an api key at: http://code.google.com/apis/maps/signup.html
 #$gmaps_apikey = '';
 
-# ------------------------------------------------------------------------------------------------------------------
-# StaticSync (staticsync.php)
-# The ability to synchronise ResourceSpace with a separate and stand-alone filestore.
-# ------------------------------------------------------------------------------------------------------------------
-$syncdir="/path/to/static/files"; # The sync folder
-$nogo="[folder1]"; # A list of folders to ignore within the sign folder.
-$staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
-# Mapping extensions to resource types for sync'd files
-# Format: staticsync_extension_mapping[resource_type]=array("extension 1","extension 2");
-$staticsync_extension_mapping_default=1;
-$staticsync_extension_mapping[3]=array("mov","3gp","avi","mpg","mp4","flv"); # Video
-$staticsync_extension_mapping[4]=array("flv");
-# Uncomment and set the next line to specify a category tree field to use to store the retieved path information for each file. The tree structure will be automatically modified as necessary to match the folder strucutre within the sync folder.
-# $staticsync_mapped_category_tree=50;
-# Should the generated resource title include the sync folder path?
-$staticsync_title_includes_path=true;
-# Should the sync'd resource files be 'ingested' i.e. moved into ResourceSpace's own filestore structure?
-# In this scenario, the sync'd folder merely acts as an upload mechanism. If path to metadata mapping is used then this allows metadata to be extracted based on the file's location.
-$staticsync_ingest=false;
-#
-# StaticSync Path to metadata mapping
-# ------------------------
-# It is possible to take path information and map selected parts of the path to metadata fields.
-# For example, if you added a mapping for '/projects/' and specified that the second level should be 'extracted' means that 'ABC' would be extracted as metadata into the specified field if you added a file to '/projects/ABC/'
-# Hence meaningful metadata can be specified by placing the resource files at suitable positions within the static
-# folder heirarchy.
-# Use the line below as an example. Repeat this for every mapping you wish to set up
-#	$staticsync_mapfolders[]=array
-#		(
-#		"match"=>"/projects/",
-#		"field"=>10,
-#		"level"=>2
-#		);
-#
-# Suffix to use for alternative files folder
-# If staticsync finds a folder in the same directory as a file with the same name as a file but with this suffix appended, then files in the folder will be treated as alternative files for the give file.
-# For example a folder/file structure might look like:
-# /staticsync_folder/myfile.jpg
-# /staticsync_folder/myfile.jpg_alternatives/alternative1.jpg
-# /staticsync_folder/myfile.jpg_alternatives/alternative2.jpg
-# /staticsync_folder/myfile.jpg_alternatives/alternative3.jpg
-# NOTE: Alternative file processing only works when $staticsync_ingest is set to 'true'.
-$staticsync_alternatives_suffix="_alternatives";
 
-# End of StaticSync settings
-# ------------------------------------------------------------------------------------------------------------------
 	
 # Data Joins -- Developer's tool to allow joining resource field data to the search query.
 # $thumbs_display_fields array items are already joined. These are fields in addition to the $thumbs_display_fields array, 
