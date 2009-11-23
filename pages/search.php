@@ -129,7 +129,7 @@ if (substr($search,0,11)=="!collection")
 
 	if ($display_collection_title)
 		{
-		$collection_title = '<div align="left"><h1>'.$collectiondata ["name"].'</h1></div>';
+		$collection_title = '<div align="left"><h1>'.$collectiondata ["name"].'</h1> <a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp; '.$lang['action-select'].' '.$lang['collection'].'</a></div>';
 		}
 	}
 
