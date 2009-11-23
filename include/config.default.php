@@ -301,6 +301,10 @@ $enable_themes=true;
 # Use the themes page as the home page?
 $use_theme_as_home=false;
 
+# Use the recent page as the home page?
+$use_recent_as_home=false;
+
+
 # Show images along with theme category headers (image selected is the most popular within the theme category)
 $theme_images=true;
 $theme_images_number=1; # How many to auto-select (if none chosen manually)

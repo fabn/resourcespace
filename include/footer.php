@@ -49,7 +49,7 @@ function SwapCSS(css)
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
 		<ul>
 <?php if (!hook("replacefooterlinks")){?>
-		<?php if (!$use_theme_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php"><?php echo $lang["home"]?></a></li><?php } ?>
+		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php"><?php echo $lang["home"]?></a></li><?php } ?>
 		<?php if ($about_link) { ?><li><a href="<?php echo $baseurl?>/pages/about.php"><?php echo $lang["aboutus"]?></a></li><?php } ?>
 		<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"><?php echo $lang["contactus"]?></a></li><?php } ?>
 <!--	<li><a href="#">Terms&nbsp;&amp;&nbsp;Conditions</a></li>-->
