@@ -205,7 +205,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			{
 			$keysql="";
 			}
-		$sql="and (u.username='$search' or c.ref='$search' $keysql)";
+		$sql.="and c.name rlike '$search' or (u.username='$search' or c.ref='$search' $keysql)";
 		}
 	
 	if ($exclude_themes) # Include only public collections.
@@ -234,11 +234,11 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Run the query
 	if ($include_resources)
 		{
-		return sql_query("select c.*,u.username,group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+            return sql_query("select c.*,u.username,group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	else
 		{
-		return sql_query("select c.*,u.username from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+		    return sql_query("select c.*,u.username from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	}
 
@@ -509,7 +509,7 @@ function get_smart_themes($field)
 function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	{
 	# When displaying category trees as smart themes, this function is used to recursively
-	# parse each node adding items sequentially with an appropriate indent level.
+	#ï¿½parse each node adding items sequentially with an appropriate indent level.
 	for ($n=0;$n<count($tree);$n++)
 		{
 		$s=explode(",",$tree[$n]);
@@ -565,7 +565,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 	if (count($urefs)>0)
 		{
-		# Delete any existing collection entries
+		#ï¿½Delete any existing collection entries
 		sql_query("delete from user_collection where collection in ('" .join("','", $reflist) . "') and user in ('" . join("','",$urefs) . "')");
 		
 		# Insert new user_collection row(s)
