@@ -179,6 +179,9 @@ $exif_date=12;
 # You may want to enable it on the usergroup level by overriding this config option in System Setup.
 $metadata_report=false;
 
+# Allow a link to re-extract metadata per-resource (on the View Page) to users who have edit abilities.
+$allow_metadata_revert=false;
+
 # Use Exiftool to attempt to extract specified resolution and unit information from files (ex. Adobe files) upon upload.
 $exiftool_resolution_calc=false;
 

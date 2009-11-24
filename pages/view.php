@@ -18,10 +18,8 @@ $ref=getvalescaped("ref","",true);
 # Reindex the exif headers, really for debug
 if (getval("exif","")!="")
 	{
-	include "include/image_processing.php";
-	include "include/resource_functions.php";
-	extract_exif_comment($ref);
-	exit();
+	include "../include/image_processing.php";
+	extract_exif_comment($ref,getvalescaped("extension",""));
 	}
 
 # fetch the current search (for finding simlar matches)
@@ -489,6 +487,9 @@ hook ("resourceactions") ?>
 	<?php if ($edit_access) { ?>
 		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>">&gt; 
 			<?php echo $lang["edit"]?></a>
+		<?php if ($allow_metadata_revert){?>	
+		<li><a href="view.php?ref=<?php echo $ref?>&exif=true&extension=<?php echo $resource['file_extension']?>" onClick="return confirm('<?php echo $lang["confirm-revertmetadata"]?>');">&gt; 
+			<?php echo $lang["action-revertmetadata"]?></a><?php } ?>
 	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["delete"]?></a><?php } ?></li><?php } ?>
 	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>
 <?php } /* End replaceresourceactions */ 
