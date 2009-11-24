@@ -213,7 +213,7 @@ $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset);
 
 if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
 {
-    $collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
+    $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
 }
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count($result)==1)

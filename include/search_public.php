@@ -2,7 +2,7 @@
 
 # Perform the search
 if (!isset($collections)){
-    $collections=search_public_collections($search,"theme","ASC",false,!$search_includes_public_collections,true);
+    $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
 }
 for ($n=0;$n<count($collections);$n++)
 	{
