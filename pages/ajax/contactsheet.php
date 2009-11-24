@@ -59,6 +59,12 @@ if ($size == "tabloid") {$width=11;$height=17;}
 $pagewidth=$pagesize[0]=$width;
 $pageheight=$pagesize[1]=$height;
 $date= date("m-d-Y h:i a");
+$leading=2;
+
+# back compatibility  
+if (isset($print_contact_title)){
+	if ($print_contact_title && empty($config_sheetthumb_fields)){$config_sheetthumb_fields=array(8);}
+}
 
 if ($orientation=="landscape"){$pagewidth=$pagesize[0]=$height; $pageheight=$pagesize[1]=$width;}
 
@@ -69,7 +75,10 @@ $columns=$column;
 	#calculating sizes of cells, images, and number of rows:
 	$cellsize[0]=$cellsize[1]=($pagewidth-1.7)/$columns;
 	$imagesize=$cellsize[0]-0.3;
-	$rowsperpage=($pageheight-1.2-$cellsize[1])/$cellsize[1];
+	# estimate rows per page based on config lines
+	$extralines=(count($config_sheetthumb_fields)!=0)?count($config_sheetthumb_fields):0;
+	if ($config_sheetthumb_include_ref){$extralines++;}
+	$rowsperpage=($pageheight-1-($cellsize[1]+($extralines*(($refnumberfontsize+$leading)/72))))/($cellsize[1]+($extralines*(($refnumberfontsize+$leading)/72)));
 	$page=1;
 }
 else if ($sheetstyle=="list")
@@ -102,8 +111,10 @@ $pdfcode="
 \$pdf->SetAuthor(\$user['fullname'].' '.\$user['email']);
 \$pdf->SetSubject(\$applicationname.' Contact Sheet');
 \$pdf->SetMargins(1,1.2,.7);
-\$pdf->SetAutoPageBreak(true,0);
-\$pdf->AddPage(); ";
+\$pdf->SetAutoPageBreak(false,0);
+\$pdf->SetCellPadding(0); 
+\$pdf->AddPage(); 
+";
 
 #Title on sheet
 $pdfcode.="\$pdf->SetFont(\$contact_sheet_font,'',\$titlefontsize);";
@@ -134,11 +145,6 @@ for ($n=0;$n<count($result);$n++)
 		$preview_extension=$result[$n]["preview_extension"];
 		$pdfcode.="\$preview_extension='".$preview_extension."';";
 		$resourcetitle="";
-		if ($print_contact_title) {	
-			$resourcetitle = " - " . $result[$n]["title"];
-			$pdfcode.="\$resourcetitle='".$resourcetitle."';";
-			$characterset.=$resourcetitle;
-			}
     	$i++;
 		$pdfcode.="\$i++;";
 
@@ -159,15 +165,25 @@ for ($n=0;$n<count($result);$n++)
 			}	
 			if (file_exists($imgpath))
 			{
-				
-				# Two ways to size image to cell, either by height or by width.
+				# cells are used for measurement purposes only
+				# Two ways to size image, either by height or by width.
 				$thumbsize=getimagesize($imgpath);
 					if ($thumbsize[0]>$thumbsize[1]){
 					
 					if ($sheetstyle=="thumbnails")
 					{
-						$characterset.=$ref.$resourcetitle;
-						$pdfcode.="\$pdf->Text(\$pdf->Getx(),\$pdf->Gety()-.05,\$ref.\$resourcetitle);\n";		
+						$pdfcode.="\$topy=\$pdf->Gety();";	$pdfcode.="\$topx=\$pdf->Getx();";	
+						if ($config_sheetthumb_include_ref){$pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$ref,0,2,'L',0,'',1);\n";}
+						for($ff=0; $ff<count($config_sheetthumb_fields); $ff++){
+							$pdfcode.="\$ff=".$ff.";";
+							$fielddata="";
+							$pdfcode.="\$fielddata='';";
+							$fielddata=get_data_by_field($ref,$config_sheetthumb_fields[$ff]);
+							$pdfcode.="\$fielddata='".$fielddata."';";
+							$characterset.=$fielddata;
+						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
+						}
+						$pdfcode.="\$bottomy=\$pdf->Gety();";	$pdfcode.="\$bottomx=\$pdf->Getx();";
 					}
 					else if ($sheetstyle=="list")
 					{
@@ -183,16 +199,30 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
 						}		
 					}
-						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY(),\$imagesize,0,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
-						$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);\n";
-					
+						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY()+.025,\$imagesize,0,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
+						if ($sheetstyle=="thumbnails"){$pdfcode.="\$pdf->Sety(\$topy);";$pdfcode.="\$pdf->Setx(\$topx);";
+							$pdfcode.="\$pdf->Cell(\$cellsize[0],(\$bottomy-\$topy)+\$imagesize+.2,'',0,0);\n";
+							}
+						else {	
+							$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);\n";
+						}
 					}
 					
 					else{
 						
 					if ($sheetstyle=="thumbnails")
 					{
-						$pdfcode.="\$pdf->Text(\$pdf->Getx(),\$pdf->Gety()-.05,\$ref.\$resourcetitle);\n";
+						$pdfcode.="\$topy=\$pdf->Gety();";	$pdfcode.="\$topx=\$pdf->Getx();";	
+						if ($config_sheetthumb_include_ref){$pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$ref,0,2,'L',0,'',1);\n";}
+						for($ff=0; $ff<count($config_sheetthumb_fields); $ff++){
+							$pdfcode.="\$ff=".$ff.";";
+							$fielddata="";
+							$pdfcode.="\$fielddata='';";
+							$fielddata=get_data_by_field($ref,$config_sheetthumb_fields[$ff]);
+							$pdfcode.="\$fielddata='".$fielddata."';";
+							$characterset.=$fielddata;
+						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
+						}$pdfcode.="\$bottomy=\$pdf->Gety();";	$pdfcode.="\$bottomx=\$pdf->Getx();";
 					}
 					else if ($sheetstyle=="list")
 					{
@@ -207,9 +237,13 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
 						}			
 					}
-						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY(),0,\$imagesize,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
-						$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);";
-						
+						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY()+.025,0,\$imagesize,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
+						if ($sheetstyle=="thumbnails"){$pdfcode.="\$pdf->Sety(\$topy);";$pdfcode.="\$pdf->Setx(\$topx);";
+							$pdfcode.="\$pdf->Cell(\$cellsize[0],(\$bottomy-\$topy)+\$imagesize+.2,'',0,0);\n";
+							}
+						else {	
+							$pdfcode.="\$pdf->Cell(\$cellsize[0],\$cellsize[1],'',0,0);\n";
+						}
 					}
 			$n=$n++;
 					if ($i == $columns){

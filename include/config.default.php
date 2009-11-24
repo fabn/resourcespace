@@ -446,13 +446,36 @@ $contact_sheet_resource=false;
 # Ajax previews in contact sheet configuration. 
 $contact_sheet_previews=true;
 # Select a contact sheet font. Default choices are 
-# helvetica,times (These are pdf core fonts: not embedded, very small pdf file size but unpredictable results. See $ttf_file for embedding option.)
+# helvetica,times (These are pdf core fonts: not embedded, very small pdf file size.)
 $contact_sheet_font="helvetica";
 # allow unicode filenames? (stripped out by default in tcpdf but since collection names may 
 # have special characters, probably want to try this on.)
 $contact_sheet_unicode_filenames=true;
-# Print title as well as ID on scontact sheet
-$print_contact_title = false;
+# Set font sizes for contactsheet
+$titlefontsize=10;
+$refnumberfontsize=8;
+# If making a contact sheet with list sheet style, use these fields in contact sheet:
+$config_sheetlist_fields = array(8);
+# If making a contact sheet with thumbnail sheet style, use these fields in contact sheet:
+$config_sheetthumb_fields = array();
+$config_sheetthumb_include_ref=true;
+
+##  Contact Print settings - paper size options
+$papersize_select = '
+<option value="a4">A4 - 210mm x 297mm</option>
+<option value="a3">A3 - 297mm x 420mm</option>
+<option value="letter">US Letter - 8.5" x 11"</option>
+<option value="legal">US Legal - 8.5" x 14"</option>
+<option value="tabloid">US Tabloid - 11" x 17"</option>';
+
+## Columns options (May want to limit options if you are adding text fields to the Thumbnail style contact sheet).
+$columns_select = '
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4 selected>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+<option value=7>7</option>';
 
 # Contact Sheet Font Embedding:
 # Note: this has only been developed for Linux so far. It relies on the ttf2ufm program included with tcpdf, and there is a compiled version included for windows, but it may need further dev on the paths to work. I don't think the linux compile works on the mac. -Tom G
@@ -462,13 +485,6 @@ $print_contact_title = false;
 # If using $ttf_file, optionally set $subsetting=true and set fontforge path to generate subset fonts on the fly (reduces PDF file size).
 # $subsetting=true; 
 # $fontforge_path="/usr/bin";
-
-# Set font size for contactsheet (if using subsetted $ttf_file, sizes may need to be reduced significantly as the scale may be altered.) 
-$titlefontsize=10;
-$refnumberfontsize=8;
-
-# If making a contact sheet with list sheet style, use these fields in contact sheet:
-$config_sheetlist_fields = array(8);
 
 
 # Options below control the batch uploader used in user contributions. If both set to true,
@@ -871,14 +887,6 @@ $disable_alternative_files = false;
 $hide_access_column = false;
 #collection_manage.php - show 'edit all' link on collections
 $show_edit_all_link = false;
-
-##  Contact Print settings - paper size options
-$papersize_select = '
-<option value="a4">A4 - 210mm x 297mm</option>
-<option value="a3">A3 - 297mm x 420mm</option>
-<option value="letter">US Letter - 8.5" x 11"</option>
-<option value="legal">US Legal - 8.5" x 14"</option>
-<option value="tabloid">US Tabloid - 11" x 17"</option>';
 
 # If displaying a collection in search.php, display collection title at top.
 $display_collection_title = false;
