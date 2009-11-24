@@ -50,7 +50,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 <div id="SearchBox">
 
 
-<?php if (isset($anonymous_login) && ($username==$anonymous_login))
+<?php if (isset($anonymous_login) && (isset($username)) && ($username==$anonymous_login))
 	{
 	# For anonymous access, display the login panel
 	?>
