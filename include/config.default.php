@@ -455,8 +455,8 @@ $contact_sheet_font="helvetica";
 # have special characters, probably want to try this on.)
 $contact_sheet_unicode_filenames=true;
 # Set font sizes for contactsheet
-$titlefontsize=10;
-$refnumberfontsize=8;
+$titlefontsize=10; // Contact Sheet Title
+$refnumberfontsize=8; // This includes field text, not just ref number
 # If making a contact sheet with list sheet style, use these fields in contact sheet:
 $config_sheetlist_fields = array(8);
 # If making a contact sheet with thumbnail sheet style, use these fields in contact sheet:
