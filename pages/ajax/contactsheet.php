@@ -193,7 +193,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$ff=".$ff.";";
 							$fielddata="";
 							$pdfcode.="\$fielddata='';";
-							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
+							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
 							$pdfcode.="\$fielddata='".$fielddata."';";
 							$characterset.=$fielddata;
 							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
