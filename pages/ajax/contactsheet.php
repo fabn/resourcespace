@@ -251,12 +251,12 @@ for ($n=0;$n<count($result);$n++)
 						$pdfcode.="\$pdf->ln(); \$i=0;\$j++;";
 						$i=0;$j++;	
 							if ($j > $rowsperpage){
-						    $page = $page+1;
 							$j=0; 
 							
 							if (($preview==true) && ($page>1)){break;} else{
 							if ($n<count($result)-1){ //avoid making an additional page if it will be empty							
 								$pdfcode.="\$pdf->AddPage();";
+								$page = $page+1;
 								}
 							}
 							
