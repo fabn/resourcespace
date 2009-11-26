@@ -63,6 +63,10 @@ elseif (isset($_REQUEST['delete'])){ # Delete a plugin from the plugins director
 elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file. 
 	if (($_FILES['pfile']['error'] == 0) && (pathinfo($_FILES['pfile']['name'], PATHINFO_EXTENSION)=='rsp')){
 	    require "../../lib/pcltar/pcltar.lib.php";
+	    
+	    # Create tmp folder if not existing
+	    if (!file_exists(dirname(__FILE__).'/../../filestore/tmp')) {mkdir(dirname(__FILE__).'/../../filestore/tmp',0777);}
+	    
 	    $tmp_file = dirname(__FILE__).'/../../filestore/tmp/'.basename($_FILES['pfile']['name'].'.tgz');
 	    if(move_uploaded_file($_FILES['pfile']['tmp_name'], $tmp_file)==true){
 	         $rejected = false;
