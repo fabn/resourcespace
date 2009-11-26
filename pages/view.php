@@ -91,7 +91,10 @@ if ($access==2)
 		
 hook("afterpermissionscheck");
 		
-		
+# Establish if this is a metadata template resource, so we can switch off certain unnecessary features
+$is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
+
+
 if ($pending_review_visible_to_all && isset($userref) && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
 	{
 	# When users can view resources in the 'User Contributed - Pending Review' state in the main search
@@ -226,6 +229,10 @@ if (file_exists("../viewers/type" . $resource["resource_type"] . ".php"))
 	}
 elseif (hook("replacedownloadoptions"))
 	{
+	}
+elseif ($is_template)
+	{
+	
 	}
 else
 	{ 

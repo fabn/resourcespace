@@ -1265,6 +1265,9 @@ $debug_log=false;
 # resource type, e.g. if you complete the photo fields then these will be copied when using this template for a photo resource.
 # 
 # $metadata_template_resource_type=5;
+#
+# The ability to set that a different field should be used for 'title' for metadata templates, so that the original title field can still be used for template data
+# $metadata_template_title_field=10;
 
 
 

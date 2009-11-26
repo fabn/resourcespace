@@ -52,6 +52,7 @@ function save_resource_data($ref,$multi)
 	$resource_sql="";
 	$fields=get_resource_field_data($ref,$multi);
 	$expiry_field_edited=false;
+	$resource_data=get_resource_data($ref);
 	
 	for ($n=0;$n<count($fields);$n++)
 		{
@@ -132,11 +133,26 @@ function save_resource_data($ref,$multi)
 
 				# If 'resource_column' is set, then we need to add this to a query to back-update
 				# the related columns on the resource table
-				if (strlen($fields[$n]["resource_column"])>0)
+				$resource_column=$fields[$n]["resource_column"];
+
+				# By default, also write the resource table column mapping (if set)
+				$write_column=true;
+
+				# For metadata templates, support an alternative title field (so the original title field can be used as part of metadata)
+				global $metadata_template_title_field,$metadata_template_resource_type;
+				if (isset($metadata_template_title_field) && $metadata_template_resource_type==$resource_data["resource_type"])
+					{
+					if ($resource_column=="title") {$write_column=false;} # Do not write the original title.
+					if ($metadata_template_title_field=$fields[$n]["ref"]) {$resource_column="title";} # Write the metadata template title to the title column instead.
+					}
+
+				# Add to resource column SQL
+				if (strlen($resource_column)>0 && $write_column)
 					{
 					if ($resource_sql!="") {$resource_sql.=",";}
-					$resource_sql.=$fields[$n]["resource_column"] . "='" . escape_check($val) . "'";
+					$resource_sql.=$resource_column . "='" . escape_check($val) . "'";
 					}
+
 				# Purge existing data and keyword mappings, decrease keyword hitcounts.
 				sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 				

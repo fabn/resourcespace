@@ -80,6 +80,10 @@ if (getval("regen","")!="")
 	create_previews($ref,false,$resource["file_extension"]);
 	}
 	
+# Establish if this is a metadata template resource, so we can switch off certain unnecessary features
+$is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
+	
+
 if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")=="")
 	{
 	# save data
@@ -97,7 +101,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		$save_errors=save_resource_data($ref,$multiple);
 		$no_exif=getval("no_exif","");
 		
-		if (($save_errors===true)&&(getval("tweak","")==""))
+		if (($save_errors===true || $is_template)&&(getval("tweak","")==""))
 			{
 			if ($ref>0)
 				{
@@ -213,6 +217,7 @@ if ($multiple) { ?>
 <?php } elseif ($ref>0) { ?>
 <h1><?php echo $lang["editresource"]?></h1>
 
+
 <?php if (!$multiple) { 
 # Resource next / back browsing.
 ?>
@@ -232,6 +237,7 @@ if ($multiple) { ?>
 <div class="clearerleft"> </div>
 </div>
 
+<?php if (!$is_template) { ?>
 <div class="Question">
 <label><?php echo $lang["file"]?></label>
 <div class="Fixed">
@@ -251,19 +257,20 @@ else
 	}
 if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 
-<?php if ($resource["has_image"]!=1) { ?>
-<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
-<?php } else { ?>
-<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
-<?php } ?>
-<?php if (! $disable_upload_preview) { ?><br />
-<a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
-<?php if (! $disable_alternative_files) { ?><br />
-<a href="alternative_files.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a><?php } ?>
+	<?php if ($resource["has_image"]!=1) { ?>
+	<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
+	<?php } else { ?>
+	<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
+	<?php } ?>
+	<?php if (! $disable_upload_preview) { ?><br />
+	<a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
+	<?php if (! $disable_alternative_files) { ?><br />
+	<a href="alternative_files.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a><?php } ?>
 
 </div>
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
 
 <?php if ($resource["has_image"]==1) { ?>
 <div class="Question">
@@ -508,7 +515,7 @@ for ($n=0;$n<count($fields);$n++)
 	?>
 
 	<div class="Question" id="question_<?php echo $n?>" <?php if ($multiple) {?>style="display:none;border-top:none;"<?php } ?>>
-	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <?php if ($fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
+	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <?php if (!$is_template && $fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
 	<?php
 
 	# Define some Javascript for help actions (applies to all fields)
@@ -839,7 +846,7 @@ for ($n=0;$n<count($fields);$n++)
 	</div>
 	
 </form>
-<p><sup>*</sup> <?php echo $lang["requiredfield"]?></p>
+<?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
 </div>
 
 <!--<p><a href="view.php?ref=<?php echo $ref?>">Back to view</a></p>-->
