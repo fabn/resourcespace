@@ -50,6 +50,10 @@ for ($n=0;$n<count($resources);$n++)
 	# Also index contributed by field.
 	add_keyword_mappings($ref,$resources[$n]["username"] . " " . $resources[$n]["fullname"],-1);		
 	
+	# Always index the resource ID as a keyword
+	remove_keyword_mappings($ref, $ref, -1);
+	add_keyword_mappings($ref, $ref, -1);
+	
 	$words=sql_value("select count(*) value from resource_keyword where resource='$ref'",0);
 	echo "Done $ref ($n/" . count($resources) . ") - $words words<br />\n";
 	}

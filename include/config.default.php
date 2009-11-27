@@ -584,7 +584,12 @@ $default_group=2;
 # You may wish to disable this if you are using metadata based access control (search filter on the user group)
 $custom_access=true;
 
-# If true: if search keyword is numeric then search for resource id
+# How are numeric searches handled?
+#
+# If true:
+# 		If the search keyword is numeric then the resource with the matching ID will be shown
+# If false:
+#		The search for the number provided will be performed as with any keyword. However, if a resource with a matching ID number if found then this will be shown first.
 $config_search_for_number=true;
 
 # Display the download as a 'save as' link instead of redirecting the browser to the download (which sometimes causes a security warning).

@@ -33,6 +33,10 @@ function create_resource($resource_type,$archive=999,$user=-1)
 	# set defaults for resource here (in case there are edit filters that depend on them)
 	set_resource_defaults($insert);	
 
+	# Always index the resource ID as a keyword
+	remove_keyword_mappings($insert, $insert, -1);
+	add_keyword_mappings($insert, $insert, -1);
+
 	# Log this			
 	daily_stat("Create resource",$insert);
 	resource_log($insert,'c',0);
@@ -188,6 +192,10 @@ function save_resource_data($ref,$multi)
 				}
 			}
 		}
+
+	# Always index the resource ID as a keyword
+	remove_keyword_mappings($ref, $ref, -1);
+	add_keyword_mappings($ref, $ref, -1);
 
 	# save resource defaults
 	set_resource_defaults($ref);	 

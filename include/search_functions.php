@@ -297,8 +297,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			}
 		}
 	
-	
-	
+	# Handle numeric searches when $config_search_for_number=false, i.e. perform a normal search but include matches for resource ID first
+	global $config_search_for_number;
+	if (!$config_search_for_number && is_numeric($search))
+		{
+		# Always show exact resource matches first.
+		$order_by="(r.ref='" . $search . "') desc," . $order_by;
+		}
 	
 	# --------------------------------------------------------------------------------
 	# Special Searches (start with an exclamation mark)
@@ -448,6 +453,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# Compile final SQL
 	$sql="select distinct r.*,$score score $select from resource r" . $t . " $resource_data_join where $t2 $sql group by r.ref order by $order_by limit $max_results";
+
+	# Debug
+	debug("\n" . $sql);
 
 	# Execute query
 	$result=sql_query($sql,false,$fetchrows);

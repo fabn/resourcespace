@@ -216,7 +216,7 @@ if (($search_includes_themes || $search_includes_public_collections) && $search!
     $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
 }
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
-if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count($result)==1)
+if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
 	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
 	}
