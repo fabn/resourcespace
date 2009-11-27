@@ -2148,6 +2148,8 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 	# Finally, if there are no matches then the 'type1' image will be used.
 	# set contactsheet to true to cd up one more level.
 	
+	global $language;
+	
 	$col=($col_size?"_col":"");
 	$folder="../gfx/";
 	if ($contactsheet){$folder="../../gfx/";}
@@ -2156,21 +2158,38 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 	global $metadata_template_resource_type;
 	if (isset($metadata_template_resource_type) && $metadata_template_resource_type==$resource_type) {$extension="mdtr";}
 
-	# Try extension
+
+	# Try extension (language specific)
+	$try="no_preview/extension/" . $extension . $col . "_" . $language . ".png";
+	if (file_exists($folder . $try))
+		{
+		return $try;
+		}
+	# Try extension (default)
 	$try="no_preview/extension/" . $extension . $col . ".png";
 	if (file_exists($folder . $try))
 		{
 		return $try;
 		}
 	
-	# Try resource type
+
+	# Try resource type (language specific)
+	$try="no_preview/resource_type/type" . $resource_type . $col . "_" . $language . ".png";
+	if (file_exists($folder . $try))
+		{
+		return $try;
+		}
+	# Try resource type (default)
 	$try="no_preview/resource_type/type" . $resource_type . $col . ".png";
 	if (file_exists($folder . $try))
 		{
 		return $try;
 		}
-	
+
+
+	# --- Legacy ---
 	# Support the old location for resource type and GIF format (root of gfx folder)
+	# Some installations use custom types in this location.
 	$try="type" . $resource_type . $col . ".gif";
 	if (file_exists($folder . $try))
 		{
