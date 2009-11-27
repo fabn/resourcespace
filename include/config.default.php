@@ -1051,8 +1051,11 @@ $themes_category_split_pages=false;
 $search_results_title_trim=40;
 
 # Uncomment the below to set a vertical height for the title on the large thumbnail view.
+# You may need to tweak $search_results_title_wordwrap below.
 # $search_result_title_height=26;
 
+# Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height above)
+$search_results_title_wordwrap=20;
 
 
 
