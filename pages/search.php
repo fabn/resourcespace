@@ -225,6 +225,22 @@ if ((is_numeric($search) || $searchresourceid > 0) && is_array($result) && count
 # Include the page header to and render the search results
 include "../include/header.php";
 
+
+# Extra CSS to support more height for titles on thumbnails.
+if (isset($search_result_title_height))
+	{
+	?>
+	<style>
+	.ResourcePanelInfo
+		{
+		white-space:normal;
+		height: <?php echo $search_result_title_height ?>px;
+		}
+	</style>
+	<?php
+	}
+
+
 if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive;
@@ -369,8 +385,13 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
 		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
 		
-			<?php	
-			if ($display=="thumbs") { #Thumbnails view
+			<?php
+			
+			
+			
+			
+				
+			if ($display=="thumbs") { #  ---------------------------- Thumbnails view ----------------------------
 			?>
 		 
 <?php if (!hook("renderresultthumb")) { ?>
@@ -393,7 +414,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		
 <?php if (!hook("rendertitlethumb")) { ?>			
 
-		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($result[$n]["title"]),30)),$search)?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim)),$search)?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
@@ -449,7 +470,13 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 <?php } ?>
 
 		<?php 
-		} elseif ($display == "smallthumbs") { #Small Thumbs view
+		
+		
+		
+		
+		
+		
+		} elseif ($display == "smallthumbs") { # ---------------- Small Thumbs view ---------------------
 		?>
 
 <div class="ResourcePanelShellSmall" id="ResourceShell<?php echo $ref?>">
@@ -483,7 +510,13 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 <div class="PanelShadow"></div></div>
 		 
 		<?php
-		} else if ($display=="list") { # List view
+		
+		
+		
+		
+		
+		
+		} else if ($display=="list") { # ----------------  List view -------------------
 		?>
 		<?php if (!hook("replacelistitem")) {?>
 		<!--List Item-->
@@ -492,7 +525,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if ($use_checkboxes_for_selection){?><td width="100px"><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
 		<?php } #end hook listcheckboxes ?>
 		
-		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),45) . 
+		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim) . 
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
 		($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
@@ -511,7 +544,12 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		
 		
 		</tr>
-		<?php } ?><!--end hook replacelistitem--> 
+		<?php }
+		
+		
+		
+		
+		 ?><!--end hook replacelistitem--> 
 		<?php
 		}
 	

@@ -1047,9 +1047,11 @@ $public_collections_top_nav=false;
 # Display theme categories as links, and themes on separate pages?
 $themes_category_split_pages=false;
 
+# How many characters to trim the title to on search results
+$search_results_title_trim=40;
 
-
-
+# Uncomment the below to set a vertical height for the title on the large thumbnail view.
+# $search_result_title_height=26;
 
 
 
