@@ -392,7 +392,7 @@ else
             $drop=sql_query($query);reset($drop);
             if ($type!="drp") {$key=$type . "_" . $key;}
             ?>
-            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="0">Please select:</option>
+            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="">Please select:</option>
             <?php
             foreach ($drop as $item)
                 {
