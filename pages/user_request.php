@@ -11,8 +11,14 @@ hook("preuserrequest");
 
 if (getval("save","")!="")
 	{
+	# Check the anti-spam code is correct
+	if (getval("antispamcode","")!=md5(getval("antispam","")))
+		{
+		$error=$lang["requiredfields"];
+		}
+	
 	# Check that the e-mail address doesn't already exist in the system
-	if (user_email_exists(getval("email","")))
+	elseif (user_email_exists(getval("email","")))
 		{
 		# E-mail already exists
 		$error=$lang["accountemailalreadyexists"];$error_extra="<br/><a href=\"user_password.php?email=" . urlencode(getval("email","")) . "\">" . $lang["forgottenpassword"] . "</a>";
@@ -121,6 +127,16 @@ if (isset($custom_registration_fields))
 		}
 	}
 ?>
+
+<?
+$code=rand(1000,9999);
+?>
+<input type="hidden" name="antispamcode" value="<?php echo md5($code)?>">
+<div class="Question">
+<label for="antispam"><?php echo $lang["enterantispamcode"] . " " . $code ?> <sup>*</sup></label>
+<input type=text name="antispam" id="antispam" class="stdwidth" value="">
+<div class="clearerleft"> </div>
+</div>
 
 <?php if (!hook("replacegroupselect")) { /* BEGIN hook Replacegroupselect */ ?>
 <?php if ($registration_group_select) {
