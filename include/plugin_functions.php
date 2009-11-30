@@ -164,3 +164,20 @@ function set_plugin_config($plugin_name, $config){
 	sql_query("UPDATE plugins SET config='$config_ser' WHERE name='$plugin_name'");
 	return true;
 }
+/**
+ * Check is a plugin is activated.
+ * 
+ * Returns true is a plugin is activated in the plugins database.
+ * 
+ * @param $name Name of plugin to check
+ * @return bool Returns true is plugin is activated.
+ */
+function is_plugin_activated($name){
+    $activated = sql_query("SELECT name FROM plugins WHERE name='$name' and inst_version IS NOT NULL");
+    if (is_array($activated) && count($activated)>0){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
