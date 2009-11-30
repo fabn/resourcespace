@@ -1,16 +1,24 @@
 <?php
-#
-#
-# Quick 'n' dirty script to update all preview images.
-# It's done one at a time via the browser so progress can be monitored.
-#
-#
+/**
+ * Quick 'n' dirty script to update all preview images.
+ * 
+ * @package ResourceSpace
+ * @subpackage Team_Admin
+ */
+
 include "../../include/db.php";
 include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
 include "../../include/general.php";
 include "../../include/image_processing.php";
 include "../../include/resource_functions.php";
 include_once "../../include/collections_functions.php";
+
+/**
+ * Update previews for given ref.
+ * 
+ * @param $ref Resource ref to update
+ * @return bool True is resource exists
+ */
 function update_preview($ref){
     global $previewbased;
     $resourceinfo=sql_query("select ref, file_extension from resource where ref='$ref'");
