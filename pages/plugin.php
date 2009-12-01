@@ -29,3 +29,9 @@ if (isset($plugin_query[1])){
         die ('Plugin page not found.');
     }
 }
+else if(file_exists("../plugins/{$plugin_query[0]}/pages/index.php")){
+    include "../plugins/{$plugin_query[0]}/pages/index.php";
+}
+else {
+    die ('Plugin page not found.');
+}
