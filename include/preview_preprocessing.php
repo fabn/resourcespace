@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
 
 if (!$previewonly)
 	{
@@ -51,7 +51,7 @@ hook("metadata");
 	For everything except Audio/Video files, attempt to generate a QuickLook preview first.
    ----------------------------------------
 */
-if (isset($qlpreview_path) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions))
+if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extensions) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions))
 	{
 	$output=shell_exec($qlpreview_path."/qlpreview -imageType jpg -width 800 -height 800 -asIcon no -preferFileIcon no -inPath " . escapeshellarg($file) . " -outPath " . escapeshellarg($target));
 	sleep(4);

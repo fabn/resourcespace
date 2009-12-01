@@ -1260,6 +1260,10 @@ $frameless_collections=false;
 # Hopefully a work-around will be found shortly. Until then, QuickLook previews will remain a 'development item'.
 #
 # $qlpreview_path="/usr/bin";
+#
+# A list of extensions that QLPreview should NOT be used for.
+$qlpreview_exclude_extensions=array("tif","tiff");
+
 
 
 # Log developer debug information to the debug log (filestore/tmp/debug.txt)?
