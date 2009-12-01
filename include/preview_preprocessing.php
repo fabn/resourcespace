@@ -246,7 +246,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
         if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
 		
-		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dUseCropBox -dEPSCrop " . escapeshellarg($target . ".ps");
+		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dEPSCrop " . escapeshellarg($target . ".ps");
 		$output=shell_exec($gscommand); 
 
 		if (file_exists($target))
@@ -506,7 +506,7 @@ if (!isset($newfile))
 		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n,false,"",$alternative); 
 		if (file_exists($target)) {unlink($target);}
 
-		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dUseCropBox -dEPSCrop " . escapeshellarg($file);
+		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
  		$output=shell_exec($gscommand2); 
 
     	debug("PDF multi page preview: page $n, executing " . $gscommand2);
