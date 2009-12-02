@@ -781,7 +781,7 @@ if (count($result)>0)
 				<table border="0" class="CollectionResourceAlign"><tr><td>
 				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
 				</tr></table>
-				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),25); } ?>&nbsp;</div>
+				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),15); } ?>&nbsp;</div>
 				</div>
 				<?php		
 				}
@@ -816,7 +816,7 @@ if (count($result)>0)
             <table border="0" class="CollectionResourceAlign"><tr><td>
             <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
             </tr></table>
-            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),15); } ?>&nbsp;</div>
+            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),15); } ?>&nbsp;</div>
         </div>
         <?php        
         }
