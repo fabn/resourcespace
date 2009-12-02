@@ -152,7 +152,7 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
 
-<h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?>&nbsp;</h1>
+<h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php if ($use_resource_column_data){?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?><?php } else { echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$view_title_field))),$search); } ?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
@@ -781,7 +781,7 @@ if (count($result)>0)
 				<table border="0" class="CollectionResourceAlign"><tr><td>
 				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
 				</tr></table>
-				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a>&nbsp;</div>
+				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($resource['ref'],$view_title_field)),25); } ?>&nbsp;</div>
 				</div>
 				<?php		
 				}
@@ -816,7 +816,7 @@ if (count($result)>0)
             <table border="0" class="CollectionResourceAlign"><tr><td>
             <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
             </tr></table>
-            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a>&nbsp;</div>
+            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),25)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($resource['ref'],$view_title_field)),15); } ?>&nbsp;</div>
         </div>
         <?php        
         }

@@ -4,7 +4,7 @@
 #  - For resource indexing / keyword creation, see resource_functions.php
 
 if (!function_exists("do_search")) {
-function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1)
+function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc")
 	{
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
@@ -13,8 +13,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score desc, user_rating desc, hit_count desc, creation_date desc,r.ref desc","popularity"=>"user_rating desc,hit_count desc,creation_date desc,r.ref desc","rating"=>"r.rating desc, user_rating desc, score desc,r.ref desc","date"=>"creation_date desc,r.ref desc","colour"=>"has_image desc,image_blue,image_green,image_red,creation_date,r.ref desc","country"=>"country,r.ref desc","title"=>"title,r.ref desc","file_path"=>"file_path,r.ref desc","resourceid"=>"r.ref desc");
-	
+	$order=array("relevance"=>"score $sort, user_rating $sort, hit_count $sort, creation_date $sort,r.ref $sort","popularity"=>"user_rating $sort,hit_count $sort,creation_date $sort,r.ref $sort","rating"=>"r.rating $sort, user_rating $sort, score $sort,r.ref $sort","date"=>"creation_date $sort,r.ref $sort","colour"=>"has_image $sort,image_blue $sort,image_green $sort,image_red $sort,creation_date $sort,r.ref $sort","country"=>"country $sort,r.ref $sort","title"=>"title $sort,r.ref $sort","file_path"=>"file_path $sort,r.ref $sort","resourceid"=>"r.ref $sort");
+	if (!in_array($order_by,$order)&&(substr($order_by,0,5)=="field")){
+		$order[$order_by]="$order_by $sort";
+	}
+		
 	$modified_order_array=(hook("modifyorderarray"));
 	if ($modified_order_array){$order=$modified_order_array;}
 	
@@ -104,6 +107,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $tdf . " on r.ref = rd" . $tdf . ".resource and rd" . $tdf . ".resource_type_field =".$tdf." ";
 		$select.=",rd".$tdf.".value field".$tdf." ";
 		}
+		
+	# Join list_display_fields to resource table 	
+	global $list_display_fields;
+	foreach( $list_display_fields as $ldf)
+		{
+		if (!in_array($ldf,$thumbs_display_fields)){ // don't double add fields	
+			$resource_data_join.=" LEFT OUTER JOIN resource_data rd" . $ldf . " on r.ref = rd" . $ldf . ".resource and rd" . $ldf . ".resource_type_field =".$ldf." ";
+			$select.=",rd".$ldf.".value field".$ldf." ";
+			}
+		}	
 		
 	# Join any other fields specified in $data_joins
 	global $data_joins;	

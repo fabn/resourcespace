@@ -20,23 +20,48 @@ $search=getvalescaped("search","");
 
 # create a thumbs_display_field array with information needed for detailed field highlighting
 $tdf=array();
-$all_field_info=get_fields($thumbs_display_fields);
-for ($n=0;$n<count($thumbs_display_fields);$n++)
+$all_field_info=get_fields(array_merge($thumbs_display_fields,$list_display_fields));
+$n=0;
+foreach ($thumbs_display_fields as $thumbs_display_field)
 	{
 	# Find field in selected list
 	for ($m=0;$m<count($all_field_info);$m++)
 		{
-		if ($all_field_info[$m]["ref"]==$thumbs_display_fields[$n])
+		if ($all_field_info[$m]["ref"]==$thumbs_display_field)
 			{
 			$field_info=$all_field_info[$m];
-			$tdf[$n]['ref']=$thumbs_display_fields[$n];
+			$tdf[$n]['ref']=$thumbs_display_field;
 			$tdf[$n]['indexed']=$field_info['keywords_index'];
 			$tdf[$n]['partial_index']=$field_info['partial_index'];
 			$tdf[$n]['name']=$field_info['name'];
+			$tdf[$n]['title']=$field_info['title'];
+			$n++;
 			}
 		}
 	}
-	
+$n=0;	
+
+# create a list_display_field array with information needed for detailed field highlighting
+$n=0;
+foreach ($list_display_fields as $list_display_field)
+	{
+	# Find field in selected list
+	for ($m=0;$m<count($all_field_info);$m++)
+		{
+		if ($all_field_info[$m]["ref"]==$list_display_field)
+			{
+			$field_info=$all_field_info[$m];
+			$ldf[$n]['ref']=$list_display_field;
+			$ldf[$n]['indexed']=$field_info['keywords_index'];
+			$ldf[$n]['partial_index']=$field_info['partial_index'];
+			$ldf[$n]['name']=$field_info['name'];
+			$ldf[$n]['title']=$field_info['title'];
+			$n++;
+			}
+		}
+	}
+$n=0;	
+
 # Append extra search parameters from the quick search.
 if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
@@ -106,7 +131,8 @@ $display=getvalescaped("display",$default_display);setcookie("display",$display)
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
-
+$sort=getval("sort","DESC");
+$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 ## If displaying a collection
 # Enable/disable the reordering feature. Just for collections for now.
@@ -208,7 +234,8 @@ $refs=array();
 if (strpos($search,"!")!==false) {$restypes="";}
 
 # Do the search!
-$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset);
+$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort);
+
 # Do the public collection search if configured.
 
 if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
@@ -243,7 +270,7 @@ if (isset($search_result_title_height))
 
 if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive;
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
 	?>
 	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
@@ -265,45 +292,45 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		
 		<?php if ($title_sort) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="title") {?><span class="Selected"><?php echo $lang["resourcetitle"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
+		<?php if ($order_by=="title") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["resourcetitle"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
 		<?php } ?>
 		
 		<?php if ($original_filename_sort) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="file_path") {?><span class="Selected"><?php echo $lang["filename"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
+		<?php if ($order_by=="file_path") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["filename"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
 		<?php } ?>
 		
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="popularity") {?><span class="Selected"><?php echo $lang["popularity"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?>
+		<?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?>
 		
 		<?php if ($orderbyrating) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="rating") {?><span class="Selected"><?php echo $lang["rating"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=rating&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["rating"]?></a><?php } ?>
+		<?php if ($order_by=="rating") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=rating&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["rating"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=rating&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["rating"]?></a><?php } ?>
 		<?php } ?>
 		
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="date") {?><span class="Selected"><?php echo $lang["date"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><?php } ?>
+		<?php if ($order_by=="date") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["date"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><?php } ?>
 		
 		<?php if ($colour_sort) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="colour") {?><span class="Selected"><?php echo $lang["colour"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["colour"]?></a><?php } ?>
+		<?php if ($order_by=="colour") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["colour"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["colour"]?></a><?php } ?>
 		<?php } ?>
 		
 		<?php if ($country_sort) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="country") {?><span class="Selected"><?php echo $lang["country"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["country"]?></a><?php } ?>
+		<?php if ($order_by=="country") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["country"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["country"]?></a><?php } ?>
 		<?php } ?>
 		
 		<?php if ($order_by_resource_id) { ?>
 		&nbsp;|&nbsp;
-		<?php if ($order_by=="resourceid") {?><span class="Selected"><?php echo $lang["resourceid"]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourceid"]?></a><?php } ?>
+		<?php if ($order_by=="resourceid") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["resourceid"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourceid"]?></a><?php } ?>
 		<?php } ?>
 		
 		</div>
 		<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
 		<?php 
 		for($n=0;$n<count($results_display_array);$n++){?>
-		<?php if ($per_page==$results_display_array[$n]){?><span class="Selected"><?php echo $results_display_array[$n]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>"><?php echo $results_display_array[$n]?></a><?php } ?><?php if ($n>-1&&$n<count($results_display_array)-1){?>&nbsp;|<?php } ?>
+		<?php if ($per_page==$results_display_array[$n]){?><span class="Selected"><?php echo $results_display_array[$n]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>&sort=<?php echo $sort?>"><?php echo $results_display_array[$n]?></a><?php } ?><?php if ($n>-1&&$n<count($results_display_array)-1){?>&nbsp;|<?php } ?>
 		<?php } ?>
 		</div>
 		
@@ -314,7 +341,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	$totalpages=ceil($results/$per_page);
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k;	
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k."&sort=".$sort;	
 
 	pager();
 	$draw_pager=true;
@@ -337,7 +364,15 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if (!hook("listcheckboxesheader")){?>
 		<?php if ($use_checkboxes_for_selection){?><td><?php echo $lang['addremove'];?></td><?php } ?>
 		<?php } # end hook listcheckboxesheader ?>
+		<?php if ($use_resource_column_data){?>
 		<td><?php echo $lang["titleandcountry"]?></td>
+		<?php } 
+			else { 
+		for ($x=0;$x<count($ldf);$x++)
+			{?>
+			<?php if ($order_by=="field".$ldf[$x]['ref']) {?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a></td><?php } ?>
+			<?php }
+		} ?>
 		<td>&nbsp;</td>
 		<td><?php echo $lang["id"]?></td>
 		<td><?php echo $lang["type"]?></td>
@@ -412,9 +447,10 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->	
 		
-<?php if (!hook("rendertitlethumb")) { ?>			
-
+<?php if (!hook("rendertitlethumb")) { ?>	
+<?php if ($use_resource_column_data) { // omit default title display ?>		
 		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+<?php } //end if use_resource_column_data ?>
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
@@ -424,7 +460,12 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			{
 			$field_content=$result[$n]['field'.$tdf[$x]['ref']];
 			?>		
-			<div class="ResourcePanelInfo"><?php echo 	highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?>&nbsp;</div><div class="clearer"></div>
+			<?php if (in_array($tdf[$x]['ref'],$thumbs_display_extended_fields)){ // add extended CSS behavior ?>
+			<div class="ResourcePanelInfo">
+			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($field_content),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php } else { ?>
+			<div class="ResourcePanelInfo"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			<?php } ?>
 			<?php
 			}
 		?>
@@ -450,7 +491,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><?php } ?>
 		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<span class="IconComment"><a href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo substr($search,11)?>" title="<?php echo $lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
-		<div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div>
+		<?php if ($order_by=="relevance"){?><div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div><?php } ?>
 		<?php } ?>
 		<div class="clearer"></div>
 		<?php if(!hook("thumbscheckboxes")){?>
@@ -525,11 +566,21 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if ($use_checkboxes_for_selection){?><td width="100px"><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
 		<?php } #end hook listcheckboxes ?>
 		
+		<?php if ($use_resource_column_data){?>
 		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim) . 
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
 		($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
 		,$search,"","",1) ?></a>&nbsp;</div></td>
+		<?php } //end if use_resource_column_data 
+			
+		else {
+			for ($x=0;$x<count($ldf);$x++){
+			$field_content=$result[$n]['field'.$ldf[$x]['ref']];
+			?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(i18n_get_translated($field_content),$search_results_title_trim),$search,$ldf[$x]['partial_index'],$ldf[$x]['name'],$ldf[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
+			<?php }
+		} ?>
+		
 		<td><?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
 		<td><?php echo $result[$n]["ref"]?></td>
 		<td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td>

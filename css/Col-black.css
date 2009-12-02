@@ -57,6 +57,8 @@ a:active {color:#CCC;}
 .IconStar, .KeyStar	{	background: url(../gfx/black/interface/IcStar.gif) no-repeat;}
 .IconReorder, .KeyReorder	{	background: url(../gfx/black/interface/IcReorder.gif) no-repeat;}
 .IconComment, .KeyComment	{	background: url(../gfx/black/interface/IcComment.gif) no-repeat;}
+.ASC	{	background: url(../gfx/black/interface/ASC.gif) no-repeat;}
+.DESC	{	background: url(../gfx/black/interface/DESC.gif) no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 

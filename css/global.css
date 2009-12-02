@@ -133,6 +133,8 @@ a:active {text-decoration:underline;}
 .KeyEmail {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
 .KeyPreview {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
 .KeyCollect {margin: 0px 5px 10px;display: inline;padding-left: 25px;}
+.ASC {display: inline;padding-right: 10px;}
+.DESC {display: inline;padding-right: 10px;}
 
 /*Resource Panel layout*/
 .Listview {	margin: 25px 15px 25px 0px;}

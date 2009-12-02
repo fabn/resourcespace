@@ -290,9 +290,9 @@ $resourceid_simple_search=false;
 
 # Enable sorting resources in other ways:
 $colour_sort=true;
-$title_sort=false; 
-$country_sort=false; // (requires that the 'country' field maps to the 'country' database column on resource)
-$original_filename_sort=false; // will only work if you are not using staticsync 
+$title_sort=false; // based on resource table column
+$country_sort=false; // based on resource table column 
+$original_filename_sort=false; // will only work if you are not using staticsync - based on resource table column
 
 # What is the default sort order?
 # Options are date, colour, relevance, popularity, country
@@ -916,8 +916,19 @@ $back_to_collections_link = "";
 # For fields with partial keyword indexing enabled, this determines the minimum infix length
 $partial_index_min_word_length=3;
 
-# array of fields to display on the large thumbnail view.
+# array of fields to display on the large thumbnail view. 
+# If $use_resource_column_data, title (aka field 8) is included by default. 
 $thumbs_display_fields=array(3);
+# array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
+$thumbs_display_extended_fields=array();
+
+# $use_resource_column_data=false intends to disable all functionality based on resource table columns 
+# setting to false should create a more flexible environment.
+# Note: If false, the resource column mapping option in System Setup is not generally applicable.
+$use_resource_column_data=true; 
+$view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
+# array of fields to display on the list view, $use_resource_column_data must be false.
+$list_display_fields=array(8);
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
 # to that specified in the dropdown on the edit page.
@@ -1056,7 +1067,7 @@ $themes_category_split_pages=false;
 $search_results_title_trim=40;
 
 # Uncomment the below to set a vertical height for the title on the large thumbnail view.
-# You may need to tweak $search_results_title_wordwrap below.
+# You may need to tweak $search_results_title_wordwrap below. 
 # $search_result_title_height=26;
 
 # Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height above)
