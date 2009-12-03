@@ -193,6 +193,16 @@ else
 		}
 	}	/* end replacesitetextloader */
 
-
+# Load group specific plugins
+$active_plugins = (sql_query("SELECT name,enabled_groups FROM plugins WHERE inst_version>=0 AND length(enabled_groups)>0"));
+foreach($active_plugins as $plugin)
+	{
+	# Check group access, only enable for global access at this point
+	$s=explode(",",$plugin['enabled_groups']);
+	if (in_array($usergroup,$s))
+		{
+		register_plugin($plugin['name']);
+		}
+	}
 
 ?>

@@ -239,9 +239,13 @@ closedir($dirh);
         else
             echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
         if ($p['info_url']!='')
+        	{
             echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
+ 			}
+        echo '<a href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt; '.$lang['groupaccess'].'</a> ';
         if ($p['config_url']!='')
         	echo '<a href="'.$baseurl.$p['config_url'].'">&gt; '.$lang['options'].'</a> ';
+
         echo '</td></tr>';
     } ?>
     </tbody>

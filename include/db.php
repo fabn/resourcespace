@@ -136,9 +136,14 @@ if ($use_plugins_manager){
 			}
 		}
 	}
-	$active_plugins = (sql_query("SELECT name FROM plugins WHERE inst_version>=0"));
+	$active_plugins = (sql_query("SELECT name,enabled_groups FROM plugins WHERE inst_version>=0"));
 	foreach($active_plugins as $plugin){
-		register_plugin($plugin['name']);
+	
+		# Check group access, only enable for global access at this point
+		if ($plugin['enabled_groups']=='')
+			{
+			register_plugin($plugin['name']);
+			}
 	}
 }
 else {

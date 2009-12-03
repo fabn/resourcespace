@@ -882,4 +882,14 @@ $lang['reportbug-login']="NOTE: Click here to login to the bug tracker BEFORE cl
 
 $lang["enterantispamcode"]="<strong>Anti-Spam</strong><br /> Please enter the following code:";
 
+$lang["groupaccess"]="Group Access";
+$lang["plugin-groupsallaccess"]="This plugin is activated for all groups";
+$lang["plugin-groupsspecific"]="This plugin is activated for the selected groups only";
+
+
+
+
+
+
+
 ?>
