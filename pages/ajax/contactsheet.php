@@ -253,7 +253,7 @@ for ($n=0;$n<count($result);$n++)
 							if ($j > $rowsperpage){
 							$j=0; 
 							
-							if (($preview==true) && ($page>1)){break;} else{
+							if (($preview==true) && ($page>0)){break;} else{
 							if ($n<count($result)-1){ //avoid making an additional page if it will be empty							
 								$pdfcode.="\$pdf->AddPage();";
 								$page = $page+1;

@@ -916,18 +916,18 @@ $back_to_collections_link = "";
 # For fields with partial keyword indexing enabled, this determines the minimum infix length
 $partial_index_min_word_length=3;
 
-# array of fields to display on the large thumbnail view. 
-# If $use_resource_column_data, title (aka field 8) is included by default. 
+# array of fields to display on the large thumbnail view. (fields must be indexed)
+# If $use_resource_column_data, title from the resource table is included by default. 
 $thumbs_display_fields=array(3);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
 
-# $use_resource_column_data=false intends to disable all functionality based on resource table columns 
+# $use_resource_column_data=false intends to remove dependence upon duped field data in the resource table.
 # setting to false should create a more flexible environment.
 # Note: If false, the resource column mapping option in System Setup is not generally applicable.
 $use_resource_column_data=true; 
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
-# array of fields to display on the list view, $use_resource_column_data must be false.
+# array of fields to display on the list view, $use_resource_column_data must be false (fields must be indexed)
 $list_display_fields=array(8);
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
