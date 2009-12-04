@@ -20,7 +20,7 @@ $search=getvalescaped("search","");
 
 # create a thumbs_display_field array with information needed for detailed field highlighting
 $tdf=array();
-$all_field_info=get_fields(array_merge($thumbs_display_fields,$list_display_fields));
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields)));
 $n=0;
 foreach ($thumbs_display_fields as $thumbs_display_field)
 	{

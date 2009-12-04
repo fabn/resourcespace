@@ -1986,6 +1986,23 @@ function get_fields($field_refs)
 		}
 	return $return;
 	}
+	
+function get_fields_for_search_display($field_refs)
+	{
+	# Returns a list of fields/properties with refs matching the supplied field refs, for search display setup
+	# This returns fewer columns and doesn't require that the fields be indexed, as in this case it's only used to judge whether the field should be highlighted.
+	if (!is_array($field_refs)) {print_r($field_refs);exit(" passed to getfields() is not an array. ");}
+	$return=array();
+	$fields=sql_query("select ref, name, title, keywords_index, partial_index from resource_type_field where length(name)>0 and ref in ('" . join("','",$field_refs) . "')");
+	# Apply field permissions
+	for ($n=0;$n<count($fields);$n++)
+		{
+		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+		&& !checkperm("f-" . $fields[$n]["ref"]))
+		{$return[]=$fields[$n];}
+		}
+	return $return;
+	}	
 
 function verify_extension($filename,$allowed_extensions=""){
 	# Allowed extension?
