@@ -53,9 +53,11 @@ hook("metadata");
 */
 if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extensions) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions))
 	{
-	$output=shell_exec($qlpreview_path."/qlpreview -imageType jpg -width 800 -height 800 -asIcon no -preferFileIcon no -inPath " . escapeshellarg($file) . " -outPath " . escapeshellarg($target));
-	sleep(4);
-	if (file_exists($target)){$newfile = $target;}	
+	$qlpreview_command=$qlpreview_path."/qlpreview -generatePreviewOnly yes -imageType jpg -maxWidth 800 -maxHeight 800 -asIcon no -preferFileIcon no -inPath " . escapeshellarg($file) . " -outPath " . escapeshellarg($target);
+	debug("qlpreview command: " . $qlpreview_command);
+	$output=shell_exec($qlpreview_command);
+	#sleep(4); # Delay to allow processing
+	if (file_exists($target)){$newfile = $target;debug("qlpreview success!");}	
 	}
 
 
