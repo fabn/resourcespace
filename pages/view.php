@@ -94,6 +94,11 @@ hook("afterpermissionscheck");
 # Establish if this is a metadata template resource, so we can switch off certain unnecessary features
 $is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
 
+# If this is a metadata template and we're using field data, change view_title_field to the metadata template title field
+if (!$use_resource_column_data && ($resource["resource_type"]==$metadata_template_resource_type))
+	{
+	$view_title_field=$metadata_template_title_field;
+	}
 
 if ($pending_review_visible_to_all && isset($userref) && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
 	{
@@ -539,7 +544,7 @@ if (count($fields)>0 && $fields[0]["tab_name"]!="")
 	$tabname="";
 	$tabcount=0;
 	for ($n=0;$n<count($fields);$n++)
-		{
+		{	
 		$value=$fields[$n]["value"];
 
 		# draw new tab?
