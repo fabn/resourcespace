@@ -375,7 +375,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			else { 
 		for ($x=0;$x<count($ldf);$x++)
 			{?>
-			<?php if ($order_by=="field".$ldf[$x]['ref']) {?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a></td><?php } ?>
+			<?php if ($order_by=="field".$ldf[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a></td><?php } ?>
 			<?php }
 		} ?>
 		<td>&nbsp;</td>
