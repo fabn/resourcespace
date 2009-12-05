@@ -94,10 +94,14 @@ hook("afterpermissionscheck");
 # Establish if this is a metadata template resource, so we can switch off certain unnecessary features
 $is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
 
-# If this is a metadata template and we're using field data, change view_title_field to the metadata template title field
+$title_field=$view_title_field; 
+# If this is a metadata template and we're using field data, change title_field to the metadata template title field
 if (!$use_resource_column_data && isset($metadata_template_resource_type) && ($resource["resource_type"]==$metadata_template_resource_type))
 	{
-	$view_title_field=$metadata_template_title_field;
+	if (isset($metadata_template_title_field)){
+		$title_field=$metadata_template_title_field;
+		}
+	else {$default_to_standard_title=true;}	
 	}
 
 if ($pending_review_visible_to_all && isset($userref) && $resource["created_by"]!=$userref && $resource["archive"]==-1 && !checkperm("e0"))
@@ -157,7 +161,12 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
 
-<h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php if ($use_resource_column_data){?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?><?php } else { echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$view_title_field))),$search); } ?>&nbsp;</h1>
+<h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php 
+if ($use_resource_column_data || isset($default_to_standard_title)){
+	?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?><?php 
+	} 
+else { 
+	echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } ?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
@@ -777,16 +786,31 @@ if (count($result)>0)
 		<?php
 		# loop and display the results by file extension
 		for ($n=0;$n<count($result);$n++)			
-			{
+			{	
 			if ($result[$n]["file_extension"]==$rext){
 				$rref=$result[$n]["ref"];
+				$title=$result[$n]["title"];
+
+				# swap title fields if necessary
+				if (!$use_resource_column_data)
+					{
+					$title=get_data_by_field($rref,$view_title_field);	
+					if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+						{
+						if ($result[$n]['resource_type']==$metadata_template_resource_type)
+							{
+							$title=get_data_by_field($rref,$metadata_template_title_field);
+							}	
+						}	
+					}	
 				?>
+				
 				<!--Resource Panel-->
 				<div class="CollectionPanelShell">
 				<table border="0" class="CollectionResourceAlign"><tr><td>
 				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
 				</tr></table>
-				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),15); } ?>&nbsp;</div>
+				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($title),15)?></a>&nbsp;</div>
 				</div>
 				<?php		
 				}
@@ -815,13 +839,28 @@ if (count($result)>0)
     	for ($n=0;$n<count($result);$n++)            
         	{
         	$rref=$result[$n]["ref"];
-        	?>
+			$title=$result[$n]["title"];
+
+			# swap title fields if necessary
+			if (!$use_resource_column_data)
+				{
+				$title=get_data_by_field($rref,$view_title_field);	
+				if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+					{
+					if ($result[$n]["resource_type"]==$metadata_template_resource_type)
+						{
+						$title=get_data_by_field($rref,$metadata_template_title_field);
+						}	
+					}	
+				}	
+
+			?>
         	<!--Resource Panel-->
         	<div class="CollectionPanelShell">
             <table border="0" class="CollectionResourceAlign"><tr><td>
             <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
             </tr></table>
-            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php if ($use_resource_column_data){?><?php echo tidy_trim(i18n_get_translated($result[$n]["title"]),15)?></a><?php } else { echo tidy_trim(i18n_get_translated(get_data_by_field($rref,$view_title_field)),15); } ?>&nbsp;</div>
+            <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($title),15)?></a>&nbsp;</div>
         </div>
         <?php        
         }

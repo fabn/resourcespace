@@ -472,10 +472,12 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 					}
 				}
 			?>		
-			<?php if (($tdf[$x]['ref']!=$metadata_template_title_field) && in_array($tdf[$x]['ref'],$thumbs_display_extended_fields)){ // add extended CSS behavior ?>
+			<?php if ( in_array($tdf[$x]['ref'],$thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ // add extended CSS behavior ?>
 			<div class="ResourcePanelInfo">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($field_content)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
-			<?php } else if ($tdf[$x]['ref']!=$metadata_template_title_field){ ?>
+			
+			<?php } else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
 			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
@@ -596,7 +598,8 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 					$field_content=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
-			if ($ldf[$x]['ref']!=$metadata_template_title_field){
+			if ( (isset($metadata_template_title_field)&& $ldf[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
+			
 				?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),$search_results_title_trim),$search,$ldf[$x]['partial_index'],$ldf[$x]['name'],$ldf[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
 				<?php } 
 			}

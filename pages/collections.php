@@ -431,7 +431,23 @@ if (count($result)>0)
 		/><?php } ?></a></td>
 		</tr></table>
 		<?php } /* end hook rendercollectionthumb */?>
-		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php if ($use_resource_column_data){ echo tidy_trim(i18n_get_translated($result[$n]["title"]),14); } else { echo tidy_trim(i18n_get_translated(get_data_by_field($result[$n]['ref'],$view_title_field)),14);}?></a>&nbsp;</div>
+		
+		<?php 
+		$title=$result[$n]["title"];
+		if (!$use_resource_column_data)
+			{
+			$title=get_data_by_field($result[$n]['ref'],$view_title_field);	
+			if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+				{
+				if ($result[$n]['resource_type']==$metadata_template_resource_type)
+					{
+					$title=get_data_by_field($ref,$metadata_template_title_field);
+					}	
+				}	
+			}	
+		?>	
+		
+		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php echo tidy_trim(i18n_get_translated($title),14);?></a>&nbsp;</div>
 	
 		<?php if ($k!="" && $feedback) { # Allow feedback for external access key users
 		?>
