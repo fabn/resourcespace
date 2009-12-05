@@ -272,11 +272,11 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 </div>
 <?php } ?>
 
-<?php if ($resource["has_image"]==1) { ?>
+
 <div class="Question">
 <label><?php echo $lang["imagecorrection"]?><br/><?php echo $lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
 <option value=""><?php echo $lang["select"]?></option>
-
+<?php if ($resource["has_image"]==1) { ?>
 <?php
 # On some PHP installations, the imagerotate() function is wrong and images are turned incorrectly.
 # A local configuration setting allows this to be rectified
@@ -297,12 +297,15 @@ else
 ?>
 <option value="gammaplus"><?php echo $lang["increasegamma"]?></option>
 <option value="gammaminus"><?php echo $lang["decreasegamma"]?></option>
-<option value="restore"><?php echo $lang["restoreoriginal"]?></option>
+<option value="restore"><?php echo $lang["recreatepreviews"]?></option>
+<?php } else { ?>
+<option value="restore"><?php echo $lang["retrypreviews"]?></option>
+<?php } ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
-<?php } ?>
+
 
 <?php } else { # For batch uploads, specify default content (writes to resource with ID [negative user ref]) ?>
 <h1><?php echo $lang["specifydefaultcontent"]?></h1>
