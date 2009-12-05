@@ -13,7 +13,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score $sort, user_rating $sort, hit_count $sort, creation_date $sort,r.ref $sort","popularity"=>"user_rating $sort,hit_count $sort,creation_date $sort,r.ref $sort","rating"=>"r.rating $sort, user_rating $sort, score $sort,r.ref $sort","date"=>"creation_date $sort,r.ref $sort","colour"=>"has_image $sort,image_blue $sort,image_green $sort,image_red $sort,creation_date $sort,r.ref $sort","country"=>"country $sort,r.ref $sort","title"=>"title $sort,r.ref $sort","file_path"=>"file_path $sort,r.ref $sort","resourceid"=>"r.ref $sort");
+	$order=array("relevance"=>"score $sort, user_rating $sort, hit_count $sort, creation_date $sort,r.ref $sort","popularity"=>"user_rating $sort,hit_count $sort,creation_date $sort,r.ref $sort","rating"=>"r.rating $sort, user_rating $sort, score $sort,r.ref $sort","date"=>"creation_date $sort,r.ref $sort","colour"=>"has_image $sort,image_blue $sort,image_green $sort,image_red $sort,creation_date $sort,r.ref $sort","country"=>"country $sort,r.ref $sort","title"=>"title $sort,r.ref $sort","file_path"=>"file_path $sort,r.ref $sort","resourceid"=>"r.ref $sort","resourcetype"=>"resource_type $sort,r.ref $sort","titleandcountry"=>"title $sort,country $sort");
 	if (!in_array($order_by,$order)&&(substr($order_by,0,5)=="field")){
 		$order[$order_by]="$order_by $sort";
 	}
