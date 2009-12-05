@@ -40,7 +40,28 @@ if ($infobox_display_resource_icon && $resource["file_extension"]!="")
 	}
 ?>
 
-<h2><?php echo htmlspecialchars(i18n_get_translated($resource["title"]))?></h2>
+<h2><?php 
+$title="";
+
+if (!$use_resource_column_data)
+	{
+	if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+		{
+		if ($resource['resource_type']==$metadata_template_resource_type)
+			{
+			$title=get_data_by_field($ref,$metadata_template_title_field);
+			}
+		}	
+	else {
+		$title=get_data_by_field($ref,$view_title_field);	
+		}
+	}	
+else 
+	{	
+	$title=$resource["title"];
+	}
+
+echo trim(htmlspecialchars(i18n_get_translated($title)))?></h2>
 
 <?php
 # Display fields
