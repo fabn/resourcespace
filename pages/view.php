@@ -95,7 +95,7 @@ hook("afterpermissionscheck");
 $is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
 
 # If this is a metadata template and we're using field data, change view_title_field to the metadata template title field
-if (!$use_resource_column_data && ($resource["resource_type"]==$metadata_template_resource_type))
+if (!$use_resource_column_data && isset($metadata_template_resource_type) && ($resource["resource_type"]==$metadata_template_resource_type))
 	{
 	$view_title_field=$metadata_template_title_field;
 	}
