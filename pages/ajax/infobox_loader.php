@@ -45,16 +45,14 @@ $title="";
 
 if (!$use_resource_column_data)
 	{
+	$title=get_data_by_field($ref,$view_title_field);	
 	if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 		{
 		if ($resource['resource_type']==$metadata_template_resource_type)
 			{
 			$title=get_data_by_field($ref,$metadata_template_title_field);
-			}
+			}	
 		}	
-	else {
-		$title=get_data_by_field($ref,$view_title_field);	
-		}
 	}	
 else 
 	{	
