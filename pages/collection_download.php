@@ -97,9 +97,15 @@ if ($submitted != "")
 				if ($original_filenames_when_downloading)	
 					{
 					if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
-					# Retrieve the original file name
-					$filename=get_resource_data($ref);
-					$filename=$filename["file_path"];
+					# Retrieve the original file name		
+					if (!$use_resource_column_data)
+						{
+						$filename=get_data_by_field($ref,$filename_field);	
+						}
+					else
+						{
+						$filename=get_resource_data($ref);$filename=$filename["file_path"];
+						}
 
 					if (strlen($filename)>0)
 						{
