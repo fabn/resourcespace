@@ -151,6 +151,8 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 <div class="RecordHeader">
 <?php if (!hook("renderinnerresourceheader")) { ?>
 
+
+
 <div class="backtoresults">
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 <?php if ($k=="") { ?>
@@ -160,6 +162,8 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 |
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
+
+
 
 <h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php 
 if ($use_resource_column_data || isset($default_to_standard_title)){
