@@ -179,7 +179,7 @@ for ($n=0;$n<count($result);$n++)
 							$fielddata="";
 							$pdfcode.="\$fielddata='';";
 							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
-							$pdfcode.="\$fielddata='".$fielddata."';";
+							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
 							$characterset.=$fielddata;
 						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
 						}
@@ -194,7 +194,7 @@ for ($n=0;$n<count($result);$n++)
 							$fielddata="";
 							$pdfcode.="\$fielddata='';";
 							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
-							$pdfcode.="\$fielddata='".$fielddata."';";
+							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
 							$characterset.=$fielddata;
 							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
 						}		
@@ -219,7 +219,7 @@ for ($n=0;$n<count($result);$n++)
 							$fielddata="";
 							$pdfcode.="\$fielddata='';";
 							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
-							$pdfcode.="\$fielddata='".$fielddata."';";
+							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
 							$characterset.=$fielddata;
 						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
 						}$pdfcode.="\$bottomy=\$pdf->Gety();";	$pdfcode.="\$bottomx=\$pdf->Getx();";
@@ -232,7 +232,7 @@ for ($n=0;$n<count($result);$n++)
 							$fielddata="";
 							$pdfcode.="\$fielddata='';";
 							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
-							$pdfcode.="\$fielddata='".$fielddata."';";
+							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
 							$characterset.=$fielddata;
 							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
 						}			
