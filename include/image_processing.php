@@ -431,7 +431,10 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 
 	# File checksum (experimental) - disabled for now
 	# if (!$previewonly) {generate_file_checksum($ref,$extension);}
-	
+
+	# first reset preview tweaks to 0
+	sql_query("update resource set preview_tweaks = '0|1' where ref = '$ref'");
+
 	# pages/tools/update_previews.php?previewbased=true
 	# use previewbased to avoid touching original files (to preserve manually-uploaded preview images
 	# when regenerating previews (i.e. for watermarks)
@@ -931,6 +934,31 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 		}
 	# Update the modified date to force the browser to reload the new thumbs.
 	sql_query("update resource set file_modified=now() where ref='$ref'");
+	
+	# record what was done so that we can reconstruct later if needed
+	# current format is rotation|gamma. Additional could be tacked on if more manipulation options are added
+	$current_preview_tweak = sql_value("select preview_tweaks value from resource where ref = '$ref'");
+	if (strlen($current_preview_tweak) == 0)
+		{
+			$oldrotate = 0;
+			$oldgamma = 1;
+		} else {
+			list($oldrotate,$oldgamma) = explode('|',$current_preview_tweak);
+		}
+		$newrotate = $oldrotate + $rotateangle;
+		if ($newrotate > 360){
+			$newrotate = $newrotate - 360;
+		}elseif ($newrotate < 0){
+			$newrotate = 360 + $newrotate;
+		}elseif ($newrotate == 360){
+			$newrotate = 0;
+		}
+		if ($gamma > 0){
+			$newgamma = $oldgamma +  $gamma -1;
+		} else {
+			$newgamma = $oldgamma;
+		}
+		sql_query("update resource set preview_tweaks = '$newrotate|$newgamma' where ref = $ref");
 	}
 
 function AltImageRotate($src_img, $angle) {
