@@ -154,7 +154,16 @@ function save_resource_data($ref,$multi)
 				if (strlen($resource_column)>0 && $write_column)
 					{
 					if ($resource_sql!="") {$resource_sql.=",";}
-					$resource_sql.=$resource_column . "='" . escape_check($val) . "'";
+					if (trim($val)=="")
+						{
+						# Insert null for empty columns.
+						$resource_sql.=$resource_column . "=null";
+						}
+					else
+						{
+						$resource_sql.=$resource_column . "='" . escape_check($val) . "'";
+						}
+						
 					}
 
 				# Purge existing data and keyword mappings, decrease keyword hitcounts.
