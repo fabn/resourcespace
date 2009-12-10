@@ -236,9 +236,9 @@ else
 
 
 <tr>
-<td>Last scheduled task (cron) execution</td>
+<td>Last scheduled task execution (days)</td>
 <td><?php $last_cron=sql_value("select datediff(now(),value) value from sysvars where name='last_cron'","Never");echo $last_cron ?></td>
-<td><?php if ($last_cron>2 || $last_cron=="Never") { ?><b>WARNING</b><br/>Relevance matching will not be effective. Ensure batch/cron.php is executed at least once daily via a cron job or similar.<?php } else {?><b>OK</b><?php } ?></td>
+<td><?php if ($last_cron>2 || $last_cron=="Never") { ?><b>WARNING</b><br/>Relevance matching will not be effective. Ensure <a href="../batch/cron.php">batch/cron.php</a> is executed at least once daily via a cron job or similar.<?php } else {?><b>OK</b><?php } ?></td>
 
 </tr>
 

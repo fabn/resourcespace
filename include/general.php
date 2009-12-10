@@ -187,7 +187,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
 		{
 		if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
 		!checkperm("f-" . $fields[$n]["fref"])))
-		&& in_array($fields[$n]["resource_type"],$validtypes)) {$return[]=$fields[$n];}
+		&& in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"])) {$return[]=$fields[$n];}
 		}
 	return $return;
 	}
