@@ -937,7 +937,7 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	
 	# record what was done so that we can reconstruct later if needed
 	# current format is rotation|gamma. Additional could be tacked on if more manipulation options are added
-	$current_preview_tweak = sql_value("select preview_tweaks value from resource where ref = '$ref'");
+	$current_preview_tweak = sql_value("select preview_tweaks value from resource where ref = '$ref'","");
 	if (strlen($current_preview_tweak) == 0)
 		{
 			$oldrotate = 0;
