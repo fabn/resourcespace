@@ -113,9 +113,9 @@ for ($n=0;$n<count($collections);$n++)
 			}	
 		?>
 		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td><?php echo $lang["collection"] ?></td>
-		<td><?php echo nicedate($collections[$n]["created"],false,true)?></td>
+		<?php if ($id_column){?><td>&nbsp;</td><?php } ?>
+		<?php if ($resource_type_column){?><td><?php echo $lang["collection"] ?></td><?php } ?>
+		<?php if ($date_column){?><td><?php echo nicedate($collections[$n]["created"],false,true)?></td><?php } ?>
 		<td><div class="ListTools"><a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>&nbsp;&nbsp;<a href="<?php echo $pub_url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
 		</tr>
 	<?php } ?>		

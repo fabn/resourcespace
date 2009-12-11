@@ -379,9 +379,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			<?php }
 		} ?>
 		<td>&nbsp;</td><!-- contains ratings -->
-		<?php if ($order_by=="resourceid"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a></td><?php } ?>
-				<?php if ($order_by=="resourcetype"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a></td><?php } ?>
-				<?php if ($order_by=="date"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a></td><?php } ?>
+		<?php if ($id_column){?><?php if ($order_by=="resourceid"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a></td><?php } ?><?php } ?>
+		<?php if ($resource_type_column){?><?php if ($order_by=="resourcetype"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a></td><?php } ?><?php } ?>
+		<?php if ($date_column){?><?php if ($order_by=="date"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a></td><?php } ?><?php } ?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		<?php } ?> <!--end hook replace listviewtitlerow-->
@@ -606,9 +606,9 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		} ?>
 		
 		<td><?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
-		<td><?php echo $result[$n]["ref"]?></td>
-		<td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td>
-		<td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td>
+		<?php if ($id_column){?><td><?php echo $result[$n]["ref"]?></td><?php } ?>
+		<?php if ($resource_type_column){?><td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td><?php } ?>
+		<?php if ($date_column){?><td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td><?php } ?>
 		<td><div class="ListTools"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);"onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
 		if (!checkperm("b")&& $k=="") { ?>

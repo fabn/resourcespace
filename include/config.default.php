@@ -929,6 +929,10 @@ $use_resource_column_data=true;
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
 # array of fields to display on the list view, $use_resource_column_data must be false 
 $list_display_fields=array(8);
+# List View Default Columns
+$id_column=true;
+$resource_type_column=true;
+$date_column=true;
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
 # to that specified in the dropdown on the edit page.
