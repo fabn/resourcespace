@@ -291,8 +291,8 @@ $resourceid_simple_search=false;
 # Enable sorting resources in other ways:
 $colour_sort=true;
 $title_sort=false; // based on resource table column
-$country_sort=false; // based on resource table column 
-$original_filename_sort=false; // will only work if you are not using staticsync - based on resource table column
+$country_sort=false; // based on resource table column
+$original_filename_sort=false; // based on resource table column
 
 # What is the default sort order?
 # Options are date, colour, relevance, popularity, country
@@ -917,7 +917,7 @@ $back_to_collections_link = "";
 $partial_index_min_word_length=3;
 
 # array of fields to display on the large thumbnail view.
-# If $use_resource_column_data, title from the resource table is included by default. 
+# If $use_resource_column_data, title from the resource table is included by default. If not, add field 8 to the beginning of the array to include title.
 $thumbs_display_fields=array(3);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();

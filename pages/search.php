@@ -295,12 +295,12 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		?>
 		<div class="InpageNavLeftBlock "><?php echo $lang["sortorder"]?>:<br /><?php if ($order_by=="relevance") {?><span class="Selected"><?php echo $rel?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=relevance&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $rel?></a><?php } ?>
 		
-		<?php if ($title_sort) { ?>
+		<?php if ($title_sort && $use_resource_column_data) { ?>
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="title") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["resourcetitle"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=title&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourcetitle"]?></a><?php } ?>
 		<?php } ?>
 		
-		<?php if ($original_filename_sort) { ?>
+		<?php if ($original_filename_sort && $use_resource_column_data) { ?>
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="file_path") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["filename"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
 		<?php } ?>
@@ -321,7 +321,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($order_by=="colour") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["colour"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=colour&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["colour"]?></a><?php } ?>
 		<?php } ?>
 		
-		<?php if ($country_sort) { ?>
+		<?php if ($country_sort && $use_resource_column_data) { ?>
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="country") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["country"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=country&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["country"]?></a><?php } ?>
 		<?php } ?>
@@ -330,6 +330,16 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="resourceid") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["resourceid"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["resourceid"]?></a><?php } ?>
 		<?php } ?>
+		
+		<?php # add thumbs_display_fields to sort order links for thumbs views
+		if (!$use_resource_column_data && ($display=="thumbs"|| $display=="smallthumbs") ){
+			for ($x=0;$x<count($tdf);$x++)
+				{?>
+				&nbsp;|&nbsp;
+				<?php if ($order_by=="field".$tdf[$x]['ref']) {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $tdf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($tdf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $tdf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($tdf[$x]['title'])?></a><?php } ?>
+				<?php } ?>	
+			<?php } ?>		
+		
 		
 		</div>
 		<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
