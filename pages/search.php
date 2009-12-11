@@ -134,7 +134,12 @@ $display=getvalescaped("display",$default_display);setcookie("display",$display)
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
-$sort=getval("sort","DESC");
+
+# Most sorts such as popularity, date, and ID should be descending by default,
+# but it seems custom display fields like title or country should be the opposite.
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 ## If displaying a collection
