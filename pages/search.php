@@ -339,8 +339,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php # add thumbs_display_fields to sort order links for thumbs views
 		if (!$use_resource_column_data && ($display=="thumbs"|| $display=="smallthumbs") ){
 			for ($x=0;$x<count($tdf);$x++)
-				{ 
-				if (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field){?>
+				{
+				if (!isset($metadata_template_title_field)){$metadata_template_title_field=false;} 
+				if ($tdf[$x]['ref']!=$metadata_template_title_field){?>
 				&nbsp;|&nbsp;
 				<?php if ($order_by=="field".$tdf[$x]['ref']) {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $tdf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($tdf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $tdf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($tdf[$x]['title'])?></a><?php } ?>
 				<?php } ?>
