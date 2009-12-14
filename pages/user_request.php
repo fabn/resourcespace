@@ -128,7 +128,7 @@ if (isset($custom_registration_fields))
 	}
 ?>
 
-<?
+<?php
 $code=rand(1000,9999);
 ?>
 <input type="hidden" name="antispamcode" value="<?php echo md5($code)?>">
