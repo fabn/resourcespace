@@ -10,6 +10,9 @@ if (file_exists("../include/config.php")){
 	include_once("../include/config.php");
 }
 
+include_once "../include/transform_functions.php";
+
+
 // verify that the requested ResourceID is numeric.
 $ref = $_REQUEST['ref'];
 if (!is_numeric($ref)){ echo "Error: non numeric ref."; exit; }
@@ -26,6 +29,11 @@ if ($access <> 0 && checkperm('transform')){
 	exit;
 }
 	
+// generate a preview image for the operation if it doesn't already exist
+if (!file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
+	generate_transform_preview($ref) or die("Error generating transform preview.");
+}
+
 
 # Locate imagemagick.
 if (!isset($imagemagick_path)){
@@ -43,7 +51,8 @@ $orig_ext = sql_value("select file_extension value from resource where ref = '$r
 $preview_ext = sql_value("select preview_extension value from resource where ref = '$ref'",'');
 
 // retrieve image paths for preview image and original file
-$previewpath = get_resource_path($ref,true,$cropper_cropsize,false,$preview_ext);
+//$previewpath = get_resource_path($ref,true,$cropper_cropsize,false,$preview_ext);
+$previewpath = "$storagedir/tmp/transform_plugin/pre_$ref.jpg";
 $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
 
 
@@ -268,13 +277,16 @@ $resource = get_resource_data($ref);
 // retrieve path to image and figure out size we're using
 if ($resource["has_image"]==1)
         {
-        	$imagepath=get_resource_path($ref,true,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
+		$imageurl = "../../../filestore/tmp/transform_plugin/pre_$ref.jpg";
+		$imagepath = $imageurl;
+
+        	//$imagepath=get_resource_path($ref,true,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
         	
         	if (!file_exists($imagepath)){
 				echo $lang['noimagefound'];
 				exit;
 			}
-        	$imageurl=get_resource_path($ref,false,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
+        	//$imageurl=get_resource_path($ref,false,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
         	
 			$origpresizes = getimagesize($imagepath);
 			$origprewidth = $origpresizes[0];
@@ -285,7 +297,8 @@ if ($resource["has_image"]==1)
 			echo $lang['noimagefound'];
 			exit;
 		}
-	
+
+
 	
 include "../../../include/header.php";
 
