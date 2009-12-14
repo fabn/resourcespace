@@ -154,14 +154,19 @@ function save_resource_data($ref,$multi)
 				if (strlen($resource_column)>0 && $write_column)
 					{
 					if ($resource_sql!="") {$resource_sql.=",";}
-					if (trim($val)=="")
+					if (trim($val)=="" || trim($val)==",")
 						{
 						# Insert null for empty columns.
 						$resource_sql.=$resource_column . "=null";
 						}
 					else
 						{
-						$resource_sql.=$resource_column . "='" . escape_check($val) . "'";
+						$mapval=$val;
+						
+						# Fix for legacy systems using a 'rating' mapped to an integer rating column on the resource table  - when writing numeric values, remove any comma (rating was a dropdown box and the value is therefore prefixed with a comma)
+						if (is_numeric(str_replace(",","",$mapval))) {$mapval=str_replace(",","",$mapval);}
+						
+						$resource_sql.=$resource_column . "='" . escape_check($mapval) . "'";
 						}
 						
 					}
