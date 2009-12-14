@@ -407,12 +407,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
         }
 
 	# Searching for pending archive
-	if ($search=="!archivepending")
+	if (substr($search,0,15)=="!archivepending")
 		{
 		return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where archive=1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
-	if ($search=="!userpending")
+	if (substr($search,0,12)=="!userpending")
 		{
 		if ($orig_order=="rating") {$order_by="request_count desc," . $order_by;}
 		return sql_query("select distinct r.*,r.hit_count score $select from resource r $sql_join $resource_data_join where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
