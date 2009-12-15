@@ -2026,7 +2026,7 @@ function get_allowed_extensions($ref){
 	return $allowed_extensions;
 }
 function get_allowed_extensions_by_type($resource_type){
-	$allowed_extensions=sql_value("select allowed_extensions value from resource_type where ref=$resource_type","");
+	$allowed_extensions=sql_value("select allowed_extensions value from resource_type where ref='$resource_type'","");
 	return $allowed_extensions;
 }
 

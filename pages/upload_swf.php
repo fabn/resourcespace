@@ -10,7 +10,8 @@ $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
 $collectionname=getvalescaped("entercolname","");
 
-$allowed_extensions=get_allowed_extensions_by_type($resource_type);
+$allowed_extensions="";
+if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
 # Create a new collection?
 if ($collection_add==-1)
