@@ -666,6 +666,9 @@ $default_res_types="";
 # Show the Resource ID on the resource view page.
 $show_resourceid=true;
 
+# Show the resource type on the resource view page.
+$show_resource_type=false;
+
 # Show the access on the resource view page.
 $show_access_field=true;
 
