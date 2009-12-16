@@ -571,6 +571,7 @@ function resolve_user_agent($agent)
                     "firefox"=>"Firefox",
                     "chrome"=>"Chrome",
                     "opera"=>"Opera",
+                    "iphone"=>"iPhone",                    
                     "safari"=>"Safari",
                     "applewebkit"=>"Safari",
                     "msie 3."=>"IE3",
