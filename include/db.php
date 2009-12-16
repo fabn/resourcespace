@@ -571,7 +571,6 @@ function resolve_user_agent($agent)
                     "firefox"=>"Firefox",
                     "chrome"=>"Chrome",
                     "opera"=>"Opera",
-                    "iphone"=>"iPhone",                    
                     "safari"=>"Safari",
                     "applewebkit"=>"Safari",
                     "msie 3."=>"IE3",
@@ -588,6 +587,7 @@ function resolve_user_agent($agent)
                     "mozilla"=>"Mozilla" #catch all for mozilla references not specified above
                     );
     $osmatches=array(
+                    "iphone"=>"iPhone",                    
                     "nt 6.1"=>"Windows 7",
                     "nt 6.0"=>"Vista",
                     "nt 5.2"=>"WS2003",
