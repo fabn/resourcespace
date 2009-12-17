@@ -1078,7 +1078,9 @@ $search_results_title_trim=40;
 # $search_result_title_height=26;
 
 # Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height above)
-$search_results_title_wordwrap=20;
+# By default this is set very high so that breaking doesn't occur.
+# If you use titles that have large unbroken words (e.g. filenames with no spaces) then it may be useful to set this value to something lower, e.g. 20
+$search_results_title_wordwrap=100;
 
 
 
