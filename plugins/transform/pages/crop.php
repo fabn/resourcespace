@@ -18,17 +18,20 @@ $ref = $_REQUEST['ref'];
 if (!is_numeric($ref)){ echo "Error: non numeric ref."; exit; }
 
 
-# Load access level
+# Load download access level
 $access=get_resource_access($ref);
 
-// if they can't edit resources, they shouldn't be doing this
-if ($access <> 0 && checkperm('transform')){
+// if they can't download this resource, they shouldn't be doing this
+if ($access!=0){
 	include "../../../include/header.php";
 	echo "Permission denied.";
 	include "../../../include/footer.php";
 	exit;
 }
-	
+
+# Load edit access level
+$edit_access=get_edit_access($ref);
+
 // generate a preview image for the operation if it doesn't already exist
 if (!file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
 	generate_transform_preview($ref) or die("Error generating transform preview.");
@@ -553,7 +556,7 @@ if ($cropper_debug){
     <p style='text-align:right;margin-top:15px;'>
       <input type='button' value="<?php echo $lang['cancel']; ?>" onclick="javascript:window.location='../../../pages/view.php?ref=<?php echo $ref ?>';" />
       <input type='submit' name='download' value="<?php echo $lang['download']; ?>" />
-      <input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" />
+      <?php if ($edit_access) { ?><input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" /><?php } ?>
     </p>
   </form>
   <p>

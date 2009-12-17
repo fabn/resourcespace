@@ -1454,12 +1454,18 @@ function resource_download_allowed($resource,$size)
 	
 	}
 
-function get_edit_access($resource,$status,$metadata=false)
+function get_edit_access($resource,$status=-999,$metadata=false)
 	{
 	# For the provided resource and metadata, does the  edit access does the current user have to this resource?
 	# Checks the edit permissions (e0, e-1 etc.) and also the group edit filter which filters edit access based on resource metadata.
 	
 	global $userref,$usereditfilter;
+	
+	if ($status==-999)
+		{
+		# Status not provided. Calculate status
+		$status=sql_value("select archive value from resource where ref='$resource'",0);
+		}
 	
 	if ($resource==0-$userref) {return true;} # Can always edit their own user template.
 

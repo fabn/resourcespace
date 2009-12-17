@@ -17,7 +17,7 @@ function HookTransformViewAfterresourceactions (){
 		}	
 	}
 
-	if ($access==0 && checkperm('transform') && $resource['has_image']==1 && in_array(strtoupper($resource['file_extension']),$cropper_allowed_extensions)){
+	if ($access==0 && $resource['has_image']==1 && in_array(strtoupper($resource['file_extension']),$cropper_allowed_extensions)){
 		echo "&nbsp;&nbsp;<li><a href='../plugins/transform/pages/crop.php?ref=$ref'>&gt; ";
 		echo $lang['transform'];
 		echo "</a></li>";
