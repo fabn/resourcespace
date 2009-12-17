@@ -130,10 +130,20 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 
 $mydesc = mysql_real_escape_string($description);
 
-$newfile=add_alternative_file($ref,$mytitle,$mydesc);
+# Is this a download only?
+$download=(getval("download","")!="");
 
-$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
-
+if (!$download)
+	{
+	$newfile=add_alternative_file($ref,$mytitle,$mydesc);
+	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
+	}
+else
+	{
+	$tmpdir = "$storagedir/tmp";
+	$newpath = "$tmpdir/transform_plugin/download_$ref." . $new_ext;
+	}
+	
 $command .= " '$originalpath' ";
 
 if ($crop_necessary){
@@ -183,20 +193,20 @@ if (is_numeric($new_width)||is_numeric($new_height)){
 		// program scales up or down by a few pixels. This should be
 		// imperceptible, but perhaps worth revisiting at some point.
 		
-		$command .= " -scale '$new_width";
+		$command .= " -scale $new_width";
 		
 		if ($new_height > 0){
 			$command .= "x$new_height";
 		}
 		
-		$command .= "' ";
+		$command .= " ";
 	}
 	
 }
 
 $command .= " '$newpath'";
 
-if ($cropper_debug){
+if ($cropper_debug && !$download){
 	error_log($command);
 	if (isset($_REQUEST['showcommand'])){
 		echo "$command";
@@ -213,7 +223,7 @@ if ($cropper_debug){
 
 // generate previews if needed
 global $alternative_file_previews;
-if ($alternative_file_previews)
+if ($alternative_file_previews && !$download)
 	{
 	create_previews($ref,false,$new_ext,false,false,$newfile);
 	}
@@ -237,7 +247,14 @@ $filename = preg_replace("/[^A-Za-z0-9_\- ]/",'',$filename);
 if ( $cropper_custom_filename && strlen($filename) > 0){
 	$filename = "$filename";
 } else {
-	$filename = "alt_$newfile";
+	if ($download)
+		{
+		$filename=$ref . "_" . strtolower($lang['transform']);
+		}
+	else
+		{
+		$filename = "alt_$newfile";
+		}
 }
 
 $filename = mysql_real_escape_string($filename);
@@ -256,13 +273,24 @@ if ($mpcalc > 0){
 if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
 	
 // update final information on alt file
-$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext',file_size = '$newfilesize',  description = concat(description,'" . $deschyphen . $newfilewidth . " x " . $newfileheight . " pixels $mptext') where ref='$newfile'");
+if (!$download)
+	{
+	$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext',file_size = '$newfilesize',  description = concat(description,'" . $deschyphen . $newfilewidth . " x " . 		$newfileheight . " pixels $mptext') where ref='$newfile'");
 
+	resource_log($ref,'a','',"$new_ext " . strtolower($verb) . " to $newfilewidth x $newfileheight");
+	}
 
+if ($download)
+	{
+	# Output file, delete file and exit
+	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
+	header("Content-Type: application/octet-stream");
 
-
-resource_log($ref,'a','',"$new_ext " . strtolower($verb) . " to $newfilewidth x $newfileheight");
-
+	set_time_limit(0);
+	readfile($newpath);
+	unlink($newpath);
+	exit();
+	}
 
 
 // send user back to view page
@@ -486,7 +514,7 @@ include "../../../include/header.php";
       <?php if ($cropper_custom_filename){ ?>
       <tr>
         <td style='text-align:right'><?php echo $lang["newfilename"]; ?>: </td>
-        <td colspan='3'><input type='text' name='filename' value='' size='24'/></td>
+        <td colspan='3'><input type='text' name='filename' value='' size='30'/></td>
       </tr>
       <?php } ?>
       <tr>
@@ -522,9 +550,10 @@ if ($cropper_debug){
 	echo "<input type='checkbox'  name='showcommand' value='1'>Debug IM Command</checkbox>";
 }
 ?>
-    <p style='text-align:right'>
+    <p style='text-align:right;margin-top:15px;'>
       <input type='button' value="<?php echo $lang['cancel']; ?>" onclick="javascript:window.location='../../../pages/view.php?ref=<?php echo $ref ?>';" />
-      <input type='submit' value="<?php echo $lang['save']; ?>" />
+      <input type='submit' name='download' value="<?php echo $lang['download']; ?>" />
+      <input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" />
     </p>
   </form>
   <p>
