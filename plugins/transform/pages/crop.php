@@ -286,6 +286,7 @@ if (!$download)
 if ($download)
 	{
 	# Output file, delete file and exit
+	$filename.="." . $new_ext;
 	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
 	header("Content-Type: application/octet-stream");
 
