@@ -147,7 +147,7 @@ else
 	$newpath = "$tmpdir/transform_plugin/download_$ref." . $new_ext;
 	}
 	
-$command .= " '$originalpath' ";
+$command .= " \"$originalpath\" ";
 
 if ($crop_necessary){
 	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord +repage ";
@@ -207,7 +207,7 @@ if (is_numeric($new_width)||is_numeric($new_height)){
 	
 }
 
-$command .= " '$newpath'";
+$command .= " \"$newpath\"";
 
 if ($cropper_debug && !$download){
 	error_log($command);
@@ -473,6 +473,7 @@ include "../../../include/header.php";
 		}
 		
 		function validate_transform(theform){
+		
 			// make sure that this is a reasonable transformation before we submit the form.
 			// fixme - could add more sophisticated validation here
 			
