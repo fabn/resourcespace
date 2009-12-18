@@ -481,22 +481,24 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		# thumbs_display_fields
 		for ($x=0;$x<count($tdf);$x++)
 			{
-			$field_content=$result[$n]['field'.$tdf[$x]['ref']];
+			$value=$result[$n]['field'.$tdf[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $tdf[$x]['name'] . ".php";
+			if (file_exists($plugin)) {include $plugin;}
 			
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($tdf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
-					$field_content=$result[$n]['field'.$metadata_template_title_field];
+					$value=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
 			?>		
 			<?php if ( in_array($tdf[$x]['ref'],$thumbs_display_extended_fields) &&
 			( (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ // add extended CSS behavior ?>
 			<div class="ResourcePanelInfo">
-			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($field_content)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
 			
 			<?php } else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
-			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($field_content)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
 			}
@@ -608,17 +610,19 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			
 		else {
 			for ($x=0;$x<count($ldf);$x++){
-			$field_content=$result[$n]['field'.$ldf[$x]['ref']];
+			$value=$result[$n]['field'.$ldf[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $ldf[$x]['name'] . ".php";
+			if (file_exists($plugin)) {include $plugin;}
 			
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($ldf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
-					$field_content=$result[$n]['field'.$metadata_template_title_field];
+					$value=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
 			if ( (isset($metadata_template_title_field)&& $ldf[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
 			
-				?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($field_content)),$search_results_title_trim),$search,$ldf[$x]['partial_index'],$ldf[$x]['name'],$ldf[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
+				?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search,$ldf[$x]['partial_index'],$ldf[$x]['name'],$ldf[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
 				<?php } 
 			}
 		} ?>

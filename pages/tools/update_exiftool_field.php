@@ -11,58 +11,61 @@ include "../../include/image_processing.php";
 
 set_time_limit(60*60*40);
 
-# ex. 
-
-# $fieldrefs=array(8,18);
-$include_blanks=true; // if new value is blank, it will replace the old value.
-$fieldrefs=array();
-
+# ex. pages/tools/update_exiftool_field.php?fieldrefs=75,3&blanks=true
+$fieldrefs=getval("fieldrefs","");
+$blanks=getval("blanks","true"); // if new value is blank, it will replace the old value.
+$fieldrefs=split(",",$fieldrefs);
 if (count($fieldrefs)==0){die ("Please add a list of refs to the fieldrefs array, which are the ref numbers of the fields that you would like exiftool to extract from.");}
 
 foreach ($fieldrefs as $fieldref){
-$fieldref_info= sql_query("select exiftool_field,title,resource_type from resource_type_field where ref='$fieldref'");
+	$fieldref_info= sql_query("select exiftool_field,title,resource_type,name from resource_type_field where ref='$fieldref'");
 
-$title=$fieldref_info[0]["title"];
-$exiftool_tag=$fieldref_info[0]["exiftool_field"];
-$field_resource_type=$fieldref_info[0]["resource_type"];
+	$title=$fieldref_info[0]["title"];
+	$name=$fieldref_info[0]["name"];
+	$exiftool_tag=$fieldref_info[0]["exiftool_field"];
+	$field_resource_type=$fieldref_info[0]["resource_type"];
 
-if ($exiftool_tag==""){ die ("Please add an exiftool mapping to your $title Field");}
+	if ($exiftool_tag==""){ die ("Please add an exiftool mapping to your $title Field");}
 
 
-echo "<b>Updating RS Field $fieldref - $title, with exiftool extraction of: $exiftool_tag</b><br><br>";
+	echo "<b>Updating RS Field $fieldref - $title, with exiftool extraction of: $exiftool_tag</b><br><br>";
 
-if($field_resource_type==0){
-$rd=sql_query("select ref,file_extension from resource where has_image=1");
-} else {
-$rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=$field_resource_type");
-}	
+	if($field_resource_type==0){
+		$rd=sql_query("select ref,file_extension from resource where has_image=1 order by ref");
+	} else {
+		$rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=$field_resource_type order by ref");
+	}	
 
-for ($n=0;$n<count($rd);$n++)
-	{
-	$ref=$rd[$n]['ref'];
-	$extension=$rd[$n]['file_extension'];
-	
-	$image=get_resource_path($ref,true,"",false,$extension);
-	if (!file_exists($image)) {return false;}
+	for ($n=0;$n<count($rd);$n++)
+		{
 		
-	$resource=get_resource_data($ref);
+		$ref=$rd[$n]['ref'];
+		$extension=$rd[$n]['file_extension'];
+	
+		$image=get_resource_path($ref,true,"",false,$extension);
+		if (file_exists($image)) {
+		
+		$resource=get_resource_data($ref);
 			
-	$command=$exiftool_path."/exiftool -s -s -s -".$exiftool_tag." ". escapeshellarg($image);
+		$command=$exiftool_path."/exiftool -s -s -s -".$exiftool_tag." ". escapeshellarg($image);
 	
-	$value = iptc_return_utf8(trim(shell_exec($command)));	
+		$value = iptc_return_utf8(trim(shell_exec($command)));	
 	
-	if ($include_blanks){
-		update_field($ref,$fieldref,$value);
-		echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");
-		}
-	else {
-		if ($value!=""){
+		$plugin="../../plugins/exiftool_filter_" . $name . ".php";
+		if (file_exists($plugin)) {include $plugin;}
+	
+		if ($blanks=="true"){
 			update_field($ref,$fieldref,$value);
-			echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");	
+			echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");
+			}
+		else {
+			if ($value!=""){
+				update_field($ref,$fieldref,$value);
+				echo ("<br>Updated Resource $ref <br> -Exiftool found \"$value\" embedded in the -$exiftool_tag tag and applied it to ResourceSpace Field $fieldref<br><br>");	
+			}
 		}
-	}
-			
-	}
+	}		
+}
 }	
 echo "...done.";
 

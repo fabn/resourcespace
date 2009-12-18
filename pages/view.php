@@ -671,6 +671,10 @@ for ($n=0;$n<count($fields);$n++)
 			#There is a value in this field, but we also need to check again for a current-language value after the i18n_get_translated() function was called, to avoid drawing empty fields
 			if ($value!=""){
 				# Draw this field normally.
+				
+				# value filter plugin should be used regardless of whether a display template is used.
+				$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
+				if (file_exists($plugin)) {include $plugin;}
 
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,20,"<br />",true);

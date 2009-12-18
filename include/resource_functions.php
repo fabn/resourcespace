@@ -886,7 +886,7 @@ function relate_to_array($ref,$array)
 function get_exiftool_fields($resource_type)
 	{
 	# Returns a list of exiftool fields, which are basically fields with an 'exiftool field' set.
-	return sql_query("select ref,type,exiftool_field,options from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
+	return sql_query("select ref,type,exiftool_field,options,name from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
 	}
 
 function write_metadata($path,$ref)
