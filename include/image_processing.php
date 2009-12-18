@@ -10,31 +10,43 @@
  */
 
 if (!function_exists("upload_file")){
-function upload_file($ref,$no_exif=false)
+function upload_file($ref,$no_exif=false,$revert=false)
 	{
+	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
+	
 	# Process file upload for resource $ref
-	
-	# Work out which file has been posted (switch is necessary for SWFUpload)
-	if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];} else {$processfile=$_FILES['Filedata'];}
-	
-    $filename=$processfile['name'];
-    
-    # Work out extension
-    global $exiftool_path;
-    # first try to get it from the filename
-    $extension=explode(".",$filename);
-    if(count($extension)>1){
-    	$extension=trim(strtolower($extension[count($extension)-1]));
-		} 
-	# if not, try exiftool	
-	else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
-		{
-		$file_type_by_exiftool=shell_exec($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
-		if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}else{return false;}
-		}
-	# if no clue of extension by now, return false		
-	else {return false;}	
+	if ($revert==true){
+		global $filename_field;
+		$original_filename=get_data_by_field($ref,$filename_field);
+		sql_query("delete from resource_data where resource=$ref");
+		sql_query("delete from resource_keyword where resource=$ref");
+		$extension=sql_value("select file_extension value from resource where ref=$ref","");
+		$filename=get_resource_path($ref,true,"",false,$extension);
+		$processfile['tmp_name']=$filename; }
+	else{
+		# Work out which file has been posted (switch is necessary for SWFUpload)
+		if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];} else {$processfile=$_FILES['Filedata'];}
+		$filename=$processfile['name'];
+	}
 
+    # Work out extension
+	if (!isset($extension)){
+		global $exiftool_path;
+		# first try to get it from the filename
+		$extension=explode(".",$filename);
+		if(count($extension)>1){
+			$extension=trim(strtolower($extension[count($extension)-1]));
+			} 
+		# if not, try exiftool	
+		else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
+			{
+			$file_type_by_exiftool=shell_exec($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
+			if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}else{return false;}
+			}
+		# if no clue of extension by now, return false		
+		else {return false;}	
+	}
+	
     # Banned extension?
     global $banned_extensions;
     if (in_array($extension,$banned_extensions)) {return false;}
@@ -42,6 +54,7 @@ function upload_file($ref,$no_exif=false)
     $status="Please provide a file name.";
     $filepath=get_resource_path($ref,true,"",true,$extension);
 
+	if (!$revert){ 
     # Remove existing file, if present
     $old_extension=sql_value("select file_extension value from resource where ref='$ref'","");
     if ($old_extension!="")	
@@ -49,6 +62,7 @@ function upload_file($ref,$no_exif=false)
     	$old_path=get_resource_path($ref,true,"",true,$old_extension);
     	if (file_exists($old_path)) {unlink($old_path);}
     	}
+	}	
 
 
     if ($filename!="")
@@ -62,8 +76,10 @@ function upload_file($ref,$no_exif=false)
 		else
 			{
 			# Standard upload.
+			if (!$revert){
 		    $result=move_uploaded_file($processfile['tmp_name'], $filepath);
-			}
+			} else {$result=true;}
+		}
 			
     	if ($result==false)
        	 	{
@@ -78,7 +94,8 @@ function upload_file($ref,$no_exif=false)
     	}
     	
     # Store extension in the database and update file modified time.
-    sql_query("update resource set file_extension='$extension',preview_extension='$extension',file_modified=now(),has_image=0 where ref='$ref'");
+	if ($revert){$has_image="";} else {$has_image=",has_image=0";}
+    sql_query("update resource set file_extension='$extension',preview_extension='jpg',file_modified=now() $has_image where ref='$ref'");
 
 	# delete existing resource_dimensions
     sql_query("delete from resource_dimensions where resource='$ref'");
@@ -94,7 +111,12 @@ function upload_file($ref,$no_exif=false)
 	global $filename_field;
 	if (isset($filename_field))
 		{
-		update_field($ref,$filename_field,$filename);
+		if (!$revert){
+			update_field($ref,$filename_field,$filename);
+			}
+		else {
+			update_field($ref,$filename_field,$original_filename);
+			}		
 		}
     
     # Clear any existing FLV file or multi-page previews.
@@ -128,17 +150,19 @@ function upload_file($ref,$no_exif=false)
 		}	
     
 	# Create previews
-	global $enable_thumbnail_creation_on_upload;
-	if ($enable_thumbnail_creation_on_upload)
-		{
-		create_previews($ref,false,$extension);
+	if (!$revert){ 
+		global $enable_thumbnail_creation_on_upload;
+		if ($enable_thumbnail_creation_on_upload)
+			{ 
+			create_previews($ref,false,$extension);
+			}
+		else
+			{
+			# Offline thumbnail generation is being used. Set 'has_image' to zero so the offline create_previews.php script picks this up.
+			sql_query("update resource set has_image=0 where ref='$ref'");
+			}
 		}
-	else
-		{
-		# Offline thumbnail generation is being used. Set 'has_image' to zero so the offline create_previews.php script picks this up.
-		sql_query("update resource set has_image=0 where ref='$ref'");
-		}
-	
+		
     return $status;
     }}
 	

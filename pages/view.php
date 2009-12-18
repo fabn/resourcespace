@@ -19,7 +19,7 @@ $ref=getvalescaped("ref","",true);
 if (getval("exif","")!="")
 	{
 	include "../include/image_processing.php";
-	extract_exif_comment($ref,getvalescaped("extension",""));
+	upload_file($ref,$no_exif=false,true);
 	}
 
 # fetch the current search (for finding simlar matches)
