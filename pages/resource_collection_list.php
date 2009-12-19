@@ -1,7 +1,12 @@
+<?php $collections=get_resource_collections($ref);
+
+if (count($collections)!=0){
+?>
+
         <div class="RecordBox">
         <div class="RecordPanel">  
         <div class="Title"><?php echo $lang['associatedcollections']?></div>
-<?php $collections=get_resource_collections($ref);?>
+
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
@@ -79,3 +84,4 @@ else
         </div>
         <div class="PanelShadow"></div>
         </div>
+<?php } ?>
