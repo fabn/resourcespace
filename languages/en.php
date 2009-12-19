@@ -889,7 +889,7 @@ $lang["plugin-groupsallaccess"]="This plugin is activated for all groups";
 $lang["plugin-groupsspecific"]="This plugin is activated for the selected groups only";
 
 
-
+$lang["associatedcollections"]="Associated Collections";
 
 
 

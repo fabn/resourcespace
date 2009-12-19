@@ -695,8 +695,12 @@ for ($n=0;$n<count($fields);$n++)
 <div class="PanelShadow"></div>
 </div>
 
-
 <?php 
+// include collections listing
+if ($view_resource_collections){ 
+	include("resource_collection_list.php"); 
+	}
+
 // include optional ajax metadata report
 if ($metadata_report && isset($exiftool_path) && $k==""){?>
         <div class="RecordBox">
