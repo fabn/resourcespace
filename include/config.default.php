@@ -1300,6 +1300,6 @@ $debug_log=false;
 # $metadata_template_title_field=10;
 
 # enable a list of collections that a resource belongs to, on the view page
-$view_resource_collections=true;
+$view_resource_collections=false;
 
 ?>
