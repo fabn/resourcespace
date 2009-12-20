@@ -96,6 +96,12 @@ else if ($sheetstyle=="list")
 $collectiondata= get_collection($collection);
 $result=do_search("!collection" . $collection);
 
+$csf="";
+for ($m=0;$m<count($config_sheetthumb_fields);$m++)
+	{
+	$csf[$m]['name']=sql_value("select name value from resource_type_field where ref='$config_sheetthumb_fields[$m]'","");
+	}
+
 $user= get_user($collectiondata['user']);
 
 # Start PDF, set metadata, etc.
@@ -176,12 +182,16 @@ for ($n=0;$n<count($result);$n++)
 						if ($config_sheetthumb_include_ref){$pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$ref,0,2,'L',0,'',1);\n";}
 						for($ff=0; $ff<count($config_sheetthumb_fields); $ff++){
 							$pdfcode.="\$ff=".$ff.";";
-							$fielddata="";
-							$pdfcode.="\$fielddata='';";
-							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
-							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
-							$characterset.=$fielddata;
-						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
+							$value="";
+							$pdfcode.="\$value='';";
+							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
+							
+							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							if (file_exists($plugin)) {include $plugin;}
+							
+							$pdfcode.="\$value='".TidyList($value)."';";
+							$characterset.=$value;
+						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$value,0,2,'L',0,'',1);\n";
 						}
 						$pdfcode.="\$bottomy=\$pdf->Gety();";	$pdfcode.="\$bottomx=\$pdf->Getx();";
 					}
@@ -191,12 +201,16 @@ for ($n=0;$n<count($result);$n++)
 						$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+0.2,\$ref);\n";	
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
 							$pdfcode.="\$ff=".$ff.";";
-							$fielddata="";
-							$pdfcode.="\$fielddata='';";
-							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
-							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
-							$characterset.=$fielddata;
-							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
+							$value="";
+							$pdfcode.="\$value='';";
+							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
+							
+							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							if (file_exists($plugin)) {include $plugin;}
+							
+							$pdfcode.="\$value='".TidyList($value)."';";
+							$characterset.=$value;
+							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$value);\n";
 						}		
 					}
 						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY()+.025,\$imagesize,0,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";
@@ -216,12 +230,16 @@ for ($n=0;$n<count($result);$n++)
 						if ($config_sheetthumb_include_ref){$pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$ref,0,2,'L',0,'',1);\n";}
 						for($ff=0; $ff<count($config_sheetthumb_fields); $ff++){
 							$pdfcode.="\$ff=".$ff.";";
-							$fielddata="";
-							$pdfcode.="\$fielddata='';";
-							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
-							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
-							$characterset.=$fielddata;
-						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$fielddata,0,2,'L',0,'',1);\n";
+							$value="";
+							$pdfcode.="\$value='';";
+							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
+							
+							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							if (file_exists($plugin)) {include $plugin;}
+							
+							$pdfcode.="\$value='".TidyList($value)."';";
+							$characterset.=$value;
+						    $pdfcode.="\$pdf->Cell(\$imagesize,((\$refnumberfontsize+\$leading)/72),\$value,0,2,'L',0,'',1);\n";
 						}$pdfcode.="\$bottomy=\$pdf->Gety();";	$pdfcode.="\$bottomx=\$pdf->Getx();";
 					}
 					else if ($sheetstyle=="list")
@@ -229,12 +247,16 @@ for ($n=0;$n<count($result);$n++)
 						$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+0.2,\$ref);\n";			
 						for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
 							$pdfcode.="\$ff=".$ff.";";
-							$fielddata="";
-							$pdfcode.="\$fielddata='';";
-							$fielddata=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
-							$pdfcode.="\$fielddata='".TidyList($fielddata)."';";
-							$characterset.=$fielddata;
-							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$fielddata);\n";
+							$value="";
+							$pdfcode.="\$value='';";
+							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
+							
+							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							if (file_exists($plugin)) {include $plugin;}
+							
+							$pdfcode.="\$value='".TidyList($value)."';";
+							$characterset.=$value;
+							$pdfcode.="\$pdf->Text(\$pdf->Getx()+\$imagesize+0.1,\$pdf->Gety()+(0.2*(\$ff+2)),\$value);\n";
 						}			
 					}
 						$pdfcode.="\$pdf->Image(\$imgpath,\$pdf->GetX(),\$pdf->GetY()+.025,0,\$imagesize,\$preview_extension,\$baseurl. '/?r=' . \$ref);\n";

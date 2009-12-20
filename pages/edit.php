@@ -177,6 +177,12 @@ if (getval("tweak","")!="")
 	# Reload resource data.
 	$resource=get_resource_data($ref,false);
 	}
+	
+# Simulate reupload (preserving filename and thumbs, but otherwise resetting metadata).
+if (getval("exif","")!="")
+	{
+	upload_file($ref,$no_exif=false,true);
+	}	
 
 # If requested, refresh the collection frame (for redirects from saves)
 if (getval("refreshcollectionframe","")!="")
@@ -266,7 +272,9 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 	<a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
 	<?php if (! $disable_alternative_files) { ?><br />
 	<a href="alternative_files.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a><?php } ?>
-
+	<?php if ($allow_metadata_revert){?><br />
+	<a href="edit.php?ref=<?php echo $ref?>&exif=true" onClick="return confirm('<?php echo $lang["confirm-revertmetadata"]?>');">&gt; 
+	<?php echo $lang["action-revertmetadata"]?></a><?php } ?>
 </div>
 <div class="clearerleft"> </div>
 </div>
