@@ -576,11 +576,12 @@ function update_field($resource,$field,$value)
 	$value=escape_check($value);
 	sql_query("insert into resource_data(resource,resource_type_field,value) values ('$resource','$field','$value')");
 	
+	if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
+	
 	# Also update resource table?
 	$column=$fieldinfo["resource_column"];
 	if (strlen($column)>0)
 		{
-		if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
 		sql_query("update resource set $column = $value where ref='$resource'");
 		}
 		
