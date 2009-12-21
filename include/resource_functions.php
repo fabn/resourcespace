@@ -769,8 +769,15 @@ function copy_resource($from,$resource_type=-1)
 	# Check that the resource exists
 	if (sql_value("select count(*) value from resource where ref='$from'",0)==0) {return false;}
 	
+	# copy joined fields to the resource column
+	$joins=get_resource_table_joins();
+	$joins_sql="";
+	foreach ($joins as $join){
+		$joins_sql.=",field$join ";
+	}
+	
 	# First copy the resources row
-	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access,created_by) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access,created_by from resource where ref='$from';");
+	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access,created_by $joins_sql) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access,created_by $joins_sql from resource where ref='$from';");
 	$to=sql_insert_id();
 	
 	# Copying a resource of the 'pending review' state? Notify, if configured.
