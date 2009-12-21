@@ -139,6 +139,12 @@ function save_resource_data($ref,$multi)
 				# the related columns on the resource table
 				$resource_column=$fields[$n]["resource_column"];
 
+				# If this is a 'joined' field we need to add it to the resource column
+				$joins=get_resource_table_joins();
+				if (in_array($fields[$n]["ref"],$joins)){
+					sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
+				}		
+
 				global $use_resource_column_data;
 				if ($use_resource_column_data){
 					# By default, also write the resource table column mapping (if set)
