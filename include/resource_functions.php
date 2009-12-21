@@ -587,7 +587,7 @@ function update_field($resource,$field,$value)
 	# If this is a 'joined' field we need to add it to the resource column
 	$joins=get_resource_table_joins();
 	if (in_array($field,$joins)){
-		sql_query("update resource set field".$field."='".escape_check($value)."' where ref='$resource'");
+		sql_query("update resource set field".$field."=".$value." where ref='$resource'");
 		}			
 		
 	}
