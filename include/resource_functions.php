@@ -139,38 +139,40 @@ function save_resource_data($ref,$multi)
 				# the related columns on the resource table
 				$resource_column=$fields[$n]["resource_column"];
 
-				# By default, also write the resource table column mapping (if set)
-				$write_column=true;
+				global $use_resource_column_data;
+				if ($use_resource_column_data){
+					# By default, also write the resource table column mapping (if set)
+					$write_column=true;
 
-				# For metadata templates, support an alternative title field (so the original title field can be used as part of metadata)
-				global $metadata_template_title_field,$metadata_template_resource_type;
-				if (isset($metadata_template_title_field) && $metadata_template_resource_type==$resource_data["resource_type"])
-					{
-					if ($resource_column=="title") {$write_column=false;} # Do not write the original title.
-					if ($metadata_template_title_field=$fields[$n]["ref"]) {$resource_column="title";} # Write the metadata template title to the title column instead.
-					}
-
-				# Add to resource column SQL
-				if (strlen($resource_column)>0 && $write_column)
-					{
-					if ($resource_sql!="") {$resource_sql.=",";}
-					if (trim($val)=="" || trim($val)==",")
+					# For metadata templates, support an alternative title field (so the original title field can be used as part of metadata)
+					global $metadata_template_title_field,$metadata_template_resource_type;
+					if (isset($metadata_template_title_field) && $metadata_template_resource_type==$resource_data["resource_type"])
 						{
-						# Insert null for empty columns.
-						$resource_sql.=$resource_column . "=null";
+						if ($resource_column=="title") {$write_column=false;} # Do not write the original title.
+						if ($metadata_template_title_field=$fields[$n]["ref"]) {$resource_column="title";} # Write the metadata template title to the title column instead.
 						}
-					else
-						{
-						$mapval=$val;
-						
-						# Fix for legacy systems using a 'rating' mapped to an integer rating column on the resource table  - when writing numeric values, remove any comma (rating was a dropdown box and the value is therefore prefixed with a comma)
-						if (is_numeric(str_replace(",","",$mapval))) {$mapval=str_replace(",","",$mapval);}
-						
-						$resource_sql.=$resource_column . "='" . escape_check($mapval) . "'";
-						}
-						
-					}
 
+					# Add to resource column SQL
+					if (strlen($resource_column)>0 && $write_column)
+						{
+						if ($resource_sql!="") {$resource_sql.=",";}
+						if (trim($val)=="" || trim($val)==",")
+							{
+							# Insert null for empty columns.
+							$resource_sql.=$resource_column . "=null";
+							}
+						else
+							{
+							$mapval=$val;
+						
+							# Fix for legacy systems using a 'rating' mapped to an integer rating column on the resource table  - when writing numeric values, remove any comma (rating was a dropdown box and the value is therefore prefixed with a comma)
+							if (is_numeric(str_replace(",","",$mapval))) {$mapval=str_replace(",","",$mapval);}
+						
+							$resource_sql.=$resource_column . "='" . escape_check($mapval) . "'";
+							}
+						
+						}
+				}
 				# Purge existing data and keyword mappings, decrease keyword hitcounts.
 				sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 				
@@ -370,12 +372,22 @@ function save_resource_data_multi($collection)
 					# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 					if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
 				
-					# If 'resource_column' is set, then we need to add this to a query to back-update
-					# the related columns on the resource table
-					if (strlen($fields[$n]["resource_column"])>0)
-						{
-						sql_query("update resource set " . $fields[$n]["resource_column"] . "='" . escape_check($val) . "' where ref='$ref'");
-						}
+					# If this is a 'joined' field we need to add it to the resource column
+					$joins=get_resource_table_joins();
+					if (in_array($fields[$n]["ref"],$joins)){
+						sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
+					}		
+					
+					global $use_resource_column_data;
+					if ($use_resource_column_data){
+						# If 'resource_column' is set, then we need to add this to a query to back-update
+						# the related columns on the resource table
+						if (strlen($fields[$n]["resource_column"])>0)
+							{
+							sql_query("update resource set " . $fields[$n]["resource_column"] . "='" . escape_check($val) . "' where ref='$ref'");
+							}
+					}	
+						
 					# Purge existing data and keyword mappings, decrease keyword hitcounts.
 					sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 					
@@ -565,6 +577,13 @@ function update_field($resource,$field,$value)
 		if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
 		sql_query("update resource set $column = $value where ref='$resource'");
 		}
+		
+	# If this is a 'joined' field we need to add it to the resource column
+	$joins=get_resource_table_joins();
+	if (in_array($field,$joins)){
+		sql_query("update resource set field".$field."='".escape_check($value)."' where ref='$resource'");
+		}			
+		
 	}
 
 if (!function_exists("email_resource")){	

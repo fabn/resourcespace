@@ -1,5 +1,4 @@
 ref,int(11),NO,PRI,,auto_increment
-title,varchar(200),YES,,,
 resource_type,int(11),YES,MUL,,
 has_image,int(11),YES,MUL,0,
 is_transcoding,int(11),YES,MUL,0,
@@ -10,7 +9,6 @@ rating,int(11),YES,MUL,,
 user_rating,int(11),YES,MUL,,
 user_rating_count,int(11),YES,,,
 user_rating_total,int(11),YES,,,
-country,varchar(200),YES,,,
 file_extension,varchar(10),YES,,,
 preview_extension,varchar(10),YES,,,
 image_red,int(11),YES,,,

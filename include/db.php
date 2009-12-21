@@ -389,6 +389,38 @@ function CheckDBStruct($path)
 				
 				# Load existing table definition
 				$existing=sql_query("describe $table",false,-1,false);
+				
+				##########
+				## RS-specific mod:
+				# copy needed resource_data into resource for search displays
+				if ($table=="resource"){
+					$joins=get_resource_table_joins();
+					for ($m=0;$m<count($joins);$m++){
+						
+						# Look for this column in the existing columns.	
+						$found=false;
+
+						for ($n=0;$n<count($existing);$n++)
+							{
+							if ("field".$joins[$m]==$existing[$n]["Field"]) {$found=true;}
+							}
+						if (!$found)
+							{
+							# Add this column.
+							$sql="alter table $table add column ";
+							$sql.="field".$joins[$m] . " VARCHAR(200)";
+							sql_query($sql,false,-1,false);
+							$values=sql_query("select resource,value from resource_data where resource_type_field=$joins[$m]");
+	
+							for($x=0;$x<count($values);$x++){
+								$value=$values[$x]['value'];
+								$resource=$values[$x]['resource'];
+								sql_query("update resource set field$joins[$m]='".escape_check($value)."' where ref=$resource");	
+						    }	
+						}
+					}	
+				}		
+				##########
 								
 				$file=$path . "/" . $file;
 				if (file_exists($file))
@@ -785,5 +817,14 @@ function rcRmdir ($path){ # Recursive rmdir function.
 		rmdir($path);
 	}
 }
+
+function get_resource_table_joins(){
+	global $thumbs_display_fields,$list_display_fields,$data_joins;
+	$joins=array_merge($thumbs_display_fields,$list_display_fields,$data_joins);
+	$joins=array_unique($joins);
+	$n=0;
+	foreach ($joins as $join){$return[$n]=$join;$n++;}
+	return $return;
+	}
     
 	

@@ -433,7 +433,7 @@ if (count($result)>0)
 		<?php } /* end hook rendercollectionthumb */?>
 		
 		<?php 
-		$title=$result[$n]["title"];
+		if ($use_resource_column_data){$title=$result[$n]["title"];}
 		if (!$use_resource_column_data)
 			{
 			$title=get_data_by_field($result[$n]['ref'],$view_title_field);	

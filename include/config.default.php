@@ -919,19 +919,25 @@ $back_to_collections_link = "";
 # For fields with partial keyword indexing enabled, this determines the minimum infix length
 $partial_index_min_word_length=3;
 
-# array of fields to display on the large thumbnail view.
-# If $use_resource_column_data, title from the resource table is included by default. If not, add field 8 to the beginning of the array to include title.
-$thumbs_display_fields=array(3);
+# $use_resource_column_data=false intends to remove dependence upon *mapped* resource columns and hardcoded displays
+# all existing resource_data defined in $thumbs_display_fields, $list_display_fields, and $data_joins will be added
+# to the resource table as varchar(200) via the DBStruct check for quicker display and sorting, and edits will be duped there as well.
+# You can optimize by deleting unneeded field# columns, title, country, or giving the appropriate column types,
+# but in any case this is tenfold faster than joining resource_data fields.
+# true is deprecated, and can only be used with old systems which still have resource columns such as title and country,
+# It is highly recommended to convert to $use_resource_column_data=false, as it will add flexibility to search displays.
+$use_resource_column_data=false; 
+# $thumbs_display_fields= array of fields to display on the large thumbnail view.
+$thumbs_display_fields=array(8,3);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
-
-# $use_resource_column_data=false intends to remove dependence upon duped field data in the resource table.
-# setting to false should create a more flexible environment.
-# Note: If false, the resource column mapping option in System Setup is not generally applicable.
-$use_resource_column_data=true; 
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
-# array of fields to display on the list view, $use_resource_column_data must be false 
-$list_display_fields=array(8);
+# $list_display_fields= array of fields to display on the list view
+$list_display_fields=array(8,3);
+# Data Joins -- Developer's tool to allow adding additional resource field data to the resource table for use in search displays.
+# ex. $data_joins=array(13); to add the expiry date to the general search query result.  
+$data_joins=array();
+
 # List View Default Columns
 $id_column=true;
 $resource_type_column=true;
@@ -1259,14 +1265,6 @@ $disable_geocoding = true;
 # add your Google Maps API Key. Requires exiftool.
 # Get an api key at: http://code.google.com/apis/maps/signup.html
 #$gmaps_apikey = '';
-
-
-	
-# Data Joins -- Developer's tool to allow joining resource field data to the search query.
-# $thumbs_display_fields array items are already joined. These are fields in addition to the $thumbs_display_fields array, 
-# that you want available for other, typically plugin, purposes, in order to avoid an excessive query count.
-# ex. $data_joins=array(13); to add the expiry date to the general search query result.  
-$data_joins=array();
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
 $frameless_collections=false;
