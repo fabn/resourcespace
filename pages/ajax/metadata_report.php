@@ -95,7 +95,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 				$RS_field_ref=$simcommands[$tag]['ref'];
 				$RS_field_name=sql_query("select title from resource_type_field where ref = $RS_field_ref");
 				$RS_field_name=$RS_field_name[0]['title'];
-				echo "<td>".$RS_field_ref." - ".$RS_field_name."</td><td>$group</td><td>$tag $tagprops</td>";
+				echo "<td>".$RS_field_ref." - ".i18n_get_translated($RS_field_name)."</td><td>$group</td><td>$tag $tagprops</td>";
 				} 
 			else 
 				{
@@ -108,7 +108,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 				{
 				if ($value!=$simcommands[$tag]['value'])
 					{
-					echo "<td>".$value."</td><td>--> ".$simcommands[$tag]['value']."</td>";
+					echo "<td>- ".$value."</td><td>+ ".$simcommands[$tag]['value']."</td>";
 					}
 				else
 					{
