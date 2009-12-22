@@ -776,8 +776,12 @@ function copy_resource($from,$resource_type=-1)
 		$joins_sql.=",field$join ";
 	}
 	
+	global $use_resource_column_data;
+	$add="";
+	if ($use_resource_column_data){$add="title,country,";}
+	
 	# First copy the resources row
-	sql_query("insert into resource(title,resource_type,creation_date,rating,country,archive,access,created_by $joins_sql) select title," . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,country,archive,access,created_by $joins_sql from resource where ref='$from';");
+	sql_query("insert into resource($add resource_type,creation_date,rating,archive,access,created_by $joins_sql) select $add" . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,archive,access,created_by $joins_sql from resource where ref='$from';");
 	$to=sql_insert_id();
 	
 	# Copying a resource of the 'pending review' state? Notify, if configured.
