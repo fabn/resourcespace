@@ -428,7 +428,7 @@ if (isset($metadata_template_resource_type))
 	foreach ($templates as $template)
 		{
 		?>
-		<option value="<?php echo $template["ref"] ?>"><?php echo $template["title"] ?></option>
+		<option value="<?php echo $template["ref"] ?>"><?php echo $template["field$metadata_template_title_field"] ?></option>
 		<?php	
 		}
 	?>
