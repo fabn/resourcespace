@@ -1417,11 +1417,11 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	if (isset($templatevars['fromusername'])){$mail->FromName = $templatevars['fromusername'];} else {$mail->FromName="";}
 	
 	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
-		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail'); 
+		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail','base64','image/jpeg'); 
 		}
 	if (isset($images)){
-		foreach ($images as $image){
-		$mail->AddEmbeddedImage($image,basename($image),basename($image));}
+		foreach ($images as $image){	
+		$mail->AddEmbeddedImage($image,basename($image),basename($image),'base64','image/gif');}
 	}	
 	if (isset($attachments)){
 		foreach ($attachments as $attachment){
