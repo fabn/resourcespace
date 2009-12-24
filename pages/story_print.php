@@ -35,7 +35,7 @@ h2 {font-size:14px;}
 </head>
 <body onLoad="print();">
 <h1><?php echo $applicationname?> <?php echo $lang["storyextract"]?></h1>
-<h2><?php echo $lang["resourceid"]?> <?php echo $ref?>: <?php echo $resource["title"]?></h2>
+<h2><?php echo $lang["resourceid"]?> <?php echo $ref?>: <?php echo  $resource["field".$view_title_field];?></h2>
 <p><?php echo nl2br(htmlspecialchars($storyextract))?></p>
 </body>
 </html>

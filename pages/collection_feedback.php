@@ -56,7 +56,7 @@ include "../include/header.php";
 		{
 		$ref=$result[$n]["ref"];
 		$access=get_resource_access($ref);
-		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["title"]),60));
+		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["field".$view_title_field]),60));
 		?>	
 		<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?php echo $ref?>">

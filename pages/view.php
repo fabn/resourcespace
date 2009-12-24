@@ -160,7 +160,7 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 
 <h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php 
 if ($use_resource_column_data || isset($default_to_standard_title)){
-	?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["title"])),$search)?><?php 
+	?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["field".$view_title_field])),$search)?><?php 
 	} 
 else { 
 	echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } ?>&nbsp;</h1>
@@ -792,7 +792,7 @@ if (count($result)>0)
 			{	
 			if ($result[$n]["file_extension"]==$rext){
 				$rref=$result[$n]["ref"];
-				$title=$result[$n]["title"];
+				$title=$result[$n]["field".$view_title_field];
 
 				# swap title fields if necessary
 				if (!$use_resource_column_data)
@@ -802,7 +802,7 @@ if (count($result)>0)
 						{
 						if ($result[$n]['resource_type']==$metadata_template_resource_type)
 							{
-							$title=get_data_by_field($rref,$metadata_template_title_field);
+							$title=$result[$n]["field".$metadata_template_title_field];
 							}	
 						}	
 					}	
@@ -842,7 +842,7 @@ if (count($result)>0)
     	for ($n=0;$n<count($result);$n++)            
         	{
         	$rref=$result[$n]["ref"];
-			$title=$result[$n]["title"];
+			$title=$result[$n]["field".$view_title_field];
 
 			# swap title fields if necessary
 			if (!$use_resource_column_data)
@@ -852,7 +852,7 @@ if (count($result)>0)
 					{
 					if ($result[$n]["resource_type"]==$metadata_template_resource_type)
 						{
-						$title=get_data_by_field($rref,$metadata_template_title_field);
+						$title=$result[$n]["field".$metadata_template_title_field];
 						}	
 					}	
 				}	

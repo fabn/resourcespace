@@ -22,7 +22,7 @@ if (getval("save","")!="")
 	$access=getvalescaped("access","");
 	if (hook("modifyresourceaccess")){$access=hook("modifyresourceaccess");}
 	$expires=getvalescaped("expires","");
-	$errors=email_resource($ref,$resource["title"],$userfullname,$users,$message,$access,$expires);
+	$errors=email_resource($ref,$resource["field".$view_title_field],$userfullname,$users,$message,$access,$expires);
 	if ($errors=="")
 		{
 		# Log this			
@@ -43,7 +43,7 @@ include "../include/header.php";
 <input type=hidden name=ref value="<?php echo $ref?>">
 
 <div class="Question">
-<label><?php echo $lang["resourcetitle"]?></label><div class="Fixed"><?php echo htmlspecialchars(i18n_get_translated($resource["title"]))?></div>
+<label><?php echo $lang["resourcetitle"]?></label><div class="Fixed"><?php echo htmlspecialchars(i18n_get_translated($resource["field".$view_title_field]))?></div>
 <div class="clearerleft"> </div>
 </div>
 

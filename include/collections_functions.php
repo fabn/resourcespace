@@ -989,7 +989,8 @@ $lang["collectionlog-X"]="Collection deleted";
 */
 function get_collection_log($collection)
 	{
-	return sql_query("select c.date,u.username,u.fullname,c.type,r.title,c.resource, c.notes from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
+	global $view_title_field;	
+	return sql_query("select c.date,u.username,u.fullname,c.type,r.field".$view_title_field." title,c.resource, c.notes from collection_log c left outer join user u on u.ref=c.user left outer join resource r on r.ref=c.resource where collection='$collection' order by c.date");
 	}
 	
 function get_collection_videocount($ref)

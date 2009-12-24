@@ -40,7 +40,7 @@ for ($n=0;$n<count($videos);$n++){
 		}
 	if ($resource_flashpath!=""){	
 	$flashpath.=urlencode($resource_flashpath)."|";
-	$title.=$video['title']."|";
+	$title.=$video["field".$view_title_field]."|";
 	} 
 }
 $flashpath=substr($flashpath,0,-1);
