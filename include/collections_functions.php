@@ -592,7 +592,9 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	$templatevars['message']=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);	
 	$templatevars['fromusername']=$fromusername;
 	
-	$subject="$applicationname: ".(count($reflist)>1)?$lang['mycollections']:$collectionname;
+	if(count($reflist)>1){$subject=$applicationname.": ".$lang['mycollections'];}
+	else { $subject=$applicationname.": ".$collectionname;}
+
 		
 	##  loop through recipients
 	for ($nx1=0;$nx1<count($emails);$nx1++)
