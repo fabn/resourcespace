@@ -24,6 +24,10 @@ $page=getvalescaped("page",1);
 $alternative=getvalescaped("alternative",-1);
 if (strpos($search,"!")!==false) {$restypes="";}
 
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 # Load access level
 $access=get_resource_access($ref);
 
@@ -94,7 +98,7 @@ if (!isset($url))
 include "../include/header.php";
 ?>
 
-<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
+<p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
 <?php if ($k=="") { ?>
 
 <?php if (!checkperm("b")) { ?>
@@ -102,11 +106,11 @@ include "../include/header.php";
 <?php echo add_to_collection_link($ref,$search)?><?php echo $lang["addtocollection"]?></a><?php } ?>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 |
-<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
+<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
 |
-<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
+<a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 <?php } ?>
 
 </p>
@@ -114,10 +118,10 @@ include "../include/header.php";
 <?php if (!hook("previewimage")) { ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
-<td valign="middle"><?php if ($previouspage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
+<td valign="middle"><?php if ($previouspage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
 elseif ($nextpage!=-1 &&resource_download_allowed($ref,"scr") ) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><?php } ?></td>
-<td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
-<td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
+<td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
+<td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
 <?php } ?>
 

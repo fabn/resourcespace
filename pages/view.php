@@ -23,6 +23,10 @@ $restypes=getvalescaped("restypes","");
 if (strpos($search,"!")!==false) {$restypes="";}
 $archive=getvalescaped("archive",0,true);
 
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 # next / previous resource browsing
 $go=getval("go","");
 if ($go!="")
@@ -30,7 +34,7 @@ if ($go!="")
 	$origref=$ref; # Store the reference of the resource before we move, in case we need to revert this.
 	
 	# Re-run the search and locate the next and previous records.
-	$result=do_search($search,$restypes,$order_by,$archive,240+$offset+1);
+	$result=do_search($search,$restypes,$order_by,$archive,240+$offset+1,$sort);
 	if (is_array($result))
 		{
 		# Locate this resource
@@ -147,13 +151,13 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 
 
 <div class="backtoresults">
-<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 <?php if ($k=="") { ?>
 |
-<a href="search.php?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&k=<?php echo $k?>"><?php echo $lang["viewallresults"]?></a>
+<a href="search.php?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&k=<?php echo $k?>"><?php echo $lang["viewallresults"]?></a>
 <?php } ?>
 |
-<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
 
 
@@ -206,7 +210,7 @@ elseif ($resource["has_image"]==1)
 		}
 	
 	?>
-	<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>">
+	<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>">
 	<?php
 	if (file_exists($imagepath))
 		{ 
@@ -326,7 +330,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			?>
 			<td class="DownloadButton">
-			<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"]?></a>
+			<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"]?></a>
 			</td>
 			<?php
 			}
@@ -354,7 +358,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 				# Add an extra line for previewing
 				?> 
 				<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td><td class="DownloadButton">
-				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
+				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
 				</td>
 				</tr>
 				<?php
@@ -373,7 +377,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		<tr class="DownloadDBlend">
 		<td><h2><?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
 		<td><?php echo formatfilesize(filesize($path))?></td>
-		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
+		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>">Download</a></td>
 		</tr>
 		<?php
 		}
@@ -417,7 +421,7 @@ if (isset($flv_download) && $flv_download)
 	<tr class="DownloadDBlend">
 	<td><h2>FLV <?php echo $lang["file"]?></h2></td>
 	<td><?php echo formatfilesize(filesize($flvfile))?></td>
-	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=flv&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
+	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=flv&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>">Download</a></td>
 	</tr>
 	<?php
 	}
@@ -455,14 +459,14 @@ if ($access==0) # open access only (not restricted)
 		?>
 		<tr class="DownloadDBlend" <?php if ($alt_pre!="" && $alternative_file_previews_mouseover) { ?>onMouseOver="orig_preview=$('previewimage').src;$('previewimage').src='<?php echo $alt_pre ?>';" onMouseOut="$('previewimage').src=orig_preview;"<?php } ?>>
 		<td>
-		<?php if ($alt_thm!="") { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $altfiles[$n]["ref"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>"><img src="<?php echo $alt_thm?>" class="AltThumb"></a><?php } ?>
+		<?php if ($alt_thm!="") { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $altfiles[$n]["ref"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><img src="<?php echo $alt_thm?>" class="AltThumb"></a><?php } ?>
 		<h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
 		<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>
 		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
 		<?php if ($access==0){?>
-		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&order_by=" . urlencode($order_by))?>">Download</a></td>
+		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>">Download</a></td>
 		<?php } else { ?>
 		<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
 		<?php } ?>
@@ -503,7 +507,7 @@ hook ("resourceactions") ?>
 		<li><a href="resource_email.php?ref=<?php echo $ref?>" target="main">&gt; <?php echo $lang["emailresource"]?></a></li>
 		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>
 	<?php if ($edit_access) { ?>
-		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>">&gt; 
+		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; 
 			<?php echo $lang["edit"]?></a>
 	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["delete"]?></a><?php } ?></li><?php } ?>
 	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>

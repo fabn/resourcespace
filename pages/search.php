@@ -217,7 +217,7 @@ if ($infobox)
 # Include function for reordering
 if ($allow_reorder && $display!="list")
 	{
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&offset=" . $offset;
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&offset=" . $offset;
 	?>
 	<script type="text/javascript">
 	function ReorderResources(id1,id2)
@@ -255,7 +255,7 @@ if (($search_includes_themes || $search_includes_public_collections) && $search!
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
-	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
+	redirect("pages/view.php?ref=" . $result[0]["ref"] . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k);
 	}
 	
 
@@ -280,7 +280,7 @@ if (isset($search_result_title_height))
 
 if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
 	?>
 	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
@@ -364,7 +364,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	$totalpages=ceil($results/$per_page);
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k."&sort=".$sort;	
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k."&sort=".$sort;	
 
 	pager();
 	$draw_pager=true;
@@ -441,7 +441,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		{
 		$ref=$result[$n]["ref"];
 		$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
-		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
+		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
 		
 			<?php
 			
@@ -737,7 +737,7 @@ else
 	<?php hook("resultsbottomtoolbar"); ?>
 	
 	<?php 
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&archive=" . $archive . "&k=" . $k;	
+	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k;	
 
 	if (isset($draw_pager)) {pager(false);} ?>
 </div>	
