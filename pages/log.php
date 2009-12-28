@@ -6,10 +6,22 @@ include "../include/resource_functions.php";
 
 $ref=getvalescaped("ref","",true);
 
+# fetch the current search (for finding simlar matches)
+$search=getvalescaped("search","");
+$order_by=getvalescaped("order_by","relevance");
+$offset=getvalescaped("offset",0,true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+$archive=getvalescaped("archive",0,true);
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
-<p><a href="view.php?ref=<?php echo $ref?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a></p>
+<p><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a></p>
 <h1><?php echo $lang["resourcelog"]?></h1>
 </div>
 
