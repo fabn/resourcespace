@@ -7,6 +7,18 @@ include "../include/resource_functions.php";
 $ref=getvalescaped("ref","",true);
 $status="";
 
+# fetch the current search 
+$search=getvalescaped("search","");
+$order_by=getvalescaped("order_by","relevance");
+$offset=getvalescaped("offset",0,true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+$archive=getvalescaped("archive",0,true);
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 $maxsize="200000000"; #200MB
 #ini_set("upload_max_filesize","200M");
 #echo "Max size = " . ini_get("upload_max_filesize");
@@ -15,7 +27,7 @@ $maxsize="200000000"; #200MB
 if (array_key_exists("userfile",$_FILES))
     {
 	$status=upload_preview($ref);
-	redirect("pages/edit.php?refreshcollectionframe=true&ref=" . $ref);
+	redirect("pages/edit.php?refreshcollectionframe=true&ref=" . $ref."&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
     }
     
 include "../include/header.php";

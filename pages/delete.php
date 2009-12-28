@@ -13,6 +13,18 @@ if ((isset($allow_resource_deletion) and !$allow_resource_deletion) or checkperm
 $ref=getvalescaped("ref","",true);
 $resource=get_resource_data($ref);
 
+# fetch the current search 
+$search=getvalescaped("search","");
+$order_by=getvalescaped("order_by","relevance");
+$offset=getvalescaped("offset",0,true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+$archive=getvalescaped("archive",0,true);
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 $error="";
 
 # Not allowed to edit this resource? They shouldn't have been able to get here.
@@ -32,7 +44,7 @@ if (getval("save","")!="")
 		
 		hook("custompostdeleteresource");
 		
-		redirect("pages/done.php?text=deleted&refreshcollection=true");
+		redirect("pages/done.php?text=deleted&refreshcollection=true&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
 		}
 	}
 include "../include/header.php";

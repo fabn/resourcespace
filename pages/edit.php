@@ -268,16 +268,16 @@ else
 if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource["file_extension"] . " " . $lang["file"]) . " (" . formatfilesize(@filesize(get_resource_path($ref,true,"",false,$resource["file_extension"]))) . ")" ?></strong><br /><?php } ?>
 
 	<?php if ($resource["has_image"]!=1) { ?>
-	<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
+	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
 	<?php } else { ?>
-	<a href="upload.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
+	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
 	<?php } ?>
 	<?php if (! $disable_upload_preview) { ?><br />
-	<a href="upload_preview.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
+	<a href="upload_preview.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
 	<?php if (! $disable_alternative_files) { ?><br />
-	<a href="alternative_files.php?ref=<?php echo $ref?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a><?php } ?>
+	<a href="alternative_files.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a><?php } ?>
 	<?php if ($allow_metadata_revert){?><br />
-	<a href="edit.php?ref=<?php echo $ref?>&exif=true" onClick="return confirm('<?php echo $lang["confirm-revertmetadata"]?>');">&gt; 
+	<a href="edit.php?ref=<?php echo $ref?>&exif=true&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" onClick="return confirm('<?php echo $lang["confirm-revertmetadata"]?>');">&gt; 
 	<?php echo $lang["action-revertmetadata"]?></a><?php } ?>
 </div>
 <div class="clearerleft"> </div>

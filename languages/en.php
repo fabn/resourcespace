@@ -432,6 +432,7 @@ $lang["complete"]="Complete";
 $lang["backtohome"]="Back to the home page";
 $lang["backtohelphome"]="Back to help home";
 $lang["backtosearch"]="Back to my search results";
+$lang["backtocontext"]="Back to current context";
 $lang["backtoview"]="Resource View";
 $lang["backtoeditresource"]="Back to edit resource";
 $lang["backtouser"]="Back to user login";

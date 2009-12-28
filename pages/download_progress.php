@@ -45,7 +45,8 @@ if (!$save_as)
     <h1><?php echo $lang["downloadinprogress"]?></h1>
     <p><?php echo text("introtext")?></p>
 	<?php } ?>
-    <p><a href="view.php?ref=<?php echo $ref?>&k=<?php echo $k?>&search=<?php echo urlencode(getval("search",""))?>&offset=<?php echo urlencode(getval("offset",""))?>&order_by=<?php echo urlencode(getval("order_by",""))?>&archive=<?php echo urlencode(getval("archive",""))?>">&gt;&nbsp;<?php echo $lang["backtoview"]?></a></p>
+    <p><a href="view.php?ref=<?php echo $ref?>&k=<?php echo $k?>&search=<?php echo urlencode(getval("search",""))?>&offset=<?php echo urlencode(getval("offset",""))?>&order_by=<?php echo urlencode(getval("order_by",""))?>&sort=<?php echo urlencode(getval("sort",""))?>&archive=<?php echo urlencode(getval("archive",""))?>">&gt;&nbsp;<?php echo $lang["backtoview"]?></a></p>
+    <p><a href="search.php?k=<?php echo $k?>&search=<?php echo urlencode(getval("search",""))?>&offset=<?php echo urlencode(getval("offset",""))?>&order_by=<?php echo urlencode(getval("order_by",""))?>&sort=<?php echo urlencode(getval("sort",""))?>&archive=<?php echo urlencode(getval("archive",""))?>">&gt;&nbsp;<?php echo $lang["backtocontext"]?></a></p>
     
     <?php if ($k=="") { ?>
     <p><a href="search.php">&gt;&nbsp;<?php echo $lang["backtosearch"]?></a></p>

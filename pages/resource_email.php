@@ -8,6 +8,19 @@ $ref=getvalescaped("ref","",true);
 # Fetch resource data
 $resource=get_resource_data($ref);if ($resource===false) {exit("Resource not found.");}
 
+# fetch the current search 
+$search=getvalescaped("search","");
+$order_by=getvalescaped("order_by","relevance");
+$offset=getvalescaped("offset",0,true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+$archive=getvalescaped("archive",0,true);
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
+
 # Load access level and check.
 $access=get_resource_access($ref);
 if (!($allow_share && ($access==0 || ($access==1 && $restricted_share)))) {exit("Access denied.");}
@@ -28,7 +41,7 @@ if (getval("save","")!="")
 		# Log this			
 		daily_stat("E-mailed resource",$ref);
 
-		redirect("pages/done.php?text=resource_email&resource=$ref");
+		redirect("pages/done.php?text=resource_email&resource=$ref&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
 		}
 	}
 
