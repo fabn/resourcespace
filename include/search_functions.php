@@ -13,7 +13,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
-	$order=array("relevance"=>"score $sort, r.user_rating $sort, r.hit_count $sort, r.creation_date $sort,r.ref $sort","popularity"=>"r.user_rating $sort,r.hit_count $sort,r.creation_date $sort,r.ref $sort","rating"=>"r.rating $sort, r.user_rating $sort, score $sort,r.ref $sort","date"=>"r.creation_date $sort,r.ref $sort","colour"=>"r.has_image $sort,r.image_blue $sort,r.image_green $sort,r.image_red $sort,r.creation_date $sort,r.ref $sort","country"=>"r.country $sort,r.ref $sort","title"=>"r.title $sort,r.ref $sort","file_path"=>"r.file_path $sort,r.ref $sort","resourceid"=>"r.ref $sort","resourcetype"=>"r.resource_type $sort,r.ref $sort","titleandcountry"=>"r.title $sort,r.country $sort");
+	$order=array("relevance"=>"score $sort, user_rating $sort, hit_count $sort, creation_date $sort,r.ref $sort","popularity"=>"user_rating $sort,hit_count $sort,creation_date $sort,r.ref $sort","rating"=>"r.rating $sort, user_rating $sort, score $sort,r.ref $sort","date"=>"creation_date $sort,r.ref $sort","colour"=>"has_image $sort,image_blue $sort,image_green $sort,image_red $sort,creation_date $sort,r.ref $sort","country"=>"country $sort,r.ref $sort","title"=>"title $sort,r.ref $sort","file_path"=>"file_path $sort,r.ref $sort","resourceid"=>"r.ref $sort","resourcetype"=>"resource_type $sort,r.ref $sort","titleandcountry"=>"title $sort,country $sort");
 	if (!in_array($order_by,$order)&&(substr($order_by,0,5)=="field")){
 		$order[$order_by]="$order_by $sort";
 	}
@@ -99,7 +99,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 		
 	# Join thumbs_display_fields to resource table 	
-	$select="r.ref,r.resource_type,r.has_image,r.is_transcoding,r.hit_count,r.creation_date,r.rating,r.user_rating,r.user_rating_count,r.user_rating_total,r.file_extension,r.preview_extension,r.image_red,r.image_green,r.image_blue,r.thumb_width,r.thumb_height,r.archive,r.access,r.colour_key,r.created_by,r.file_modified,r.file_checksum,r.request_count,r.new_hit_count,r.expiry_notification_sent,r.preview_tweaks,r.file_path ";
+	$select="r.ref,r.resource_type,r.has_image,r.is_transcoding,r.hit_count,r.creation_date,r.rating,r.user_rating,r.user_rating_count,r.user_rating_total,r.file_extension,r.preview_extension,r.image_red,r.image_green,r.image_blue,r.thumb_width,r.thumb_height,r.archive,r.access,r.colour_key,r.created_by,r.file_modified,r.file_checksum,r.request_count,r.new_hit_count,r.expiry_notification_sent,r.preview_tweaks,r.file_path ";	
+	
+	# add title and country to select (for older installations)
+	global $use_resource_column_data;
+	if ($use_resource_column_data){$select.=",title,country";}
+	
+	# add 'joins' to select (adding them 
 	$joins=get_resource_table_joins();
 	foreach( $joins as $datajoin)
 		{
