@@ -101,6 +101,12 @@ for ($m=0;$m<count($config_sheetthumb_fields);$m++)
 	{
 	$csf[$m]['name']=sql_value("select name value from resource_type_field where ref='$config_sheetthumb_fields[$m]'","");
 	}
+	
+$cslf="";
+for ($m=0;$m<count($config_sheetlist_fields);$m++)
+	{
+	$cslf[$m]['name']=sql_value("select name value from resource_type_field where ref='$config_sheetlist_fields[$m]'","");
+	}	
 
 $user= get_user($collectiondata['user']);
 
@@ -205,7 +211,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$value='';";
 							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
 							
-							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}
 							
 							$pdfcode.="\$value='".TidyList($value)."';";
@@ -251,7 +257,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$value='';";
 							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
 							
-							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
+							$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}
 							
 							$pdfcode.="\$value='".TidyList($value)."';";
