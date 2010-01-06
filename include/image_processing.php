@@ -192,18 +192,19 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
 				# and exiftool can provide more data. 
 			
-				$command=$exiftool_path."/exiftool -s -s -s -t -imagewidth -imageheight -xresolution -resolutionunit " . escapeshellarg($image);
+				$command=$exiftool_path."/exiftool -s -s -s -t -composite:imagesize -xresolution -resolutionunit " . escapeshellarg($image);
 				$dimensions_resolution_unit=explode("\t",shell_exec($command));
 				# if dimensions resolution and unit could be extracted, add them to the database.
 				# they can be used in view.php to give more accurate data.
-				if (count($dimensions_resolution_unit)==4)
+				if (count($dimensions_resolution_unit)==3)
 					{
 					$dru=$dimensions_resolution_unit;
 					$filesize=filesize($image); 
-					$width=$dru[0];
-					$height=$dru[1];
-					$resolution=$dru[2];
-					$unit=$dru[3];
+					$wh=explode("x",$dru[0]);
+					$width=$wh[0];
+					$height=$wh[1];
+					$resolution=$dru[1];
+					$unit=$dru[2];
 					sql_query("insert into resource_dimensions (resource, width, height, resolution, unit, file_size) values ('$ref', '$width', '$height', '$resolution', '$unit', '$filesize')");  
 					}
 				}
