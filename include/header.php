@@ -12,7 +12,9 @@ http://www.resourcespace.org/
 <title><?php echo htmlspecialchars($applicationname)?></title>
 <link rel="icon" type="image/png" href="<?php echo $baseurl?>/gfx/interface/favicon.png" />
 <link href="<?php echo $baseurl?>/css/global.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" />
+<?php if (!hook("adjustcolortheme")){ ?>
 <link href="<?php echo $baseurl?>/css/Col-<?php echo (isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
+<?php } ?>
 <!--[if lte IE 7]> <link href="<?php echo $baseurl?>/css/globalIE.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="<?php echo $baseurl?>/css/globalIE5.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <script src="<?php echo $baseurl?>/lib/js/prototype.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
