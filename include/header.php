@@ -59,7 +59,7 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 
 </head>
 
-<body <?php if (isset($bodyattribs)) { ?><?php echo $bodyattribs?><?php } ?>>
+<body id="<?php echo $pagename; ?>" <?php if (isset($bodyattribs)) { ?><?php echo $bodyattribs?><?php } ?>>
 <?php hook("bodystart"); ?>
 
 <?php
