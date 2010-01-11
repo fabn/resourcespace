@@ -35,7 +35,12 @@ if (getval("save","")!="")
 	$access=getvalescaped("access","");
 	if (hook("modifyresourceaccess")){$access=hook("modifyresourceaccess");}
 	$expires=getvalescaped("expires","");
-	$errors=email_resource($ref,$resource["field".$view_title_field],$userfullname,$users,$message,$access,$expires);
+	
+	$use_user_email=getvalescaped("use_user_email",false);
+	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
+	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches system name
+	
+	$errors=email_resource($ref,$resource["field".$view_title_field],$userfullname,$users,$message,$access,$expires,$user_email,$from_name);
 	if ($errors=="")
 		{
 		# Log this			
@@ -107,6 +112,16 @@ for ($n=$access;$n<=1;$n++) { ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
+
+<?php if ($email_from_user){?>
+<?php if ($useremail!="") { # Only allow this option if there is an email address available for the user.
+?>
+<div class="Question">
+<label for="use_user_email"><?php echo $lang["emailfromuser"].$useremail.". ".$lang["emailfromsystem"].$email_from ?></label><input type=checkbox checked id="use_user_email" name="use_user_email">
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
 <?php } ?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>

@@ -891,7 +891,8 @@ $lang["plugin-groupsspecific"]="This plugin is activated for the selected groups
 
 
 $lang["associatedcollections"]="Associated Collections";
-
+$lang["emailfromuser"]="Send the e-mail from ";
+$lang["emailfromsystem"]="If unchecked, email will be sent from the system address: ";
 
 
 

@@ -1194,9 +1194,13 @@ function i18n_get_indexable($text)
 	return $out;
 	}
 
-function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null)
+function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
+	
+	# NOTE: $from is the name of the user sending the email,
+	# while $from_name is the name that should be put in the header, which can be the system name
+	# It is necessary to specify two since in all cases the email should be able to contain the user's name.
 	
 	# old mail function remains the same to avoid possible issues with phpmailer
 	# send_mail_phpmailer allows for the use of text and html (multipart) emails,
@@ -1205,7 +1209,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	global $use_phpmailer;
 	if ($use_phpmailer){
-		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars); 
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name); 
 		return true;
 		}
 	
@@ -1232,12 +1236,12 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	
 	# Add headers
 	$headers="";
-   	$headers .= "X-Sender:  $from" . $eol;
-   	$headers .= "From: $from" . $eol;
+   #	$headers .= "X-Sender:  x-sender" . $eol;
+   	$headers .= "From: \"$from_name\" <$reply_to>" . $eol;
  	$headers .= "Reply-To: $reply_to" . $eol;
    	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $from . ">" . $eol;
-   	$headers .= "Return-Path: $from" . $eol;
+   	#$headers .= "Return-Path: returnpath" . $eol;
    	//$headers .= "Delivered-to: $email" . $eol;
    	$headers .= "MIME-Version: 1.0" . $eol;
    	$headers .= "X-Mailer: PHP Mail Function" . $eol;
@@ -1247,7 +1251,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	}
 
 if (!function_exists("send_mail_phpmailer")){
-function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null)
+function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="")
 	{
 	
 	# if ($use_phpmailer==true) this function is used instead.
@@ -1403,8 +1407,9 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	if (!isset($body)){$body=$message;}
 
 	$mail = new PHPMailer();
-	$mail->From = $from;
-	$mail->AddReplyto = $reply_to;
+	$mail->From = $reply_to;
+	$mail->FromName=$from_name;
+	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
 	

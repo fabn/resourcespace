@@ -36,9 +36,11 @@ $mysql_force_strict_mode=false;
 $secure=false; # Using HTTPS?
 $development=false; # Development mode?
 $baseurl="http://my.site/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
-$email_from="resourcespace@my.site"; # Where e-mails appear to come from
+$email_from="resourcespace@my.site"; # Where system e-mails appear to come from
 $email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
 $spider_password="TBTT6FD"; # The password required for spider.php - IMPORTANT - randomise this for each new installation. Your resources will be readable by anyone that knows this password.
+
+$email_from_user=true; #enable user-to-user emails to come from user's address by default (for better reply-to), with the user-level option of reverting to the system address
 
 # Scramble resource paths? If this is a public installation then this is a very wise idea.
 # Set the scramble key to be a hard-to-guess string (similar to a password).

@@ -594,11 +594,13 @@ function update_field($resource,$field,$value)
 	}
 
 if (!function_exists("email_resource")){	
-function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="")
+function email_resource($resource,$resourcename,$fromusername,$userlist,$message,$access=-1,$expires="",$useremail="",$from_name="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 
 	global $baseurl,$email_from,$applicationname,$lang,$userref;
+	
+	if ($useremail==""){$useremail=$email_from;}
 	
 	# remove any line breaks that may have been entered
 	$userlist=str_replace("\\r\\n",",",$userlist);
@@ -633,6 +635,9 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 
 	# Send an e-mail to each resolved user / e-mail address
 	$subject="$applicationname: $resourcename";
+	if ($fromusername==""){$fromusername=$applicationname;} // fromusername is used for describing the sender's name inside the email
+	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
+	
 	if ($message!="") {$message="\n\n" . $lang["message"] . ": " . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);}
 	for ($n=0;$n<count($emails);$n++)
 		{
@@ -651,10 +656,11 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		$templatevars['fromusername']=$fromusername;
 		$templatevars['message']=$message;
 		$templatevars['resourcename']=$resourcename;
+		$templatevars['from_name']=$from_name;
 		
 		# Build message and send.
 		$body=$templatevars['fromusername']." ". $lang["hasemailedyouaresource"] . $templatevars['message']."\n\n" . $lang["clicktoviewresource"] . "\n\n" . $templatevars['url'];
-		send_mail($emails[$n],$subject,$body,"","","emailresource",$templatevars);
+		send_mail($emails[$n],$subject,$body,$fromusername,$useremail,"emailresource",$templatevars,$from_name);
 		
 		# log this
 		resource_log($resource,"E","",$notes=$ulist[$n]);

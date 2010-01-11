@@ -526,13 +526,15 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	}
 
 if (!function_exists("email_collection")){
-function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="")
+function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
 	# Send them an e-mail linking to this collection
 	#  handle multiple collections (comma seperated list)
 	global $baseurl,$email_from,$applicationname,$lang,$userref, $email_multi_collections ;
+	
+	if ($useremail==""){$useremail=$email_from;}
 	
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneusername"]);}
 	$userlist=resolve_userlist_groups($userlist);
@@ -589,12 +591,17 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	global $use_phpmailer;
 	if ($use_phpmailer){$htmlbreak="<br><br>";} 
 	
+	if ($fromusername==""){$fromusername=$applicationname;} // fromusername is used for describing the sender's name inside the email
+	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
+	
 	$templatevars['message']=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);	
 	$templatevars['fromusername']=$fromusername;
+	$templatevars['from_name']=$from_name;
 	
 	if(count($reflist)>1){$subject=$applicationname.": ".$lang['mycollections'];}
 	else { $subject=$applicationname.": ".$collectionname;}
-
+	
+	if ($fromusername==""){$fromusername=$applicationname;}
 		
 	##  loop through recipients
 	for ($nx1=0;$nx1<count($emails);$nx1++)
@@ -624,9 +631,10 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 			}
 		$list.=$htmlbreak;	
 		$templatevars['list']=$list;
+		$templatevars['from_name']=$from_name;
 		
 		$body=$templatevars['fromusername']." " . ((count($reflist)>1)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
-		send_mail($emails[$nx1],$subject,$body,"","","emailcollection",$templatevars);
+		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,"emailcollection",$templatevars,$from_name);
 		}
 		
 	# Return an empty string (all OK).

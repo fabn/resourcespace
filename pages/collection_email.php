@@ -7,6 +7,7 @@ include "../include/search_functions.php";
 
 
 $ref=getvalescaped("ref","");
+
 # Fetch collection data
 if (!is_numeric($ref)) ##  multiple collections may be referenced
 	{
@@ -27,7 +28,13 @@ if (getval("save","")!="")
 	$access=getvalescaped("access",-1);
 	$expires=getvalescaped("expires","");	
 	$feedback=getvalescaped("request_feedback","");	if ($feedback=="") {$feedback=false;} else {$feedback=true;}
-	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires);
+	
+	$use_user_email=getvalescaped("use_user_email",false);
+	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
+	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches email
+	
+	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name);
+
 	if ($errors=="")
 		{
 		# Log this			
@@ -170,6 +177,16 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 <div class="clearerleft"> </div>
 </div>
 <?php } # end hook replaceemailrequestfeedback ?>
+<?php } ?>
+
+<?php if ($email_from_user){?>
+<?php if ($useremail!="") { # Only allow this option if there is an email address available for the user.
+?>
+<div class="Question">
+<label for="use_user_email"><?php echo $lang["emailfromuser"].$useremail.". ".$lang["emailfromsystem"].$email_from ?></label><input type=checkbox checked id="use_user_email" name="use_user_email">
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
 <?php } ?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>
