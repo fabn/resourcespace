@@ -1408,7 +1408,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	$mail = new PHPMailer();
 	$mail->From = $reply_to;
-	$mail->FromName=$from_name;
+	$mail->FromName = $templatevars['from_name'];
 	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
@@ -1418,8 +1418,6 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	
 	$mail->Subject = $subject;
 	$mail->Body    = $body;
-	
-	if (isset($templatevars['fromusername'])){$mail->FromName = $templatevars['fromusername'];} else {$mail->FromName="";}
 	
 	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
 		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail','base64','image/jpeg'); 
