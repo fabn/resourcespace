@@ -419,7 +419,7 @@ if ($enable_copy_data_from && !$multiple)
 	<?php
 	}
 
-if (isset($metadata_template_resource_type))
+if (isset($metadata_template_resource_type) && !$multiple)
 	{
 	# Show metadata templates here
 	?>
