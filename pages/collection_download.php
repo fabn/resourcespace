@@ -189,7 +189,7 @@ if ($submitted != "")
 	foreach ($result as $resource)
 	{if (!in_array($resource['ref'],$used_resources)){$text.="Did not include: ".$resource['ref']." \r\n\r\n";}}
 	
-	$textfile = $storagedir . "/tmp/".$collection."-".$collectiondata['name'].$sizetext.".txt";
+	$textfile = $storagedir . "/tmp/".$collection."-".safe_file_name($collectiondata['name']).$sizetext.".txt";
 	$fh = fopen($textfile, 'w') or die("can't open file");
 	fwrite($fh, $text);
 	fclose($fh);
