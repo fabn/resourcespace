@@ -823,7 +823,12 @@ function get_resource_table_joins(){
 	$joins=array_merge($thumbs_display_fields,$list_display_fields,$data_joins,array($metadata_template_title_field));
 	$joins=array_unique($joins);
 	$n=0;
-	foreach ($joins as $join){$return[$n]=$join;$n++;}
+	foreach ($joins as $join){
+		if ($join!=""){
+			$return[$n]=$join;
+			}
+		$n++;
+		}
 	return $return;
 	}
     
