@@ -88,7 +88,7 @@ include "../include/header.php";
 </div>
 
 <div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
-<label>Page</label>
+<label><?php echo $lang['previewpage']?></label>
 <select class="shrtwidth" name="previewpage" id="previewpage">
 </select>
 </div>
