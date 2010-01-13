@@ -50,11 +50,11 @@ include "../include/header.php";
 <select class="shrtwidth" name="sheetstyle" id="sheetstyle" onChange="
 	if ($('sheetstyle').value=='list')
 		{
-		Effect.DropOut('ThumbnailOptions',{duration:0.5});
+		$('ThumbnailOptions').style.display='none';
 		}
 	else
 		{
-		Effect.Appear('ThumbnailOptions',{duration:0.5});
+		$('ThumbnailOptions').style.display='block';
 		}
 	revertToPage1();	
 		">
