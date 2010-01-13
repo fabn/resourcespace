@@ -1408,7 +1408,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	$mail = new PHPMailer();
 	$mail->From = $reply_to;
-	$mail->FromName = $templatevars['from_name'];
+	$mail->FromName = $from_name;
 	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
