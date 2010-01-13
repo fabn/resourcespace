@@ -325,7 +325,7 @@ for ($n=0;$n<count($result);$n++)
 		
 		$command= $ghostscript_path. "/gs";
 		if (!file_exists($command)) {$command= $ghostscript_path. "\gs.exe";}
-		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -r100 -dLastPage=$previewpage -dUseCropBox -sOutputFile=\"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.pdf\"";
+		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -r100 -dLastPage=$previewpage -sOutputFile=\"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.pdf\"";
 		shell_exec($command);
 		
 		$command=$imagemagick_path . "/bin/convert";

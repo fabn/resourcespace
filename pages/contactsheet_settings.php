@@ -39,7 +39,9 @@ include "../include/header.php";
  preview image that can be judged before initiating a download of sometimes several MB.-->
 <form method=post name="contactsheetform" id="contactsheetform" action="ajax/contactsheet.php" >
 <input type=hidden name="c" value="<?php echo $collection?>">
-<div name="error" id="error"></div>
+
+<!--<div name="error" id="error"></div>-->
+
 <div class="Question">
 <label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo $collectiondata['name']?></div>
 <div class="clearerleft"> </div>
