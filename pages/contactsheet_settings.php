@@ -14,8 +14,14 @@ $headerinsert.="
 <script type=\"text/javascript\">
 contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
 </script>
-";
+<script type=\"text/javascript\">
+function revertToPage1(){
+$('previewpage').options.length=0;$('previewpage').options[1]=new Option(1,1,selected,selected);$('previewpage').value=1;$('previewPageOptions').style.display='none';
+}
+</script>
+";?>
 
+<?php
 $bodyattribs="onload=\"previewContactSheet();\"";
 include "../include/header.php";
 ?>
@@ -49,7 +55,9 @@ include "../include/header.php";
 	else
 		{
 		Effect.Appear('ThumbnailOptions',{duration:0.5});
-		}"">
+		}
+	revertToPage1();	
+		">
 <option value="thumbnails"><?php echo $lang["thumbnails"]?></option>
 <option value="list"><?php echo $lang["list"]?></option>
 </select>
@@ -58,25 +66,31 @@ include "../include/header.php";
 
 <div class="Question">
 <label><?php echo $lang["size"]?></label>
-<select class="shrtwidth" name="size" id="size"><?php echo $papersize_select ?>
+<select class="shrtwidth" name="size" id="size" onChange="revertToPage1();"><?php echo $papersize_select ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
 
 <div id="ThumbnailOptions" class="Question">
 <label><?php echo $lang["columns"]?></label>
-<select class="shrtwidth" name="columns" id="ThumbnailOptions">
+<select class="shrtwidth" name="columns" id="ThumbnailOptions" onChange="revertToPage1();"> 
 <?php echo $columns_select ?>
 </select>
 </div>
 
 <div class="Question">
 <label><?php echo $lang["orientation"]?></label>
-<select class="shrtwidth" name="orientation" id="orientation">
+<select class="shrtwidth" name="orientation" id="orientation" onChange="revertToPage1();">
 <option value="portrait"><?php echo $lang["portrait"]?></option>
 <option value="landscape"><?php echo $lang["landscape"]?></option>
 </select>
 <div class="clearerleft"> </div>
+</div>
+
+<div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
+<label>Page</label>
+<select class="shrtwidth" name="previewpage" id="previewpage">
+</select>
 </div>
 
 <div class="QuestionSubmit">

@@ -46,6 +46,7 @@ $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","");
 if(getval("preview","")!=""){$preview=true;} else {$preview=false;}
 $imgsize="pre";
+$previewpage=getval("previewpage",1);
 
 if ($preview==true){$imgsize="col";}
 if ($size == "a4") {$width=210/25.4;$height=297/25.4;} // convert to inches
@@ -281,12 +282,12 @@ for ($n=0;$n<count($result);$n++)
 							if ($j > $rowsperpage){
 							$j=0; 
 							
-							if (($preview==true) && ($page>0)){break;} else{
+							
 							if ($n<count($result)-1){ //avoid making an additional page if it will be empty							
 								$pdfcode.="\$pdf->AddPage();";
 								$page = $page+1;
 								}
-							}
+							
 							
 							if ($n<count($result)-1){// avoid adding header if this is the last page and the next would be empty
 								#When moving to a new page, get current coordinates, place a new page header.
@@ -315,15 +316,24 @@ for ($n=0;$n<count($result);$n++)
 		if (file_exists($storagedir."/tmp/contactsheet.pdf")){unlink($storagedir."/tmp/contactsheet.pdf");}
 		$pdfcode.="\$pdf->Output(\$storagedir.'/tmp/contactsheet.pdf','F');"; 
 		eval($pdfcode);
-		# Set up ImageMagick 
+		echo $pagecount;// send the page count back for paging links, also the column count so that the page can be reset to one. 
+		
+		# Set up  
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
+		
+		$command= $ghostscript_path. "/gs";
+		if (!file_exists($command)) {$command= $ghostscript_path. "\gs.exe";}
+		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -r100 -dLastPage=$previewpage -dUseCropBox -sOutputFile=\"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.pdf\"";
+		shell_exec($command);
+		
 		$command=$imagemagick_path . "/bin/convert";
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
-		$command.= " -resize 250x250 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheet.pdf\"[0] \"".$storagedir."/tmp/contactsheet.jpg\"";
+		
+		$command.= " -resize 250x250 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.jpg\"";
 		shell_exec($command);
 		exit();
 		}
