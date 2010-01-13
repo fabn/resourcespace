@@ -225,9 +225,9 @@ if ($multiple) { ?>
 <p><?php echo count($items)?> <?php echo $lang["resourcesselected"]?>. <?php echo text("multiple")?></p>
 
 <?php } elseif ($ref>0) { ?>
+
 <h1><?php echo $lang["editresource"]?></h1>
-
-
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a>
 <?php if (!$multiple) { 
 # Resource next / back browsing.
 ?>
