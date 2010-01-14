@@ -191,7 +191,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$ff=".$ff.";";
 							$value="";
 							$pdfcode.="\$value='';";
-							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
+							$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}
@@ -210,7 +210,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$ff=".$ff.";";
 							$value="";
 							$pdfcode.="\$value='';";
-							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
+							$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 							$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}
@@ -239,7 +239,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$ff=".$ff.";";
 							$value="";
 							$pdfcode.="\$value='';";
-							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetthumb_fields[$ff]));
+							$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 							$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}
@@ -256,7 +256,7 @@ for ($n=0;$n<count($result);$n++)
 							$pdfcode.="\$ff=".$ff.";";
 							$value="";
 							$pdfcode.="\$value='';";
-							$value=str_replace("'","\'", get_data_by_field($ref,$config_sheetlist_fields[$ff]));
+							$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 							$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
 							if (file_exists($plugin)) {include $plugin;}

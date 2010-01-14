@@ -819,8 +819,8 @@ function rcRmdir ($path){ # Recursive rmdir function.
 }
 
 function get_resource_table_joins(){
-	global $thumbs_display_fields,$list_display_fields,$data_joins,$metadata_template_title_field;
-	$joins=array_merge($thumbs_display_fields,$list_display_fields,$data_joins,array($metadata_template_title_field));
+	global $thumbs_display_fields,$list_display_fields,$data_joins,$metadata_template_title_field,$config_sheetlist_fields,$config_sheetthumb_fields;
+	$joins=array_merge($thumbs_display_fields,$list_display_fields,$data_joins,$config_sheetlist_fields,$config_sheetthumb_fields,array($metadata_template_title_field));
 	$joins=array_unique($joins);
 	$n=0;
 	foreach ($joins as $join){

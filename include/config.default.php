@@ -922,10 +922,8 @@ $back_to_collections_link = "";
 $partial_index_min_word_length=3;
 
 # $use_resource_column_data=false intends to remove dependence upon *mapped* resource columns and hardcoded displays
-# all existing resource_data defined in $thumbs_display_fields, $list_display_fields, and $data_joins will be added
+# all existing resource_data needed for search display are gathered in get_resource_table_joins() and will be added
 # to the resource table as varchar(200) via the DBStruct check for quicker display and sorting, and edits will be duped there as well.
-# You can optimize by deleting unneeded field# columns, title, country, or giving the appropriate column types,
-# but in any case this is tenfold faster than joining resource_data fields.
 # true is deprecated, and can only be used with old systems which still have resource columns such as title and country,
 # It is highly recommended to convert to $use_resource_column_data=false, as it will add flexibility to search displays.
 $use_resource_column_data=false; 
