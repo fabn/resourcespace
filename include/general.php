@@ -1114,7 +1114,7 @@ function make_password()
 
 function bulk_mail($userlist,$subject,$text)
 	{
-	global $email_from,$lang;
+	global $email_from,$lang,$applicationname;
 	
 	# Attempt to resolve all users in the string $userlist to user references.
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
@@ -1123,12 +1123,15 @@ function bulk_mail($userlist,$subject,$text)
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 	if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
 
+	$templatevars['text']=stripslashes(str_replace("\\r\\n","\n",$text));
+	$body=$templatevars['text'];
+
 	# Send an e-mail to each resolved user
 	$emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
 	for ($n=0;$n<count($emails);$n++)
 		{
 		if ($emails[$n]!=""){
-			send_mail($emails[$n],$subject,stripslashes(str_replace("\\r\\n","\n",$text)));
+			send_mail($emails[$n],$subject,$body,$applicationname,$email_from,"emailbulk",$templatevars,$applicationname);
 			}
 		}
 		
