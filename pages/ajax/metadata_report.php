@@ -11,18 +11,19 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$ref=getval("ref","");
 	$resource=get_resource_data($ref);
 	$ext=$resource['file_extension'];
+	if ($ext==""){die($lang['nometadatareport']);}
 	$resource_type=$resource['resource_type'];
 	$type_name=get_resource_type_name($resource_type);
 
 	$image=get_resource_path($ref,true,"",false,$ext);
-	if (!file_exists($image)) {die("error");}
+	if (!file_exists($image)) {die($lang['error']);}
 
 	#test if filetype is supported by exiftool
 	$command=$exiftool_path."/exiftool -listf";
 	$formats=shell_exec($command);
 	$ext=strtoupper($ext);
-	if (strlen(strstr($formats,$ext))<2){die("filetype $ext not supported");}
-	if (in_array(strtolower($ext),$exiftool_no_process)) {die("Exiftool processing is disabled for filetype $ext.");}
+	if (strlen(strstr($formats,$ext))<2){die($ext." ".$lang['notsupported']);}
+	if (in_array(strtolower($ext),$exiftool_no_process)) {die($lang['exiftoolprocessingdisabledforfiletype']." ".$ext);}
 	
 	#build array of writable tags
 	$command=$exiftool_path."/exiftool -listw";
@@ -39,7 +40,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$writable_formats=shell_exec($command);
 	$writable_formats=str_replace("\n","",$writable_formats);
 	$writable_formats_array=explode(" ",$writable_formats);
-	$file_writability=in_array($ext,$writable_formats_array);
+	$file_writability=in_array($ext,$writable_formats_array); 
 	}
 	
 	$command=$exiftool_path."/exiftool -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
@@ -67,13 +68,13 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 		} 
 
 	# build report:		
-	if(!isset($file_writability)){$file_writability=true;$writability_comment="Not all file formats are writable by exiftool.";}else{$writability_comment="";}
-	($exiftool_write&&$file_writability)?$write_status="Metadata write will be attempted. ".$writability_comment:$write_status="No write will be attempted.";?>
+	if(!isset($file_writability)){$file_writability=true;$writability_comment=$lang['notallfileformatsarewritable'];}else{$writability_comment="";}
+	($exiftool_write&&$file_writability)?$write_status=$lang['metadatawritewillbeattempted']. $writability_comment:$write_status=$lang['nowritewillbeattempted'];?>
 	
 	<?php
 	echo "<table class=\"InfoTable\">";
-	echo "<tr><td colspan=\"5\">Resource Type: ".$type_name."</td></tr>";
-	echo "<tr><td width=\"150\">RESOURCESPACE</td><td width=\"50\">GROUP</td><td width=\"150\">EXIFTOOL TAG</td><td>EMBEDDED VALUE</td><td>$write_status</td></tr>";
+	echo "<tr><td colspan=\"5\">".$lang['resourcetype'].": ".$type_name."</td></tr>";
+	echo "<tr><td width=\"150\">".$applicationname."</td><td width=\"50\">".$lang['group']."</td><td width=\"150\">".$lang['exiftooltag']."</td><td>".$lang['embeddedvalue']."</td><td>$write_status</td></tr>";
 	$fields=explode("\n",$report);
 	foreach ($fields as $field)
 		{

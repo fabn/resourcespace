@@ -899,4 +899,13 @@ $lang["emailfromsystem"]="If unchecked, email will be sent from the system addre
 $lang["previewpage"]="Preview Page";
 $lang["nodownloads"]="No Downloads";
 $lang["uncollectedresources"]="Resources Not Used in Collections";
+$lang["nowritewillbeattempted"]="No write will be attempted";
+$lang["notallfileformatsarewritable"]="Not all file formats are writable by exiftool";
+$lang["notsupported"]="filetype not supported";
+$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool processing disabled for file type";
+$lang["nometadatareport"]="No Metadata Report";
+$lang["metadatawritewillbeattempted"]="Metadata write will be attempted.";
+$lang["embeddedvalue"]="Embedded Value";
+$lang["exiftooltag"]="Exiftool Tag";
+$lang["error"]="Error";
 ?>
