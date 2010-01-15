@@ -62,21 +62,44 @@ if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extension
 
 
 /* ----------------------------------------
-	Try InDesign
+	Try InDesign - for non-exiftool - CS4 not supported
    ----------------------------------------
 */
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
-if ($extension=="indd" && !isset($newfile))
-	{
-	$indd_thumb = extract_indd_thumb ($file);
-	if ($indd_thumb!="no")
+global $exiftool_path;
+if (!isset($exiftool_path)){
+	if ($extension=="indd" && !isset($newfile))
 		{
-		base64_to_jpeg( $indd_thumb, $target);
-		if (file_exists($target)){$newfile = $target;}
+		$indd_thumb = extract_indd_thumb ($file);
+		if ($indd_thumb!="no")
+			{
+			base64_to_jpeg( $indd_thumb, $target);
+			if (file_exists($target)){$newfile = $target;}
+			}
 		}
-		
-	hook("indesign");	
 	}
+	
+	
+/* ----------------------------------------
+       Try InDesignThumbnail - exiftool
+  ----------------------------------------
+*/
+# Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+# Thanks to Jeff Harmon for this code
+
+if ($extension=="indd" && !isset($newfile))
+       {
+       global $exiftool_path;
+       if (isset($exiftool_path))
+               {
+               shell_exec($exiftool_path.'/exiftool -b -thumbnailimage '.$file.' > '.$target);
+               }
+       if (file_exists($target))
+               {
+               #if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
+               if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+               }
+       }
 	
 	
 /* ----------------------------------------
