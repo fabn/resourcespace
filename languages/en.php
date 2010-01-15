@@ -897,5 +897,6 @@ $lang["emailfromsystem"]="If unchecked, email will be sent from the system addre
 
 
 $lang["previewpage"]="Preview Page";
-
+$lang["nodownloads"]="No Downloads";
+$lang["uncollectedresources"]="Resources Not Used in Collections";
 ?>

@@ -169,6 +169,41 @@ if (substr($search,0,11)=="!collection")
 		}
 	}
 
+
+if ($search_titles){
+	if (substr($search,0,9)=="!last1000"){
+		$collection_title = '<div align="left"><h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
+	}
+	if (substr($search,0,8)=="!related") {
+		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
+		$collection_title = '<div align="left"><h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
+	}
+	if ($archive==-2){
+	$collection_title = '<div align="left"><h1>'.$lang["status-2"].'</h1> ';
+	}
+	if ($archive==-1){
+	$collection_title = '<div align="left"><h1>'.$lang["status-1"].'</h1> ';
+	}
+	if ($archive==2){
+	$collection_title = '<div align="left"><h1>'.$lang["status2"].'</h1> ';
+	}
+	if ($archive==3){
+	$collection_title = '<div align="left"><h1>'.$lang["status3"].'</h1> ';
+	}
+	if (substr($search,0,15)=="!archivepending") {
+		$collection_title = '<div align="left"><h1>'.$lang["status1"].'</h1> ';
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-2){$collection_title = '<div align="left"><h1>'.$lang["viewcontributedps"].'</h1> ';}
+	}
+	if (substr($search,0,7)=="!unused") {
+		$collection_title = '<div align="left"><h1>'.$lang["uncollectedresources"].'</h1> ';
+	}
+}
+	
+	
+
 # get current collection resources to pre-fill checkboxes
 if ($use_checkboxes_for_selection){
 $collectionresources=get_collection_resources($usercollection);

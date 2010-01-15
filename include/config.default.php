@@ -1300,4 +1300,6 @@ $debug_log=false;
 # enable a list of collections that a resource belongs to, on the view page
 $view_resource_collections=false;
 
+# enable titles on the search page that help describe the current context
+$search_titles=false;
 ?>
