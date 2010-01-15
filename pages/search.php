@@ -171,7 +171,7 @@ if (substr($search,0,11)=="!collection")
 
 
 if ($search_titles){
-	if (substr($search,0,9)=="!last1000"){
+	if (substr($search,0,5)=="!last"){
 		$collection_title = '<div align="left"><h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
 	}
 	if (substr($search,0,8)=="!related") {
