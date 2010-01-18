@@ -789,7 +789,7 @@ function email_reminder($email)
 	$templatevars['url']=$baseurl;
 	
 	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
-	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars,$applicationname);
+	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);
 	return true;
 	}
 
@@ -1114,7 +1114,7 @@ function make_password()
 
 function bulk_mail($userlist,$subject,$text)
 	{
-	global $email_from,$lang,$applicationname;
+	global $email_from,$lang;
 	
 	# Attempt to resolve all users in the string $userlist to user references.
 	if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
@@ -1123,16 +1123,11 @@ function bulk_mail($userlist,$subject,$text)
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
 	if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
 
-	$templatevars['text']=stripslashes(str_replace("\\r\\n","\n",$text));
-	$body=$templatevars['text'];
-
 	# Send an e-mail to each resolved user
 	$emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
 	for ($n=0;$n<count($emails);$n++)
 		{
-		if ($emails[$n]!=""){
-			send_mail($emails[$n],$subject,$body,$applicationname,$email_from,"emailbulk",$templatevars,$applicationname);
-			}
+		send_mail($emails[$n],$subject,stripslashes(str_replace("\\r\\n","\n",$text)));
 		}
 		
 	# Return an empty string (all OK).
@@ -1413,7 +1408,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	$mail = new PHPMailer();
 	$mail->From = $reply_to;
-	$mail->FromName = $from_name;
+	$mail->FromName = $templatevars['from_name'];
 	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
@@ -1903,16 +1898,12 @@ function check_access_key($resource,$key)
 function check_access_key_collection($collection,$key)
 	{
 	$r=get_collection_resources($collection);
-	$valid=false;
 	for ($n=0;$n<count($r);$n++)
 		{
 		# Verify a supplied external access key for all resources in a collection
-		# There must be at least one matching key.
-		if (check_access_key($r[$n],$key)) {$valid=true;}
+		if (!check_access_key($r[$n],$key)) {return false;}
 		}	
-	if (!$valid) {return false;}
-	
-	
+
 	# Set the 'last used' date for this key
 	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
 	return true;
