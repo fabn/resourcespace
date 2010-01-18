@@ -673,6 +673,7 @@ function remove_saved_search($collection,$search)
 
 function add_saved_search_items($collection)
 	{
+	# Adds resources from a search to the collection.
 	$results=do_search(getvalescaped("addsearch",""), getvalescaped("restypes",""), "relevance", getvalescaped("archive","",true));
 	if (is_array($results))
 		{
@@ -683,6 +684,31 @@ function add_saved_search_items($collection)
 			sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
 			}
 		}
+
+	# Check if this collection has already been shared externally. If it has, we must add a further entry
+	# for this specific resource, and warn the user that this has happened.
+	$keys=get_collection_external_access($collection);
+	if (count($keys)>0)
+		{
+		# Set the flag so a warning appears.
+		global $collection_share_warning;
+		$collection_share_warning=true;
+		
+		for ($n=0;$n<count($keys);$n++)
+			{
+			# Insert a new access key entry for this resource/collection.
+			global $userref;
+			
+			for ($r=0;$r<count($results);$r++)
+				{
+				$resource=$results[$r]["ref"];
+				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
+				#log this
+				collection_log($collection,"s",$resource, '#new_resource');
+				}
+			}
+		}
+
 	}
 
 if (!function_exists("allow_multi_edit")){
