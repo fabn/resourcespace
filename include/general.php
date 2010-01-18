@@ -1903,12 +1903,16 @@ function check_access_key($resource,$key)
 function check_access_key_collection($collection,$key)
 	{
 	$r=get_collection_resources($collection);
+	$valid=false;
 	for ($n=0;$n<count($r);$n++)
 		{
 		# Verify a supplied external access key for all resources in a collection
-		if (!check_access_key($r[$n],$key)) {return false;}
+		# There must be at least one matching key.
+		if (check_access_key($r[$n],$key)) {$valid=true;}
 		}	
-
+	if (!$valid) {return false;}
+	
+	
 	# Set the 'last used' date for this key
 	sql_query("update external_access_keys set lastused=now() where collection='$collection' and access_key='$key'");
 	return true;
