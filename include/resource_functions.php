@@ -125,7 +125,7 @@ function save_resource_data($ref,$multi)
 				# Set the value exactly as sent.
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 				} 
-			if ($fields[$n]["value"]!=str_replace("\\","",$val))
+			if ($fields[$n]["value"]!== str_replace("\\","",$val))
 				{
 				# This value is different from the value we have on record.
 
@@ -841,7 +841,7 @@ function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue=""
 	
 	# Add difference to file.
 	$diff="";
-	if ($field!="" && ($fromvalue!=$tovalue))
+	if ($field!="" && ($fromvalue !== $tovalue))
 		{
 		$diff=log_diff($fromvalue,$tovalue);
 		}
@@ -1324,7 +1324,7 @@ function save_field_options($field)
 				
 				#echo "Old value = '" . $matching[$m]["value"] . "', new value = '" . $newval . "'";
 				
-				if ($matching[$m]["value"]!=$newval)
+				if ($matching[$m]["value"]!== $newval)
 					{
 					# Value has changed. Update.
 
@@ -1364,7 +1364,7 @@ function save_field_options($field)
 					}
 				$new=join(",",$new);
 				
-				if ($matching[$m]["value"]!=$new)
+				if ($matching[$m]["value"]!== $new)
 					{
 					# Value has changed. Update.
 
@@ -1575,7 +1575,7 @@ function filter_match($filter,$name,$value)
 function log_diff($fromvalue,$tovalue)	
 	{
 	# Forumlate descriptive text to describe the change made to a metadata field.
-	
+
 	# Remove any database escaping
 	$fromvalue=str_replace("\\","",$fromvalue);
 	$tovalue=str_replace("\\","",$tovalue);
