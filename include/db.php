@@ -246,6 +246,10 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
         	{
 			echo "<span class=error>Sorry, but this query would return too many results. Please try refining your query by adding addition keywords or search parameters.<!--$sql--></span>";        	
         	}
+        elseif (substr($error,0,15)=="Too many tables")
+        	{
+			echo "<span class=error>Sorry, but this query contained too many keywords. Please try refining your query by removing any surplus keywords or search parameters.<!--$sql--></span>";        	
+        	}
         else
         	{
         	# Check that all database tables and columns exist using the files in the 'dbstruct' folder.
