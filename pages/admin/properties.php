@@ -233,7 +233,20 @@ if (array_key_exists("delete",$_POST))
     </script>
     <?php
     }
+	?>
+<script type="text/javascript">
 
+function stopRKey(evt) {
+  var evt = (evt) ? evt : ((event) ? event : null);
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+}
+
+document.onkeypress = stopRKey;
+
+</script>
+
+<?php 
 include "include/header.php";
 ?>
 <body style="background-position:0px -85px;margin:0;padding:10px;">
