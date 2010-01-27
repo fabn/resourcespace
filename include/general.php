@@ -775,7 +775,7 @@ function save_user($ref)
 function email_reminder($email)
 	{
 	if ($email=="") {return false;}
-	$details=sql_query("select username from user where email like '$email'");
+	$details=sql_query("select username from user where email like '$email' and approved=1");
 	if (count($details)==0) {return false;}
 	$details=$details[0];
 	global $applicationname,$email_from,$baseurl,$lang;
