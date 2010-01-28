@@ -1230,6 +1230,8 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	if ($reply_to=="") {$reply_to=$email_from;}
+	global $applicationname;
+	if ($from_name==""){$from_name=$applicationname;}
 	
 	# Work out correct EOL to use for mails (should use the system EOL).
 	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
@@ -1285,7 +1287,9 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	if ($reply_to=="") {$reply_to=$email_from;}
-
+	global $applicationname;
+	if ($from_name==""){$from_name=$applicationname;}
+	
 	#check for html template. If exists, attempt to include vars into message
 	if ($html_template!="")
 		{
@@ -1408,7 +1412,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	$mail = new PHPMailer();
 	$mail->From = $reply_to;
-	$mail->FromName = $templatevars['from_name'];
+	$mail->FromName = $from_name;
 	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
 	$mail->CharSet = "utf-8"; 
