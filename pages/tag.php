@@ -8,6 +8,12 @@ if (getval("save","")!="")
 	{
 	$ref=getvalescaped("ref","",true);
 	$keywords=getvalescaped("keywords","");
+	
+	# support resource_type based tag fields
+	$resource_type=get_resource_data($ref);
+	$resource_type=$resource_type['resource_type'];
+	if (isset($speedtagging_by_type[$resource_type])){$speedtaggingfield=$speedtagging_by_type[$resource_type];}
+	
 	$oldval=get_data_by_field($ref,$speedtaggingfield);
 	
 	update_field($ref,$speedtaggingfield,$keywords);
