@@ -524,10 +524,16 @@ function escape_check($text) #only escape a string if we need to, to prevent esc
     {
     $text=mysql_escape_string($text);
     # turn all \\' into \'
-    while (!(strpos($text,"\\\\")===false))
+    while (!(strpos($text,"\\\\'")===false))
         {
-        $text=str_replace("\\\\","\\",$text);
+        $text=str_replace("\\\\'","\\'",$text);
         }
+
+	# Remove any backslashes that are not being used to escape single quotes.
+    $text=str_replace("\\'","{bs}'",$text);
+    $text=str_replace("\\","",$text);
+    $text=str_replace("{bs}'","\\'",$text);            
+    
     return $text;
     }
     
