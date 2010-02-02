@@ -299,7 +299,7 @@ if ($k!="")
 ?>
 <div id="CollectionMenu">
 <?php if (!hook("thumbsmenu")) { ?>
-  <h2><?php echo $lang["mycollections"]?></h2>
+  <h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
 		<select name="collection" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
@@ -334,7 +334,10 @@ if ($k!="")
 
   <ul>
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-    <?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li>
+    <?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li><?php } ?>
+	<?php if ($contact_sheet==true && $collections_compact_style) { ?>
+    <a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+	<?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>

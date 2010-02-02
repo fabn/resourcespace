@@ -1309,4 +1309,9 @@ $view_resource_collections=false;
 
 # enable titles on the search page that help describe the current context
 $search_titles=false;
+
+# $collections_compact_style switches on some experimental UI changes in the collections frame. (making My Collections header a link to Manage page, 
+# removing Manage My Collections and adding a direct link to contact sheets
+$collections_compact_style=false;
+
 ?>
