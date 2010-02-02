@@ -172,7 +172,7 @@ if ($theme_category_levels>=3)
 <div class="clearerleft"> </div>
 </div>
 
-<?php if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
+<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D")) { ?>
 <div class="Question">
 <label for="deleteall"><?php echo $lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?php echo $lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>
