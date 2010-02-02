@@ -91,7 +91,7 @@ include "../include/header.php";
 
 <div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
 <label><?php echo $lang['previewpage']?></label>
-<select class="shrtwidth" name="previewpage" id="previewpage">
+<select class="shrtwidth" name="previewpage" id="previewpage" onChange="previewContactSheet();">
 </select>
 </div>
 
