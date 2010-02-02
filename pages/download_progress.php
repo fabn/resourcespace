@@ -10,9 +10,18 @@ $size=getval("size","");
 $ext=getval("ext","");
 $alternative=getval("alternative",-1);
 
+$usage=getval("usage","");
+$usagecomment=getval("usagecomment",-1);
+
+
+if ($download_usage && getval("usage","")=="")
+	{
+	redirect("pages/download_usage.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative);
+	}
+
 if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext, 1, $alternative)))) // used in remotedownload-plugin
 	{
-	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative;
+	$url=$baseurl."/pages/download.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative . "&usage=" . $usage . "&usagecomment=" . urlencode($usagecomment);
 	}
 
 # For Opera and Internet Explorer 7 - redirected downloads are always blocked, so use the '$save_as' config option

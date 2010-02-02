@@ -908,4 +908,9 @@ $lang["metadatawritewillbeattempted"]="Metadata write will be attempted.";
 $lang["embeddedvalue"]="Embedded Value";
 $lang["exiftooltag"]="Exiftool Tag";
 $lang["error"]="Error";
+
+$lang["indicateusage"]="Please describe your planned use for this resource.";
+$lang["usage"]="Usage";
+$lang["indicateusagemedium"]="Usage Medium";
+$lang["usageincorrect"]="You must describe the planned usage and select a medium";
 ?>

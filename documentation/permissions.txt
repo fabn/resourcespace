@@ -22,6 +22,8 @@ f*	Can see all fields
 f?	Can see field with reference ? e.g. f1,f2,f3 (applies to editing, advanced search, and viewing resources).
 f-? Can not see the field with reference ? e.g. f*,f-3 means see all fields except field 3.
 F?	DENY write access to the field. The field will not appear on edit or edit all.
+F*  DENY write access to all fields.
+F-? ALLOW write access to the given field, used with F* to allow write access to specific fields only.
 T?  DENY access to resources with the given resource type ID, also hide this resource type when editing/searching
 X?  RESTRICT access to resources with the given resource type ID.
 X?_$	RESTRICT access to resources with the given resource type ID AND the given download size ID, for example X1_scr restricts access to the screen size download for photo resources.

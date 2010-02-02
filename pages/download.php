@@ -12,6 +12,8 @@ $size=getvalescaped("size","");
 $ext=getvalescaped("ext","");
 $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
+$usage=getval("usage","");
+$usagecomment=getval("usagecomment","");
 
 # Permissions check
 $allowed=resource_download_allowed($ref,$size);
@@ -53,7 +55,7 @@ header("Content-Length: " . $filesize);
 if ($noattach=="")
 	{
 	daily_stat("Resource download",$ref);
-	resource_log($ref,'d',0);
+	resource_log($ref,'d',0,$usagecomment,"","",$usage);
 	
 	# update hit count if tracking downloads only
 	if ($resource_hit_count_on_downloads) { 

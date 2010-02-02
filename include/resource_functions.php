@@ -60,7 +60,14 @@ function save_resource_data($ref,$multi)
 	
 	for ($n=0;$n<count($fields);$n++)
 		{
-		if (!checkperm("F" . $fields[$n]["ref"]))
+		if (!(
+		
+		# Not if field has write access denied
+		checkperm("F" . $fields[$n]["ref"])
+		||
+		(checkperm("F*") && !checkperm("F-" . $fields[$n]["ref"]))
+			
+		))
 			{
 			if ($fields[$n]["type"]==2)
 				{
@@ -246,8 +253,10 @@ function save_resource_data($ref,$multi)
 	if ($expiry_field_edited) {$expirysql=",expiry_notification_sent=0";}
 
 	# Also update archive status and access level
-	sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
-	
+	if (!checkperm("F*")) # Only if 'full' access (not selected fields only).
+		{
+		sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
+		}
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
 
@@ -832,7 +841,7 @@ function copy_resource($from,$resource_type=-1)
 	return $to;
 	}
 	
-function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="")
+function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage)
 	{
 	global $userref;
 	
@@ -846,12 +855,12 @@ function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue=""
 		$diff=log_diff($fromvalue,$tovalue);
 		}
 	
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "')");
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage')");
 	}
 
 function get_resource_log($resource)
 	{
-	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
+	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff,r.usageoption from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
 	}
 	
 function get_resource_type_name($type)

@@ -247,7 +247,7 @@ if ($multiple) { ?>
 <div class="clearerleft"> </div>
 </div>
 
-<?php if (!$is_template) { ?>
+<?php if (!$is_template && !checkperm("F*")) { ?>
 <div class="Question">
 <label><?php echo $lang["file"]?></label>
 <div class="Fixed">
@@ -284,7 +284,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 </div>
 <?php } ?>
 
-
+<?php if (!checkperm("F*")) { ?>
 <div class="Question">
 <label><?php echo $lang["imagecorrection"]?><br/><?php echo $lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
 <option value=""><?php echo $lang["select"]?></option>
@@ -316,7 +316,7 @@ else
 </select>
 <div class="clearerleft"> </div>
 </div>
-
+<?php } ?>
 
 
 <?php } else { # For batch uploads, specify default content (writes to resource with ID [negative user ref]) ?>
@@ -408,7 +408,7 @@ if ($enable_add_collection_on_upload)
 $lastrt=-1;
 
 # "copy data from" feature
-if ($enable_copy_data_from && !$multiple)
+if ($enable_copy_data_from && !$multiple && !checkperm("F*"))
 	{ 
 	?>
 	<div class="Question">
@@ -419,7 +419,7 @@ if ($enable_copy_data_from && !$multiple)
 	<?php
 	}
 
-if (isset($metadata_template_resource_type) && !$multiple)
+if (isset($metadata_template_resource_type) && !$multiple && !checkperm("F*"))
 	{
 	# Show metadata templates here
 	?>
@@ -464,6 +464,8 @@ for ($n=0;$n<count($fields);$n++)
 			(($resource["archive"]==0) && ($fields[$n]["resource_type"]==999))
 		||
 			# Field has write access denied
+			(checkperm("F*") && !checkperm("F-" . $fields[$n]["ref"]))
+		||			
 			checkperm("F" . $fields[$n]["ref"])
 		))
 		
@@ -758,8 +760,11 @@ for ($n=0;$n<count($fields);$n++)
 		<?php
 		}
 	}
-?>
 
+
+if (!checkperm("F*")) # Only display status/relationships if full write access field access has been granted.
+{
+?>
 <?php if(!hook("replacestatusandrelationshipsheader")){?>
 <?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
 <?php } /* end hook replacestatusandrelationshipsheader */ ?>
@@ -851,7 +856,10 @@ for ($n=0;$n<count($fields);$n++)
 	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"><?php echo ((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
-	<?php } ?>
+	<?php } 
+}
+?>
+	
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>

@@ -1093,7 +1093,9 @@ $search_results_title_trim=40;
 # If you use titles that have large unbroken words (e.g. filenames with no spaces) then it may be useful to set this value to something lower, e.g. 20
 $search_results_title_wordwrap=100;
 
-
+# Ask the user the intended usage when downloading
+$download_usage=false;
+$download_usage_options=array("Press","Print","Web","TV","Other");
 
 
 
