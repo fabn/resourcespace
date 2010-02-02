@@ -336,7 +336,7 @@ for ($n=0;$n<count($result);$n++)
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
-		$command.= " -resize 400x400 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.jpg\"";
+		$command.= " -resize 300x300 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.jpg\"";
 		shell_exec($command);
 		exit();
 		}
