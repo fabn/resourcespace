@@ -301,7 +301,7 @@ if ($k!="")
 <?php if (!hook("thumbsmenu")) { ?>
   <h2><?php echo $lang["mycollections"]?></h2>
   <form method="get" id="colselect">
-		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>:
+		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
 		<select name="collection" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
@@ -605,7 +605,7 @@ if ($k!="")
 <?php } ?>
 <?php } ?>
 <!--Collection Count-->	
-<div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php echo $lang["items"]?></div>		
+<div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?></div>		
 <?php } ?>
 
 

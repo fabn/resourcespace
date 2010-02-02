@@ -214,6 +214,7 @@ $lang["allfields"]="All Fields";
 $lang["typespecific"]="Type Specific";
 $lang["youfound"]="You found"; # e.g. you found 17 resources
 $lang["youfoundresources"]="resources"; # e.g. you found 17 resources
+$lang["youfoundresource"]="resource"; # e.g. you found 1 resource
 $lang["display"]="Display"; # e.g. Display: thumbnails / list
 $lang["sortorder"]="Sort Order";
 $lang["relevance"]="Relevance";
@@ -447,6 +448,7 @@ $lang["previous"]="Previous";
 $lang["page"]="Page";
 $lang["of"]="of"; # e.g. page 1 of 2
 $lang["items"]="items"; # e.g. 17 items
+$lang["item"]="item"; # e.g. 1 item
 
 # Statistics
 $lang["stat-addpubliccollection"]="Add public collection";

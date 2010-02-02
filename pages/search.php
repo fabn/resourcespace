@@ -319,7 +319,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
 	?>
 	<div class="TopInpageNav">
-	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php echo $lang["youfoundresources"]?></div>
+	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php if (count($result)==1){echo $lang["youfoundresource"];} else {echo $lang["youfoundresources"];}?></div>
 	<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
 	<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
 		<?php if ($smallthumbs==true) { ?>		
