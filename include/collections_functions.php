@@ -388,7 +388,7 @@ function save_collection($ref)
 		}
 		
 	# Delete all resources?
-	if (getval("deleteall","")!="")
+	if (getval("deleteall","")!="" && !checkperm("D"))
 		{
 		$resources=do_search("!collection" . $ref);
 		for ($n=0;$n<count($resources);$n++)
