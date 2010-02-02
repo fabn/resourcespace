@@ -73,6 +73,27 @@ include "../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<?php if ($contactsheet_sorting){ 
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields)));
+?>
+<div class="Question">
+<label><?php echo $lang["sortorder"]?></label>
+<select class="shrtwidth" name="orderby" id="orderby">
+<option value="relevance"><?php echo $lang["relevance"]?></option>
+<option value="date"><?php echo $lang["date"]?></option>
+<option value="colour"><?php echo $lang["colour"]?></option>
+<option value="resourceid"><?php echo $lang["resourceid"]?></option>
+<?php 
+foreach ($all_field_info as $sortable_field)
+	{ 
+	?><option value="<?php echo $sortable_field['ref']?>"><?php echo $sortable_field["title"]?></option><?php
+	}	
+?>
+</select>
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
+
 <div id="ThumbnailOptions" class="Question">
 <label><?php echo $lang["columns"]?></label>
 <select class="shrtwidth" name="columns" id="ThumbnailOptions" onChange="revertToPage1();"> 

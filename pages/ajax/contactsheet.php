@@ -42,6 +42,8 @@ if (!isset($subsetting)){$subsetting=false;}
 $collection=getval("c","");
 $size=getval("size","");
 $column=getval("columns","");
+$order_by=getval("orderby","relevance");
+$sort=getval("sort","desc");
 $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","");
 if(getval("preview","")!=""){$preview=true;} else {$preview=false;}
@@ -95,7 +97,8 @@ else if ($sheetstyle=="list")
 
 #Get data
 $collectiondata= get_collection($collection);
-$result=do_search("!collection" . $collection);
+if (is_numeric($order_by)){ $order_by="field".$order_by;}
+$result=do_search("!collection" . $collection,"",$order_by,0,-1,$sort);
 
 $csf="";
 for ($m=0;$m<count($config_sheetthumb_fields);$m++)
@@ -333,7 +336,7 @@ for ($n=0;$n<count($result);$n++)
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
-		$command.= " -resize 300x300 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.jpg\"";
+		$command.= " -resize 400x400 -quality 90 -colorspace RGB \"".$storagedir."/tmp/contactsheetrip.jpg\" \"".$storagedir."/tmp/contactsheet.jpg\"";
 		shell_exec($command);
 		exit();
 		}

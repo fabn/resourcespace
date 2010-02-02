@@ -469,6 +469,8 @@ $config_sheetlist_fields = array(8);
 # If making a contact sheet with thumbnail sheet style, use these fields in contact sheet:
 $config_sheetthumb_fields = array();
 $config_sheetthumb_include_ref=true;
+# experimental sorting (doesn't include ASC/DESC yet).
+$contactsheet_sorting=false;
 
 ##  Contact Print settings - paper size options
 $papersize_select = '
