@@ -84,7 +84,29 @@ function SwapCSS(css)
 	foreach ($querylog as $query=>$time)
 		{
 		?>
-		<tr><td align="left"><?php echo $query?></td><td><?php echo round($time,4)?></td></tr>
+		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
+		<table><tr>
+		<?php if (substr($query,0,6)!="update" && substr($query,0,5)!="insert"){
+			
+			$explain=sql_query("explain ".$query);
+			?><tr><?php
+			foreach ($explain[0] as $explainitem=>$value){?>
+				<td align="left">   
+				<?php echo $explainitem?></td><?php 
+				}
+			?></tr><?php
+			for($n=0;$n<count($explain);$n++){
+				?><tr><?php
+				foreach ($explain[$n] as $explainitem=>$value){?>
+				<td align="left">   
+					<?php echo $value?></td><?php 
+					}
+				?></tr><?php	
+				}
+			}	?>
+		</tr>
+		</table>
+		</td><td><?php echo round($time,4)?></td></tr>
 		<?php	
 		}
 	?>

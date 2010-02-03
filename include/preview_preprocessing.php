@@ -76,6 +76,7 @@ if (!isset($exiftool_path)){
 			base64_to_jpeg( $indd_thumb, $target);
 			if (file_exists($target)){$newfile = $target;}
 			}
+		hook("indesign");	
 		}
 	}
 	
@@ -98,7 +99,8 @@ if ($extension=="indd" && !isset($newfile))
                {
                #if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
                if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
-               }
+               }		
+		hook("indesign");	
        }
 	
 	
