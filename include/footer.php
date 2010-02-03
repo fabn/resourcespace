@@ -86,7 +86,7 @@ function SwapCSS(css)
 		?>
 		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
 		<table class="InfoTable">
-		<?php if (substr($query,0,6)=="select"){
+		<?php if (strtolower(substr($query,0,6))=="select"){
 			
 			$explain=sql_query("explain ".$query);
 			?><tr><?php
