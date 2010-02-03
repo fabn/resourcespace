@@ -99,7 +99,7 @@ function SwapCSS(css)
 				?><tr><?php
 				foreach ($explain[$n] as $explainitem=>$value){?>
 				<td align="left">   
-					<?php echo $value?></td><?php 
+					<?php echo str_replace(",",", ",$value)?></td><?php 
 					}
 				?></tr><?php	
 				}
