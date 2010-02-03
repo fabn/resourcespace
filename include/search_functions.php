@@ -432,7 +432,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$resources=explode(" ",$search);$resources=str_replace("!list","",$resources[0]);
 
 		$resources=str_replace(":"," OR r.ref=",$resources);
-		return sql_query("SELECT $select FROM resource r $sql_join  where r.ref=$resources and $sql_filter",false,$fetchrows);
+		return sql_query("SELECT distinct r.hit_count score, $select FROM resource r $sql_join  where r.ref=$resources and $sql_filter order by $order_by",false,$fetchrows);
 		}		
 
 
