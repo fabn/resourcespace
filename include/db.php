@@ -531,9 +531,12 @@ function escape_check($text) #only escape a string if we need to, to prevent esc
 
 	# Remove any backslashes that are not being used to escape single quotes.
     $text=str_replace("\\'","{bs}'",$text);
+    $text=str_replace("\\n","{bs}n",$text);
+
     $text=str_replace("\\","",$text);
     $text=str_replace("{bs}'","\\'",$text);            
-    
+    $text=str_replace("{bs}n","\\n",$text);            
+        
     return $text;
     }
     
