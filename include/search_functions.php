@@ -425,6 +425,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 		return sql_query("SELECT $select FROM resource r $sql_join  where r.ref>0 and r.ref not in (select c.resource from collection_resource c) and $sql_filter",false,$fetchrows);
 		}	
+	
+	# Search for a list of resources
+	if (substr($search,0,5)=="!list") 
+		{
+		$resources=explode(" ",$search);$resources=str_replace("!list","",$resources[0]);
+
+		$resources=str_replace(":"," OR r.ref=",$resources);
+		return sql_query("SELECT $select FROM resource r $sql_join  where r.ref=$resources and $sql_filter",false,$fetchrows);
+		}		
 
 
 
