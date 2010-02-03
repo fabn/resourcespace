@@ -85,7 +85,7 @@ function SwapCSS(css)
 		{
 		?>
 		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
-		<table><tr>
+		<table class="InfoTable">
 		<?php if (substr($query,0,6)=="select"){
 			
 			$explain=sql_query("explain ".$query);
@@ -104,7 +104,6 @@ function SwapCSS(css)
 				?></tr><?php	
 				}
 			}	?>
-		</tr>
 		</table>
 		</td><td><?php echo round($time,4)?></td></tr>
 		<?php	
