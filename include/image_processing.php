@@ -20,6 +20,9 @@ function upload_file($ref,$no_exif=false,$revert=false)
 		$original_filename=get_data_by_field($ref,$filename_field);
 		sql_query("delete from resource_data where resource=$ref");
 		sql_query("delete from resource_keyword where resource=$ref");
+		#original filename is preserved to be reinserted below.
+		#also add the ref back into keywords:
+		add_keyword_mappings($ref, $ref , -1);
 		$extension=sql_value("select file_extension value from resource where ref=$ref","");
 		$filename=get_resource_path($ref,true,"",false,$extension);
 		$processfile['tmp_name']=$filename; }
