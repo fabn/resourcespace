@@ -330,24 +330,24 @@ if ($extension=="txt" && !isset($newfile))
 */
 if (isset($ffmpeg_path))
 	{
-	$ffmpeg_path.="/ffmpeg";
-	if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
+	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
+	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
 	}
 
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
         {
-        $ffmpeg_path=escapeshellarg($ffmpeg_path);
+        $ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
         	
         # A work-around for Windows systems. Prefixing the command prevents a problem
         # with double quotes.
         global $config_windows;
         if ($config_windows)
         	{
-		    $ffmpeg_path = "cd & " . $ffmpeg_path;
+		    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
         	}
         
         $snapshottime = 1;
-        $out = shell_exec($ffmpeg_path." -i " . escapeshellarg($file) . " 2>&1");
+        $out = shell_exec($ffmpeg_path_working." -i " . escapeshellarg($file) . " 2>&1");
         if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))
         	{
 			$duration = $match[1]*3600+$match[2]*60+$match[3];
@@ -364,7 +364,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
 		if ($extension=="mxf")
 			{ $snapshottime = 0; }
         
-        $output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target)); 
+        $output=shell_exec($ffmpeg_path_working . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target)); 
 
         if (file_exists($target)) 
             {
@@ -388,7 +388,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
 	                	}
                 	else 
 	                	{
-	                	include(dirname(__FILE__)."/ffmpeg_processing.php");
+	                	include (dirname(__FILE__)."/ffmpeg_processing.php");
 	                	}
                 }
             } 
@@ -399,21 +399,21 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && !isset($newfile) && in_a
 	Try FFMPEG for audio files
    ----------------------------------------
 */
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
+if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
 	{
-	$ffmpeg_path=escapeshellarg($ffmpeg_path);
+	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
 	
 	# A work-around for Windows systems. Prefixing the command prevents a problem
 	# with double quotes.
 	global $config_windows;
 	if ($config_windows)
 		{
-	    $ffmpeg_path = "cd & " . $ffmpeg_path;
+	    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
 		}
 	
 	# Produce the MP3 preview.
 	$mp3file=get_resource_path($ref,true,"",false,"mp3"); 
-	$output=shell_exec($ffmpeg_path . " -i " . escapeshellarg($file) . " " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file)); 
+	$output=shell_exec($ffmpeg_path_working . " -i " . escapeshellarg($file) . " " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file)); 
 	}
 
 

@@ -1,7 +1,11 @@
 <?php
 
-define("RUNNING_ASYNC", !isset($ffmpeg_preview));
+if (!defined("RUNNING_ASYNC")) {define("RUNNING_ASYNC", !isset($ffmpeg_preview));}
 
+$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
+if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
+$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
+	
 if (RUNNING_ASYNC)
 	{
 	require dirname(__FILE__)."/db.php";
@@ -21,16 +25,12 @@ if (RUNNING_ASYNC)
 	if (!isset($_SERVER['argv'][5])) {exit("Previewonly param missing");}
 	$previewonly=$_SERVER['argv'][5];
 	
-	$ffmpeg_path.="/ffmpeg";
-	if (!file_exists($ffmpeg_path)) {$ffmpeg_path.=".exe";}
-	$ffmpeg_path=escapeshellarg($ffmpeg_path);
-	
 	# A work-around for Windows systems. Prefixing the command prevents a problem
 	# with double quotes.
     global $config_windows;
     if ($config_windows)
        	{
-	    $ffmpeg_path = "cd & " . $ffmpeg_path;
+	    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
        	}
 	
 	sql_query("UPDATE resource SET is_transcoding = 1 WHERE ref = '".escape_check($ref)."'");
@@ -76,7 +76,7 @@ if($width>$ffmpeg_preview_max_width)
 if ($width % 2){$width++;}
 if ($height % 2) {$height++;}
 
-$shell_exec_cmd = $ffmpeg_path . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
+$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 $output=shell_exec($shell_exec_cmd);
 
 if (!file_exists($targetfile))
@@ -110,7 +110,7 @@ if (isset($ffmpeg_alternatives))
 		$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
 		
 		# Process the video 
-		$shell_exec_cmd = $ffmpeg_path . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
+		$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
 		$output=shell_exec($shell_exec_cmd);
 
 		if (file_exists($apath))
