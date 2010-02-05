@@ -206,6 +206,17 @@ if ($removesearch!="")
 	hook("postremovesearch");
 	}
 	
+$addsmartcollection=getvalescaped("addsmartcollection",-1);
+if ($addsmartcollection!=-1)
+	{
+	
+	#add saved search (the items themselves rather than just the query)
+	add_smart_collection($usercollection);
+		
+	# Log this
+	daily_stat("Added smart collection",0);	
+	}
+	
 $research=getvalescaped("research","");
 if ($research!="")
 	{
@@ -390,6 +401,7 @@ if ($k!="")
 
 <?php
 # Loop through saved searches
+if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null){ // don't include saved search item in result if this is a smart collection  
 for ($n=0;$n<count($searches);$n++)			
 		{
 		$ref=$searches[$n]["ref"];
@@ -406,6 +418,7 @@ for ($n=0;$n<count($searches);$n++)
 		</div>
 		<?php		
 		}
+}		
 
 # Loop through thumbnails
 if (count($result)>0) 
@@ -467,8 +480,11 @@ if (count($result)>0)
 		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<span class="IconRemove"><a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
-		<?php } else { ?>
+		<?php } else { 
+			if (!isset($cinfo['savedsearch'])||(isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)){ // add 'remove' link only if this is not a smart collection 
+			?>
 		<a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?></a>
+			<?php } ?>
 		<?php } ?>
 		</div><?php } ?>			
 		</div>

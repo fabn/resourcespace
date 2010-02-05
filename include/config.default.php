@@ -1316,4 +1316,7 @@ $search_titles=false;
 # removing Manage My Collections and adding a direct link to contact sheets
 $collections_compact_style=false;
 
+# Allow saving searches as 'smart collections' which self-update based on a saved search. 
+$allow_smart_collections=false;
+
 ?>

@@ -78,9 +78,9 @@ function get_collection_resources($collection)
 	return sql_array("select resource value from collection_resource where collection='$collection' order by date_added desc"); 
 	}
 	
-function add_resource_to_collection($resource,$collection)
+function add_resource_to_collection($resource,$collection,$smartadd=false)
 	{
-	if (collection_writeable($collection))
+	if (collection_writeable($collection)||$smartadd)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
@@ -105,6 +105,7 @@ function add_resource_to_collection($resource,$collection)
 				#log this
 				collection_log($collection,"s",$resource, '#new_resource');
 				}
+			
 			}
 
 		return true;
@@ -115,9 +116,9 @@ function add_resource_to_collection($resource,$collection)
 		}
 	}
 
-function remove_resource_from_collection($resource,$collection)
+function remove_resource_from_collection($resource,$collection,$smartadd=false)
 	{
-	if (collection_writeable($collection))
+	if (collection_writeable($collection)||$smartadd)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("delete from external_access_keys where resource='$resource' and collection='$collection'");
@@ -137,6 +138,12 @@ function collection_writeable($collection)
 	# Returns true if the current user has write access to the given collection.
 	$collectiondata=get_collection($collection);
 	global $userref;
+	global $allow_smart_collections;
+	if ($allow_smart_collections){ 
+		if (isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']!=null){
+			return false; // so "you cannot modify this collection"
+			}
+	}
 	return $userref==$collectiondata["user"] || $collectiondata["allow_changes"]==1 || checkperm("h");
 	}
 	
@@ -669,6 +676,16 @@ function add_saved_search($collection)
 function remove_saved_search($collection,$search)
 	{
 	sql_query("delete from collection_savedsearch where collection='$collection' and ref='$search'");
+	}
+
+function add_smart_collection($collection)
+	{
+	global $userref;
+	$newcollection=create_collection($userref,"Search:".getvalescaped("addsmartcollection",""),1);	
+	sql_query("insert into collection_savedsearch(collection,search,restypes,archive) values ('$newcollection','" . getvalescaped("addsmartcollection","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "')");
+	$savedsearch=mysql_insert_id();
+	sql_query("update collection set savedsearch=$savedsearch where ref=$newcollection"); 
+	set_user_collection($userref,$newcollection);
 	}
 
 function add_saved_search_items($collection)

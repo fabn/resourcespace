@@ -4,12 +4,13 @@
 #  - For resource indexing / keyword creation, see resource_functions.php
 
 if (!function_exists("do_search")) {
-function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc")
+function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
 	{
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
 	# If there are no matches, instead returns an array of suggested searches.
 	# $restypes is optionally used to specify which resource types to search.
+	# $access_override is used by smart collections, so that all all applicable resources can be judged regardless of the final access-based results
 	
 	# resolve $order_by to something meaningful in sql
 	$orig_order=$order_by;
@@ -44,7 +45,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if (substr($userpermissions[$n],0,1)=="T")
 			{
 			$rt=substr($userpermissions[$n],1);
-			if (is_numeric($rt)) {$rtfilter[]=$rt;}
+			if (is_numeric($rt)&&!$access_override) {$rtfilter[]=$rt;}
 			}
 		}
 	if (count($rtfilter)>0)
@@ -54,7 +55,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 	
 	# append "use" access rights, do not show restricted resources unless admin
-	if (!checkperm("v"))
+	if (!checkperm("v")&&!$access_override)
 		{
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		$sql_filter.="r.access<>'2'";
@@ -86,7 +87,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# ------ Advanced 'custom' permissions, need to join to access table.
 	$sql_join="";
-	if (!checkperm("v"))
+	if (!checkperm("v")&&!$access_override)
 		{
 		global $usergroup;
 		#$sql_join=" join resource_custom_access rca on (r.access<>3 and rca.resource=0) or (r.ref=rca.resource and rca.usergroup='$usergroup' and rca.access<>2) ";
@@ -355,6 +356,34 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 		# Extract the collection number
 		$collection=explode(" ",$search);$collection=str_replace("!collection","",$collection[0]);
+		
+		# smart collections update
+		global $allow_smart_collections;
+		if ($allow_smart_collections){
+			$smartsearch=sql_value("select savedsearch value from collection where ref=$collection",null);
+			if ($smartsearch!=0){
+				$smartsearch=sql_query("select * from collection_savedsearch where ref=$smartsearch");
+				$smartsearch=$smartsearch[0];
+				$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true);
+				# results is a list of the current search without any restrictions
+				# we need to compare against the current collection contents to minimize inserts and deletions
+				$current=sql_query("select resource from collection_resource where collection=$collection");
+				$current_contents=array(); $results_contents=array();
+				foreach($current as $current_item){ $current_contents[]=$current_item['resource'];}
+				foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}
+				if (is_array($results_contents))
+					{					
+					for ($n=0;$n<count($results_contents);$n++)
+						{
+						if (!in_array($results_contents[$n],$current_contents)){ add_resource_to_collection($results_contents[$n],$collection,true);}
+						}
+					for ($n=0;$n<count($current_contents);$n++)
+						{
+						if (!in_array($current_contents[$n],$results_contents)){ remove_resource_from_collection($current_contents[$n],$collection,true);}
+						}	
+					}
+				}
+			}		
 		
 		return sql_query("select distinct c.date_added,c.comment,r.hit_count score,length(c.comment) commentset, $select from resource r join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
 		}

@@ -156,10 +156,18 @@ if ($theme_category_levels>=3)
 <?php
 } 
 }?>
+
+<?php if (isset($collection['savedsearch'])&&$collection['savedsearch']==null){
+	# disallowing share breaks smart collections 
+	?>
 <div class="Question">
 <label for="allow_changes"><?php echo $lang["allowothersaddremove"]?></label><input type=checkbox id="allow_changes" name="allow_changes" <?php if ($collection["allow_changes"]==1) { ?>checked<?php } ?>>
 <div class="clearerleft"> </div>
 </div>
+<?php } else { 
+	# allow changes by default
+	?><input type=hidden id="allow_changes" name="allow_changes" value="checked">
+<?php } ?>
 
 <?php if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
 <div class="Question">

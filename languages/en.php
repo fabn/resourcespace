@@ -915,4 +915,6 @@ $lang["indicateusage"]="Please describe your planned use for this resource.";
 $lang["usage"]="Usage";
 $lang["indicateusagemedium"]="Usage Medium";
 $lang["usageincorrect"]="You must describe the planned usage and select a medium";
+
+$lang["savesearchassmartcollection"]="Save Search as Smart Collection";
 ?>
