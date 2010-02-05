@@ -20,7 +20,14 @@ function upload_file($ref,$no_exif=false,$revert=false)
 		$original_filename=get_data_by_field($ref,$filename_field);
 		sql_query("delete from resource_data where resource=$ref");
 		sql_query("delete from resource_keyword where resource=$ref");
-		#original filename is preserved to be reinserted below.
+		#clear 'joined' display fields which are based on metadata that is being deleted in a revert (original filename is reinserted later)
+		$display_fields=get_resource_table_joins();
+		$clear_fields="";
+		for ($x=0;$x<count($display_fields);$x++){ 
+			$clear_fields.="field".$display_fields[$x]."=''";
+			if ($x<count($display_fields)-1){$clear_fields.=",";}
+			}	
+		sql_query("update resource set ".$clear_fields." where ref=$ref");
 		#also add the ref back into keywords:
 		add_keyword_mappings($ref, $ref , -1);
 		$extension=sql_value("select file_extension value from resource where ref=$ref","");
