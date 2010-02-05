@@ -584,9 +584,11 @@ if ($k!="")
 		$list=get_user_collections($userref);
 		for ($n=0;$n<count($list);$n++)
 			{
-			?>
+			#show only active collections if a start date is set for $active_collections 
+			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))	
+			{ ?>
 			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
-			<?php
+			<?php }
 			}
 		if ($found==false)
 			{
