@@ -129,7 +129,8 @@ include "../include/header.php";
 </ul>
 </div>
 
-<?php if (collection_writeable($ref))
+<?php if (collection_writeable($ref)||
+	(isset($collection['savedsearch']) && $collection['savedsearch']!=null && ($userref==$collection["user"] || checkperm("h"))))
 	{
 	?>
 	<h2><?php echo $lang["internalusersharing"]?></h2>
