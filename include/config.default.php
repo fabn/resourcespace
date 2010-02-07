@@ -939,8 +939,9 @@ $thumbs_display_fields=array(8,3);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
+$date_field=12; // handle dates as any other; this is the *searchable* date.
 # $list_display_fields= array of fields to display on the list view
-$list_display_fields=array(8,3);
+$list_display_fields=array(8,3,12);
 # Data Joins -- Developer's tool to allow adding additional resource field data to the resource table for use in search displays.
 # ex. $data_joins=array(13); to add the expiry date to the general search query result.  
 $data_joins=array();
@@ -948,7 +949,7 @@ $data_joins=array();
 # List View Default Columns
 $id_column=true;
 $resource_type_column=true;
-$date_column=true;
+$date_column=false; // based on creation_date which is a deprecated mapping.
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
 # to that specified in the dropdown on the edit page.

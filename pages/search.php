@@ -354,8 +354,10 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($order_by=="rating") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=rating&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["rating"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=rating&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["rating"]?></a><?php } ?>
 		<?php } ?>
 		
+		<?php if ($date_column){?>
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="date") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["date"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><?php } ?>
+		<?php } ?>
 		
 		<?php if ($colour_sort) { ?>
 		&nbsp;|&nbsp;

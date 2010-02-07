@@ -9,7 +9,7 @@
 
 </div>",,0,,,1,0,,0
 10,credit,Credit,0,,300,1,0,0,,1,1,2#080,,,0,,"Source,Creator,Credit,By-line",1,0,,0
-12,,Date,4,,160,1,0,0,creation_date,1,1,2#055,,,0,,DateTimeOriginal,0,0,,0
+12,date,Date,4,,160,1,0,0,creation_date,1,1,2#055,,,0,,DateTimeOriginal,0,0,,0
 13,,Expiry Date,6,,400,1,0,0,,1,1,,,,0,,,1,0,,0
 18,caption,Caption,5,,55,1,0,0,,1,0,2#120,"<div class=""item""><h3>[title]</h3><p>[value]</p></div>
 
