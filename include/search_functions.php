@@ -365,6 +365,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$smartsearch=sql_query("select * from collection_savedsearch where ref=$smartsearch");
 				$smartsearch=$smartsearch[0];
 				$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true);
+				if (!empty($results)){
 				# results is a list of the current search without any restrictions
 				# we need to compare against the current collection contents to minimize inserts and deletions
 				$current=sql_query("select resource from collection_resource where collection=$collection");
@@ -382,6 +383,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						if (!in_array($current_contents[$n],$results_contents)){ remove_resource_from_collection($current_contents[$n],$collection,true);}
 						}	
 					}
+				}
 				}
 			}		
 		
