@@ -164,7 +164,7 @@ if (substr($search,0,11)=="!collection")
 	if ($display_collection_title)
 		{
 		$collection_title = '<div align="left"><h1>'.$collectiondata ["name"].'</h1> ';
-		$collection_title.='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang['action-select'].' '.$lang['collection'].'</a></div>';
+		if ($k==""){$collection_title.='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang['action-select'].' '.$lang['collection'].'</a></div>';}
 		if ($display!="list"){$collection_title.= '<br>';}
 		}
 	}

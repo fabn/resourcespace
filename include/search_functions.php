@@ -371,19 +371,18 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$current_contents=array(); $results_contents=array();
 				if (!empty($current)){foreach($current as $current_item){ $current_contents[]=$current_item['resource'];}}
 				if (!empty($results)){foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}}
-				if (is_array($results_contents))
-					{					
+				
 					for ($n=0;$n<count($results_contents);$n++)
 						{
 						if (!in_array($results_contents[$n],$current_contents)){ add_resource_to_collection($results_contents[$n],$collection,true);}
 						}
-					}
-				if (is_array($current_contents)){	
+					
+
 					for ($n=0;$n<count($current_contents);$n++)
 						{
 						if (!in_array($current_contents[$n],$results_contents)){ remove_resource_from_collection($current_contents[$n],$collection,true);}
 						}	
-					}
+					
 				}
 			}		
 		
