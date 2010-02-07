@@ -372,7 +372,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$current=sql_query("select resource from collection_resource where collection=$collection");
 				$current_contents=array(); $results_contents=array();
 				if (!empty($current)){foreach($current as $current_item){ $current_contents[]=$current_item['resource'];}}
-				if (!empty($results)){foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}}
+				if (!empty($results)&&is_array($results)){foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}}
 				
 					for ($n=0;$n<count($results_contents);$n++)
 						{
