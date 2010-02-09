@@ -940,14 +940,8 @@ function copy_collection($copied,$current,$remove_existing=false)
 	#put all the copied collection records in
 	foreach($copied_collection as $col_resource)
 		{
-		#test if the resource is already there before adding it to avoid duplicates if remove_existing isn't used...
-		$test= sql_query("select * from collection_resource where collection='$current' and resource='".$col_resource['resource']."'","");
-		if (!count($test)>0)
-			{
-			sql_query("insert into collection_resource (collection,resource,date_added,comment,rating) 
-			values ( $current ,'".$col_resource['resource']."','".$col_resource['date_added']."','". escape_check($col_resource['comment'])."'," . (($col_resource['rating']!="")?"'".$col_resource['rating']."'":"null") . ")");
-			collection_log($current,"c",$col_resource['resource']);
-			}
+		# Use correct function so external sharing is honoured.
+		add_resource_to_collection($col_resource['resource'],$current);
 		}
 	}
 
