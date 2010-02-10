@@ -149,7 +149,20 @@ if ($extension=="cr2" && !isset($newfile))
 			}
 		}
 	}	
-	
+
+/* ---------------------------------------- 
+        Try Apple iWork Formats 
+        The following are to generate previews for the Apple iWork files such 
+as Apple Pages, Apple Keynote, and Apple Numbers. 
+   ---------------------------------------- 
+*/ 
+if ( (($extension=="pages") || ($extension=="numbers") || ($extension=="key")) && !isset($newfile)) 
+	{ 
+    shell_exec("unzip -p $file \"QuickLook/Thumbnail.jpg\" > $target"); 
+	$newfile = $target; 
+	} 
+
+
 /* ----------------------------------------
 	Try NEF preview extraction via exiftool
    ----------------------------------------
