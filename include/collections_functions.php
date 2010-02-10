@@ -415,6 +415,7 @@ function get_theme_headers($theme1="",$theme2="")
 	#return sql_array("select theme value,count(*) c from collection where public=1 and length(theme)>0 group by theme order by theme");
 		
 	# Work out which theme category level we are selecting based on the higher selected levels provided.
+	$selecting="theme";
 	if ($theme1=="" && $theme2=="") {$selecting="theme";}
 	if ($theme1!="" && $theme2=="") {$selecting="theme2";}
 	if ($theme1!="" && $theme2!="") {$selecting="theme3";}
