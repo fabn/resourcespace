@@ -1,1 +1,2 @@
-<?php if ($value!=""){$value=date("d M y",strtotime($value));}
+<?php 
+if ($value!=""){$value=nicedate($value,false);}
