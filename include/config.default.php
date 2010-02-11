@@ -849,7 +849,7 @@ $simple_search_dropdown_filtering=false;
 
 
 # When searching, also include themes/public collections at the top?
-$search_includes_themes=true;
+$search_includes_themes=false;
 $search_includes_public_collections=false;
 
 # include keywords from collection titles when indexing collections
