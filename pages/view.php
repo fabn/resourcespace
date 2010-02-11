@@ -666,10 +666,11 @@ for ($n=0;$n<count($fields);$n++)
 			if ($value!=""){
 				# Draw this field normally.
 				
-				# value filter plugin should be used regardless of whether a display template is used.
-				$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
-				if (file_exists($plugin)) {include $plugin;}
-
+				if ($fields[$n]["type"]!=4) { // nicedate is already applied here
+					# value filter plugin should be used regardless of whether a display template is used.
+					$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
+					if (file_exists($plugin)) {include $plugin;}
+				}
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,20,"<br />",true);
 				
