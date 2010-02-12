@@ -23,6 +23,9 @@ Contents:\r\n\r\n";
 # get collection
 $result=do_search("!collection" . $collection);
 
+$modified_result=hook("modifycollectiondownload");
+if ($modified_result){$result=$modified_result;}
+
 #this array will store all the available downloads.
 $available_sizes=array();
 
@@ -259,6 +262,10 @@ include "../include/header.php";
 
 <form method=post>
 <input type=hidden name="collection" value="<?php echo $collection?>">
+
+<?php 
+hook("collectiondownloadmessage");
+?>
 
 <div class="Question">
 <label for="downloadsize"><?php echo $lang["downloadsize"]?></label>
