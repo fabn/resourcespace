@@ -28,7 +28,7 @@ function SwapCSS(css)
 	SetCookie("colourcss",css,1000);	
 <?php for ($n=0;$n<count($plugins);$n++)
 	{?>	
-	document.getElementById('<?php echo $plugins[$n]?>css').href='<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/Col-' + css + '.css?css_reload_key=<?php echo $css_reload_key?>';
+	document.getElementById('<?php echo $plugins[$n]?>css').href='<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/Col-' + css + '.css';
 	<?php if (!checkperm("b") && !$frameless_collections) { ?>parent.collections.document.getElementById('<?php echo $plugins[$n]?>css').href='<?php echo $baseurl?>/css/Col-' + css + '.css';<?php } ?>
 	<?php
 	}?>
