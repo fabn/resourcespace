@@ -34,7 +34,7 @@ for ($n=0;$n<count($resources);$n++)
 			{
 			#echo $data[$m]["value"];
 			$value=$data[$m]["value"];
-			if ($data[$m]["type"]==3)
+			if ($data[$m]["type"]==3 || $data[$m]["type"]==2)
 				{
 				# Prepend a comma when indexing dropdowns
 				$value="," . $value;
