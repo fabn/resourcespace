@@ -545,6 +545,66 @@ $lang["collectionviewhover"]="Ressourcen dieser Kollektion anzeigen";
 $lang["collectioncontacthover"]="Kontaktabzug der Ressourcen dieser Kollektion erstellen";
 $lang["original"]="Original";
 
+$lang["password_not_min_length"]="Das Passwort muss mindestens ? Zeichen lang sein";
+$lang["password_not_min_alpha"]="Das Passwort muss mindestens ? Buchstaben (a-z, A-Z) enthalten";
+$lang["password_not_min_uppercase"]="Das Passwort muss mindestens ? Großbuchstaben (A-Z) enthalten";
+$lang["password_not_min_numeric"]="Das Passwort muss mindestens ? Ziffern (0-9) enthalten";
+$lang["password_not_min_special"]="Das Passwort muss mindestens ? Sonderzeichen (!@$%&* etc.) enthalten";
+$lang["password_matches_existing"]="Das eingegebene Passwort ist identisch mit dem bestehenden Passwort";
+$lang["password_expired"]="Ihr Passwort ist abgelaufen. Sie müssen ein neues Passwort eingeben";
+$lang["max_login_attempts_exceeded"]="Sie haben die maximale Anzahl an Login Versuchen überschritten. Sie müssen ? Minuten warten, bis Sie es erneut versuchen können.";
+
+$lang["newlogindetails"]="Dies sind Ihre neuen Login Daten."; # For new password mail
+$lang["youraccountdetails"]="Ihre Daten"; # Subject of mail sent to user on user details save
+
+$lang["copyfromcollection"]="Aus Kollektion kopieren";
+$lang["donotcopycollection"]="Nicht aus einer Kollektion kopieren";
+
+$lang["resourcesincollection"]="Ressourcen in dieser Kollektion"; # E.g. 3 resources in this collection
+$lang["removefromcurrentcollection"]="Aus aktueller Kollektion entfernen";
+$lang["showtranslations"]="+ Übersetzungen zeigen";
+$lang["hidetranslations"]="- Übersetzungen verbergen";
+$lang["archivedresource"]="Archivierte Ressourcen";
+
+$lang["managerelatedkeywords"]="Verknüpfte Stichworte verwalten";
+$lang["keyword"]="Stichwort";
+$lang["relatedkeywords"]="Verknüpfte Stichworte";
+$lang["matchingrelatedkeywords"]="Passende verknüpfte Stichworte";
+$lang["newkeywordrelationship"]="Neue Verknüpfung für Stichworte hinzufügen...";
+
+$lang["exportdata"]="Export Daten";
+$lang["exporttype"]="Export Typ";
+
+$lang["managealternativefiles"]="Alternative Dateien verwalten";
+$lang["managealternativefilestitle"]="Alternative Dateien verwalten";
+$lang["alternativefiles"]="Alternative Dateien";
+$lang["filetype"]="Dateiformat";
+$lang["filedeleteconfirm"]="Wollen Sie diese Datei wirklich löschen?";
+$lang["addalternativefile"]="Alternative Datei hinzufügen";
+$lang["editalternativefile"]="Alternative Datei bearbeiten";
+$lang["description"]="Beschreibung";
+$lang["notuploaded"]="Nicht hochgeladen";
+$lang["uploadreplacementfile"]="Datei ersetzen";
+
+
+$lang["resourceistranscoding"]="Ressource wird momentan umgewandelt";
+$lang["cantdeletewhiletranscoding"]="Sie können Ressourcen nicht löschen, während Sie umgewandelt werden.";
+
+$lang["maxcollectionthumbsreached"]="Zu viele Ressourcen in dieser Kollektion, um Thumbnails anzuzeigen. Thumbnails werden jetzt versteckt.";
+
+$lang["ratethisresource"]="Wie bewerten Sie diese Ressource?";
+$lang["ratingthankyou"]="Vielen Dank für Ihre Bewertung.";
+$lang["ratings"]="Bewertungen";
+$lang["rating_lowercase"]="Bewertung";
+$lang["cannotemailpassword"]="Sie können dem Benutzer das bestehende Passwort nicht per E-Mail senden, da es nicht gespeichert wird (nur ein verschlüsselter Hash wird gespeichert).<br /><br />Bitte nutzen Sie den 'Vorschlagen' Button oben, der ein neues Passwort generiert und die E-Mail Funktion wieder ermöglicht.";
+
+$lang["userrequestnotification1"]="Die Login Anfrage wurde mit den folgenden Daten gestellt:";
+$lang["userrequestnotification2"]="Wenn Sie den Benutzer erstellen möchten, folgen Sie bitte dem untenstehenden Link und legen den Benutzer dort an.";
+$lang["ipaddress"]="IP-Adresse";
+$lang["userresourcessubmitted"]="Die folgenden Ressourcen wurden von Benutzern zur Überprüfung eingesandt:";
+$lang["userresourcesunsubmitted"]="Die folgenden Ressourcen wurden von Benutzern zurückgezogen und müssen nicht mehr überprüft werden:";
+$lang["viewalluserpending"]="Alle von Benutzern zur Überprüfung eingesandten Ressourcen anzeigen:";
+
 # New for 1.7
 $lang["installationcheck"]="Installation Überprüfen";
 $lang["managefieldoptions"]="Feldoptionen verwalten";
