@@ -271,6 +271,10 @@ function debug()
 		<div id="thumbnails"></div>
 	</div>
 
+<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+
+<p><a target="_blank" href="http://get.adobe.com/flashplayer/">&gt; <?php echo $lang["getflash"] ?></a></p>
+
 </div>
 
 <?php
