@@ -152,7 +152,8 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	if($video_playlists){$videocount=get_collection_videocount($collections[$n]["ref"]);}else{$videocount="";}		
 	?><tr>
 	<td><div class="ListTitle">
-    <a <?php if ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
+	<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){$collection_tag="";} else {$collection_tag=$lang['smartcollection'].": ";}?>
+    <a <?php if ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo $collection_tag. highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
 	<td><?php echo highlightkeywords($collection_prefix . $collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>

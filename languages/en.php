@@ -917,10 +917,13 @@ $lang["indicateusagemedium"]="Usage Medium";
 $lang["usageincorrect"]="You must describe the planned usage and select a medium";
 
 $lang["savesearchassmartcollection"]="Save Search as Smart Collection";
+$lang["smartcollection"]="Smart Collection";
+
 
 $lang["uploadertryflash"]="If you are having problems with this uploader, try the <strong>Flash uploader</strong>.";
 $lang["uploadertryjava"]="If you are having problems with this uploader, try the <strong>Java uploader</strong>.";
 $lang["getjava"]="To ensure that you have the latest Java software on your system, visit the Java website.";
 $lang["getflash"]="To ensure that you have the latest Flash player on your system, visit the Flash website.";
+
 
 ?>
