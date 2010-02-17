@@ -690,6 +690,8 @@ for ($n=0;$n<count($fields);$n++)
 <div class="PanelShadow"></div>
 </div>
 
+<?php hook("w2pspawn");?>
+
 <?php 
 // include collections listing
 if ($view_resource_collections){ 

@@ -24,7 +24,7 @@ Contents:\r\n\r\n";
 $result=do_search("!collection" . $collection);
 
 $modified_result=hook("modifycollectiondownload");
-if ($modified_result){$result=$modified_result;}
+if (is_array($modified_result)){$result=$modified_result;}
 
 #this array will store all the available downloads.
 $available_sizes=array();
