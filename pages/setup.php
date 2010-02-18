@@ -619,6 +619,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		$config_output .= "\$thumbs_display_fields = array(8,3);\r\n";
 		$config_output .= "\$list_display_fields = array(8,3,12);\r\n";
 		$config_output .= "\$date_column = false;\r\n";
+		$config_output .= "\$sort_fields = array(12);\r\n";
 
 	}
 ?>

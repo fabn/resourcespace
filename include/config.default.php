@@ -935,6 +935,8 @@ $partial_index_min_word_length=3;
 $use_resource_column_data=true; 
 # $thumbs_display_fields= array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(3);
+# display fields to be added to the sort links in thumbnail views
+$sort_fields=array();
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
