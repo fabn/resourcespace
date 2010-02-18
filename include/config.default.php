@@ -933,15 +933,15 @@ $partial_index_min_word_length=3;
 # to the resource table as varchar(200) via the DBStruct check for quicker display and sorting, and edits will be duped there as well.
 # true is deprecated, and can only be used with old systems which still have resource columns such as title and country,
 # It is highly recommended to convert to $use_resource_column_data=false, as it will add flexibility to search displays.
-$use_resource_column_data=false; 
+$use_resource_column_data=true; 
 # $thumbs_display_fields= array of fields to display on the large thumbnail view.
-$thumbs_display_fields=array(8,3);
+$thumbs_display_fields=array(3);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
 $date_field=12; // handle dates as any other; this is the *searchable* date.
 # $list_display_fields= array of fields to display on the list view
-$list_display_fields=array(8,3,12);
+$list_display_fields=array(8,3);
 # Data Joins -- Developer's tool to allow adding additional resource field data to the resource table for use in search displays.
 # ex. $data_joins=array(13); to add the expiry date to the general search query result.  
 $data_joins=array();
@@ -949,7 +949,7 @@ $data_joins=array();
 # List View Default Columns
 $id_column=true;
 $resource_type_column=true;
-$date_column=false; // based on creation_date which is a deprecated mapping.
+$date_column=true; // based on creation_date which is a deprecated mapping. The new system distinguishes creation_date (the date the resource record was created) from the date metadata field. If $use_resource_column_data=true, creation_date is updated with the date field.
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
 # to that specified in the dropdown on the edit page.
