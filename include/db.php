@@ -841,8 +841,8 @@ function get_resource_table_joins(){
 	foreach ($joins as $join){
 		if ($join!=""){
 			$return[$n]=$join;
+			$n++;
 			}
-		$n++;
 		}
 	return $return;
 	}
