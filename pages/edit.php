@@ -670,7 +670,7 @@ for ($n=0;$n<count($fields);$n++)
 		$dy="";$dm="";$dd=""; 
 		$dh="";$di="";
 		
-		if ($ref<0 && $reset_date_upload_template && $reset_date_field==$fields[$n]["ref"])
+		if (($ref<0||!$multiple) && $reset_date_upload_template && $reset_date_field==$fields[$n]["ref"])
 			{
 			# Upload template: always reset to today's date (if configured).
 			$dy=date("Y");$dm=date("m");$dd=date("d");
