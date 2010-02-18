@@ -396,8 +396,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		# Extract the resource number
 		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
+		$order_by=str_replace("r.","",$order_by); # UNION below doesn't like table aliases in the order by.
 		
-		return sql_query("select distinct r.hit_count score, $select from resource r join resource_related t on ((t.related=r.ref and t.resource='" . $resource . "') or (t.resource=r.ref and t.related='" . $resource . "')) $sql_join  where 1=1 and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
+		return sql_query("select distinct r.hit_count score, $select from resource r join resource_related t on (t.related=r.ref and t.resource='" . $resource . "') $sql_join  where 1=1 and $sql_filter group by r.ref 
+		UNION
+		select distinct r.hit_count score, $select from resource r join resource_related t on (t.resource=r.ref and t.related='" . $resource . "') $sql_join  where 1=1 and $sql_filter group by r.ref 
+		order by $order_by;",false,$fetchrows);
 		}
 		
 	# Similar to a colour
