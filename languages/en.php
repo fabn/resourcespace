@@ -925,5 +925,5 @@ $lang["uploadertryjava"]="If you are having problems with this uploader, try the
 $lang["getjava"]="To ensure that you have the latest Java software on your system, visit the Java website.";
 $lang["getflash"]="To ensure that you have the latest Flash player on your system, visit the Flash website.";
 
-
+$lang["all"]="All";
 ?>

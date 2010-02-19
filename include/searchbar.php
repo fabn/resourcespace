@@ -109,12 +109,15 @@ if (!$basic_simple_search)
 	{
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
+	<?php if ($searchbar_selectall){?>
+	<div class="tick"><input type='checkbox' name='tickall' checked onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}'/>&nbsp;<?php echo $lang['all']?></div>
+	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
 	$clear_function="";
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
 		{
-		?><div class="tick"><input id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> />&nbsp;<?php echo $types[$n]["name"]?></div><?php	
+		?><div class="tick"><input class="tickbox" id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> />&nbsp;<?php echo $types[$n]["name"]?></div><?php	
 		$clear_function.="document.getElementById('TickBox" . $n . "').checked=true;";
 		}
 	}

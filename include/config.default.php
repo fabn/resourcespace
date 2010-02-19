@@ -524,6 +524,9 @@ $disable_quoted_printable_enc=false;
 # Set to 'true' to make the simple search bar more basic, with just the single search box.
 $basic_simple_search=false;
 
+# include an "all" toggle checkbox for Resource Types in Search bar
+$searchbar_selectall=false;
+
 # Hide the main simple search field in the searchbar (if using only simple search fields for the searchbar)
 $hide_main_simple_search=false;
 
