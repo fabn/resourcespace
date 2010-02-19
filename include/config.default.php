@@ -873,7 +873,7 @@ $config_trimchars="";
 # Permissions that will be prefixed to all user group permissions
 # Handy for setting global options, e.g. for fields
 # By default do not allow the 'original filename' and 'camera make/model' fields to be edited.
-$global_permissions="F51,F52";
+$global_permissions="";
 
 # User account application - auto creation
 # By default this is switched off and applications for new user accounts will be sent as e-mails
