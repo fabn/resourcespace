@@ -450,11 +450,31 @@ $originalref=$use;
 if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
 if (getval("metadatatemplate","")!="") {$use=getvalescaped("metadatatemplate","");}
 
+$fields=get_resource_field_data($use,$multiple,true,$originalref);
+
+# if this is a metadata template, set the metadata template title field at the top
+if (isset($metadata_template_resource_type)&&(isset($metadata_template_title_field)) && $resource["resource_type"]==$metadata_template_resource_type){
+	# recreate fields array, first with metadata template field
+	$x=0;
+	for ($n=0;$n<count($fields);$n++){
+		if ($fields[$n]["resource_type"]==$metadata_template_resource_type){
+			$newfields[$x]=$fields[$n];
+			$x++;
+		}
+	}
+	# then add the others
+	for ($n=0;$n<count($fields);$n++){
+		if ($fields[$n]["resource_type"]!=$metadata_template_resource_type){
+			$newfields[$x]=$fields[$n];
+		}
+		$x++;
+	}
+	$fields=$newfields;
+}
+
 ?>
 <br /><br /><h1><?php echo $lang["resourcemetadata"]?></h1>
 <?php
-
-$fields=get_resource_field_data($use,$multiple,true,$originalref);
 for ($n=0;$n<count($fields);$n++)
 	{
 	# Should this field be displayed?
