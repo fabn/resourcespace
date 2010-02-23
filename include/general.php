@@ -1113,26 +1113,31 @@ function make_password()
 
 
 function bulk_mail($userlist,$subject,$text)
-	{
-	global $email_from,$lang;
-	
-	# Attempt to resolve all users in the string $userlist to user references.
-	if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
-	$userlist=resolve_userlist_groups($userlist);
-	$ulist=trim_array(explode(",",$userlist));
-	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
-	if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
+    {
+    global $email_from,$lang,$applicationname;
+    
+    # Attempt to resolve all users in the string $userlist to user references.
+    if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
+    $userlist=resolve_userlist_groups($userlist);
+    $ulist=trim_array(explode(",",$userlist));
+    $urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
+    if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
 
-	# Send an e-mail to each resolved user
-	$emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
-	for ($n=0;$n<count($emails);$n++)
-		{
-		send_mail($emails[$n],$subject,stripslashes(str_replace("\\r\\n","\n",$text)));
-		}
-		
-	# Return an empty string (all OK).
-	return "";
-	}
+    $templatevars['text']=stripslashes(str_replace("\\r\\n","\n",$text));
+    $body=$templatevars['text'];
+
+    # Send an e-mail to each resolved user
+    $emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
+    for ($n=0;$n<count($emails);$n++)
+        {
+        if ($emails[$n]!=""){
+            send_mail($emails[$n],$subject,$body,$applicationname,$email_from,"emailbulk",$templatevars,$applicationname);
+            }
+        }
+        
+    # Return an empty string (all OK).
+    return "";
+    }
 
 function i18n_get_translated($text)
 	{
