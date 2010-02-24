@@ -34,7 +34,7 @@ if(!is_dir($storagedir."/fonts/utils")){
     copy("../../lib/tcpdf/fonts/times.php",$storagedir."/fonts/times.php");
     }
     
- if (!file_exists($storagedir."fonts/utils/ttf2ufm")){   
+ if (!file_exists($storagedir."/fonts/utils/ttf2ufm")){   
  copy("../../lib/tcpdf/fonts/utils/ttf2ufm",$storagedir."/fonts/utils/ttf2ufm"); chmod($storagedir."/fonts/utils/ttf2ufm",0777);}
 if (!isset($subsetting)){$subsetting=false;}
 
