@@ -588,11 +588,14 @@ function update_field($resource,$field,$value)
 	if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
 	
 	# Also update resource table?
+	global $use_resource_column_data;
+	if ($use_resource_column_data){
 	$column=$fieldinfo["resource_column"];
 	if (strlen($column)>0)
 		{
 		sql_query("update resource set $column = $value where ref='$resource'");
 		}
+	}	
 		
 	# If this is a 'joined' field we need to add it to the resource column
 	$joins=get_resource_table_joins();
