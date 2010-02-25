@@ -1019,7 +1019,7 @@ function import_resource($path,$type,$title,$ingest=false)
 	$extension=explode(".",$path);$extension=trim(strtolower(end($extension)));
 
 	# Store extension/data in the database
-	sql_query("update resource set archive=0,file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
+	sql_query("update resource set archive=0,file_path='".escape_check($path)."',file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
 			
 	# Store original filename in field, if set
 	if (!$ingest)
@@ -1032,15 +1032,11 @@ function import_resource($path,$type,$title,$ingest=false)
 			if (!$use_resource_column_data){
 				$s=explode("/",$path);
 				$filename=end($s);
-			} else {
+				} 
+			else {
 				$filename=$path; // which will update file_path as well in old installs. 
-			}
-			update_field($r,$filename_field,$filename);
-			if (!$use_resource_column_data){
-				// file_path needs to be constant for staticsync, but filename field (which affects download name) can be modified as usual.
-				// using file_path as file path and filename field as an editable field makes sense.
-				sql_query("update resource set file_path='".escape_check($path)."' where ref=$r");
 				}
+			update_field($r,$filename_field,$filename);
 			}
 		}
 	else
@@ -1076,7 +1072,7 @@ function import_resource($path,$type,$title,$ingest=false)
 	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.
-	get_resource_path($r,false,"pre",true,$extension);	
+	get_resource_path($r,false,"",true,$extension);	
 	
 	# Generate previews/thumbnails (if configured i.e if not completed by offline process 'create_previews.php')
 	global $enable_thumbnail_creation_on_upload;

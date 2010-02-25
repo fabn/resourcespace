@@ -124,6 +124,7 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 $GLOBALS['get_resource_data_cache'] = array();
 function get_resource_data($ref,$cache=true)
 	{
+	if ($ref==""){return false;}
 	# Returns basic resource data (from the resource table alone) for resource $ref.
 	# For 'dynamic' field data, see get_resource_field_data
 	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads,$always_record_resource_creator;
@@ -143,8 +144,7 @@ function get_resource_data($ref,$cache=true)
 					global $userref;
                 			$user=$userref;
                 		} else {$user=-1;}
-
-			sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
+			$wait=sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
 			$resource=sql_query("select * from resource where ref='$ref'");
 			}
 		}
@@ -157,6 +157,7 @@ function get_resource_data($ref,$cache=true)
 	$get_resource_data_cache[$ref]=$resource[0];
 	return $resource[0];
 	}
+	
 function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
