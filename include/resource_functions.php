@@ -1039,7 +1039,7 @@ function import_resource($path,$type,$title,$ingest=false)
 			if (!$use_resource_column_data){
 				// file_path needs to be constant for staticsync, but filename field (which affects download name) can be modified as usual.
 				// using file_path as file path and filename field as an editable field makes sense.
-				sql_query("update resource set file_path='$path' where ref=$r");
+				sql_query("update resource set file_path='".escape_check($path)."' where ref=$r");
 				}
 			}
 		}
