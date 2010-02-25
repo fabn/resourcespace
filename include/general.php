@@ -123,43 +123,40 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	
 $GLOBALS['get_resource_data_cache'] = array();
 function get_resource_data($ref,$cache=true)
-       {
-       # Returns basic resource data (from the resource table alone) for resource $ref.
-       # For 'dynamic' field data, see get_resource_field_data
-       global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads,$always_record_resource_creator;
-       if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
-       $resource=sql_query("select * from resource where ref='$ref'");
-       if (isset($resource[0]) && array($resource[0]))
-               {
-               if ($ref>0)
-                       {
-                       return false;
-                       }
-               else
-                       {
-                       # For batch upload templates (negative reference numbers), generate a new resource.
-                       if (isset($always_record_resource_creator) && $always_record_resource_creator)
-                               {
-                                       global $userref;
-                                       $user=$userref;
-                               } else {$user=-1;}
+	{
+	# Returns basic resource data (from the resource table alone) for resource $ref.
+	# For 'dynamic' field data, see get_resource_field_data
+	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads,$always_record_resource_creator;
+	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
+	$resource=sql_query("select * from resource where ref='$ref'");
+	if (count($resource)==0) 
+		{
+		if ($ref>0)
+			{
+			return false;
+			}
+		else
+			{
+			# For batch upload templates (negative reference numbers), generate a new resource.
+			if (isset($always_record_resource_creator) && $always_record_resource_creator)
+				{
+					global $userref;
+                			$user=$userref;
+                		} else {$user=-1;}
 
-                       sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
-                       $resource=sql_query("select * from resource where ref='$ref'");
-                       }
+			sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
+			$resource=sql_query("select * from resource where ref='$ref'");
+			}
+		}
 
-       # update hit count if not tracking downloads only
-       if (!$resource_hit_count_on_downloads) {
-               # greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
-               sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
-       }
-       $get_resource_data_cache[$ref]=$resource[0];
-       return $resource[0];
-
-               }
-
-       }
-
+	# update hit count if not tracking downloads only
+	if (!$resource_hit_count_on_downloads) { 
+		# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).
+		sql_query("update resource set new_hit_count=greatest(hit_count,new_hit_count)+1 where ref='$ref'");
+	} 
+	$get_resource_data_cache[$ref]=$resource[0];
+	return $resource[0];
+	}
 function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
