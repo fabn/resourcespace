@@ -1028,10 +1028,14 @@ function import_resource($path,$type,$title,$ingest=false)
 		global $filename_field;
 		if (isset($filename_field))
 			{
-			$s=explode("/",$path);
-			$filename=end($s);
-			update_field($r,$filename_field,$filename);
 			global $use_resource_column_data;
+			if (!$use_resource_column_data){
+				$s=explode("/",$path);
+				$filename=end($s);
+			} else {
+				$filename=$path; // which will update file_path as well in old installs. 
+			}
+			update_field($r,$filename_field,$filename);
 			if (!$use_resource_column_data){
 				// file_path needs to be constant for staticsync, but filename field (which affects download name) can be modified as usual.
 				// using file_path as file path and filename field as an editable field makes sense.
