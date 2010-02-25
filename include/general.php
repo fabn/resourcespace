@@ -456,7 +456,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			{
 			global $imagemagick_path;
 			$file=$path2;
-			$filesize=@filesize($file);
+			$filesize=filesize_unlimited($file);
 			
 			# imagemagick_calculate_sizes is normally turned off 
 			if (isset($imagemagick_path) && $imagemagick_calculate_sizes)
@@ -540,7 +540,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$returnline["path"]=$path;
 				$returnline["id"]=$sizes[$n]["id"];
 				if ((list($sw,$sh) = @getimagesize($path))===false) {$sw=0;$sh=0;}
-				if (($filesize=@filesize($path))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
+				if (($filesize=@filesize_unlimited($path))===false) {$returnline["filesize"]="?";$returnline["filedown"]="?";}
 				else {$returnline["filedown"]=ceil($filesize/50000) . " seconds @ broadband";$filesize=formatfilesize($filesize);}
 				$returnline["filesize"]=$filesize;			
 				$returnline["width"]=$sw;			
@@ -2344,4 +2344,19 @@ function user_email_exists($email)
 	# Returns true if a user account exists with e-mail address $email
 	$email=escape_check(trim(strtolower($email)));
 	return (sql_value("select count(*) value from user where email like '$email'",0)>0);
+	}
+
+function filesize_unlimited($path)
+	{
+	# A resolution, at least on UNIX systems, for PHP's issue with large files and filesize().
+	$f=@filesize($path);
+	if ($f<1024*1024*1024) {return $f;} # Less than 1GB? We trust filesize(). It always returns 1.6GB for anything really large.
+	
+	# Attempt to use 'du' utility.
+	$f2=exec("du " . escapeshellarg($path));
+	$f2s=explode("\t",$f2);
+	if (count($f2s)!=2) {return $f;} # Bomb out, the output wasn't as we expected. Return the filesize() output.
+	
+	return $f2s[0] * 1024;
+		
 	}

@@ -376,7 +376,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		?>
 		<tr class="DownloadDBlend">
 		<td><h2><?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
-		<td><?php echo formatfilesize(filesize($path))?></td>
+		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>">Download</a></td>
 		</tr>
 		<?php

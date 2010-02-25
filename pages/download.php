@@ -48,7 +48,7 @@ if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
 	if ($tmpfile!==false && file_exists($tmpfile)){$path=$tmpfile;}
 	}
 	
-$filesize=filesize($path);
+$filesize=filesize_unlimited($path);
 header("Content-Length: " . $filesize);
 
 # Log this activity (download only, not preview)
