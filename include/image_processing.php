@@ -74,7 +74,7 @@ function upload_file($ref,$no_exif=false,$revert=false)
     	}
 	}	
 
-
+	if (!$revert){
     if ($filename!="")
     	{
     	global $jupload_alternative_upload_location;
@@ -102,8 +102,9 @@ function upload_file($ref,$no_exif=false,$revert=false)
 			$status="Your file has been uploaded.";
     	 	}
     	}
-    	
-    # Store extension in the database and update file modified time.
+    }	
+    
+	# Store extension in the database and update file modified time.
 	if ($revert){$has_image="";} else {$has_image=",has_image=0";}
     sql_query("update resource set file_extension='$extension',preview_extension='jpg',file_modified=now() $has_image where ref='$ref'");
 
