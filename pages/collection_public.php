@@ -43,7 +43,7 @@ include "../include/header.php";
 	</form>
 </div>
 <?php
-$collections=search_public_collections($find,$order_by,$sort,true,false,false,$override_group_restrict=="true");
+$collections=search_public_collections($find,$order_by,$sort,$public_collections_exclude_themes,false,false,$override_group_restrict=="true");
 
 # pager
 $per_page=15;

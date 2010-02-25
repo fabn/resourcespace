@@ -1104,6 +1104,16 @@ $search_results_title_wordwrap=100;
 $download_usage=false;
 $download_usage_options=array("Press","Print","Web","TV","Other");
 
+# Should public collections exclude themes
+# I.e. once a public collection has been given a theme category, should it be removed from the public collections search results?
+$public_collections_exclude_themes=true;
+
+
+
+
+
+
+
 
 
 # ------------------------------------------------------------------------------------------------------------------

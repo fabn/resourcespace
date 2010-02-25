@@ -212,7 +212,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			{
 			$keysql="";
 			}
-		$sql.="and c.name rlike '$search' or (u.username='$search' or c.ref='$search' $keysql)";
+		$sql.="and (c.name rlike '$search' or u.username='$search' or c.ref='$search' $keysql)";
 		}
 	
 	if ($exclude_themes) # Include only public collections.
