@@ -43,8 +43,8 @@ include "../include/header.php";
 	?>
  
 	<?php if (getval("k","")=="") { ?>
-    <p><a href="search.php?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["backtocontext"]?></a></p>
-    <p><a href="search.php">&gt;&nbsp;<?php echo $lang["backtosearch"]?></a></p>
+    <p><a href="search.php?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["backtoresults"]?></a></p>
+
     <p><a href="<?php echo ($use_theme_as_home?'themes.php':$default_home_page)?>">&gt;&nbsp;<?php echo $lang["backtohome"]?></a></p>
 
     <?php } ?>

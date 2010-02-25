@@ -433,7 +433,6 @@ $lang["complete"]="Complete";
 $lang["backtohome"]="Back to the home page";
 $lang["backtohelphome"]="Back to help home";
 $lang["backtosearch"]="Back to my search results";
-$lang["backtocontext"]="Back to current context";
 $lang["backtoview"]="Resource View";
 $lang["backtoeditresource"]="Back to edit resource";
 $lang["backtouser"]="Back to user login";
@@ -926,4 +925,5 @@ $lang["getjava"]="To ensure that you have the latest Java software on your syste
 $lang["getflash"]="To ensure that you have the latest Flash player on your system, visit the Flash website.";
 
 $lang["all"]="All";
+$lang["backtoresults"]="Back to results";
 ?>

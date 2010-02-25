@@ -703,6 +703,12 @@ function get_usergroups($usepermissions=false,$find="")
 	return sql_query("select * from usergroup $sql order by (ref='$default_group') desc,name");
 	}
 	
+function get_usergroup($ref)
+	{
+	$return=sql_query("select * from usergroup where ref='$ref'");
+	if (count($return)==0) {return false;} else {return $return[0];}
+	}
+
 function get_user($ref)
 	{
 	# Return a user's credentials.

@@ -252,7 +252,7 @@ include "include/header.php";
 <body style="background-position:0px -85px;margin:0;padding:10px;">
 <div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
 
-<div class="propbox">
+<div class="propbox" id="propbox">
 
 <?php if ($saved) { ?>
 <table width=100% style="border:1px solid black;">
@@ -352,79 +352,82 @@ else
         <?php
         # include plugin
         if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
-        switch ($type)
-            {
-            #-------------------------------------------------------------------------
-            case "txt":
-            #Normal Text
-            ?>
-            <input type="text" style="width:100%" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "btx":
-            #Big Text
-            ?>
-            <textarea style="width:100%" rows="26" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "mtx":
-            #Medium Text
-            ?>
-            <textarea style="width:100%" rows="8" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "upl":
-            #In-line file uploader
-            ?>
-            <input type="text" style="width:100%;background-color:#eeeeee" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
-            <iframe width="100%" height="70" scrolling="no" src="upload.php?callback=<?php echo $key?>"></iframe>
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "bit":
-            #Yes or no
-            ?>
-            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;">
-            <option <?php echo ($value==0)?" selected":""?> value="0">NO</option>
-            <option <?php echo ($value==1)?" selected":""?> value="1">YES</option>
-            </select>
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "drp":
-            case "dr2":
-            case "dr3":
-            #Dropdown
-            #find query
-            $query=explode(";",$tree[$key]);$query=str_replace($transfrom,$transto,$query[6]);
-            $query=str_replace("%search","",$query);
-            $query=str_replace("%recurse",$lastref,$query);
-            $drop=sql_query($query);reset($drop);
-            if ($type!="drp") {$key=$type . "_" . $key;}
-            ?>
-            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="">Please select:</option>
-            <?php
-            foreach ($drop as $item)
-                {
-                ?>
-                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
-                <?php
-                }
-               ?>
-            </select>
-            <?php
-            break;
-            #-------------------------------------------------------------------------
-            case "lbl":
-            # label
-            ?>
-            <?php echo $value?>
-            <?php
-            break;
-            }
+        if (!hook("field" . $curid . "_" . $key)) # Hook to optionally replace this field (if hook returns true) or add HTML above field (if hook returns false)
+        	{
+	        switch ($type)
+	            {
+	            #-------------------------------------------------------------------------
+	            case "txt":
+	            #Normal Text
+	            ?>
+	            <input type="text" style="width:100%" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "btx":
+	            #Big Text
+	            ?>
+	            <textarea style="width:100%" rows="26" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "mtx":
+	            #Medium Text
+	            ?>
+	            <textarea style="width:100%" rows="8" id="<?php echo $key?>" name="<?php echo $key?>"><?php echo $value?></textarea>
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "upl":
+	            #In-line file uploader
+	            ?>
+	            <input type="text" style="width:100%;background-color:#eeeeee" id="<?php echo $key?>" name="<?php echo $key?>" value="<?php echo $value?>">
+	            <iframe width="100%" height="70" scrolling="no" src="upload.php?callback=<?php echo $key?>"></iframe>
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "bit":
+	            #Yes or no
+	            ?>
+	            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;">
+	            <option <?php echo ($value==0)?" selected":""?> value="0">NO</option>
+	            <option <?php echo ($value==1)?" selected":""?> value="1">YES</option>
+	            </select>
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "drp":
+	            case "dr2":
+	            case "dr3":
+	            #Dropdown
+	            #find query
+	            $query=explode(";",$tree[$key]);$query=str_replace($transfrom,$transto,$query[6]);
+	            $query=str_replace("%search","",$query);
+	            $query=str_replace("%recurse",$lastref,$query);
+	            $drop=sql_query($query);reset($drop);
+	            if ($type!="drp") {$key=$type . "_" . $key;}
+	            ?>
+	            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="">Please select:</option>
+	            <?php
+	            foreach ($drop as $item)
+	                {
+	                ?>
+	                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
+	                <?php
+	                }
+	               ?>
+	            </select>
+	            <?php
+	            break;
+	            #-------------------------------------------------------------------------
+	            case "lbl":
+	            # label
+	            ?>
+	            <?php echo $value?>
+	            <?php
+	            break;
+	            }
+	        }
         }
         ?>
         </p>
