@@ -983,7 +983,7 @@ function write_metadata($path,$ref)
 							$command.="-".$field."=\"". str_replace("\"","\\\"",$writevalue) . "\" " ;
 							}
 						}
-					$command.=" $tmpfile";
+					$command.=" '$tmpfile'";
 					$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
 					
 			return $tmpfile;
