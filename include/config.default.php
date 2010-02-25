@@ -1259,6 +1259,7 @@ $enable_thumbnail_creation_on_upload = true;
 # Create XML metadata dump files in the resource folder?
 # This ensures that your metadata is kept in a readable format next to each resource file and may help
 # to avoid data obsolescence / future migration. Also, potentially a useful additional backup.
+# must be off if using staticsync.
 $xml_metadump=true;
 
 # Configures mapping between metadata and Dublin Core fields, which are used in the XML metadata dump instead if a match is found.
