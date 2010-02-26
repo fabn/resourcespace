@@ -445,44 +445,48 @@ if (!isset($newfile))
     
     # CR2 files need a cr2: prefix
     if ($extension=="cr2") {$prefix="cr2:";}
-    
-    # Recognize Photoshop EPS(F) pixel data files
-    if ($extension=="eps")
-      {
-      $photoshop_eps = false;
-      $eps_file = fopen($file, 'r');
-      $i = 0;
-      while (!$photoshop_eps && ($eps_line = fgets($eps_file)) && ($i < 100))
-	  {
-	  if (@eregi("%%BoundingBox: [0-9]+ [0-9]+ ([0-9]+) ([0-9]+)", $eps_line, $regs))
-	    {
-	    $eps_bbox_x = $regs[1];
-	    $eps_bbox_y = $regs[2];
-	    }
-	  if (@eregi("%ImageData: ([0-9]+) ([0-9]+)", $eps_line, $regs))
-	    {
-	    $eps_data_x = $regs[1];
-	    $eps_data_y = $regs[2];
-	    }
-	  if (@eregi("%BeginPhotoshop:",$eps_line))
-	    {
-	    $photoshop_eps = true;
-	    }
-	  $i++;
-	  }
-	  if ($photoshop_eps)
-	    {
-	    $eps_density_x = $eps_data_x / $eps_bbox_x * 72;
-	    $eps_density_y = $eps_data_y / $eps_bbox_y * 72;
-	    $eps_target=get_resource_path($ref,true,"",false,"miff");
-	    $nfcommand = $command . ' -compress zip -colorspace RGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
-	    shell_exec($nfcommand);
-	    if (file_exists($eps_target))
-	      {
-	    #  create_previews_using_im($ref,false,'miff',$previewonly);
-	      $extension = 'miff';
-	      }
-	    }
+
+	$photoshop_eps = false;
+	global $photoshop_eps_miff;  
+	if ($photoshop_eps_miff){
+		
+		# Recognize Photoshop EPS(F) pixel data files
+		if ($extension=="eps")
+		{
+		$eps_file = fopen($file, 'r');
+		$i = 0;
+		while (!$photoshop_eps && ($eps_line = fgets($eps_file)) && ($i < 100))
+		{
+		if (@eregi("%%BoundingBox: [0-9]+ [0-9]+ ([0-9]+) ([0-9]+)", $eps_line, $regs))
+			{
+			$eps_bbox_x = $regs[1];
+			$eps_bbox_y = $regs[2];
+			}
+		if (@eregi("%ImageData: ([0-9]+) ([0-9]+)", $eps_line, $regs))
+			{
+			$eps_data_x = $regs[1];
+			$eps_data_y = $regs[2];
+			}
+		if (@eregi("%BeginPhotoshop:",$eps_line))
+			{
+			$photoshop_eps = true;
+			}
+		$i++;
+		}
+		if ($photoshop_eps)
+			{
+			$eps_density_x = $eps_data_x / $eps_bbox_x * 72;
+			$eps_density_y = $eps_data_y / $eps_bbox_y * 72;
+			$eps_target=get_resource_path($ref,true,"",false,"miff");
+			$nfcommand = $command . ' -compress zip -colorspace RGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
+			shell_exec($nfcommand);
+			if (file_exists($eps_target))
+			{
+			#  create_previews_using_im($ref,false,'miff',$previewonly);
+			$extension = 'miff';
+			}
+			}
+		}
 	}
 
    if (($extension=="pdf") || (($extension=="eps") && !$photoshop_eps) || ($extension=="ai") || ($extension=="ps")) 

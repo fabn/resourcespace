@@ -210,6 +210,10 @@ $photoshop_thumb_extract=false;
 $cr2_thumb_extract=false; 
 $nef_thumb_extract=false;
 
+# Turn on creation of a miff file for Photoshop EPS.
+# Off by default because it is 4x slower than just ripping with ghostscript, and bloats filestore.
+$photoshop_eps_miff=false;
+
 # Attempt to resolve a height and width of the ImageMagick file formats at view time
 # (enabling may cause a slowdown on viewing resources when large files are used)
 $imagemagick_calculate_sizes=false;
