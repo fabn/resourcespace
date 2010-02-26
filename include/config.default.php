@@ -443,6 +443,9 @@ $infobox_display_resource_id=true;
 # Display a small resource file type icon in the info box?
 $infobox_display_resource_icon=true;
 
+# An alternative mode for the InfoBox, that displays the preview image instead of any metadata.
+$infobox_image_mode=false;
+
 
 # Reordering, captioning and ranking of collections
 $collection_reorder_caption=false;
@@ -1112,6 +1115,7 @@ $download_usage_options=array("Press","Print","Web","TV","Other");
 # Should public collections exclude themes
 # I.e. once a public collection has been given a theme category, should it be removed from the public collections search results?
 $public_collections_exclude_themes=true;
+
 
 
 

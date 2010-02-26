@@ -266,7 +266,7 @@ if (getval("refreshcollectionframe","")!="")
 
 # Include javascript for infobox panels.
 $headerinsert.="
-<script src=\"../lib/js/infobox.js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
+<script src=\"../lib/js/infobox" . ($infobox_image_mode?"_image":"") . ".js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
 ";
 
 if ($infobox)
@@ -333,6 +333,25 @@ if (isset($search_result_title_height))
 		}
 	</style>
 	<?php
+	}
+
+
+# Extra CSS if using Image Infoboxes ($infobox_image_mode)
+if ($infobox_image_mode)
+	{
+	?>
+	<style>
+	#InfoBox
+		{
+		width:400px;height:450px;
+		}
+	#InfoBoxInner
+		{
+		height:350px;
+		}
+	</style>
+	<?php
+	
 	}
 
 

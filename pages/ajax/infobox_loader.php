@@ -7,12 +7,43 @@ include "../../include/search_functions.php";
 include "../../include/resource_functions.php";
 
 $ref=getvalescaped("ref","",true);
+$image=(getvalescaped("image","")!="");
+
 
 # Load resource data
 $resource=get_resource_data($ref);
 
 # Load access level
 $access=get_resource_access($ref);
+
+
+if ($image)
+	{
+	# Image mode. Just display the 'pre' image.
+	if ($resource["has_image"]==1)
+		{
+		$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+		if (!file_exists($imagepath))
+			{
+			$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+			}
+		else
+			{
+			$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+			}
+		}
+	else
+		{
+		$imageurl="../gfx/" . get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false,true);
+		}
+	
+	?>
+	<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="center" align="center"><img src="<?php echo $imageurl ?>"></td></tr></table>
+	<?php
+	
+	exit();
+	}
+
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
