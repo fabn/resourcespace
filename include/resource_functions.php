@@ -578,7 +578,7 @@ function update_field($resource,$field,$value)
 			$value = ','.$value;
 		}
 		
-		$val=strip_leading_comma($val);	
+		$value=strip_leading_comma($value);	
 		
 		# Index the new value
 		add_keyword_mappings($resource,i18n_get_indexable($value),$field,$fieldinfo["partial_index"]);
