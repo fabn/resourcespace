@@ -502,7 +502,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		$ref=$result[$n]["ref"];
 		$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
 		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
-		
+		<?php 
+		// establish the nature of the rating field-- resource.rating or resource.field[$rating_field]
+		if (!$use_resource_column_data && isset($rating_field)){$rating="field".$rating_field;} else {$rating="rating";}?>
 			<?php
 			
 			
@@ -541,6 +543,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		# thumbs_display_fields
 		for ($x=0;$x<count($tdf);$x++)
 			{
+			#value filter plugin -tbd	
 			$value=$result[$n]['field'.$tdf[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $tdf[$x]['name'] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
@@ -552,12 +555,17 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 					}
 				}
 			?>		
-			<?php if ( in_array($tdf[$x]['ref'],$thumbs_display_extended_fields) &&
-			( (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ // add extended CSS behavior ?>
+			<?php 
+			// extended css behavior 
+			if ( in_array($tdf[$x]['ref'],$thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
 			<div class="ResourcePanelInfo">
-			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
-			
-			<?php } else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
+			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php 
+
+			// normal behavior
+			} else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
 			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
@@ -582,7 +590,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php } ?>
 		
 		<?php if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["emailresource"]?>"><img src="../gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><?php } ?>
-		<?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"></div><?php } ?>
+		<?php if ($result[$n][$rating]>0) { ?><div class="IconStar"></div><?php } ?>
 		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<span class="IconComment"><a href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo substr($search,11)?>" title="<?php echo $lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 		<?php if ($order_by=="relevance"){?><div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div><?php } ?>
@@ -686,8 +694,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 				<?php } 
 			}
 		} ?>
-		
-		<td><?php if ($result[$n]["rating"]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
+		<td><?php if ($result[$n][$rating]>0) { ?><div class="IconStar"> </div><?php } else { ?>&nbsp;<?php } ?></td>
 		<?php if ($id_column){?><td><?php echo $result[$n]["ref"]?></td><?php } ?>
 		<?php if ($resource_type_column){?><td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td><?php } ?>
 		<?php if ($date_column){?><td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td><?php } ?>

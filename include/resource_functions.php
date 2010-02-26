@@ -149,6 +149,7 @@ function save_resource_data($ref,$multi)
 				# If this is a 'joined' field we need to add it to the resource column
 				$joins=get_resource_table_joins();
 				if (in_array($fields[$n]["ref"],$joins)){
+					$val=strip_leading_comma($val);	
 					sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
 				}		
 
@@ -376,11 +377,12 @@ function save_resource_data_multi($collection)
 					$val=str_replace($origval,"",$existing);
 					}
 					
+				$val=strip_leading_comma($val);		
 				#echo "<li>existing=$existing, new=$val";
 				if ($existing!=str_replace("\\","",$val))
 					{
 					# This value is different from the value we have on record.
-		
+					
 					# Write this edit to the log.
 					resource_log($ref,'m',$fields[$n]["ref"],"",$existing,$val);
 		
@@ -398,7 +400,7 @@ function save_resource_data_multi($collection)
 						# If 'resource_column' is set, then we need to add this to a query to back-update
 						# the related columns on the resource table
 						if (strlen($fields[$n]["resource_column"])>0)
-							{
+							{	
 							sql_query("update resource set " . $fields[$n]["resource_column"] . "='" . escape_check($val) . "' where ref='$ref'");
 							}
 					}	
@@ -575,6 +577,8 @@ function update_field($resource,$field,$value)
 		if (($fieldinfo['type'] == 2 || $fieldinfo['type'] == 3 || $fieldinfo['type'] == 7) && substr($value,0,1) <> ','){
 			$value = ','.$value;
 		}
+		
+		$val=strip_leading_comma($val);	
 		
 		# Index the new value
 		add_keyword_mappings($resource,i18n_get_indexable($value),$field,$fieldinfo["partial_index"]);

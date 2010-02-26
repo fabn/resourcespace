@@ -2366,3 +2366,11 @@ function filesize_unlimited($path)
 	return $f2s[0] * 1024;
 		
 	}
+
+function strip_leading_comma($val)
+	{
+    # make sure value is numeric if it can be, i.e. for ratings
+	# not sure if it's ok to remove commas before any value, since they were explicitly added
+	if (is_numeric(str_replace(",","",$val))) {$val=str_replace(",","",$val);}
+	return $val;
+	}	

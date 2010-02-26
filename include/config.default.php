@@ -199,7 +199,6 @@ $exiftool_no_process=array();
 # Which field do we drop the original filename in to?
 $filename_field=51;
 
-
 # If using imagemagick, should colour profiles be preserved? (for larger sizes only - above 'scr')
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
@@ -944,6 +943,8 @@ $sort_fields=array();
 $thumbs_display_extended_fields=array();
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
 $date_field=12; // handle dates as any other; this is the *searchable* date.
+# a rating field is also supported, which adds the star to list and thumbs view if active. If $use_resource_column_data=false and $rating_field is set, star appears if the field[$rating_field] is not blank
+# $rating_field=[your rating field];
 # $list_display_fields= array of fields to display on the list view
 $list_display_fields=array(8,3);
 # Data Joins -- Developer's tool to allow adding additional resource field data to the resource table for use in search displays.
