@@ -1547,9 +1547,9 @@ function get_edit_access($resource,$status=-999,$metadata=false)
 		{
 		# An edit filter has been set. Perform edit filter processing to establish if the user can edit this resource.
 		
-		# Metadata not provided? Load metadata.
-		if ($metadata===false) {$metadata=get_resource_field_data($resource);}
-		
+		# Always load metadata, because the provided metadata may be missing fields due to permissions.
+		$metadata=get_resource_field_data($resource,false,false);
+				
 		for ($n=0;$n<count($metadata);$n++)
 			{
 			$name=$metadata[$n]["name"];
