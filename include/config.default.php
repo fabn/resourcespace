@@ -123,6 +123,7 @@ $languages["it"]="Italiano"; # Italian
 $languages["jp"]="日本語"; # Japanese
 $languages["nl"]="Nederlands"; # Dutch
 $languages["no"]="Norsk"; # Norwegian
+$languages["pl"]="Polski"; # Polish
 $languages["pt"]="Português"; # Portuguese
 $languages["pt-BR"]="Português do Brasil"; # Brazilian Portuguese
 $languages["ru"]="Русский язык"; # Russian
