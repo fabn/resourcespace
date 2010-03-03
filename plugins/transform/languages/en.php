@@ -4,7 +4,7 @@
 $lang["log-a"]="Created alternate";
 $lang['transform']="Transform";
 $lang['transformimage']="Transform Image";
-$lang['transformblurb']="To crop the image, drag your pointer across the image. You can move and resize the crop box once you have created it. When you are done, enter a name for the crop and press save. Optionally, you can choose a width and/or height to rescale the cropped image.";
+$lang['transformblurb']="To crop the image, drag your pointer across the image. You can move and resize the crop box once you have created it. When you are done, enter a name for the crop and press save. Optionally, you can choose a width and/or height to rescale the cropped image.<br/><br/><strong>All the options below can be left blank.</strong> If you don't provide a width and height, the original height and width of the crop area will be used.";
 $lang['width']="Width";
 $lang['height']="Height";
 $lang['px']="px";

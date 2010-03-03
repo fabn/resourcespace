@@ -150,7 +150,7 @@ else
 $command .= " \"$originalpath\" ";
 
 if ($crop_necessary){
-	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord +repage ";
+	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord ";
 }
 
 
