@@ -773,21 +773,48 @@ function get_theme_image($theme,$theme2="",$theme3="")
 
 function swap_collection_order($resource1,$resource2,$collection)
 	{
-	# Inserts $resource1 into the position currently occupied by $resource2 and moves $resouce2
-	# and subsequent resources down a position.
+	# Inserts $resource1 into the position currently occupied by $resource2 
 
-	$existingorder=sql_array("select resource value from collection_resource where collection='$collection' order by date_added desc");
-	#echo "inserting $resource1 into position occupied by $resource2<br>" . join(",",$existingorder);
-	$neworder=array();
-	for ($n=0;$n<count($existingorder);$n++)
-		{
-		if ($existingorder[$n]==$resource2)
-			{
-			$neworder[]=$resource1;
+	$existingorder=sql_query("select resource,date_added  from collection_resource where collection='$collection' order by date_added desc");
+	#find dates for 1 and 2
+	for ($n=0;$n<count($existingorder);$n++){
+		if ($existingorder[$n]['resource']==$resource1){
+			$firstdate=strtotime($existingorder[$n]['date_added']);
 			}
-		if ($existingorder[$n]!=$resource1)
+		if ($existingorder[$n]['resource']==$resource2){
+			$seconddate=strtotime($existingorder[$n]['date_added']);
+			}
+	}
+	if ($firstdate>$seconddate){$reverse=1;}else{$reverse=0;}		
+	
+	$neworder=array();
+	if ($reverse){
+		for ($n=0;$n<count($existingorder);$n++)
 			{
-			$neworder[]=$existingorder[$n];
+			if ($existingorder[$n]['resource']==$resource1){}
+				if ($existingorder[$n]['resource']==$resource2)
+				{
+				$neworder[]=$resource2;	
+				$neworder[]=$resource1;
+				}	
+				if ($existingorder[$n]['resource']!=$resource1&&$existingorder[$n]['resource']!=$resource2)
+				{
+				$neworder[]=$existingorder[$n]['resource'];
+				}	
+			}
+		}
+	else{
+	
+		for ($n=0;$n<count($existingorder);$n++)
+			{
+			if ($existingorder[$n]['resource']==$resource2)
+				{
+				$neworder[]=$resource1;
+				}
+			if ($existingorder[$n]['resource']!=$resource1)
+				{
+				$neworder[]=$existingorder[$n]['resource'];
+				}
 			}
 		}
 	#echo " to " . join(",",$neworder);
