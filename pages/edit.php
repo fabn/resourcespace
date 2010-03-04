@@ -107,7 +107,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 		
 		if (($save_errors===true || $is_template)&&(getval("tweak","")==""))
 			{
-			if ($ref>0)
+			if ($ref>0 && getval("save","")!="")
 				{
 				# Log this			
 				daily_stat("Resource edit",$ref);
@@ -336,19 +336,6 @@ else
 	}
 ?>
 
-<div class="Question">
-<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
-<select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
-<?php
-$types=get_resource_types();
-for ($n=0;$n<count($types);$n++)
-	{
-	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
-	}
-?></select>
-<div class="clearerleft"> </div>
-</div>
-
 <?php
 if (getval("swf","")!="" || getval("java","")!="") { 
 
@@ -403,6 +390,20 @@ if ($enable_add_collection_on_upload)
 </div>
 
 <?php } ?>
+
+<div class="Question">
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
+<select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
+<?php
+$types=get_resource_types();
+for ($n=0;$n<count($types);$n++)
+	{
+	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
+	}
+?></select>
+<div class="clearerleft"> </div>
+</div>
+
 
 <?php
 $lastrt=-1;
