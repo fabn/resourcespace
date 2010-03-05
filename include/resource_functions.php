@@ -1750,4 +1750,9 @@ function get_resource_collections($ref)
 	return $return;
 	}
 	
+function download_summary($resource)
+	{
+	# Returns a summary of downloads by usage type
+	return sql_query("select usageoption,count(*) c from resource_log where resource='$resource' and type='D' group by usageoption order by usageoption");
+	}
 ?>

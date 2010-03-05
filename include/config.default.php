@@ -1117,7 +1117,8 @@ $download_usage_options=array("Press","Print","Web","TV","Other");
 # I.e. once a public collection has been given a theme category, should it be removed from the public collections search results?
 $public_collections_exclude_themes=true;
 
-
+# Show a download summary on the resource view page.
+$download_summary=false;
 
 
 
