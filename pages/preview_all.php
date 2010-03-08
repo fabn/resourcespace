@@ -65,7 +65,6 @@ $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 $headerinsert="
-	<link rel='stylesheet' type='text/css' href='../css/thw.css' />
 	 <!--[if lt IE 7]><link rel='stylesheet' type='text/css' href='../css/ie.css'><![endif]-->
 ";
 
