@@ -1431,6 +1431,8 @@ function add_field_option($field,$option)
 if (!function_exists("get_resource_access")){	
 function get_resource_access($resource)
 	{
+	# $resource may be a resource_data array from a search, in which case, many of the permissions checks are already done.	
+		
 	# Returns the access that the currently logged-in user has to $resource.
 	# Return values:
 	# 0 = Full Access (download all sizes)
@@ -1438,9 +1440,21 @@ function get_resource_access($resource)
 	# 2 = Confidential (no access)
 	
 	# Load the 'global' access level set on the resource
-	$resourcedata=get_resource_data($resource);
-	$access=$resourcedata["access"];
+	# In the case of a search, resource type and global,group and user access are passed through to this point, to avoid multiple unnecessary get_resource_data queries.
+	# passthru signifies that this is the case, so that blank values in group or user access mean that there is no data to be found, so don't check again .
+	$passthru="no";
 
+	if (!is_array($resource)){
+	$resourcedata=get_resource_data($resource,true);
+	}
+	else {
+	$resourcedata=$resource;
+	$passthru="yes";
+	}
+	
+	$access=$resourcedata["access"];
+	$resource_type=$resourcedata['resource_type'];
+	
 	global $k;
 	if ($k!="")
 		{
@@ -1455,18 +1469,33 @@ function get_resource_access($resource)
 		# Always return 0
 		return 0; 
 		}
-	
+
 	if ($access==3)
 		{
 		# Load custom access level
-		global $usergroup;
-		$access=get_custom_access($resource,$usergroup);
+		if ($passthru=="no"){ 
+			global $usergroup;
+			$access=get_custom_access($resource,$usergroup);
+			//echo "checked group access: ".$access;
+			} 
+		else {
+			$access=$resource['group_access'];
 		}
+	}
 
 	# Check for user-specific access (overrides any other restriction)
 	global $userref;
-	$userspecific=get_custom_access_user($resource,$userref);	
-	if ($userspecific!==false)
+
+	if ($passthru=="no"){
+		$userspecific=get_custom_access_user($resource,$userref);	
+		//echo "checked user access: ".$userspecific;
+		} 
+	else {
+		$userspecific=$resourcedata['user_access'];
+		}
+
+		
+	if ($userspecific!="")
 		{
 		return $userspecific;
 		}
@@ -1477,7 +1506,7 @@ function get_resource_access($resource)
 		return 1; 
 		}
 	
-	if (checkperm('X'.$resourcedata['resource_type'])){
+	if (checkperm('X'.$resource_type)){
 		// this resource type is always restricted for this user group
 		return 1;
 	}
@@ -1493,15 +1522,18 @@ function get_custom_access_user($resource,$user)
 
 function resource_download_allowed($resource,$size)
 	{
+
 	# For the given resource and size, can the curent user download it?
+	# resource type and access may already be available in the case of search, so pass them along to get_resource_access to avoid extra queries
+	# $resource can be a resource-specific search result array.
 	$access=get_resource_access($resource);
-	
+
 	# Full access
 	if ($access==0)
 		{
 		return true;
 		}
-		
+
 	# Restricted
 	if ($access==1)
 		{

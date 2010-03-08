@@ -1346,4 +1346,6 @@ $collections_compact_style=false;
 # Allow saving searches as 'smart collections' which self-update based on a saved search. 
 $allow_smart_collections=false;
 
+# Allow a Preview page for entire collections (for more side to side comparison ability, works with collection_reorder_caption)
+$preview_all=false;
 ?>

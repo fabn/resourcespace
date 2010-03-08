@@ -927,6 +927,8 @@ $lang["getflash"]="To ensure that you have the latest Flash player on your syste
 $lang["all"]="All";
 $lang["backtoresults"]="Back to results";
 
+$lang["preview_all"]="Preview All";
+
 $lang["usagehistory"]="Usage History";
 $lang["usagebreakdown"]="Usage Breakdown";
 $lang["usagetotal"]="Total Downloads";

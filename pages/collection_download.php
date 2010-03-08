@@ -34,7 +34,7 @@ for ($n=0;$n<count($result);$n++)
 	{
 	$ref=$result[$n]["ref"];
 	# Load access level (0,1,2) for this resource
-	$access=get_resource_access($ref);
+	$access=get_resource_access($result[$n]);
 	
 	# get all possible sizes for this resource
 	$sizes=get_all_image_sizes(false,$access>=1);
@@ -73,7 +73,7 @@ if ($submitted != "")
 		{
 		$ref=$result[$n]["ref"];
 		# Load access level
-		$access=get_resource_access($ref);
+		$access=get_resource_access($result[$n]);
 			
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)
@@ -81,7 +81,8 @@ if ($submitted != "")
 			$usesize=$size;
 			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
 			($size == 'original') ? $usesize="" : $usesize=$usesize;
-			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+			if ($access==1&&(checkperm('w')|| ($k!="" && isset($watermark)))){$watermark=true;} else {$watermark=false;}
+			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,$watermark);
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 

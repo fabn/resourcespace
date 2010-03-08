@@ -10,13 +10,13 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 <div class="clearer"> </div>
 
 </div><!--End div-CentralSpace-->
-<?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="user_request")) { ?></div><?php } ?><!--End div-CentralSpaceContainer-->
+<?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="preview_all") && ($pagename!="user_request")) { ?></div><?php } ?><!--End div-CentralSpaceContainer-->
 
 <div class="clearer"></div>
 
 <?php hook("footertop"); ?>
 
-<?php if (($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="done") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
+<?php if (($pagename!="login") && ($pagename!="user_request") && ($pagename!="user_password") && ($pagename!="preview_all")&& ($pagename!="done") && ($pagename!="preview") && ($pagename!="change_language") && ($loginterms==false)) { ?>
 <!--Global Footer-->
 <div id="Footer">
 

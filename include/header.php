@@ -78,9 +78,8 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 <!--Global Header-->
 <?php
 if (($pagename=="terms") && (getval("url","")=="index.php")) {$loginterms=true;} else {$loginterms=false;}
-if ($pagename!="preview") { ?>
+if ($pagename!="preview" && $pagename!="preview_all") { ?>
 <div id="Header">
-
 <?php 
 
 hook("headertop");
@@ -194,7 +193,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <div class="clearer"></div>
 <?php
 # Include simple search sidebar?
-if (!in_array($pagename,array("search_advanced","login","preview","admin_header")) && ($loginterms==false)) 	
+if (!in_array($pagename,array("preview_all","search_advanced","login","preview","admin_header")) && ($loginterms==false)) 	
 	{
 	include "searchbar.php";
 	}
@@ -214,7 +213,7 @@ else {$div="CentralSpace";}
 
 <?php
 # Include theme bar?
-if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("done","search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
+if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("preview_all","done","search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
 	{
 	# Tables seem to be the only solution to having a left AND right side bar, due to the way the clear CSS attribute works.
 	?>

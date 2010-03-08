@@ -88,11 +88,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# ------ Advanced 'custom' permissions, need to join to access table.
 	$sql_join="";
-	if (!checkperm("v")&&!$access_override)
+	global $k;
+	if ((!checkperm("v")) &&!$access_override)
 		{
-		global $usergroup;
-		#$sql_join=" join resource_custom_access rca on (r.access<>3 and rca.resource=0) or (r.ref=rca.resource and rca.usergroup='$usergroup' and rca.access<>2) ";
-		$sql_join=" left outer join resource_custom_access rca on r.ref=rca.resource and rca.usergroup='$usergroup' and rca.access<>2 ";
+		global $usergroup;global $userref;
+		# one extra join (rca2) is required for user specific permissions (enabling more intelligent watermarks in search view)
+		# the original join is used to gather group access into the search query as well.
+		$sql_join=" left outer join resource_custom_access rca2 on r.ref=rca2.resource and rca2.user='$userref' and rca2.access<>2 ";	
+		$sql_join.=" left outer join resource_custom_access rca on r.ref=rca.resource and rca.usergroup='$usergroup' and rca.access<>2 ";
+		
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		# If rca.resource is null, then no matching custom access record was found
 		# If r.access is also 3 (custom) then the user is not allowed access to this resource.
@@ -102,6 +106,17 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 	# Join thumbs_display_fields to resource table 	
 	$select="r.ref, r.resource_type, r.has_image, r.is_transcoding, r.hit_count, r.creation_date, r.rating, r.user_rating, r.user_rating_count, r.user_rating_total, r.file_extension, r.preview_extension, r.image_red, r.image_green, r.image_blue, r.thumb_width, r.thumb_height, r.archive, r.access, r.colour_key, r.created_by, r.file_modified, r.file_checksum, r.request_count, r.new_hit_count, r.expiry_notification_sent, r.preview_tweaks, r.file_path ";	
+	
+	# select group and user access rights if available, otherwise select null values so columns can still be used regardless
+	# this makes group and user specific access available in the basic search query, which can then be passed through access functions
+	# in order to eliminate many single queries.
+	if ((!checkperm("v")) &&!$access_override)
+		{
+		$select.=",rca.access group_access,rca2.access user_access ";
+		}
+	else {
+		$select.=",null group_access, null user_access ";
+	}
 	
 	# add title and country to select (for older installations)
 	global $use_resource_column_data;
@@ -354,7 +369,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		if ($orig_order=="relevance") {$order_by="c.date_added desc,r.ref";}
 		$colcustperm=$sql_join;
-		if (getval("k","")!="") {$colcustperm="";$sql_filter="ref>0";} # Special case if a key has been provided.
+		if (getval("k","")!="") {$sql_filter="ref>0";} # Special case if a key has been provided.
 		
 		# Extract the collection number
 		$collection=explode(" ",$search);$collection=str_replace("!collection","",$collection[0]);
@@ -388,7 +403,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				}
 			}		
 		
-		return sql_query("select distinct c.date_added,c.comment,r.hit_count score,length(c.comment) commentset, $select from resource r join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
+		return sql_query("select distinct c.date_added,c.comment,r.hit_count score,length(c.comment) commentset, $select from resource r  join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
 		}
 	
 	# View Related
