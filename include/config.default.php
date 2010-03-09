@@ -635,6 +635,12 @@ $checkbox_ordered_vertically=true;
 $enable_add_collection_on_upload=true;
 # Batch Uploads, default is "Add to New Collection". Turn off to default to "Do not Add to Collection"
 $upload_add_to_new_collection=true;
+# Batch Uploads, enables the "Add to New Collection" option.
+$upload_add_to_new_collection_opt=true;
+# Batch Uploads, enables the "Do Not Add to New Collection" option, set to false to force upload to a collection.
+$upload_do_not_add_to_new_collection_opt=true;
+# Batch Uploads, require that a collection name is entered, to override the Upload<timestamp> default behavior
+$upload_collection_name_required=false;
 
 # When batch uploading, enable the 'copy resource data from existing resource' feature
 $enable_copy_data_from=true;
