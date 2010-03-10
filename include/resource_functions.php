@@ -1027,8 +1027,11 @@ function import_resource($path,$type,$title,$ingest=false)
 	# Work out extension based on path
 	$extension=explode(".",$path);$extension=trim(strtolower(end($extension)));
 
+	# file_path should only really be set to indicate a staticsync location. Otherwise, it should just be left blank.
+	if ($ingest){$file_path="";} else {$file_path=escape_check($path);}
+
 	# Store extension/data in the database
-	sql_query("update resource set archive=0,file_path='".escape_check($path)."',file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
+	sql_query("update resource set archive=0,file_path='".$file_path."',file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
 			
 	# Store original filename in field, if set
 	if (!$ingest)
