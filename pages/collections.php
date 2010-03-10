@@ -393,6 +393,7 @@ if ($k!="")
    	<?php if (isset($zipcommand)) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["zipall"]?></a></li>
 	<?php } ?>
+	<?php hook("collectiontool");?>
     <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a></li>
   </ul>
 <?php } ?>
@@ -592,6 +593,7 @@ if ($k!="")
 		    }
 	    }
 	?>
+	<?php hook("collectiontoolmin");?>
     <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
   </ul>
