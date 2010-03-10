@@ -1059,6 +1059,7 @@ function import_resource($path,$type,$title,$ingest=false)
 			{
 			update_field($r,$filename_field,$filename);
 			}
+			
 		
 		# Move the file
 		global $syncdir;
@@ -1071,7 +1072,7 @@ function import_resource($path,$type,$title,$ingest=false)
 			delete_resource($r);
 			return false;
 			}
-		chmod($destination,0777);
+		//chmod($destination,0777);
 		}
 
 	# Add title
@@ -1081,7 +1082,7 @@ function import_resource($path,$type,$title,$ingest=false)
 	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.
-	get_resource_path($r,false,"",true,$extension);	
+	get_resource_path($r,false,"pre",true,$extension);	
 	
 	# Generate previews/thumbnails (if configured i.e if not completed by offline process 'create_previews.php')
 	global $enable_thumbnail_creation_on_upload;
