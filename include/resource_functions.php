@@ -1075,7 +1075,7 @@ function import_resource($path,$type,$title,$ingest=false)
 			delete_resource($r);
 			return false;
 			}
-		//chmod($destination,0777);
+		chmod($destination,0777);
 		}
 
 	# Add title
