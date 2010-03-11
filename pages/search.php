@@ -555,7 +555,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		</td>
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->	
-		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><? } ?><?php } ?> 
+		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
 <?php if (!hook("rendertitlethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
 		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
@@ -660,7 +660,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</td>
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
-		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br/><?php } else { ?><? } ?><?php } ?>
+		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br/><?php } else { ?><?php } ?><?php } ?>
 		<div class="ResourcePanelCountry">
 		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -721,7 +721,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 				<?php } 
 			}
 		} ?>
-		<?php if ($display_user_rating_stars){?><td></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar" style="margin-bottom:0;height:12px;"></span><?php } } else { ?><span class="IconUserRatingSpace" style="margin-bottom:0;height:12px;">&nbsp;</span><? } ?></td><?php } ?>
+		<?php if ($display_user_rating_stars){?><td></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar" style="margin-bottom:0;height:12px;"></span><?php } } else { ?><span class="IconUserRatingSpace" style="margin-bottom:0;height:12px;">&nbsp;</span><?php } ?></td><?php } ?>
 		<td><?php if ($result[$n][$rating]>0) { ?><?php for ($y=0;$y<$result[$n][$rating];$y++){?> <div class="IconStar"></div><?php } } else { ?>&nbsp;<?php } ?></td>
 		<?php if ($id_column){?><td><?php echo $result[$n]["ref"]?></td><?php } ?>
 		<?php if ($resource_type_column){?><td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td><?php } ?>
