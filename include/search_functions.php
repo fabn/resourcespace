@@ -152,34 +152,35 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$field=0;#echo "<li>$keyword<br/>";
 				if (strpos($keyword,":")!==false)
 					{	
-					$k=explode(":",$keyword);
-					if ($k[0]=="day")
+					$kw=explode(":",$keyword);
+					if ($kw[0]=="day")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
-						$sql_filter.="r.field$date_field like '____-__-" . $k[1] . "%' ";
+						$sql_filter.="r.field$date_field like '____-__-" . $kw[1] . "%' ";
 						}
-					elseif ($k[0]=="month")
+					elseif ($kw[0]=="month")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
-						$sql_filter.="r.field$date_field like '____-" . $k[1] . "-%' ";
+						$sql_filter.="r.field$date_field like '____-" . $kw[1] . "-%' ";
 						}
-					elseif ($k[0]=="year")
+					elseif ($kw[0]=="year")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
-						$sql_filter.="r.field$date_field like '" . $k[1] . "-%' ";
+						$sql_filter.="r.field$date_field like '" . $kw[1] . "-%' ";
 						}
 					else
 						{
-						$ckeywords=explode(";",$k[1]);
+						$ckeywords=explode(";",$kw[1]);
 						
 						# Fetch field info
-						$fieldinfo=sql_query("select ref,type from resource_type_field where name='" . escape_check($k[0]) . "'",0);
+
+						$fieldinfo=sql_query("select ref,type from resource_type_field where name='" . escape_check($kw[0]) . "'",0);
 						if (count($fieldinfo)==0) {return false;} else {$fieldinfo=$fieldinfo[0];}
 						
 						# Special handling for dates
 						if ($fieldinfo["type"]==4 || $fieldinfo["type"]==6) 
 							{
-							$ckeywords=array(str_replace(" ","-",$k[1]));
+							$ckeywords=array(str_replace(" ","-",$kw[1]));
 							}
 						
 						$field=$fieldinfo["ref"];
@@ -307,10 +308,10 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			
 			# Find keyword(s)
 			$ks=explode("|",strtolower(escape_check($s[1])));
-			$k=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
+			$kw=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
 			#if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
 					
-			$sql_join.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$k) . "') ";	
+			$sql_join.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$kw) . "') ";	
 			}
 		}
 	
