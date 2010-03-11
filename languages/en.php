@@ -51,7 +51,7 @@ $lang["manageusers"]="Manage Users";
 $lang["managecontent"]="Manage Content";
 $lang["viewstatistics"]="View Statistics";
 $lang["viewreports"]="View Reports";
-$lang["viewreport"]="View Report";
+$lang["viewreport"]="dView Report";
 $lang["report"]="Report";
 $lang["sendbulkmail"]="Send Bulk Mail";
 $lang["systemsetup"]="System Setup";
@@ -278,6 +278,7 @@ $lang["log-e"]="Edited resource field";
 $lang["log-m"]="Edited resource field (multi-edit)";
 $lang["log-E"]="Shared Resource via e-mail to ";//  + notes field
 $lang["log-v"]="Viewed resource";
+$lang["log-x"]="Deleted resource";
 $lang["log-l"]="Logged in"; # For user entries only.
 
 $lang["backtoresourceview"]="Back to resource view";

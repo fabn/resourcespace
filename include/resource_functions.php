@@ -702,6 +702,9 @@ function delete_resource($ref)
 		# $resource_deletion_state is set. Do not delete this resource, instead move it to the specified state.
 		
 		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
+
+                # log this so that administrator can tell who requested deletion
+                resource_log($ref,'x','');
 		
 		# Remove the resource from any collections
 		sql_query("delete from collection_resource where resource='$ref'");
