@@ -1721,7 +1721,7 @@ function update_xml_metadump($resource)
 	global $xml_metadump,$xml_metadump_dc_map;
 	if (!$xml_metadump || $resource < 0) {return true;} # Only execute when configured and when not a template
 	
-	$path=dirname(get_resource_path($resource,true,"",true)) . "/metadump.xml";
+	$path=dirname(get_resource_path($resource,true,"pre",true)) . "/metadump.xml";
 	$f=fopen($path,"w");
 	fwrite($f,"<?xml version=\"1.0\"?>\n");
 	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" resourcespace:resourceid=\"$resource\">\n\n");
