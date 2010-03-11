@@ -646,7 +646,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		} elseif ($display == "smallthumbs") { # ---------------- Small Thumbs view ---------------------
 		?>
 
-<div class="ResourcePanelShellSmall" id="ResourceShell<?php echo $ref?>">
+<div class="ResourcePanelShellSmall" <?php if ($display_user_rating_stars){?> style="height:135px;" <?php } ?>id="ResourceShell<?php echo $ref?>">
 	<div class="ResourcePanelSmall">	
 		<?php if (!hook("renderimagesmallthumb")){;?>
 		<?php $access=get_resource_access($result[$n]);
@@ -660,7 +660,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</td>
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
-		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?>&nbsp;<?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br/><?php } else { ?><span class="IconUserRatingSpace"></span><br><? } ?><?php } ?>
+		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br/><?php } else { ?><? } ?><?php } ?>
 		<div class="ResourcePanelCountry">
 		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
