@@ -94,7 +94,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		global $usergroup;global $userref;
 		# one extra join (rca2) is required for user specific permissions (enabling more intelligent watermarks in search view)
 		# the original join is used to gather group access into the search query as well.
-		$sql_join=" left outer join resource_custom_access rca2 on r.ref=rca2.resource and rca2.user='$userref' and rca2.access<>2 ";	
+		$sql_join=" left outer join resource_custom_access rca2 on r.ref=rca2.resource and rca2.user='$userref'  and (rca2.user_expires is null or rca2.user_expires>now()) and rca2.access<>2  ";	
 		$sql_join.=" left outer join resource_custom_access rca on r.ref=rca.resource and rca.usergroup='$usergroup' and rca.access<>2 ";
 		
 		if ($sql_filter!="") {$sql_filter.=" and ";}
