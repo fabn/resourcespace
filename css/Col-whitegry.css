@@ -59,6 +59,9 @@ a:active {color:#737373;}
 .IconComment, .KeyComment	{	background: url(../gfx/whitegry/interface/IcComment.gif) no-repeat;}
 .ASC	{	background: url(../gfx/whitegry/interface/ASC.gif) no-repeat;background-position:center;}
 .DESC	{	background: url(../gfx/whitegry/interface/DESC.gif) no-repeat;background-position:center;}
+.IconUserRatingStar	{	background: url(../gfx/interface/RatingStarRed.gif) no-repeat;}
+.IconUserRatingSpace	{	background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
+.StarSelect {background: transparent url(../gfx/interface/RatingStarRed.gif) no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 .SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #3C3C3C}

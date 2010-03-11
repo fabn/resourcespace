@@ -109,7 +109,7 @@ a:active {text-decoration:underline;}
 .ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
 
 
-.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 90px;height:110px;}
+.ResourcePanelShellSmall {padding:0 0 10px; float: left;margin: 0px 15px 0px 0px;width: 90px;}
 .ResourcePanelSmall {padding:0;margin:0;width: 90px;}
 .ResourceAlignSmall {width:90px;height:90px;text-align: center;vertical-align: middle;}
 
@@ -120,12 +120,12 @@ a:active {text-decoration:underline;}
 .IconPreview	{width:16px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
 
 .IconStar	{width:11px;height:12px;padding: 0;display: block;float: right;}
-
 .IconRemove		{width:14px;height:12px;padding: 0;display: block;float: right;}
 .IconReorder	{width:16px;height:12px;padding: 0;display: block;float: right;}
 .IconComment	{width:13px;height:12px;padding: 0;display: block;float: right;}
 .ResourceSelect {display:block;float:right;}
-
+.IconUserRatingStar	{width:13px;height:15px;padding: 0;margin-bottom:6px;display: block;float: left;}
+.IconUserRatingSpace	{width:7px;height:15px;padding: 0;margin-bottom:6px;display: block;float: left;}
 .KeyReorder {margin: 0px 5px 10px;display: inline;padding-left: 18px;}
 .KeyComment {margin: 0px 5px 10px;display: inline;padding-left: 19px;}
 
