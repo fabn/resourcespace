@@ -711,7 +711,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			# Always make preview sizes for smaller file sizes.
 			#
 			# Always make pre/thm/col sizes regardless of source image size.
-			if (($id == "scr" && !($extension=="jpg" || $extension=="jpeg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
+			if (($id == "hpr" && !($extension=="jpg" || $extension=="jpeg")) || ($id == "scr" && !($extension=="jpg" || $extension=="jpeg")) || ($sw>$tw) || ($sh>$th) || ($id == "pre") || ($id=="thm") || ($id=="col"))
 				{
 					
 				# Find the target path
