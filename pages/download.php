@@ -25,12 +25,13 @@ if (!$allowed)
 
 # additional access check, as the resource download may be allowed, but access restriction should force watermark.	
 $access=get_resource_access($ref);	
+$use_watermark=check_use_watermark($ref);
 
 # If no extension was provided, we fallback to JPG.
 if ($ext=="") {$ext="jpg";}
 
 $noattach=getval("noattach","");
-$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1 && $alternative==-1,"",$alternative);
+$path=get_resource_path($ref,true,$size,false,$ext,-1,$page,$use_watermark && $alternative==-1,"",$alternative);
 
 if (!file_exists($path)) {$path=get_resource_path($ref,true,"",false,$ext,-1,$page,false,"",$alternative);}
 

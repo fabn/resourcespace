@@ -438,11 +438,11 @@ if (count($result)>0)
 		<div class="CollectionPanelShell" id="ResourceShell<?php echo $ref?>">
 		<?php if (!hook("rendercollectionthumb")){?>
 		<?php $access=get_resource_access($result[$n]);
-		if ($access==1&&(checkperm('w')|| ($k!="" && isset($watermark)))){$watermark=true;} else {$watermark=false;}?>
+		$use_watermark=check_use_watermark($result[$n]['ref']);?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php if ($result[$n]["has_image"]==1) { 
 		
-		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,$watermark,$result[$n]["file_modified"])
+		$colimgpath=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])
 		?>
 		<img border=0 src="<?php echo $colimgpath?>" class="CollectImageBorder" <?php if (!$infobox) { ?>title="<?php echo htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))?>" alt="<?php echo htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))?>"<?php } ?> 
 		<?php if ($infobox) { ?>onMouseOver="InfoBoxSetResource(<?php echo $ref?>);" onMouseOut="InfoBoxSetResource(0);"<?php } ?>

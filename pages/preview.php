@@ -30,6 +30,7 @@ $sort=getval("sort",$default_sort);
 
 # Load access level
 $access=get_resource_access($ref);
+$use_watermark=check_use_watermark($ref);
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
@@ -61,30 +62,30 @@ if ($go!="")
 
 # Next / previous page browsing (e.g. pdfs)
 $previouspage=$page-1;
-if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage,checkperm("w") && $access==1))&&!file_exists(get_resource_path($ref,true,"",false,$ext,-1,$previouspage,checkperm("w") && $access==1))) {$previouspage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage,$use_watermark))&&!file_exists(get_resource_path($ref,true,"",false,$ext,-1,$previouspage,$use_watermark))) {$previouspage=-1;}
 $nextpage=$page+1;
-if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,checkperm("w") && $access==1))) {$nextpage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,$use_watermark))) {$nextpage=-1;}
 
 
 # Locate the resource
 
-$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
-$path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,$use_watermark,"",$alternative);
+$path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,$use_watermark,"",$alternative);
 
 if (file_exists($path) && resource_download_allowed($ref,"scr"))
 	{
-	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,$use_watermark,"",$alternative);
 	}
 elseif (file_exists($path_orig) && resource_download_allowed($ref,""))
 	{
-	$url=get_resource_path($ref,false,"",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+	$url=get_resource_path($ref,false,"",false,$ext,-1,$page,$use_watermark,"",$alternative);
 	}
 else
 	{
-	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,$use_watermark,"",$alternative);
 	if (file_exists($path))
 		{
-		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,"",$alternative);
+		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,$use_watermark,"",$alternative);
 		}
 	 }	
 if (!isset($url))

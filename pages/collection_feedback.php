@@ -56,6 +56,8 @@ include "../include/header.php";
 		{
 		$ref=$result[$n]["ref"];
 		$access=get_resource_access($ref);
+		$use_watermark=check_use_watermark($ref);
+		
 		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["field".$view_title_field]),60));
 		?>	
 		<!--Resource Panel-->
@@ -65,16 +67,16 @@ include "../include/header.php";
 		<table border="0" class="ResourceAlign<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>"><tr><td>
 		
 		<?php if ($result[$n]["has_image"]==1) {
-			$path=get_resource_path($ref,true,"scr",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+			$path=get_resource_path($ref,true,"scr",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 			if (file_exists($path))
 				{
 				# Use 'scr' path
-				$path=get_resource_path ($ref, false,"scr",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+				$path=get_resource_path ($ref, false,"scr",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 				}
 			else if (!file_exists($path))
 				{
 				# Attempt original file if jpeg
-				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"]);
+				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 				}
 		
 		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>

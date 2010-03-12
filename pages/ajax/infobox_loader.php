@@ -15,21 +15,21 @@ $resource=get_resource_data($ref);
 
 # Load access level
 $access=get_resource_access($ref);
-
+$use_watermark=check_use_watermark($ref);
 
 if ($image)
 	{
 	# Image mode. Just display the 'pre' image.
 	if ($resource["has_image"]==1)
 		{
-		$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+		$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 		if (!file_exists($imagepath))
 			{
-			$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+			$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,$use_watermark);
 			}
 		else
 			{
-			$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+			$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 			}
 		}
 	else

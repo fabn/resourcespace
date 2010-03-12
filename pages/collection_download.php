@@ -74,15 +74,15 @@ if ($submitted != "")
 		$ref=$result[$n]["ref"];
 		# Load access level
 		$access=get_resource_access($result[$n]);
-			
+		$use_watermark=check_use_watermark($result[$n]);
+		
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)
 			{
 			$usesize=$size;
 			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
 			($size == 'original') ? $usesize="" : $usesize=$usesize;
-			if ($access==1&&(checkperm('w')|| ($k!="" && isset($watermark)))){$watermark=true;} else {$watermark=false;}
-			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,$watermark);
+			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,$use_watermark);
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 

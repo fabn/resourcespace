@@ -1794,4 +1794,17 @@ function download_summary($resource)
 	# Returns a summary of downloads by usage type
 	return sql_query("select usageoption,count(*) c from resource_log where resource='$resource' and type='D' group by usageoption order by usageoption");
 	}
+	
+	
+function check_use_watermark($ref){
+	# access status must be available prior to this.
+	# This function checks whether to use watermarks or not.
+	# Two cases:
+	# if access is restricted and the group has "w"
+	# if $watermark is set and it's an external share.
+	
+	global $access,$k,$watermark;
+	if ($access==1 &&    (checkperm('w') || ($k!="" && isset($watermark)) )    ){return true;} else {return false;} 
+}
+		
 ?>

@@ -199,14 +199,15 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+	$use_watermark=check_use_watermark($resource['ref']);
+	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 	if (!file_exists($imagepath))
 		{
-		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,$use_watermark);
 		}
 	else
 		{
-		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1);
+		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 		}
 	
 	?>
