@@ -545,7 +545,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 <?php if (!hook("renderimagethumb")) { ?>			
 	<?php $access=get_resource_access($result[$n]);
 	$use_watermark=check_use_watermark($result[$n]['ref']);?>
-	<table border="0" class="ResourceAlign<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?> <?php hook("icons")?>">
+	<table border="0" class="ResourceAlign<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>">
 	<tr><td>
 	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { ?> width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" <?php } ?> src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
@@ -556,6 +556,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->	
 		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+<?php hook("icons");?>
 <?php if (!hook("rendertitlethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
 		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
