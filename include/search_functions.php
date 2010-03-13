@@ -107,6 +107,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Join thumbs_display_fields to resource table 	
 	$select="r.ref, r.resource_type, r.has_image, r.is_transcoding, r.hit_count, r.creation_date, r.rating, r.user_rating, r.user_rating_count, r.user_rating_total, r.file_extension, r.preview_extension, r.image_red, r.image_green, r.image_blue, r.thumb_width, r.thumb_height, r.archive, r.access, r.colour_key, r.created_by, r.file_modified, r.file_checksum, r.request_count, r.new_hit_count, r.expiry_notification_sent, r.preview_tweaks, r.file_path ";	
 	
+	$modified_select=hook("modifyselect");
+	if ($modified_select){$select.=$modified_select;}	
+
 	# select group and user access rights if available, otherwise select null values so columns can still be used regardless
 	# this makes group and user specific access available in the basic search query, which can then be passed through access functions
 	# in order to eliminate many single queries.
