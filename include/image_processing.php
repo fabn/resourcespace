@@ -341,6 +341,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 					# Read the data.				
 					if ($read) {
 						$plugin="../plugins/exiftool_filter_" . $read_from[$i]['name'] . ".php";
+						if (!file_exists($plugin)){$plugin="../../plugins/exiftool_filter_" . $read_from[$i]['name'] . ".php";}
 						if (file_exists($plugin)) {include $plugin;}
 						update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($value));}
 					}
