@@ -112,6 +112,7 @@ $languages["en"]="British English";
 $languages["en-US"]="American English";
 $languages["ar"]="العربية";
 $languages["id"]="Bahasa Indonesia"; # Indonesian
+$languages["ca"]="Català"; # Catalan
 $languages["zh-CN"]="简化字"; # Simplified Chinese
 $languages["da"]="Dansk"; # Danish
 $languages["de"]="Deutsch"; # German

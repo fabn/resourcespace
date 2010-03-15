@@ -580,4 +580,16 @@ $lang["restrictedsharecollection"]="Tienes el acceso restringido a uno o más de
 
 $lang["resourcemetadata"]="Metadatos de material";
 
+# Updated/improved entries.
+$lang["password_not_min_length"]="La contraseña debe tener una longitud mínima de ? carácteres";
+$lang["password_not_min_alpha"]="La contraseña debe tener como a mínimo ? carácteres alfabéticos";
+$lang["password_not_min_uppercase"]="La contraseña debe tener como mínimo ? carácteres en mayúscula";
+$lang["password_not_min_numeric"]="La contraseña debe tener como mínimo ? carácteres numéricos";
+$lang["password_not_min_special"]="La contraseña debe tener como mínimo ? carácteres no alfanuméricos (!@$%&* etc.)";
+$lang["password_matches_existing"]="La contraseña introducida es la misma que ya había";
+$lang["password_expired"]="Tu contraseña ha caducado. Debes crear una nueva";
+$lang["max_login_attempts_exceeded"]="Has exedido el número máximo de intentos. Deberás esperar ? minutos antes de intentar entrar de nuevo.";
+
+
+
 ?>
