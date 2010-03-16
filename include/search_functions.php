@@ -468,6 +468,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
 		
 		if ($userref==$cuser) {$sql_filter="archive='$archive'";$sql_join="";} # Disable permissions when viewing your own contributions - only restriction is the archive status
+		$select=str_replace(",rca.access group_access,rca2.access user_access ",",null group_access, null user_access ",$select);
 		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where created_by='" . $cuser . "' and r.ref > 0 and $sql_filter group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
