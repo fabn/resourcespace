@@ -162,8 +162,15 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 			{
 			for ($n=0;$n<count($custom_top_nav);$n++)
 				{
+				
+				if (preg_match("/^https?\:\/\/.+/",$custom_top_nav[$n]['link'])){
+					$isextlink = true;
+				} else {
+					$isextlink = false;
+				}
+				
 				?>
-				<li><a target="<?php echo $target?>" href="<?php echo $custom_top_nav[$n]["link"] ?>"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
+				<li><a target="<?php if ($isextlink){echo "_top"; } else {  echo $target; } ?>" href="<?php echo $custom_top_nav[$n]["link"] ?>"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
 				<?php
 				}
 			}
