@@ -74,7 +74,7 @@ include "../include/header.php";
 </div>
 
 <?php if ($contactsheet_sorting){ 
-$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields)));
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$config_sheetlist_fields,$config_sheetthumb_fields)));
 ?>
 <div class="Question">
 <label><?php echo $lang["sortorder"]?></label>
