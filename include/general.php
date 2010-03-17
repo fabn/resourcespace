@@ -1593,6 +1593,7 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
     $needle = (array) $needle;
     foreach ($needle as $needle_s) {
         $needle_s = preg_quote($needle_s);
+        $needle_s = str_replace("#","\\#",$needle_s);
  
         // Escape needle with optional whole word check
         if ($options & STR_HIGHLIGHT_WHOLEWD) {
