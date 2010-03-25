@@ -473,6 +473,7 @@ $lang["stat-resourceupload"]="Resource upload";
 $lang["stat-resourceview"]="Resource view";
 $lang["stat-search"]="Search";
 $lang["stat-usersession"]="User session";
+$lang["stat-addedsmartcollection"]="Added Smart Collection";
 
 # Access
 $lang["access0"]="Open";
@@ -935,4 +936,6 @@ $lang["usagebreakdown"]="Usage Breakdown";
 $lang["usagetotal"]="Total Downloads";
 $lang["usagetotalno"]="Total number of downloads";
 $lang["ok"]="OK";
+
+$lang["random"]="Random";
 ?>
