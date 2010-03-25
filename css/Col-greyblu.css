@@ -61,7 +61,9 @@ a:active {color:#B5C3D4;}
 .DESC	{background: url(../gfx/greyblu/interface/DESC.gif) no-repeat; background-position:center;}
 .IconUserRatingStar	{	background: url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
 .IconUserRatingSpace	{	background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
-.StarSelect {background: transparent url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
+.StarSelect {  background: transparent url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
+.StarEmpty {  background: transparent url('../gfx/interface/RatingStarLightBlue.gif') no-repeat;}
+.StarCurrent { background: transparent url('../gfx/interface/RatingStarWhite.gif') no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 

@@ -62,6 +62,8 @@ a:active {color:#CCC;}
 .IconUserRatingStar	{	background: url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
 .IconUserRatingSpace	{	background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
 .StarSelect {background: transparent url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
+.StarEmpty {  background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;}
+.StarCurrent { background: transparent url('../gfx/interface/RatingStarWhite.gif') no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 

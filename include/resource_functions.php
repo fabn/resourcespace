@@ -1176,7 +1176,7 @@ function save_alternative_file($resource,$ref)
 	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "' $sql where resource='$resource' and ref='$ref'");
 	}
 	
-function user_rating_save($ref,$rating)
+function user_rating_save($userref,$ref,$rating)
 	{
 	# Save a user rating for a given resource
 	$resource=get_resource_data($ref);
@@ -1184,14 +1184,56 @@ function user_rating_save($ref,$rating)
 	# Recalculate the averate rating
 	$total=$resource["user_rating_total"]; if ($total=="") {$total=0;}
 	$count=$resource["user_rating_count"]; if ($count=="") {$count=0;}
-
-	# Increment the total and count and work out a new average.
-	$total+=$rating;
-	$count++;
+	
+	# modify behavior to allow only one current rating per user (which can be re-edited)
+	global $user_rating_only_once;
+	if ($user_rating_only_once){
+		$ratings=array();
+		$ratings=sql_query("select user,rating from user_rating where ref='$ref'");
+		
+		#Calculate ratings total and get current rating for user if available
+		$total=0;
+		$current="";
+		for ($n=0;$n<count($ratings);$n++){
+			$total+=$ratings[$n]['rating'];
+			
+			if ($ratings[$n]['user']==$userref){
+				$current=$ratings[$n]['rating'];
+				}
+			}
+		# Calculate Count
+		$count=count($ratings);
+		
+		# if user has a current rating, subtract the old rating and add the new one.
+		if ($current!=""){
+			$total=$total-$current+$rating;
+			sql_query("update user_rating set rating='$rating' where user='$userref' and ref='$ref'");
+		}
+		
+		# if user does not have a current rating, add it 
+		else {
+			$total=$total+$rating;
+			$count++;
+			sql_query("insert into user_rating (user,ref,rating) values ('$userref','$ref','$rating')");
+		}
+	}	
+	else {
+		# If not using $user_rating_only_once, Increment the total and count 
+		$total+=$rating;
+		$count++;
+	}
+	
+	if ($count==0){
+		# avoid division by zero
+		$average=$total;
+	} else {
+	# work out a new average.
 	$average=ceil($total/$count);
+	}	
 	
 	# Save to the database
 	sql_query("update resource set user_rating='$average',user_rating_total='$total',user_rating_count='$count' where ref='$ref'");
+		
 	}
 		
 function notify_user_contributed_submitted($refs)

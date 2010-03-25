@@ -271,6 +271,11 @@ $headerinsert.="
 <script src=\"../lib/js/infobox" . ($infobox_image_mode?"_image":"") . ".js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
 ";
 
+if ($display_user_rating_stars_edit){
+	$headerinsert.="
+	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js\" type=\"text/javascript\"></script>";
+}
+
 if ($infobox)
 	$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
 
@@ -389,6 +394,11 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($order_by=="file_path") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["filename"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=file_path&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["filename"]?></a><?php } ?>
 		<?php } ?>
 		
+		<?php if ($random_sort){?>
+		&nbsp;|&nbsp;
+		<?php if ($order_by=="random") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=random&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["random"]?></a></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=random&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["random"]?></a><?php } ?>
+		<?php } ?>
+		
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?>
 		
@@ -477,7 +487,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			<?php if ($order_by=="field".$ldf[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $ldf[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a></td><?php } ?>
 			<?php }
 		} ?>
-		<?php if ($display_user_rating_stars){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>
+		<?php if ($display_user_rating_stars && $k=="" ){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>
 		<td>&nbsp;</td><!-- contains admin ratings -->
 		<?php if ($id_column){?><?php if ($order_by=="resourceid"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a></td><?php } ?><?php } ?>
 		<?php if ($resource_type_column){?><?php if ($order_by=="resourcetype"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a></td><?php } ?><?php } ?>
@@ -555,7 +565,21 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		</td>
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->	
-		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+<?php if ($display_user_rating_stars && $k==""){ ?>
+	<span class="IconUserRatingSpace"></span>
+	<?php if ($display_user_rating_stars_edit){?>
+		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
+		
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
+		<?php for ($z=1;$z<=5;$z++)
+			{
+			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			}
+		?>
+		</div>
+	<?php } else { ?>
+			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+	<?php } ?>
 <?php hook("icons");?>
 <?php if (!hook("rendertitlethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
@@ -661,7 +685,21 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</td>
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
-		<?php if ($display_user_rating_stars){ ?><span class="IconUserRatingSpace"></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br/><?php } else { ?><?php } ?><?php } ?>
+		<?php if ($display_user_rating_stars && $k==""){ ?>
+	<span class="IconUserRatingSpace"></span>
+	<?php if ($display_user_rating_stars_edit){?>
+		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
+		
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
+		<?php for ($z=1;$z<=5;$z++)
+			{
+			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			}
+		?>
+		</div>
+	<?php } else { ?>
+			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+	<?php } ?>
 		<div class="ResourcePanelCountry">
 		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -722,7 +760,24 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 				<?php } 
 			}
 		} ?>
-		<?php if ($display_user_rating_stars){?><td></span><?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar" style="margin-bottom:0;height:12px;"></span><?php } } else { ?><span class="IconUserRatingSpace" style="margin-bottom:0;height:12px;">&nbsp;</span><?php } ?></td><?php } ?>
+
+		<?php if ($display_user_rating_stars && $k==""){ ?>
+			<td>
+			<?php if ($display_user_rating_stars_edit){?>
+			<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
+		
+			<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
+			<?php for ($z=1;$z<=5;$z++)
+				{
+				?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+				}
+			?>
+		</div></td>
+	<?php } else { ?>
+			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+	<?php } ?>
+		
+		
 		<td><?php if ($result[$n][$rating]>0) { ?><?php for ($y=0;$y<$result[$n][$rating];$y++){?> <div class="IconStar"></div><?php } } else { ?>&nbsp;<?php } ?></td>
 		<?php if ($id_column){?><td><?php echo $result[$n]["ref"]?></td><?php } ?>
 		<?php if ($resource_type_column){?><td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td><?php } ?>

@@ -938,4 +938,6 @@ $lang["usagetotalno"]="Total number of downloads";
 $lang["ok"]="OK";
 
 $lang["random"]="Random";
+$lang["userratingstatsforresource"]="User Rating Stats for Resource";
+$lang["average"]="Average";
 ?>

@@ -318,9 +318,9 @@ div.autocomplete ul li {
 .StarGrey {background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;;}
 .RatingCount {font-size:11px;}
 .RatingStars a:hover {text-decoration:none;}
-
 .Listview .ListViewSubTable,.Listview .ListViewSubTable td,.Listview .ListViewSubTable tr {background-image: none;}
-
+.StarEmpty {  background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;}
+.StarCurrent { background: transparent url('../gfx/interface/RatingStarWhite.gif') no-repeat;}
 
 
 /* CSS for the lightbox (for resource feedback) */

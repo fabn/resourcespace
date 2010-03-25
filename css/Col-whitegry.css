@@ -62,6 +62,8 @@ a:active {color:#737373;}
 .IconUserRatingStar	{	background: url(../gfx/interface/RatingStarRed.gif) no-repeat;}
 .IconUserRatingSpace	{	background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
 .StarSelect {background: transparent url(../gfx/interface/RatingStarRed.gif) no-repeat;}
+.StarEmpty {background: transparent url('../gfx/interface/RatingStarLightGrey.gif') no-repeat;}
+.StarCurrent {background: transparent url('../gfx/interface/RatingStarGrey.gif') no-repeat;}
 
 .NavUnderline {border-bottom: 1px solid #5A7599;}
 .SearchSpace .tick, .SearchSpace .SearchItem, .ListviewStyle, .RecordPanel .SearchSimilar, .RecordPanel .item p, .RecordPanel .itemNarrow p, .BasicsBox h1, .BasicsBox h2, .BasicsBox p, .OxColourWhite, .Selected, .Selected a, .Question, .RecordPanel .Title {color: #3C3C3C}
