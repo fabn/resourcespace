@@ -1,2 +1,1 @@
-resource_data,1,resource_type_field,1,resource_type_field,A,1,,,YES,BTREE,
 resource_data,1,resource,1,resource,A,1060,,,YES,BTREE,
