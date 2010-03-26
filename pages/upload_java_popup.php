@@ -94,4 +94,4 @@ http://www.resourcespace.org/
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
-</div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()">Close this Window</A>  
+</div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()"><?php echo $lang['closethiswindow']?></A>  
