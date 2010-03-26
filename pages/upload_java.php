@@ -186,6 +186,24 @@ foreach ($extensions as $allowed_extension){
 
 ?>
 
+<?php if ($upload_java_popup && getval("replace","")=="" && getval("alternative","")==""){?>
+<script type="text/javascript">
+
+function popUp(URL) {
+var date  = new Date();
+var id=date.getTime();
+var test=window.open(URL,id,'toolbar=no,scrollbars=no,location=no,status=no,menubar=no,resizable=no,width=690,height=560');
+
+if (test==null || typeof(test)=="undefined") {
+		alert ('<?php echo $lang['popupblocked']?>');
+	} else {
+		window.location.href="search.php";
+	}
+}
+popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo urlencode(getvalescaped("no_exif",""))?>');
+
+</script>
+<?php }?>
 <div class="BasicsBox" id="uploadbox"> 
 <h2>&nbsp;</h2>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
