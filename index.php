@@ -86,7 +86,7 @@ Copyright Oxfam GB 2006-2008
 -->
 <title><?php echo htmlspecialchars($applicationname)?></title>
 
-<frameset rows="*<?php if ($bottomurl!="") { ?><?php if ($collection_resize!=true){?>,3<?php } ?>,138<?php } ?>" id="topframe" framespacing="0" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
+<frameset rows="*<?php if ($bottomurl!="") { ?><?php if ($collection_resize!=true){?>,<?php echo $collection_frame_divider_height ?><?php } ?>,<?php echo $collection_frame_height ?><?php } ?>" id="topframe" framespacing="0" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
 <frame name="main" id="main" src="<?php echo $topurl?>" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
 
 <?php if ($bottomurl!="") { ?>

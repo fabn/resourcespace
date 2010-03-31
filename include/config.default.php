@@ -1128,8 +1128,9 @@ $public_collections_exclude_themes=true;
 # Show a download summary on the resource view page.
 $download_summary=false;
 
-
-
+# Ability to alter collection frame height/width
+$collection_frame_divider_height=3;
+$collection_frame_height=138;
 
 
 
