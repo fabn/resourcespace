@@ -1797,6 +1797,8 @@ function update_xml_metadump($resource)
 
 	fwrite($f,"</record>\n");
 	fclose($f);
+	chmod($path,0777); // fixme - temporarily make world readable/writable until we have better solution for file permissions
+
 	}
 
 function get_metadata_templates()
