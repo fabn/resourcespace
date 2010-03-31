@@ -33,7 +33,9 @@ if (getval("save","")!="")
 	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
 	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches email
 	
-	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name);
+	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
+	
+	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc);
 
 	if ($errors=="")
 		{
@@ -187,6 +189,13 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+<?php } ?>
+
+<?php if ($cc_me && $useremail!=""){?>
+<div class="Question">
+<label for="ccme">CC <?php echo $useremail; ?></label><input type=checkbox checked id="ccme" name="ccme">
+<div class="clearerleft"> </div>
+</div>
 <?php } ?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>

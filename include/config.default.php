@@ -1369,4 +1369,6 @@ $user_rating_stats=false;
 # Try to open the java uploader in a popup window for basic uploads (doesn't apply to batch or alternative uploads)
 $upload_java_popup=false;
 
+# Allow a user to CC oneself when sending resources or collections.
+$cc_me=false;
 ?>

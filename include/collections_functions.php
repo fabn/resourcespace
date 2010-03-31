@@ -534,7 +534,7 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	}
 
 if (!function_exists("email_collection")){
-function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="")
+function email_collection($colrefs,$collectionname,$fromusername,$userlist,$message,$feedback,$access=-1,$expires="",$useremail="",$from_name="",$cc="")
 	{
 	# Attempt to resolve all users in the string $userlist to user references.
 	# Add $collection to these user's 'My Collections' page
@@ -642,7 +642,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		$templatevars['from_name']=$from_name;
 		
 		$body=$templatevars['fromusername']." " . ((count($reflist)>1)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
-		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,"emailcollection",$templatevars,$from_name);
+		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,"emailcollection",$templatevars,$from_name,$cc);
 		}
 		
 	# Return an empty string (all OK).

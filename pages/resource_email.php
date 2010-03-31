@@ -40,7 +40,9 @@ if (getval("save","")!="")
 	if ($use_user_email){$user_email=$useremail;} else {$user_email="";} // if use_user_email, set reply-to address
 	if (!$use_user_email){$from_name=$applicationname;} else {$from_name=$userfullname;} // make sure from_name matches system name
 	
-	$errors=email_resource($ref,$resource["field".$view_title_field],$userfullname,$users,$message,$access,$expires,$user_email,$from_name);
+	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
+	
+	$errors=email_resource($ref,$resource["field".$view_title_field],$userfullname,$users,$message,$access,$expires,$user_email,$from_name,$cc);
 	if ($errors=="")
 		{
 		# Log this			
@@ -123,6 +125,13 @@ for ($n=$access;$n<=1;$n++) { ?>
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+<?php } ?>
+
+<?php if ($cc_me && $useremail!=""){?>
+<div class="Question">
+<label for="ccme">CC <?php echo $useremail; ?></label><input type=checkbox checked id="ccme" name="ccme">
+<div class="clearerleft"> </div>
+</div>
 <?php } ?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>

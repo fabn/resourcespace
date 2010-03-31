@@ -1205,7 +1205,7 @@ function i18n_get_indexable($text)
 	return $out;
 	}
 
-function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="")
+function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
@@ -1220,7 +1220,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	global $use_phpmailer;
 	if ($use_phpmailer){
-		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name); 
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name,$cc); 
 		return true;
 		}
 	
@@ -1252,7 +1252,11 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
    #	$headers .= "X-Sender:  x-sender" . $eol;
    	$headers .= "From: \"$from_name\" <$reply_to>" . $eol;
  	$headers .= "Reply-To: $reply_to" . $eol;
-   	$headers .= "Date: " . date("r") .  $eol;
+	if ($cc!=""){
+		global $userfullname;
+		$headers .= "Cc: ".$userfullname. " <$cc>\r\n";
+	}
+	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $from . ">" . $eol;
    	#$headers .= "Return-Path: returnpath" . $eol;
    	//$headers .= "Delivered-to: $email" . $eol;
@@ -1264,7 +1268,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	}
 
 if (!function_exists("send_mail_phpmailer")){
-function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="")
+function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
 	{
 	
 	# if ($use_phpmailer==true) this function is used instead.
@@ -1426,6 +1430,10 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->FromName = $from_name;
 	$mail->AddReplyto($reply_to,$from_name);
 	$mail->AddAddress($email);
+	if ($cc!=""){
+		global $userfullname;
+		$mail->AddCC($cc,$userfullname);
+	}
 	$mail->CharSet = "utf-8"; 
 	
 	if ($html_template!="") {$mail->IsHTML(true);}  	
