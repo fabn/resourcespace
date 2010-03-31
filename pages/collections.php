@@ -117,7 +117,7 @@ function ToggleThumbs()
 	document.getElementById("CollectionSpace").style.visibility="hidden";
 	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,33";
 	<?php } else { ?>
-	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138";
+	top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=true) {?>,3<?php } ?>,<?php echo $collection_frame_height?>";
 	<?php } ?>
 	}
 <?php if ($thumbs=="hide") { ?>
