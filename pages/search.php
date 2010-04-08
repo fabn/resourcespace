@@ -709,13 +709,13 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 					if ($display=="xlthumbs") { #  ---------------------------- X-Large Thumbnails view ----------------------------
 			?>
 		 
-<?php if (!hook("renderresultthumb")) { ?>
+<?php if (!hook("renderresultlargethumb")) { ?>
 
 <!--Resource Panel-->
 	<div class="ResourcePanelShellLarge" id="ResourceShell<?php echo $ref?>">
 	<div class="ResourcePanelLarge">
 	
-<?php if (!hook("renderimagethumb")) { ?>			
+<?php if (!hook("renderimagelargethumb")) { ?>			
 	<?php $access=get_resource_access($result[$n]);
 	$use_watermark=check_use_watermark($result[$n]['ref']);?>
 	<table border="0" class="ResourceAlignLarge<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>">
@@ -727,7 +727,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	/><?php } ?></a>
 		</td>
 		</tr></table>
-<?php } ?> <!-- END HOOK Renderimagethumb-->	
+<?php } ?> <!-- END HOOK Renderimagelargethumb-->	
 <?php if ($display_user_rating_stars && $k==""){ ?>
 	<span class="IconUserRatingSpace"></span>
 	<?php if ($display_user_rating_stars_edit){?>
@@ -744,12 +744,12 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
 	<?php } ?>
 <?php hook("icons");?>
-<?php if (!hook("rendertitlethumb")) { ?>	
+<?php if (!hook("rendertitlelargethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
 		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
 <?php } //end if use_resource_column_data ?>
 
-<?php } ?> <!-- END HOOK Rendertitlethumb -->			
+<?php } ?> <!-- END HOOK Rendertitlelargethumb -->			
 		
 		<?php
 		# thumbs_display_fields
