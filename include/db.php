@@ -834,8 +834,8 @@ function rcRmdir ($path){ # Recursive rmdir function.
 }
 
 function get_resource_table_joins(){
-	global $rating_field,$sort_fields,$thumbs_display_fields,$list_display_fields,$data_joins,$metadata_template_title_field,$view_title_field,$date_field,$config_sheetlist_fields,$config_sheetthumb_fields;
-	$joins=array_merge($sort_fields,$thumbs_display_fields,$list_display_fields,$data_joins,$config_sheetlist_fields,$config_sheetthumb_fields,array($rating_field,$metadata_template_title_field,$view_title_field,$date_field));
+	global $rating_field,$sort_fields,$xl_thumbs_display_fields,$thumbs_display_fields,$list_display_fields,$data_joins,$metadata_template_title_field,$view_title_field,$date_field,$config_sheetlist_fields,$config_sheetthumb_fields;
+	$joins=array_merge($sort_fields,$xl_thumbs_display_fields,$thumbs_display_fields,$list_display_fields,$data_joins,$config_sheetlist_fields,$config_sheetthumb_fields,array($rating_field,$metadata_template_title_field,$view_title_field,$date_field));
 	$joins=array_unique($joins);
 	$n=0;
 	foreach ($joins as $join){

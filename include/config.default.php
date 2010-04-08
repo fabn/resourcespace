@@ -382,6 +382,8 @@ $thumbs_default="show";
 $autoshow_thumbs = false;
 # Enable small thumbnails option for search screen
 $smallthumbs=true;
+# Enable extra large thumbnails option for search screen
+$xlthumbs=false;
 # How many thumbnails to show in the collections frame until the frame automatically hides thumbnails.
 $max_collection_thumbs=150;
 
@@ -953,10 +955,14 @@ $partial_index_min_word_length=3;
 $use_resource_column_data=false; 
 # $thumbs_display_fields= array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(8,3);
+# $xl_thumbs_display_fields= array of fields to display on the large thumbnail view.
+$xl_thumbs_display_fields=array(8,3);
 # display fields to be added to the sort links in thumbnail views
 $sort_fields=array(12);
 # array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
+# array of additional xl_thumbs_display_fields to apply CSS modifications to ($xl_search_results_title_wordwrap, $xl_search_results_title_height, $xl_search_results_title_trim)
+$xl_thumbs_display_extended_fields=array();
 $view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
 $date_field=12; // handle dates as any other; this is the *searchable* date.
 # a rating field is also supported, which adds the star to list and thumbs view if active. If $use_resource_column_data=false and $rating_field is set, star appears if the field[$rating_field] is not blank
@@ -1107,15 +1113,18 @@ $themes_category_split_pages=false;
 
 # How many characters to trim the title to on search results
 $search_results_title_trim=40;
+$xl_search_results_title_trim=40;
 
 # Uncomment the below to set a vertical height for the title on the large thumbnail view.
 # You may need to tweak $search_results_title_wordwrap below. 
 # $search_result_title_height=26;
+# $xl_search_result_title_height=26;
 
 # Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height above)
 # By default this is set very high so that breaking doesn't occur.
 # If you use titles that have large unbroken words (e.g. filenames with no spaces) then it may be useful to set this value to something lower, e.g. 20
 $search_results_title_wordwrap=100;
+$xl_search_results_title_wordwrap=100;
 
 # Ask the user the intended usage when downloading
 $download_usage=false;
@@ -1371,4 +1380,4 @@ $upload_java_popup=false;
 
 # Allow a user to CC oneself when sending resources or collections.
 $cc_me=false;
-?>
+

@@ -32,6 +32,7 @@ $lang["anymonth"]="Any month";
 $lang["anyday"]="Any day";
 $lang["anycountry"]="Any country";
 $lang["resultsdisplay"]="Results Display";
+$lang["xlthumbs"]="X-Large";
 $lang["largethumbs"]="Large";
 $lang["smallthumbs"]="Small";
 $lang["list"]="List";
@@ -942,4 +943,5 @@ $lang["userratingstatsforresource"]="User Rating Stats for Resource";
 $lang["average"]="Average";
 $lang["popupblocked"]="The popup has been blocked by your browser.";
 $lang["closethiswindow"]="Close this window";
+
 ?>

@@ -20,10 +20,13 @@ $search=getvalescaped("search","");
 
 # create a thumbs_display_field array with information needed for detailed field highlighting
 $tdf=array();
+$xltdf=array();
+$ldf=array();
+
 if (isset($metadata_template_resource_type) && isset($metadata_template_title_field)){
 	$thumbs_display_fields[]=$metadata_template_title_field;
 	}
-$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields)));
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields)));
 $n=0;
 foreach ($thumbs_display_fields as $thumbs_display_field)
 	{
@@ -38,6 +41,27 @@ foreach ($thumbs_display_fields as $thumbs_display_field)
 			$tdf[$n]['partial_index']=$field_info['partial_index'];
 			$tdf[$n]['name']=$field_info['name'];
 			$tdf[$n]['title']=$field_info['title'];
+			$n++;
+			}
+		}
+	}
+$n=0;	
+
+# create an xl_thumbs_display_field array with information needed for detailed field highlighting
+$n=0;
+foreach ($xl_thumbs_display_fields as $xl_thumbs_display_field)
+	{
+	# Find field in selected list
+	for ($m=0;$m<count($all_field_info);$m++)
+		{
+		if ($all_field_info[$m]["ref"]==$xl_thumbs_display_field)
+			{
+			$field_info=$all_field_info[$m];
+			$xltdf[$n]['ref']=$xl_thumbs_display_field;
+			$xltdf[$n]['indexed']=$field_info['keywords_index'];
+			$xltdf[$n]['partial_index']=$field_info['partial_index'];
+			$xltdf[$n]['name']=$field_info['name'];
+			$xltdf[$n]['title']=$field_info['title'];
 			$n++;
 			}
 		}
@@ -329,7 +353,7 @@ include "../include/header.php";
 
 
 # Extra CSS to support more height for titles on thumbnails.
-if (isset($search_result_title_height))
+if (isset($search_result_title_height) && $display=="thumbs")
 	{
 	?>
 	<style>
@@ -341,6 +365,18 @@ if (isset($search_result_title_height))
 	</style>
 	<?php
 	}
+if (isset($xl_search_result_title_height) && $display=="xlthumbs")
+	{
+	?>
+	<style>
+	.ResourcePanelInfo
+		{
+		white-space:normal;
+		height: <?php echo $xl_search_result_title_height ?>px;
+		}
+	</style>
+	<?php
+	}	
 
 
 # Extra CSS if using Image Infoboxes ($infobox_image_mode)
@@ -369,9 +405,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php if (count($result)==1){echo $lang["youfoundresource"];} else {echo $lang["youfoundresources"];}?></div>
 	<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
+	<?php if ($xlthumbs==true) { ?><?php if ($display=="xlthumbs") { ?><span class="Selected"><?php echo $lang["xlthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=xlthumbs&k=<?php echo $k?>"><?php echo $lang["xlthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
 	<?php if ($display=="thumbs") { ?><span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp;|&nbsp; 
-		<?php if ($smallthumbs==true) { ?>		
-	<?php if ($display=="smallthumbs") { ?><span class="Selected"><?php echo $lang["smallthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
+	<?php if ($smallthumbs==true) { ?><?php if ($display=="smallthumbs") { ?><span class="Selected"><?php echo $lang["smallthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
 	<?php if ($display=="list") { ?><span class="Selected"><?php echo $lang["list"]?></span><?php } else { ?><a href="<?php echo $url?>&display=list&k=<?php echo $k?>"><?php echo $lang["list"]?></a><?php } ?> <?php hook("adddisplaymode"); ?> </div>
 	<?php
 	
@@ -668,6 +704,129 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		
 		
 		
+		} 
+		
+					if ($display=="xlthumbs") { #  ---------------------------- X-Large Thumbnails view ----------------------------
+			?>
+		 
+<?php if (!hook("renderresultthumb")) { ?>
+
+<!--Resource Panel-->
+	<div class="ResourcePanelShellLarge" id="ResourceShell<?php echo $ref?>">
+	<div class="ResourcePanelLarge">
+	
+<?php if (!hook("renderimagethumb")) { ?>			
+	<?php $access=get_resource_access($result[$n]);
+	$use_watermark=check_use_watermark($result[$n]['ref']);?>
+	<table border="0" class="ResourceAlignLarge<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>">
+	<tr><td>
+	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img src="<?php echo get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
+	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
+	 /><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
+	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
+	/><?php } ?></a>
+		</td>
+		</tr></table>
+<?php } ?> <!-- END HOOK Renderimagethumb-->	
+<?php if ($display_user_rating_stars && $k==""){ ?>
+	<span class="IconUserRatingSpace"></span>
+	<?php if ($display_user_rating_stars_edit){?>
+		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
+		
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
+		<?php for ($z=1;$z<=5;$z++)
+			{
+			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			}
+		?>
+		</div>
+	<?php } else { ?>
+			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
+	<?php } ?>
+<?php hook("icons");?>
+<?php if (!hook("rendertitlethumb")) { ?>	
+<?php if ($use_resource_column_data) { // omit default title display ?>		
+		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+<?php } //end if use_resource_column_data ?>
+
+<?php } ?> <!-- END HOOK Rendertitlethumb -->			
+		
+		<?php
+		# thumbs_display_fields
+		for ($x=0;$x<count($xltdf);$x++)
+			{
+			#value filter plugin -tbd	
+			$value=$result[$n]['field'.$xltdf[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $xltdf[$x]['name'] . ".php";
+			if (file_exists($plugin)) {include $plugin;}
+			
+			# swap title fields if necessary
+			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
+				if (!$use_resource_column_data && ($xltdf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+					$value=$result[$n]['field'.$metadata_template_title_field];
+					}
+				}
+			?>		
+			<?php 
+			// extended css behavior 
+			if ( in_array($xltdf[$x]['ref'],$xl_thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $xltdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			<div class="ResourcePanelInfo">
+			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$xl_search_results_title_trim),$xl_search_results_title_wordwrap,"#zwspace;",true)),$search,$xltdf[$x]['partial_index'],$xltdf[$x]['name'],$xltdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php 
+
+			// normal behavior
+			} else if  ( (isset($metadata_template_title_field)&&$xltdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
+			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$xltdf[$x]['partial_index'],$xltdf[$x]['name'],$xltdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			<?php } ?>
+			<?php
+			}
+		?>
+		
+		<div class="ResourcePanelCountry">&nbsp;</div>
+				
+		<?php if (!hook("replacefullscreenpreviewicon")){?>
+		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
+		<?php } /* end hook replacefullscreenpreviewicon */?>
+		
+		<?php if(!hook("iconcollect")){?>
+		<?php if (!checkperm("b") && $k=="" && !$use_checkboxes_for_selection) { ?>
+		<span class="IconCollect"><?php echo add_to_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12"/></a></span>
+		<?php } ?>
+		<?php } # end hook iconcollect ?>
+
+		<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="" && !$use_checkboxes_for_selection) { ?>
+		<?php if ($search=="!collection".$usercollection){?><span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
+		<?php } ?>
+		<?php } ?>
+		
+		<?php if ($allow_share && $k=="") { ?><span class="IconEmail"><a href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["emailresource"]?>"><img src="../gfx/interface/sp.gif" alt="" width="16" height="12" /></a></span><?php } ?>
+		<?php if ($result[$n][$rating]>0) { ?><div class="IconStar"></div><?php } ?>
+		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
+		<span class="IconComment"><a href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo substr($search,11)?>" title="<?php echo $lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
+		<?php if ($order_by=="relevance"){?><div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div><?php } ?>
+		<?php } ?>
+		<div class="clearer"></div>
+		<?php if(!hook("thumbscheckboxes")){?>
+		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
+		<?php } # end hook thumbscheckboxes?>
+	</div>
+<div class="PanelShadow"></div>
+</div>
+<?php if ($allow_reorder && $display!="list") { 
+# Javascript drag/drop enabling.
+?>
+<script type="text/javascript">
+new Draggable('ResourceShell<?php echo $ref?>',{handle: 'IconReorder', revert: true});
+Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', onDrop: function(element) {ReorderResources(element.id,<?php echo $ref?>);}, hoverclass: 'ReorderHover'});
+</script>
+<?php } ?> 
+<?php } ?>
+
+		<?php 
+		
+
 		} elseif ($display == "smallthumbs") { # ---------------- Small Thumbs view ---------------------
 		?>
 

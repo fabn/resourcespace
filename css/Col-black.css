@@ -37,12 +37,13 @@ a:active {color:#CCC;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
 
-#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #AAA;border-bottom: 1px solid #AAA;border-left: 1px solid #AAA;}
 
 #ThemeBoxPanel, #SearchBoxPanel {background: #5B5B5B url(../gfx/black/interface/SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: #5B5B5B url(../gfx/black/interface/researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #595959 url(../gfx/black/interface/resourcepanel.gif) repeat-x;}
 .ResourcePanelSmall {background: #595959 url(../gfx/black/interface/resourcepanel.gif) repeat-x;}
+.ResourcePanelLarge {background: #595959 url(../gfx/black/interface/resourcepanel.gif) repeat-x;}
 .IconVideo {background: url(../gfx/black/interface/IcVideo.gif) no-repeat 140px 5px;}
 
 .ImageBorder, .RecordPanel .Picture {border: 1px solid #AAA;}
