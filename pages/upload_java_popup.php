@@ -51,7 +51,7 @@ http://www.resourcespace.org/
 
 </p>
 </div><h2>&nbsp;</h2>
-<h1><?php echo $lang["fileupload"]?> - <?php echo $lang['collection']?> <?php echo $collectionname?></h1>
+<h1><?php echo $lang["fileupload"]?><?php if (isset($collectionname)){?> - <?php echo $lang['collection']?>: <?php echo $collectionname?><?php } ?></h1>
 <p><?php echo text("introtext")?></p>
 
 <?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions))?></p><?php } ?>
