@@ -295,7 +295,7 @@ $headerinsert.="
 <script src=\"../lib/js/infobox" . ($infobox_image_mode?"_image":"") . ".js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
 ";
 
-if ($display_user_rating_stars_edit){
+if ($display_user_rating_stars){
 	$headerinsert.="
 	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js\" type=\"text/javascript\"></script>";
 }
