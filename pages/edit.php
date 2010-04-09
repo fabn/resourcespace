@@ -790,15 +790,8 @@ for ($n=0;$n<count($fields);$n++)
 	}
 
 
-if (!checkperm("F*")) # Only display status/relationships if full write access field access has been granted.
-{
-?>
-<?php if(!hook("replacestatusandrelationshipsheader")){?>
-<?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
-<?php } /* end hook replacestatusandrelationshipsheader */ ?>
-
-	<!-- Archive Status -->
-	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 
+# User upload forms. Work out the correct archive status.
+if ($ref<0 && $show_status_and_access_on_upload==false) { 
 		# Hide the dropdown, and set the default status depending on user permissions.
 		$mode=0;
 		if (checkperm("e-1")) {$mode=-1;}
@@ -813,6 +806,19 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 		?>
 		<input type=hidden name="archive" value="<?php echo $mode?>">
 		<?php
+		}
+
+if (!checkperm("F*")) # Only display status/relationships if full write access field access has been granted.
+{
+?>
+<?php if(!hook("replacestatusandrelationshipsheader")){?>
+<?php if ($ref>=0) { ?><br><h1><?php echo $lang["statusandrelationships"]?></h1><?php } ?>
+<?php } /* end hook replacestatusandrelationshipsheader */ ?>
+
+	<!-- Archive Status -->
+	<?php if ($ref<0 && $show_status_and_access_on_upload==false)
+		{ 
+		# Do not display
 		}
 	else { ?>
 	<?php if(!hook("replacestatusselector")){?>
