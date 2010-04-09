@@ -859,8 +859,8 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	<?php } else { ?>
 			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
 	<?php } ?>
-		<div class="ResourcePanelCountry">
-		<span class="IconPreview">
+		<div class="ResourcePanelSmallIcons">
+		<span class="IconPreview" style="align:right">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
 		<?php if (!checkperm("b") && $k=="") { ?>
