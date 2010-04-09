@@ -236,7 +236,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 							# Form join							
 							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
-							echo $sql_join;
+							#echo $sql_join;
 							}
 						else		
 							{
