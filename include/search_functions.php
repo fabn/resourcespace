@@ -224,41 +224,62 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					global $noadd;
 					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
 						{
-						$keyref=resolve_keyword($keyword);
-						if ($keyref===false)
+							
+						# Handle wildcards
+						if (strpos($keyword,"*")!==false)
 							{
-							$fullmatch=false;
-							$soundex=resolve_soundex($keyword);
-							if ($soundex===false)
+							# Keyword contains a wildcard. Expand.
+							$c++;
+							
+							global $wildcard_expand_limit;
+							$wildcards=sql_array("select ref value from keyword where keyword like '" . escape_check(str_replace("*","%",$keyword)) . "' order by hit_count desc limit " . $wildcard_expand_limit);
+
+							# Form join							
+							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
+							echo $sql_join;
+							}
+						else		
+							{
+							# Not a wildcard. Normal matching.
+							
+							$keyref=resolve_keyword($keyword); # Resolve keyword. Ignore any wildcards when resolving. We need wildcards to be present later but not here.
+							if ($keyref===false)
 								{
-								# No keyword match, and no keywords sound like this word. Suggest dropping this word.
-								$suggested[$n]="";
+								$fullmatch=false;
+								$soundex=resolve_soundex($keyword);
+								if ($soundex===false)
+									{
+									# No keyword match, and no keywords sound like this word. Suggest dropping this word.
+									$suggested[$n]="";
+									}
+								else
+									{
+									# No keyword match, but there's a word that sounds like this word. Suggest this word instead.
+									$suggested[$n]="<i>" . $soundex . "</i>";
+									}
 								}
 							else
 								{
-								# No keyword match, but there's a word that sounds like this word. Suggest this word instead.
-								$suggested[$n]="<i>" . $soundex . "</i>";
+								# Key match, add to query.
+								$c++;
+		
+								# Add related keywords
+								$related=get_related_keywords($keyref);$relatedsql="";
+								for ($m=0;$m<count($related);$m++)
+									{
+									$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
+									}
+								
+								# Form join
+								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+
+
+								if ($score!="") {$score.="+";}
+								$score.="k" . $c . ".hit_count";
+								
+								# Log this
+								daily_stat("Keyword usage",$keyref);
 								}
-							}
-						else
-							{
-							# Key match, add to query.
-							$c++;
-	
-							# Add related keywords
-							$related=get_related_keywords($keyref);$relatedsql="";
-							for ($m=0;$m<count($related);$m++)
-								{
-								$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
-								}
-							
-							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
-							
-							if ($score!="") {$score.="+";}
-							$score.="k" . $c . ".hit_count";
-							
-							# Log this
-							daily_stat("Keyword usage",$keyref);
 							}
 						}
 					}
