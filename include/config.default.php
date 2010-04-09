@@ -1382,6 +1382,6 @@ $upload_java_popup=false;
 $cc_me=false;
 
 # How many keywords should be included in the search when a single keyword expands via a wildcard. Setting this too high may cause performance issues.
-$wildcard_expand_limit=250;
+$wildcard_expand_limit=50;
 
 
