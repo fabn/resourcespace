@@ -55,11 +55,11 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	for($i=0;$i< count($write_to);$i++)
 		{
 		$fieldtype=$write_to[$i]['type'];	
-		$field=explode(",",$write_to[$i]['exiftool_field']);
+		$fields=explode(",",$write_to[$i]['exiftool_field']);
 		 # write datetype fields as ISO 8601 date ("c") 
 		 if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
 		 else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
-		foreach ($field as $field)
+		foreach ($fields as $field)
 			{
 			$field=strtolower($field);
 			$simcommands[$field]['value']=str_replace("\"","\\\"",$writevalue);
@@ -86,14 +86,20 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 			$tag=$tag_value[1];
 			$value=trim($tag_value[2]);
 			$tag=trim(strtolower($tag));
+			$group=trim(strtolower($group));
 			$tagprops="";
-			if(in_array($tag,$writable_tags_array)&&$file_writability){$tagprops.="w";}
+			if((in_array($tag,$writable_tags_array)&&$file_writability)){$tagprops.="w";}
 			if ($tagprops!="")$tagprops="($tagprops)";
 			
-			if(isset($simcommands[$tag]['value']))
+			if(isset($simcommands[$tag]['value'])||isset($simcommands[$group.":".$tag]))
 				{
 				#add notes to mapped fields	
-				$RS_field_ref=$simcommands[$tag]['ref'];
+				if (isset($simcommands[$tag]['ref'])){
+					$RS_field_ref=$simcommands[$tag]['ref'];
+				}
+				elseif (isset($simcommands[$group.":".$tag])){
+					$RS_field_ref=$simcommands[$group.":".$tag]['ref'];
+				}
 				$RS_field_name=sql_query("select title from resource_type_field where ref = $RS_field_ref");
 				$RS_field_name=$RS_field_name[0]['title'];
 				echo "<td>".$RS_field_ref." - ".i18n_get_translated($RS_field_name)."</td><td>$group</td><td>$tag $tagprops</td>";
@@ -105,11 +111,14 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 				
 					
 			#add diff arrow to fields that will likely change
-			if(isset($simcommands[$tag]['value']))
+			if(isset($simcommands[$tag]['value'])||isset($simcommands[$group.":".$tag]['value']))
 				{
-				if ($value!=$simcommands[$tag]['value'])
+				if (isset($simcommands[$tag]['value'])){ $newvalue=	$simcommands[$tag]['value'];}
+				else if (isset($simcommands[$group.":".$tag]['value'])){ $newvalue=	$simcommands[$group.":".$tag]['value'];}	
+					
+				if ($value!=$newvalue)
 					{
-					echo "<td>- ".$value."</td><td>+ ".$simcommands[$tag]['value']."</td>";
+					echo "<td>- ".$value."</td><td>+ ".$newvalue."</td>";
 					}
 				else
 					{
