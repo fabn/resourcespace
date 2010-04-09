@@ -602,20 +602,16 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagethumb-->	
 <?php if ($display_user_rating_stars && $k==""){ ?>
-	<span class="IconUserRatingSpace"></span>
-	<?php if ($display_user_rating_stars_edit){?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
-		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
-		<?php for ($z=1;$z<=5;$z++)
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">&nbsp;<?php 
+		for ($z=1;$z<=5;$z++)
 			{
 			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
 			}
 		?>
 		</div>
-	<?php } else { ?>
-			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
-	<?php } ?>
+		<?php } ?>
 <?php hook("icons");?>
 <?php if (!hook("rendertitlethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
@@ -718,7 +714,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 <?php if (!hook("renderimagelargethumb")) { ?>			
 	<?php $access=get_resource_access($result[$n]);
 	$use_watermark=check_use_watermark();?>
-	<table border="0" class="ResourceAlignLarge<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideo<?php } ?>">
+	<table border="0" class="ResourceAlignLarge<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideoLarge<?php } ?>">
 	<tr><td>
 	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img src="<?php echo get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
@@ -729,20 +725,16 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</tr></table>
 <?php } ?> <!-- END HOOK Renderimagelargethumb-->	
 <?php if ($display_user_rating_stars && $k==""){ ?>
-	<span class="IconUserRatingSpace"></span>
-	<?php if ($display_user_rating_stars_edit){?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
-		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
-		<?php for ($z=1;$z<=5;$z++)
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">&nbsp;<?php
+		for ($z=1;$z<=5;$z++)
 			{
 			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
 			}
 		?>
 		</div>
-	<?php } else { ?>
-			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
-	<?php } ?>
+		<?php } ?>
 <?php hook("icons");?>
 <?php if (!hook("rendertitlelargethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
@@ -845,22 +837,18 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
 		<?php if ($display_user_rating_stars && $k==""){ ?>
-	<span class="IconUserRatingSpace"></span>
-	<?php if ($display_user_rating_stars_edit){?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
-		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
-		<?php for ($z=1;$z<=5;$z++)
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">&nbsp;<?php
+	    for ($z=1;$z<=5;$z++)
 			{
 			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
 			}
 		?>
 		</div>
-	<?php } else { ?>
-			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
-	<?php } ?>
-		<div class="ResourcePanelSmallIcons">
-		<span class="IconPreview" style="align:right">
+		<?php } ?>
+		<div class="ResourcePanelCountry">
+		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
 		<?php if (!checkperm("b") && $k=="") { ?>
@@ -922,19 +910,16 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 
 		<?php if ($display_user_rating_stars && $k==""){ ?>
 			<td>
-			<?php if ($display_user_rating_stars_edit){?>
 			<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
-			<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
+			<div  class="RatingStars" style="text-align:left;margin:0px;" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">
 			<?php for ($z=1;$z<=5;$z++)
 				{
 				?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
 				}
 			?>
 		</div></td>
-	<?php } else { ?>
-			<?php if ($result[$n]['user_rating']!=""){ ?><?php for ($y=0;$y<$result[$n]['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br><?php } else { ?><span class="IconUserRatingSpace"></span><br><?php } ?><?php } ?> 
-	<?php } ?>
+		<?php } ?>
 		
 		
 		<td><?php if ($result[$n][$rating]>0) { ?><?php for ($y=0;$y<$result[$n][$rating];$y++){?> <div class="IconStar"></div><?php } } else { ?>&nbsp;<?php } ?></td>

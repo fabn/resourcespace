@@ -46,6 +46,7 @@ a:active {color:#737373;}
 .ResourcePanelSmall {background: #FFFFFF  repeat-x;}
 .ResourcePanelLarge {background: #FFFFFF  repeat-x;}
 .IconVideo {background: url(../gfx/whitegry/interface/IcVideo.gif) no-repeat 140px 5px;}
+.IconVideoLarge {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 340px 5px;}
 
 .ImageBorder, .RecordPanel .Picture, .VideoBorder {border: 1px solid #000000;}	
 .CollectImageBorder {border: 1px solid #000000;}	
