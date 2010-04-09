@@ -182,6 +182,7 @@ if (getval("tweak","")!="")
 		break;
 		case "restore":
 		create_previews($ref,false,$resource["file_extension"]);
+		refresh_collection_frame();
 		break;
 		}
 
