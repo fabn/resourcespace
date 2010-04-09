@@ -1840,7 +1840,7 @@ function download_summary($resource)
 	}
 	
 	
-function check_use_watermark($ref){
+function check_use_watermark(){
 	# access status must be available prior to this.
 	# This function checks whether to use watermarks or not.
 	# Two cases:

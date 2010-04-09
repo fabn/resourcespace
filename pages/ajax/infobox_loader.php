@@ -15,7 +15,7 @@ $resource=get_resource_data($ref);
 
 # Load access level
 $access=get_resource_access($ref);
-$use_watermark=check_use_watermark($ref);
+$use_watermark=check_use_watermark();
 
 if ($image)
 	{

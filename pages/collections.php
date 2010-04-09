@@ -438,7 +438,7 @@ if (count($result)>0)
 		<div class="CollectionPanelShell" id="ResourceShell<?php echo $ref?>">
 		<?php if (!hook("rendercollectionthumb")){?>
 		<?php $access=get_resource_access($result[$n]);
-		$use_watermark=check_use_watermark($result[$n]['ref']);?>
+		$use_watermark=check_use_watermark();?>
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>"><?php if ($result[$n]["has_image"]==1) { 
 		

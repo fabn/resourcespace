@@ -74,7 +74,7 @@ if ($submitted != "")
 		$ref=$result[$n]["ref"];
 		# Load access level
 		$access=get_resource_access($result[$n]);
-		$use_watermark=check_use_watermark($result[$n]);
+		$use_watermark=check_use_watermark();
 		
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)

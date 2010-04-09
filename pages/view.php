@@ -199,7 +199,7 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	}
 elseif ($resource["has_image"]==1)
 	{
-	$use_watermark=check_use_watermark($resource['ref']);
+	$use_watermark=check_use_watermark();
 	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 	if (!file_exists($imagepath))
 		{
