@@ -254,7 +254,7 @@ function save_resource_data($ref,$multi)
 	if ($expiry_field_edited) {$expirysql=",expiry_notification_sent=0";}
 
 	# Also update archive status and access level
-	if (!checkperm("F*")) # Only if 'full' access (not selected fields only).
+	if (getvalescaped("archive","")!="") # Only if archive has been sent
 		{
 		sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
 		}
