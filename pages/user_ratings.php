@@ -42,12 +42,12 @@ for ($n=0;$n<count($ratings);$n++){
 	?>
 
 <tr><td><?php echo $username?></td>
-<td><?php for ($y=0;$y<$ratings[$n]['rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br>
+<td><div  class="RatingStars" ><?php for ($y=0;$y<$ratings[$n]['rating'];$y++){?><span class="IconUserRatingStar" style="float:left;display:block;"></span><?php } ?></div><br>
 
 </td></tr>
 <?php } ?>
 
-<tr><td><b><?php echo $lang['average']?></b></td><td> <?php for ($y=0;$y<$resource['user_rating'];$y++){?><span class="IconUserRatingStar"></span><?php } ?><br> </td></tr>
+<tr><td><b><?php echo $lang['average']?></b></td><td> <?php for ($y=0;$y<$resource['user_rating'];$y++){?><span class="IconUserRatingStar" style="float:left;display:block;"></span><?php } ?><br> </td></tr>
 
 </table>
 </div>
