@@ -989,23 +989,23 @@ function formatfilesize($bytes)
 	# Return a human-readable string representing $bytes in either KB or MB.
 	if ($bytes<1024)
 		{
-		return number_format($bytes) . "&nbsp;B";		
+		return number_format((double)$bytes) . "&nbsp;B";		
 		}
 	elseif ($bytes<pow(1024,2))
 		{
-		return number_format(ceil($bytes/1024)) . "&nbsp;KB";
+		return number_format((double)ceil($bytes/1024)) . "&nbsp;KB";
 		}
 	elseif ($bytes<pow(1024,3))
 		{
-		return number_format($bytes/pow(1024,2),1) . "&nbsp;MB";
+		return number_format((double)$bytes/pow(1024,2),1) . "&nbsp;MB";
 		}
 	elseif ($bytes<pow(1024,4))
 		{
-		return number_format($bytes/pow(1024,3),1) . "&nbsp;GB";
+		return number_format((double)$bytes/pow(1024,3),1) . "&nbsp;GB";
 		}
 	else
 		{
-		return number_format($bytes/pow(1024,4),1) . "&nbsp;TB";
+		return number_format((double)$bytes/pow(1024,4),1) . "&nbsp;TB";
 		}
 	}
 
