@@ -24,12 +24,20 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	union
 	select c.*,u.username,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist order by $order_by $sort");
 	
-	if (count($return)==0 && $auto_create)
+	// To keep My Collection creation consistent: Check that user has at least one collection of his/her own  (not if collection result is empty, which may include shares), 
+	$hasown=false;
+	for ($n=0;$n<count($return);$n++){
+		if ($return[$n]['user']==$user){
+			$hasown=true;
+		}
+	}
+	
+	if (!$hasown && $auto_create)
 		{
-		# No collections? The user must have at least one My Collection
+		# No collections of one's own? The user must have at least one My Collection
 		global $usercollection;
 		$name=get_mycollection_name($user);
-		$usercollection=create_collection ($user,$name);
+		$usercollection=create_collection ($user,$name,0,1); // make not deletable
 		set_user_collection($user,$usercollection);
 		
 		# Recurse to send the updated collection list.
