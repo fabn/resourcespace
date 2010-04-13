@@ -1283,7 +1283,25 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 
 	# Include footer
 	global $email_footer;
-
+	$phpversion=phpversion();
+	if ($phpversion>='5.3') {
+	if (file_exists("../lib/phpmailer_v5_1/class.phpmailer.php")){
+		include_once("../lib/phpmailer_v5_1/class.phpmailer.php");
+		include_once("../lib/phpmailer/class.html2text.php");
+		}
+	else if (file_exists("../../lib/phpmailer_v5_1/class.phpmailer.php")){
+		# team center
+		include_once("../../lib/phpmailer_v5_1/class.phpmailer.php");
+		include_once("../lib/phpmailer/class.html2text.php");
+		}	
+	else if (file_exists("../../../lib/phpmailer_v5_1/class.phpmailer.php")){
+		# plugin
+		include_once("../../../lib/phpmailer_v5_1/class.phpmailer.php");
+		include_once("../lib/phpmailer/class.html2text.php");
+		}		
+		
+	} else {
+	// less than 5.3
 	if (file_exists("../lib/phpmailer/class.phpmailer.php")){
 		include_once("../lib/phpmailer/class.phpmailer.php");
 		include_once("../lib/phpmailer/class.html2text.php");
@@ -1298,6 +1316,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		include_once("../../../lib/phpmailer/class.phpmailer.php");
 		include_once("../../../lib/phpmailer/class.html2text.php");
 		}	
+	}
 		
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
