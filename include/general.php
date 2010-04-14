@@ -2384,7 +2384,7 @@ function filesize_unlimited($path)
 	{
 	# A resolution, at least on UNIX systems, for PHP's issue with large files and filesize().
 	$f=@filesize($path);
-	if ($f<1024*1024*1024) {return $f;} # Less than 1GB? We trust filesize(). It always returns 1.6GB for anything really large.
+	if ($f<1024*1024*1024 && $f>0) {return $f;} # Less than 1GB? We trust filesize(). It always returns 1.6GB for anything really large.
 	
 	# Attempt to use 'du' utility.
 	$f2=exec("du " . escapeshellarg($path));
