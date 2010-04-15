@@ -647,7 +647,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 
 			// normal behavior
 			} else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
-			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),20),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
 			}
