@@ -380,10 +380,6 @@ $terms_login=false;
 $thumbs_default="show";
 #  Automatically show thumbs when you change collection (only if default is show)
 $autoshow_thumbs = false;
-# Enable small thumbnails option for search screen
-$smallthumbs=true;
-# Enable extra large thumbnails option for search screen
-$xlthumbs=false;
 # How many thumbnails to show in the collections frame until the frame automatically hides thumbnails.
 $max_collection_thumbs=150;
 
@@ -947,28 +943,53 @@ $back_to_collections_link = "";
 # For fields with partial keyword indexing enabled, this determines the minimum infix length
 $partial_index_min_word_length=3;
 
-# $use_resource_column_data=false intends to remove dependence upon *mapped* resource columns and hardcoded displays
-# all existing resource_data needed for search display are gathered in get_resource_table_joins() and will be added
+# ---------------------
+# Search Display 
+
+# all existing resource_data fields needed for fast search displays are gathered in get_resource_table_joins() and will be added
 # to the resource table as varchar(200) via the DBStruct check for quicker display and sorting, and edits will be duped there as well.
-# true is deprecated, and can only be used with old systems which still have resource columns such as title and country,
-# It is highly recommended to convert to $use_resource_column_data=false, as it will add flexibility to search displays.
-$use_resource_column_data=false; 
-# $thumbs_display_fields= array of fields to display on the large thumbnail view.
+$use_resource_column_data=false; // should be false 
+
+# Thumbs Display Fields: array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(8,3);
-# $xl_thumbs_display_fields= array of fields to display on the large thumbnail view.
-$xl_thumbs_display_fields=array(8,3);
-# display fields to be added to the sort links in thumbnail views
-$sort_fields=array(12);
-# array of additional thumbs_display_fields to apply CSS modifications to ($search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
+# array of additional thumbs_display_fields to apply CSS modifications to (via $search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
-# array of additional xl_thumbs_display_fields to apply CSS modifications to ($xl_search_results_title_wordwrap, $xl_search_results_title_height, $xl_search_results_title_trim)
+	# $search_result_title_height=26;
+	$search_results_title_trim=40;
+	$search_results_title_wordwrap=100; // Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height). By default this is set very high so that breaking doesn't occur. If you use titles that have large unbroken words (e.g. filenames with no spaces) then it may be useful to set this value to something lower, e.g. 20
+	
+# Enable extra large thumbnails option for search screen
+$xlthumbs=false;
+# Extra Large Display Fields:  array of fields to display on the xlarge thumbnail view.
+$xl_thumbs_display_fields=array(8,3);
+# array of additional xl_thumbs_display_fields to apply CSS modifications to (via $xl_search_results_title_wordwrap, $xl_search_results_title_height, $xl_search_results_title_trim)
 $xl_thumbs_display_extended_fields=array();
-$view_title_field=8; // If not using resource_column_data, the field that should be used as title on the View and Collections pages.
-$date_field=12; // handle dates as any other; this is the *searchable* date.
-# a rating field is also supported, which adds the star to list and thumbs view if active. If $use_resource_column_data=false and $rating_field is set, star appears if the field[$rating_field] is not blank
-# $rating_field=[your rating field];
-# $list_display_fields= array of fields to display on the list view
+	# $xl_search_result_title_height=26;
+	$xl_search_results_title_trim=40;
+	$xl_search_results_title_wordwrap=100;
+	
+# Enable small thumbnails option for search screen
+$smallthumbs=true;	
+# Small Thumbs Display Fields: array of fields to display on the small thumbnail view.
+$small_thumbs_display_fields=array();
+# array of additional small_thumbs_display_fields to apply CSS modifications to ($small_search_results_title_wordwrap, $small_search_results_title_height, $small_search_results_title_trim)
+$small_thumbs_display_extended_fields=array();
+	# $small_search_result_title_height=26;
+	$small_search_results_title_trim=30;
+	$small_search_results_title_wordwrap=100;
+
+# List Display Fields: array of fields to display on the list view
 $list_display_fields=array(8,3,12);
+	
+# SORT Fields: display fields to be added to the sort links in large,small, and xlarge thumbnail views
+$sort_fields=array(12);
+
+# TITLE field that should be used as title on the View and Collections pages.
+$view_title_field=8; 
+
+# Searchable Date Field:
+$date_field=12; 
+
 # Data Joins -- Developer's tool to allow adding additional resource field data to the resource table for use in search displays.
 # ex. $data_joins=array(13); to add the expiry date to the general search query result.  
 $data_joins=array();
@@ -977,6 +998,9 @@ $data_joins=array();
 $id_column=true;
 $resource_type_column=true;
 $date_column=false; // based on creation_date which is a deprecated mapping. The new system distinguishes creation_date (the date the resource record was created) from the date metadata field. If $use_resource_column_data=true, creation_date is updated with the date field.
+# ---------------------------
+
+
 
 # On some PHP installations, the imagerotate() function is wrong and images are rotated in the opposite direction
 # to that specified in the dropdown on the edit page.
@@ -1110,21 +1134,6 @@ $public_collections_top_nav=false;
 
 # Display theme categories as links, and themes on separate pages?
 $themes_category_split_pages=false;
-
-# How many characters to trim the title to on search results
-$search_results_title_trim=40;
-$xl_search_results_title_trim=40;
-
-# Uncomment the below to set a vertical height for the title on the large thumbnail view.
-# You may need to tweak $search_results_title_wordwrap below. 
-# $search_result_title_height=26;
-# $xl_search_result_title_height=26;
-
-# Force breaking up of very large titles so they wrap to multiple lines (useful when using multi line titles with $search_result_title_height above)
-# By default this is set very high so that breaking doesn't occur.
-# If you use titles that have large unbroken words (e.g. filenames with no spaces) then it may be useful to set this value to something lower, e.g. 20
-$search_results_title_wordwrap=100;
-$xl_search_results_title_wordwrap=100;
 
 # Ask the user the intended usage when downloading
 $download_usage=false;

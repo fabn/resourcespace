@@ -102,6 +102,7 @@ a:active {text-decoration:underline;}
 .ResourcePanelPreview {height: 156px;width: 156px;margin: 3px;}
 .ResourcePanelInfo {margin-right: 5px;margin-left: 5px;margin-bottom: 2px;overflow:hidden;white-space:nowrap;}	
 .ResourcePanelCountry {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
+.ResourcePanelIcons {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
 .ResourcePanelSmallIcons {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: right;clear: left;display:inline;}	
 .ResourcePanelIcon {margin-right: 3px;margin-left: 5px;float: right;}
 .ResourcePanelIcon img {margin-left: 2px;border-style: none;}
@@ -126,7 +127,7 @@ a:active {text-decoration:underline;}
 .IconStar	{width:11px;height:12px;padding: 0;display: block;float: right;}
 .IconRemove		{width:14px;height:12px;padding: 0;display: block;float: right;}
 .IconReorder	{width:16px;height:12px;padding: 0;display: block;float: right;}
-.IconComment	{width:13px;height:12px;padding: 0;display: block;float: right;}
+.IconComment	{width:16px;height:12px;padding: 0;display: block;float: right;}
 .ResourceSelect {display:block;float:right;}
 .IconUserRatingStar	{width:13px;height:15px;padding: 0;margin-bottom:6px;display: block;}
 .IconUserRatingSpace	{width:7px;height:15px;padding: 0;margin-bottom:6px;display: block;float: left;}

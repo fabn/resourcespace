@@ -18,76 +18,62 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 
 $search=getvalescaped("search","");
 
-# create a thumbs_display_field array with information needed for detailed field highlighting
-$tdf=array();
-$xltdf=array();
-$ldf=array();
+# create a display_fields array with information needed for detailed field highlighting
+$df=array();
 
 if (isset($metadata_template_resource_type) && isset($metadata_template_title_field)){
 	$thumbs_display_fields[]=$metadata_template_title_field;
 	}
-$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields)));
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields)));
+
+# get display and normalize display specific variables
+$display=getvalescaped("display",$default_display);setcookie("display",$display);
+
+if ($display=="thumbs"){ 
+	$display_fields	= $thumbs_display_fields;  
+	if (isset($search_result_title_height)) { $result_title_height = $search_result_title_height; }
+	$results_title_trim = $search_results_title_trim;
+	$results_title_wordwrap	= $search_results_title_wordwrap;
+	}
+	
+if ($display=="list"){ 
+	$display_fields	= $list_display_fields; 
+	$results_title_trim = $search_results_title_trim;
+	}
+	
+if ($display=="smallthumbs"){ 
+	$display_fields	= $small_thumbs_display_fields; 
+	if (isset($small_search_result_title_height)) { $result_title_height = $small_search_result_title_height; }
+	$results_title_trim = $small_search_results_title_trim;
+	$results_title_wordwrap = $small_search_results_title_wordwrap;
+	}
+if ($display=="xlthumbs"){ 
+	$display_fields = $xl_thumbs_display_fields;
+	if (isset($xl_search_result_title_height)) { $result_title_height = $xl_search_result_title_height; }
+	$results_title_trim = $xl_search_results_title_trim;
+	$results_title_wordwrap = $xl_search_results_title_wordwrap;
+	}
+
 $n=0;
-foreach ($thumbs_display_fields as $thumbs_display_field)
+foreach ($display_fields as $display_field)
 	{
 	# Find field in selected list
 	for ($m=0;$m<count($all_field_info);$m++)
 		{
-		if ($all_field_info[$m]["ref"]==$thumbs_display_field)
+		if ($all_field_info[$m]["ref"]==$display_field)
 			{
 			$field_info=$all_field_info[$m];
-			$tdf[$n]['ref']=$thumbs_display_field;
-			$tdf[$n]['indexed']=$field_info['keywords_index'];
-			$tdf[$n]['partial_index']=$field_info['partial_index'];
-			$tdf[$n]['name']=$field_info['name'];
-			$tdf[$n]['title']=$field_info['title'];
+			$df[$n]['ref']=$display_field;
+			$df[$n]['indexed']=$field_info['keywords_index'];
+			$df[$n]['partial_index']=$field_info['partial_index'];
+			$df[$n]['name']=$field_info['name'];
+			$df[$n]['title']=$field_info['title'];
 			$n++;
 			}
 		}
 	}
 $n=0;	
 
-# create an xl_thumbs_display_field array with information needed for detailed field highlighting
-$n=0;
-foreach ($xl_thumbs_display_fields as $xl_thumbs_display_field)
-	{
-	# Find field in selected list
-	for ($m=0;$m<count($all_field_info);$m++)
-		{
-		if ($all_field_info[$m]["ref"]==$xl_thumbs_display_field)
-			{
-			$field_info=$all_field_info[$m];
-			$xltdf[$n]['ref']=$xl_thumbs_display_field;
-			$xltdf[$n]['indexed']=$field_info['keywords_index'];
-			$xltdf[$n]['partial_index']=$field_info['partial_index'];
-			$xltdf[$n]['name']=$field_info['name'];
-			$xltdf[$n]['title']=$field_info['title'];
-			$n++;
-			}
-		}
-	}
-$n=0;	
-
-# create a list_display_field array with information needed for detailed field highlighting
-$n=0;
-foreach ($list_display_fields as $list_display_field)
-	{
-	# Find field in selected list
-	for ($m=0;$m<count($all_field_info);$m++)
-		{
-		if ($all_field_info[$m]["ref"]==$list_display_field)
-			{
-			$field_info=$all_field_info[$m];
-			$ldf[$n]['ref']=$list_display_field;
-			$ldf[$n]['indexed']=$field_info['keywords_index'];
-			$ldf[$n]['partial_index']=$field_info['partial_index'];
-			$ldf[$n]['name']=$field_info['name'];
-			$ldf[$n]['title']=$field_info['title'];
-			$n++;
-			}
-		}
-	}
-$n=0;	
 
 # create a sort_fields array with information for sort fields
 $n=0;
@@ -174,7 +160,6 @@ $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("s
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}
 $order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}
 if ($order_by=="") {$order_by=$default_sort;}
-$display=getvalescaped("display",$default_display);setcookie("display",$display);
 $per_page=getvalescaped("per_page",$default_perpage);setcookie("per_page",$per_page);
 $archive=getvalescaped("archive",0);if (strpos($search,"!")===false) {setcookie("saved_archive",$archive);}
 $jumpcount=0;
@@ -353,30 +338,18 @@ include "../include/header.php";
 
 
 # Extra CSS to support more height for titles on thumbnails.
-if (isset($search_result_title_height) && $display=="thumbs")
+if (isset($result_title_height))
 	{
 	?>
 	<style>
 	.ResourcePanelInfo
 		{
 		white-space:normal;
-		height: <?php echo $search_result_title_height ?>px;
+		height: <?php echo $result_title_height ?>px;
 		}
 	</style>
 	<?php
 	}
-if (isset($xl_search_result_title_height) && $display=="xlthumbs")
-	{
-	?>
-	<style>
-	.ResourcePanelInfo
-		{
-		white-space:normal;
-		height: <?php echo $xl_search_result_title_height ?>px;
-		}
-	</style>
-	<?php
-	}	
 
 
 # Extra CSS if using Image Infoboxes ($infobox_image_mode)
@@ -518,9 +491,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($order_by=="titleandcountry"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=titleandcountry&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["titleandcountry"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=titleandcountry&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["titleandcountry"]?></a></td><?php } ?>
 		<?php } 
 			else { 
-		for ($x=0;$x<count($ldf);$x++)
+		for ($x=0;$x<count($df);$x++)
 			{?>
-			<?php if ($order_by=="field".$ldf[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $ldf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $ldf[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($ldf[$x]['title'])?></a></td><?php } ?>
+			<?php if ($order_by=="field".$df[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $df[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($df[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $df[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($df[$x]['title'])?></a></td><?php } ?>
 			<?php }
 		} ?>
 		<?php if ($display_user_rating_stars && $k=="" ){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>
@@ -528,6 +501,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($id_column){?><?php if ($order_by=="resourceid"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a></td><?php } ?><?php } ?>
 		<?php if ($resource_type_column){?><?php if ($order_by=="resourcetype"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a></td><?php } ?><?php } ?>
 		<?php if ($date_column){?><?php if ($order_by=="date"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=date&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["date"]?></a></td><?php } ?><?php } ?>
+		<?php hook("addlistviewtitlecolumn");?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		<?php } ?> <!--end hook replace listviewtitlerow-->
@@ -615,45 +589,47 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 <?php hook("icons");?>
 <?php if (!hook("rendertitlethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
-		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
 <?php } //end if use_resource_column_data ?>
 
 <?php } ?> <!-- END HOOK Rendertitlethumb -->			
 		
 		<?php
 		# thumbs_display_fields
-		for ($x=0;$x<count($tdf);$x++)
+		for ($x=0;$x<count($df);$x++)
 			{
 			#value filter plugin -tbd	
-			$value=$result[$n]['field'.$tdf[$x]['ref']];
-			$plugin="../plugins/value_filter_" . $tdf[$x]['name'] . ".php";
+			$value=$result[$n]['field'.$df[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
 			
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
-				if (!$use_resource_column_data && ($tdf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
 					$value=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
 			?>		
 			<?php 
 			// extended css behavior 
-			if ( in_array($tdf[$x]['ref'],$thumbs_display_extended_fields) &&
-			( (isset($metadata_template_title_field) && $tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			if ( in_array($df[$x]['ref'],$thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			<?php if (!hook("replaceresourcepanelinfo")){?>
 			<div class="ResourcePanelInfo">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
-			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search_results_title_wordwrap,"#zwspace;",true)),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php } /* end hook replaceresourcepanelinfo */?>
 			<?php 
 
 			// normal behavior
-			} else if  ( (isset($metadata_template_title_field)&&$tdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
-			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),20),$search,$tdf[$x]['partial_index'],$tdf[$x]['name'],$tdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			} else if  ( (isset($metadata_template_title_field)&&$df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
+			<div class="ResourcePanelInfo"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),20),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
 			}
 		?>
 		
-		<div class="ResourcePanelCountry">&nbsp;</div>
+		<div class="ResourcePanelIcons">&nbsp;</div>	
 				
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -675,8 +651,8 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<span class="IconComment"><a href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo substr($search,11)?>" title="<?php echo $lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 		<?php if ($order_by=="relevance"){?><div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div><?php } ?>
-		<?php } ?>
-		<div class="clearer"></div>
+		<?php } 
+		hook("largesearchicon");?><div class="clearer"></div>
 		<?php if(!hook("thumbscheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
 		<?php } # end hook thumbscheckboxes?>
@@ -738,45 +714,47 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 <?php hook("icons");?>
 <?php if (!hook("rendertitlelargethumb")) { ?>	
 <?php if ($use_resource_column_data) { // omit default title display ?>		
-		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$xl_search_results_title_trim),$xl_search_results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
+		<div class="ResourcePanelInfo"><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["title"])))?>"<?php } ?>><?php echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(i18n_get_translated($result[$n]["title"]),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?></a>&nbsp;</div>
 <?php } //end if use_resource_column_data ?>
 
 <?php } ?> <!-- END HOOK Rendertitlelargethumb -->			
 		
 		<?php
 		# thumbs_display_fields
-		for ($x=0;$x<count($xltdf);$x++)
+		for ($x=0;$x<count($df);$x++)
 			{
 			#value filter plugin -tbd	
-			$value=$result[$n]['field'.$xltdf[$x]['ref']];
-			$plugin="../plugins/value_filter_" . $xltdf[$x]['name'] . ".php";
+			$value=$result[$n]['field'.$df[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
 			
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
-				if (!$use_resource_column_data && ($xltdf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
 					$value=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
 			?>		
 			<?php 
 			// extended css behavior 
-			if ( in_array($xltdf[$x]['ref'],$xl_thumbs_display_extended_fields) &&
-			( (isset($metadata_template_title_field) && $xltdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			if ( in_array($df[$x]['ref'],$xl_thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			<?php if (!hook("replaceresourcepanelinfolarge")){?>
 			<div class="ResourcePanelInfo">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
-			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$xl_search_results_title_trim),$xl_search_results_title_wordwrap,"#zwspace;",true)),$search,$xltdf[$x]['partial_index'],$xltdf[$x]['name'],$xltdf[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php } /* end hook replaceresourcepanelinfolarge */?>
 			<?php 
 
 			// normal behavior
-			} else if  ( (isset($metadata_template_title_field)&&$xltdf[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
-			<div class="ResourcePanelCountry"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$xltdf[$x]['partial_index'],$xltdf[$x]['name'],$xltdf[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			} else if  ( (isset($metadata_template_title_field)&&$df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
+			<div class="ResourcePanelInfo"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
 			<?php } ?>
 			<?php
 			}
 		?>
 		
-		<div class="ResourcePanelCountry">&nbsp;</div>
+		<div class="ResourcePanelIcons">&nbsp;</div>	
 				
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -798,7 +776,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
 		<span class="IconComment"><a href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo substr($search,11)?>" title="<?php echo $lang["addorviewcomments"]?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>			
 		<?php if ($order_by=="relevance"){?><div class="IconReorder" onmousedown="InfoBoxWaiting=false;"> </div><?php } ?>
-		<?php } ?>
+		<?php } hook("xlargesearchicon");?>
 		<div class="clearer"></div>
 		<?php if(!hook("thumbscheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
@@ -822,7 +800,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		} elseif ($display == "smallthumbs") { # ---------------- Small Thumbs view ---------------------
 		?>
 
-<div class="ResourcePanelShellSmall" <?php if ($display_user_rating_stars){?> style="height:135px;" <?php } ?>id="ResourceShell<?php echo $ref?>">
+<div class="ResourcePanelShellSmall" <?php if ($display_user_rating_stars){?> <?php } ?>id="ResourceShell<?php echo $ref?>">
 	<div class="ResourcePanelSmall">	
 		<?php if (!hook("renderimagesmallthumb")){;?>
 		<?php $access=get_resource_access($result[$n]);
@@ -836,6 +814,45 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</td>
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
+		
+		
+		<?php
+		# smallthumbs_display_fields
+		for ($x=0;$x<count($df);$x++)
+			{
+			#value filter plugin -tbd	
+			$value=$result[$n]['field'.$df[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
+			if (file_exists($plugin)) {include $plugin;}
+			
+			# swap title fields if necessary
+			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
+				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+					$value=$result[$n]['field'.$metadata_template_title_field];
+					}
+				}
+			?>		
+			<?php 
+			// extended css behavior 
+			if ( in_array($df[$x]['ref'],$small_thumbs_display_extended_fields) &&
+			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
+			<?php if (!hook("replaceresourcepanelinfosmall")){?>
+			<div class="ResourcePanelInfo">
+			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			<?php } /* end hook replaceresourcepanelinfolarge */?>
+			<?php 
+
+			// normal behavior
+			} else if  ( (isset($metadata_template_title_field)&&$df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) {?> 
+			<div class="ResourcePanelInfo"><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),28),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed'])?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div><div class="clearer"></div>
+			<?php } ?>
+			<?php
+			}
+		?>
+		
+		
+		
 		<?php if ($display_user_rating_stars && $k==""){ ?>
 		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
@@ -848,6 +865,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</div>
 		<?php } ?>
 		<div class="ResourcePanelSmallIcons">
+		<?php hook("smallsearchicon");?>
 		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
@@ -856,6 +874,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php } ?>
 
 		<?php if (!checkperm("b") && substr($search,0,11)=="!collection" && $k=="") { ?>
+		
 		<?php if ($search=="!collection".$usercollection){?>
 		<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 		<?php } ?>
@@ -882,7 +901,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php } #end hook listcheckboxes ?>
 		
 		<?php if ($use_resource_column_data){?>
-		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),$search_results_title_trim) . 
+		<td nowrap><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php echo highlightkeywords(tidy_trim(i18n_get_translated($result[$n]["title"]),$results_title_trim) . 
 		
 		((strlen(trim($result[$n]["country"]))>1)?(", " . tidy_trim(TidyList(i18n_get_translated($result[$n]["country"])),25)):"") .
 		($show_extension_in_search?" [" . strtoupper($result[$n]["file_extension"]) . "]":"")
@@ -890,20 +909,20 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php } //end if use_resource_column_data 
 			
 		else {
-			for ($x=0;$x<count($ldf);$x++){
-			$value=$result[$n]['field'.$ldf[$x]['ref']];
-			$plugin="../plugins/value_filter_" . $ldf[$x]['name'] . ".php";
+			for ($x=0;$x<count($df);$x++){
+			$value=$result[$n]['field'.$df[$x]['ref']];
+			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
 			
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
-				if (!$use_resource_column_data && ($ldf[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
+				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
 					$value=$result[$n]['field'.$metadata_template_title_field];
 					}
 				}
-			if ( (isset($metadata_template_title_field)&& $ldf[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
+			if ( (isset($metadata_template_title_field)&& $df[$x]['ref']!=$metadata_template_title_field ) || !isset($metadata_template_title_field) ) {
 			
-				?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),$search_results_title_trim),$search,$ldf[$x]['partial_index'],$ldf[$x]['name'],$ldf[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
+				?><td nowrap><?php if ($x==0){ // add link to first item only ?><div class="ListTitle"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>"><?php } //end link conditional?><?php echo highlightkeywords(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']) ?><?php if ($x==0){ // add link to first item only ?></a><?php } //end link conditional ?>&nbsp;</div></td>
 				<?php } 
 			}
 		} ?>
@@ -926,6 +945,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if ($id_column){?><td><?php echo $result[$n]["ref"]?></td><?php } ?>
 		<?php if ($resource_type_column){?><td><?php if (array_key_exists($result[$n]["resource_type"],$rtypes)) { ?><?php echo i18n_get_translated($rtypes[$result[$n]["resource_type"]])?><?php } ?></td><?php } ?>
 		<?php if ($date_column){?><td><?php echo nicedate($result[$n]["creation_date"],false,true)?></td><?php } ?>
+		<?php hook("addlistviewcolumn");?>
 		<td><div class="ListTools"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);"onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
 		if (!checkperm("b")&& $k=="") { ?>
