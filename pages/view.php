@@ -517,6 +517,7 @@ hook ("resourceactions") ?>
 	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>
 <?php } /* End replaceresourceactions */ 
 		hook("afterresourceactions");
+		hook("afterresourceactions2");
 ?>
 <?php } /* End if ($k!="")*/ ?>
 <?php } /* End of renderinnerresourcedownloadspace hook */ ?>
