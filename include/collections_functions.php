@@ -930,12 +930,13 @@ function send_collection_feedback($collection,$comment)
 			$ref=$result[$n]["ref"];
 			if (getval("select_" . $ref,"")!="")
 				{
-				$info=get_resource_data($ref);
-				$body.="\n" . $ref . " : " . $info["file_path"];
+				global $filename_field;
+				$filename=get_data_by_field($ref,$filename_field);
+				$body.="\n" . $ref . " : " . $filename;
 
 				# Append to a file list that is compatible with Adobe Lightroom
 				if ($file_list!="") {$file_list.=", ";}
-				$s=explode(".",$info["file_path"]);
+				$s=explode(".",$filename);
 				$file_list.=$s[0];
 				}
 			}
