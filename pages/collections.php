@@ -37,9 +37,17 @@ for ($n=0;$n<count($plugins);$n++)
 	if (file_exists($csspath))
 		{
 		?>
-		<link href="<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/style.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
+		<link href="<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/style.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print"  />
 		<?php
 		}
+	$theme=((isset($userfixedtheme) && $userfixedtheme!=""))?$userfixedtheme:getval("colourcss",$defaulttheme);
+	$csspath=$storagedir."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
+	if (file_exists($csspath))
+		{
+		?>
+		<link href="<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/Col-<?php echo $theme?>.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="<?php echo $plugins[$n]?>css" />
+		<?php
+		}	
 	}
 ?>
 
