@@ -989,6 +989,7 @@ function collection_is_research_request($collection)
 	}
 }	
 
+if (!function_exists("add_to_collection_link")){
 function add_to_collection_link($resource,$search="")
 	{
 	# Generates a HTML link for adding a resource to a collection
@@ -1002,6 +1003,7 @@ function add_to_collection_link($resource,$search="")
 		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["addtocurrentcollection"] . "\">";
 		}
 	}
+}	
 	
 function remove_from_collection_link($resource,$search="")
 	{
