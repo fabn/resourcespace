@@ -690,9 +690,14 @@ function get_usergroups($usepermissions=false,$find="")
 	if ($usepermissions && checkperm("U"))
 		{
 		# Only return users in children groups to the user's group
-		global $usergroup;
+		global $usergroup,$U_perm_strict;
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
-		$sql.="(ref='$usergroup' or parent='$usergroup')";
+		if ($U_perm_strict){
+			$sql.="(parent='$usergroup')";
+			}
+		else {
+			$sql.="(ref='$usergroup' or parent='$usergroup')";
+			}
 		}
 	if (strlen($find)>0)
 		{
