@@ -14,7 +14,7 @@ if ($theme=="whitegry") {$colour="999999";}
 <td align="center" colspan="2">
 
 <object type="application/x-shockwave-flash" data="../lib/flashplayer/player_mp3_maxi.swf" width="200" height="20">
-<param name="movie" value="player_mp3_maxi.swf" />
+<param name="movie" value="../lib/flashplayer/player_mp3_maxi.swf" />
 <param name="FlashVars" value="mp3=<?php echo $mp3path?>&width=200&bgcolor=<?php echo $colour?>&volume=200&showvolume=1" />
 </object>
 
