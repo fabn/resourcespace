@@ -167,7 +167,7 @@ if ($use_resource_column_data || isset($default_to_standard_title)){
 	?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["field".$view_title_field])),$search)?><?php 
 	} 
 else { 
-	echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } ?>&nbsp;</h1>
+	 if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } /* end hook replaceviewtitle */  } ?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
