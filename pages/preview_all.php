@@ -120,11 +120,11 @@ if (!file_exists($path))
 ?>
 
 <?php if ($vertical=="v"){?>
-<a href="view.php?ref=<?php echo $collection[$x]['ref']?>">&nbsp;<?php echo $collection[$x]['field'.$view_title_field]?></a></tr><tr><?php }else { ?>
+<a href="view.php?ref=<?php echo $collection[$x]['ref']?>">&nbsp;<?php echo $collection[$x]['field'.$view_title_field]?></a><?php hook("afterpreviewalltitle")?></tr><tr><?php }else { ?>
 <td style="padding:10px;"><?php } ?>
 	
 	<div class="ResourceShel_" id="ResourceShel_<?php echo $ref?>">
-	<?php if ($vertical=="h"){?>&nbsp;<a href="view.php?ref=<?php echo $collection[$x]['ref']?>"><?php echo $collection[$x]['field'.$view_title_field]?></a><br/><?php } ?>
+	<?php if ($vertical=="h"){?>&nbsp;<a href="view.php?ref=<?php echo $collection[$x]['ref']?>"><?php echo $collection[$x]['field'.$view_title_field]?></a><?php hook("afterpreviewalltitle")?><br/><?php } ?>
 	<?php $imageinfo = getimageSize( $url ); 
 	$imageheight=$imageinfo[1];?>
 <a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"></a><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" />

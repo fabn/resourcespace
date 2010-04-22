@@ -448,7 +448,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 				<?php } ?>	
 			<?php } ?>		
 		
-		
+		<?php hook("sortorder");?>
 		</div>
 		<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
 		<?php 
@@ -994,6 +994,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			
 			<?php if (!checkperm("b")) { ?><div class="KeyCollect"><?php echo $lang["addtocurrentcollection"]?></div><?php } ?>
 			<div class="KeyPreview"><?php echo $lang["fullscreenpreview"]?></div>
+			<?php hook("searchkey");?>
 		</div>
 		<?php }/*end replacesearchkey */?>
 		<?php
