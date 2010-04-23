@@ -231,12 +231,29 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 							# Keyword contains a wildcard. Expand.
 							$c++;
 							
-							global $wildcard_expand_limit;
-							$wildcards=sql_array("select ref value from keyword where keyword like '" . escape_check(str_replace("*","%",$keyword)) . "' order by hit_count desc limit " . $wildcard_expand_limit);
+							global $use_temp_tables;
+							if (!$use_temp_tables){
+								global $wildcard_expand_limit;
+								$wildcards=sql_array("select ref value from keyword where keyword like '" . escape_check(str_replace("*","%",$keyword)) . "' order by hit_count desc limit " . $wildcard_expand_limit);
+		
+								# Form join							
+								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
+								#echo $sql_join;
+							} else {
+								//begin dwiggins test code
+								sql_query("create temporary table wcql$c (resource bigint unsigned)");
+								sql_query("insert into wcql$c select distinct r.ref from resource r
+									left join resource_keyword rk on r.ref = rk.resource	
+									left join keyword k  on rk.keyword = k.ref
+									where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
 
-							# Form join							
-							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
-							#echo $sql_join;
+									$sql_join .= " join wcql$c on wcql$c.resource = r.ref ";
+
+								// end dwiggins test code
+							}
+
+
+
 							}
 						else		
 							{
