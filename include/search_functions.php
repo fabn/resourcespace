@@ -240,7 +240,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
 								#echo $sql_join;
 							} else {
-								//begin dwiggins test code
+								//begin code for temporary table wildcard expansion
 								sql_query("create temporary table wcql$c (resource bigint unsigned)");
 								sql_query("insert into wcql$c select distinct r.ref from resource r
 									left join resource_keyword rk on r.ref = rk.resource	
@@ -248,8 +248,6 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 									where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
 
 									$sql_join .= " join wcql$c on wcql$c.resource = r.ref ";
-
-								// end dwiggins test code
 							}
 
 
