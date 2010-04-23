@@ -1374,6 +1374,8 @@ $allow_smart_collections=false;
 
 # Allow a Preview page for entire collections (for more side to side comparison ability, works with collection_reorder_caption)
 $preview_all=false;
+# Minimize collections frame when visiting preview_all.php
+$preview_all_hide_collections=true;
 
 # Display User Rating Stars in search views (a popularity column in list view)
 $display_user_rating_stars=false;

@@ -154,7 +154,7 @@ if (maxheight><?php echo $imageheight?>){
 </table>
 
 <script type="text/javascript">
-	top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?ref=<?php echo $ref ?>&thumbs=hide";
+	<?php if ($preview_all_hide_collections){?>top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?ref=<?php echo $ref ?>&thumbs=hide";<?php } ?>
 
 	window.onresize=function(event){
 	var maxheight=window.innerHeight-110;
