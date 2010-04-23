@@ -331,7 +331,7 @@ if ($resource["has_image"]==1)
 		}
 
 
-	
+header("X-UA-Compatible:IE=EmulateIE7"); // hack to make cropperUI work in IE8	
 include "../../../include/header.php";
 
 
