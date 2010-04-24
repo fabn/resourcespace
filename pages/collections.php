@@ -477,9 +477,10 @@ if (count($result)>0)
 				}	
 			}	
 		?>	
-		
+		<?php if (!hook("replacecolresourcetitle")){?>
 		<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode("!collection" . $usercollection)?>&k=<?php echo $k?>" <?php if (!$infobox) { ?>title="<?php echo htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field]))?>"<?php } ?> ><?php echo tidy_trim(i18n_get_translated($title),14);?></a>&nbsp;</div>
-	
+		<?php } ?>
+		
 		<?php if ($k!="" && $feedback) { # Allow feedback for external access key users
 		?>
 		<div class="CollectionPanelInfo">
