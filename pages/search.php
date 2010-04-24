@@ -863,7 +863,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			}
 		?>
 		</div>
-		<?php } ?>
+		<?php } ?><?php hook("smallsearchfreeicon");?>
 		<div class="ResourcePanelSmallIcons">
 		<?php hook("smallsearchicon");?>
 		<span class="IconPreview">
