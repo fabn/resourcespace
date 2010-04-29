@@ -978,7 +978,7 @@ function copy_collection($copied,$current,$remove_existing=false)
 	foreach($copied_collection as $col_resource)
 		{
 		# Use correct function so external sharing is honoured.
-		add_resource_to_collection($col_resource['resource'],$current);
+		add_resource_to_collection($col_resource['resource'],$current,true);
 		}
 	}
 
