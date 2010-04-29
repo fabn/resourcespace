@@ -1150,7 +1150,8 @@ $download_summary=false;
 $collection_frame_divider_height=3;
 $collection_frame_height=138;
 
-
+# Ability to hide error messages
+$show_error_messages=true;
 
 
 
