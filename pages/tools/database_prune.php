@@ -46,7 +46,7 @@ echo mysql_affected_rows() . " orphaned resource custom access rows deleted.<br/
 sql_query("delete from resource_dimensions where resource not in (select ref from resource)");
 echo mysql_affected_rows() . " orphaned resource dimension rows deleted.<br/><br/>";
 
-sql_query("delete from resource_log where resource not in (select ref from resource)");
+sql_query("delete from resource_log where resource<>0 and resource not in (select ref from resource)");
 echo mysql_affected_rows() . " orphaned resource log rows deleted.<br/><br/>";
 
 sql_query("delete from resource_related where resource not in (select ref from resource) or related not in (select ref from resource)");
