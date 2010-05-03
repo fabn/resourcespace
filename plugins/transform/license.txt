@@ -1,4 +1,4 @@
-ResourceSpace Transform Plugin v. 1.0
+ResourceSpace Transform Plugin v. 1.3
 	a plugin for the ResourceSpace Digital Asset Management system to allow in-system cropping and scaling of images.
 	Copyright David Dwiggins, 10/19/2009
 	david [at] dwiggins [dot] net
