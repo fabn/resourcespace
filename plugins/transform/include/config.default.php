@@ -8,5 +8,5 @@ $cropper_cropsize='pre';
 $cropper_custom_filename=true;
 $cropper_use_filename_as_title=true;
 $cropper_allow_scale_up = true; // if false, scaling parameters that would result in enlargement are ignored
-
+$cropper_rotation = true; // if true, enables flipping and rotation of images
 ?>

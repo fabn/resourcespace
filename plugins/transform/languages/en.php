@@ -16,6 +16,12 @@ $lang['newfilename'] = "Filename";
 $lang['errorspecifiedbiggerthanoriginal'] = "Error: Specified width or height is greater than the original image.";
 $lang['errormustchoosecropscale'] = "Error: You must choose a crop and/or enter scaling values.";
 $lang['savealternative']="Save as alternative file";
+$lang['rotation']="Rotation";
+$lang['rotation0']="No Rotation";
+$lang['rotation90']="90 degrees CW";
+$lang['rotation180']="180 degrees CW";
+$lang['rotation270']="270 degrees CW";
+$lang['fliphorizontal']="Flip horizontally?";
 
 
 

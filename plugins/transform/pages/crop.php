@@ -80,6 +80,18 @@ $cropsize = $_REQUEST['cropsize'];
 $new_width = $_REQUEST['new_width'];
 $new_height = $_REQUEST['new_height'];
 
+if (isset($_REQUEST['flip']) && $_REQUEST['flip'] == 1){
+    $flip = true;
+} else {
+    $flip = false;
+}
+
+if (isset($_REQUEST['rotation']) && is_numeric($_REQUEST['rotation']) && $_REQUEST['rotation'] > 0 && $_REQUEST['rotation'] < 360){
+    $rotation = $_REQUEST['rotation'];
+}else{
+    $rotation = 0;
+}
+
 if (isset($_REQUEST['filename']) && $cropper_custom_filename){
 	$filename = $_REQUEST['filename'];
 } else {
@@ -206,6 +218,15 @@ if (is_numeric($new_width)||is_numeric($new_height)){
 	}
 	
 }
+
+if ($flip){
+    $command .= " -flop ";
+}
+
+if ($rotation > 0){
+    $command .= " -rotate $rotation ";
+}
+
 
 $command .= " \"$newpath\"";
 
@@ -477,7 +498,7 @@ include "../../../include/header.php";
 			// make sure that this is a reasonable transformation before we submit the form.
 			// fixme - could add more sophisticated validation here
 			
-			if (theform.xcoord.value == 0 && theform.ycoord.value == 0 && theform.new_width.value == '' && theform.new_height.value == ''){
+			if (theform.xcoord.value == 0 && theform.ycoord.value == 0 && theform.new_width.value == '' && theform.new_height.value == '' <?php if ($cropper_rotation) { ?>&& theform.rotation.value == 0 & !theform.flip.checked <?php } ?>){
 				alert('<?php echo addslashes($lang['errormustchoosecropscale']); ?>');
 				return false;
 			}
@@ -516,6 +537,21 @@ include "../../../include/header.php";
         <td><input type='text' name='new_height'  id='new_height' value='' size='4'  onblur='evaluate_values()' />
           px </td>
       </tr>
+      <?php if ($cropper_rotation){ ?>
+      <tr>
+        <td style='text-align:right'><?php echo $lang['rotation']; ?>: </td>
+        <td colspan='3'>
+          <select name='rotation'>
+              <option value="0"><?php echo $lang['rotation0']; ?></option>
+              <option value="90"><?php echo $lang['rotation90']; ?></option>
+              <option value="180"><?php echo $lang['rotation180']; ?></option>
+              <option value="270"><?php echo $lang['rotation270']; ?></option>
+          </select>
+
+          &nbsp;&nbsp;&nbsp; <?php echo $lang['fliphorizontal']; ?> <input type="checkbox" name='flip' value="1" />
+        </td>
+      </tr>
+      <?php } ?>
       <?php if ($cropper_custom_filename){ ?>
       <tr>
         <td style='text-align:right'><?php echo $lang["newfilename"]; ?>: </td>
@@ -524,7 +560,7 @@ include "../../../include/header.php";
       <?php } ?>
       <tr>
         <td><?php echo $lang["description"]; ?>: </td>
-        <td colspan='3' style='text-align:right'><input type='text' name='description' value='' size='30'/></td>
+        <td colspan='3'><input type='text' name='description' value='' size='30'/></td>
       </tr>
       <tr>
         <td style='text-align:right'><?php echo $lang['type']; ?>: </td>
@@ -549,6 +585,7 @@ include "../../../include/header.php";
           </select>
           <?php } // end of if force_original_format ?></td>
       </tr>
+   
     </table>
     <?php
 if ($cropper_debug){
