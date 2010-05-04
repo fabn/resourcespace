@@ -2,7 +2,7 @@
 <html>
 <!--
 ResourceSpace version <?php echo $productversion?>
-Copyright Oxfam GB, Montala, WWF International 2006-2010
+Copyright Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC 2006-2010
 http://www.resourcespace.org/
 -->
 <head>
