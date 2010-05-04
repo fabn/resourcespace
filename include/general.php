@@ -1945,7 +1945,7 @@ function check_access_key($resource,$key)
 
 function check_access_key_collection($collection,$key)
 	{
-	if ($collection=="" || !isnumeric($collection)) {return false;}
+	if ($collection=="" || !is_numeric($collection)) {return false;}
 	$r=get_collection_resources($collection);
 	for ($n=0;$n<count($r);$n++)
 		{
