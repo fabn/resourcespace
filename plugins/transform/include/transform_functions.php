@@ -25,8 +25,10 @@ function generate_transform_preview($ref){
 	// while we're here, clean up any old files still hanging around
 	$dp = opendir("$storagedir/tmp/transform_plugin");
 	while ($file = readdir($dp)) {
-		if ((filemtime("$storagedir/tmp/transform_plugin/$file")) < (strtotime('-2 days'))) {
-			unlink("$storagedir/tmp/transform_plugin/$file");
+		if ($file <> '.' && $file <> '..'){
+			if ((filemtime("$storagedir/tmp/transform_plugin/$file")) < (strtotime('-2 days'))) {
+				unlink("$storagedir/tmp/transform_plugin/$file");
+			}
 		}
 	}
 	closedir($dp);
