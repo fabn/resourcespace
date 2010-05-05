@@ -18,7 +18,7 @@ function generate_transform_preview($ref){
 	if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 	if(!is_dir($storagedir."/tmp/transform_plugin")){mkdir($storagedir."/tmp/transform_plugin",0777);}
 
-        $command .= " $originalpath -geometry 450 $tmpdir/transform_plugin/pre_$ref.jpg";
+        $command .= " \"$originalpath\" -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         shell_exec($command);
 	
 
