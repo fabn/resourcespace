@@ -475,8 +475,8 @@ if (isset($metadata_template_resource_type)&&(isset($metadata_template_title_fie
 	for ($n=0;$n<count($fields);$n++){
 		if ($fields[$n]["resource_type"]!=$metadata_template_resource_type){
 			$newfields[$x]=$fields[$n];
+			$x++;
 		}
-		$x++;
 	}
 	$fields=$newfields;
 }
