@@ -789,7 +789,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 ?>
 <script type="text/javascript">
 new Draggable('ResourceShell<?php echo $ref?>',{handle: 'IconReorder', revert: true});
-Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', onDrop: function(element) {ReorderResources(element.id,<?php echo $ref?>);}, hoverclass: 'ReorderHover'});
+Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarge', onDrop: function(element) {ReorderResources(element.id,<?php echo $ref?>);}, hoverclass: 'ReorderHover'});
 </script>
 <?php } ?> 
 <?php } ?>
