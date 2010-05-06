@@ -281,6 +281,7 @@ $lang["log-E"]="Shared Resource via e-mail to ";//  + notes field
 $lang["log-v"]="Viewed resource";
 $lang["log-x"]="Deleted resource";
 $lang["log-l"]="Logged in"; # For user entries only.
+$lang["log-t"]="Transformed file";
 
 $lang["backtoresourceview"]="Back to resource view";
 
