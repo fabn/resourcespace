@@ -343,7 +343,7 @@ if (!$download && !$original){
     rename($newpath,$neworigpath);
     resource_log($ref,'t','','original transformed');
     create_previews($ref, false, $orig_ext, false, false, $origalt);
-    create_previews($ref);
+    create_previews($ref,false,$new_ext);
 
     # delete existing resource_dimensions
     sql_query("delete from resource_dimensions where resource='$ref'");
