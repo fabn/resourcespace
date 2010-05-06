@@ -233,7 +233,7 @@ else
 
 if ($download_summary) {include "../include/download_summary.php";}
 ?>
-
+<?php if (!hook("renderresourcedownloadspace")) { ?>
 <div class="RecordDownload" id="RecordDownload">
 <div class="RecordDownloadSpace">
 <?php if (!hook("renderinnerresourcedownloadspace")) { ?>
@@ -535,6 +535,7 @@ if ($user_rating && $k=="") { include "../include/user_rating.php"; }
 
 
 </div>
+<?php } /* End of renderresourcedownloadspace hook */ ?>
 <?php } /* End of renderinnerresourceview hook */ ?>
 </div>
 
