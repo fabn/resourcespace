@@ -331,7 +331,7 @@ if (!$download && !$original){
     // we are supposed to replace the original file
 
     $origalttitle = $lang['priorversion'];
-    $origaltdesc = $lang['replaced'] . strftime("%Y-%m-%d, %H:%M");
+    $origaltdesc = $lang['replaced'] . " " . strftime("%Y-%m-%d, %H:%M");
     $origfilename = sql_value("select value from resource_data left join resource_type_field on resource_data.resource_type_field = resource_type_field.ref where resource = '$ref' and name = 'original_filename'",$ref . "_original.$orig_ext");
     $origalt  = add_alternative_file($ref,$origalttitle,$origaltdesc);
     $origaltpath = get_resource_path($ref, true, "", true, $orig_ext, -1, 1, false, "", $origalt);
@@ -344,7 +344,11 @@ if (!$download && !$original){
     resource_log($ref,'t','','original transformed');
     create_previews($ref, false, $orig_ext, false, false, $origalt);
     create_previews($ref);
-    
+
+    # delete existing resource_dimensions
+    sql_query("delete from resource_dimensions where resource='$ref'");
+    sql_query("insert into resource_dimensions (resource, width, height, file_size) values ('$ref', '$newfilewidth', '$newfileheight', '$newfilesize')");
+
     // remove the cached transform preview, since it will no longer be accurate
     if (file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
 	unlink("../../../filestore/tmp/transform_plugin/pre_$ref.jpg");
