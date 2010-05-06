@@ -399,6 +399,7 @@ if ($enable_add_collection_on_upload)
 
 <?php } ?>
 
+<?php if (!$multiple){?>
 <div class="Question">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
@@ -411,6 +412,7 @@ for ($n=0;$n<count($types);$n++)
 ?></select>
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
 
 
 <?php
