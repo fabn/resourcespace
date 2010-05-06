@@ -279,6 +279,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
 	<?php } else { ?>
 	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
+	<?php hook("afterreplacefile"); ?>
 	<?php } ?>
 	<?php if (! $disable_upload_preview) { ?><br />
 	<a href="upload_preview.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["uploadpreview"]?></a><?php } ?>
