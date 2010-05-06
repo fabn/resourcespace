@@ -16,20 +16,32 @@ include_once "../include/transform_functions.php";
 $ref = $_REQUEST['ref'];
 if (!is_numeric($ref)){ echo "Error: non numeric ref."; exit; }
 
+# Load edit access level
+$edit_access=get_edit_access($ref);
 
 # Load download access level
 $access=get_resource_access($ref);
 
+// are they requesting to change the original?
+if (isset($_REQUEST['mode']) && strtolower($_REQUEST['mode']) == 'original'){
+    $original = true;
+} else {
+    $original = false;
+}
+
+
+
 // if they can't download this resource, they shouldn't be doing this
-if ($access!=0){
+// also, if they are trying to modify the original but don't have edit access
+// they should never get these errors, because the links shouldn't show up if no perms
+if ($access!=0 || ($original && !$edit_access)){
 	include "../../../include/header.php";
 	echo "Permission denied.";
 	include "../../../include/footer.php";
 	exit;
 }
 
-# Load edit access level
-$edit_access=get_edit_access($ref);
+
 
 // generate a preview image for the operation if it doesn't already exist
 if (!file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
@@ -147,7 +159,7 @@ $mydesc = mysql_real_escape_string($description);
 # Is this a download only?
 $download=(getval("download","")!="");
 
-if (!$download)
+if (!$download && !$original)
 	{
 	$newfile=add_alternative_file($ref,$mytitle,$mydesc);
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
@@ -184,8 +196,8 @@ if (is_numeric($new_width)||is_numeric($new_height)){
 			$checkwidth = $finalwidth;
 			$checkheight = $finalheight;
 		} else {
-			$checkwidth = $orig_width;
-			$checkheight = $orig_height;
+			$checkwidth = $origwidth;
+			$checkheight = $origheight;
 		}
 		
 		if (is_numeric($new_width) && $new_width > $checkwidth){
@@ -231,6 +243,11 @@ if ($rotation > 0){
 }
 
 
+if ($flip || $rotation > 0){
+    // assume we should reset exif orientation flag since they have rotated to another orientation
+    $command .= " -orient undefined ";
+}
+
 $command .= " \"$newpath\"";
 
 if ($cropper_debug && !$download){
@@ -248,18 +265,19 @@ if ($cropper_debug){
 	error_log("SHELL RESULT: $shell_result");
 }
 
-// generate previews if needed
-global $alternative_file_previews;
-if ($alternative_file_previews && !$download)
-	{
-	create_previews($ref,false,$new_ext,false,false,$newfile);
-	}
 
 // get final pixel dimensions of resulting file
 $newfilesize = filesize($newpath);
 $newfiledimensions = getimagesize($newpath);
 $newfilewidth = $newfiledimensions[0];
 $newfileheight = $newfiledimensions[1];
+
+// generate previews if needed
+global $alternative_file_previews;
+if ($alternative_file_previews && !$download && !$original)
+	{
+	create_previews($ref,false,$new_ext,false,false,$newfile);
+	}
 
 // strip of any extensions from the filename, since we'll provide that
 if(preg_match("/(.*)\.\w\w\w\\$/",$filename,$matches)){
@@ -278,8 +296,12 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 		{
 		$filename=$ref . "_" . strtolower($lang['transform']);
 		}
-	else
+	elseif ($original)
 		{
+                // fixme
+                }
+        else
+                {
 		$filename = "alt_$newfile";
 		}
 }
@@ -299,16 +321,41 @@ if ($mpcalc > 0){
 
 if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
 	
-// update final information on alt file
-if (!$download)
-	{
+// Do something with the final file:
+if (!$download && !$original){
+    // we are supposed to make an alternative
 	$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext',file_size = '$newfilesize',  description = concat(description,'" . $deschyphen . $newfilewidth . " x " . 		$newfileheight . " pixels $mptext') where ref='$newfile'");
-
 	resource_log($ref,'a','',"$new_ext " . strtolower($verb) . " to $newfilewidth x $newfileheight");
-	}
 
-if ($download)
-	{
+} elseif ($original) {
+    // we are supposed to replace the original file
+
+    $origalttitle = $lang['priorversion'];
+    $origaltdesc = $lang['replaced'] . strftime("%Y-%m-%d, %H:%M");
+    $origfilename = sql_value("select value from resource_data left join resource_type_field on resource_data.resource_type_field = resource_type_field.ref where resource = '$ref' and name = 'original_filename'",$ref . "_original.$orig_ext");
+    $origalt  = add_alternative_file($ref,$origalttitle,$origaltdesc);
+    $origaltpath = get_resource_path($ref, true, "", true, $orig_ext, -1, 1, false, "", $origalt);
+    $mporig =  round(($origwidth*$origheight)/1000000,2);
+    $filesizeorig = filesize($originalpath);
+    rename($originalpath,$origaltpath);
+    $result = sql_query("update resource_alt_files set file_name='{$origfilename}',file_extension='$orig_ext',file_size = '$filesizeorig' where ref='$origalt'");
+    $neworigpath = get_resource_path($ref,true,'',false,$new_ext);
+    rename($newpath,$neworigpath);
+    resource_log($ref,'t','','original transformed');
+    create_previews($ref, false, $orig_ext, false, false, $origalt);
+    create_previews($ref);
+    
+    // remove the cached transform preview, since it will no longer be accurate
+    if (file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
+	unlink("../../../filestore/tmp/transform_plugin/pre_$ref.jpg");
+    }
+
+    header("Location:../../../pages/view.php?ref=$ref\n\n");
+    exit;
+
+} else {
+
+    // we are supposed to download
 	# Output file, delete file and exit
 	$filename.="." . $new_ext;
 	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
@@ -318,7 +365,7 @@ if ($download)
 	readfile($newpath);
 	unlink($newpath);
 	exit();
-	}
+}
 
 
 // send user back to view page
@@ -531,6 +578,7 @@ include "../../../include/header.php";
     <input type='hidden' name='lastHeightSetting' id='lastHeightSetting' value='' />
     <input type='hidden' name='origwidth' id='origwidth'  value='<?php echo $origwidth ?>' />
     <input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
+    <?php if ($original){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
     <table>
       <tr>
         <td style='text-align:right'><?php echo $lang["width"]; ?>: </td>
@@ -597,8 +645,12 @@ if ($cropper_debug){
 ?>
     <p style='text-align:right;margin-top:15px;'>
       <input type='button' value="<?php echo $lang['cancel']; ?>" onclick="javascript:window.location='../../../pages/view.php?ref=<?php echo $ref ?>';" />
-      <input type='submit' name='download' value="<?php echo $lang['download']; ?>" />
-      <?php if ($edit_access) { ?><input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" /><?php } ?>
+      <?php if ($original){ ?>
+             <input type='submit' name='replace' value="<?php echo $lang['transform_original']; ?>" />
+      <?php } else { ?>
+        <input type='submit' name='download' value="<?php echo $lang['download']; ?>" />
+        <?php if ($edit_access) { ?><input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" /><?php } ?>
+      <?php } // end of if $original ?>
     </p>
   </form>
   <p>

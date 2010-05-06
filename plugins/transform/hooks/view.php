@@ -6,8 +6,16 @@ function HookTransformViewAfterresourceactions (){
 	global $lang;
 	global $resource;
 	global $cropper_allowed_extensions;
+
+        include_once "../plugins/transform/include/config.default.php";
+        if (file_exists("../plugins/transform/include/config.php")){
+                include_once("../plugins/transform/include/config.php");
+        }
+
 	// fixme - for some reason this isn't pulling from config default for plugin even when set as global
 	// hack below makes it work, but need to figure this out at some point
+	// this is something to do with hook architecture -- think it is now fixed by above includes. But this
+	// code isn't hurting anything, so leave it for now. -Dwiggins, 5/2010
 	if (!isset($cropper_allowed_extensions)){
 		$cropper_allowed_extensions = array('TIF','TIFF','JPG','JPEG','PNG','GIF','BMP','PSD'); // file formats that can be transformed
 	} else {

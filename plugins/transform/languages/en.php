@@ -22,6 +22,9 @@ $lang['rotation90']="90 degrees CW";
 $lang['rotation180']="180 degrees CW";
 $lang['rotation270']="270 degrees CW";
 $lang['fliphorizontal']="Flip horizontally?";
+$lang['transform_original']="Transform original";
+$lang['priorversion']="Prior version";
+$lang['replaced']="Replaced";
 
 
 
