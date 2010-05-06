@@ -160,6 +160,10 @@ else
 	
 $command .= " \"$originalpath\" ";
 
+// below is a hack to make this work with multilayer images
+// the result will always be a flattened single-layer image
+$command .= " -flatten ";
+
 if ($crop_necessary){
 	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord ";
 }
