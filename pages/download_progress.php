@@ -10,7 +10,7 @@ $size=getval("size","");
 $ext=getval("ext","");
 $alternative=getval("alternative",-1);
 
-$usage=getval("usage","");
+$usage=getval("usage","-1");
 $usagecomment=getval("usagecomment",-1);
 
 

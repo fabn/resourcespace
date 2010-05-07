@@ -12,7 +12,7 @@ $size=getvalescaped("size","");
 $ext=getvalescaped("ext","");
 $alternative=getvalescaped("alternative",-1);
 $page=getvalescaped("page",1);
-$usage=getval("usage","");
+$usage=getval("usage","-1");
 $usagecomment=getval("usagecomment","");
 
 # Permissions check
