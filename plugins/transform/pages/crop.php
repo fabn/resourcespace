@@ -181,6 +181,8 @@ if ($crop_necessary){
 }
 
 
+$command .= " +repage"; // force imagemagick to repage image to fix canvas and offset info
+
 // did the user request a width? If so, tack that on
 if (is_numeric($new_width)||is_numeric($new_height)){
 	
