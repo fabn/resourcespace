@@ -343,6 +343,7 @@ if (!$download && !$original){
     $result = sql_query("update resource_alt_files set file_name='{$origfilename}',file_extension='$orig_ext',file_size = '$filesizeorig' where ref='$origalt'");
     $neworigpath = get_resource_path($ref,true,'',false,$new_ext);
     rename($newpath,$neworigpath);
+    $result = sql_query("update resource set file_extension = '$new_ext' where ref = '$ref' limit 1"); // update extension
     resource_log($ref,'t','','original transformed');
     create_previews($ref, false, $orig_ext, false, false, $origalt);
     create_previews($ref,false,$new_ext);
