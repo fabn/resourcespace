@@ -107,7 +107,7 @@ for ($n=0;$n<count($collections);$n++)
 		<td nowrap><div class="ListTitle"><a href="<?php echo $pub_url?>"><?php echo $lang["collection"] . ": " . highlightkeywords(tidy_trim(i18n_get_translated($collections[$n]["name"]),45),$search)?></a></div></td>
 		<?php 
 		if (!$use_resource_column_data){
-			for ($x=0;$x<count($ldf)-1;$x++){
+			for ($x=0;$x<count($df)-1;$x++){
 				?><td>&nbsp;</td><?php
 				}
 			}	
