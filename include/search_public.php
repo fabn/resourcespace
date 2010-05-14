@@ -51,7 +51,47 @@ for ($n=0;$n<count($collections);$n++)
 	
 	
 	
+		if ($display=="xlthumbs")
+		{
+		?>
+		<div class="ResourcePanelShellLarge" id="ResourceShell">
+		<div class="ResourcePanelLarge">
 	
+		<table  border="0" class="ResourceAlignLarge"><tr><td>
+		
+		<div style="position: relative;height:330px;">
+		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
+		
+		<?php 
+		$resources=explode(",",$collections[$n]["resources"]);
+		$images=0;
+		for ($m=0;$m<count($resources) && $images<=4;$m++)
+			{
+			$ref=$resources[$m];
+			if (file_exists(get_resource_path($ref, true, "thm", false, "jpg", -1, 1, false)))
+				{
+				$images++;
+				$space=3+($images-1)*45;
+				?>
+				<img style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo get_resource_path($ref,false,"thm",false,"jpg",-1,1,false)?>" class="ImageBorder">
+				<?php				
+				}
+			}
+		?>
+		</a>
+		</div>
+		</td>
+		</tr></table>
+
+		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
+
+		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
+
+		<div class="clearer"></div>
+		</div>
+		<div class="PanelShadow"></div>
+		</div>
+	<?php } 
 	
 	
 	
