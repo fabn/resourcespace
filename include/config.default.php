@@ -1401,3 +1401,7 @@ $use_temp_tables = false;
 
 # "U" permission allows management of users in the current group as well as children groups. TO test stricter adherence to the idea of "children only", set this to true. 
 $U_perm_strict=false;
+
+# enable remote apis (if using API, RSS2, or other plugins that allow remote authentication via an api key)
+$enable_remote_apis=false;
+$api_scramble_key="abcdef123";

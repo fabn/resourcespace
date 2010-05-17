@@ -4,6 +4,30 @@ $valid=true;
 $autologgedout=false;
 $nocookies=false;
 
+if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.php in remotely accessible scripts.
+
+if ($api && $enable_remote_apis ){
+	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
+	include_once ('rest_utils.php'); //for sending response
+	include_once ('rest_request.php'); //for requesting to the login page
+	if (getval("key","")){ // key is provided within the website when logged in (encrypted username and password)
+		$key=decrypt_api_key(getval("key",""));
+		if (count($key)!=2){
+			$data['cookie']="no";
+			} 
+		else{
+			$username=$key[0];
+			$password=$key[1];
+			$request = new RestRequest($baseurl.'/login.php', 'POST', array("api"=>true,"username"=>$username,"password"=>$password,"userkey"=>md5($username . $scramble_key)));
+			$request->execute();
+			$data=json_decode($request->getResponseBody(),true);
+		}
+		if ($data['cookie']!="no"){
+		$_COOKIE['user']=$data['cookie'];
+		}
+	}
+}
+
 if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login))
     {
     if (array_key_exists("user",$_COOKIE))
@@ -122,7 +146,7 @@ else
     # If this cookie is missing, it's assumed that cookies are switched off or blocked and a warning message is displayed.
     setcookie("cookiecheck","true");
     }
-  
+
 if (!$valid)
     {
 	$_SERVER['REQUEST_URI'] = ( isset($_SERVER['REQUEST_URI']) ?

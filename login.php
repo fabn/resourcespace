@@ -5,6 +5,7 @@ include "include/resource_functions.php";
 
 $url=getval("url","index.php");
 $text=getvalescaped("text","");
+$api=getval("api","");
 
 # process log in
 $error="";
@@ -56,6 +57,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
     hook("externalauth","",array( $username, $password)); #Attempt external auth if configured
 
     $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
+    if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // session hashes need to match if using api key, so password cannot be included here to avoid auto-logouts after a remote api call.
     
     $valid=sql_query("select ref,usergroup from user where username='$username' and (password='$password' or password='$password_hash')");
     
@@ -99,11 +101,21 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 			if (strpos($url,"pages/collections.php")!==false) {$url="index.php";}
 
 	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
-	        if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
+	        if ($api && $enable_remote_apis ){
+				# send the cookie back to authenticate.php
+				include_once('include/rest_utils.php');
+				RestUtils::sendResponse(200, json_encode(array("cookie"=>$username . "|" . $session_hash,"expires"=>$expires)), 'application/json');  
+				}
+				
+			if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
 	        }
         }
     else
-        {
+        {		
+		if ($api && $enable_remote_apis ){
+			include_once('include/rest_utils.php');
+			RestUtils::sendResponse(200,  json_encode(array("cookie"=>"no")), 'application/json');  
+		}
         $error=$lang["loginincorrect"];
         
         # Add / increment a lockout value for this IP
