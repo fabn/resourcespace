@@ -136,12 +136,15 @@ if (!$basic_simple_search)
 	}
 	?>	
 	<?php if ($searchbar_selectall){?><script type="text/javascript">resetTickAll();</script><?php }?>
-	<div class="SearchItem"><?php if (!$basic_simple_search) { ?><input name="Clear" type="button" value="&nbsp;&nbsp;<?php echo $lang["clearbutton"]?>&nbsp;&nbsp;" onClick="document.getElementById('ssearchbox').value='';
-	document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';
-	<?php if ($searchbyday) { ?>document.getElementById('basicday').value='';<?php } ?>
-	ResetTicks();"/><?php } ?><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
-	<br />
 
+	
+	<?php $searchbuttons="<div class=\"SearchItem\">";
+	if (!$basic_simple_search) { $searchbuttons.="<input name=\"Clear\" type=\"button\" value=\"&nbsp;&nbsp;".$lang['clearbutton']."&nbsp;&nbsp;\" onClick=\"document.getElementById('ssearchbox').value=''; document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';";
+	if ($searchbyday) { $searchbuttons.="document.getElementById('basicday').value='';"; } 
+	$searchbuttons.="ResetTicks();\"/>"; } 
+	$searchbuttons.="<input name=\"Submit\" type=\"submit\" value=\"&nbsp;&nbsp;". $lang['searchbutton']."&nbsp;&nbsp;\" /></div>";?>
+	
+	<?php if (!$searchbar_buttons_at_bottom){ echo $searchbuttons."<br/>"; } ?>
 
 	<?php
 	if (!$basic_simple_search) {
@@ -363,6 +366,8 @@ if (!$basic_simple_search)
 	-->
 	
 	<?php } ?>
+		
+	<?php if ($searchbar_buttons_at_bottom){ echo $searchbuttons; } ?>
 			
   </form>
 

@@ -534,6 +534,9 @@ $basic_simple_search=false;
 # include an "all" toggle checkbox for Resource Types in Search bar
 $searchbar_selectall=false;
 
+# move search and clear buttons to bottom of searchbar
+$searchbar_buttons_at_bottom=false;
+
 # Hide the main simple search field in the searchbar (if using only simple search fields for the searchbar)
 $hide_main_simple_search=false;
 
@@ -1405,3 +1408,5 @@ $U_perm_strict=false;
 # enable remote apis (if using API, RSS2, or other plugins that allow remote authentication via an api key)
 $enable_remote_apis=false;
 $api_scramble_key="abcdef123";
+
+
