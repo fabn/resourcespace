@@ -945,4 +945,19 @@ $lang["average"]="Average";
 $lang["popupblocked"]="The popup has been blocked by your browser.";
 $lang["closethiswindow"]="Close this window";
 
+$lang["requestaddedtocollection"]="This resource has been added to your current collection. You can request the items in your collection by clicking \'Request All\' on the collection bar below.";
+
+# E-commerce text
+$lang["buynow"]="Buy Now";
+$lang["yourbasket"]="Your Basket";
+$lang["addtobasket"]="Add to basket";
+$lang["yourbasketcontains"]="Your basket contains ? items.";
+$lang["yourbasketisempty"]="Your basket is empty.";
+$lang["buy"]="Buy";
+$lang["buyitemaddedtocollection"]="This resource has been added to your basket. You can purchase all the items in your basket by clicking \'Buy Now\' below.";
+$lang["buynowintro"]="Please select the sizes you require.";
+$lang["nodownloadsavailable"]="Sorry, there are no downloads available for this resource.";
+$lang["proceedtocheckout"]="Proceed to checkout";
+$lang["totalprice"]="Total price";
+
 ?>

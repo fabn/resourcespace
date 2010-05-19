@@ -17,6 +17,21 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 $thumbs=getval("thumbs",$thumbs_default);
 setcookie("thumbs",$thumbs,0);
 
+# Basket mode? - this is for the e-commerce user request modes.
+if ($userrequestmode==2 || $userrequestmode==3)
+	{
+	# Always show thumbs
+	$thumbs="show";
+	
+	# Enable basket
+	$basket=true;	
+	}
+else
+	{
+	$basket=false;
+	}
+
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html class="CollectBack">
@@ -55,6 +70,8 @@ for ($n=0;$n<count($plugins);$n++)
 $collection=getvalescaped("collection","",true);
 $entername=getvalescaped("entername","");
 
+
+# ------------ Change the collection, if a collection ID has been provided ----------------
 if ($collection!="")
 	{
 	hook("prechangecollection");
@@ -81,8 +98,10 @@ if ($collection!="")
 	hook("postchangecollection");
 	}
 
+
 # Load collection info.
 $cinfo=get_collection($usercollection);
+
 
 # Check to see if the user can edit this collection.
 $allow_reorder=false;
@@ -90,6 +109,7 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 	{
 	$allow_reorder=true;
 	}
+
 
 # Include function for reordering / infobox
 if ($allow_reorder || $infobox)
@@ -284,10 +304,29 @@ if (count($result)>$max_collection_thumbs && $k=="")
 	$result=array(); # Empty the result set so nothing is drawn; the window will be resized shortly anyway.
 	}
 
-# ---------------------------- Maximised view
-if ($k!="")
+# ---------------------------- Maximised view -------------------------------------------------------------------------
+if ($basket)
 	{
-	# Anonymous access, slightly different display
+	# ------------------------ Basket Mode ----------------------------------------
+	?>
+	<div id="CollectionMenu">
+	<h2><?php echo $lang["yourbasket"] ?></h2>
+	<form target="main" action="purchase.php">
+
+	<?php if (count($result)==0) { ?>
+	<p><br /><?php echo $lang["yourbasketisempty"] ?></p><br /><br /><br />
+	<?php } else { ?>
+	<p><br /><?php echo str_replace("?",count($result),$lang["yourbasketcontains"]) ?></p>
+	<p><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></p>
+	<?php } ?>
+
+	</form>
+	</div>
+	<?php	
+	}
+elseif ($k!="")
+	{
+	# ------------- Anonymous access, slightly different display ------------------
 	$tempcol=get_collection($usercollection);
 	?>
 <div id="CollectionMenu">
@@ -315,6 +354,7 @@ if ($k!="")
 </div>
 <?php 
 } else { 
+# -------------------------- Standard display --------------------------------------------
 ?>
 <div id="CollectionMenu">
 <?php if (!hook("thumbsmenu")) { ?>

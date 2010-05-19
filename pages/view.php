@@ -342,7 +342,13 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			?>
 			<?php if(!hook("resourcerequest")){?>
-			<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo getval("k","")?>"><?php echo $lang["request"]?></a></td>
+			<td class="DownloadButton">
+			<?php if ($request_adds_to_collection) { ?>
+				<?php echo add_to_collection_link($ref,$search,"alert('" . $lang["requestaddedtocollection"] . "');") ?>
+			<?php } else { ?>
+				<a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo getval("k","")?>">
+			<?php } ?>
+			<?php echo $lang["request"]?></a></td>
 			<?php } ?>
 			<?php
 			}

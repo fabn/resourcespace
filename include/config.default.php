@@ -253,7 +253,7 @@ $ffmpeg_preview_async=false;
 # $ffmpeg_alternatives[0]["params"]="-vcodec h264 -s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
 #
 # $ffmpeg_alternatives[1]["name"]="Larger FLV";
-# $ffmpeg_alternatives[0]["filename"]="flash";
+# $ffmpeg_alternatives[1/]["filename"]="flash";
 # $ffmpeg_alternatives[1]["extension"]="FLV";
 # $ffmpeg_alternatives[1]["params"]="-s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
 
@@ -1155,6 +1155,42 @@ $collection_frame_height=138;
 
 # Ability to hide error messages
 $show_error_messages=true;
+
+# Ability to set that the 'request' button on resources adds the item to the current collection (which then can be requested) instead of starting a request process for this individual item.
+$request_adds_to_collection=false;
+
+#
+# ------------------------ eCommerce Settings -----------------------------
+#
+# Pricing information for the e-commerce / basket request mode.
+# Pricing is size based, so that the user can select the download size they require.
+$pricing["scr"]=10;
+$pricing["lpr"]=20;
+$pricing["hpr"]=30;
+$currency_symbol="&pound;";
+$payment_address="payment.address@goes.here";
+$payment_currency="GBP";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

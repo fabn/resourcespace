@@ -81,7 +81,21 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $usereditfilter=$userdata[0]["edit_filter"];
         $userresourcedefaults=$userdata[0]["resource_defaults"];
         $userrequestmode=trim($userdata[0]["request_mode"]);
-        
+    	
+        # Some alternative language choices for basket mode / e-commerce
+        if ($userrequestmode==2 || $userrequestmode==3)
+			{
+			$lang["addtocollection"]=$lang["addtobasket"];
+			$lang["action-addtocollection"]=$lang["addtobasket"];
+			$lang["addtocurrentcollection"]=$lang["addtobasket"];
+			$lang["requestaddedtocollection"]=$lang["buyitemaddedtocollection"];
+			$lang["request"]=$lang["buy"];
+			
+			# The request button (renamed "Buy" by the line above) should always add the item to the current collection.
+			$request_adds_to_collection=true;
+			}        
+    
+	
         # Apply config override options
         $config_options=trim($userdata[0]["config_options"]);
         if ($config_options!="") {eval($config_options);}

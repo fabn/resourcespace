@@ -431,7 +431,8 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 
 	# add the original image
 	$return=array();
-	$lastname="";$lastpreview=0;$lastrestricted=0;
+	$lastname=sql_value("select name value from preview_size where width=(select max(width) from preview_size)",""); # Start with the highest resolution.
+	$lastpreview=0;$lastrestricted=0;
 	$path2=get_resource_path($ref,true,'',false,$extension);
 	if (file_exists($path2))
 	{

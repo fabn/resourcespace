@@ -992,17 +992,17 @@ function collection_is_research_request($collection)
 }	
 
 if (!function_exists("add_to_collection_link")){
-function add_to_collection_link($resource,$search="")
+function add_to_collection_link($resource,$search="",$extracode="")
 	{
 	# Generates a HTML link for adding a resource to a collection
 	global $frameless_collections,$lang;
 	if ($frameless_collections)
 		{
-		return "<a href=\"#\" onClick=\"AddResourceToCollection('" . $resource . "');return false;\">";
+		return "<a href=\"#\" onClick=\"AddResourceToCollection('" . $resource . "');" . $extracode . "return false;\">";
 		}
 	else
 		{
-		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["addtocurrentcollection"] . "\">";
+		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" onClick=\"" . $extracode . "\" title=\"" . $lang["addtocurrentcollection"] . "\">";
 		}
 	}
 }	
