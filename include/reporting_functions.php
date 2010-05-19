@@ -27,6 +27,16 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 	$sql=str_replace("[to-m]",$to_m,$sql);
 	$sql=str_replace("[to-d]",$to_d,$sql);
 	
+	global $view_title_field;
+	#back compatibility for three default reports, to replace "title" with the view_title_field.
+	#all reports should either use r.title or view_title_field when referencing the title column on the resource table.
+	if ($ref==7||$ref==8||$ref==9){
+		$sql=str_replace(",title",",field".$view_title_field,$sql);
+	}
+	
+    $sql=str_replace("view_title_field","field".$view_title_field,$sql);
+	$sql=str_replace("r.title","field".$view_title_field,$sql);
+	
 	$results=sql_query($sql);
 	#echo "\"Number of results: " . count($results) . "\"\n";
 	

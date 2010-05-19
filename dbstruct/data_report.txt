@@ -133,8 +133,8 @@ or
 
 group by r.ref order by Added desc;
 "
-7,"Resources created","select ref 'Resource ID',title 'Title',creation_date 'Creation Date' from resource where creation_date>=date('[from-y]-[from-m]-[from-d]') and creation_date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)"
-8,"Resources with zero downloads","select ref 'Resource ID',title 'Title' from resource where ref not in 
+7,"Resources created","select ref 'Resource ID',view_title_field 'Title',creation_date 'Creation Date' from resource where creation_date>=date('[from-y]-[from-m]-[from-d]') and creation_date<=adddate(date('[to-y]-[to-m]-[to-d]'),1)"
+8,"Resources with zero downloads","select ref 'Resource ID',view_title_field 'Title' from resource where ref not in 
 
 (
 #Previous query to fetch resource downloads
@@ -163,7 +163,7 @@ or
 
 group by r.ref
 )"
-9,"Resources with zero views","select ref 'Resource ID',title 'Title' from resource where ref not in 
+9,"Resources with zero views","select ref 'Resource ID',view_title_field 'Title' from resource where ref not in 
 
 (
 #Previous query to fetch resource views
