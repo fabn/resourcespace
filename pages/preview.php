@@ -62,9 +62,9 @@ if ($go!="")
 
 # Next / previous page browsing (e.g. pdfs)
 $previouspage=$page-1;
-if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage,$use_watermark))&&!file_exists(get_resource_path($ref,true,"",false,$ext,-1,$previouspage,$use_watermark))) {$previouspage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$previouspage,$use_watermark,"",$alternative))&&!file_exists(get_resource_path($ref,true,"",false,$ext,-1,$previouspage,$use_watermark,"",$alternative))) {$previouspage=-1;}
 $nextpage=$page+1;
-if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,$use_watermark))) {$nextpage=-1;}
+if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,$use_watermark,"",$alternative))) {$nextpage=-1;}
 
 
 # Locate the resource
@@ -119,10 +119,10 @@ include "../include/header.php";
 <?php if (!hook("previewimage")) { ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
-<td valign="middle"><?php if ($previouspage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
+<td valign="middle"><?php if ($previouspage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
 elseif ($nextpage!=-1 &&resource_download_allowed($ref,"scr") ) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><?php } ?></td>
 <td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
-<td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
+<td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
 <?php } ?>
 
