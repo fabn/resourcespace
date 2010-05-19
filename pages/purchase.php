@@ -37,7 +37,7 @@ if (getval("submit","")=="")
 			}
 		else
 			{
-			?><select name="select_<?php echo $resource["ref"] ?>"><?php
+			?><select class="stdwidth" name="select_<?php echo $resource["ref"] ?>"><?php
 			# List all sizes with pricing options.
 			foreach ($sizes as $size)
 				{
