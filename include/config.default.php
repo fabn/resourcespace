@@ -535,7 +535,7 @@ $basic_simple_search=false;
 $searchbar_selectall=false;
 
 # move search and clear buttons to bottom of searchbar
-$searchbar_buttons_at_bottom=false;
+$searchbar_buttons_at_bottom=true;
 
 # Hide the main simple search field in the searchbar (if using only simple search fields for the searchbar)
 $hide_main_simple_search=false;
@@ -1124,6 +1124,12 @@ $default_display="thumbs";
 
 # Generate thumbs/previews for alternative files?
 $alternative_file_previews=true;
+$alternative_file_previews_batch=true;
+
+# Display resource title on alternative file management page
+$alternative_file_resource_title=true;
+# Display col-size image of resource on alternative file management page
+$alternative_file_resource_preview=true;
 
 # For alternative file previews... enable a thumbnail mouseover to see the preview image?
 $alternative_file_previews_mouseover=false;

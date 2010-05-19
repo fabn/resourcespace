@@ -11,6 +11,17 @@ $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
 $collectionname=getvalescaped("entercolname","");
 
+$search=getvalescaped("search","");
+$offset=getvalescaped("offset","",true);
+$order_by=getvalescaped("order_by","");
+$archive=getvalescaped("archive","",true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
@@ -127,6 +138,11 @@ if (array_key_exists("File0",$_FILES))
 		# Save alternative file data.
 		sql_query("update resource_alt_files set file_name='" . escape_check($filename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now() where resource='$alternative' and ref='$aref'");
 		
+		if ($alternative_file_previews_batch)
+			{
+			create_previews($alternative,false,$extension,false,false,$aref);
+			}
+		
 		echo "SUCCESS";
 		exit();
 		}
@@ -205,7 +221,21 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 </script>
 <?php }?>
 <div class="BasicsBox" id="uploadbox"> 
-<h2>&nbsp;</h2>
+<?php if ($alternative!=""){?><p>
+<a href="edit.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p><?php } ?>
+<h2>
+<?php if ($alternative!=""){$resource=get_resource_data($alternative);
+	if ($alternative_file_resource_preview){ 
+		$imgpath=get_resource_path($resource['ref'],true,"col",false);
+		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resource['ref'],false,"col",false);?>"/><?php } 
+	} 
+	if ($alternative_file_resource_title){ 
+		echo "<h2>".$resource['field'.$view_title_field]."</h2><br/>";
+	}
+}
+?></h2>
+<?php if ($alternative!=""){$lang["fileupload"]=$lang["alternativefiles"];}?>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?php echo text("introtext")?></p>
 <?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions))?></p><?php } ?>

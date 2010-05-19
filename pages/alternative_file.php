@@ -7,6 +7,17 @@ include "../include/image_processing.php";
 
 $ref=getvalescaped("ref","",true);
 
+$search=getvalescaped("search","");
+$offset=getvalescaped("offset","",true);
+$order_by=getvalescaped("order_by","");
+$archive=getvalescaped("archive","",true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
 $resource=getvalescaped("resource","",true);
 
 # Fetch resource data.
@@ -23,7 +34,7 @@ if (getval("name","")!="")
 	{
 	# Save file data
 	save_alternative_file($resource,$ref);
-	redirect ("pages/alternative_files.php?ref=$resource");
+	redirect ("pages/alternative_files.php?ref=$resource&search=".urlencode($search)."&offset=$offset&order_by=$order_by&sort=$sort&archive=$archive");
 	}
 
 	

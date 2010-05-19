@@ -6,6 +6,18 @@ include "../include/resource_functions.php";
 
 $ref=getvalescaped("ref","",true);
 
+$search=getvalescaped("search","");
+$offset=getvalescaped("offset","",true);
+$order_by=getvalescaped("order_by","");
+$archive=getvalescaped("archive","",true);
+$restypes=getvalescaped("restypes","");
+if (strpos($search,"!")!==false) {$restypes="";}
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
+
+
 # Fetch resource data.
 $resource=get_resource_data($ref);
 
@@ -17,7 +29,7 @@ if ((!checkperm("e" . $resource["archive"])) && ($ref>0)) {exit ("Permission den
 if (getval("newfile","")!="")
 	{
 	$newfile=add_alternative_file($ref,getvalescaped("newfile",""));
-	redirect("pages/alternative_file.php?resource=$ref&ref=$newfile");
+	redirect("pages/alternative_file.php?resource=$ref&ref=$newfile&search=".urlencode($search)."&offset=$offset&order_by=$order_by&sort=$sort&archive=$archive");
 	}
 
 # Handle deleting a file
@@ -30,10 +42,16 @@ include "../include/header.php";
 ?>
 <div class="BasicsBox">
 <p>
-<a href="edit.php?ref=<?php echo $ref?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
-<a href="view.php?ref=<?php echo $ref?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
+<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
 </p>
-
+	<?php if ($alternative_file_resource_preview){ 
+		$imgpath=get_resource_path($resource['ref'],true,"col",false);
+		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resource['ref'],false,"col",false);?>"/><?php } 
+	} ?>
+	<?php if ($alternative_file_resource_title){ 
+		echo "<h2>".$resource['field'.$view_title_field]."</h2><br/>";
+	}?>
 <h1><?php echo $lang["managealternativefilestitle"]?></h1>
 </div>
 
@@ -68,7 +86,7 @@ for ($n=0;$n<count($files);$n++)
 	
 	<a href="#" onclick="if (confirm('<?php echo $lang["filedeleteconfirm"]?>')) {document.getElementById('filedelete').value='<?php echo $files[$n]["ref"]?>';document.getElementById('fileform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>
 
-	&nbsp;<a href="alternative_file.php?resource=<?php echo $ref?>&ref=<?php echo $files[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a>
+	&nbsp;<a href="alternative_file.php?resource=<?php echo $ref?>&ref=<?php echo $files[$n]["ref"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a>
 	
 	</td>
 	
@@ -91,7 +109,7 @@ for ($n=0;$n<count($files);$n++)
 			</div>
 		<div class="clearerleft"> </div>
 		<br />
-		<p><a href="upload_java.php?alternative=<?php echo $ref ?>">&gt;&nbsp;<?php echo $lang["alternativebatchupload"] ?></a></p>
+		<p><a href="upload_java.php?alternative=<?php echo $ref ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["alternativebatchupload"] ?></a></p>
 	    </div>
 	</form>
 </div>
