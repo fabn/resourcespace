@@ -253,7 +253,7 @@ $ffmpeg_preview_async=false;
 # $ffmpeg_alternatives[0]["params"]="-vcodec h264 -s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
 #
 # $ffmpeg_alternatives[1]["name"]="Larger FLV";
-# $ffmpeg_alternatives[1/]["filename"]="flash";
+# $ffmpeg_alternatives[1]["filename"]="flash";
 # $ffmpeg_alternatives[1]["extension"]="FLV";
 # $ffmpeg_alternatives[1]["params"]="-s wvga -aspect 16:9 -b 2500k -deinterlace -ab 160k -acodec mp3 -ac 2";
 
