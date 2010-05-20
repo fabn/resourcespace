@@ -41,6 +41,18 @@ if (getval("name","")!="")
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
+<p>
+<a href="edit.php?ref=<?php echo $resource?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $resource?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoresourceview"]?></a>
+</p>
+<?php if ($alternative_file_resource_preview){ 
+		$imgpath=get_resource_path($resourcedata['ref'],true,"col",false);
+		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resourcedata['ref'],false,"col",false);?>"/><?php } 
+	} ?>
+	<?php if ($alternative_file_resource_title){ 
+		echo "<h2>".$resourcedata['field'.$view_title_field]."</h2><br/>";
+	}?>
+	
 <h1><?php echo $lang["editalternativefile"]?></h1>
 
 
