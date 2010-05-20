@@ -621,6 +621,7 @@ $lang["editalternativefile"]="Edit Alternative File";
 $lang["description"]="Description";
 $lang["notuploaded"]="Not uploaded";
 $lang["uploadreplacementfile"]="Upload replacement file";
+$lang["backtomanagealternativefiles"]="Back to Manage Alternative Files";
 
 
 $lang["resourceistranscoding"]="Resource is currently being transcoded";
