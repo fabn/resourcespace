@@ -10,5 +10,5 @@ $cropper_allow_scale_up = true; // if false, scaling parameters that would resul
 $cropper_rotation = true; // if true, enables flipping and rotation of images
 $cropper_transform_original = false;
 $cropper_use_repage = true; // use repage feature to remove image geometry after transformation. This is necessary for most ImageMagick-based systems to behave correctly.
-
+$cropper_jpeg_rgb = true; // when creating a jpeg, make sure it is RGB
 ?>

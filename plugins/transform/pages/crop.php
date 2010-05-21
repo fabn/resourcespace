@@ -176,6 +176,10 @@ $command .= " \"$originalpath\" ";
 // the result will always be a flattened single-layer image
 $command .= " -flatten ";
 
+if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
+	$command .= " -colorspace RGB ";
+}
+
 if ($crop_necessary){
 	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord ";
 }
