@@ -14,7 +14,7 @@ $plugin=getvalescaped("plugin","");
 
 # Fetch current access level
 $access=sql_value("select enabled_groups value from plugins where name='$plugin'","");
-$s=explode(",",$access);
+
 
 # Fetch user groups
 $groups=get_usergroups();
@@ -40,7 +40,8 @@ if (getval("save","")!="")
 	redirect("pages/team/team_plugins.php");
 	}
 
-include "../../include/header.php"
+include "../../include/header.php";
+$s=explode(",",$access);
 ?>
 <div class="BasicsBox"> 
 <p><a href="team_plugins.php">&lt; <?php echo $lang["pluginssetup"] ?></a></p>
