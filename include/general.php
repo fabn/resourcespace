@@ -158,7 +158,7 @@ function get_resource_data($ref,$cache=true)
 	return $resource[0];
 	}
 	
-function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1)
+function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)
 	# for this resource, for display in an edit / view form.
@@ -177,7 +177,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
 		}
 
 	$return=array();
-	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
+	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index,f.external_user_access from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
 	
 	# Build an array of valid types and only return fields of this type.
 	$validtypes=sql_array("select ref value from resource_type");
@@ -187,7 +187,7 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
 		{
 		if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
 		!checkperm("f-" . $fields[$n]["fref"])))
-		&& in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"])) {$return[]=$fields[$n];}
+		&& in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"]) && (!($external_access && !$fields[$n]["external_user_access"]))) {$return[]=$fields[$n];}
 		}
 	return $return;
 	}
