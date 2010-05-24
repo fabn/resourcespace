@@ -50,31 +50,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 <div id="SearchBox">
 
 
-<?php if (isset($anonymous_login) && (isset($username)) && ($username==$anonymous_login))
-	{
-	# For anonymous access, display the login panel
-	?>
-	<div id="SearchBoxPanel">
-	<div class="SearchSpace">
 
-	  <h2><?php echo $lang["login"]?></h2>
-
-  
-  <form id="form1" method="post" action="<?php echo $baseurl?>/login.php" target="_top">
-  <div class="SearchItem"><?php echo $lang["username"]?><br/><input type="text" name="username" id="name" class="SearchWidth" /></div>
-  
-  <div class="SearchItem"><?php echo $lang["password"]?><br/><input type="password" name="password" id="name" class="SearchWidth" /></div>
-  <div class="SearchItem"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["login"]?>&nbsp;&nbsp;" /></div>
-  </form>
-    <p><br/><?php if ($allow_account_request) { ?><a href="user_request.php">&gt; <?php echo $lang["nopassword"]?> </a></p><p><?php } ?>
-  <a href="user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
-	</div>
-  
-	</div>
-	<div class="PanelShadow"></div><br />
-	<?php
-	}
-?>
 
 
 <?php if (checkperm("s") && (!isset($k) || $k=="")) { ?>
@@ -379,6 +355,33 @@ if (!$basic_simple_search)
 	</div>
 	<div class="PanelShadow"></div>
 <?php } ?>	
+	
+	<?php if (isset($anonymous_login) && (isset($username)) && ($username==$anonymous_login))
+	{
+	# For anonymous access, display the login panel
+	?>
+	<br /><div id="SearchBoxPanel">
+	<div class="SearchSpace">
+
+	  <h2><?php echo $lang["login"]?></h2>
+
+  
+  <form id="form1" method="post" action="<?php echo $baseurl?>/login.php" target="_top">
+  <div class="SearchItem"><?php echo $lang["username"]?><br/><input type="text" name="username" id="name" class="SearchWidth" /></div>
+  
+  <div class="SearchItem"><?php echo $lang["password"]?><br/><input type="password" name="password" id="name" class="SearchWidth" /></div>
+  <div class="SearchItem"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["login"]?>&nbsp;&nbsp;" /></div>
+  </form>
+    <p><br/><?php if ($allow_account_request) { ?><a href="user_request.php">&gt; <?php echo $lang["nopassword"]?> </a></p><p><?php } ?>
+  <a href="user_password.php">&gt; <?php echo $lang["forgottenpassword"]?></a></p>
+	</div>
+  
+	</div>
+	<div class="PanelShadow"></div>
+	<?php
+	}
+?>
+	
 	
 	<?php if (($research_request) && (!isset($k) || $k=="") && (checkperm("q"))) { ?>
 	<div id="ResearchBoxPanel">
