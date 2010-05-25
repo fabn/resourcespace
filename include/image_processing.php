@@ -14,6 +14,8 @@ function upload_file($ref,$no_exif=false,$revert=false)
 	{
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
+	hook ("removeannotations");
+	
 	# Process file upload for resource $ref
 	if ($revert==true){
 		global $filename_field;
@@ -1094,6 +1096,9 @@ function generate_file_checksum($resource,$extension)
 if (!function_exists("upload_preview")){
 function upload_preview($ref)
 	{
+		
+	hook ("removeannotations");	
+		
 	# Upload a preview image only.
 	$processfile=$_FILES['userfile'];
     $filename=strtolower(str_replace(" ","_",$processfile['name']));
