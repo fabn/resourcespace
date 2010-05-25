@@ -56,7 +56,7 @@ if (getval("submit","")=="")
 					}
 				
 				?>
-				<option value="<?php echo $size["id"] ?>"><?php echo $name . " - " . $currency_symbol . " " . number_format($price,2)  ?></option>
+				<option value="<?php echo $size["id"] ?>"><?php echo i18n_get_translated($name) . " - " . $currency_symbol . " " . number_format($price,2)  ?></option>
 				<?php
 				}
 			?></select><?php
