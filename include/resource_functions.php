@@ -258,6 +258,7 @@ function save_resource_data($ref,$multi)
 		{
 		sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
 		}
+		
 	# For access level 3 (custom) - also save custom permissions
 	if (getvalescaped("access",0)==3) {save_resource_custom_access($ref);}
 
@@ -1581,6 +1582,14 @@ function resource_download_allowed($resource,$size)
 	if ($access==0)
 		{
 		return true;
+		}
+
+	# Special case for purchased downloads.
+	global $usercollection;
+	if (isset($usercollection))
+		{
+		$complete=sql_value("select purchase_complete value from collection_resource where collection='$usercollection' and resource='$resource' and purchase_size='" . escape_check($size) . "'",0);
+		if ($complete==1) {return true;}
 		}
 
 	# Restricted

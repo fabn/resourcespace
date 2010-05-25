@@ -2463,3 +2463,16 @@ function decrypt_api_key($key){
 	$key=convert(base64_decode(strtr($key, '-_,', '+/=')),$api_scramble_key);
 	return explode("|",$key);
 	}	
+
+function purchase_set_size($collection,$resource,$size)
+	{
+	// Set the selected size for an item in a collection. This is used later on when the items are downloaded.
+	sql_query("update collection_resource set purchase_size='" . escape_check($size) . "' where collection='$collection' and resource='$resource'");
+	return true;
+	}
+
+function payment_set_complete($collection)
+	{
+	sql_query("update collection_resource set purchase_complete=1 where collection='$collection'");
+	return true;
+	}
