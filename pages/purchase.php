@@ -100,7 +100,7 @@ else
 				if (array_key_exists($id,$pricing)) {$price=$pricing[$id];}	else {$price=999;}
 				$totalprice+=$price;
 				# Build up the paypal string...
-				$paypal.="<input type=\"hidden\" name=\"item_name_" . $n . "\" value=\"" . $title . " (" . $size["name"] . ")\">\n";
+				$paypal.="<input type=\"hidden\" name=\"item_name_" . $n . "\" value=\"" . $title . " (" . i18n_get_translated($size["name"]) . ")\">\n";
 				$paypal.="<input type=\"hidden\" name=\"amount_" . $n . "\" value=\"" . $price . "\">\n";
 				$paypal.="<input type=\"hidden\" name=\"quantity_" . $n . "\" value=\"1\">\n";
 				$n++;
