@@ -132,6 +132,7 @@ function upload_file($ref,$no_exif=false,$revert=false)
 			}		
 		}
     
+   if (!$revert){
     # Clear any existing FLV file or multi-page previews.
 	global $pdf_pages;
 	for ($n=2;$n<=$pdf_pages;$n++)
@@ -143,6 +144,7 @@ function upload_file($ref,$no_exif=false,$revert=false)
 		$path=get_resource_path($ref,true,"scr",false,"jpg",-1,$n,true);
 		if (file_exists($path)) {unlink($path);}
 		}
+	
 	# Remove any FLV video preview (except if the actual resource is an FLV file).
 	global $ffmpeg_preview_extension;
 	if ($extension!=$ffmpeg_preview_extension)
@@ -163,7 +165,6 @@ function upload_file($ref,$no_exif=false,$revert=false)
 		}	
     
 	# Create previews
-	if (!$revert){ 
 		global $enable_thumbnail_creation_on_upload;
 		if ($enable_thumbnail_creation_on_upload)
 			{ 
@@ -179,16 +180,16 @@ function upload_file($ref,$no_exif=false,$revert=false)
     return $status;
     }}
 	
-function extract_exif_comment($ref,$extension)
+function extract_exif_comment($ref,$extension="")
 	{
 	# Extract the EXIF comment from either the ImageDescription field or the UserComment
 	# Also parse IPTC headers and insert
-	
 	# EXIF headers
 
 	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
 	
+	hook("pdfsearch");
 
 global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
 if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
@@ -1097,7 +1098,7 @@ if (!function_exists("upload_preview")){
 function upload_preview($ref)
 	{
 		
-	hook ("removeannotations");	
+	hook ("removeannotations");		
 		
 	# Upload a preview image only.
 	$processfile=$_FILES['userfile'];
@@ -1184,7 +1185,7 @@ function extract_text($ref,$extension)
 		$command=$pdftotext_path . "/pdftotext";
 		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
 		if (!file_exists($command)) {exit("pdftotext executable not found at '$pdftotext_path'");}
-		$text=shell_exec($command . " \"" . $path . "\" -");
+		$text=shell_exec($command . " -enc UTF-8 \"" . $path . "\" -");
 		}
 	
 	# HTML extraction
