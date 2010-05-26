@@ -115,8 +115,8 @@ include "../include/header.php";
 <?php } ?>
 
 </p>
-
 <?php if (!hook("previewimage")) { ?>
+<?php if (!hook("previewimage2")) { ?>
 <table cellpadding="0" cellspacing="0">
 <tr>
 <?php if ($page!=1){?>
@@ -127,7 +127,7 @@ elseif ($nextpage!=-1 &&resource_download_allowed($ref,"scr") ) { ?><a href="#" 
 <td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr")) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
 <?php } ?>
-
+<?php } ?>
 <div id="CollectionFramelessCount" style="display:none;"> </div>
 
 <?php
