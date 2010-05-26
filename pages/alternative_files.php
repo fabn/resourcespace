@@ -67,6 +67,7 @@ include "../include/header.php";
 <td><?php echo $lang["filetype"]?></td>
 <td><?php echo $lang["filesize"]?></td>
 <td><?php echo $lang["date"]?></td>
+<?php if(count($alt_types) > 1){ ?><td><?php echo $lang["alternatetype"]?></td><?php } ?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
@@ -82,6 +83,7 @@ for ($n=0;$n<count($files);$n++)
 	<td><?php echo ($files[$n]["file_extension"]==""?$lang["notuploaded"]:htmlspecialchars(strtoupper($files[$n]["file_extension"])) . " " . $lang["file"])?></td>	
 	<td><?php echo formatfilesize($files[$n]["file_size"])?></td>	
 	<td><?php echo nicedate($files[$n]["creation_date"],true)?></td>
+	<?php if(count($alt_types) > 1){ ?><td><?php echo $files[$n]["alt_type"] ?></td><?php } ?>
 	<td><div class="ListTools">
 	
 	<a href="#" onclick="if (confirm('<?php echo $lang["filedeleteconfirm"]?>')) {document.getElementById('filedelete').value='<?php echo $files[$n]["ref"]?>';document.getElementById('fileform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>

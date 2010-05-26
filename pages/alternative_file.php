@@ -76,6 +76,21 @@ include "../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
+<?php
+	// if the system is configured to support a type selector for alt files, show it
+	if (isset($alt_types) && count($alt_types) > 1){
+		echo "<div class='Question'>\n<label for='alt_type'>".$lang["alternatetype"]."</label><select name='alt_type' id='alt_type'>";
+		foreach($alt_types as $thealttype){
+			//echo "thealttype:$thealttype: / filealttype:" . $file['alt_type'].":";
+			if ($thealttype == $file['alt_type']){$alt_type_selected = " selected='selected'"; } else { $alt_type_selected = ''; }
+			$thealttype = htmlspecialchars($thealttype,ENT_QUOTES);
+			echo "\n   <option value='$thealttype' $alt_type_selected >$thealttype</option>";
+		}
+		echo "\n</select>\n<div class='clearerleft'> </div>\n</div>";
+	}
+?>
+
+
 <div class="Question">
 <label for="userfile"><?php echo $file["file_extension"]==""?$lang["clickbrowsetolocate"]:$lang["uploadreplacementfile"]?></label>
 <input type=file name=userfile id=userfile>

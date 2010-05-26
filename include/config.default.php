@@ -1128,6 +1128,14 @@ $alternative_file_previews_batch=true;
 
 # Display resource title on alternative file management page
 $alternative_file_resource_title=true;
+
+# enable support for storing an alternative type for each alternate file
+# to activate, enter the array of support types below. Note that the 
+# first value will be the default
+# EXAMPLE: 
+# $alt_types=array("","Print","Web","Online Store","Detail");
+$alt_types=array("");
+
 # Display col-size image of resource on alternative file management page
 $alternative_file_resource_preview=true;
 

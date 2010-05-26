@@ -964,4 +964,6 @@ $lang["waitingforpaymentauthorisation"]="Sorry, we have not yet received the pay
 $lang["reload"]="Reload";
 $lang["downloadpurchaseitems"]="Download Purchased Items";
 $lang["downloadpurchaseitemsnow"]="Please use the links below to download your purchased items immediately.<br><br>Do not navigate away from this page until you have downloaded all the items.";
+$lang["alternatetype"]="Alternative type";
+
 ?>

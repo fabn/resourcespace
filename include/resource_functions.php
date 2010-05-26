@@ -1102,7 +1102,7 @@ function import_resource($path,$type,$title,$ingest=false)
 function get_alternative_files($resource)
 	{
 	# Returns a list of alternative files for the given resource
-	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date from resource_alt_files where resource='$resource'");
+	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='$resource'");
 	}
 	
 function add_alternative_file($resource,$name,$description="",$file_name="",$file_extension="",$file_size=0)
@@ -1125,7 +1125,7 @@ function delete_alternative_file($resource,$ref)
 function get_alternative_file($resource,$ref)
 	{
 	# Returns the row for the requested alternative file
-	$return=sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date from resource_alt_files where resource='$resource' and ref='$ref'");
+	$return=sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='$resource' and ref='$ref'");
 	if (count($return)==0) {return false;} else {return $return[0];}
 	}
 	
@@ -1174,7 +1174,7 @@ function save_alternative_file($resource,$ref)
 			}
 		}
 	# Save data back to the database.
-	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "' $sql where resource='$resource' and ref='$ref'");
+	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "',alt_type='" . getvalescaped("alt_type","") . "' $sql where resource='$resource' and ref='$ref'");
 	}
 	
 function user_rating_save($userref,$ref,$rating)
