@@ -90,6 +90,7 @@ $description = $_REQUEST['description'];
 $cropsize = $_REQUEST['cropsize'];
 $new_width = $_REQUEST['new_width'];
 $new_height = $_REQUEST['new_height'];
+$alt_type = $_REQUEST['alt_type'];
 
 if (isset($_REQUEST['flip']) && $_REQUEST['flip'] == 1){
     $flip = true;
@@ -154,6 +155,9 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 	$mytitle = mysql_real_escape_string("$verb " . strtoupper($new_ext) . ' ' . $lang['file']);
 }
 
+if (strlen($alt_type)>0){ $mytitle .= " - $alt_type"; }
+
+
 $mydesc = mysql_real_escape_string($description);
 
 # Is this a download only?
@@ -161,7 +165,7 @@ $download=(getval("download","")!="");
 
 if (!$download && !$original)
 	{
-	$newfile=add_alternative_file($ref,$mytitle,$mydesc);
+	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','','',mysql_real_escape_string($alt_type));
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
 	}
 else
@@ -622,10 +626,23 @@ include "../../../include/header.php";
       </tr>
       <?php } ?>
       <tr>
-        <td><?php echo $lang["description"]; ?>: </td>
+        <td style='text-align:right'><?php echo $lang["description"]; ?>: </td>
         <td colspan='3'><input type='text' name='description' value='' size='30'/></td>
       </tr>
-      <tr>
+<?php
+        // if the system is configured to support a type selector for alt files, show it
+        if (isset($alt_types) && count($alt_types) > 1){
+                echo "<tr><td style='text-align:right'>\n<label for='alt_type'>".$lang["alternatetype"].":</label></td><td colspan='3'><select name='alt_type' id='alt_type'>";
+                foreach($alt_types as $thealttype){
+                        $thealttype = htmlspecialchars($thealttype,ENT_QUOTES);
+                        echo "\n   <option value='$thealttype' >$thealttype</option>";
+                }
+                echo "</select>\n</td></tr>";
+        } else {
+		echo "<input type='hidden' name='alt_type' value='' />\n";
+	}
+?>
+       <tr>
         <td style='text-align:right'><?php echo $lang['type']; ?>: </td>
         <td colspan='3'><?php
 			
@@ -648,7 +665,6 @@ include "../../../include/header.php";
           </select>
           <?php } // end of if force_original_format ?></td>
       </tr>
-   
     </table>
     <?php
 if ($cropper_debug){
