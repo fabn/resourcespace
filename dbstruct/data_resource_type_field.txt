@@ -20,7 +20,7 @@
 
   <p>[value]</p>
 
-</div>",,0,,JobID,1,0,,0
+</div>",,0,,JobID,1,0,,0,1
 29,person,Named Person(s),0,,60,1,0,0,,1,1,,,,0,,People,1,0,,0,1
 52,camera,Camera Make / Model,0,,1600,0,0,1,,1,0,,,,0,,Model,1,0,,0,1
 51,original_filename,Original Filename,0,,6,1,0,0,file_path,0,1,,,,0,,,1,0,,0,1
