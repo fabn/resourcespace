@@ -8,7 +8,7 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalesc
 
 $topurl="pages/" . $default_home_page;
 if ($use_theme_as_home) {$topurl="pages/themes.php";}
-if ($use_recent_as_home) {$topurl="pages/search.php?search=" . urlencode("!last1000");}
+if ($use_recent_as_home) {$topurl="pages/search.php?search=" . urlencode("!last".$recent_search_quantity);}
 
 $bottomurl="pages/collections.php?k=" . $k;
 

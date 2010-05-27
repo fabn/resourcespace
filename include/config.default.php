@@ -341,8 +341,6 @@ $home_advancedsearch=false;
 # Display the advanced search as a 'search' link in the top navigation
 $advanced_search_nav=false;
 
-
-
 # Show My Contributions on the home page?
 $home_mycontributions=false;
 
@@ -351,15 +349,16 @@ $disable_searchresults = false;
 
 # Display a 'Recent' link in the top navigation
 $recent_link=true;
+# Display 'View New Material' link in the quick search bar (same as 'Recent')
+$view_new_material=false;
+# For recent_link and view_new_material, and use_recent_as_home, the quantity of resources to return.
+$recent_search_quantity=1000;
 
 # Display Help and Advice link in the top navigation
 $help_link=true;
 
 # Display Search Results link in top navigation
 $search_results_link=true;
-
-# Display 'View New Material' link in the quick search bar (same as 'Recent')
-$view_new_material=false;
 
 # Display a 'My Collections' link in the top navigation
 $mycollections_link=false;
