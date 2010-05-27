@@ -98,7 +98,7 @@ function save_research_request($ref)
 	sql_query("update research_request set status='" . $newstatus . "',assigned_to='" . getvalescaped("assigned_to",0) . "' where ref='$ref'");
 	
 	# Copy existing collection
-	if (getvalescaped("copyexisting","")!="")
+	if (getvalescaped("copyexisting","")!="" && is_numeric($collection))
 		{
 		sql_query("insert into collection_resource(collection,resource) select '$collection',resource from collection_resource where collection='" . getvalescaped("copyexistingref","") . "' and resource not in (select resource from collection_resource where collection='$collection');");
 		}
