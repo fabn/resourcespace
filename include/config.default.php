@@ -462,6 +462,8 @@ $contact_sheet_resource=false;
 $contact_sheet_previews=true;
 # Select a contact sheet font. Default choices are 
 # helvetica,times (These are pdf core fonts: not embedded, very small pdf file size.)
+# There are also several other fonts included in the tcpdf lib (dejavu and 'free' families of sans, serif, mono styles in regular, bold, italic and bold italic)
+# To use them, set contact_sheet_font, for example, to 'freeserifb' for freeserif bold.
 $contact_sheet_font="helvetica";
 # if using a custom tcpdf font, subsetting is available, but can be turned off
 $subsetting=true; 

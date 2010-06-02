@@ -124,6 +124,7 @@ $pdf->SetMargins(1,1.2,.7);
 $pdf->SetAutoPageBreak(false);
 $pdf->SetCellPadding(0); 
 $pdf->AddPage(); 
+$pdf->SetFont($contact_sheet_font,'','','',$subsetting);
 
 
 $pdf->ln();$pdf->ln();
