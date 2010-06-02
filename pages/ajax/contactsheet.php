@@ -316,6 +316,10 @@ relate_to_collection($newresource,$collection);
 	redirect("pages/view.php?ref=" .$newresource);
 	}
 
-else{ ob_end_clean();
+else{ 
+	$out1 = ob_get_contents();
+	if ($out1!=""){
+	ob_end_clean();
+	}
 $pdf->Output($collectiondata['name'].".pdf","D");
 }
