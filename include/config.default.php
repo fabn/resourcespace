@@ -463,6 +463,8 @@ $contact_sheet_previews=true;
 # Select a contact sheet font. Default choices are 
 # helvetica,times (These are pdf core fonts: not embedded, very small pdf file size.)
 $contact_sheet_font="helvetica";
+# if using a custom tcpdf font, subsetting is available, but can be turned off
+$subsetting=true; 
 # allow unicode filenames? (stripped out by default in tcpdf but since collection names may 
 # have special characters, probably want to try this on.)
 $contact_sheet_unicode_filenames=true;
@@ -493,15 +495,6 @@ $columns_select = '
 <option value=5>5</option>
 <option value=6>6</option>
 <option value=7>7</option>';
-
-# Contact Sheet Font Embedding:
-# Note: this has only been developed for Linux so far. It relies on the ttf2ufm program included with tcpdf, and there is a compiled version included for windows, but it may need further dev on the paths to work. I don't think the linux compile works on the mac. -Tom G
-# $ttf_file overrides $contact_sheet_font. 
-# A .ttf file should be installed in the filestore/fonts directory (folder created on first use of the contact sheet), 
-# $ttf_file="dejavusans.ttf"; 
-# If using $ttf_file, optionally set $subsetting=true and set fontforge path to generate subset fonts on the fly (reduces PDF file size).
-# $subsetting=true; 
-# $fontforge_path="/usr/bin";
 
 
 # Options below control the batch uploader used in user contributions. If both set to true,
