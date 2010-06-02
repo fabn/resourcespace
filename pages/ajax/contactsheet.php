@@ -102,7 +102,7 @@ class MYPDF extends TCPDF {
     //Page header
     public function Header() {
         global $contact_sheet_font,$titlefontsize,$applicationname,$collectiondata,$date,$subsetting;
-        $this->SetFont($contact_sheet_font,'',$titlefontsize,$subsetting);
+        $this->SetFont($contact_sheet_font,'',$titlefontsize,'',$subsetting);
 		$title = $applicationname.' - '. $collectiondata['name'].' - '.$date;
 		$pagenumber=$this->getAliasNumPage().' of '.$this->getAliasNbPages();
 		$this->Text(1,.8,$title.'   '.$pagenumber);
