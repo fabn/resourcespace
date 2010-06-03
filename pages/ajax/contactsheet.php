@@ -23,7 +23,7 @@ $column=getval("columns","");
 $order_by=getval("orderby","relevance");
 $sort=getval("sort","desc");
 $orientation=getval("orientation","");
-$sheetstyle=getval("sheetstyle","");
+$sheetstyle=getval("sheetstyle","thumbnails");
 if(getval("preview","")!=""){$preview=true;} else {$preview=false;}
 $imgsize="pre";
 $previewpage=getval("previewpage",1);
@@ -140,7 +140,8 @@ for ($n=0;$n<count($result);$n++){
 	$preview_extension=$result[$n]["preview_extension"];
 	$resourcetitle="";
     $i++;
-
+	$currentx=$pdf->GetX();
+	$currenty=$pdf->GetY();
 	if ($ref!==false){
 		# Find image
 		$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
@@ -158,7 +159,7 @@ for ($n=0;$n<count($result);$n++){
 			$thumbsize=getimagesize($imgpath);
 			if ($thumbsize[0]>$thumbsize[1]){
 				if ($sheetstyle=="thumbnails"){
-					$topy=$pdf->Gety();	$topx=$pdf->Getx();	
+					$topy=$pdf->GetY();	$topx=$pdf->GetX();	
 					if ($config_sheetthumb_include_ref){
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$ref,0,2,'L',0,'',1);
 					}
@@ -172,11 +173,13 @@ for ($n=0;$n<count($result);$n++){
 						$value=TidyList($value);
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
 					}
-					$bottomy=$pdf->Gety();	
-					$bottomx=$pdf->Getx();
+					$bottomy=$pdf->GetY();	
+					$bottomx=$pdf->GetX();
 				}
 				else if ($sheetstyle=="list"){
-					$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);	
+					$pdf->SetXY($currentx,$currenty);
+					$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+0.2,$ref);
+					$pdf->SetXY($currentx,$currenty);	
 					for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
 						$value="";
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
@@ -185,12 +188,14 @@ for ($n=0;$n<count($result);$n++){
 						if (file_exists($plugin)) {include $plugin;}
 							
 						$value=TidyList($value);
-						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),$value);
+						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					
+						
+						$pdf->SetXY($currentx,$currenty);
 					}		
 				}
 				$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY()+.025,$imagesize,0,$preview_extension,$baseurl. '/?r=' . $ref);
 				if ($sheetstyle=="thumbnails"){
-					$pdf->Sety($topy);$pdf->Setx($topx);
+					$pdf->SetXY($topx,$topy);
 					$pdf->Cell($cellsize[0],($bottomy-$topy)+$imagesize+.2,'',0,0);
 				}
 				else {	
@@ -200,8 +205,8 @@ for ($n=0;$n<count($result);$n++){
 					
 			else{
 				if ($sheetstyle=="thumbnails"){
-					$topy=$pdf->Gety();	
-					$topx=$pdf->Getx();	
+					$topy=$pdf->GetY();	
+					$topx=$pdf->GetX();	
 					if ($config_sheetthumb_include_ref){
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$ref,0,2,'L',0,'',1);
 					}
@@ -216,11 +221,13 @@ for ($n=0;$n<count($result);$n++){
 
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
 					}
-					$bottomy=$pdf->Gety();
-					$bottomx=$pdf->Getx();
+					$bottomy=$pdf->GetY();
+					$bottomx=$pdf->GetX();
 				}
 				else if ($sheetstyle=="list"){
-					$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+0.2,$ref);		
+					$pdf->SetXY($currentx,$currenty);
+					$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+0.2,$ref);
+					$pdf->SetXY($currentx,$currenty);		
 					for($ff=0; $ff<count($config_sheetlist_fields); $ff++){
 						$value="";
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
@@ -229,13 +236,15 @@ for ($n=0;$n<count($result);$n++){
 						if (file_exists($plugin)) {include $plugin;}
 							
 						$value=TidyList($value);
-
-						$pdf->Text($pdf->Getx()+$imagesize+0.1,$pdf->Gety()+(0.2*($ff+2)),$value);
+						
+						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					
+						
+						$pdf->SetXY($currentx,$currenty);
 					}			
 				}
 				$pdf->Image($imgpath,$pdf->GetX(),$pdf->GetY()+.025,0,$imagesize,$preview_extension,$baseurl. '/?r=' . $ref);
 				if ($sheetstyle=="thumbnails"){
-					$pdf->Sety($topy);
+					$pdf->SetXY($topx,$topy);
 					$pdf->Setx($topx);
 					$pdf->Cell($cellsize[0],($bottomy-$topy)+$imagesize+.2,'',0,0);
 				}

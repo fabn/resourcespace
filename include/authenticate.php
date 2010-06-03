@@ -244,4 +244,4 @@ foreach($active_plugins as $plugin)
 		}
 	}
 
-?>
+

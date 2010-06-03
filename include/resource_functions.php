@@ -1860,4 +1860,3 @@ function check_use_watermark(){
 	if ($access==1 &&    (checkperm('w') || ($k!="" && isset($watermark)) )    ){return true;} else {return false;} 
 }
 		
-?>
