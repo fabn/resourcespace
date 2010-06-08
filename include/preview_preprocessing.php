@@ -549,8 +549,9 @@ if (!isset($newfile))
 		$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
 		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n,false,"",$alternative); 
 		if (file_exists($target)) {unlink($target);}
-
-		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." -dUseCIEColor -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
+		global $dUseCIEColor;
+		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
+		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
  		$output=shell_exec($gscommand2); 
 
     	debug("PDF multi page preview: page $n, executing " . $gscommand2);

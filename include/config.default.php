@@ -205,6 +205,9 @@ $filename_field=51;
 $imagemagick_preserve_profiles=false;
 $imagemagick_quality=90; # JPEG quality (0=worst quality/lowest filesize, 100=best quality/highest filesize)
 
+# To use the Ghostscript command -dUseCIEColor or not (generally true but added in some cases where scripts might want to turn it off).
+$dUseCIEColor=true;
+
 # Some files can take a long time to preview, or take too long (PSD) or involve too many sofware dependencies (RAW). 
 # If this is a problem, these options allow EXIFTOOL to attempt to grab a preview embedded in the file.
 # (Files must be saved with Previews). If a preview image can't be extracted, RS will revert to ImageMagick.
