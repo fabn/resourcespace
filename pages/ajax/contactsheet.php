@@ -280,8 +280,8 @@ for ($n=0;$n<count($result);$n++){
 		if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 		if (file_exists($storagedir."/tmp/contactsheet.jpg")){unlink($storagedir."/tmp/contactsheet.jpg");}
 		if (file_exists($storagedir."/tmp/contactsheet.pdf")){unlink($storagedir."/tmp/contactsheet.pdf");}
+		echo ($pdf->GetPage());
 		$pdf->Output($storagedir.'/tmp/contactsheet.pdf','F'); 
-		echo $page;// send the page count back for paging links, also the column count so that the page can be reset to one. 
 		
 		# Set up  
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
