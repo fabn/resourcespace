@@ -112,7 +112,7 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 
 
 # Include function for reordering / infobox
-if ($allow_reorder || $infobox)
+if ($allow_reorder || $infobox || $use_checkboxes_for_selection)
 	{
 	?>
 	<script src="../lib/js/prototype.js" type="text/javascript"></script>
@@ -361,7 +361,7 @@ elseif ($k!="")
   <h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
-		<select name="collection" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
+		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').toggle();document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
@@ -389,7 +389,7 @@ elseif ($k!="")
 		?>
 		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
-		<input type=text id="entername" name="entername" style="display:none;" class="SearchWidth" onUnfocus="$(this).submit();">
+		<input type=text id="entername" name="entername" style="display:none;" class="SearchWidth" onUnfocus="document.getElementById('colselect').submit();">
 		</div>			
   </form>
 
@@ -653,7 +653,7 @@ if ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" class="SearchWidth" onchange="if($(this).value==-1){$('entername').toggle();$('entername').focus();return false;} document.getElementById('colselect').submit();">
+		<select name="collection" id="collection" class="SearchWidth" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').toggle();document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
@@ -680,7 +680,7 @@ if ($k!="")
 		?>
 		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
-		<input type=text id="entername" name="entername" style="display:inline;display:none;" class="SearchWidth" onUnfocus="$(this).submit();">
+		<input type=text id="entername" name="entername" style="display:inline;display:none;" class="SearchWidth" onUnfocus="document.getElementById('colselect').submit();">
 		</div>				
   </form>
 </div>
