@@ -178,7 +178,7 @@ if (maxheight><?php echo $imageheight?>){
 
 <script type="text/javascript">
 <?php if ($preview_all_hide_collections){ ?>
-	top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?ref=<?php echo $ref ?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>&thumbs=hide";<? } ?>
+	top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?ref=<?php echo $ref ?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>&thumbs=hide";<?php } ?>
 
 	window.onresize=function(event){
 	var maxheight=window.innerHeight-110;
