@@ -101,7 +101,8 @@ return false;">
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
-
+				hook("themebartitlesubstitute"); 
+				
 				# Indent this item?				
 				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
 				$indent=str_replace(" ","&nbsp;",$indent);
