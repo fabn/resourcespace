@@ -402,7 +402,7 @@ elseif ($k!="")
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
 
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
-
+	<?php hook("collectiontool2");?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
     
     <?php } ?>
@@ -607,7 +607,7 @@ if ($k!="")
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
 
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["preview_all"]?></a></li><?php } ?>
-
+    <?php hook('collectiontool2min');?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
     
     <?php } ?>
