@@ -349,13 +349,17 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			
 			# Find keyword(s)
 			$ks=explode("|",strtolower(escape_check($s[1])));
-			if (hook("modifysearchfilter")){$ks=hook("modifysearchfilter");} 
+			$modifiedsearchfilter=hook("modifysearchfilter");
+			if ($modifiedsearchfilter){$ks=$modifiedsearchfilter;} 
 			$kw=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
 			#if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
 					
 			$sql_join.=" join resource_keyword filter" . $n . " on r.ref=filter" . $n . ".resource and filter" . $n . ".resource_type_field in ('" . join("','",$f) . "') and filter" . $n . ".keyword in ('" . join("','",$kw) . "') ";	
 			}
 		}
+		
+	$userownfilter=	hook("userownfilter");
+	if ($userownfilter){$sql_join.=$userownfilter;} 
 	
 	# Handle numeric searches when $config_search_for_number=false, i.e. perform a normal search but include matches for resource ID first
 	global $config_search_for_number;
