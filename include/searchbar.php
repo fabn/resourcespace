@@ -177,8 +177,11 @@ if (!$basic_simple_search)
 				$c=i18n_get_translated($options[$m]);
 				if ($c!="")
 					{
-					?><option <?php if (cleanse_string($c,false)==$value) { ?>selected<?php } ?>><?php echo $c?></option><?php
-					}
+					if (!hook('modifysearchfieldvalues')) 
+						{
+						?><option <?php if (cleanse_string($c,false)==$value) { ?>selected<?php } ?>><?php echo $c?></option><?php
+                        }
+                    }
 				}
 			  ?>
 	  		</select>
