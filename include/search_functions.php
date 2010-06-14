@@ -708,7 +708,6 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			if ($l>25) {$cols=2;}
 
 			$height=ceil(count($options)/$cols);
-			
 			global $checkbox_ordered_vertically;
 			if ($checkbox_ordered_vertically)
 				{
@@ -731,6 +730,10 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 								?>
 								<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
 								<?php
+								}
+							else
+								{
+								?><td></td><td></td><?php
 								}
 							}
 						}
