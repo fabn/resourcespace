@@ -673,6 +673,10 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		
 		# Translate all options
 		$options=trim_array(explode(",",$field["options"]));
+		
+		$adjusted_dropdownoptions=hook("adjustdropdownoptions");
+		if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
+		
 		$option_trans=array();
 		$option_trans_simple=array();
 		for ($m=0;$m<count($options);$m++)
