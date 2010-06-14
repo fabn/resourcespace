@@ -128,7 +128,7 @@ if (!$basic_simple_search)
 	$optionfields=array();
 	for ($n=0;$n<count($fields);$n++)
 		{
-		?>
+		hook("modifysearchfieldtitle");?>
 		<div class="SearchItem"><?php echo i18n_get_translated($fields[$n]["title"])?><br />
 		<?php
 		
