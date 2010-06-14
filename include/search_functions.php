@@ -109,6 +109,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	$modified_select=hook("modifyselect");
 	if ($modified_select){$select.=$modified_select;}	
+	$modified_select2=hook("modifyselect2");
+	if ($modified_select2){$select.=$modified_select2;}	
 
 	# select group and user access rights if available, otherwise select null values so columns can still be used regardless
 	# this makes group and user specific access available in the basic search query, which can then be passed through access functions
