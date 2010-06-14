@@ -100,6 +100,7 @@ if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 	}
 else
 	{
+	if (!hook("replaceheadernav1")) {
 	?>
 	<ul>
 	<?php if (!hook("replaceheaderfullnamelink")){?>
@@ -113,6 +114,7 @@ else
 	<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"><?php echo $lang["contactus"]?></a></li><?php } ?>
 	</ul>
 	<?php
+	} /* end replaceheadernav1 */
 	}
 ?>
 </div>
@@ -127,7 +129,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <?php if ($breadcrumbs) { ?>
 <div class="Breadcrumbs"><?php echo get_breadcrumbs()?></div>
 <?php } ?>
-
+		<?php if (!hook("replaceheadernav2")) { ?>
 		<ul>
 		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
 		hook("topnavlinksafterhome");
@@ -182,9 +184,8 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php"><?php echo $lang["teamcentre"]?></a></li><?php } ?>
 
 <?php hook("toptoolbaradder"); ?>
-
 		</ul>
-
+<?php } /* end replaceheadernav1 */ ?>
 		
 </div>
 

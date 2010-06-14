@@ -663,6 +663,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 		global $usergroup;
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		$sql.="g.parent='" . $usergroup . "'";
+		$sql.=hook("getuseradditionalsql");
 		}
 	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 	}
