@@ -349,6 +349,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			
 			# Find keyword(s)
 			$ks=explode("|",strtolower(escape_check($s[1])));
+			if (hook("modifysearchfilter")){$ks=hook("modifysearchfilter");} 
 			$kw=sql_array("select ref value from keyword where keyword in ('" . join("','",$ks) . "')");
 			#if (count($k)==0) {exit ("At least one of keyword(s) '" . join("', '",$ks) . "' not found in user group search filter.");}
 					
