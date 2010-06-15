@@ -332,6 +332,7 @@ function save_collection($ref)
 	#if ($theme!="") {$allow_changes=0;} # lock allow changes to off if this is a theme
 	
 	# Update collection with submitted form data
+	if (!hook('modifysavecollection')) {
 	sql_query("update collection set
 				name='" . getvalescaped("name","") . "',
 				keywords='" . getvalescaped("keywords","") . "',
@@ -341,6 +342,7 @@ function save_collection($ref)
 				theme3='" . $theme3 . "',
 				allow_changes='" . $allow_changes . "'
 	where ref='$ref'");
+	} # end replace hook - modifysavecollection
 	
     	$index_string=getvalescaped("keywords","");
 	
