@@ -36,7 +36,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		$sql_filter.="resource_type in ($restypes)";
 		}
-	
+
 	# append resource type restrictions based on 'T' permission	
 	# look for all 'T' permissions and append to the SQL filter.
 	global $userpermissions;
@@ -408,7 +408,28 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Duplicate Resources (based on file_checksum)
 	if (substr($search,0,11)=="!duplicates") 
 		{
-		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum in (select file_checksum from (select file_checksum,count(*) dupecount from resource group by file_checksum) r2 where r2.dupecount>1) order by file_checksum",false,$fetchrows);
+			// old code disabled due to performance issues
+			//return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and file_checksum in (select file_checksum from (select file_checksum,count(*) dupecount from resource group by file_checksum) r2 where r2.dupecount>1) order by file_checksum",false,$fetchrows);
+
+			// new code relies on MySQL temporary tables being enabled, as well as checksums
+			// if either is not turned on, just give up.
+
+			global $use_temp_tables;
+			global $file_checksums;
+
+			if ($use_temp_tables && $file_checksums){
+				$dupequery = "select distinct r.hit_count score, $select from resource r $sql_join join dupehashx on r.file_checksum = dupehashx.hash where $sql_filter order by file_checksum";
+				sql_query("CREATE TEMPORARY TABLE dupehashx (`hash` varchar(255) NOT NULL,`hashcount` int(10) default NULL, KEY `Index 1` (`hash`))",false);
+				sql_query("insert into dupehashx select file_checksum, count(file_checksum) from resource where archive = 0 and ref > 0 and file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum) > 1",false);
+				$duperesult = sql_query($dupequery,false,$fetchrows);
+				sql_query("drop table dupehashx",false);
+				return $duperesult;
+			} else {
+				return false;
+			}
+
+
+
 		}
 	
 	# View Collection

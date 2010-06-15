@@ -64,7 +64,16 @@ include "../../include/header.php";
 		if (isset($resource_deletion_state) && $resource_deletion_state==3 && checkperm("e3")) { ?><li><a href="../search.php?search=&archive=3"><?php echo $lang["viewdeletedresources"]?></a></li>
 		<?php } ?>
 
-		<!--<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>-->
+		<?php
+			if ($use_temp_tables && $file_checksums){
+				// MySQL temporary tables and file checksums must both be enabled for duplicate searching to work
+				// also, rememember that it only works for resources that have a checksum
+				// so if you're using offline generation of checksum hashes, make sure they have been updated
+				// before running this search.
+			?>
+			<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>
+		<?php } // end if checksums and temp tables turned on ?>
+
 		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>
 		<?php if (checkperm("k")): // Check if user can manage keywords and fields ?>
 			<li><a href="team_related_keywords.php"><?php echo $lang["managerelatedkeywords"]?></a></li>
