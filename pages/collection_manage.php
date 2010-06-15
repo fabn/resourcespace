@@ -60,6 +60,17 @@ if ($remove!="")
 	{
 	# Remove someone else's collection from your My Collections
 	remove_collection($userref,$remove);
+	
+	# Get count of collections
+	$c=get_user_collections($userref);
+	
+	# If the user has just removed the collection they were using, select a new collection
+	if ($usercollection==$remove && count($c)>0) {
+		# Select the first collection in the dropdown box.
+		$usercollection=$c[0]["ref"];
+		set_user_collection($userref,$usercollection);
+	}
+	
 	refresh_collection_frame();
 	}
 
@@ -81,6 +92,89 @@ if ($reload!="")
 	# Refresh the collection frame (just edited a collection)
 	refresh_collection_frame();
 	}
+
+$purge=getvalescaped("purge","");
+if ($purge!="") {
+	
+	if (!function_exists("do_search")) {
+		include "../include/search_functions.php";
+	}
+	
+	if (!function_exists("delete_resource")) {
+		include "../include/resource_functions.php";
+	}
+	
+	# Delete all resources in collection
+	if (!checkperm("D")) {
+		$resources=do_search("!collection" . $purge);
+		for ($n=0;$n<count($resources);$n++) {
+			if (checkperm("e" . $resources[$n]["archive"])) {
+				delete_resource($resources[$n]["ref"]);	
+				collection_log($purge,"D",$resources[$n]["ref"]);
+			}
+		}
+	}
+		
+	# Delete collection
+	delete_collection($purge);
+	# Get count of collections
+	$c=get_user_collections($userref);
+		
+	# If the user has just deleted the collection they were using, select a new collection
+	if ($usercollection==$purge && count($c)>0) {
+		# Select the first collection in the dropdown box.
+		$usercollection=$c[0]["ref"];
+		set_user_collection($userref,$usercollection);
+	}
+	
+	# User has deleted their last collection? add a new one.
+	if (count($c)==0) {
+		# No collections to select. Create them a new collection.
+		$name=get_mycollection_name($userref);
+		$usercollection=create_collection ($userref,$name);
+		set_user_collection($userref,$usercollection);
+	}
+	
+	refresh_collection_frame($usercollection);
+}
+
+$deleteempty=getvalescaped("deleteempty","");
+if ($deleteempty!="") {
+		
+	$collections=get_user_collections($userref);
+	$deleted_usercoll = false;
+		
+	for ($n = 0; $n < count($collections); $n++) {
+		// if count is zero and not My Collection and collection is owned by user:
+		if ($collections[$n]['count'] == 0 && $collections[$n]['cant_delete'] != 1 && $collections[$n]['user']==$userref) {
+			delete_collection($collections[$n]['ref']);
+			if ($collections[$n]['ref'] == $usercollection) {
+				$deleted_usercoll = true;
+			}
+		}
+				
+	}
+		
+	# Get count of collections
+	$c=get_user_collections($userref);
+		
+	# If the user has just deleted the collection they were using, select a new collection
+	if ($deleted_usercoll && count($c)>0) {
+		# Select the first collection in the dropdown box.
+		$usercollection=$c[0]["ref"];
+		set_user_collection($userref,$usercollection);
+	}
+	
+	# User has deleted their last collection? add a new one.
+	if (count($c)==0) {
+		# No collections to select. Create them a new collection.
+		$name=get_mycollection_name($userref);
+		$usercollection=create_collection ($userref,$name);
+		set_user_collection($userref,$usercollection);
+	}
+	
+	refresh_collection_frame($usercollection);
+}
 
 include "../include/header.php";
 ?>
@@ -192,13 +286,24 @@ else
     &nbsp;<a href="video_playlist.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["videoplaylist"]?></a>
 	<?php } ?>
 	
-	<?php if ($contact_sheet==true) { ?>
+	<?php if ($collection_purge){ 
+		if ($n == 0) {
+			?><input type=hidden name="purge" id="collectionpurge" value=""><?php 
+		}
+
+		if (checkperm("e0") && $collections[$n]["cant_delete"] == 0) {
+			?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["purgecollectionareyousure"]?>')) {document.getElementById('collectionpurge').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?></a><?php 
+		} 
+	}
+	?>
+	
+	<?php if ($contact_sheet==true && $manage_collections_contact_sheet_link) { ?>
     &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 	<?php } ?>
 
-	<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+	<?php if ($manage_collections_share_link && $allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 	
-	<?php if ($username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
+	<?php if ($manage_collections_remove_link && $username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
 
 	<?php if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
 
@@ -214,6 +319,13 @@ else
 	</td>
 	</tr><?php
 	}
+	?>
+	<input type=hidden name="deleteempty" id="collectiondeleteempty" value="">
+	
+	<?php if ($collections_delete_empty){?>
+	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
+	<?php } 
+	
 ?>
 </table>
 </div>

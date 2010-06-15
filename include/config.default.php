@@ -1420,6 +1420,15 @@ $search_titles=false;
 # removing Manage My Collections and adding a direct link to contact sheets
 $collections_compact_style=false;
 
+# if using $collections_compact_style, you may want to remove the contact sheet link from the Manage Collections page
+$manage_collections_contact_sheet_link=true;
+# Other collections management link switches:
+$manage_collections_remove_link=true;
+$manage_collections_share_link=true;
+
+# Tool at the bottom of the Collection Manager list which allows users to delete any empty collections that they own. 
+$collections_delete_empty=false;
+
 # Allow saving searches as 'smart collections' which self-update based on a saved search. 
 $allow_smart_collections=false;
 
@@ -1456,4 +1465,5 @@ $U_perm_strict=false;
 $enable_remote_apis=false;
 $api_scramble_key="abcdef123";
 
-
+# Allow users capable of deleting a full collection (of resources) to do so from the Collection Manage page.
+$collection_purge=false;

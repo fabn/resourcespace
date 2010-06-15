@@ -167,6 +167,10 @@ $lang["emailcollectionmessageexternal"]="has e-mailed you a collection of resour
 $lang["clicklinkviewcollection"]="Click the link below to view the collection.";
 $lang["zippedcollectiontextfile"]="Include text file with resource/collection data.";
 $lang["copycollectionremoveall"]="Remove all resources before copying";
+$lang["purgeanddelete"]="Purge";
+$lang["purgecollectionareyousure"]="Are you sure you want to remove this collection AND DELETE all resources in it?";
+$lang["collectionsdeleteempty"]="Delete Empty Collections";
+$lang["collectionsdeleteemptyareyousure"]="Are you sure you want to delete all of your own empty collections?";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";
