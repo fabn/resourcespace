@@ -594,6 +594,13 @@ $flag_new_themes=true;
 # Create file checksums? (experimental)
 $file_checksums=false;
 
+# Calculate checksums on full file, rather than just first 5 k and size
+$file_checksums_fullfile = true;
+
+# checksums will not be generated in realtime; a background cron job must be used
+# recommended if files are large, since the checksums can take time
+$file_checksums_offline = true;
+
 # Default group when adding new users;
 $default_group=2;
 

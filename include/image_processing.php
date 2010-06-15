@@ -473,7 +473,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	debug("create_previews(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
 
 	# File checksum (experimental) - disabled for now
-	# if (!$previewonly) {generate_file_checksum($ref,$extension);}
+	if (!$previewonly) {generate_file_checksum($ref,$extension);}
 
 	# first reset preview tweaks to 0
 	sql_query("update resource set preview_tweaks = '0|1' where ref = '$ref'");
@@ -1075,24 +1075,54 @@ function extract_indd_thumb ($filename) {
      }
  
  
-function generate_file_checksum($resource,$extension)
+function generate_file_checksum($resource,$extension,$anyway=false)
 	{
 	global $file_checksums;
-	if ($file_checksums)
+        global $file_checksums_fullfile;
+	global $file_checksums_offline;
+	$generated = false;
+
+	if (($file_checksums && !$file_checksums_offline)||$anyway) // do it if file checksums are turned on, or if requestor said do it anyway
 		{
 		# Generates a unique checksum for the given file, based on the first 50K and the file size.
+
 		$path=get_resource_path($resource,true,"",false,$extension);
 		if (file_exists($path))
 			{
-			# Fetch the string used to generate the unique ID
-			$use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
-			
-			# Generate the ID and store.
-			$checksum=md5($use);
+
+                        # Generate the ID
+                        if ($file_checksums_fullfile){
+                            # Fetch the string used to generate the unique ID
+                            $use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
+                            $checksum=md5($use);
+                        } else {
+                            $checksum=md5_file($path);
+                        }
+
+                        # Generate store.
 			sql_query("update resource set file_checksum='" . escape_check($checksum) . "' where ref='$resource'");
+			$generated = true;
 			}
 		}
+
+		if ($generated){
+			return true;
+		} else {
+			# if we didn't generate a new file checksum, clear any existing one so that it will not be incorrect
+			# The lack of checksum will also be used as the trigger for the offline process
+			clear_file_checksum($resource);
+			return false;
+		}
 	}
+
+function clear_file_checksum($resource){
+    if (strlen($resource) > 0 && is_numeric($resource)){
+    	sql_query("update resource set file_checksum='' where ref='$resource'");
+    	return true;
+    } else {
+	return false;
+    }
+}
 
 if (!function_exists("upload_preview")){
 function upload_preview($ref)

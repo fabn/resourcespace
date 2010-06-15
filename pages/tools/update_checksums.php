@@ -8,15 +8,18 @@
 #
 #
 include "../../include/db.php";
-include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
+//include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
 include "../../include/general.php";
 include "../../include/image_processing.php";
 include "../../include/resource_functions.php";
 
-$resources=sql_query("select ref,file_extension from resource where length(file_extension)>0");
+$resources=sql_query("select ref,file_extension from resource where length(file_extension)>0 and (file_checksum is null or file_checksum = '')");
 for ($n=0;$n<count($resources);$n++)
 	{
-	generate_file_checksum($resources[$n]["ref"],$resources[$n]["file_extension"]);
-	echo "Key for " . $resources[$n]["ref"] . " generated<br />";
+	if (generate_file_checksum($resources[$n]["ref"],$resources[$n]["file_extension"],true)){
+		echo "Key for " . $resources[$n]["ref"] . " generated<br />\n";
+	} else {
+		echo "Key for " . $resources[$n]["ref"] . " NOT generated<br />\n";
 	}
+}
 ?>
