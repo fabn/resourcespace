@@ -332,6 +332,15 @@ function save_resource_data_multi($collection)
 				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
 				if (strlen($val)!=10) {$val="";}
 				}
+			elseif ($fields[$n]["type"] == 3)
+				{
+				$val=getvalescaped("field_" . $fields[$n]["ref"],"");				
+				// if it doesn't already start with a comma, add one
+				if (substr($val,0,1) != ',')
+					{
+					$val = ','.$val;
+					}
+				}
 			else
 				{
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
