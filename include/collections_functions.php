@@ -163,12 +163,14 @@ function set_user_collection($user,$collection)
 	$usercollection=$collection;
 	}
 	
+if (!function_exists("create_collection")){	
 function create_collection($userid,$name,$allowchanges=0,$cant_delete=0)
 	{
 	# Creates a new collection and returns the reference
 	sql_query("insert into collection (name,user,created,allow_changes,cant_delete) values ('" . escape_check($name) . "','$userid',now(),'$allowchanges','$cant_delete')");
 	return sql_insert_id();
 	}	
+}
 	
 function delete_collection($ref)
 	{
@@ -457,6 +459,7 @@ function get_smart_theme_headers()
 	return sql_query("select ref,name,smart_theme_name from resource_type_field where length(smart_theme_name)>0 order by smart_theme_name");
 	}
 
+if (!function_exists("get_smart_themes")){	
 function get_smart_themes($field)
 	{
 	# Returns a list of smart themes (which are really field options).
@@ -522,6 +525,7 @@ function get_smart_themes($field)
 		return $return;
 		}
 	}
+}
 
 function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 	{
