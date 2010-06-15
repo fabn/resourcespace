@@ -177,6 +177,7 @@ else {
 
 <div class="RecordResource">
 <?php if (!hook("renderinnerresourceview")) { ?>
+<?php if (!hook("replacerenderinnerresourcepreview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
 
@@ -228,6 +229,7 @@ else
 
 ?>
 <?php } /* End of renderinnerresourcepreview hook */ ?>
+<?php } /* End of replacerenderinnerresourcepreview hook */ ?>
 
 <?php hook("renderbeforerecorddownload");
 
