@@ -98,6 +98,8 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?php echo $lang["ipaddressrestriction"]?><br/><?php echo $lang["wildcardpermittedeg"]?> 194.128.*</label><input name="ip_restrict" type="text" class="stdwidth" value="<?php echo $user["ip_restrict"]?>"><div class="clearerleft"> </div></div>
 
+<?php hook("additionaluserfields");?>
+
 <div class="Question"><label><?php echo $lang["comments"]?></label><textarea name="comments" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($user["comments"])?></textarea><div class="clearerleft"> </div></div>
 
 <?php 
