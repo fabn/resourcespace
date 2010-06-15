@@ -254,21 +254,19 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo $collections[$n]["count"]?></td>
 <?php if (! $hide_access_column){ ?>	<td><?php
 # Work out the correct access mode to display
-if ($collections[$n]["public"]==0)
-	{
-	echo $lang["private"];
+if (!hook('collectionaccessmode')) {
+	if ($collections[$n]["public"]==0){
+		echo $lang["private"];
 	}
-else
-	{
-	if (strlen($collections[$n]["theme"])>0)
-		{
-		echo $lang["theme"];
+	else{
+		if (strlen($collections[$n]["theme"])>0){
+			echo $lang["theme"];
 		}
-	else
-		{
+	else{
 		echo $lang["public"];
 		}
 	}
+}
 ?></td><?php
 }
 ?>
@@ -286,6 +284,16 @@ else
     &nbsp;<a href="video_playlist.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["videoplaylist"]?></a>
 	<?php } ?>
 	
+	<?php if ($contact_sheet==true && $manage_collections_contact_sheet_link) { ?>
+    &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+	<?php } ?>
+
+	<?php if ($manage_collections_share_link && $allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+	
+	<?php if ($manage_collections_remove_link && $username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
+
+	<?php if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
+
 	<?php if ($collection_purge){ 
 		if ($n == 0) {
 			?><input type=hidden name="purge" id="collectionpurge" value=""><?php 
@@ -296,16 +304,7 @@ else
 		} 
 	}
 	?>
-	
-	<?php if ($contact_sheet==true && $manage_collections_contact_sheet_link) { ?>
-    &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
-	<?php } ?>
-
-	<?php if ($manage_collections_share_link && $allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
-	
-	<?php if ($manage_collections_remove_link && $username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
-
-	<?php if ((($username==$collections[$n]["username"]) || checkperm("h")) && ($collections[$n]["cant_delete"]==0)) {?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectiondeleteconfirm"]?>')) {document.getElementById('collectiondelete').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
+	<?php hook('additionalcollectiontool') ?>
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
     <?php     # If this collection is (fully) editable, then display an edit all link
