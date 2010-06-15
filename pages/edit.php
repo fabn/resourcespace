@@ -666,16 +666,16 @@ for ($n=0;$n<count($fields);$n++)
 		case 3: # -------- Drop down list
 		# Translate all options
 		$options=trim_array(explode(",",$fields[$n]["options"]));
+		
+		$adjusted_dropdownoptions=hook("adjustdropdownoptions");
+		if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
+		
 		$option_trans=array();
 		for ($m=0;$m<count($options);$m++)
 			{
 			$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
 			}
 		if ($auto_order_checkbox) {asort($option_trans);}	
-		
-		# This hook will need modifying as the options list no longer works this way. Options are now translated first so the sort order is correct. ~DH
-		#$adjusted_editdropdownoptions=hook("adjusteditdropdownoptions");
-		#if ($adjusted_editdropdownoptions){$options=$adjusted_editdropdownoptions;}
 
 		if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
 
