@@ -149,6 +149,7 @@ if (isset($custom_home_panels))
 	{
 	for ($n=0;$n<count($custom_home_panels);$n++)
 		{
+		if (!hook("panelperm")) { 
 		?>
 		<div class="HomePanel"><div class="HomePanelIN" <?php if ($custom_home_panels[$n]["text"]=="") {?>style="min-height:0;"<?php } ?>>
 		<h2><a href="<?php echo $custom_home_panels[$n]["link"] ?>"><?php echo i18n_get_translated($custom_home_panels[$n]["title"]) ?></a></h2>
@@ -157,6 +158,7 @@ if (isset($custom_home_panels))
 		<div class="PanelShadow"></div>
 		</div>
 		<?php
+		} // end hook 'panelperm'
 		}
 	}
 ?>
