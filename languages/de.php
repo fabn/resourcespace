@@ -56,7 +56,7 @@ $lang["viewreport"]="Bericht ansehen";
 $lang["report"]="Bericht";
 $lang["sendbulkmail"]="Massenmail senden";
 $lang["systemsetup"]="Systemeinstellungen";
-$lang["usersonline"]="Benutzer die zur Zeit online sind (Leerlaufzeit in Minuten)";
+$lang["usersonline"]="Benutzer, die zur Zeit online sind (Leerlaufzeit in Minuten)";
 $lang["diskusage"]="Speicherplatzverbrauch";
 $lang["available"]="gesamt";
 $lang["used"]="verwendet";
@@ -70,7 +70,8 @@ $lang["searchcontenteg"]="(Seite, Name oder Text)";
 $lang["copyresource"]="Ressource kopieren";
 $lang["resourceidnotfound"]="Die Ressourcen-ID konnte nicht gefunden werden";
 $lang["inclusive"]="(inklusive)";
-
+$lang["pluginssetup"]="Plugins verwalten";
+$lang["pluginmanager"]="Plugin Manager";
 
 # Team Centre - Bulk E-mails
 $lang["emailrecipients"]="E-Mail Empfänger";
@@ -173,7 +174,7 @@ $lang["resourcesselected"]="Ressourcen ausgewählt"; # e.g. 17 resources selecte
 $lang["image"]="Bild";
 $lang["previewimage"]="Vorschaubild";
 $lang["file"]="Datei";
-$lang["upload"]="hochladen";
+$lang["upload"]="Upload";
 $lang["uploadafile"]="Datei hochladen";
 $lang["imagecorrection"]="Bild-Korrekture";
 $lang["previewthumbonly"]="(nur Vorschaubild anzeigen)";
@@ -272,14 +273,14 @@ $lang["status-2"]="Benutzer-Beiträge: Freischaltung noch nicht erledigt";
 $lang["status-1"]="Benutzer-Beiträge: Überprüfung noch nicht erledigt";
 $lang["status0"]="Aktiv";
 $lang["status1"]="Archivierung noch nicht erledigt";
-$lang["status2"]="archiviert";
+$lang["status2"]="Archiviert";
 
 # Charts
 $lang["activity"]="Aktivität";
 $lang["summary"]="Zusammenfassung";
 $lang["mostinaday"]="am meisten pro Tag";
 $lang["totalfortheyear"]="Gesamt für das Jahr";
-$lang["dailyaverage"]="Daily average for active days";
+$lang["dailyaverage"]="Tagesdurchschnitt für aktive Tage";
 $lang["nodata"]="Keine Daten für diesen Zeitabschnitt verfügbar.";
 $lang["max"]="max."; # i.e. maximum
 $lang["statisticsfor"]="Statistik für"; # e.g. Statistics for 2007
@@ -452,7 +453,7 @@ $lang["access0"]="Offen";
 $lang["access1"]="eingeschränkt";
 $lang["access2"]="vertraulich";
 $lang["access3"]="benutzerdefiniert";
-$lang["statusandrelationships"]="Status und Beziehungenen";
+$lang["statusandrelationships"]="Status und Beziehungen";
 
 # Lists
 $lang["months"]=array("Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
@@ -820,7 +821,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang['plugins-rejremedy'] = 'Wenn Sie dem Plugin vertrauen, können Sie es manuell installieren, in dem Sie es im plugins Verzeichnis entpacken.';
  $lang['plugins-uploadsuccess'] = 'Plugin erfolgreich hochgeladen.';
  $lang['plugins-headertext'] = 'Plugins erweitern die Funktionalität von ResourceSpace.';
- $lang['plugins-legacyinst'] = 'Activiert durch die Datei config.php';
+ $lang['plugins-legacyinst'] = 'Aktiviert durch die Datei config.php';
 
  #Location Data
  $lang['location-title'] = 'Geodaten';
@@ -875,5 +876,49 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["usageincorrect"]="Sie müssen die geplante Nutzung und das Medium angeben";
 
  $lang["savesearchassmartcollection"]="Als Smarte Kollektion speichern";
+ $lang["smartcollection"]="Smarte Kollektion";
+
+
+ $lang["uploadertryflash"]="Wenn Sie Probleme mit dem Upload haben, versuchen Sie bitte den <strong>Flash uploader</strong>.";
+ $lang["uploadertryjava"]="Wenn Sie Probleme mit dem Upload haben, versuchen Sie bitte den <strong>Java uploader</strong>.";
+ $lang["getjava"]="Um sicherzustellen, dass Sie die neueste Java Version installiert haben, besuchen Sie bitte die Java Website.";
+ $lang["getflash"]="Um sicherzustellen, dass Sie die neueste Version des Flash Players installiert haben, besuchen Sie bitte die Flash Website.";
+
+ $lang["all"]="Alle";
+ $lang["backtoresults"]="Zurück zu den Suchergebnissen";
+
+ $lang["preview_all"]="Alle in Vorschau zeigen";
+
+ $lang["usagehistory"]="Nutzungsprotokoll";
+ $lang["usagebreakdown"]="Nutzungsanalyse";
+ $lang["usagetotal"]="Downloads gesamt";
+ $lang["usagetotalno"]="Gesamtzahl der Downloads";
+ $lang["ok"]="OK";
+ 
+ $lang["random"]="Zufällig";
+ $lang["userratingstatsforresource"]="Bewertungsstatistik für diese Ressource";
+ $lang["average"]="Durchschnitt";
+ $lang["popupblocked"]="Das Popup-Fenster wurde von Ihrem Browser geblockt.";
+ $lang["closethiswindow"]="Fenster schließen";
+
+ $lang["requestaddedtocollection"]="Diese Ressource wurde zu Ihrer aktuellen Kollektion hinzugefügt. Sie können die Ressourcen in Ihrer Kollektion mit dem Link \'Alle anfordern\' anfordern.";
+
+ # E-commerce text
+ $lang["buynow"]="Jetzt kaufen";
+ $lang["yourbasket"]="Ihr Warenkorb";
+ $lang["addtobasket"]="Zum Warenkorb hinzufügen";
+ $lang["yourbasketcontains"]="Ihr Warenkorb enthält ? Ressourcen.";
+ $lang["yourbasketisempty"]="Ihr Warenkorb ist leer.";
+ $lang["buy"]="Kaufen";
+ $lang["buyitemaddedtocollection"]="Diese Ressource wurde zu Ihrem Warenkorb hinzugefügt. Sie können alle Ressourcen im Warenkorb mit dem Link \'Jetzt kaufen\' erwerben.";
+ $lang["buynowintro"]="Bitte wählen Sie die Größen aus, die Sie benötigen.";
+ $lang["nodownloadsavailable"]="Für diese Ressource gibt es leider keine Downloads.";
+ $lang["proceedtocheckout"]="Weiter zur Kasse";
+ $lang["totalprice"]="Gesamtpreis";
+ $lang["waitingforpaymentauthorisation"]="Wir haben leider noch keine Zahlungsbestätigung erhalten. Bitte warten Sie einen Augenblick und klicken Sie dann 'Aktualisieren'.";
+ $lang["reload"]="Aktualisieren";
+ $lang["downloadpurchaseitems"]="Gekaufte Ressourcen herunterladen";
+ $lang["downloadpurchaseitemsnow"]="Bitte benutzen Sie die untenstehenden Links, um Ihre gekauften Ressourcen jetzt herunterzuladen.<br><br>Verlassen Sie diese Seite nicht, bis Sie alle Ressourcen heruntergeladen haben.";
+ $lang["alternatetype"]="Alternative Art";
  
 ?>
