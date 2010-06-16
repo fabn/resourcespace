@@ -7,11 +7,12 @@
 #
 #
 #
-include "../../include/db.php";
+$cwd = dirname(__FILE__);
+include "$cwd/../../include/db.php";
 //include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission denied");}
-include "../../include/general.php";
-include "../../include/image_processing.php";
-include "../../include/resource_functions.php";
+include "$cwd/../../include/general.php";
+include "$cwd/../../include/image_processing.php";
+include "$cwd/../../include/resource_functions.php";
 
 $resources=sql_query("select ref,file_extension from resource where length(file_extension)>0 and (file_checksum is null or file_checksum = '')");
 for ($n=0;$n<count($resources);$n++)
