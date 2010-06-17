@@ -177,7 +177,6 @@ else {
 
 <div class="RecordResource">
 <?php if (!hook("renderinnerresourceview")) { ?>
-<?php if (!hook("replacerenderinnerresourcepreview")) { ?>
 <?php if (!hook("renderinnerresourcepreview")) { ?>
 <?php
 
@@ -229,7 +228,6 @@ else
 
 ?>
 <?php } /* End of renderinnerresourcepreview hook */ ?>
-<?php } /* End of replacerenderinnerresourcepreview hook */ ?>
 
 <?php hook("renderbeforerecorddownload");
 
@@ -695,8 +693,10 @@ for ($n=0;$n<count($fields);$n++)
 			}
 		}
 	}
-?><?php hook("extrafields2");?><div class="clearerleft"></div>
+?>
 <?php echo $extra?>
+<?php hook("extrafields2");?>
+<div class="clearerleft"></div>
 </div>
 </div>
 <!-- end of tabbed panel-->
