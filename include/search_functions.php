@@ -5,7 +5,8 @@
 
 if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
-	{
+	{	 
+	global $order;
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
 	# If there are no matches, instead returns an array of suggested searches.
@@ -19,7 +20,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (!in_array($order_by,$order)&&(substr($order_by,0,5)=="field")){
 		$order[$order_by]="$order_by $sort";
 	}
-		
+	
 	$modified_order_array=(hook("modifyorderarray"));
 	if ($modified_order_array){$order=$modified_order_array;}
 	
