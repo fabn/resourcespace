@@ -21,8 +21,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$order[$order_by]="$order_by $sort";
 	}
 	
-	$modified_order_array=(hook("modifyorderarray"));
-	if ($modified_order_array){$order=$modified_order_array;}
+	hook("modifyorderarray");
 	
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
