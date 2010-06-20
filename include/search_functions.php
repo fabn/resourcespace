@@ -6,7 +6,7 @@
 if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
 	{	 
-	global $order;
+	global $order,$select,$sql_filter,$orig_order;
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
 	# If there are no matches, instead returns an array of suggested searches.
@@ -22,7 +22,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	}
 	
 	hook("modifyorderarray");
-	
+
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search); # remove any trailing or leading spaces
@@ -555,7 +555,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		return sql_query("SELECT distinct r.hit_count score, $select FROM resource r $sql_join  where r.ref=$resources and $sql_filter order by $order_by",false,$fetchrows);
 		}		
 
-
+	$addspecialsearch=hook ("addspecialsearch");
+	if ($addspecialsearch){return $addspecialsearch;}
 
 	# -------------------------------------------------------------------------------------
 	# Standard Searches
