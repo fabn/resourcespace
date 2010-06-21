@@ -558,10 +558,10 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}		
 
 	$addspecialsearch=hook ("addspecialsearch");
-	if ($addspecialsearch){return $addspecialsearch;}
+	if (is_array($addspecialsearch) ){return $addspecialsearch;}
 	
 	$addspecialsearch=hook ("addspecialsearch2");
-	if ($addspecialsearch){return $addspecialsearch;}
+	if (is_array($addspecialsearch) ){return $addspecialsearch;}
 
 	# -------------------------------------------------------------------------------------
 	# Standard Searches
