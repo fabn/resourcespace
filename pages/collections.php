@@ -361,7 +361,7 @@ elseif ($k!="")
   <h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
-		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').toggle();document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
+		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
@@ -653,7 +653,7 @@ if ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" id="collection" class="SearchWidth" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').toggle();document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();">
+		<select name="collection" id="collection" class="SearchWidth" onchange="alert('.');if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
