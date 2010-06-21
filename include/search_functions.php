@@ -551,7 +551,9 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Search for a list of resources
 	if (substr($search,0,5)=="!list") 
 		{
-		$resources=explode(" ",$search);$resources=str_replace("!list","",$resources[0]);
+		$resources=explode(" ",$search);
+		$resources=str_replace("!list","",$resources[0]);
+		$resources=str_replace(",","",$resources);
 		if (strlen(trim($resources))==0){
 			$resources="where r.ref IS NULL";
 			}
