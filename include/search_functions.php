@@ -5,8 +5,10 @@
 
 if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
-	{	 
-	global $order,$select,$sql_filter,$orig_order;
+	{	
+	# globals needed for hooks	 
+	global $order,$select,$sql_join,$sql_filter,$orig_order;
+	
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
 	# If there are no matches, instead returns an array of suggested searches.
