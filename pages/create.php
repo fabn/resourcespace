@@ -9,6 +9,7 @@ include "../include/resource_functions.php";
 $archive=getvalescaped("archive",0);
 if (!checkperm("e" . $archive)) {exit ("Permission denied.");}
 
+
 $resource_type=getvalescaped("resource_type","");
 if ($resource_type!="")
 	{

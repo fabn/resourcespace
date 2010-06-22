@@ -5,7 +5,7 @@ if (!defined("RUNNING_ASYNC")) {define("RUNNING_ASYNC", !isset($ffmpeg_preview))
 $ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
 if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
 $ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
-	
+
 if (RUNNING_ASYNC)
 	{
 	require dirname(__FILE__)."/db.php";

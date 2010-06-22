@@ -229,7 +229,10 @@ function save_resource_data($ref,$multi)
 
 	# save resource defaults
 	set_resource_defaults($ref);	 
-		
+	
+	# Autocomplete any blank fields.
+	autocomplete_blank_fields($ref);
+	
 	# Also save related resources field
 	sql_query("delete from resource_related where resource='$ref' or related='$ref'"); # remove existing related items
 	$related=explode(",",getvalescaped("related",""));
@@ -1868,4 +1871,25 @@ function check_use_watermark(){
 	global $access,$k,$watermark;
 	if ($access==1 &&    (checkperm('w') || ($k!="" && isset($watermark)) )    ){return true;} else {return false;} 
 }
-		
+
+function autocomplete_blank_fields($resource)
+	{
+	# Fill in any blank fields for the resource
+	
+	# Fetch resource type
+	$resource_type=sql_value("select resource_type value from resource where ref='$resource'",0);
+	
+	# Fetch field list
+	$fields=sql_query("select ref,autocomplete_macro from resource_type_field where (resource_type=0 || resource_type='$resource_type') and length(autocomplete_macro)>0");
+	foreach ($fields as $field)
+		{
+		$value=sql_value("select value from resource_data where resource='$resource' and resource_type_field='" . $field["ref"] . "'","");
+		if (strlen(trim($value))==0)
+			{
+			# Empty value. Autocomplete and set.
+			$value=eval($field["autocomplete_macro"]);	
+			update_field($resource,$field["ref"],$value);
+			}
+		}	
+	}
+

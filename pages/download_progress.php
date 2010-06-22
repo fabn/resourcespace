@@ -11,7 +11,7 @@ $ext=getval("ext","");
 $alternative=getval("alternative",-1);
 
 $usage=getval("usage","-1");
-$usagecomment=getval("usagecomment",-1);
+$usagecomment=getval("usagecomment","");
 
 
 if ($download_usage && getval("usage","")=="")

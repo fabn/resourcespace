@@ -47,7 +47,7 @@ for ($n=0;$n<count($log);$n++)
 	<td nowrap><?php echo $log[$n]["fullname"]?></td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]]." ".$log[$n]["notes"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
-	<td><?php echo nl2br(htmlspecialchars($log[$n]["diff"])) . ($log[$n]["notes"]==""?"":$lang["usage"] . ": " . nl2br(htmlspecialchars($log[$n]["notes"])) . "<br>" . $lang["indicateusagemedium"] . ": " . @$download_usage_options[$log[$n]["usageoption"]]) ?></td>
+	<td><?php echo nl2br(htmlspecialchars($log[$n]["diff"])) . (($log[$n]["notes"]=="" || $log[$n]["notes"]=="-1")?"":$lang["usage"] . ": " . nl2br(htmlspecialchars($log[$n]["notes"])) . "<br>" . $lang["indicateusagemedium"] . ": " . @$download_usage_options[$log[$n]["usageoption"]]) ?></td>
 	</tr>
 	<?php
 	}
