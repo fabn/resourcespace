@@ -1193,7 +1193,8 @@ $payment_address="payment.address@goes.here";
 $payment_currency="GBP";
 
 
-
+# Ability to set a field which will store 'Portrait' or 'Landscape' depending on image dimensions
+# $portrait_landscape_field=1;
 
 
 

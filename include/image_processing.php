@@ -601,7 +601,9 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 					{
 					# If the source is smaller than the pre/thm/col, we still need these sizes; just copy the file
 					copy($file,get_resource_path($ref,true,$id,false,$extension,-1,1,false,"",$alternative));
-					if ($id=="thm") {sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");}
+					if ($id=="thm") {
+						sql_query("update resource set thumb_width='$sw',thumb_height='$sh' where ref='$ref'");
+						}
 					}
 				}
 			# flag database so a thumbnail appears on the site
@@ -820,6 +822,15 @@ function extract_mean_colour($image,$ref)
 	$totalblue=floor($totalblue/$total);
 	
 	$colkey=get_colour_key($image);
+
+	global $portrait_landscape_field,$lang;
+	if (isset($portrait_landscape_field))
+		{
+		# Write 'Portrait' or 'Landscape' to the appropriate field.
+		if ($width>=$height) {$portland=$lang["landscape"];} else {$portland=$lang["portrait"];}
+		update_field($ref,$portrait_landscape_field,$portland);
+		}
+
 	
 	sql_query("update resource set image_red='$totalred', image_green='$totalgreen', image_blue='$totalblue',colour_key='$colkey',thumb_width='$width', thumb_height='$height' where ref='$ref'");
 	}
@@ -978,6 +989,15 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 		# Swap thumb heights/widths
 		$ts=sql_query("select thumb_width,thumb_height from resource where ref='$ref'");
 		sql_query("update resource set thumb_width='" . $ts[0]["thumb_height"] . "',thumb_height='" . $ts[0]["thumb_width"] . "' where ref='$ref'");
+		
+		global $portrait_landscape_field,$lang;
+		if (isset($portrait_landscape_field))
+			{
+			# Write 'Portrait' or 'Landscape' to the appropriate field.
+			if ($ts[0]["thumb_height"]>=$ts[0]["thumb_width"]) {$portland=$lang["landscape"];} else {$portland=$lang["portrait"];}
+			update_field($ref,$portrait_landscape_field,$portland);
+			}
+		
 		}
 	# Update the modified date to force the browser to reload the new thumbs.
 	sql_query("update resource set file_modified=now() where ref='$ref'");
