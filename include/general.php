@@ -1299,12 +1299,12 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	else if (file_exists("../../lib/phpmailer_v5_1/class.phpmailer.php")){
 		# team center
 		include_once("../../lib/phpmailer_v5_1/class.phpmailer.php");
-		include_once("../lib/phpmailer/class.html2text.php");
+		include_once("../../lib/phpmailer/class.html2text.php");
 		}	
 	else if (file_exists("../../../lib/phpmailer_v5_1/class.phpmailer.php")){
 		# plugin
 		include_once("../../../lib/phpmailer_v5_1/class.phpmailer.php");
-		include_once("../lib/phpmailer/class.html2text.php");
+		include_once("../../../lib/phpmailer/class.html2text.php");
 		}		
 		
 	} else {
