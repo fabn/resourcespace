@@ -106,6 +106,9 @@ and running.
 include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
 
+# Include ResourceSpace version header in View Source
+$include_rs_header_info=true;
+
 # Available languages
 $defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
 $languages["en"]="British English";

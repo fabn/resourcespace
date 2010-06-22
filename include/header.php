@@ -1,10 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
+<?php if ($include_rs_header_info){?>
 <!--
 ResourceSpace version <?php echo $productversion?>
+
 Copyright Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC, Worldcolor 2006-2010
 http://www.resourcespace.org/
 -->
+<?php } ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
