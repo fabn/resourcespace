@@ -312,3 +312,79 @@ all,footer,"Ce site utilise le système de gestion des actifs numériques <a hre
 change_language,introtext,"Veuillez sélectionner votre langue ci-dessous.",257,fr,,,
 change_password,introtext,"Saisissez un nouveau mot de passe ci-dessous pour changer votre mot de passe.",258,fr,,,
 login,welcomelogin,"Bienvenue dans ResourceSpace, veuillez vous identifier...",259,fr,,,
+all,emailresource,"[img_../gfx/whitegry/titles/title.gif]<br>
+[fromusername] [lang_hasemailedyouaresource]<br><br>
+[message]<br><br>
+<a href=""[url]"">[embed_thumbnail]</a><br><br>
+[lang_clicktoviewresource]<br><a href=""[url]"">[resourcename] - [url]</a><br><br>
+[text_footer]
+",260,en,,,1
+all,emailnewresearchrequestwaiting,"[img_../gfx/whitegry/titles/title.gif]<br>
+[username] ([userfullname] - [useremail])
+[lang_haspostedresearchrequest]<br><br>
+[lang_nameofproject]:[name]<br><br>
+[lang_descriptionofproject]:[description]<br><br>
+[lang_deadline]:[deadline]<br><br>
+[lang_contacttelephone]:[contact]<br><br>
+[lang_finaluse]: [finaluse]<br><br>
+[lang_shaperequired]: [shape]<br><br>
+[lang_noresourcesrequired]: [noresources]<br><br>
+<a href=""[url]"">[url]</a><br><br>
+<a href=""[teamresearchurl]"">[teamresearchurl]</a><br><br>
+[text_footer]
+",261,en,,,1
+all,emailresearchrequestassigned,"[img_../../gfx/whitegry/titles/title.gif]<br>
+[lang_researchrequestassignedmessage]<br><br>
+[text_footer]
+",262,en,,,1
+all,emailresearchrequestcomplete,"[img_../gfx/whitegry/titles/title.gif]<br>
+[lang_researchrequestcompletemessage] <br><br> 
+[lang_clicklinkviewcollection] <br><br> 
+<a href=""[url]"">[url]</a><br><br>
+[text_footer]
+",263,en,,,1
+all,emailnotifyresourcessubmitted,"[img_../gfx/whitegry/titles/title.gif]<br>
+[lang_userresourcessubmitted]
+[list] <br>
+[lang_viewalluserpending] <br><br> 
+<a href=""[url]"">[url]</a><br><br>
+[text_footer]
+",264,en,,,1
+all,emailnotifyresourcesunsubmitted,"[img_../gfx/whitegry/titles/title.gif]<br>
+[lang_userresourcesunsubmitted]
+[list] <br>
+[lang_viewalluserpending] <br><br> 
+<a href=""[url]"">[url]</a><br><br>
+[text_footer]
+",265,en,,,1
+all,emaillogindetails,"[img_../../gfx/whitegry/titles/title.gif]<br>
+[welcome]<br><br> 
+[lang_newlogindetails]<br><br> 
+[lang_username] : [username] <br><br>
+[lang_password] : [password]<br><br>
+<a href=""[url]"">[url]</a><br><br>
+[text_footer]
+",266,en,,,1
+all,emailreminder,"[img_../gfx/whitegry/titles/title.gif]<br>
+[lang_newlogindetails] <br><br>
+[lang_username] : [username] <br> 
+[lang_password]  : [password] <br><br>
+<a href=""[url]"">[url]</a><br><br>
+[text_footer]
+",267,en,,,1
+all,emailresourcerequest,"[img_../gfx/whitegry/titles/title.gif]<br>
+[lang_username] : [username] <br>
+[list] <br>
+[details]<br><br>
+[lang_clicktoviewresource] <br><br>
+<a href=""[url]"">[url]</a>
+",268,en,,,1
+all,emailcollection,"[img_../gfx/whitegry/titles/title.gif]<br>
+[fromusername] [lang_emailcollectionmessage] <br><br> 
+[lang_message] : [message]<br><br> 
+[lang_clicklinkviewcollection] [list]
+",269,en,,,1
+all,emailbulk,"[img_../../gfx/whitegry/titles/title.gif]<br><br>
+[text]<br><br>
+[text_footer]
+",270,en,,,1
