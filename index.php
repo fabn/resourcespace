@@ -81,8 +81,8 @@ if (checkperm("b") || $frameless_collections) {redirect($topurl);}
 <!--
 ResourceSpace version <?php echo $productversion?>
 
-http://www.montala.net/resourcespace.php
-Copyright Oxfam GB 2006-2008
+Copyright Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC, Worldcolor 2006-2010
+http://www.resourcespace.org/
 -->
 <title><?php echo htmlspecialchars($applicationname)?></title>
 
