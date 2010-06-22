@@ -337,7 +337,7 @@ all,emailresearchrequestassigned,"[img_../../gfx/whitegry/titles/title.gif]<br>
 [lang_researchrequestassignedmessage]<br><br>
 [text_footer]
 ",262,en,,,1
-all,emailresearchrequestcomplete,"[img_../gfx/whitegry/titles/title.gif]<br>
+all,emailresearchrequestcomplete,"[img_../../gfx/whitegry/titles/title.gif]<br>
 [lang_researchrequestcompletemessage] <br><br> 
 [lang_clicklinkviewcollection] <br><br> 
 <a href=""[url]"">[url]</a><br><br>
