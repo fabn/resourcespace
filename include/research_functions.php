@@ -34,7 +34,7 @@ function send_research_request()
 	
 	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";
 	$message.=$templatevars['teamresearchurl'];
-	
+	hook("modifyresearchrequestemail");
 	send_mail($email_notify,$applicationname . ": " . $lang["newresearchrequestwaiting"],$message,$useremail,"","emailnewresearchrequestwaiting",$templatevars);
 	}
 }

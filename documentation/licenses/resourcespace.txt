@@ -1,4 +1,4 @@
-Copyright (c) 2006 to 2010, Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC.
+Copyright (c) 2006 to 2010, Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC, Worldcolor.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
