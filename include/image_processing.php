@@ -442,6 +442,10 @@ elseif (isset($exif_comment))
 	
 	# Update the XML metadata dump file.
 	update_xml_metadump($ref);
+	
+	# Auto fill any blank fields.
+	autocomplete_blank_fields($ref);
+	
 	}
 
 function iptc_return_utf8($text)
