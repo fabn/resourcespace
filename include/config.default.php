@@ -556,7 +556,7 @@ $home_helpadvice=true;
 # $custom_home_panels[0]["link"]="search.php?search=example";
 #
 # You can add additional code to a link like this:
-# $custom_home_panels[0]["additional"]='target="_new"';
+# $custom_home_panels[0]["additional"]="target='_blank'";
 #
 # $custom_home_panels[1]["title"]="Custom Panel B";
 # $custom_home_panels[1]["text"]="Custom Panel Text B";
