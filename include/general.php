@@ -1455,10 +1455,25 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->From = $reply_to;
 	$mail->FromName = $from_name;
 	$mail->AddReplyto($reply_to,$from_name);
-	$mail->AddAddress($email);
+	
+	# modification to handle multiple comma delimited emails
+	# such as for a multiple $email_notify
+	$emails = $email;
+	$emails = explode(',', $emails);
+	$emails = array_map('trim', $emails);
+	foreach ($emails as $email){
+		$mail->AddAddress($email);
+	}
+	
 	if ($cc!=""){
+		# modification for multiple is also necessary here, though a broken cc seems to be simply removed by phpmailer rather than breaking it.
+		$ccs = $cc;
+		$ccs = explode(',', $ccs);
+		$ccs = array_map('trim', $ccs);
 		global $userfullname;
-		$mail->AddCC($cc,$userfullname);
+		foreach ($ccs as $cc){
+			$mail->AddCC($cc,$userfullname);
+		}
 	}
 	$mail->CharSet = "utf-8"; 
 	
