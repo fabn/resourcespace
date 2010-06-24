@@ -778,7 +778,7 @@ function delete_resource($ref)
 	sql_query("delete from external_access_keys where resource='$ref'");
 	sql_query("delete from resource_alt_files where resource='$ref'");
 		
-	hook("afterdeleteresource","all",$ref);
+	hook("afterdeleteresource");
 	
 	return true;
 	}

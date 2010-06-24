@@ -204,7 +204,11 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <div class="clearer"></div>
 <?php
 # Include simple search sidebar?
-if (!in_array($pagename,array("preview_all","search_advanced","login","preview","admin_header")) && ($loginterms==false)) 	
+$omit_searchbar_pages=array("preview_all","search_advanced","preview","admin_header");
+$modified_omit_searchbar_pages=hook("modifyomitsearchbarpages");
+if ($modified_omit_searchbar_pages){$omit_searchbar_pages=$modified_omit_searchbar_pages;}
+
+if (!in_array($pagename,$omit_searchbar_pages) && ($loginterms==false)) 	
 	{
 	include "searchbar.php";
 	}
