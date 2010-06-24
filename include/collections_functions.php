@@ -175,6 +175,7 @@ function create_collection($userid,$name,$allowchanges=0,$cant_delete=0)
 function delete_collection($ref)
 	{
 	# Deletes the collection with reference $ref
+	hook("beforedeletecollection");
 	sql_query("delete from collection where ref='$ref'");
 	sql_query("delete from collection_resource where collection='$ref'");
 		#log this
