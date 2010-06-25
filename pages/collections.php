@@ -653,7 +653,7 @@ if ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" id="collection" class="SearchWidth" onchange="alert('.');if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';return false;} document.getElementById('colselect').submit();">
+		<select name="collection" id="collection" class="SearchWidth" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='inline';return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
