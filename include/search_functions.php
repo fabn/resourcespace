@@ -7,7 +7,7 @@ if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
 	{	
 	# globals needed for hooks	 
-	global $sql,$order,$order_by,$select,$sql_join,$sql_filter,$orig_order;
+	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order;
 	
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
@@ -25,6 +25,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	hook("modifyorderarray");
 
+	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search); # remove any trailing or leading spaces
 	
@@ -367,7 +368,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (!$config_search_for_number && is_numeric($search))
 		{
 		# Always show exact resource matches first.
-		$order[$order_by]="(r.ref='" . $search . "') desc," . $order[$order_by];
+		$order_by="(r.ref='" . $search . "') desc," . $order_by;
 		}
 	
 	# --------------------------------------------------------------------------------
@@ -385,25 +386,25 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (substr($search,0,5)=="!last") 
 		{
 		# Replace r2.ref with r.ref for the alternative query used here.
-		$order[$order_by]=str_replace("r.ref","r2.ref",$order[$order_by]);
-		if ($orig_order=="relevance") {$order[$order_by]="r2.ref desc";}
+		$order_by=str_replace("r.ref","r2.ref",$order_by);
+		if ($orig_order=="relevance") {$order_by="r2.ref desc";}
 
 		# Extract the number of records to produce
 		$last=explode(" ",$search);
 		$last=str_replace("!last","",$last[0]);
 		
 		# Fix the order by for this query (special case due to inner query)
-		$order[$order_by]=str_replace("r.rating","rating",$order[$order_by]);
+		$order_by=str_replace("r.rating","rating",$order_by);
 
-		return sql_query("select distinct *,r2.hit_count score from (select $select from resource r $sql_join  where $sql_filter order by ref desc limit $last ) r2 order by $order[$order_by]",false,$fetchrows);
+		return sql_query("select distinct *,r2.hit_count score from (select $select from resource r $sql_join  where $sql_filter order by ref desc limit $last ) r2 order by $order_by",false,$fetchrows);
 		}
 	
 	# View Resources With No Downloads
 	if (substr($search,0,12)=="!nodownloads") 
 		{
-		if ($orig_order=="relevance") {$order[$order_by]="ref desc";}
+		if ($orig_order=="relevance") {$order_by="ref desc";}
 
-		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and ref not in (select distinct object_ref from daily_stat where activity_type='Resource download') order by $order[$order_by]",false,$fetchrows);
+		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where $sql_filter and ref not in (select distinct object_ref from daily_stat where activity_type='Resource download') order by $order_by",false,$fetchrows);
 		}
 	
 	# Duplicate Resources (based on file_checksum)
@@ -436,7 +437,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# View Collection
 	if (substr($search,0,11)=="!collection")
 		{
-		if ($orig_order=="relevance" || !isset($orig_order)) {$order[$order_by]="c.date_added desc,r.ref";}
+		if ($orig_order=="relevance") {$order_by="c.date_added desc,r.ref";}
 		$colcustperm=$sql_join;
 		if (getval("k","")!="") {$sql_filter="ref>0";} # Special case if a key has been provided.
 		
@@ -472,7 +473,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				}
 			}		
 		
-		return sql_query("select distinct c.date_added,c.comment,c.purchase_size,c.purchase_complete,r.hit_count score,length(c.comment) commentset, $select from resource r  join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order[$order_by];",false,$fetchrows);
+		return sql_query("select distinct c.date_added,c.comment,c.purchase_size,c.purchase_complete,r.hit_count score,length(c.comment) commentset, $select from resource r  join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
 		}
 	
 	# View Related
@@ -480,12 +481,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		{
 		# Extract the resource number
 		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-		$order[$order_by]=str_replace("r.","",$order[$order_by]); # UNION below doesn't like table aliases in the order by.
+		$order_by=str_replace("r.","",$order_by); # UNION below doesn't like table aliases in the order by.
 		
 		return sql_query("select distinct r.hit_count score, $select from resource r join resource_related t on (t.related=r.ref and t.resource='" . $resource . "') $sql_join  where 1=1 and $sql_filter group by r.ref 
 		UNION
 		select distinct r.hit_count score, $select from resource r join resource_related t on (t.resource=r.ref and t.related='" . $resource . "') $sql_join  where 1=1 and $sql_filter group by r.ref 
-		order by $order[$order_by];",false,$fetchrows);
+		order by $order_by;",false,$fetchrows);
 		}
 		
 	# Similar to a colour
@@ -515,13 +516,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Searching for pending archive
 	if (substr($search,0,15)=="!archivepending")
 		{
-		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where archive=1 and ref>0 group by r.ref order by $order[$order_by]",false,$fetchrows);
+		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where archive=1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
 	if (substr($search,0,12)=="!userpending")
 		{
 		if ($orig_order=="rating") {$order_by="request_count desc," . $order_by;}
-		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where archive=-1 and ref>0 group by r.ref order by $order[$order_by]",false,$fetchrows);
+		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where archive=-1 and ref>0 group by r.ref order by $order_by",false,$fetchrows);
 		}
 		
 	# View Contributions
@@ -534,11 +535,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 		if ($userref==$cuser) {$sql_filter="archive='$archive'";$sql_join="";} # Disable permissions when viewing your own contributions - only restriction is the archive status
 		$select=str_replace(",rca.access group_access,rca2.access user_access ",",null group_access, null user_access ",$select);
-		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where created_by='" . $cuser . "' and r.ref > 0 and $sql_filter group by r.ref order by $order[$order_by]",false,$fetchrows);
+		return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where created_by='" . $cuser . "' and r.ref > 0 and $sql_filter group by r.ref order by $order_by",false,$fetchrows);
 		}
 	
 	# Search for resources with images
-	if ($search=="!images") return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where has_image=1 group by r.ref order by $order[$order_by]",false,$fetchrows);
+	if ($search=="!images") return sql_query("select distinct r.hit_count score, $select from resource r $sql_join  where has_image=1 group by r.ref order by $order_by",false,$fetchrows);
 
 	# Search for resources not used in Collections
 	if (substr($search,0,7)=="!unused") 
@@ -559,7 +560,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		else {	
 		$resources="where r.ref=".str_replace(":"," OR r.ref=",$resources);
 			}
-		return sql_query("SELECT distinct r.hit_count score, $select FROM resource r $sql_join $resources and $sql_filter order by $order[$order_by]",false,$fetchrows);
+		return sql_query("SELECT distinct r.hit_count score, $select FROM resource r $sql_join $resources and $sql_filter order by $order_by",false,$fetchrows);
 		}		
 
 	# Within this hook implementation, set the value of the global $sql variable:
@@ -595,7 +596,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (($t2!="") && ($sql!="")) {$sql=" and " . $sql;}
 	
 	# Compile final SQL
-	$sql="select distinct $score score, $select from resource r" . $t . "  where $t2 $sql group by r.ref order by $order[$order_by] limit $max_results";
+	$sql="select distinct $score score, $select from resource r" . $t . "  where $t2 $sql group by r.ref order by $order_by limit $max_results";
 
 	# Debug
 	debug("\n" . $sql);
