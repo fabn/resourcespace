@@ -33,7 +33,7 @@ foreach ($fieldrefs as $fieldref){
 	if($field_resource_type==0){
 		$rd=sql_query("select ref,file_extension from resource order by ref");
 	} else {
-		$rd=sql_query("select ref,file_extension from resource and resource_type=$field_resource_type order by ref");
+		$rd=sql_query("select ref,file_extension from resource where resource_type=$field_resource_type order by ref");
 	}	
 
 	for ($n=0;$n<count($rd);$n++)
