@@ -193,7 +193,10 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	{
 	# Include the Flash player if an FLV file exists for this resource.
 	$download_multisize=false;
-	include "flv_play.php";
+      if(!hook("customflvplay"))
+	      {
+          include "flv_play.php";
+	      }
 	
 	# If configured, and if the resource itself is not an FLV file (in which case the FLV can already be downloaded), then allow the FLV file to be downloaded.
 	if ($flv_preview_downloadable && $resource["file_extension"]!="flv") {$flv_download=true;}
