@@ -1191,7 +1191,7 @@ function extract_text($ref,$extension)
 		$command=$antiword_path . "/antiword";
 		if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
 		if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
-		$text=shell_exec($command . " \"" . $path . "\"");
+		$text=shell_exec($command . " -m UTF-8 \"" . $path . "\"");
 		}
 	
        # Microsoft OfficeOpen (docx,xlsx) extraction
