@@ -389,7 +389,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		{
 		?>
 		<tr class="DownloadDBlend">
-		<td><h2><?php echo strtoupper($resource["file_extension"])?> <?php echo $lang["file"]?></h2></td>
+		<td><h2><?php echo (isset($original_download_name))?str_replace("?",strtoupper($resource["file_extension"]),$original_download_name):strtoupper($resource["file_extension"]). " " . $lang["file"]?></h2></td>
 		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton"><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&ext=" . $resource["file_extension"] ))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a></td>
 		</tr>
@@ -433,9 +433,9 @@ if (isset($flv_download) && $flv_download)
 	# Allow the FLV preview to be downloaded. $flv_download is set when showing the FLV preview video above.
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2>FLV <?php echo $lang["file"]?></h2></td>
+	<td><h2><?php echo (isset($ffmpeg_preview_download_name))?$ffmpeg_preview_download_name:strtoupper($ffmpeg_preview_extension) . " " . $lang["file"]?></h2></td>
 	<td><?php echo formatfilesize(filesize($flvfile))?></td>
-	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=flv&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"] ?></a></td>
+	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"] ?></a></td>
 	</tr>
 	<?php
 	}

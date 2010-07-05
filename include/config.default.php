@@ -1183,6 +1183,12 @@ $show_error_messages=true;
 # Ability to set that the 'request' button on resources adds the item to the current collection (which then can be requested) instead of starting a request process for this individual item.
 $request_adds_to_collection=false;
 
+# Option to change the FFMPEG download name from the default ("FLV File") to a custom string.
+# $ffmpeg_preview_download_name = "Flash web preview";
+
+# Option to change the original download file name ("?" is replaced with the file extension)
+# $original_download_name="Original ? file";
+
 #
 # ------------------------ eCommerce Settings -----------------------------
 #

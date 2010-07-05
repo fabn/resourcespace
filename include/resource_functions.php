@@ -1114,7 +1114,7 @@ function import_resource($path,$type,$title,$ingest=false)
 function get_alternative_files($resource)
 	{
 	# Returns a list of alternative files for the given resource
-	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='$resource'");
+	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='$resource' order by file_size desc");
 	}
 	
 function add_alternative_file($resource,$name,$description="",$file_name="",$file_extension="",$file_size=0,$alt_type='')
