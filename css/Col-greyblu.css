@@ -43,7 +43,7 @@ a:active {color:#B5C3D4;}
 #ResearchBoxPanel, .HomePanelIN {background: #5A7599 url(../gfx/greyblu/interface/researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
 .ResourcePanelSmall {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
-.ResourcePanelLarge {background: #567298 url(../gfx/greyblu/interface/resourcepanel.gif) repeat-x;}
+.ResourcePanelLarge {background: #5A7599 url(../gfx/greyblu/interface/SearchBox.gif) repeat-x;}
 .IconVideo {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 140px 5px;}
 .IconVideoLarge {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 340px 5px;}
 
