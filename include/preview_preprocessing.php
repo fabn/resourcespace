@@ -592,6 +592,44 @@ if (!isset($newfile))
 			}
 	}
 	
+	
+# Handle alternative image file generation.
+global $image_alternatives;
+if (isset($image_alternatives))
+	{
+	for($n=0;$n<count($image_alternatives);$n++)
+		{
+		$exts=explode(",",$image_alternatives[$n]["source_extensions"]);
+		if (in_array($extension,$exts))
+			{
+			
+			# Remove any existing alternative file(s) with this name.
+			$existing=sql_query("select ref from resource_alt_files where resource='$ref' and name='" . escape_check($image_alternatives[$n]["name"]) . "'");
+			for ($m=0;$m<count($existing);$m++)
+				{
+				delete_alternative_file($ref,$existing[$m]["ref"]);
+				}
+				
+			# Create the alternative file.
+			$aref=add_alternative_file($ref,$image_alternatives[$n]["name"]);
+			$apath=get_resource_path($ref,true,"",true,$image_alternatives[$n]["target_extension"],-1,1,false,"",$aref);
+			
+			# Process the image
+			$shell_exec_cmd = $command . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
+			$output=shell_exec($shell_exec_cmd);
+	
+			if (file_exists($apath))
+				{
+				# Update the database with the new file details.
+				$file_size=filesize($apath);
+				sql_query("update resource_alt_files set file_name='" . escape_check($image_alternatives[$n]["filename"] . "." . $image_alternatives[$n]["target_extension"]) . "',file_extension='" . escape_check($image_alternatives[$n]["target_extension"]) . "',file_size='" . $file_size . "',creation_date=now() where ref='$aref'");
+				}
+			}
+		}
+	}
+
+	
+	
 
 # If a file has been created, generate previews just as if a JPG was uploaded.
 if (isset($newfile))

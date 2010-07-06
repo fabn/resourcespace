@@ -1191,6 +1191,28 @@ $request_adds_to_collection=false;
 # Option to change the original download file name ("?" is replaced with the file extension)
 # $original_download_name="Original ? file";
 
+
+# Generation of alternative image file sizes/formats using ImageMagick/GraphicMagick
+# It is possible to automatically generate different file sizes and have them attached as alternative files.
+# This works in a similar way to video file alternatives.
+# See below for examples.
+# The blocks must be numbered sequentially (0, 1, 2).
+# 'params' are any extra parameters to pass to ImageMagick for example DPI
+# 'source_extensions' is a comma-separated list of the files that will be processed, e.g. "eps,png,gif" (note no spaces).
+#
+# Example - automatically create a PNG file alternative when an EPS file is uploaded.
+# $image_alternatives[0]["name"]="PNG File";
+# $image_alternatives[0]["source_extensions"]="eps";
+# $image_alternatives[0]["filename"]="alternative_png";
+# $image_alternatives[0]["target_extension"]="png";
+# $image_alternatives[0]["params"]="";
+
+
+
+
+
+
+
 #
 # ------------------------ eCommerce Settings -----------------------------
 #
