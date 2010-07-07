@@ -1205,7 +1205,7 @@ $request_adds_to_collection=false;
 # $image_alternatives[0]["source_extensions"]="eps";
 # $image_alternatives[0]["filename"]="alternative_png";
 # $image_alternatives[0]["target_extension"]="png";
-# $image_alternatives[0]["params"]="";
+# $image_alternatives[0]["params"]="-density 300"; # 300 dpi
 
 
 

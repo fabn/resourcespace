@@ -32,69 +32,82 @@ include "../include/header.php";
 
 <?php
 
+if ($themes_category_split_pages && $theme1!="")
+	{
+	# Display back link
+	?>
+	<p><a href="themes.php?theme1=<?php echo urlencode(($theme2=="")?"":$theme1) ?>&theme2=<?php echo urlencode(($theme3=="")?"":$theme2) ?>">&lt;&lt; <?php echo $lang["back"]?></a></p>
+	<?php
+	}
 
-if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
+
+#if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
+if ($themes_category_split_pages)
 	{
 	# --------------- Split theme categories on to separate pages -------------------
-	?>
-	<div class="RecordBox">
-	<div class="RecordPanel">  
-	
-	<div class="RecordHeader">
-	<h1 style="margin-top:5px;"><?php echo $lang["themes"] ?></h1>
-	</div>
-	
-	<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
-	<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-	<tr class="ListviewBoxedTitleStyle">
-	<td><?php echo $lang["name"]?></td>
-	<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
-	</tr>
-	<?php
-	
-	# Theme headers
-	$headers=get_theme_headers();
-	for ($n=0;$n<count($headers);$n++)
+	#
+	# This option shows the theme categories / subcategories as a simple list, instead of using dropdown boxes.
+	#
+	if ($theme3=="")
 		{
+		# Only if we haven't yet reached the final level. No need to show sub categories on the final level.
 		?>
-		<tr>
-		<td><div class="ListTitle"><a href="themes.php?theme1=<?php echo urlencode($headers[$n])?>"><?php echo str_replace("*","",$headers[$n])?></a></div></td>
-		<td><div class="ListTools"><a href="themes.php?theme1=<?php echo urlencode($headers[$n])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
-		</tr>
-		<?php
-		}
-	# Smart theme headers
-	$headers=get_smart_theme_headers();
-	for ($n=0;$n<count($headers);$n++)
-		{
-		?>
-		<tr>
-		<td><div class="ListTitle"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>"><?php echo $headers[$n]["smart_theme_name"]?></a></div></td>
-		<td><div class="ListTools"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
-		</tr>
-		<?php
-		}
+		<div class="RecordBox">
+		<div class="RecordPanel">  
 		
-	?>
-	</table>
-	</div>
+		<div class="RecordHeader">
+		<h1 style="margin-top:5px;"><?php echo ($theme1=="")?$lang["themes"]:$lang["subcategories"] ?></h1>
+		</div>
+		
+		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
+		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+		<tr class="ListviewBoxedTitleStyle">
+		<td><?php echo $lang["name"]?></td>
+		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+		</tr>
+		<?php
+		
+		# Theme headers
+		$headers=get_theme_headers($theme1,$theme2);
+		for ($n=0;$n<count($headers);$n++)
+			{
+			$link="themes.php?theme1=" . urlencode(($theme1=="")? $headers[$n]:$theme1) . 
+			                "&theme2=" . urlencode(($theme2=="")? (($theme1=="")?"":$headers[$n]):$theme2) . 
+			                "&theme3=" . urlencode(($theme3=="")? (($theme2=="")?"":$headers[$n]):$theme3);
+			?>
+			<tr>
+			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo str_replace("*","",$headers[$n])?></a></div></td>
+			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
+			</tr>
+			<?php
+			}
 	
-	</div>
-	<div class="PanelShadow"> </div>
-	</div>
-	<?php	
+		# Smart theme headers
+		$headers=get_smart_theme_headers($theme1,$theme2,$theme3);
+		for ($n=0;$n<count($headers);$n++)
+			{
+			?>
+			<tr>
+			<td><div class="ListTitle"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>"><?php echo $headers[$n]["smart_theme_name"]?></a></div></td>
+			<td><div class="ListTools"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
+			</tr>
+			<?php
+			}
+			
+		?>
+		</table>
+		</div>
+		
+		</div>
+		<div class="PanelShadow"> </div>
+		</div>
+		<?php	
+		}
 	}
 else
 	{
 	# --------------- All theme categories on one page, OR multi level browsing via dropdowns. -------------------
-	
-	if ($themes_category_split_pages)
-		{
-		# Display back link
-		?>
-		<p><a href="themes.php">&lt;&lt; <?php echo $lang["backtothemes"]?></a></p>
-		<?php
-		}
+
 	
 	if ($theme_category_levels>1)
 		{
@@ -183,79 +196,79 @@ else
 		</div>
 		<?php
 		}
-	
-	# Display Themes
-	
-	if ($theme1!="")
+	}
+
+# Display Themes
+
+if ($theme1!="")
+	{
+	# Display just the selected theme
+	DisplayTheme($theme1,$theme2,$theme3);
+	}
+elseif ($theme_category_levels==1 && $smart_theme=="")
+	{
+	# Display all themes
+	$headers=get_theme_headers();
+	for ($n=0;$n<count($headers);$n++)
 		{
-		# Display just the selected theme
-		DisplayTheme($theme1,$theme2,$theme3);
-		}
-	elseif ($theme_category_levels==1 && $smart_theme=="")
-		{
-		# Display all themes
-		$headers=get_theme_headers();
-		for ($n=0;$n<count($headers);$n++)
+		if ($header=="" || $header==$headers[$n])
 			{
-			if ($header=="" || $header==$headers[$n])
-				{
-				DisplayTheme($headers[$n]);
-				}
+			DisplayTheme($headers[$n]);
 			}
 		}
-	?>
-	
-	<?php
-	# ------- Smart Themes -------------
-	if ($header=="" && $theme1=="")
+	}
+?>
+
+<?php
+# ------- Smart Themes -------------
+if ($header=="" && $theme1=="")
+	{
+	$headers=get_smart_theme_headers();
+	for ($n=0;$n<count($headers);$n++)
 		{
-		$headers=get_smart_theme_headers();
-		for ($n=0;$n<count($headers);$n++)
+		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
+		&& !checkperm("f-" . $headers[$n]["ref"]) && ($smart_theme=="" || $smart_theme==$headers[$n]["ref"]))
 			{
-			if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
-			&& !checkperm("f-" . $headers[$n]["ref"]) && ($smart_theme=="" || $smart_theme==$headers[$n]["ref"]))
-				{
-				?>
-				<div class="RecordBox">
-				<div class="RecordPanel">  
-	
-				<div class="RecordHeader">
-				<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
-				</div>
+			?>
+			<div class="RecordBox">
+			<div class="RecordPanel">  
+
+			<div class="RecordHeader">
+			<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
+			</div>
+		
+			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
+			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+			<tr class="ListviewBoxedTitleStyle">
+			<td><?php echo $lang["name"]?></td>
+			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+			</tr>
 			
-				<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
-				<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-				<tr class="ListviewBoxedTitleStyle">
-				<td><?php echo $lang["name"]?></td>
-				<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
-				</tr>
-				
-				<?php
-				$themes=get_smart_themes($headers[$n]["ref"]);
-				for ($m=0;$m<count($themes);$m++)
-					{
-					$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
-	
-					# Indent this item?				
-					$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
-					$indent=str_replace(" ","&nbsp;",$indent);
-	
-					?>
-					<tr>
-					<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
-					<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
-					</tr>
-					<?php
-					}
+			<?php
+			$themes=get_smart_themes($headers[$n]["ref"]);
+			for ($m=0;$m<count($themes);$m++)
+				{
+				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
+
+				# Indent this item?				
+				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
+				$indent=str_replace(" ","&nbsp;",$indent);
+
 				?>
-				</table>
-				</div>
-				
-				</div>
-				<div class="PanelShadow"> </div>
-				</div>
+				<tr>
+				<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
+				<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
+				</tr>
 				<?php
 				}
+			?>
+			</table>
+			</div>
+			
+			</div>
+			<div class="PanelShadow"> </div>
+			</div>
+			<?php
 			}
 		}
 	}
@@ -376,3 +389,4 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 <?php
 include "../include/footer.php";
 ?>
+
