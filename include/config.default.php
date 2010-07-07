@@ -1497,6 +1497,12 @@ $cc_me=false;
 # How many keywords should be included in the search when a single keyword expands via a wildcard. Setting this too high may cause performance issues.
 $wildcard_expand_limit=50;
 
+# Should *all* manually entered keywords (e.g. basic search and 'all fields' search on advanced search) be treated as wildcards?
+# E.g. "cat" will always match "catch", "catalogue", "catagory" with no need for an asterisk.
+# WARNING - this option could cause search performance issues due to the hugely expanded searches that will be performed.
+$wildcard_always_applied=false;
+
+
 # Use temporary tables to improve performance/reliability of certain query types?
 # This is recommended if your server supports it, as it will provide more reliable search results
 # for wildcard searches

@@ -225,13 +225,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					}
 				else
 					{
-					global $noadd;
+					global $noadd, $wildcard_always_applied;
 					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
 						{
 							
 						# Handle wildcards
-						if (strpos($keyword,"*")!==false)
+						if (strpos($keyword,"*")!==false || $wildcard_always_applied)
 							{
+							if ($wildcard_always_applied && strpos($keyword,"*")===false) {$keyword.="*";} # Suffix asterisk if none supplied and using $wildcard_always_applied mode.
+							
 							# Keyword contains a wildcard. Expand.
 							$c++;
 							
