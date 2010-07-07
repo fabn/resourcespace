@@ -165,7 +165,7 @@ $download=(getval("download","")!="");
 
 if (!$download && !$original)
 	{
-	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','','',mysql_real_escape_string($alt_type));
+	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','',0,mysql_real_escape_string($alt_type));
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
 	}
 else
