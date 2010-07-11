@@ -158,6 +158,19 @@ function get_resource_data($ref,$cache=true)
 	return $resource[0];
 	}
 	
+function get_resource_type_field($field)
+	{
+	# Returns field data from resource_type_field for the given field.
+	$return=sql_query("select * from resource_type_field where ref='$field'");
+	if (count($return)==0)
+		{
+		return false;
+		}
+	else
+		{
+		return $return[0];
+		}
+	}
 function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false)
 	{
 	# Returns field data and field properties (resource_type_field and resource_data tables)

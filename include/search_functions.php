@@ -671,7 +671,7 @@ function get_advanced_search_fields($archive=false)
 	return $return;
 	}
 
-function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$forsearchbar=false)
+function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$forsearchbar=false,$limit_keywords=array())
 	{
 	# Renders the HTML for the provided $field for inclusion in a search form, for example the
 	# advanced search page.
@@ -757,6 +757,18 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			if ($l>15) {$cols=3;}
 			if ($l>25) {$cols=2;}
 
+			# Filter the options array for blank values and ignored keywords.
+			$newoptions=array();
+			foreach ($options as $option)
+				{
+				if ($option!="" && (count($limit_keywords)==0 || in_array($option,$limit_keywords)))
+					{
+					$newoptions[]=$option;
+					}
+				}
+			$options=$newoptions;
+
+			
 			$height=ceil(count($options)/$cols);
 			global $checkbox_ordered_vertically;
 			if ($checkbox_ordered_vertically)
