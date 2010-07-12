@@ -820,7 +820,6 @@ if (count($result)>0)
 				# swap title fields if necessary
 				if (!$use_resource_column_data)
 					{
-					$title=get_data_by_field($rref,$view_title_field);	
 					if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 						{
 						if ($result[$n]['resource_type']==$metadata_template_resource_type)
@@ -834,7 +833,7 @@ if (count($result)>0)
 				<!--Resource Panel-->
 				<div class="CollectionPanelShell">
 				<table border="0" class="CollectionResourceAlign"><tr><td>
-				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
+				<a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
 				</tr></table>
 				<div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($title),15)?></a>&nbsp;</div>
 				</div>
@@ -870,7 +869,6 @@ if (count($result)>0)
 			# swap title fields if necessary
 			if (!$use_resource_column_data)
 				{
-				$title=get_data_by_field($rref,$view_title_field);	
 				if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 					{
 					if ($result[$n]["resource_type"]==$metadata_template_resource_type)
@@ -884,7 +882,7 @@ if (count($result)>0)
         	<!--Resource Panel-->
         	<div class="CollectionPanelShell">
             <table border="0" class="CollectionResourceAlign"><tr><td>
-            <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"))?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
+            <a target="main" href="view.php?ref=<?php echo $rref?>&search=<?php echo urlencode("!related" . $ref)?>"><?php if ($result[$n]["has_image"]==1) { ?><img border=0 src="<?php echo get_resource_path($rref,false,"col",false,$result[$n]["preview_extension"],-1,1,checkperm("w"),$result[$n]["file_modified"])?>" class="CollectImageBorder"/><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true)?>"/><?php } ?></a></td>
             </tr></table>
             <div class="CollectionPanelInfo"><a target="main" href="view.php?ref=<?php echo $rref?>"><?php echo tidy_trim(i18n_get_translated($title),15)?></a>&nbsp;</div>
         </div>
