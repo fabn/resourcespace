@@ -995,6 +995,7 @@ $small_thumbs_display_extended_fields=array();
 
 # List Display Fields: array of fields to display on the list view
 $list_display_fields=array(8,3,12);
+$list_search_results_title_trim=25;
 	
 # SORT Fields: display fields to be added to the sort links in large,small, and xlarge thumbnail views
 $sort_fields=array(12);

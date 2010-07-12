@@ -38,7 +38,7 @@ if ($display=="thumbs"){
 	
 if ($display=="list"){ 
 	$display_fields	= $list_display_fields; 
-	$results_title_trim = $search_results_title_trim;
+	$results_title_trim = $list_search_results_title_trim;
 	}
 	
 if ($display=="smallthumbs"){ 
