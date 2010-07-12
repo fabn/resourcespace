@@ -716,7 +716,7 @@ for ($n=0;$n<count($fields);$n++)
             	{
             	# Attempt to extract hours and minutes from second part.
             	$st=explode(":",$sd[1]);
-            	if (count($st>=2))
+            	if (count($st)>=2)
             		{
             		$dh=$st[0];
             		$di=$st[1];
