@@ -776,27 +776,34 @@ function save_user($ref)
 		
 		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "',approved='" . ((getval("approved","")=="")?"0":"1") . "' where ref='$ref'");
 		}
+		
 	if (getval("emailme","")!="")
 		{
-		global $applicationname,$email_from,$baseurl,$lang,$email_url_save_user;
-		
-		# Fetch any welcome message for this user group
-		$welcome=sql_value("select welcome_message value from usergroup where ref='" . getvalescaped("usergroup","") . "'","");
-		if (trim($welcome)!="") {$welcome.="\n\n";}
-		
-		$templatevars['welcome']=$welcome;
-		$templatevars['username']=getval("username","");
-		$templatevars['password']=getval("password","");
-		if (trim($email_url_save_user)!=""){$templatevars['url']=$email_url_save_user;}
-		else {$templatevars['url']=$baseurl;}
-		
-		$message=$templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password']."\n\n".$templatevars['url'];
-		
-		send_mail(getval("email",""),$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
+		email_user_welcome(getval("email",""),getval("username",""),getval("password",""),getvalescaped("usergroup",""));
 		}
 	return true;
 	}
 }
+
+function email_user_welcome($email,$username,$password,$usergroup)
+	{
+	global $applicationname,$email_from,$baseurl,$lang,$email_url_save_user;
+	
+	# Fetch any welcome message for this user group
+	$welcome=sql_value("select welcome_message value from usergroup where ref='" . $usergroup . "'","");
+	if (trim($welcome)!="") {$welcome.="\n\n";}
+	
+	$templatevars['welcome']=$welcome;
+	$templatevars['username']=$username;
+	$templatevars['password']=$password;
+	if (trim($email_url_save_user)!=""){$templatevars['url']=$email_url_save_user;}
+	else {$templatevars['url']=$baseurl;}
+	
+	$message=$templatevars['welcome'] . $lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password']."\n\n".$templatevars['url'];
+	
+	send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
+	}
+
 
 function email_reminder($email)
 	{
@@ -1991,8 +1998,8 @@ function check_access_key_collection($collection,$key)
 if (!function_exists("auto_create_user_account")){
 function auto_create_user_account()
 	{
-	# Automatically creates a non-approved user account
-	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select;
+	# Automatically creates a user account (which requires approval unless $auto_approve_accounts is true).
+	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts;
 	
 	# Add custom fields
 	$c="";
@@ -2034,14 +2041,26 @@ function auto_create_user_account()
 	if ($check!=""){return $lang["useremailalreadyexists"];}
 
 	# Create the user
-	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . make_password() . "','" . getvalescaped("name","") . "','" . getvalescaped("email","") . "','" . $usergroup . "','" . escape_check($c) . "',0)");
+	$email=getvalescaped("email","") ;
+	$password=make_password();
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . $password . "','" . getvalescaped("name","") . "','" . $email . "','" . $usergroup . "','" . escape_check($c) . "'," . (($auto_approve_accounts)?1:0) . ")");
 	$new=sql_insert_id();
-	
-	# Build a message
-	$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification3"] . "\n$baseurl?u=" . $new;
-	
-	
-	send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message,"",$user_email,"","",getval("name",""));
+
+	if ($auto_approve_accounts)
+		{
+		# Auto approving, send mail direct to user
+		email_user_welcome($email,$username,$password,$usergroup);
+		}
+	else
+		{
+		# Not auto approving.
+		# Build a message to send to an admin notifying of unapproved user
+		$message=$lang["userrequestnotification1"] . "\n\n" . $lang["name"] . ": " . getval("name","") . "\n\n" . $lang["email"] . ": " . getval("email","") . "\n\n" . $lang["comment"] . ": " . getval("userrequestcomment","") . "\n\n" . $lang["ipaddress"] . ": '" . $_SERVER["REMOTE_ADDR"] . "'\n\n" . $c . "\n\n" . $lang["userrequestnotification3"] . "\n$baseurl?u=" . $new;
+		
+		
+		send_mail($email_notify,$applicationname . ": " . $lang["requestuserlogin"] . " - " . getval("name",""),$message,"",$user_email,"","",getval("name",""));
+		}
+		
 	return true;
 	}
 } //end function replace hook	

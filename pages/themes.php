@@ -355,7 +355,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		
 			<?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $themes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 		
-			<?php hook("addcustomtool"); ?>
+			<?php hook("addcustomtool","",array($themes[$m]["ref"])); ?>
 			
 			</td>
 			</tr>

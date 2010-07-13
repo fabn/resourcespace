@@ -913,6 +913,10 @@ $global_permissions="";
 $user_account_auto_creation=false;
 $user_account_auto_creation_usergroup=2; # which user group for auto-created accounts? (see also $registration_group_select - allows users to select the group themselves).
 
+# Automatically approve account requests (created via $user_account_auto_creation above)?
+$auto_approve_accounts=false;
+
+
 # Display a larger preview image on the edit page?
 $edit_large_preview=false;
 
@@ -1207,6 +1211,7 @@ $request_adds_to_collection=false;
 # $image_alternatives[0]["filename"]="alternative_png";
 # $image_alternatives[0]["target_extension"]="png";
 # $image_alternatives[0]["params"]="-density 300"; # 300 dpi
+
 
 
 
