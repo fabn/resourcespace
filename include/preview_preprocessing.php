@@ -6,6 +6,7 @@
 #
 
 global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
+global $dUseCIEColor;
 
 if (!$previewonly)
 	{
@@ -102,7 +103,44 @@ if ($extension=="indd" && !isset($newfile))
                }		
 		hook("indesign");	
        }
-	
+
+
+/* ----------------------------------------
+	Try InDesign - for CS5 (page previews)
+   ----------------------------------------
+*/
+global $exiftool_path;
+if (isset($exiftool_path))
+	{
+	if ($extension=="indd" && !isset($newfile))
+		{
+		$indd_thumbs = extract_indd_pages ($file);
+
+		if (is_array($indd_thumbs))
+			{
+			$n=0;	
+			foreach ($indd_thumbs as $indd_thumb){
+				base64_to_jpeg( $indd_thumb, $target."_".$n);
+				$n++;
+				}
+			$pagescommand="";
+			for ($x=0;$x<$n;$x++){
+				$pagescommand.=" ".$target."_".$x;
+				}
+			// process jpgs as a pdf so the existing pdf paging code can be used.	
+			$file=get_resource_path($ref,true,"",false,"pdf");		
+			$jpg2pdfcommand=$command . " ".$pagescommand." " . $file; 
+			$output=shell_exec($jpg2pdfcommand); 
+			for ($x=0;$x<$n;$x++){
+				unlink($target."_".$x);
+				}
+			$extension="pdf";
+			$dUseCIEColor=false;
+			$n=0;	
+			$x=0;
+		}
+	}	
+}
 	
 /* ----------------------------------------
 	Try PhotoshopThumbnail
@@ -549,7 +587,7 @@ if (!isset($newfile))
 		$size="";if ($n>1) {$size="scr";} # Use screen size for other pages.
 		$target=get_resource_path($ref,true,$size,false,"jpg",-1,$n,false,"",$alternative); 
 		if (file_exists($target)) {unlink($target);}
-		global $dUseCIEColor;
+
 		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
 		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
  		$output=shell_exec($gscommand2); 

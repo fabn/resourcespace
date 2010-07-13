@@ -1083,7 +1083,7 @@ function base64_to_jpeg( $imageData, $outputfile ) {
 }
 
 function extract_indd_thumb ($filename) {
-   
+	// not used
     $source = file_get_contents($filename);
 
     $xmpdata_start = strrpos($source,"<xap:Thumbnails");
@@ -1097,6 +1097,26 @@ function extract_indd_thumb ($filename) {
     	$indd_thumb = str_replace("#xA;","",$indd_thumb);
     	return $indd_thumb;} else {return "no";}
      }
+     
+function extract_indd_pages ($filename) {
+	global $exiftool_path;
+	shell_exec($exiftool_path.'/exiftool -b '.$filename.' > '.$filename.'metadata');
+    $source = file_get_contents($filename.'metadata');
+    $xmpdata = $source;
+    $regexp     = "/<xmpGImg:image>.+<\/xmpGImg:image>/";
+    preg_match_all ($regexp, $xmpdata, $r);
+    $indd_thumbs=array();
+    if (isset($r[0]) && count($r[0])>0){
+		$n=0;
+		foreach ($r[0] as $image){
+    	$indd_thumbs[$n] = strip_tags($image);
+    	$indd_thumbs[$n] = str_replace("#xA;","",$indd_thumbs[$n]);
+		$n++;
+		}
+		$n=0;
+		unlink($filename.'metadata');
+    	return ($indd_thumbs);} 
+     }     
  
  
 function generate_file_checksum($resource,$extension,$anyway=false)
