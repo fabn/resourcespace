@@ -1130,6 +1130,36 @@ function delete_alternative_file($resource,$ref)
 	$path=get_resource_path($resource, true, "", true, $info["file_extension"], -1, 1, false, "", $ref);
 	if (file_exists($path)) {unlink($path);}
 	
+        // run through all possible extensions/sizes
+	$extensions = array();
+	$extensions[]=$info['file_extension']?$info['file_extension']:"jpg";
+	$extensions[]=isset($info['preview_extension'])?$info['preview_extension']:"jpg";
+	$extensions[]=$GLOBALS['ffmpeg_preview_extension'];
+        $extensions[]='jpg'; // always look for jpegs, just in case
+	$extensions=array_unique($extensions);
+        $sizes = sql_array('select id value from preview_size');
+	
+        // in some cases, a jpeg original is generated for non-jpeg files like PDFs. Delete if it exists.
+        $path=get_resource_path($resource, true,'', true, 'jpg', -1, 1, false, "", $ref);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        foreach ($extensions as $extension){
+            foreach ($sizes as $size){
+                $page = 1;
+                $lastpage = 0;
+                while ($page <> $lastpage){
+                    $lastpage = $page;
+                    $path=get_resource_path($resource, true, $size, true, $extension, -1, $page, false, "", $ref);
+                    if (file_exists($path)) {
+                        unlink($path);
+                        $page++;
+                    }
+                }
+            }
+        }
+        
 	# Delete the database row
 	sql_query("delete from resource_alt_files where resource='$resource' and ref='$ref'");
 	}
