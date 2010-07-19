@@ -1929,3 +1929,156 @@ function autocomplete_blank_fields($resource)
 		}	
 	}
 
+
+function get_resource_files($ref,$includeorphan=false){
+    // returns array of all files associated with a resource
+    // if $includeorphan set to true, will also return all files in the
+    // resource dir even if the system doesn't understand why they're there.
+
+    $filearray = array();
+    $file_checklist = array();
+
+    global $config_windows;
+    if ($config_windows){ $sep = "\\"; } else { $sep = "/"; }
+
+
+    $sizearray = sql_array("select id value from preview_size",false);
+    $original_ext = sql_value("select file_extension value from resource where ref = '".escape_check($ref)."'",'');
+
+    $rootpath=dirname(get_resource_path($ref,true,"pre",true));
+
+    // get listing of all files in resource dir to compare mark off as we find them
+    if (is_dir($rootpath)) {
+    if ($dh = opendir($rootpath)) {
+            while (($file = readdir($dh)) !== false) {
+                if (!($file == '.' || $file == '..')){
+                    $file_checklist[$rootpath.$sep.$file] = 1;
+                }
+            }
+            closedir($dh);
+        }
+    }
+
+    // first get the resource itself
+    $original = get_resource_path($ref,true,'',false,$original_ext);
+    if (file_exists($original)){
+	    array_push($filearray,$original);
+	    unset($file_checklist[$original]);
+    }
+
+    // in some cases, the system also generates a jpeg equivalent of the original, so check for that
+    $original = get_resource_path($ref,true,'',false,'jpg');
+    if (file_exists($original)){
+	    array_push($filearray,$original);
+    	unset($file_checklist[$original]);
+    }
+
+    // in some cases, the system also generates a jpeg equivalent of the original, so check for that
+    $original = get_resource_path($ref,true,'',false,'mp3');
+    if (file_exists($original)){
+    	array_push($filearray,$original);
+    	unset($file_checklist[$original]);
+    }
+
+
+    # check for pages
+    $page = 1;
+    $misscount = 0;
+    // just to be safe, we'll try at least 4 pages ahead to make sure none got skipped
+    while($misscount < 4){
+        $thepath = get_resource_path($ref,true,"scr",false,'jpg',-1,$page,"","","");
+        if (file_exists($thepath)){
+            array_push($filearray,$thepath);
+            unset($file_checklist[$thepath]);
+            $page++;
+        } else {
+            $misscount++;
+            $page++;
+        }
+    }        
+
+    // now look for other sizes
+    foreach($sizearray as $size){
+        $thepath = get_resource_path($ref,true,$size,false,'jpg');
+        if (file_exists($thepath)){
+            array_push($filearray,$thepath);
+            unset($file_checklist[$thepath]);
+        }
+    }
+
+
+    // get alternative files
+    $altfiles = get_alternative_files($ref);
+    foreach($altfiles as $altfile){
+        // first get original
+        $alt_ext = sql_value("select file_extension value from resource_alt_files where ref = '" . $altfile['ref'] . "'",'');
+        $thepath = get_resource_path($ref,true,'',false,$alt_ext,-1,1,false,"",$altfile["ref"]);
+        if (file_exists($thepath)){
+            array_push($filearray,$thepath);
+            unset($file_checklist[$thepath]);
+        }
+        
+
+        // now check for previews
+        foreach($sizearray as $size){
+            $thepath = get_resource_path($ref,true,$size,false,"jpg",-1,1,false,"",$altfile["ref"]);
+            if (file_exists($thepath)){
+                array_push($filearray,$thepath);
+                unset($file_checklist[$thepath]);
+            }
+        }
+
+        # check for pages
+        $page = 1;
+        while($page <> 0){
+            $thepath = get_resource_path($ref,true,"scr",false,'jpg',-1,$page,"","",$altfile['ref']);
+            if (file_exists($thepath)){
+                array_push($filearray,$thepath);
+                unset($file_checklist[$thepath]);
+                $page++;
+            } else {
+                $page = 0;
+            }
+        }
+        // in some cases, the system also generates a jpeg equivalent of the original, so check for that
+        $original = get_resource_path($ref,true,'',false,'jpg',-1,1,'','',$altfile['ref']);
+	if (file_exists($original)){
+	        array_push($filearray,$original);
+        	unset($file_checklist[$original]);
+    	}
+
+        // in some cases, the system also generates a mp3 equivalent of the original, so check for that
+        $original = get_resource_path($ref,true,'',false,'mp3',-1,1,'','',$altfile['ref']);
+	if (file_exists($original)){
+	        array_push($filearray,$original);
+       		unset($file_checklist[$original]);
+	}
+    }
+
+
+    // check for metadump
+    $thefile="$rootpath/metadump.xml";
+    if (file_exists($thefile)){
+        array_push($filearray,$thefile);
+        unset($file_checklist[$thefile]);
+    }
+
+    // check for ffmpeg previews
+    global $ffmpeg_preview_extension;
+    $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
+    if (file_exists($flvfile)){
+        array_push($filearray,$flvfile);
+        unset($file_checklist[$flvfile]);
+    }
+
+
+    if (count($file_checklist)>0){
+	foreach (array_keys($file_checklist) as $thefile){
+		error_log("ResourceSpace: Orphaned file, resource $ref: $thefile");
+	        if ($includeorphan) {
+			array_push($filearray,$thefile);
+		}
+       }
+    }
+    return array_unique($filearray);
+}
