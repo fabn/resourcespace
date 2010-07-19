@@ -499,6 +499,8 @@ for ($n=0;$n<count($fields);$n++)
 			(checkperm("F*") && !checkperm("F-" . $fields[$n]["ref"]))
 		||			
 			checkperm("F" . $fields[$n]["ref"])
+		||
+			($ref<0 && $fields[$n]["hide_when_uploading"])
 		))
 		
 		{
