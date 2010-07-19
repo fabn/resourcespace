@@ -463,7 +463,7 @@ function get_smart_theme_headers()
 	}
 
 if (!function_exists("get_smart_themes")){	
-function get_smart_themes($field)
+function get_smart_themes($field,$node=0)
 	{
 	# Returns a list of smart themes (which are really field options).
 	# The results are filtered so that only field options that are in use are returned.
@@ -482,7 +482,19 @@ function get_smart_themes($field)
 		$tree=explode("\n",$fielddata["options"]);
 
 		$return=array();	
-		$return=populate_smart_theme_tree_node($tree,0,$return,0);
+		
+		global $themes_category_split_pages;
+		if ($themes_category_split_pages)
+			{
+			# Return one level only.
+			$levels=1;
+			}
+		else
+			{
+			# Return an infinite number of levels
+			$levels=-1;
+			}
+		$return=populate_smart_theme_tree_node($tree,$node,$return,0,$levels);
 		
 		# For each option, if it is in use, add it to the return list.
 		$out=array();
@@ -497,6 +509,8 @@ function get_smart_themes($field)
 				$c=count($out);
 				$out[$c]["indent"]=$return[$n]["indent"];
 				$out[$c]["name"]=trim(i18n_get_translated($return[$n]["name"]));
+				$out[$c]["node"]=$return[$n]["node"];
+				$out[$c]["children"]=$return[$n]["children"];
 				}
 			}
 		return $out;
@@ -530,10 +544,10 @@ function get_smart_themes($field)
 	}
 }
 
-function populate_smart_theme_tree_node($tree,$node,$return,$indent)
+function populate_smart_theme_tree_node($tree,$node,$return,$indent,$levels)
 	{
 	# When displaying category trees as smart themes, this function is used to recursively
-	#�parse each node adding items sequentially with an appropriate indent level.
+	# parse each node adding items sequentially with an appropriate indent level.
 	for ($n=0;$n<count($tree);$n++)
 		{
 		$s=explode(",",$tree[$n]);
@@ -543,7 +557,18 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent)
 			$c=count($return);
 			$return[$c]["indent"]=$indent;
 			$return[$c]["name"]=$s[2];
-			$return=populate_smart_theme_tree_node($tree,$n+1,$return,$indent+1);
+			$return[$c]["node"]=$n+1;
+			
+			# Add child count
+			$children=populate_smart_theme_tree_node($tree,$n+1,array(),0,1);
+			$return[$c]["children"]=count($children);
+			
+			if ($levels>0) {$levels--;}
+			if ($levels>0 || $levels==-1)
+				{
+				# Cascade
+				$return=populate_smart_theme_tree_node($tree,$n+1,$return,$indent+1,$levels);
+				}
 			}
 		}
 	return $return;

@@ -42,7 +42,10 @@ if ($themes_category_split_pages && $theme1!="")
 
 
 #if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
-if ($themes_category_split_pages)
+if ($smart_theme!="")
+	{
+	}
+elseif ($themes_category_split_pages)
 	{
 	# --------------- Split theme categories on to separate pages -------------------
 	#
@@ -83,6 +86,7 @@ if ($themes_category_split_pages)
 			}
 	
 		# Smart theme headers
+		/*
 		$headers=get_smart_theme_headers($theme1,$theme2,$theme3);
 		for ($n=0;$n<count($headers);$n++)
 			{
@@ -93,7 +97,7 @@ if ($themes_category_split_pages)
 			</tr>
 			<?php
 			}
-			
+		*/	
 		?>
 		</table>
 		</div>
@@ -205,7 +209,7 @@ if ($theme1!="")
 	# Display just the selected theme
 	DisplayTheme($theme1,$theme2,$theme3);
 	}
-elseif ($theme_category_levels==1 && $smart_theme=="")
+elseif ($theme_category_levels==1 && $smart_theme=="" && !$themes_category_split_pages)
 	{
 	# Display all themes
 	$headers=get_theme_headers();
@@ -245,7 +249,7 @@ if ($header=="" && $theme1=="")
 			</tr>
 			
 			<?php
-			$themes=get_smart_themes($headers[$n]["ref"]);
+			$themes=get_smart_themes($headers[$n]["ref"],getval("node",0));
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
@@ -254,10 +258,34 @@ if ($header=="" && $theme1=="")
 				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
 				$indent=str_replace(" ","&nbsp;",$indent);
 
+				$node=$themes[$m]["node"];
 				?>
 				<tr>
-				<td><div class="ListTitle"><?php echo $indent?><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true"><?php echo i18n_get_translated($themes[$m]["name"])?></a></div></td>
-				<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $lang["action-view"]?></a></div></td>
+				<td><div class="ListTitle"><?php echo $indent?>
+				<?php if ($themes[$m]["children"]>0)
+					{
+					# Has children. Default action is to navigate to a deeper level.
+					?>
+					<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>">
+					<?php
+					}
+				else
+					{
+					# Has no children. Default action is to show matching resources.
+					?>
+					<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">
+					<?php
+					}
+				?>
+				
+				<?php echo i18n_get_translated($themes[$m]["name"])?></a>
+				</div></td>
+				<td><div class="ListTools">
+				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["action-view"]?></a>
+				<?php if ($themes_category_split_pages) { ?>
+				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
+				<?php } ?>
+				</div></td>
 				</tr>
 				<?php
 				}
