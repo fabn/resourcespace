@@ -85,7 +85,8 @@ if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result=
 
 <?php
 # Check filestore folder browseability
-$output=@file_get_contents($baseurl . "/filestore");
+# $output=@file_get_contents($baseurl . "/filestore");
+$output="";
 if (strpos($output,"Index of")===false)
 	{
 	$result="OK";
@@ -120,13 +121,29 @@ function CheckImagemagick()
 	
 	return true;
 	}
-	
+
+$ffmpeg_version="";
 function CheckFfmpeg()
 {
  	global $ffmpeg_path;
-	if (file_exists($ffmpeg_path . "/ffmpeg")) return true;
-	if (file_exists($ffmpeg_path . "/ffmpeg.exe")) return true;	
-	return false;
+ 	
+ 	# Check for path
+ 	$path=$ffmpeg_path . "/ffmpeg";
+	if (!file_exists($path)) {$path=$ffmpeg_path . "/ffmpeg.exe";}
+	if (!file_exists($path)) {return false;}
+	
+	# Check execution and return version
+	$version=@shell_exec(escapeshellcmd($path));
+	if (strpos(strtolower($version),"ffmpeg")===false)
+		{
+		return "Execution failed; unexpected output when executing ffmpeg command. Output was '$version'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki.";
+		}	
+		
+	# Set version
+	$s=explode("\n",$version);
+	global $ffmpeg_version;$ffmpeg_version=$s[0];
+	
+	return true;
 }
 function CheckGhostscript()
 {
@@ -181,7 +198,9 @@ else
 	{
 	$result="(not installed)";
 	}
-?><tr><td colspan="2">FFmpeg</td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td <?php if ($ffmpeg_version=="") { ?>colspan="2"<?php } ?>>FFmpeg</td>
+<?php if ($ffmpeg_version!="") { ?><td><?php echo $ffmpeg_version ?></td><?php } ?>
+<td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check Ghostscript path
