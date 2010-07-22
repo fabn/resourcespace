@@ -246,14 +246,21 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
 								#echo $sql_join;
 							} else {
-								//begin code for temporary table wildcard expansion
-								sql_query("create temporary table wcql$c (resource bigint unsigned)");
-								sql_query("insert into wcql$c select distinct r.ref from resource r
-									left join resource_keyword rk on r.ref = rk.resource	
-									left join keyword k  on rk.keyword = k.ref
-									where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
+								 //begin code for temporary table wildcard expansion
+								
+								// use a global counter to avoide temporary table naming collisions
+                                                                global $temptable_counter;
+                                                                if (!isset($temptable_counter)){$temptable_counter = 0;}
+                                                                $temptable_counter++;
+                                                                $thetemptable = 'wcql' . $c . '_' . $temptable_counter;
 
-									$sql_join .= " join wcql$c on wcql$c.resource = r.ref ";
+                                                                sql_query("create temporary table $thetemptable (resource bigint unsigned)");
+                                                                sql_query("insert into $thetemptable select distinct r.ref from resource r
+                                                                        left join resource_keyword rk on r.ref = rk.resource
+                                                                        left join keyword k  on rk.keyword = k.ref
+                                                                        where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
+
+                                                                        $sql_join .= " join $thetemptable on $thetemptable.resource = r.ref ";
 							}
 
 
@@ -422,11 +429,18 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			global $file_checksums;
 
 			if ($use_temp_tables && $file_checksums){
-				$dupequery = "select distinct r.hit_count score, $select from resource r $sql_join join dupehashx on r.file_checksum = dupehashx.hash where $sql_filter order by file_checksum";
-				sql_query("CREATE TEMPORARY TABLE dupehashx (`hash` varchar(255) NOT NULL,`hashcount` int(10) default NULL, KEY `Index 1` (`hash`))",false);
-				sql_query("insert into dupehashx select file_checksum, count(file_checksum) from resource where archive = 0 and ref > 0 and file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum) > 1",false);
+
+
+				  global $temptable_counter;
+                                  if (!isset($temptable_counter)){$temptable_counter = 0;}
+                                  $temptable_counter++;
+                                  $thetemptable = 'dupehashx' . '_' . $temptable_counter;
+
+				$dupequery = "select distinct r.hit_count score, $select from resource r $sql_join join $thetemptable on r.file_checksum = $thetemptable.hash where $sql_filter order by file_checksum";
+				sql_query("CREATE TEMPORARY TABLE $thetemptable (`hash` varchar(255) NOT NULL,`hashcount` int(10) default NULL, KEY `Index 1` (`hash`))",false);
+				sql_query("insert into $thetemptable select file_checksum, count(file_checksum) from resource where archive = 0 and ref > 0 and file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum) > 1",false);
 				$duperesult = sql_query($dupequery,false,$fetchrows);
-				sql_query("drop table dupehashx",false);
+				sql_query("drop table $thetemptable",false);
 				return $duperesult;
 			} else {
 				return false;
