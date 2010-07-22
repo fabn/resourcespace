@@ -345,6 +345,28 @@ else
 	}
 ?>
 
+<div class="Question">
+<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
+<div class="clearerleft"> </div>
+</div>
+
+<?php } ?>
+
+<?php if (!$multiple){?>
+<div class="Question">
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
+<select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
+<?php
+$types=get_resource_types();
+for ($n=0;$n<count($types);$n++)
+	{
+	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
+	}
+?></select>
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
+
 <?php
 if (getval("swf","")!="" || getval("java","")!="") { 
 
@@ -391,28 +413,6 @@ if ($enable_add_collection_on_upload)
 ?>
 
 
-<?php } ?>
-
-<div class="Question">
-<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
-<div class="clearerleft"> </div>
-</div>
-
-<?php } ?>
-
-<?php if (!$multiple){?>
-<div class="Question">
-<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
-<select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
-<?php
-$types=get_resource_types();
-for ($n=0;$n<count($types);$n++)
-	{
-	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
-	}
-?></select>
-<div class="clearerleft"> </div>
-</div>
 <?php } ?>
 
 
