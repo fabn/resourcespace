@@ -11,7 +11,7 @@ $error=false;
 
 if (getval("save","")!="")
 	{
-	if ($k!="" || $userrequestmode==0)
+	if ($k!="" || $username==$anonymous_login || $userrequestmode==0)
 		{
 		# Request mode 0 : Simply e-mail the request.
 		$result=email_resource_request($ref,getvalescaped("request",""));
@@ -48,7 +48,7 @@ include "../include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 	
-	<?php if ($k!="") { ?>
+	<?php if ($k!="" || $username==$anonymous_login) { ?>
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
