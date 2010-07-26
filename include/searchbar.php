@@ -105,7 +105,7 @@ if (!$basic_simple_search)
 	$clear_function="";
 	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
 		{
-		?><div class="tick"><input class="tickbox" id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> 	<?php if ($searchbar_selectall){?>onClick="resetTickAll();"<?php }?>/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
+		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> 	<?php if ($searchbar_selectall){?>onClick="resetTickAll();"<?php }?>/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
 		$clear_function.="document.getElementById('TickBox" . $n . "').checked=true;";
 		if ($searchbar_selectall) {$clear_function.="resetTickAll();";}
 		}
