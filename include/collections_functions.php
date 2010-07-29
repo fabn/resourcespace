@@ -537,6 +537,8 @@ function get_smart_themes($field,$node=0)
 				$c=count($return);
 				$return[$c]["name"]=trim(i18n_get_translated($options[$n]));
 				$return[$c]["indent"]=0;
+				$return[$c]["node"]=0;
+				$return[$c]["children"]=0;
 				}
 			}
 		return $return;
@@ -546,6 +548,7 @@ function get_smart_themes($field,$node=0)
 
 function populate_smart_theme_tree_node($tree,$node,$return,$indent,$levels)
 	{
+	
 	# When displaying category trees as smart themes, this function is used to recursively
 	# parse each node adding items sequentially with an appropriate indent level.
 	for ($n=0;$n<count($tree);$n++)
