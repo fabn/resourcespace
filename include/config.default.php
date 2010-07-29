@@ -328,7 +328,7 @@ $theme_images=true;
 $theme_images_number=1; # How many to auto-select (if none chosen manually)
 $theme_images_align_right=false; # Align theme images to the right on the themes page? (particularly useful when there are multiple theme images)
 
-# How many levels of theme category to show.
+# How many levels of theme category to show.F
 # If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
 # Maximum of 3 category levels (so with the themes themselves, a total of 4 categorisation levels for resources).
 $theme_category_levels=1;
@@ -468,6 +468,8 @@ $contact_sheet=true;
 $contact_sheet_resource=false; 
 # Ajax previews in contact sheet configuration. 
 $contact_sheet_previews=true;
+# Ajax previews in contact sheet, preview image size in pixels. 
+$contact_sheet_preview_size="250x250";
 # Select a contact sheet font. Default choices are 
 # helvetica,times (These are pdf core fonts: not embedded, very small pdf file size.)
 # There are also several other fonts included in the tcpdf lib (dejavu and 'free' families of sans, serif, mono styles in regular, bold, italic and bold italic)
@@ -719,6 +721,12 @@ $show_extension_in_search=false;
 
 # Should the category tree field (if one exists) default to being open instead of closed?
 $category_tree_open=false;
+
+# Should the category tree status window be shown?
+$category_tree_show_status_window=true;
+
+# Should searches using the category tree use AND for heirarchical keys?
+$category_tree_search_use_and=false;
 
 # Length of a user session. This is used for statistics (user sessions per day) and also for auto-log out if $session_autologout is set.
 $session_length=30;

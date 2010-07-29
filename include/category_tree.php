@@ -1,8 +1,9 @@
 <?php
-global $lang,$baseurl,$css_reload_key;
+
+global $lang,$baseurl,$css_reload_key,$category_tree_show_status_window;
 
 ?><div class="Fixed">
-<div id="<?php echo $name?>_statusbox" class="CategoryBox"></div>
+<div id="<?php echo $name?>_statusbox" class="CategoryBox"<?php if (!$category_tree_show_status_window) { ?>style="display:none;"<?php } ?>></div>
 
 <div><a href="#" onclick="if (document.getElementById('<?php echo $name?>_tree').style.display!='block') {document.getElementById('<?php echo $name?>_tree').style.display='block';} else {document.getElementById('<?php echo $name?>_tree').style.display='none';} return false;">&gt; <?php echo $lang["showhidetree"]?></a>
 &nbsp;
@@ -10,6 +11,7 @@ global $lang,$baseurl,$css_reload_key;
 </div>
 
 <div id="<?php echo $name?>_tree" class="CategoryTree" <?php if ($category_tree_open) { ?>style="display:block;"<?php } ?>>&nbsp;</div>
+<input type="hidden" name="<?php echo $name?>" id="<?php echo $name?>_category" value="<?php echo $value?>">
 <script type="text/javascript">
 
 
@@ -43,8 +45,8 @@ for ($t=0;$t<count($class);$t++)
 ResolveParents("<?php echo $name?>");
 DrawTree("<?php echo $name?>");
 UpdateStatusBox("<?php echo $name?>");
+UpdateHiddenField("<?php echo $name?>");
 
 </script>
 
-<input type="hidden" name="<?php echo $name?>" id="<?php echo $name?>_category" value="<?php echo $value?>">
 </div>

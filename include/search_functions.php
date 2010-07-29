@@ -145,7 +145,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	$keysearch=true;
 	
 	 # Do not process if a numeric search is provided (resource ID)
-	global $config_search_for_number;
+	global $config_search_for_number, $category_tree_search_use_and;
 	if ($config_search_for_number && is_numeric($search)) {$keysearch=false;}
 	
 	if ($keysearch)
@@ -192,35 +192,66 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						
 						$field=$fieldinfo["ref"];
 						
-						$c++;
-						$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
+						#special SQL generation for category trees to use AND instead of OR
+						if( $fieldinfo["type"] == 7 && $category_tree_search_use_and ) {
+							for ($m=0;$m<count($ckeywords);$m++) {
+								$keyref=resolve_keyword($ckeywords[$m]);
+								if (!($keyref===false)) {
+									$c++;
+		
+									# Add related keywords
+									$related=get_related_keywords($keyref);
+									$relatedsql="";
+									
+									for ($r=0;$r<count($related);$r++)
+										{
+										$relatedsql.=" or k" . $c . ".keyword='" . $related[$r] . "'";
+										}
+									
+									# Form join
+									$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "' and (k" . $c . ".keyword='$keyref' $relatedsql)";
+	
+	
+									if ($score!="") {$score.="+";}
+									$score.="k" . $c . ".hit_count";
+									
+									# Log this
+									daily_stat("Keyword usage",$keyref);
+								}							
 								
-						if ($score!="") {$score.="+";}
-						$score.="k" . $c . ".hit_count";
-						
-						# work through all options in an OR approach for multiple selects on the same field
-						# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
-
-						$keyjoin="";
-						for ($m=0;$m<count($ckeywords);$m++)
-							{
-							$keyref=resolve_keyword($ckeywords[$m]);
-							if ($keyref===false) {$keyref=-1;}
-							
-							if ($m!=0) {$keyjoin.=" or ";}
-							$keyjoin.="k" . $c. ".keyword='$keyref'";
-							
-							# Log this
-							daily_stat("Keyword usage",$keyref);
-			
-							# Also add related.
-							$related=get_related_keywords($keyref);
-							for ($o=0;$o<count($related);$o++)
-								{
-								$keyjoin.=" or k" . $c . ".keyword='" . $related[$o] . "'";
-								}
 							}
-						if ($keyjoin!="") {$sql_join.=" and (" . $keyjoin . ")";}
+						} else {
+							$c++;
+							$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "'";
+									
+							if ($score!="") {$score.="+";}
+							$score.="k" . $c . ".hit_count";
+																			
+							# work through all options in an OR approach for multiple selects on the same field
+							# where k.resource=type_field=$field and (k*.keyword=3 or k*.keyword=4) etc
+	
+							$keyjoin="";
+							for ($m=0;$m<count($ckeywords);$m++)
+								{
+								$keyref=resolve_keyword($ckeywords[$m]);
+								if ($keyref===false) {$keyref=-1;}
+								
+								if ($m!=0) {$keyjoin.=" OR ";}
+								$keyjoin.="k" . $c. ".keyword='$keyref'";
+				
+								# Also add related.
+								$related=get_related_keywords($keyref);
+								for ($o=0;$o<count($related);$o++)
+									{
+									$keyjoin.=" OR k" . $c . ".keyword='" . $related[$o] . "'";
+									}
+									
+								# Log this
+								daily_stat("Keyword usage",$keyref);
+								
+								}
+							if ($keyjoin!="") {$sql_join.=" and (" . $keyjoin . ")";}
+							}
 						}
 					}
 				else
@@ -688,7 +719,7 @@ function get_advanced_search_fields($archive=false)
 function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$forsearchbar=false,$limit_keywords=array())
 	{
 	# Renders the HTML for the provided $field for inclusion in a search form, for example the
-	# advanced search page.
+	#ï¿½advanced search page.
 	#
 	# $field	an associative array of field data, i.e. a row from the resource_type_field table.
 	# $name		the input name to use in the form (post name)
