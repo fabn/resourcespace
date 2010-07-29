@@ -808,7 +808,7 @@ $lang["addnewcontent"]="New content (Page,Name)";
 $lang["hitcount"]="Hit Count";
 $lang["downloads"]="Downloads";
 
-$lang["addremove"]="Add/Remove";
+$lang["addremove"]="";
 
 ##  Translations for standard log entries
 $lang["all_users"]="all users";
