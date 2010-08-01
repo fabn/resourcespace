@@ -196,7 +196,7 @@ $lang["resourcetitle"]="Ressourcen-Titel";
 $lang["requestresource"]="Ressource anfordern";
 $lang["viewmatchingresources"]="Passende Ressourcen anzeigen";
 $lang["nomatchingresources"]="keine passenden Ressourcen";
-$lang["matchingresources"]="passenden Ressourcen"; # e.g. 17 matching resources
+$lang["matchingresources"]="passende Ressourcen"; # e.g. 17 matching resources
 $lang["advancedsearch"]="Erweiterte Suche";
 $lang["archiveonlysearch"]="nur im Archiv suchen";
 $lang["allfields"]="alle Felder";
@@ -921,4 +921,6 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["downloadpurchaseitemsnow"]="Bitte benutzen Sie die untenstehenden Links, um Ihre gekauften Ressourcen jetzt herunterzuladen.<br><br>Verlassen Sie diese Seite nicht, bis Sie alle Ressourcen heruntergeladen haben.";
  $lang["alternatetype"]="Alternative Art";
  
+ $lang["subcategories"]="Unterkategorien";
+ $lang["back"]="Zurück";
 ?>
