@@ -621,6 +621,31 @@ if (!isset($newfile))
 				}
 				
 			}
+		
+		# Splitting of PDF files to multiple resources
+		global $pdf_split_pages_to_resources;
+		if (file_exists($target) && $pdf_split_pages_to_resources)
+			{
+			# Create a new resource based upon the metadata/type of the current resource.
+			$copy=copy_resource($ref);
+						
+			# Find out the path to the original file.
+			$copy_path=get_resource_path($copy,true,"",true,"pdf");
+			
+			# Extract this one page to a new resource.
+			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
+	 		$output=shell_exec($gscommand2); 
+ 		
+ 			# Update the file extension
+ 			sql_query("update resource set file_extension='pdf' where ref='$copy'");
+ 		
+ 			# Create preview for the page.
+ 			$pdf_split_pages_to_resources=false; # So we don't get stuck in a loop creating split pages for the single page PDFs.
+ 			create_previews($copy,false,"pdf");
+ 			$pdf_split_pages_to_resources=true;
+			}
+		
+			
 		}
 	}
     else
