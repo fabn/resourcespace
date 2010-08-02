@@ -474,7 +474,7 @@ $contact_sheet_previews=true;
 # Ajax previews in contact sheet, preview image size in pixels. 
 $contact_sheet_preview_size="250x250";
 # Select a contact sheet font. Default choices are 
-# helvetica,times,courier (standard) and dejavusans for more Unicode support (but embedding/subsetting makes it slower).
+# helvetica,times,courier (standard) and dejavusanscondensed for more Unicode support (but embedding/subsetting makes it slower).
 # There are also several other fonts included in the tcpdf lib (but not ResourceSpace), which provide unicode support
 # To embed more elaborate fonts, acquire the files from the TCPDF distribution or create your own using TCPDF utilities, and install them in the lib/tcpdf/fonts folder.
 $contact_sheet_font="helvetica";
