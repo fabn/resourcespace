@@ -87,12 +87,12 @@ function get_collection_resources($collection)
 	return sql_array("select resource value from collection_resource where collection='$collection' order by date_added desc"); 
 	}
 	
-function add_resource_to_collection($resource,$collection,$smartadd=false)
+function add_resource_to_collection($resource,$collection,$smartadd=false,$size="")
 	{
 	if (collection_writeable($collection)||$smartadd)
 		{	
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
-		sql_query("insert into collection_resource(resource,collection) values ('$resource','$collection')");
+		sql_query("insert into collection_resource(resource,collection,purchase_size) values ('$resource','$collection','$size')");
 		
 		#log this
 		collection_log($collection,"a",$resource);
@@ -1027,7 +1027,7 @@ function collection_is_research_request($collection)
 }	
 
 if (!function_exists("add_to_collection_link")){
-function add_to_collection_link($resource,$search="",$extracode="")
+function add_to_collection_link($resource,$search="",$extracode="",$size="")
 	{
 	# Generates a HTML link for adding a resource to a collection
 	global $frameless_collections,$lang;
@@ -1037,7 +1037,7 @@ function add_to_collection_link($resource,$search="",$extracode="")
 		}
 	else
 		{
-		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" onClick=\"" . $extracode . "\" title=\"" . $lang["addtocurrentcollection"] . "\">";
+		return "<a href=\"collections.php?add=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "&size=" . urlencode($size) . "\" target=\"collections\" onClick=\"" . $extracode . "\" title=\"" . $lang["addtocurrentcollection"] . "\">";
 		}
 	}
 }	

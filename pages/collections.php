@@ -174,7 +174,7 @@ if ($add!="")
 	{
 	hook("preaddtocollection");
 	#add to current collection
-	if (add_resource_to_collection($add,$usercollection)==false)
+	if (add_resource_to_collection($add,$usercollection,false,getvalescaped("size",""))==false)
 		{ ?><script language="Javascript">alert("<?php echo $lang["cantmodifycollection"]?>");</script><?php };
 	
    	# Log this
@@ -274,6 +274,29 @@ $result=do_search("!collection" . $usercollection);
 $cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
 
+
+
+# E-commerce functionality. Work out total price, if $basket_stores_size is enabled so that they've already selected a suitable size.
+$price=0;
+if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
+	{
+	foreach ($result as $resource)
+		{
+		# For each resource in the collection, fetch the price (set in config.php, or config override for group specific pricing)
+		$id=$resource["purchase_size"];
+		if ($id=="") {$id="hpr";} # Treat original size as "hpr".
+		if (array_key_exists($id,$pricing))
+			{
+			$price+=$pricing[$id];
+			}
+		else
+			{
+			$price+=999; # Error.
+			}
+		}
+	}
+
+
 if(!hook("updatemaincheckboxesfromcollectionframe")){
 	if ($use_checkboxes_for_selection){	
 		# update checkboxes in main window
@@ -316,7 +339,14 @@ if ($basket)
 	<?php if (count($result)==0) { ?>
 	<p><br /><?php echo $lang["yourbasketisempty"] ?></p><br /><br /><br />
 	<?php } else { ?>
-	<p><br /><?php echo str_replace("?",count($result),$lang["yourbasketcontains"]) ?></p>
+	<p><br /><?php echo str_replace("?",count($result),$lang["yourbasketcontains"]) ?>
+
+	<?php if ($basket_stores_size) {
+	# If they have already selected the size, we can show a total price here.
+	?><br/><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($price,2) ?><?php } ?>
+	
+	</p>
+
 	<p><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></p>
 	<?php } ?>
 

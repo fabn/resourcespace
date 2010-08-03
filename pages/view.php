@@ -338,7 +338,18 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			?>
 			<td class="DownloadButton">
+			<?php
+			if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
+				{
+				?><?php echo add_to_collection_link($ref,$search,"",$sizes[$n]["id"]) ?><?php echo $lang["addtobasket"]?></a><?php
+				}				
+			else
+				{
+				?>
 			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"]?></a>
+				<?php
+				}
+			?>
 			</td>
 			<?php
 			}
@@ -516,7 +527,16 @@ if ($mp3_player){
 hook ("resourceactions") ?>
 <?php if ($k=="") { ?>
 <?php if (!hook("replaceresourceactions")) {?>
-	<?php if (!checkperm("b")) { ?><li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["addtocollection"]?></a></li><?php } ?>
+	
+	
+	<?php if ((!checkperm("b"))
+	&&
+	
+	(!(($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size))
+	
+	) { ?><li><?php echo add_to_collection_link($ref,$search)?>&gt; <?php echo $lang["addtocollection"]?></a></li><?php } ?>
+	
+	
 	<?php if ($allow_share && ($access==0 || ($access==1 && $restricted_share))) { ?>
 		<li><a href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" target="main">&gt; <?php echo $lang["emailresource"]?></a></li>
 		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>

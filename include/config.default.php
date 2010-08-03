@@ -1241,7 +1241,8 @@ $pricing["hpr"]=30;
 $currency_symbol="&pound;";
 $payment_address="payment.address@goes.here";
 $payment_currency="GBP";
-
+# Should the "Add to basket" function appear on the download sizes, so the size of the file required is selected earlier and stored in the basket? This means the total price can appear in the basket. Enabling this only makes sense if you have set different prices for the different sizes available above.
+$basket_stores_size=false; 
 
 # Ability to set a field which will store 'Portrait' or 'Landscape' depending on image dimensions
 # $portrait_landscape_field=1;
