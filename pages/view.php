@@ -338,18 +338,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			?>
 			<td class="DownloadButton">
-			<?php
-			if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
-				{
-				?><?php echo add_to_collection_link($ref,$search,"",$sizes[$n]["id"]) ?><?php echo $lang["addtobasket"]?></a><?php
-				}				
-			else
-				{
-				?>
 			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"]?></a>
-				<?php
-				}
-			?>
 			</td>
 			<?php
 			}
