@@ -21,11 +21,19 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 <div id="Footer">
 
 <script type="text/javascript">
+
 function SwapCSS(css)
 	{
 	document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css?css_reload_key=<?php echo $css_reload_key?>';
 	<?php if (!checkperm("b") && !$frameless_collections) { ?>parent.collections.document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css';<?php } ?>
-	SetCookie("colourcss",css,1000);	
+	
+	<?php 
+	if ($global_cookies){?>
+	document.cookie ='colourcss='+css+'; path=/';<?php } 
+	else { ?> 
+	SetCookie("colourcss",css,1000);  
+	<?php }?>
+	
 <?php for ($n=0;$n<count($plugins);$n++)
 	{
 	$csspath=$storagedir."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	

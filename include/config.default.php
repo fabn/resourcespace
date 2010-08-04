@@ -1535,3 +1535,7 @@ $api_scramble_key="abcdef123";
 
 # Allow users capable of deleting a full collection (of resources) to do so from the Collection Manage page.
 $collection_purge=false;
+
+# Set cookies at root (for now, this is implemented for the colourcss cookie to preserve selection between pages/ team/ and plugin pages)
+# probably requires the user to clear cookies.
+$global_cookies=false;
