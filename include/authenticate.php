@@ -89,7 +89,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 			$lang["action-addtocollection"]=$lang["addtobasket"];
 			$lang["addtocurrentcollection"]=$lang["addtobasket"];
 			$lang["requestaddedtocollection"]=$lang["buyitemaddedtocollection"];
-			$lang["request"]=$lang["buy"];
+			$lang["request"]=$lang["addtobasket"];
 			
 			# The request button (renamed "Buy" by the line above) should always add the item to the current collection.
 			$request_adds_to_collection=true;
