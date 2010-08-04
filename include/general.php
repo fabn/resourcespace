@@ -2025,8 +2025,17 @@ function auto_create_user_account()
 	if (getval("name","")=="") {return $lang['requiredfields'];}
 	if (getval("email","")=="") {return $lang['requiredfields'];}
 	
-	# Work out which user group to set.
-	$usergroup=$user_account_auto_creation_usergroup;
+	# Work out which user group to set. Allow a hook to change this, if necessary.
+	$altgroup=hook("auto_approve_account_switch_group");
+	if ($altgroup!==false)
+		{
+		$usergroup=$altgroup;
+		}
+	else
+		{
+		$usergroup=$user_account_auto_creation_usergroup;
+		}
+			
 	if ($registration_group_select)
 		{
 		$usergroup=getvalescaped("usergroup","",true);
