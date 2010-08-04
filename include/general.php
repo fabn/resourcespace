@@ -708,12 +708,15 @@ function get_usergroups($usepermissions=false,$find="")
 		global $usergroup,$U_perm_strict;
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
 		if ($U_perm_strict){
-			$sql.="(parent='$usergroup')";
-			}
-		else {
-			$sql.="(ref='$usergroup' or parent='$usergroup')";
-			}
-		}
+               //$sql.="(parent='$usergroup')";
+               $sql.="find_in_set('" . $usergroup . "',parent)";
+               }
+        else {
+               //$sql.="(ref='$usergroup' or parent='$usergroup')";
+               $sql.="(ref='$usergroup' or find_in_set('" . $usergroup . "',parent))";
+               }
+            }
+
 	if (strlen($find)>0)
 		{
 		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
