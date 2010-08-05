@@ -68,6 +68,8 @@ if (getval("submit","")=="")
 	?>
 	</table>
 	<p>&nbsp;</p>
+	<?php hook("purchase_extra_options"); ?>
+	
 	<?php if ($showbuy) { ?>
 		<p><input type="submit" name="submit" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"]?>&nbsp;&nbsp;&nbsp;"></p>
 	<?php } ?>
@@ -98,6 +100,14 @@ else
 				purchase_set_size($usercollection,$resource["ref"],$size["id"]);
 								
 				if (array_key_exists($id,$pricing)) {$price=$pricing[$id];}	else {$price=999;}
+				
+				# Pricing adjustment hook (for discounts or other price adjustments plugin).
+				$priceadjust=hook("adjust_item_price","",array($price));
+				if ($priceadjust!==false)
+					{
+					$price=$priceadjust;
+					}
+								
 				$totalprice+=$price;
 				# Build up the paypal string...
 				$paypal.="<input type=\"hidden\" name=\"item_name_" . $n . "\" value=\"" . $title . " (" . i18n_get_translated($size["name"]) . ")\">\n";
@@ -114,6 +124,8 @@ else
 	<div class="BasicsBox"> 
 	<h2>&nbsp;</h2>
 	<h1><?php echo $lang["proceedtocheckout"] ?></h1>
+	<?php hook ("price_display_extras"); ?>
+	
 	<p><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?></p>
 	<form name="_xclick" class="form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_cart">
