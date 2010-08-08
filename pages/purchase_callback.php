@@ -39,6 +39,8 @@ else
 			
 			// Mark these items as bought.
 			payment_set_complete(getvalescaped("custom",""));
+			
+			hook("payment_complete");
 			} 
 		else
 			{
