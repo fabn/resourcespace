@@ -77,6 +77,15 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $ip_restrict_user=trim($userdata[0]["ip_restrict_user"]);
         
         $usercollection=$userdata[0]["current_collection"];
+        if ($usercollection==0 || !is_numeric($usercollection))
+        	{
+       		# Create a collection for this user
+			global $lang;
+			$usercollection=create_collection($userref,$lang["mycollection"],0,1);
+			# set this to be the user's current collection
+			sql_query("update user set current_collection='$usercollection' where ref='$userref'");
+        	}
+        
         $usersearchfilter=$userdata[0]["search_filter"];
         $usereditfilter=$userdata[0]["edit_filter"];
         $userresourcedefaults=$userdata[0]["resource_defaults"];
