@@ -20,9 +20,6 @@ setcookie("thumbs",$thumbs,0);
 # Basket mode? - this is for the e-commerce user request modes.
 if ($userrequestmode==2 || $userrequestmode==3)
 	{
-	# Always show thumbs
-	$thumbs="show";
-	
 	# Enable basket
 	$basket=true;	
 	}
@@ -350,6 +347,8 @@ if ($basket)
 	<p><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></p>
 	<?php } ?>
 
+
+    <br/><a href="collections.php?thumbs=hide&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a>
 	</form>
 	</div>
 	<?php	
@@ -605,7 +604,35 @@ else
 <!--Title-->	
 <?php if (!hook("nothumbs")) {
 
-if ($k!="")
+if ($basket)
+	{
+	# ------------------------ Basket Mode ----------------------------------------
+	?>
+	<div id="CollectionMinTitle"><h2><?php echo $lang["yourbasket"] ?></h2></div>
+	<div id="CollectionMinRightNav">
+	<form target="main" action="purchase.php">
+	<ul>
+	
+	<?php if (count($result)==0) { ?>
+	<li><?php echo $lang["yourbasketisempty"] ?></li>
+	<?php } else { ?>
+
+	<?php if ($basket_stores_size) {
+	# If they have already selected the size, we can show a total price here.
+	?><li><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($price,2) ?><?php } ?></li>
+    <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
+	<li><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></li>
+	<?php } ?>
+
+    <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
+    
+    </ul>
+	</form>
+
+	</div>
+	<?php	
+	}
+elseif ($k!="")
 	{
 	# Anonymous access, slightly different display
 	$tempcol=get_collection($usercollection);
