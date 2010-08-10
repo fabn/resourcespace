@@ -230,6 +230,8 @@ if ($header=="" && $theme1=="")
 	$headers=get_smart_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
+		$node=getval("node",0);
+		
 		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
 		&& !checkperm("f-" . $headers[$n]["ref"]) && ($smart_theme=="" || $smart_theme==$headers[$n]["ref"]))
 			{
@@ -238,7 +240,21 @@ if ($header=="" && $theme1=="")
 			<div class="RecordPanel">  
 
 			<div class="RecordHeader">
-			<h1 style="margin-top:5px;"><?php echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))?></h1>
+			<h1 style="margin-top:5px;">
+			<?php if ($node==0)
+				{
+				# Top level node. Just display smart theme name.
+				echo str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]));
+				}
+			else
+				{
+				# Sub node, display node name and make it a link to the previous level.
+				?>
+				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo getval("parentnode",0) ?>&nodename=<?php echo getval("parentnodename","") ?>"><?php echo getval("nodename","???") ?></a>
+				<?php
+				}
+			?>
+			</h1>
 			</div>
 		
 			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
@@ -249,7 +265,7 @@ if ($header=="" && $theme1=="")
 			</tr>
 			
 			<?php
-			$themes=get_smart_themes($headers[$n]["ref"],getval("node",0));
+			$themes=get_smart_themes($headers[$n]["ref"],$node);
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
@@ -258,7 +274,6 @@ if ($header=="" && $theme1=="")
 				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
 				$indent=str_replace(" ","&nbsp;",$indent);
 
-				$node=$themes[$m]["node"];
 				?>
 				<tr>
 				<td><div class="ListTitle"><?php echo $indent?>
@@ -266,7 +281,7 @@ if ($header=="" && $theme1=="")
 					{
 					# Has children. Default action is to navigate to a deeper level.
 					?>
-					<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>">
+					<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">
 					<?php
 					}
 				else
@@ -283,7 +298,7 @@ if ($header=="" && $theme1=="")
 				<td><div class="ListTools">
 				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["action-view"]?></a>
 				<?php if ($themes_category_split_pages) { ?>
-				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
+				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
 				<?php } ?>
 				</div></td>
 				</tr>
