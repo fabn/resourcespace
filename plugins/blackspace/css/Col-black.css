@@ -41,7 +41,7 @@ body,html {background: #111 ;}
 	
 	}
 	
-.RecordPanel .RecordDownloadSpace h2 {color: #999;}
+.RecordPanel .RecordDownloadSpace h2 {color: #fff;}
 .RecordPanel .DownloadDBlend h2 {color: #fff;}
 .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
 	{
@@ -60,7 +60,10 @@ body,html {background: #111 ;}
 	{
 	
 	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
-	background: #666;
+	background: #444;
 	}
  #ResearchBoxPanel, .HomePanelIN ,#ThemeBoxPanel, #SearchBoxPanel {background: #444;}
 .CollectBack {background:#111;}
+.RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #444;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #335436 ;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #333;}
