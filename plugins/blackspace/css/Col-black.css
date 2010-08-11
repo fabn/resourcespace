@@ -1,4 +1,4 @@
-
+body,html {background: #111 ;}
 
 .HorizontalWhiteNav li, .HorizontalNav li {border-left:1px solid #E2E2E2;}
 
@@ -60,7 +60,7 @@
 	{
 	
 	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
-	background: #444;
+	background: #666;
 	}
  #ResearchBoxPanel, .HomePanelIN ,#ThemeBoxPanel, #SearchBoxPanel {background: #444;}
 .CollectBack {background:#111;}
