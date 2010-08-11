@@ -1,0 +1,57 @@
+
+
+.HorizontalWhiteNav li, .HorizontalNav li {border-left:1px solid #E2E2E2;}
+
+
+
+/* Home slideshow white border */
+
+.HomePicturePanel
+	{
+	border: 1px solid #333 ;
+	width: 517px;
+	}
+
+.HomePicturePanelIN, #image1
+	{
+	border: none;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+.PanelShadow
+	{
+	background: none;
+	}
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload
+	{
+	border: 1px solid #333 ;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+.HomePanel h2
+	{
+	background: none;
+	padding-left: 0;
+	}
+
+.HomePanelIN
+	{
+	padding:8px 15px 10px 15px;
+	
+	}
+	
+.RecordPanel .RecordDownloadSpace h2 {color: #999;}
+.RecordPanel .DownloadDBlend h2 {color: #fff;}
+.ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border: 1px solid #333 ;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	background: #333  url(../../../gfx/black/interface/SearchBox.gif) repeat-x 0 0;
+	}
+.RecordPanel
+	{
+	border: 1px solid #333 ;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	background: #333;
+	}
