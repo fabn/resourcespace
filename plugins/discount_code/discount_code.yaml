@@ -1,0 +1,6 @@
+name: discount_code
+desc: Discount code e-commerce extension
+author: Montala Limited
+version: 1.0
+info_url: http://www.montala.com
+config_url: /plugins/discount_code/pages/setup.php

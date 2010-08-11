@@ -1,0 +1,2 @@
+user,int,YES,,,
+code,varchar(50),YES,,,

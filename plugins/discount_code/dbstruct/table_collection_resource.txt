@@ -1,0 +1,1 @@
+discount_code,varchar(50),YES,,,
