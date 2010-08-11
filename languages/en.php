@@ -966,6 +966,7 @@ $lang["buynowintro"]="Please select the sizes you require.";
 $lang["nodownloadsavailable"]="Sorry, there are no downloads available for this resource.";
 $lang["proceedtocheckout"]="Proceed to checkout";
 $lang["totalprice"]="Total price";
+$lang["price"]="Price";
 $lang["waitingforpaymentauthorisation"]="Sorry, we have not yet received the payment authorisation. Please wait a few moments then click 'reload' below.";
 $lang["reload"]="Reload";
 $lang["downloadpurchaseitems"]="Download Purchased Items";

@@ -264,6 +264,7 @@ else
 <tr>
 <td><?php echo $lang["fileinformation"]?></td>
 <td><?php echo $lang["filesize"]?></td>
+<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td><?php echo $lang["price"] ?></td><?php } ?>
 <td><?php echo $lang["options"]?></td>
 </tr>
 <?php
@@ -316,8 +317,18 @@ if ($resource["has_image"]==1 && $download_multisize)
 		<p><?php echo $sizes[$n]["width"]?> x <?php echo $sizes[$n]["height"]?> <?php echo $lang["pixels"]?> <?php if ($mp>=1) { ?> (<?php echo $mp?> MP)<?php } ?></p>
 		<p><?php echo $dpi_w?> <?php echo $dpi_unit?> x <?php echo $dpi_h?> <?php echo $dpi_unit?> @ <?php echo $dpi?> <?php echo $lang["ppi"] ?></p></td>
 		<?php } ?>
+		
+		
 		<td><?php echo $sizes[$n]["filesize"]?></td>
-		<!--<td><?php echo $sizes[$n]["filedown"]?></td>-->
+
+		<?php if ($userrequestmode==2 || $userrequestmode==3) {
+		# Display price for basket request modes
+		$price_id=$sizes[$n]["id"];if ($price_id=="") {$price_id="hpr";}
+		$price=999; # If price cannot be found
+		if (array_key_exists($price_id,$pricing)) {$price=$pricing[$price_id];}
+		 ?>
+		<td><?php echo $currency_symbol . " " . number_format($price,2) ?></td>
+		<?php } ?>
 
 		<?php
 
@@ -371,7 +382,10 @@ if ($resource["has_image"]==1 && $download_multisize)
 				{ 
 				# Add an extra line for previewing
 				?> 
-				<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td><td class="DownloadButton">
+				<tr class="DownloadDBlend"><td><h2><?php echo $lang["preview"]?></h2><p><?php echo $lang["fullscreenpreview"]?></p></td><td><?php echo $sizes[$n]["filesize"]?></td>
+				<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td></td><?php } # Blank spacer column if displaying a price above (basket mode).
+				?>
+				<td class="DownloadButton">
 				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
 				</td>
 				</tr>
@@ -479,6 +493,10 @@ if ($access==0) # open access only (not restricted)
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>
 		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
+		
+		<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td></td><?php } # Blank spacer column if displaying a price above (basket mode).
+		?>
+		
 		<?php if ($access==0){?>
 		<td class="DownloadButton"><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&alternative=" . $altfiles[$n]["ref"] . "&k=" . $k . "&ext=" . $altfiles[$n]["file_extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a></td>
 		<?php } else { ?>
