@@ -47,7 +47,7 @@
 	{
 	border: 1px solid #333 ;
 	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
-	background: #333  url(../../../gfx/black/interface/SearchBox.gif) repeat-x 0 0;
+	background: #333 ;
 	}
 .RecordPanel
 	{
@@ -55,3 +55,11 @@
 	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
 	background: #333;
 	}
+	
+.RecordDownloadSpace	
+	{
+	
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	background: #444;
+	}
+#ResearchBoxPanel, .HomePanelIN ,#ThemeBoxPanel, #SearchBoxPanel {background: #444;}
