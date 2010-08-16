@@ -712,7 +712,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			    $flatten = "-flatten";
 			}
 
-			$command .= ' '. escapeshellarg($file) .'[0] ' . $flatten . ' -quality ' . $imagemagick_quality;
+			$command .= ' '. escapeshellarg($file) .'[0] +matte ' . $flatten . ' -quality ' . $imagemagick_quality;
 			
 			# fetch target width and height
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
