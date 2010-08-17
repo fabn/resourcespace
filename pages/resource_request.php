@@ -9,9 +9,15 @@ $ref=getval("ref","");
 $k=getval("k","");
 $error=false;
 
+if (isset($anonymous_login) && $username == $anonymous_login){
+	$user_is_anon = true;
+} else {
+	$user_is_anon = false;
+}
+
 if (getval("save","")!="")
 	{
-	if ($k!="" || $username==$anonymous_login || $userrequestmode==0)
+	if ($k!="" || $user_is_anon || $userrequestmode==0)
 		{
 		# Request mode 0 : Simply e-mail the request.
 		$result=email_resource_request($ref,getvalescaped("request",""));
@@ -48,7 +54,7 @@ include "../include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 	
-	<?php if ($k!="" || $username==$anonymous_login) { ?>
+	<?php if ($k!="" || $user_is_anon) { ?>
 	<div class="Question">
 	<label><?php echo $lang["fullname"]?></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
