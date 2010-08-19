@@ -174,7 +174,7 @@ for ($n=0;$n<count($types);$n++)
 </select>
 <div class="clearerleft"> </div>
 </div>
-
+<iframe src="blank.html" name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <?php
 # Fetch fields
 $fields=get_advanced_search_fields($archive>0);
@@ -209,7 +209,6 @@ for ($n=0;$n<count($fields);$n++)
 	render_search_field($fields[$n],$value,true);
 	}
 ?>
-<iframe src="blank.html" name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
 <input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["viewmatchingresources"]?>" />
