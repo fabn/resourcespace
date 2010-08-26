@@ -129,10 +129,32 @@ if ($metadata_report && isset($exiftool_path)){
 	<script src=\"../lib/js/metadata_report.js\" type=\"text/javascript\"></script>
 	";
 	}
+
+if ($direct_download && !$save_as){	
+// check browser to see if forcing save_as 
+if (!$direct_download_allow_opera  && strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
+if (!$direct_download_allow_ie7 && strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 7.")!==false) {$save_as=true;}	
+}
+	
+if ($direct_download && !$save_as){
+	$headerinsert.="
+	<script type=\"text/javascript\">
+	function directDownload(url)
+		{
+		dlIFrma = document.getElementById('dlIFrm');
+		dlIFrma.src = url;  
+		}
+	</script>";
+	}
 	
 # Show the header/sidebar
 include "../include/header.php";
 
+if ($direct_download && !$save_as){
+?>
+<iframe id="dlIFrm" frameborder=0 scrolling="auto" <?php if ($debug_direct_download){?>width="600" height="200"<?php } else { ?>width="0" height="0"<?php } ?>> This browser can not use IFRAME. </iframe>
+
+<?php }
 # Load resource field data
 $fields=get_resource_field_data($ref,false,true,-1,$k!="");
 
@@ -349,7 +371,13 @@ if ($resource["has_image"]==1 && $download_multisize)
 			{
 			?>
 			<td class="DownloadButton">
-			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"]?></a>
+			<?php if (!$direct_download || $save_as){
+				?><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&size=" . $sizes[$n]["id"] . "&ext=" . $sizes[$n]["extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"]?></a>
+			<?php 
+			} 
+			else { ?>
+				<a href="#" onclick="directDownload('download_progress.php?ref=<?php echo $ref ?>&size=<?php echo $sizes[$n]['id']?>&ext=<?php echo $sizes[$n]['extension']?>&k=<?php echo $k?>')"><?php echo $lang["download"]?></a>
+			<?php } // end if direct_download ?>
 			</td>
 			<?php
 			}
@@ -405,7 +433,13 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		<tr class="DownloadDBlend">
 		<td><h2><?php echo (isset($original_download_name))?str_replace("?",strtoupper($resource["file_extension"]),$original_download_name):strtoupper($resource["file_extension"]). " " . $lang["file"]?></h2></td>
 		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
-		<td class="DownloadButton"><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&ext=" . $resource["file_extension"] ))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a></td>
+		<td class="DownloadButton">
+		<?php if (!$direct_download || $save_as){ ?>
+			<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&k=" . $k . "&ext=" . $resource["file_extension"] ))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $resource["file_extension"] . "&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a>
+		<?php } else { ?>
+			<a href="#" onclick="directDownload('download_progress.php?ref=<?php echo $ref?>&ext=<?php echo $resource['file_extension']?>&k=<?php echo $k?>')"><?php echo $lang["download"]?></a>
+		<?php } // end if direct_download ?>
+		</td>
 		</tr>
 		<?php
 		}
@@ -449,7 +483,12 @@ if (isset($flv_download) && $flv_download)
 	<tr class="DownloadDBlend">
 	<td><h2><?php echo (isset($ffmpeg_preview_download_name))?$ffmpeg_preview_download_name:strtoupper($ffmpeg_preview_extension) . " " . $lang["file"]?></h2></td>
 	<td><?php echo formatfilesize(filesize($flvfile))?></td>
-	<td class="DownloadButton"><a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"] ?></a></td>
+	<td class="DownloadButton">
+	<?php if (!$direct_download || $save_as){?>
+		<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["download"] ?></a>
+	<?php } else { ?>
+		<a href="#" onclick="directDownload('download_progress.php?ref=<?php echo $ref?>&ext=<?php echo $ffmpeg_preview_extension?>&size=pre&k=<?php echo $k?>')"><?php echo $lang["download"]?></a>
+	<?php } // end if direct_download ?></td>
 	</tr>
 	<?php
 	}
@@ -498,7 +537,12 @@ if ($access==0) # open access only (not restricted)
 		?>
 		
 		<?php if ($access==0){?>
-		<td class="DownloadButton"><a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&alternative=" . $altfiles[$n]["ref"] . "&k=" . $k . "&ext=" . $altfiles[$n]["file_extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a></td>
+		<td class="DownloadButton">
+		<?php if (!$direct_download || $save_as){?>
+		<a <?php if (!hook("downloadlink","",array("ref=" . $ref . "&alternative=" . $altfiles[$n]["ref"] . "&k=" . $k . "&ext=" . $altfiles[$n]["file_extension"]))) { ?>href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $altfiles[$n]["file_extension"] . "&k=" . $k . "&alternative=" . $altfiles[$n]["ref"] . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"<?php } ?>><?php echo $lang["download"] ?></a>
+		<?php } else { ?>
+			<a href="#" onclick="directDownload('download_progress.php?ref=<?php echo $ref?>&ext=<?php echo $altfiles[$n]["file_extension"]?>&k=<?php echo $k?>&alternative=<?php echo $altfiles[$n]["ref"]?>')"><?php echo $lang["download"]?></a>
+		<?php } // end if direct_download ?></td></td>
 		<?php } else { ?>
 		<td class="DownloadButton DownloadDisabled"><?php echo $lang["access1"]?></td>
 		<?php } ?>
@@ -1019,6 +1063,8 @@ for ($n=0;$n<count($keywords);$n++)
 
 
 <?php } # end of block that requires search permissions?>
+
+
 
 <?php
 include "../include/footer.php";

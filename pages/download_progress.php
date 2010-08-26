@@ -14,7 +14,7 @@ $usage=getval("usage","-1");
 $usagecomment=getval("usagecomment","");
 
 
-if ($download_usage && getval("usage","")=="")
+if ($download_usage && getval("usage","")=="" && !$direct_download)
 	{
 	redirect("pages/download_usage.php?ref=" . $ref  . "&size=" . $size . "&ext=" . $ext . "&k=" . $k . "&alternative=" . $alternative);
 	}
@@ -26,8 +26,8 @@ if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext, 1, $alternative))
 
 # For Opera and Internet Explorer 7 - redirected downloads are always blocked, so use the '$save_as' config option
 # to present a link instead.
-if (strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
-if (strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 7.")!==false) {$save_as=true;}
+if (!$direct_download_allow_opera &&  strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
+if (!$direct_download_allow_ie7 &&  strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 7.")!==false) {$save_as=true;}
 
 include "../include/header.php";
 
