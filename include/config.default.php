@@ -1545,4 +1545,5 @@ $global_cookies=false;
 $direct_download=false;
 $debug_direct_download=false; // set to true to see the download iframe for debugging purposes.
 $direct_download_allow_ie7=false; // ie7 blocks initial downloads but after allowing once, it seems to work, so this option is available (no guarantees).
+$direct_download_allow_ie8=false; // ie7 blocks initial downloads but after allowing once, it seems to work, so this option is available (no guarantees).
 $direct_download_allow_opera=false; // opera can also allow popups, but this is recommended off as well since by default it won't work for most users.

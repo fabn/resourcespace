@@ -28,6 +28,7 @@ if (!($url=hook("getdownloadurl", "", array($ref, $size, $ext, 1, $alternative))
 # to present a link instead.
 if (!$direct_download_allow_opera &&  strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
 if (!$direct_download_allow_ie7 &&  strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 7.")!==false) {$save_as=true;}
+if (!$direct_download_allow_ie8 &&  strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"msie 8.")!==false) {$save_as=true;}
 
 include "../include/header.php";
 
