@@ -5,7 +5,7 @@ include "../../include/authenticate.php";
 <html>
 <head><title>Administration</title>
 
-<frameset rows="85,*" frameborder=0>
+<frameset rows="110,*" frameborder=0>
 <frame colspan=2 name="top" id="top" src="../admin_header.php" frameborder=0 scrolling=no>
     <frameset cols="43%,*" frameborder=0>
     <frame name="left" id="left" src="tree.php">

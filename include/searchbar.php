@@ -83,6 +83,12 @@ new Ajax.Autocompleter("ssearchbox", "autocomplete_search_choices", "<?php echo 
 <?php
 if (!$basic_simple_search)
 	{
+	# Load resource types.
+	$types=get_resource_types();
+	
+	# More than 5 types? Always display the 'select all' option.
+	if (count($types)>5) {$searchbar_selectall=true;}
+	
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
 	<?php if ($searchbar_selectall){?>
@@ -103,7 +109,7 @@ if (!$basic_simple_search)
 	<?php
 	$rt=explode(",",@$restypes);
 	$clear_function="";
-	$types=get_resource_types();for ($n=0;$n<count($types);$n++)
+	for ($n=0;$n<count($types);$n++)
 		{
 		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> 	<?php if ($searchbar_selectall){?>onClick="resetTickAll();"<?php }?>/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
 		$clear_function.="document.getElementById('TickBox" . $n . "').checked=true;";
