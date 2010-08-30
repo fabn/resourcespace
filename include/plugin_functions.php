@@ -29,18 +29,24 @@ function activate_plugin($name){
        		$about=$plugins_dir . $name.'/about.txt';
        		if (file_exists($about)) {$plugin_yaml["desc"]=substr(file_get_contents($about),0,95) . "...";}
        		}
-        
+	# escape the plugin information
+	$plugin_yaml_esc = array();
+	foreach (array_keys($plugin_yaml) as $thekey){
+		$plugin_yaml_esc[$thekey] = escape_check($plugin_yaml[$thekey]);
+	}
+
+
         # Add/Update plugin information.
         # Check if the plugin is already in the table.
         $c = sql_value("SELECT name as value FROM plugins WHERE name='$name'",'');
         if ($c == ''){
             sql_query("INSERT INTO plugins(name) VALUE ('$name')");
         }
-        sql_query("UPDATE plugins SET config_url='{$plugin_yaml['config_url']}', " .
-        		  "descrip='{$plugin_yaml['desc']}', author='{$plugin_yaml['author']}', " .
-        		  "inst_version='{$plugin_yaml['version']}', " .
-        		  "update_url='{$plugin_yaml['update_url']}', info_url='{$plugin_yaml['info_url']}' " .
-        		  "WHERE name='{$plugin_yaml['name']}'");
+        sql_query("UPDATE plugins SET config_url='{$plugin_yaml_esc['config_url']}', " .
+        		  "descrip='{$plugin_yaml_esc['desc']}', author='{$plugin_yaml_esc['author']}', " .
+        		  "inst_version='{$plugin_yaml_esc['version']}', " .
+        		  "update_url='{$plugin_yaml_esc['update_url']}', info_url='{$plugin_yaml_esc['info_url']}' " .
+        		  "WHERE name='{$plugin_yaml_esc['name']}'");
         return true;
     }
     else {
