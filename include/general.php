@@ -1976,6 +1976,15 @@ function check_access_key($resource,$key)
 			$userrequestmode=0; # Always use 'email' request mode for external users
 			}
 		
+		# Special case for anonymous logins.
+		# When a valid key is present, we need to log the user in as the anonymous user so they will be able to browse the public links.
+		global $anonymous_login;
+		if (isset($anonymous_login))
+			{
+			global $username;
+			$username=$anonymous_login;
+			}
+		
 		# Set the 'last used' date for this key
 		sql_query("update external_access_keys set lastused=now() where resource='$resource' and access_key='$key'");
 		
