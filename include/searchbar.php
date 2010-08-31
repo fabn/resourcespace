@@ -104,15 +104,15 @@ if (!$basic_simple_search)
 		if (checkcount==tickboxes.length-1){$('tickall').checked=true;}	
 	}
 	</script>
-	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}'/>&nbsp;<?php echo $lang['all']?></div>
+	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}  HideInapplicableSimpleSearchFields(); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
 	$clear_function="";
 	for ($n=0;$n<count($types);$n++)
 		{
-		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $n?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> 	<?php if ($searchbar_selectall){?>onClick="resetTickAll();"<?php }?>/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
-		$clear_function.="document.getElementById('TickBox" . $n . "').checked=true;";
+		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $types[$n]["ref"]?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> onClick="HideInapplicableSimpleSearchFields();<?php if ($searchbar_selectall){?>resetTickAll();<?php } ?>"/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
+		$clear_function.="document.getElementById('TickBox" . $types[$n]["ref"] . "').checked=true;";
 		if ($searchbar_selectall) {$clear_function.="resetTickAll();";}
 		}
 	}
@@ -130,12 +130,13 @@ if (!$basic_simple_search)
 
 	<?php
 	if (!$basic_simple_search) {
+	
 	// Include simple search items (if any)
 	$optionfields=array();
 	for ($n=0;$n<count($fields);$n++)
 		{
 		hook("modifysearchfieldtitle");?>
-		<div class="SearchItem"><?php echo i18n_get_translated($fields[$n]["title"])?><br />
+		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>"><?php echo i18n_get_translated($fields[$n]["title"])?><br />
 		<?php
 		
 		$value=""; # to do, fetch set value.
@@ -247,6 +248,8 @@ if (!$basic_simple_search)
 				";
 			break;
 			
+			
+			
 			}
 		?>
 		</div>	
@@ -283,6 +286,27 @@ if (!$basic_simple_search)
 		new Ajax.Request('<?php echo $baseurl_short?>pages/ajax/filter_basic_search_options.php?nofilter=' + encodeURIComponent(clickedfieldno) + '&filter=' + encodeURIComponent(Filter), { method: 'post',onSuccess: function(transport) {eval(transport.responseText);} });
 		<?php } ?>
 		}
+		
+	function HideInapplicableSimpleSearchFields()
+		{
+		<?php
+		# Consider each of the fields. Hide if the resource type for this field is not checked
+		for ($n=0;$n<count($fields);$n++)
+			{
+			if ($fields[$n]["resource_type"]!=0)
+				{
+				?>
+				if (!document.getElementById('TickBox<?php echo $fields[$n]["resource_type"] ?>').checked)
+					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='none';}
+				else
+					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='block';}
+				<?php
+				}
+			}
+		?>
+		}
+	HideInapplicableSimpleSearchFields();
+	
 	</script>
 		
 	<div class="SearchItem"><?php echo $lang["bydate"]?><br />
