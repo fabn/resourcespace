@@ -342,7 +342,7 @@ if (isset($result_title_height))
 	{
 	?>
 	<style>
-	.ResourcePanelInfo
+	.ResourcePanelInfo .extended
 		{
 		white-space:normal;
 		height: <?php echo $result_title_height ?>px;
@@ -617,9 +617,9 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			if ( in_array($df[$x]['ref'],$thumbs_display_extended_fields) &&
 			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
 			<?php if (!hook("replaceresourcepanelinfo")){?>
-			<div class="ResourcePanelInfo">
+			<div class="ResourcePanelInfo"><div class="extended">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
-			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div></div>
 			<?php } /* end hook replaceresourcepanelinfo */?>
 			<?php 
 
@@ -744,9 +744,9 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			if ( in_array($df[$x]['ref'],$xl_thumbs_display_extended_fields) &&
 			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
 			<?php if (!hook("replaceresourcepanelinfolarge")){?>
-			<div class="ResourcePanelInfo">
+			<div class="ResourcePanelInfo"><div class="extended">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
-			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div></div>
 			<?php } /* end hook replaceresourcepanelinfolarge */?>
 			<?php 
 
@@ -841,9 +841,9 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 			if ( in_array($df[$x]['ref'],$small_thumbs_display_extended_fields) &&
 			( (isset($metadata_template_title_field) && $df[$x]['ref']!=$metadata_template_title_field) || !isset($metadata_template_title_field) ) ){ ?>
 			<?php if (!hook("replaceresourcepanelinfosmall")){?>
-			<div class="ResourcePanelInfo">
+			<div class="ResourcePanelInfo"><div class="extended">
 			<?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?><a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($value)))?>"<?php } //end if infobox ?>><?php } //end link
-			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div>
+			echo str_replace("#zwspace","&#x200b",highlightkeywords(htmlspecialchars(wordwrap(tidy_trim(TidyList(i18n_get_translated($value)),$results_title_trim),$results_title_wordwrap,"#zwspace;",true)),$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']))?><?php if ($show_extension_in_search) { ?><?php echo " [" . strtoupper($result[$n]["file_extension"] . "]")?><?php } ?><?php if (!$use_resource_column_data && $x==0){ // add link if necessary ?></a><?php } //end link?>&nbsp;</div></div>
 			<?php } /* end hook replaceresourcepanelinfolarge */?>
 			<?php 
 
