@@ -46,7 +46,6 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 		{
 		$username=$anonymous_login;
 		$session_hash="";
-		$basic_simple_search=true; # Always use the basic simple search for anonymous users to save screen space (the login box will appear on the right hand side).
 		}
 
 	$hashsql="and u.session='$session_hash'";

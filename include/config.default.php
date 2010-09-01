@@ -443,6 +443,7 @@ $plugins=array();
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
 # to the account with the username specified.
+# Note that collections will be shared among all anonymous users - it's therefore best to turn off all collections functionality for the anonymous user.
 # $anonymous_login="guest";
 
 # Enable AJAX popup info box on search results.
