@@ -14,7 +14,7 @@ set_time_limit(60*60*40);
 # ex. pages/tools/update_exiftool_field.php?fieldrefs=75,3&blanks=true
 $fieldrefs=getval("fieldrefs","");
 $blanks=getval("blanks","true"); // if new value is blank, it will replace the old value.
-$fieldrefs=split(",",$fieldrefs);
+$fieldrefs=explode(",",$fieldrefs);
 if (count($fieldrefs)==0){die ("Please add a list of refs to the fieldrefs array, which are the ref numbers of the fields that you would like exiftool to extract from.");}
 
 foreach ($fieldrefs as $fieldref){
