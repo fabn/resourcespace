@@ -108,10 +108,12 @@ foreach($collection as $key=>$value){
 		if ($value==""){break 1;} 
 		else{
 			if (substr($key,5)==""){
-				$themecount=1;
+				$themecount=1;				
+				$orig_themecount=$themecount;
 				}
 			else{
 				$themecount=substr($key,5);
+				$orig_themecount=$themecount;
 				}
 		}
 	}
@@ -134,7 +136,7 @@ if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can
 <?php
 
 if (getval("addlevel","")=="yes"){$themecount++;}
-
+$lastselected=false;
 # Theme category levels
 for ($i=1;$i<=$themecount;$i++){
 if ($theme_category_levels>=$i)
@@ -153,12 +155,15 @@ if ($theme_category_levels>=$i)
 	?>
 	<div class="Question">
 	<label for="theme<?php echo $themeindex?>"><?php echo $lang["themecategory"] . " ".$themeindex ?></label>
-	<?php if (count($themes)>0){?><select class="stdwidth" name="theme<?php echo $themeindex?>" id="theme<?php echo $themeindex?>" <?php if ($theme_category_levels>$themeindex) { ?>onchange="if (document.getElementById('theme<?php echo $themeindex?>').value!=='') {document.getElementById('addlevel').value='yes'; document.getElementById('collectionform').submit();} else {document.getElementById('redirect').value='';document.getElementById('collectionform').submit();}"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
+	<?php if (count($themes)>0){?><select class="stdwidth" name="theme<?php echo $themeindex?>" id="theme<?php echo $themeindex?>" <?php if ($theme_category_levels>=$themeindex) { ?>onchange="if (document.getElementById('theme<?php echo $themeindex?>').value!=='') {document.getElementById('addlevel').value='yes'; document.getElementById('collectionform').submit();} else {document.getElementById('redirect').value='';document.getElementById('collectionform').submit();}"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
 	<?php 
 	for ($n=0;$n<count($themes);$n++) { ?>
 	<option <?php if ($collection["theme".$themeindex]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
+	<?php if ($collection["theme".$themeindex]==$themes[$n] && $i==$orig_themecount){$lastselected=true;} else {$lastselected=false;}?>
 	<?php } ?>
 	</select>
+	<?php if ($lastselected){echo "true".$i;}?>
+	<?php if (getval("addlevel","")!="yes" && $lastselected){$themecount++;}?>
 	<div class="clearerleft"> </div>
 	<label><?php echo $lang["newcategoryname"]?></label>
 		<?php } //end conditional selector?>
