@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 # Chinese Simplified
 # Language File for ResourceSpace
