@@ -4,17 +4,30 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
 
+$themes=array();
+$themecount=0;
+foreach ($_GET as $key => $value) {
+	// only set necessary vars
+	if (substr($key,0,5)=="theme" && $value!=""){
+		$themes[$themecount]=$value;
+		$themecount++;
+		}
+	}
+
 $header=getvalescaped("header","");
-$theme1=getvalescaped("theme1","");
-$theme2=getvalescaped("theme2","");
-$theme3=getvalescaped("theme3","");
 $smart_theme=getvalescaped("smart_theme","");
 
 # When changing higher levels, deselect the lower levels.
-$lastlevelchange=getvalescaped("lastlevelchange","");
-if ($lastlevelchange=="1") {$theme2="";$theme3="";}
-if ($lastlevelchange=="2") {$theme3="";}
+$lastlevelchange=getvalescaped("lastlevelchange",1);
 
+for ($n=$lastlevelchange;$n<=$themecount;$n++){
+	if ($n>$lastlevelchange && !$themes_category_split_pages){
+	$themes[$n-1]="";
+	}
+}	
+
+//if ($lastlevelchange=="1") {$theme2="";$theme3="";}
+//if ($lastlevelchange=="2") {$theme3="";}
 include "../include/header.php";
 ?>
 
@@ -31,14 +44,21 @@ include "../include/header.php";
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
 
 <?php
-
-if ($themes_category_split_pages && $theme1!="")
+if ($themes_category_split_pages && isset($themes[0]))
 	{
 	# Display back link
-	?>
-	<p><a href="themes.php?theme1=<?php echo urlencode(($theme2=="")?"":$theme1) ?>&theme2=<?php echo urlencode(($theme3=="")?"":$theme2) ?>">&lt;&lt; <?php echo $lang["back"]?></a></p>
-	<?php
+	$link="themes.php?";
+	for ($x=0;$x<count($themes);$x++){
+		if ($x!=0){ $link.="&"; } 
+		$link.="theme";
+		$link.=($x==0)?"":$x;
+		$link.="=". urlencode((!isset($themes[$x+1]))?"":$themes[$x]); 
 	}
+	?>
+	<p><a href="<?php echo $link?>">&lt;&lt; <?php echo $lang["back"]?></a></p>
+	<?php
+
+}
 
 
 #if ($themes_category_split_pages && $theme1=="" && $smart_theme=="")
@@ -51,15 +71,16 @@ elseif ($themes_category_split_pages)
 	#
 	# This option shows the theme categories / subcategories as a simple list, instead of using dropdown boxes.
 	#
-	if ($theme3=="")
-		{
-		# Only if we haven't yet reached the final level. No need to show sub categories on the final level.
-		?>
+
+	?>
+	<?php 
+	$headers=get_theme_headers($themes);
+	if (count($headers)>0){?>	
 		<div class="RecordBox">
 		<div class="RecordPanel">  
-		
+
 		<div class="RecordHeader">
-		<h1 style="margin-top:5px;"><?php echo ($theme1=="")?$lang["themes"]:$lang["subcategories"] ?></h1>
+		<h1 style="margin-top:5px;"><?php echo (!isset($themes[0]))?$lang["themes"]:$lang["subcategories"] ?></h1>
 		</div>
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
@@ -71,23 +92,24 @@ elseif ($themes_category_split_pages)
 		<?php
 		
 		# Theme headers
-		$headers=get_theme_headers($theme1,$theme2);
 		for ($n=0;$n<count($headers);$n++)
 			{
-			$link="themes.php?theme1=" . urlencode(($theme1=="")? $headers[$n]:$theme1) . 
-			                "&theme2=" . urlencode(($theme2=="")? (($theme1=="")?"":$headers[$n]):$theme2) . 
-			                "&theme3=" . urlencode(($theme3=="")? (($theme2=="")?"":$headers[$n]):$theme3);
-			?>
+			$link="themes.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]); 
+			for ($x=2;$x<count($themes)+2;$x++){
+				if (isset($headers[$n])){
+					$link.="&theme".$x."=" . urlencode((!isset($themes[$x-1]))? ((!isset($themes[$x-2]))?"":$headers[$n]):$themes[$x-1]);
+				}
+			}?>
 			<tr>
 			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo str_replace("*","",$headers[$n])?></a></div></td>
 			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
 			</tr>
 			<?php
 			}
-	
+
 		# Smart theme headers
 		/*
-		$headers=get_smart_theme_headers($theme1,$theme2,$theme3);
+		$headers=get_smart_theme_headers($themes);
 		for ($n=0;$n<count($headers);$n++)
 			{
 			?>
@@ -96,8 +118,8 @@ elseif ($themes_category_split_pages)
 			<td><div class="ListTools"><a href="themes.php?smart_theme=<?php echo urlencode($headers[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
 			</tr>
 			<?php
-			}
-		*/	
+			}*/
+			
 		?>
 		</table>
 		</div>
@@ -105,8 +127,8 @@ elseif ($themes_category_split_pages)
 		</div>
 		<div class="PanelShadow"> </div>
 		</div>
-		<?php	
-		}
+	<?php } /*end if subcategory headers */ ?>
+	<?php	
 	}
 else
 	{
@@ -124,16 +146,18 @@ else
 		<label for="theme1"><?php echo $lang["themecategory"] . " 1" ?></label>
 		<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
 		<?php
-		if ($theme1=="")
-			{
+		//if (!isset($themes[0]))
+			//{
 			?><option value=""><?php echo $lang["select"]?></option><?php
-			}
+			//}
 		
 		# ----------------- Level 1 headers -------------------------
-		$headers=get_theme_headers();
+		$headers=get_theme_headers(array());
 		for ($n=0;$n<count($headers);$n++)
 			{
-			?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme1)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+			?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (isset($themes[0])&&
+			stripslashes($themes[0])==
+			stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
 			}
 		?>
 		</select>
@@ -141,25 +165,31 @@ else
 		</div>
 		
 		<?php
-		# ----------------- Level 2 headers -------------------------
-		if ($theme1!="" && $theme_category_levels>1)
+		if (count($themes)>0){
+		for ($x=0;$x<count($themes);$x++){
+		# ----------------- Level headers -------------------------
+		if (isset($themes[$x])&&$themes[$x]!="" && $theme_category_levels>($x+1))
 			{
-			$headers=get_theme_headers($theme1);
+			$themearray=array();
+			for($n=0;$n<$x+1;$n++){
+				$themearray[]=$themes[$n];
+				}
+			$headers=get_theme_headers($themearray);	
 			if (count($headers)>0)
 				{
 				?>
 				<div class="Question" style="border-top:none;">
-				<label for="theme2"><?php echo $lang["themecategory"] . " 2" ?></label>
+				<label for="theme<?php echo $x+2?>"><?php echo $lang["themecategory"] . " ".($x+2) ?></label>
 		
-				<select class="stdwidth" name="theme2" id="theme2" onchange="document.getElementById('lastlevelchange').value='2';document.getElementById('themeform').submit();">
+				<select class="stdwidth" name="theme<?php echo $x+2?>" id="theme<?php echo $x+2?>" onchange="document.getElementById('lastlevelchange').value='<?php echo $x+2?>';document.getElementById('themeform').submit();">
 				<?php
-				if ($theme2=="")
-					{
+				//if (!isset($themes[$x+1])||$themes[$x+1]=="")
+					//{
 					?><option value=""><?php echo $lang["select"]?></option><?php
-					}
+					//}
 				for ($n=0;$n<count($headers);$n++)
 					{
-					?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme2)==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
+					?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (isset($themes[$x+1])&&stripslashes($themes[$x+1])==stripslashes($headers[$n]))  { ?>selected<?php } ?> ><?php echo str_replace("*","",$headers[$n])?></option><?php
 					}
 				?>
 				</select>
@@ -168,33 +198,8 @@ else
 				<?php
 				}
 			}
-		
-		# ----------------- Level 3 headers -------------------------
-		if ($theme2!="" && $theme_category_levels>2)
-			{
-			$headers=get_theme_headers($theme1,$theme2);
-			if (count($headers)>0)
-				{
-				?>
-				<div class="Question" style="border-top:none;">
-				<label for="theme3"><?php echo $lang["themecategory"] . " 3" ?></label>
-				<select class="stdwidth" name="theme3" id="theme3" onchange="document.getElementById('lastlevelchange').value='3';document.getElementById('themeform').submit();">
-				<?php
-				if ($theme3=="")
-					{
-					?><option value=""><?php echo $lang["select"]?></option><?php
-					}
-				for ($n=0;$n<count($headers);$n++)
-					{
-					?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (stripslashes($theme3)==stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
-					}
-				?>
-				</select>
-				<div class="clearerleft"> </div>
-				</div>
-				<?php
-				}
-			}
+		}
+	}
 		?>
 		</div>
 		</div>
@@ -202,22 +207,23 @@ else
 		}
 	}
 
+
 # Display Themes
 
-if ($theme1!="")
+if (isset($themes[0]))
 	{
 	# Display just the selected theme
-	DisplayTheme($theme1,$theme2,$theme3);
+	DisplayTheme($themes);
 	}
 elseif ($theme_category_levels==1 && $smart_theme=="" && !$themes_category_split_pages)
 	{
 	# Display all themes
-	$headers=get_theme_headers();
+	$headers=get_theme_headers($themes);
 	for ($n=0;$n<count($headers);$n++)
 		{
 		if ($header=="" || $header==$headers[$n])
 			{
-			DisplayTheme($headers[$n]);
+			DisplayTheme(array($headers[$n]));
 			}
 		}
 	}
@@ -225,9 +231,10 @@ elseif ($theme_category_levels==1 && $smart_theme=="" && !$themes_category_split
 
 <?php
 # ------- Smart Themes -------------
-if ($header=="" && $theme1=="")
+if ($header=="" && !isset($themes[0]))
 	{
 	$headers=get_smart_theme_headers();
+
 	for ($n=0;$n<count($headers);$n++)
 		{
 		$node=getval("node",0);
@@ -316,17 +323,19 @@ if ($header=="" && $theme1=="")
 		}
 	}
 
-function DisplayTheme($theme1,$theme2="",$theme3="")
+function DisplayTheme($themes=array())
 	{
 	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right;
 
 	# Work out theme name
-	if ($theme1!="") {$themename=$theme1;}
-	if ($theme2!="") {$themename=$theme2;}
-	if ($theme3!="") {$themename=$theme3;}
+	$themecount=count($themes);
+	for ($x=0;$x<$themecount;$x++){
+		if (isset($themes[$x])&&!isset($themes[$x+1])) {$themename=$themes[$x];}
+}
 
-	$themes=get_themes($theme1,$theme2,$theme3);
-	if (count($themes)>0)
+	$getthemes=get_themes($themes);
+
+	if (count($getthemes)>0)
 		{
 		?>
 		<div class="RecordBox">
@@ -342,7 +351,7 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 			<?php	
 			}
 		
-		$images=get_theme_image($theme1, $theme2, $theme3);
+		$images=get_theme_image($themes);
 		if (($images!==false) && ($theme_images))
 			{
 			for ($n=0;$n<count($images);$n++)
@@ -372,33 +381,33 @@ function DisplayTheme($theme1,$theme2="",$theme3="")
 		</tr>
 		
 		<?php
-		for ($m=0;$m<count($themes);$m++)
+		for ($m=0;$m<count($getthemes);$m++)
 			{
 			?>
 			<tr>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
-			<?php if ($flag_new_themes && (time()-strtotime($themes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
+			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
-			<td width="5%"><?php echo $themes[$m]["c"]?></td>
+			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			
-			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $themes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
+			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
 			
-			<?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($themes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
+			<?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 		
 			<?php if (isset($zipcommand)) { ?>
-			&nbsp;<a href="collection_download.php?collection=<?php echo $themes[$m]["ref"]?>"
+			&nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>"
 			>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 			<?php } ?>
 			
 			<?php if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?c=<?php echo $themes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+			&nbsp;<a href="contactsheet_settings.php?c=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 			<?php } ?>
 		
-			<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $themes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+			<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 		
-			<?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $themes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+			<?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 		
-			<?php hook("addcustomtool","",array($themes[$m]["ref"])); ?>
+			<?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
 			
 			</td>
 			</tr>

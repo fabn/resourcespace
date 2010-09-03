@@ -228,7 +228,7 @@ else {$div="CentralSpace";}
 
 <?php
 # Include theme bar?
-if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("preview_all","done","search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
+if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes","preview_all","done","search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
 	{
 	# Tables seem to be the only solution to having a left AND right side bar, due to the way the clear CSS attribute works.
 	?>

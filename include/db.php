@@ -427,6 +427,34 @@ function CheckDBStruct($path)
 					}	
 				}		
 				##########
+				
+				##########
+				## RS-specific mod:
+				# add theme columns to collection table as needed.
+				global $theme_category_levels;
+				if ($table=="collection"){
+					print_r($existing);
+					for ($m=1;$m<=$theme_category_levels;$m++){
+						if ($m==1){$themeindex="";}else{$themeindex=$m;}
+						# Look for this column in the existing columns.	
+						$found=false;
+
+						for ($n=0;$n<count($existing);$n++)
+							{
+							if ("theme".$themeindex==$existing[$n]["Field"]) {$found=true;}
+							}
+						if (!$found)
+							{
+							# Add this column.
+							$sql="alter table $table add column ";
+							$sql.="theme".$themeindex . " VARCHAR(100)";
+							sql_query($sql,false,-1,false);
+
+						}
+					}	
+				}		
+				
+				##########				
 								
 				$file=$path . "/" . $file;
 				if (file_exists($file))

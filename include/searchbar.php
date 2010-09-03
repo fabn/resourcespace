@@ -150,6 +150,7 @@ if (!$basic_simple_search)
 			case 0: # -------- Text boxes?><?php
 			case 1:
 			case 5:
+			case 7:
 			?>	
 			<input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" id="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
 			if ($autocomplete_search) { 

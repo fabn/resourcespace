@@ -318,14 +318,8 @@ function index_collection($ref,$index_string='')
 
 function save_collection($ref)
 	{
-	$theme=getvalescaped("theme","");
-	if (getval("newtheme","")!="") {$theme=trim(getvalescaped("newtheme",""));}
-
-	$theme2=getvalescaped("theme2","");
-	if (getval("newtheme2","")!="") {$theme2=trim(getvalescaped("newtheme2",""));}
-
-	$theme3=getvalescaped("theme3","");
-	if (getval("newtheme3","")!="") {$theme3=trim(getvalescaped("newtheme3",""));}
+	global $theme_category_levels;
+	
 	
 	$allow_changes=(getval("allow_changes","")!=""?1:0);
 	
@@ -334,15 +328,25 @@ function save_collection($ref)
 	
 	# Update collection with submitted form data
 	if (!hook('modifysavecollection')) {
-	sql_query("update collection set
+	$sql="update collection set
 				name='" . getvalescaped("name","") . "',
 				keywords='" . getvalescaped("keywords","") . "',
-				public='" . getvalescaped("public","",true) . "',
-				theme='" . $theme . "',
-				theme2='" . $theme2 . "',
-				theme3='" . $theme3 . "',
-				allow_changes='" . $allow_changes . "'
-	where ref='$ref'");
+				public='" . getvalescaped("public","",true) . "',";
+		
+		for($n=1;$n<=$theme_category_levels;$n++){
+			if ($n==1){$themeindex="";} else {$themeindex=$n;}
+			$themes[$n]=getvalescaped("theme$themeindex","");
+			if (getval("newtheme$themeindex","")!="") {
+				$themes[$n]=trim(getvalescaped("newtheme$themeindex",""));
+				}
+			if (isset($themes[$n])){
+				$sql.="theme".$themeindex."='" . $themes[$n]. "',";
+				}
+		}
+
+	$sql.="allow_changes='" . $allow_changes . "' where ref='$ref'";
+	
+	sql_query($sql);
 	} # end replace hook - modifysavecollection
 	
     	$index_string=getvalescaped("keywords","");
@@ -423,20 +427,26 @@ function save_collection($ref)
 		}
 	}
 
-function get_theme_headers($theme1="",$theme2="")
+function get_theme_headers($themes=array())
 	{
 	# Return a list of theme headers, i.e. theme categories
 	#return sql_array("select theme value,count(*) c from collection where public=1 and length(theme)>0 group by theme order by theme");
-		
 	# Work out which theme category level we are selecting based on the higher selected levels provided.
 	$selecting="theme";
-	if ($theme1=="" && $theme2=="") {$selecting="theme";}
-	if ($theme1!="" && $theme2=="") {$selecting="theme2";}
-	if ($theme1!="" && $theme2!="") {$selecting="theme3";}
-	
+
 	$sql="";
-	if ($theme1!="") {$sql.=" and theme='" . escape_check($theme1) . "'";}
-	if ($theme2!="") {$sql.=" and theme2='" . escape_check($theme2) . "'";}
+	for ($x=0;$x<count($themes);$x++){
+		if (isset($themes[$x])){
+			$selecting="theme".($x+2);
+		}
+		
+		if (isset($themes[$x]) && $themes[$x]!="" && $x==0) {
+			$sql.=" and theme='" . escape_check($themes[$x]) . "'";
+		}
+		else if (isset($themes[$x])&& $themes[$x]!=""&& $x!=0) {
+			$sql.=" and theme".($x+1)."='" . escape_check($themes[$x]) . "'";
+		}
+	}
 	
 	$return=array();
 	$themes=sql_query("select * from collection where public=1 and $selecting is not null and length($selecting)>0 $sql order by $selecting");
@@ -447,13 +457,23 @@ function get_theme_headers($theme1="",$theme2="")
 	return $return;
 	}
 
-function get_themes($theme,$theme2="",$theme3="")
-	{
+function get_themes($themes=array(""))
+	{	
 	# Return a list of themes under a given header (theme category).
-	return sql_query("select *,(select count(*) from collection_resource cr where cr.collection=c.ref) c from collection c  where c.theme='" . escape_check($theme) . "' " . 
-	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
-	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
-	. " and c.public=1 order by c.name;");
+	$sql="select *,(select count(*) from collection_resource cr where cr.collection=c.ref) c from collection c  where c.theme='" . escape_check($themes[0]) . "' ";
+	
+	for ($x=1;$x<count($themes)+1;$x++){
+		if (isset($themes[$x])&&$themes[$x]!=""){
+			$sql.=" and theme".($x+1)."='" . escape_check($themes[$x]) . "' ";
+		}
+		else {
+			$sql.=" and (theme".($x+1)."='' or theme".($x+1)." is null) ";
+		}
+	}
+	$sql.=" and c.public=1 order by c.name;";
+	
+	return sql_query($sql);
+
 	}
 
 function get_smart_theme_headers()
@@ -794,23 +814,38 @@ function allow_multi_edit($collection)
 	}
 }	
 
-function get_theme_image($theme,$theme2="",$theme3="")
+function get_theme_image($themes=array())
 	{
 	# Returns an array of resource references that can be used as theme category images.
 	global $theme_images_number;
 	
 	# First try to find resources that have been specifically chosen using the option on the collection comments page.
-	$chosen=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
-	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
-	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
-	. " and r.has_image=1 and cr.use_as_theme_thumbnail=1 order by r.ref desc",0);
+	$sql="select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($themes[0]) . "' ";
+	for ($n=2;$n<=count($themes)+1;$n++){
+		if (isset($themes[$n-1])){
+			$sql.=" and theme".$n."='" . escape_check($themes[$n-1]) . "' ";
+		} 
+		else {
+			$sql.=" and (theme".$n."='' or theme".$n." is null) ";
+		}
+	} 
+
+	$sql.=" and r.has_image=1 and cr.use_as_theme_thumbnail=1 order by r.ref desc";
+	$chosen=sql_array($sql,0);
 	if (count($chosen)>0) {return $chosen;}
 	
 	# No chosen images? Manually choose a single image based on hit counts.
-	$images=sql_array("select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($theme) . "' " .
-	(($theme2!="")?" and theme2='" . escape_check($theme2) . "' ":" and (theme2='' or theme2 is null) ") . 
-	(($theme3!="")?" and theme3='" . escape_check($theme3) . "' ":" and (theme3='' or theme3 is null) ")
-	. " and r.has_image=1 order by r.hit_count desc limit " . $theme_images_number,0);
+	$sql="select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($themes[0]) . "' ";
+	for ($n=2;$n<=count($themes)+1;$n++){
+		if (isset($themes[$n-1])){
+			$sql.=" and theme".$n."='" . escape_check($themes[$n-1]) . "' ";
+		} 
+		else {
+			$sql.=" and (theme".$n."='' or theme".$n." is null) ";
+		}
+	} 
+	$sql.=" and r.has_image=1 order by r.hit_count desc limit " . $theme_images_number;
+	$images=sql_array($sql,0);
 	if (count($images)>0) {return $images;}
 	return false;
 	}

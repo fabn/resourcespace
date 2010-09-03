@@ -27,7 +27,9 @@ function get_cookie ( cookie_name )
 hook("themebartoptoolbar"); 
 
 # Display all themes
+// only works for collections on first level
 $headers=get_theme_headers();
+
 for ($n=0;$n<count($headers);$n++)
 	{
 	DisplayThemeBar($headers[$n]);
@@ -41,7 +43,7 @@ function DisplayThemeBar($theme1)
 	$themename=$theme1;
 	$theme_display=getval("theme_$n","off");
 	
-	$themes=get_themes($theme1);
+	$themes=get_themes(array($theme1));
 	if (count($themes)>0)
 		{
 		?>
@@ -98,9 +100,11 @@ return false;">
 <div id="<?php echo $header_name?>" style="display:<?php if ($smart_theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 			<?php
 			$themes=get_smart_themes($headers[$n]["ref"]);
+
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
+		
 				hook("themebartitlesubstitute"); 
 				
 				# Indent this item?				
@@ -110,7 +114,7 @@ return false;">
 				?>
 				<br>
 
-				<?php echo $indent?>&nbsp;<a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a><?php echo $indent?>
+				<?php echo $indent?><a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode($s)?>"><?php echo i18n_get_translated($themes[$m]["name"])?></a>
 				<?php
 				}
 			?><br><br>

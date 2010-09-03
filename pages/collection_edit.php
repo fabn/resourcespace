@@ -4,7 +4,7 @@ include "../include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission 
 include "../include/general.php";
 include "../include/collections_functions.php";
 include "../include/resource_functions.php";
-include "../include/search_functions.php";
+include "../include/search_functions.php"; 
 
 $ref=getvalescaped("ref","",true);
 $copycollectionremoveall=getvalescaped("copycollectionremoveall","");
@@ -27,7 +27,10 @@ if (getval("name","")!="")
 	save_collection($ref);
 	if (getval("redirect","")!="")
 		{
-		if ((getval("theme","")!="") || (getval("newtheme","")!=""))
+		if (getval("addlevel","")=="yes"){
+			redirect ("pages/collection_edit.php?ref=".$ref."&addlevel=yes");
+			}		
+		else if ((getval("theme","")!="") || (getval("newtheme","")!=""))
 			{
 			redirect ("pages/themes.php?manage=true");
 			}
@@ -96,66 +99,86 @@ include "../include/header.php";
 <?php } /* end hook replaceuserselect */?>
 
 <?php } else { 
+	
+//////////////////////////
+// find current number of themes used
+$themecount=1;
+foreach($collection as $key=>$value){
+	if (substr($key,0,5)=="theme"){
+		if ($value==""){break 1;} 
+		else{
+			if (substr($key,5)==""){
+				$themecount=1;
+				}
+			else{
+				$themecount=substr($key,5);
+				}
+		}
+	}
+}
+//echo "<br/>Current theme level:".$themecount;
+
+// find number of theme columns
+foreach($collection as $key=>$value){
+	if (substr($key,0,5)=="theme"){
+		$themecolumns=substr($key,5);
+	}
+}		
+//echo "<br/>Theme levels available:".$themecolumns;	
+	
 if (checkperm("h") && $enable_themes) { # Only users with the 'h' permission can publish public collections as themes.
 
-# Theme category level 1
+
 ?>
-<div class="Question">
-<label for="theme"><?php echo $lang["themecategory"] . (($theme_category_levels>1)?"1":"")?></label>
-<select class="stdwidth" name="theme" id="theme" <?php if ($theme_category_levels>1) { ?>onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
-<?php $themes=get_theme_headers(); for ($n=0;$n<count($themes);$n++) { ?>
-<option <?php if ($collection["theme"]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
-<?php } ?>
-</select>
-<div class="clearerleft"> </div>
-<label><?php echo $lang["newcategoryname"]?></label>
-<input type=text class=stdwidth name="newtheme" id="newtheme" value="" maxlength="100"><br/>
-<div class="clearerleft"> </div>
-</div>
-<?php 
+<input type=hidden name="addlevel" id="addlevel" value=""/>
+<?php
 
-# Theme category level 2
-if ($theme_category_levels>=2)
+if (getval("addlevel","")=="yes"){$themecount++;}
+
+# Theme category levels
+for ($i=1;$i<=$themecount;$i++){
+if ($theme_category_levels>=$i)
 	{
+	if ($i==1){$themeindex="";}else{$themeindex=$i;}	
+	$themearray=array();
+	for($y=0;$y<$i-1;$y++){
+		if ($y==0){
+				$themearray[]=$collection["theme"];
+			}
+			else {
+				$themearray[]=$collection["theme".($y+1)];
+			}
+	}	
+	$themes=get_theme_headers($themearray);
 	?>
 	<div class="Question">
-	<label for="theme2"><?php echo $lang["themecategory"] . " 2" ?></label>
-	<select class="stdwidth" name="theme2" id="theme2" <?php if ($theme_category_levels>2) { ?>onchange="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
-	<?php $themes=get_theme_headers($collection["theme"]); for ($n=0;$n<count($themes);$n++) { ?>
-	<option <?php if ($collection["theme2"]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
+	<label for="theme<?php echo $themeindex?>"><?php echo $lang["themecategory"] . " ".$themeindex ?></label>
+	<?php if (count($themes)>0){?><select class="stdwidth" name="theme<?php echo $themeindex?>" id="theme<?php echo $themeindex?>" <?php if ($theme_category_levels>$themeindex) { ?>onchange="if (document.getElementById('theme<?php echo $themeindex?>').value!=='') {document.getElementById('addlevel').value='yes'; document.getElementById('collectionform').submit();} else {document.getElementById('redirect').value='';document.getElementById('collectionform').submit();}"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
+	<?php 
+	for ($n=0;$n<count($themes);$n++) { ?>
+	<option <?php if ($collection["theme".$themeindex]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
 	<?php } ?>
 	</select>
 	<div class="clearerleft"> </div>
 	<label><?php echo $lang["newcategoryname"]?></label>
-	<input type=text class=stdwidth name="newtheme2" id="newtheme2" value="" maxlength="100"><br/>
-	<div class="clearerleft"> </div>
+		<?php } //end conditional selector?>
+	<input type=text class="medwidth" name="newtheme<?php echo $themeindex?>" id="newtheme<?php echo $themeindex?>" value="" maxlength="100">
+	<input type=button  value="<?php echo $lang['save'];?>" style="display:inline;" onclick="document.getElementById('addlevel').value='yes';document.getElementById('collectionform').submit();"/>	<div class="clearerleft"> </div>
 	</div>
 	<?php
 	}
-
-# Theme category level 3
-if ($theme_category_levels>=3)
-	{
-	?>
-	<div class="Question">
-	<label for="theme3"><?php echo $lang["themecategory"] . " 3"?></label>
-	<select class="stdwidth" name="theme3" id="theme3"><option value=""><?php echo $lang["select"]?></option>
-	<?php $themes=get_theme_headers($collection["theme"],$collection["theme2"]); for ($n=0;$n<count($themes);$n++) { ?>
-	<option <?php if ($collection["theme3"]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
-	<?php } ?>
-	</select>
-	<div class="clearerleft"> </div>
-	<label><?php echo $lang["newcategoryname"]?></label>
-	<input type=text class=stdwidth name="newtheme3" id="newtheme3" value="" maxlength="100"><br/>
-	<div class="clearerleft"> </div>
-	</div>
-	<?php
-	}
+}
 
 } else {
-?>
-<input type=hidden name="theme" value="<?php echo $collection["theme"]?>">
-<?php
+	// in case a user can edit collections but doesn't have themes enabled, preserve them
+	for ($i=1;$i<=$themecount;$i++){
+		if ($theme_category_levels>=$i)	{
+			if ($i==1){$themeindex="";}else{$themeindex=$i;}	
+			?>
+			<input type=hidden name="theme<?php echo $themeindex?>" value="<?php echo $collection["theme".$themeindex]?>">
+			<?php
+		}
+	}	
 } 
 }?>
 

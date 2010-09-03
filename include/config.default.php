@@ -333,7 +333,6 @@ $theme_images_align_right=false; # Align theme images to the right on the themes
 
 # How many levels of theme category to show.F
 # If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
-# Maximum of 3 category levels (so with the themes themselves, a total of 4 categorisation levels for resources).
 $theme_category_levels=1;
 
 ##  Advanced Search Options
