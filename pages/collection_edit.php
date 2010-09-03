@@ -162,7 +162,6 @@ if ($theme_category_levels>=$i)
 	<?php if ($collection["theme".$themeindex]==$themes[$n] && $i==$orig_themecount){$lastselected=true;} else {$lastselected=false;}?>
 	<?php } ?>
 	</select>
-	<?php if ($lastselected){echo "true".$i;}?>
 	<?php if (getval("addlevel","")!="yes" && $lastselected){$themecount++;}?>
 	<div class="clearerleft"> </div>
 	<label><?php echo $lang["newcategoryname"]?></label>
