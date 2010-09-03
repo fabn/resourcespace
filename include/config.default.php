@@ -116,7 +116,7 @@ $languages["en-US"]="American English";
 $languages["ar"]="العربية";
 $languages["id"]="Bahasa Indonesia"; # Indonesian
 $languages["ca"]="Català"; # Catalan
-$languages["zh-CN"]="简化字"; # Simplified Chinese
+$languages["zh-CN"]="简体字"; # Simplified Chinese
 $languages["da"]="Dansk"; # Danish
 $languages["de"]="Deutsch"; # German
 $languages["el"]="Ελληνικά"; # Greek
@@ -236,7 +236,7 @@ $pdf_split_pages_to_resources=false;
 
 # Create a preview video for ffmpeg compatible files? A FLV (Flash Video) file will automatically be produced for supported file types (most video types - AVI, MOV, MPEG etc.)
 $ffmpeg_preview=true; 
-$ffmpeg_preview_seconds=20; # how many seconds to preview
+$ffmpeg_preview_seconds=120; # how many seconds to preview
 $ffmpeg_preview_extension="flv";
 $ffmpeg_preview_min_width=32;
 $ffmpeg_preview_min_height=18;
@@ -443,7 +443,7 @@ $plugins=array();
 
 # Uncomment and set the next line to allow anonymous access. The anonymous user will automatically be logged in
 # to the account with the username specified.
-# Note that collections will be shared among all anonymous users - it's therefore best to turn off all collections functionality for the anonymous user.
+# Note that collections will be shared among all anonymous users - it's therefore usually best to turn off all collections functionality for the anonymous user.
 # $anonymous_login="guest";
 
 # Enable AJAX popup info box on search results.
