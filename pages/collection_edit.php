@@ -168,10 +168,10 @@ if ($theme_category_levels>=$i)
 		<?php } //end conditional selector?>
 	<input type=text class="medwidth" name="newtheme<?php echo $themeindex?>" id="newtheme<?php echo $themeindex?>" value="" maxlength="100">
 	<?php if ($themecount!=1){?>
-	<input type=button  value="<?php echo $lang['save'];?>" style="display:inline;" onclick="document.getElementById('addlevel').value='yes';document.getElementById('collectionform').submit();"/>	
+	<input type=button class="medcomplementwidth" value="<?php echo $lang['save'];?>" style="display:inline;" onclick="document.getElementById('addlevel').value='yes';document.getElementById('collectionform').submit();"/>	
 	<?php } ?>
 	<?php if ($themecount==1){?>
-	<input type=button  value="<?php echo $lang['add'];?>" style="display:inline;" onclick="if (document.getElementById('theme<?php echo $themeindex?>').value=='' && document.getElementById('newtheme<?php echo $themeindex?>').value==''){alert('You must select or enter a theme category name.');return false;}document.getElementById('addlevel').value='yes';document.getElementById('collectionform').submit();"/><?php }?>
+	<input type=button class="medcomplementwidth" value="<?php echo $lang['add'];?>" style="display:inline;" onclick="if (document.getElementById('theme<?php echo $themeindex?>').value=='' && document.getElementById('newtheme<?php echo $themeindex?>').value==''){alert('You must select or enter a theme category name.');return false;}document.getElementById('addlevel').value='yes';document.getElementById('collectionform').submit();"/><?php }?>
 	<div class="clearerleft"> </div>
 	</div>
 	<?php
