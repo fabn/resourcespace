@@ -433,7 +433,6 @@ function CheckDBStruct($path)
 				# add theme columns to collection table as needed.
 				global $theme_category_levels;
 				if ($table=="collection"){
-					print_r($existing);
 					for ($m=1;$m<=$theme_category_levels;$m++){
 						if ($m==1){$themeindex="";}else{$themeindex=$m;}
 						# Look for this column in the existing columns.	

@@ -929,13 +929,13 @@ function get_custom_access($resource,$usergroup)
 function get_themes_by_resource($ref)
 	{
 	global $theme_category_levels;
-	echo $theme_category_levels;
+
 	$themestring="";
 	for($n=1;$n<=$theme_category_levels;$n++){
 		if ($n==1){$themeindex="";}else{$themeindex=$n;}
 		$themestring.=",c.theme".$themeindex;
 	}
-	echo "TEST".$themestring;
+
 	$themes=sql_query("select c.ref $themestring ,c.name,u.fullname from collection_resource cr join collection c on cr.collection=c.ref and cr.resource='$ref' and c.public=1 left outer join user u on c.user=u.ref order by length(theme) desc");
 	# Combine the theme categories into one string so multiple category levels display correctly.
 	$return=array();
