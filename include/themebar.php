@@ -53,12 +53,12 @@ onclick="
 var theme_display=get_cookie('theme_<?php echo $n?>');
 if (theme_display=='off'){var toggle_theme_display='on';} else { var toggle_theme_display='off';}
 SetCookie('theme_<?php echo $n?>',toggle_theme_display,1000);
-Effect.toggle($('<?php echo $themename?>'),'blind',{ duration: 0.2 });
+Effect.toggle($('<?php echo str_replace("\"","",$themename)?>'),'blind',{ duration: 0.2 });
 return false;"> 		
 		
 		<a href='#'><b><?php echo stripslashes(str_replace("*","",$themename))?></b></a></div>
 		
-<div id="<?php echo $themename?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
+<div id="<?php echo str_replace("\"","",$themename)?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 		<?php
 		for ($m=0;$m<count($themes);$m++)
 			{ ?><br>
