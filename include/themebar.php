@@ -99,7 +99,7 @@ return false;">
 		
 <div id="<?php echo $header_name?>" style="display:<?php if ($smart_theme_display == 'off'){echo 'none';} else {echo '';}?>" > 
 			<?php
-			$themes=get_smart_themes($headers[$n]["ref"]);
+			$themes=get_smart_themes($headers[$n]["ref"],0,true);
 
 			for ($m=0;$m<count($themes);$m++)
 				{

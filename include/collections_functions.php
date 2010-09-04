@@ -483,7 +483,7 @@ function get_smart_theme_headers()
 	}
 
 if (!function_exists("get_smart_themes")){	
-function get_smart_themes($field,$node=0)
+function get_smart_themes($field,$node=0,$themebar=false)
 	{
 	# Returns a list of smart themes (which are really field options).
 	# The results are filtered so that only field options that are in use are returned.
@@ -504,9 +504,9 @@ function get_smart_themes($field,$node=0)
 		$return=array();	
 		
 		global $themes_category_split_pages;
-		if ($themes_category_split_pages)
+		if ($themes_category_split_pages && !$themebar)
 			{
-			# Return one level only.
+			# Return one level only, unless grabbing for themebar
 			$levels=1;
 			}
 		else
