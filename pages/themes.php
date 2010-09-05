@@ -74,6 +74,7 @@ elseif ($themes_category_split_pages)
 
 	?>
 	<?php 
+	if (count($themes)<$theme_category_levels){
 	$headers=get_theme_headers($themes);
 	if (count($headers)>0){?>	
 		<div class="RecordBox">
@@ -127,7 +128,7 @@ elseif ($themes_category_split_pages)
 		</div>
 		<div class="PanelShadow"> </div>
 		</div>
-	<?php } /*end if subcategory headers */ ?>
+	<?php } }/*end if subcategory headers */ ?>
 	<?php	
 	}
 else
