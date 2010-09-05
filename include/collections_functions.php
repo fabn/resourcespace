@@ -467,7 +467,10 @@ function get_themes($themes=array(""))
 			$sql.=" and theme".($x+1)."='" . escape_check($themes[$x]) . "' ";
 		}
 		else {
+			global $theme_category_levels;
+			if (($x+1)<=$theme_category_levels){
 			$sql.=" and (theme".($x+1)."='' or theme".($x+1)." is null) ";
+			}
 		}
 	}
 	$sql.=" and c.public=1 order by c.name;";
@@ -818,7 +821,7 @@ function get_theme_image($themes=array())
 	{
 	# Returns an array of resource references that can be used as theme category images.
 	global $theme_images_number;
-	
+	global $theme_category_levels;
 	# First try to find resources that have been specifically chosen using the option on the collection comments page.
 	$sql="select r.ref value from collection c join collection_resource cr on c.ref=cr.collection join resource r on cr.resource=r.ref where c.theme='" . escape_check($themes[0]) . "' ";
 	for ($n=2;$n<=count($themes)+1;$n++){
@@ -826,7 +829,9 @@ function get_theme_image($themes=array())
 			$sql.=" and theme".$n."='" . escape_check($themes[$n-1]) . "' ";
 		} 
 		else {
-			$sql.=" and (theme".$n."='' or theme".$n." is null) ";
+			if ($n<=$theme_category_levels){
+				$sql.=" and (theme".$n."='' or theme".$n." is null) ";
+			}
 		}
 	} 
 
@@ -841,7 +846,9 @@ function get_theme_image($themes=array())
 			$sql.=" and theme".$n."='" . escape_check($themes[$n-1]) . "' ";
 		} 
 		else {
+			if ($n<=$theme_category_levels){
 			$sql.=" and (theme".$n."='' or theme".$n." is null) ";
+			}
 		}
 	} 
 	$sql.=" and r.has_image=1 order by r.hit_count desc limit " . $theme_images_number;
