@@ -22,7 +22,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (!in_array($order_by,$order)&&(substr($order_by,0,5)=="field")){
 		$order[$order_by]="$order_by $sort";
 	}
-	
+
 	hook("modifyorderarray");
 
 	$order_by=$order[$order_by];
@@ -191,7 +191,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 							}
 						
 						$field=$fieldinfo["ref"];
-						
+
 						#special SQL generation for category trees to use AND instead of OR
 						if( $fieldinfo["type"] == 7 && $category_tree_search_use_and ) {
 							for ($m=0;$m<count($ckeywords);$m++) {
@@ -657,13 +657,13 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	
 	# All keywords resolved OK, but there were no matches
 	# Remove keywords, least used first, until we get results.
-	$sql="";
+	$lsql="";
 	for ($n=0;$n<count($keywords);$n++)
 		{
-		if ($sql!="") {$sql.=" or ";}
-		$sql.="keyword='" . $keywords[$n] . "'";
+		if ($lsql!="") {$lsql.=" or ";}
+		$lsql.="keyword='" . $keywords[$n] . "'";
 		}
-	$least=sql_value("select keyword value from keyword where $sql order by hit_count asc limit 1","");
+	$least=sql_value("select keyword value from keyword where $lsql order by hit_count asc limit 1","");
 	return trim_spaces(str_replace(" " . $least . " "," "," " . join(" ",$keywords) . " "));
 	}
 }
