@@ -86,7 +86,7 @@ function touch_category_tree_level($path_parts)
 function ProcessFolder($folder)
 	{
 	#echo "<br>processing folder $folder";
-	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path, $staticsync_ingest, $staticsync_mapfolders,$staticsync_alternatives_suffix;
+	global $syncdir,$nogo,$max,$count,$done,$modtimes,$lastsync, $ffmpeg_preview_extension, $staticsync_autotheme, $staticsync_folder_structure,$staticsync_extension_mapping_default, $staticsync_extension_mapping, $staticsync_mapped_category_tree,$staticsync_title_includes_path, $staticsync_ingest, $staticsync_mapfolders,$staticsync_alternatives_suffix;
 	
 	$collection=0;
 	
@@ -133,15 +133,34 @@ function ProcessFolder($folder)
 					# Make a new collection for this folder.
 					$e=explode("/",$shortpath);
 					$theme=ucwords($e[0]);
-					$name=(count($e)==1?"":$e[count($e)-2]);
-					echo "\nCollection $name, theme=$theme";
-					$collection=sql_value("select ref value from collection where name='" . escape_check($name) . "' and theme='" . escape_check($theme) . "'",0);
-					if ($collection==0)
-						{
-						sql_query("insert into collection (name,created,public,theme,allow_changes) values ('" . escape_check($name) . "',now(),1,'" . escape_check($theme) . "',0)");
-						$collection=sql_insert_id();
+					$themesql="theme='".ucwords(escape_check($e[0]))."'";
+					$themecolumns="theme";
+					$themevalues="'".ucwords(escape_check($e[0]))."'";
+					
+					if ($staticsync_folder_structure){
+						for ($x=0;$x<count($e)-1;$x++){
+							if ($x==0){} else {$themeindex=$x+1;
+							global $theme_category_levels;
+							if ($themeindex>$theme_category_levels){
+								$theme_category_levels=$themeindex;
+								if ($x==count($e)-2){echo "\n\nUPDATE THEME_CATEGORY_LEVELS TO $themeindex IN CONFIG!!!!\n\n";}
+							}
+							$themesql.=" and theme".$themeindex."='".ucwords(escape_check($e[$x]))."'";
+							$themevalues.=",'".ucwords(escape_check($e[$x]))."'";
+							$themecolumns.=",theme".$themeindex;
+							}
 						}
 					}
+					
+					$name=(count($e)==1?"":$e[count($e)-2]);
+					echo "\nCollection $name, theme=$theme";
+					$collection=sql_value("select ref value from collection where name='" . escape_check($name) . "' and " . $themesql ,0);
+					if ($collection==0){
+						sql_query("insert into collection (name,created,public,$themecolumns,allow_changes) values ('" . escape_check($name) . "',now(),1,".$themevalues.",0)");
+						$collection=sql_insert_id();
+					}
+				}
+						
 
 				# Work out extension
 				$extension=explode(".",$file);$extension=trim(strtolower($extension[count($extension)-1]));
@@ -239,7 +258,11 @@ function ProcessFolder($folder)
 					# Add to collection
 					if ($staticsync_autotheme)
 						{
-						sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+						$test="";	
+						$test=sql_query("select * from collection_resource where collection='$collection' and resource='$r'");
+						if (count($test)==0){
+							sql_query("insert into collection_resource(collection,resource,date_added) values ('$collection','$r',now())");
+							}
 						}
 					}
 				else
@@ -260,7 +283,7 @@ function ProcessFolder($folder)
 						{
 						$rd=$rd[0];
 						$rref=$rd["ref"];
-
+						
 						echo "Resource $rref has changed, regenerating previews: $fullpath\n";
 						create_previews($rref,false,$rd["file_extension"]);
 						sql_query("update resource set file_modified=now() where ref='$rref'");
@@ -268,7 +291,7 @@ function ProcessFolder($folder)
 					}
 				}
 			}	
-		}
+		}	
 	}
 
 

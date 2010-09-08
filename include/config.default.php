@@ -1274,6 +1274,9 @@ $basket_stores_size=true;
 $syncdir="/path/to/static/files"; # The sync folder
 $nogo="[folder1]"; # A list of folders to ignore within the sign folder.
 $staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
+# Allow unlimited theme levels to be created based on the folder structure. 
+# Script will output a new $theme_category_levels number which must then be updated in config.php
+$staticsync_folder_structure=false;
 # Mapping extensions to resource types for sync'd files
 # Format: staticsync_extension_mapping[resource_type]=array("extension 1","extension 2");
 $staticsync_extension_mapping_default=1;
