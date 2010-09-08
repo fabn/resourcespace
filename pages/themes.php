@@ -81,7 +81,22 @@ elseif ($themes_category_split_pages)
 		<div class="RecordPanel">  
 
 		<div class="RecordHeader">
-		<h1 style="margin-top:5px;"><?php echo (!isset($themes[0]))?$lang["themes"]:$lang["subcategories"] ?></h1>
+		<h1 style="margin-top:5px;"><?php 
+		if (!isset($themes[0])){
+			echo $lang["themes"];
+			}
+		else{ 
+			if ($themes_category_split_pages_parents){
+				$themeslinks="";
+				for ($x=0;$x<count($themes);$x++){
+					$themeslinks.="theme".$x."=".$themes[$x]."&";
+					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+					}
+			}
+			else { 
+				echo $lang["subcategories"]; 
+			}
+		}?></h1>
 		</div>
 		
 		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">

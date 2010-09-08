@@ -1179,6 +1179,8 @@ $public_collections_top_nav=false;
 
 # Display theme categories as links, and themes on separate pages?
 $themes_category_split_pages=false;
+# Display breadcrumb-style theme parent links instead of "Subcategories"
+$themes_category_split_pages_parents=false;
 
 # Ask the user the intended usage when downloading
 $download_usage=false;
