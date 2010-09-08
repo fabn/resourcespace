@@ -159,7 +159,12 @@ elseif (array_key_exists("submit",$_POST))
     foreach($_POST as $key=>$value)
         {
         $value=str_replace("&AMP;","&",$value);
-        $value=fixSmartQuotes($value);
+        
+        # Fix quote issue. English language only as this breaks extended UTF-8 characters (such as Chinese).
+        if ($language=="en" || $language=="en-US")
+        	{
+	        $value=fixSmartQuotes($value);
+	        }
         
         $query=str_replace("[" . $key . "]",escape_check($value),$query);
         $history.="&$key=" . urlencode($value);
