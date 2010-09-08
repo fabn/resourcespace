@@ -9,7 +9,7 @@ $themecount=0;
 foreach ($_GET as $key => $value) {
 	// only set necessary vars
 	if (substr($key,0,5)=="theme" && $value!=""){
-		$themes[$themecount]=$value;
+		$themes[$themecount]=urldecode($value);
 		$themecount++;
 		}
 	}
@@ -89,7 +89,7 @@ elseif ($themes_category_split_pages)
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
 				for ($x=0;$x<count($themes);$x++){
-					$themeslinks.="theme".$x."=".$themes[$x]."&";
+					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
 					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
 					}
 			}
