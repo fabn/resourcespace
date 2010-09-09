@@ -1260,7 +1260,7 @@ function extract_text($ref,$extension)
 		}
 	
 	# PDF extraction using pdftotext (part of the XPDF project)
-	if ($extension=="pdf" || $extension=="ai" && isset($pdftotext_path))
+	if (($extension=="pdf" || $extension=="ai") && isset($pdftotext_path))
 		{
 		$command=$pdftotext_path . "/pdftotext";
 		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
