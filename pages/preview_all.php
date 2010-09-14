@@ -150,7 +150,7 @@ if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collec
 	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo $collection[$x]['field'.$view_title_field]?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
 	<?php $imageinfo = getimageSize( $url ); 
 	$imageheight=$imageinfo[1];?>
-<a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"></a><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><br/><br/>
+<?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <script type="text/javascript">
 var maxheight=window.innerHeight-110; 
 if (maxheight><?php echo $imageheight?>){

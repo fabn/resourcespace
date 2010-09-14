@@ -13,6 +13,7 @@ $lang["home"]="Home";
 $lang["searchresults"]="Search Results";
 $lang["themes"]="Themes";
 $lang["mycollections"]="My Collections";
+$lang["collections"]="Collections";
 $lang["mycontributions"]="My Contributions";
 $lang["researchrequest"]="Research Request";
 $lang["helpandadvice"]="Help & Advice";

@@ -88,6 +88,7 @@ elseif ($themes_category_split_pages)
 		else{ 
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
+				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php
 				for ($x=0;$x<count($themes);$x++){
 					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
 					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
@@ -341,7 +342,7 @@ if ($header=="" && !isset($themes[0]))
 
 function DisplayTheme($themes=array())
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -360,6 +361,9 @@ function DisplayTheme($themes=array())
 		<div class="RecordHeader">
 		
 		<?php
+		if ($themes_category_split_pages && $themes_category_split_pages_parents){?><h1><?php
+		echo $lang["collections"];?></h1><?php }
+		
 		if ($theme_images_align_right)
 			{
 			?>
@@ -383,7 +387,14 @@ function DisplayTheme($themes=array())
 			<?php	
 			}
 		?>
-		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php echo stripslashes(str_replace("*","",$themename))?></h1>
+		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php if (!$themes_category_split_pages && $themes_category_split_pages_parents){echo stripslashes(str_replace("*","",$themename));} 
+		elseif ($themes_category_split_pages && $themes_category_split_pages_parents){
+				$themeslinks="";
+				for ($x=0;$x<count($themes);$x++){
+					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
+					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+					}
+			}?></h1>
 
 		<div class="clearerright"> </div>
 		</div>
