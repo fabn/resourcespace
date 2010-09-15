@@ -736,7 +736,9 @@ for ($n=0;$n<count($fields);$n++)
 			# Process the value using a plugin
 			$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
 			if (file_exists($plugin)) {include $plugin;}
-			
+			else if ($fields[$n]['value_filter']!=""){
+				eval($fields[$n]['value_filter']);
+			}
 			# Highlight keywords
 			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);
 
@@ -758,7 +760,11 @@ for ($n=0;$n<count($fields);$n++)
 					# value filter plugin should be used regardless of whether a display template is used.
 					$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
 					if (file_exists($plugin)) {include $plugin;}
+					else if ($fields[$n]['value_filter']!=""){
+						eval($fields[$n]['value_filter']);
+					}
 				}
+				
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,20,"<br />",true);
 				

@@ -1,2 +1,2 @@
-resource_type_field,0,PRIMARY,1,ref,A,13,,,,BTREE,
-resource_type_field,1,resource_type,1,resource_type,A,2,,,,BTREE,
+resource_type_field,0,PRIMARY,1,ref,A,30,,,,BTREE,
+resource_type_field,1,resource_type,1,resource_type,A,,,,YES,BTREE,

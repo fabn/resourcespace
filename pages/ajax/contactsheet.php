@@ -82,17 +82,25 @@ $collectiondata= get_collection($collection);
 if (is_numeric($order_by)){ $order_by="field".$order_by;}
 $result=do_search("!collection" . $collection,"",$order_by,0,-1,$sort);
 
+if ($sheetstyle=="thumbnails"){
 $csf="";
 for ($m=0;$m<count($config_sheetthumb_fields);$m++)
 	{
-	$csf[$m]['name']=sql_value("select name value from resource_type_field where ref='$config_sheetthumb_fields[$m]'","");
+	$csf_data=sql_query("select name,value_filter from resource_type_field where ref='$config_sheetthumb_fields[$m]'");
+	$csf[$m]['name']=$csf_data[0]['name'];
+	$csf[$m]['value_filter']=$csf_data[0]['value_filter'];
 	}
+}
 	
-$cslf="";
+if ($sheetstyle=="list"){
+$csf="";
 for ($m=0;$m<count($config_sheetlist_fields);$m++)
 	{
-	$cslf[$m]['name']=sql_value("select name value from resource_type_field where ref='$config_sheetlist_fields[$m]'","");
+	$csf_data=sql_query("select name,value_filter from resource_type_field where ref='$config_sheetlist_fields[$m]'");
+	$csf[$m]['name']=$csf_data[0]['name'];
+	$csf[$m]['value_filter']=$csf_data[0]['value_filter'];
 	}	
+}
 
 $user= get_user($collectiondata['user']);
 if ($orientation=="landscape"){$orientation="L";}else{$orientation="P";}
@@ -168,7 +176,10 @@ for ($n=0;$n<count($result);$n++){
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
-						if (file_exists($plugin)) {include $plugin;}
+						if (file_exists($plugin)) {include $plugin;} 
+						else if ($csf[$ff]['value_filter']!=""){
+							eval($csf[$ff]['value_filter']);
+							}
 							
 						$value=TidyList($value);
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
@@ -184,9 +195,11 @@ for ($n=0;$n<count($result);$n++){
 						$value="";
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
 							
-						$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
+						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
 						if (file_exists($plugin)) {include $plugin;}
-							
+						else if ($csf[$ff]['value_filter']!=""){
+							eval($csf[$ff]['value_filter']);
+						}
 						$value=TidyList($value);
 						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					
 						
@@ -216,7 +229,9 @@ for ($n=0;$n<count($result);$n++){
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
 						if (file_exists($plugin)) {include $plugin;}
-							
+						else if ($csf[$ff]['value_filter']!=""){
+							eval($csf[$ff]['value_filter']);
+							}
 						$value=TidyList($value);
 
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
@@ -232,9 +247,11 @@ for ($n=0;$n<count($result);$n++){
 						$value="";
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
 							
-						$plugin="../../plugins/value_filter_" . $cslf[$ff]['name'] . ".php";
+						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
 						if (file_exists($plugin)) {include $plugin;}
-							
+						else if ($csf[$ff]['value_filter']!=""){
+							eval($csf[$ff]['value_filter']);
+							}
 						$value=TidyList($value);
 						
 						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					

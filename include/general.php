@@ -2149,7 +2149,7 @@ function get_fields_for_search_display($field_refs)
 	# This returns fewer columns and doesn't require that the fields be indexed, as in this case it's only used to judge whether the field should be highlighted.
 	if (!is_array($field_refs)) {print_r($field_refs);exit(" passed to getfields() is not an array. ");}
 	$return=array();
-	$fields=sql_query("select ref, name, title, keywords_index, partial_index from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
+	$fields=sql_query("select ref, name, title, keywords_index, partial_index, value_filter from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
 	# Apply field permissions
 	for ($n=0;$n<count($fields);$n++)
 		{
