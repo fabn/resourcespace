@@ -603,10 +603,10 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 			#value filter plugin -tbd	
 			$value=$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
-			if (file_exists($plugin)) {include $plugin;}
-			else if ($df[$x]['value_filter']!=""){
+			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
 			}
+			else if (file_exists($plugin)) {include $plugin;}
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
@@ -732,10 +732,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			#value filter plugin -tbd	
 			$value=$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
-			if (file_exists($plugin)) {include $plugin;}
-			else if ($df[$x]['value_filter']!=""){
+			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
 			}
+			else if (file_exists($plugin)) {include $plugin;}
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
@@ -831,10 +831,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 			#value filter plugin -tbd	
 			$value=$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
-			if (file_exists($plugin)) {include $plugin;}
-			else if ($df[$x]['value_filter']!=""){
+			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
 			}
+			else if (file_exists($plugin)) {include $plugin;}
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){
@@ -922,10 +922,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 			for ($x=0;$x<count($df);$x++){
 			$value=$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
-			if (file_exists($plugin)) {include $plugin;}
-			else if ($df[$x]['value_filter']!=""){
+			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
 			}
+			else if (file_exists($plugin)) {include $plugin;}
 			# swap title fields if necessary
 			if (isset($metadata_template_resource_type) && isset ($metadata_template_title_field)){
 				if (!$use_resource_column_data && ($df[$x]['ref']==$view_title_field) && ($result[$n]['resource_type']==$metadata_template_resource_type)){

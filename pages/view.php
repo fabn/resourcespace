@@ -735,10 +735,11 @@ for ($n=0;$n<count($fields);$n++)
 			{
 			# Process the value using a plugin
 			$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
-			if (file_exists($plugin)) {include $plugin;}
-			else if ($fields[$n]['value_filter']!=""){
+			if ($fields[$n]['value_filter']!=""){
 				eval($fields[$n]['value_filter']);
 			}
+			else if (file_exists($plugin)) {include $plugin;}
+			
 			# Highlight keywords
 			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);
 
@@ -759,10 +760,10 @@ for ($n=0;$n<count($fields);$n++)
 				if ($fields[$n]["type"]!=4) { // nicedate is already applied here
 					# value filter plugin should be used regardless of whether a display template is used.
 					$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
-					if (file_exists($plugin)) {include $plugin;}
-					else if ($fields[$n]['value_filter']!=""){
+					if ($fields[$n]['value_filter']!=""){
 						eval($fields[$n]['value_filter']);
 					}
+					else if (file_exists($plugin)) {include $plugin;}
 				}
 				
 				# Extra word wrapping to break really large words (e.g. URLs)

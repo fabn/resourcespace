@@ -176,10 +176,11 @@ for ($n=0;$n<count($result);$n++){
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
-						if (file_exists($plugin)) {include $plugin;} 
-						else if ($csf[$ff]['value_filter']!=""){
+						if ($csf[$ff]['value_filter']!=""){
 							eval($csf[$ff]['value_filter']);
 							}
+						else if (file_exists($plugin)) {include $plugin;} 
+
 							
 						$value=TidyList($value);
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
@@ -196,10 +197,10 @@ for ($n=0;$n<count($result);$n++){
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
-						if (file_exists($plugin)) {include $plugin;}
-						else if ($csf[$ff]['value_filter']!=""){
+						if ($csf[$ff]['value_filter']!=""){
 							eval($csf[$ff]['value_filter']);
 						}
+						else if (file_exists($plugin)) {include $plugin;}
 						$value=TidyList($value);
 						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					
 						
@@ -228,10 +229,10 @@ for ($n=0;$n<count($result);$n++){
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetthumb_fields[$ff]]);
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
-						if (file_exists($plugin)) {include $plugin;}
-						else if ($csf[$ff]['value_filter']!=""){
+						if ($csf[$ff]['value_filter']!=""){
 							eval($csf[$ff]['value_filter']);
 							}
+						else if (file_exists($plugin)) {include $plugin;}
 						$value=TidyList($value);
 
 						$pdf->Cell($imagesize,(($refnumberfontsize+$leading)/72),$value,0,2,'L',0,'',1);
@@ -248,10 +249,11 @@ for ($n=0;$n<count($result);$n++){
 						$value=str_replace("'","\'", $result[$n]['field'.$config_sheetlist_fields[$ff]]);
 							
 						$plugin="../../plugins/value_filter_" . $csf[$ff]['name'] . ".php";
-						if (file_exists($plugin)) {include $plugin;}
-						else if ($csf[$ff]['value_filter']!=""){
+						if ($csf[$ff]['value_filter']!=""){
 							eval($csf[$ff]['value_filter']);
 							}
+						else if (file_exists($plugin)) {include $plugin;}
+						
 						$value=TidyList($value);
 						
 						$pdf->Text($pdf->GetX()+$imagesize+0.1,$pdf->GetY()+(0.2*($ff+2)),$value);					
