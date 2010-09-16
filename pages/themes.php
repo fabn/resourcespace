@@ -387,13 +387,17 @@ function DisplayTheme($themes=array())
 			<?php	
 			}
 		?>
-		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php if (!$themes_category_split_pages && $themes_category_split_pages_parents){echo stripslashes(str_replace("*","",$themename));} 
-		elseif ($themes_category_split_pages && $themes_category_split_pages_parents){
-				$themeslinks="";
-				for ($x=0;$x<count($themes);$x++){
-					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
-					}
+		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
+			{
+			$themeslinks="";
+			for ($x=0;$x<count($themes);$x++){
+				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
+				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+				}
+			} 
+		else
+			{
+			echo stripslashes(str_replace("*","",$themename));
 			}?></h1>
 
 		<div class="clearerright"> </div>
