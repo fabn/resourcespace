@@ -153,40 +153,6 @@ function save_resource_data($ref,$multi)
 					sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
 				}		
 
-				global $use_resource_column_data;
-				if ($use_resource_column_data){
-					# By default, also write the resource table column mapping (if set)
-					$write_column=true;
-
-					# For metadata templates, support an alternative title field (so the original title field can be used as part of metadata)
-					global $metadata_template_title_field,$metadata_template_resource_type;
-					if (isset($metadata_template_title_field) && $metadata_template_resource_type==$resource_data["resource_type"])
-						{
-						if ($resource_column=="title") {$write_column=false;} # Do not write the original title.
-						if ($metadata_template_title_field=$fields[$n]["ref"]) {$resource_column="title";} # Write the metadata template title to the title column instead.
-						}
-
-					# Add to resource column SQL
-					if (strlen($resource_column)>0 && $write_column)
-						{
-						if ($resource_sql!="") {$resource_sql.=",";}
-						if (trim($val)=="" || trim($val)==",")
-							{
-							# Insert null for empty columns.
-							$resource_sql.=$resource_column . "=null";
-							}
-						else
-							{
-							$mapval=$val;
-						
-							# Fix for legacy systems using a 'rating' mapped to an integer rating column on the resource table  - when writing numeric values, remove any comma (rating was a dropdown box and the value is therefore prefixed with a comma)
-							if (is_numeric(str_replace(",","",$mapval))) {$mapval=str_replace(",","",$mapval);}
-						
-							$resource_sql.=$resource_column . "='" . escape_check($mapval) . "'";
-							}
-						
-						}
-				}
 				# Purge existing data and keyword mappings, decrease keyword hitcounts.
 				sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 				
@@ -407,16 +373,6 @@ function save_resource_data_multi($collection)
 					if (in_array($fields[$n]["ref"],$joins)){
 						sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
 					}		
-					
-					global $use_resource_column_data;
-					if ($use_resource_column_data){
-						# If 'resource_column' is set, then we need to add this to a query to back-update
-						# the related columns on the resource table
-						if (strlen($fields[$n]["resource_column"])>0)
-							{	
-							sql_query("update resource set " . $fields[$n]["resource_column"] . "='" . escape_check($val) . "' where ref='$ref'");
-							}
-					}	
 						
 					# Purge existing data and keyword mappings, decrease keyword hitcounts.
 					sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
@@ -603,16 +559,6 @@ function update_field($resource,$field,$value)
 	sql_query("insert into resource_data(resource,resource_type_field,value) values ('$resource','$field','$value')");
 	
 	if ($value=="") {$value="null";} else {$value="'" . $value . "'";}
-	
-	# Also update resource table?
-	global $use_resource_column_data;
-	if ($use_resource_column_data){
-	$column=$fieldinfo["resource_column"];
-	if (strlen($column)>0)
-		{
-		sql_query("update resource set $column = $value where ref='$resource'");
-		}
-	}	
 		
 	# If this is a 'joined' field we need to add it to the resource column
 	$joins=get_resource_table_joins();
@@ -680,7 +626,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			}
 		
 		# make vars available to template
-		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false);
+		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,$watermarked=true);
 		$templatevars['url']=$baseurl . "/?r=" . $resource . $key;
 		$templatevars['fromusername']=$fromusername;
 		$templatevars['message']=$message;
@@ -814,10 +760,8 @@ function copy_resource($from,$resource_type=-1)
 		$joins_sql.=",field$join ";
 	}
 	
-	global $use_resource_column_data;
 	$add="";
-	if ($use_resource_column_data){$add="title,country,";}
-	
+
 	# First copy the resources row
 	sql_query("insert into resource($add resource_type,creation_date,rating,archive,access,created_by $joins_sql) select $add" . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",creation_date,rating,archive,access,created_by $joins_sql from resource where ref='$from';");
 	$to=sql_insert_id();
@@ -1071,14 +1015,10 @@ function import_resource($path,$type,$title,$ingest=false)
 		global $filename_field;
 		if (isset($filename_field))
 			{
-			global $use_resource_column_data;
-			if (!$use_resource_column_data){
-				$s=explode("/",$path);
-				$filename=end($s);
-				} 
-			else {
-				$filename=$path; // which will update file_path as well in old installs. 
-				}
+
+			$s=explode("/",$path);
+			$filename=end($s);
+				
 			update_field($r,$filename_field,$filename);
 			}
 		}

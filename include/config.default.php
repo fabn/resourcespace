@@ -976,10 +976,6 @@ $partial_index_min_word_length=3;
 # ---------------------
 # Search Display 
 
-# all existing resource_data fields needed for fast search displays are gathered in get_resource_table_joins() and will be added
-# to the resource table as varchar(200) via the DBStruct check for quicker display and sorting, and edits will be duped there as well.
-$use_resource_column_data=false; // should be false 
-
 # Thumbs Display Fields: array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(8,3);
 # array of additional thumbs_display_fields to apply CSS modifications to (via $search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
@@ -1028,7 +1024,7 @@ $data_joins=array();
 # List View Default Columns
 $id_column=true;
 $resource_type_column=true;
-$date_column=false; // based on creation_date which is a deprecated mapping. The new system distinguishes creation_date (the date the resource record was created) from the date metadata field. If $use_resource_column_data=true, creation_date is updated with the date field.
+$date_column=false; // based on creation_date which is a deprecated mapping. The new system distinguishes creation_date (the date the resource record was created) from the date metadata field. creation_date is updated with the date field.
 # ---------------------------
 
 

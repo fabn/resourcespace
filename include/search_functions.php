@@ -125,10 +125,6 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$select.=",null group_access, null user_access ";
 	}
 	
-	# add title and country to select (for older installations)
-	global $use_resource_column_data;
-	if ($use_resource_column_data){$select.=",title,country";}
-	
 	# add 'joins' to select (adding them 
 	$joins=get_resource_table_joins();
 	foreach( $joins as $datajoin)

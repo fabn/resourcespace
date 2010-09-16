@@ -79,14 +79,8 @@ if ($noattach=="")
 			{
 				
 			# Fetch from field data or standard table		
-			if (!$use_resource_column_data)
-				{
-				$origfile=get_data_by_field($ref,$filename_field);	
-				}
-			else
-				{
-				$origfile=get_resource_data($ref);$origfile=$origfile["file_path"];
-				}
+
+			$origfile=get_data_by_field($ref,$filename_field);	
 				
 			}
 		if (strlen($origfile)>0)

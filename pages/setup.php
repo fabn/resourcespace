@@ -615,7 +615,6 @@ h2#dbaseconfig{  min-height: 32px;}
 		$config_output .= "\$ftp_defaultfolder = '$ftp_defaultfolder';\r\n";
 
 		// set display defaults for new installs
-		$config_output .= "\$use_resource_column_data = false;\r\n";
 		$config_output .= "\$thumbs_display_fields = array(8,3);\r\n";
 		$config_output .= "\$list_display_fields = array(8,3,12);\r\n";
 		$config_output .= "\$sort_fields = array(12);\r\n";

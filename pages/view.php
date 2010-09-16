@@ -93,7 +93,7 @@ $is_template=(isset($metadata_template_resource_type) && $resource["resource_typ
 
 $title_field=$view_title_field; 
 # If this is a metadata template and we're using field data, change title_field to the metadata template title field
-if (!$use_resource_column_data && isset($metadata_template_resource_type) && ($resource["resource_type"]==$metadata_template_resource_type))
+if (isset($metadata_template_resource_type) && ($resource["resource_type"]==$metadata_template_resource_type))
 	{
 	if (isset($metadata_template_title_field)){
 		$title_field=$metadata_template_title_field;
@@ -186,11 +186,10 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 
 
 <h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php 
-if ($use_resource_column_data || isset($default_to_standard_title)){
-	?><?php echo highlightkeywords(htmlspecialchars(i18n_get_translated($resource["field".$view_title_field])),$search)?><?php 
-	} 
-else { 
-	 if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } /* end hook replaceviewtitle */  } ?>&nbsp;</h1>
+
+ if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } /* end hook replaceviewtitle */  
+  
+?>&nbsp;</h1>
 <?php } /* End of renderinnerresourceheader hook */ ?>
 </div>
 
@@ -897,16 +896,15 @@ if (count($result)>0)
 				$title=$result[$n]["field".$view_title_field];
 
 				# swap title fields if necessary
-				if (!$use_resource_column_data)
+
+				if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 					{
-					if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+					if ($result[$n]['resource_type']==$metadata_template_resource_type)
 						{
-						if ($result[$n]['resource_type']==$metadata_template_resource_type)
-							{
-							$title=$result[$n]["field".$metadata_template_title_field];
-							}	
+						$title=$result[$n]["field".$metadata_template_title_field];
 						}	
 					}	
+						
 				?>
 				
 				<!--Resource Panel-->
@@ -946,16 +944,15 @@ if (count($result)>0)
 			$title=$result[$n]["field".$view_title_field];
 
 			# swap title fields if necessary
-			if (!$use_resource_column_data)
+
+			if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 				{
-				if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
+				if ($result[$n]["resource_type"]==$metadata_template_resource_type)
 					{
-					if ($result[$n]["resource_type"]==$metadata_template_resource_type)
-						{
-						$title=$result[$n]["field".$metadata_template_title_field];
-						}	
+					$title=$result[$n]["field".$metadata_template_title_field];
 					}	
 				}	
+	
 
 			?>
         	<!--Resource Panel-->
