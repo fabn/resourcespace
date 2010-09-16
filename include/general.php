@@ -1261,7 +1261,10 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	global $email_footer;
 	global $disable_quoted_printable_enc;
 	
-	$message.="\r\n\r\n\r\n" . $email_footer;
+	# Work out correct EOL to use for mails (should use the system EOL).
+	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
+	
+	$message.=$eol.$eol.$eol . $email_footer;
 	
 	if ($disable_quoted_printable_enc==false){
 	$message=rs_quoted_printable_encode($message);
@@ -1274,18 +1277,46 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	global $applicationname;
 	if ($from_name==""){$from_name=$applicationname;}
 	
-	# Work out correct EOL to use for mails (should use the system EOL).
-	if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
+	if (substr($reply_to,-1)==","){$reply_to=substr($reply_to,0,-1);}
+	
+	$reply_tos=explode(",",$reply_to);
 	
 	# Add headers
 	$headers="";
-   #	$headers .= "X-Sender:  x-sender" . $eol;
-   	$headers .= "From: \"$from_name\" <$reply_to>" . $eol;
+	#$headers .= "X-Sender:  x-sender" . $eol;
+   	$headers .= "From: ";
+   	#allow multiple emails, and fix for long format emails
+   	for ($n=0;$n<count($reply_tos);$n++){
+		if ($n!=0){$headers.=",";}
+		if (strstr($reply_tos[$n],"<")){ 
+			$rtparts=explode("<",$reply_tos[$n]);
+			$headers.=$rtparts[0]." <".$rtparts[1];
+		}
+		else {
+			$headers.=$from_name." <".$reply_tos[$n].">";
+		}
+ 	}
+ 	$headers.=$eol;
  	$headers .= "Reply-To: $reply_to" . $eol;
+ 	
 	if ($cc!=""){
 		global $userfullname;
-		$headers .= "Cc: ".$userfullname. " <$cc>\r\n";
+		#allow multiple emails, and fix for long format emails
+		$ccs=explode(",",$cc);
+		$headers .= "Cc: ";
+		for ($n=0;$n<count($ccs);$n++){
+			if ($n!=0){$headers.=",";}
+			if (strstr($ccs[$n],"<")){ 
+				$ccparts=explode("<",$ccs[$n]);
+				$headers.=$ccparts[0]." <".$ccparts[1];
+			}
+			else {
+				$headers.=$userfullname. " <".$ccs[$n].">";
+			}
+		}
+		$headers.=$eol;
 	}
+	
 	$headers .= "Date: " . date("r") .  $eol;
    	$headers .= "Message-ID: <" . date("YmdHis") . $from . ">" . $eol;
    	#$headers .= "Return-Path: returnpath" . $eol;
@@ -1475,9 +1506,28 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	if (!isset($body)){$body=$message;}
 
 	$mail = new PHPMailer();
-	$mail->From = $reply_to;
-	$mail->FromName = $from_name;
-	$mail->AddReplyto($reply_to,$from_name);
+	$reply_tos=explode(",",$reply_to);
+	// only one from address is possible, so only use the first one:
+	if (strstr($reply_tos[0],"<")){
+		$rtparts=explode("<",$reply_tos[0]);
+		$mail->From = str_replace(">","",$rtparts[1]);
+		$mail->FromName = $rtparts[0];
+	}
+	else {
+		$mail->From = $reply_tos[0];
+		$mail->FromName = $from_name;
+	}
+	
+	// if there are multiple addresses, that's what replyto handles.
+	for ($n=0;$n<count($reply_tos);$n++){
+		if (strstr($reply_tos[$n],"<")){
+			$rtparts=explode("<",$reply_tos[$n]);
+			$mail->AddReplyto(str_replace(">","",$rtparts[1]),$rtparts[0]);
+		}
+		else {
+			$mail->AddReplyto($reply_tos[$n],$from_name);
+		}
+	}
 	
 	# modification to handle multiple comma delimited emails
 	# such as for a multiple $email_notify
@@ -1485,7 +1535,13 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$emails = explode(',', $emails);
 	$emails = array_map('trim', $emails);
 	foreach ($emails as $email){
-		$mail->AddAddress($email);
+		if (strstr($email,"<")){
+			$emparts=explode("<",$email);
+			$mail->AddAddress(str_replace(">","",$emparts[1]),$emparts[0]);
+		}
+		else {
+			$mail->AddAddress($email);
+		}
 	}
 	
 	if ($cc!=""){
@@ -1495,7 +1551,13 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		$ccs = array_map('trim', $ccs);
 		global $userfullname;
 		foreach ($ccs as $cc){
-			$mail->AddCC($cc,$userfullname);
+			if (strstr($cc,"<")){
+				$ccparts=explode("<",$cc);
+				$mail->AddCC(str_replace(">","",$ccparts[1]),$ccparts[0]);
+			}
+			else{
+				$mail->AddCC($cc,$userfullname);
+			}
 		}
 	}
 	$mail->CharSet = "utf-8"; 

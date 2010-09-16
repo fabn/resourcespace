@@ -104,7 +104,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo $users[$n]["groupname"]?></td>
 	<?php } ?>
 	<?php if (!hook("replaceemailrow")){?>
-	<td><?php echo $users[$n]["email"]?></td>
+	<td><?php echo htmlentities($users[$n]["email"])?></td>
 	<?php } ?>
 	<td><?php 
 	# Forumulate a sensible last active date that also includes a non-approved indication.
