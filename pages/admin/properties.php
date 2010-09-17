@@ -23,6 +23,12 @@ for ($n=0;$n<count($plugins);$n++)
     if (file_exists($alt_tree_path . "tree.txt")) {$tree=file($alt_tree_path . "tree.txt");}
     }
 
+if ($web_config_edit){
+	$tree[]="999  ;;config.default.php;false;true;txt;;url fileedit.php?file=../../include/config.default.php";
+	$tree[]="999  ;;config.php;false;true;txt;;url fileedit.php?file=../../include/config.php";
+}
+
+
 #fetch ID string
 $id=$_GET["id"];
 $name=$_GET["name"];
