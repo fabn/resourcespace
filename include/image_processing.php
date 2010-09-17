@@ -335,7 +335,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 						$s=trim_array(explode(",",$value));
 						$value=""; # blank value
 						for ($n=0;$n<count($s);$n++)
-							{echo "value:". $s[$n]."...Option: ". $options[$n];
+							{
 							if (trim($s[0])!="" && (in_array(strtolower($s[$n]),$options))) {$value.="," . $s[$n];} 							
 							}
 						#echo($read_from[$i]["ref"] . " = " . $value . "<br>");
