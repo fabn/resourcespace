@@ -328,15 +328,15 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 						# The use of safe_file_name and strtolower ensures matching takes place on alphanumeric characters only and ignores case.
 						
 						# First fetch all options in all languages
-						$options=trim_array(explode(",",strtolower(i18n_get_indexable($read_from[$i]["options"]))));
-						for ($n=0;$n<count($options);$n++)	{$options[$n]=safe_file_name($options[$n]);}
+						$options=trim_array(explode(",",strtolower($read_from[$i]["options"])));
+						for ($n=0;$n<count($options);$n++)	{$options[$n]=$options[$n];}
 
 						# If not in the options list, do not read this value
 						$s=trim_array(explode(",",$value));
 						$value=""; # blank value
 						for ($n=0;$n<count($s);$n++)
-							{
-							if (trim($s[0])!="" && (in_array(safe_file_name(strtolower($s[$n])),$options))) {$value.="," . $s[$n];} 							
+							{echo "value:". $s[$n]."...Option: ". $options[$n];
+							if (trim($s[0])!="" && (in_array(strtolower($s[$n]),$options))) {$value.="," . $s[$n];} 							
 							}
 						#echo($read_from[$i]["ref"] . " = " . $value . "<br>");
 						}
