@@ -85,7 +85,7 @@ if ($filename!="config.php" && $filename!="config.default.php"){
 <?php } ?>
 
 <?php if ($filename!="config.default.php"){
-	echo $filename;?>
+?>
 <td align=right><input type="submit" name="submit" value="Save" style="width:150px;" onclick="this.value='please wait';"></td></tr>
 <?php } ?>
 </table>
