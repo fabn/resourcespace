@@ -68,7 +68,8 @@ include "include/header.php";
 <div class=propbox style="font-weight:bold;color:red;"><?php echo $error?></div><br><br>
 <?php } ?>
 
-<div class="proptitle">File: <?php echo str_replace("../","",$file); if (basename($file)=="config.default.php"){echo " (copy and paste options from here)";}?></div>
+<div class="proptitle">File: <?php echo str_replace("../","",$file); if (basename($file)=="config.default.php"){echo " (copy and paste options from here)";}
+if (basename($file)=="config.php"){echo " (BE CAREFUL not to make syntax errors. If you break this file, you must fix server-side!)";}?></div>
 <div class="propbox">
 
 <form method=post>
