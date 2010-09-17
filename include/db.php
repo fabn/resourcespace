@@ -865,6 +865,7 @@ function rcRmdir ($path){ # Recursive rmdir function.
 function get_resource_table_joins(){
 	
 	global 
+	$filesize_field,
 	$rating_field,
 	$sort_fields,
 	$small_thumbs_display_fields,
@@ -896,6 +897,8 @@ function get_resource_table_joins(){
 	
 	$joins=array_unique($joins);
 	$n=0;
+	# add filesize field automatically if set.
+	if (isset($filesize_field)){$joins[]=$filesize_field;}
 	foreach ($joins as $join){
 		if ($join!=""){
 			$return[$n]=$join;

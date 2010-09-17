@@ -18,10 +18,11 @@ $fieldrefs=explode(",",$fieldrefs);
 if (count($fieldrefs)==0){die ("Please add a list of refs to the fieldrefs array, which are the ref numbers of the fields that you would like exiftool to extract from.");}
 
 foreach ($fieldrefs as $fieldref){
-	$fieldref_info= sql_query("select exiftool_field,title,resource_type,name from resource_type_field where ref='$fieldref'");
+	$fieldref_info= sql_query("select exiftool_field,exiftool_filter,title,resource_type,name from resource_type_field where ref='$fieldref'");
 
 	$title=$fieldref_info[0]["title"];
 	$name=$fieldref_info[0]["name"];
+	$exiftool_filter=$fieldref_info[0]["exiftool_filter"];
 	$exiftool_tag=$fieldref_info[0]["exiftool_field"];
 	$field_resource_type=$fieldref_info[0]["resource_type"];
 
@@ -52,6 +53,9 @@ foreach ($fieldrefs as $fieldref){
 		$value = iptc_return_utf8(trim(shell_exec($command)));	
 	
 		$plugin="../../plugins/exiftool_filter_" . $name . ".php";
+		if ($exiftool_filter!=""){
+			eval($exiftool_filter);
+			}
 		if (file_exists($plugin)) {include $plugin;}
 	
 		if ($blanks=="true"){
