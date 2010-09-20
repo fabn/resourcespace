@@ -90,4 +90,4 @@ body,html {background: #111 ;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #333;}
 
 .InfoTable tr {background-image:url(); background-repeat: repeat-x;background-color: #444;}
-.InfoTable td {border:1px solid #333;border-top:1px solid #222;padding:10px;}
+.InfoTable td {border:1px solid #666;border-top:1px solid #777;padding:10px;}
