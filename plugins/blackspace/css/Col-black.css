@@ -91,3 +91,6 @@ body,html {background: #111 ;}
 
 .InfoTable tr {background-image:url(); background-repeat: repeat-x;background-color: #444;}
 .InfoTable td {border:1px solid #666;border-top:1px solid #777;padding:10px;}
+.RecordStory{color: #fff;background: #555 url();border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;}
+.RecordStory h1{color: #fff;}
+.RecordStory a:hover{color: #fff;}
