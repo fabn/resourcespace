@@ -427,9 +427,7 @@ elseif ($k!="")
     <?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li><?php } ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
-    
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["edit"]:$lang["editcollection"]?></a></li><?php } ?>
-
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
 	<?php hook("collectiontool2");?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
@@ -641,6 +639,19 @@ elseif ($k!="")
 	<li><a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo $lang["sendfeedback"]?></a></li><?php } ?>
+   	<?php if (count($result)>0)
+    	{ 
+		# Ability to request a whole collection (only if user has restricted access to any of these resources)
+		$min_access=collection_min_access($usercollection);
+		if ($min_access!=0)
+			{
+		    ?>
+		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo 	$lang["requestall"]?></a></li>
+		    <?php
+		    }
+	    }
+	?>
+   	
    	<li><a href="collections.php?thumbs=show&collection=<?php echo $usercollection?>&k=<?php echo $k?>" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></li>
 </div>
 <?php 
