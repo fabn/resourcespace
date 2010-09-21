@@ -152,7 +152,10 @@ for ($n=0;$n<count($result);$n++){
 	$currenty=$pdf->GetY();
 	if ($ref!==false){
 		# Find image
-		$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension);
+		# Load access level
+		$access=get_resource_access($result[$n]); // feed get_resource_access the resource array rather than the ref, since access is included.
+		$use_watermark=check_use_watermark();
+		$imgpath = get_resource_path($ref,true,$imgsize,false,$preview_extension,-1,1,$use_watermark);
 			$preview_extension="jpeg";
 		if (!file_exists($imgpath)){
 			$imgpath="../../gfx/".get_nopreview_icon($result[$n]['resource_type'],$result[$n]['file_extension'],false,true); 
