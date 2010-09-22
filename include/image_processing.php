@@ -1349,7 +1349,6 @@ function AutoRotateImage ($src_image){
 	$src_image = $src_image;
 
 	$command .= ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
-	error_log($command);
 	shell_exec($command);
 	if (file_exists($new_image)){
 		unlink($src_image);
