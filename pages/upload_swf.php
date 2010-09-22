@@ -44,7 +44,7 @@ if (array_key_exists("Filedata",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 	
-		$status=upload_file($ref,(getval("no_exif","")!=""));
+		$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
 		
 		$thumb=get_resource_path($ref,true,"col",false);
 		if (file_exists($thumb))
@@ -69,7 +69,7 @@ if (array_key_exists("Filedata",$_FILES))
 			$ref=trim($s[0]);
 			if (is_numeric($ref)) # is the first part of the filename numeric?
 				{
-				$status=upload_file($ref,(getval("no_exif","")!="")); # Upload to the specified ref.
+				$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
 				}
 			}
 		$thumb=get_resource_path($ref,true,"col",false);
@@ -196,7 +196,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 
@@ -271,7 +271,7 @@ function debug()
 		<div id="thumbnails"></div>
 	</div>
 
-<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
 
 <p><a target="_blank" href="http://get.adobe.com/flashplayer/">&gt; <?php echo $lang["getflash"] ?></a></p>
 

@@ -104,6 +104,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 
 		$save_errors=save_resource_data($ref,$multiple);
 		$no_exif=getval("no_exif","");
+		$autorotate = getval("autorotate","");
 
 		if ($upload_collection_name_required){
 			if (getvalescaped("entercolname","")=="" && getval("collection_add","")==-1){ 
@@ -125,22 +126,22 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
 				elseif (getval("java","")!="") // Test if in browser java upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
 				else
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch.php?resource_type=".$resource_type . "&no_exif=" . $no_exif);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
 				}
 			}
@@ -349,6 +350,15 @@ else
 <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
 <div class="clearerleft"> </div>
 </div>
+
+<?php if($camera_autorotation){ ?>
+<div class="Question">
+<label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php
+if ($camera_autorotation_checked) {echo ' checked';}?>>
+<div class="clearerleft"> </div>
+</div>
+<?php } // end if camera autorotation ?>
+
 
 <?php } ?>
 

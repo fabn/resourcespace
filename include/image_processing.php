@@ -10,7 +10,7 @@
  */
 
 if (!function_exists("upload_file")){
-function upload_file($ref,$no_exif=false,$revert=false)
+function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	{
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
@@ -100,6 +100,14 @@ function upload_file($ref,$no_exif=false,$revert=false)
        	 	}
      	else
      		{
+		
+		global $camera_autorotation;
+		if ($camera_autorotation){
+			if ($autorotate){
+				AutoRotateImage($filepath);
+			}
+		}
+
      		chmod($filepath,0777);
 			$status="Your file has been uploaded.";
     	 	}
@@ -1318,6 +1326,39 @@ function extract_text($ref,$extension)
 		}
 	
 	}
+
+function AutoRotateImage ($src_image){
+	global $imagemagick_path;
+	if (!isset($imagemagick_path)){
+		return false; // for the moment, this only works for imagemagick
+			      // note that it would be theoretically possible to implement this
+                              // with a combination of exiftool and GD image rotation functions.
+	}
+        # Locate imagemagick.
+        $command=$imagemagick_path . "/bin/convert";
+        if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+        if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+        if (!file_exists($command)) {return false;}
+
+	$exploded_src = explode('.',$src_image);
+	$ext = $exploded_src[count($exploded_src)-1];
+	$triml = strlen($src_image) - (strlen($ext)+1);
+	$noext = substr($src_image,0,$triml);
+
+	$new_image = $noext . '-autorotated.' . $ext ;
+	$src_image = $src_image;
+
+	$command .= ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
+	error_log($command);
+	shell_exec($command);
+	if (file_exists($new_image)){
+		unlink($src_image);
+		rename($new_image,$src_image);
+		return true;
+	} else {
+		return false;
+	}
+}
 	
 
 ?>

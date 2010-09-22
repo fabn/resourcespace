@@ -31,7 +31,7 @@ if (array_key_exists("userfile",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 
-		$status=upload_file($ref,(getval("no_exif","")!=""));
+		$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval("autorotate","")!=""));
 		redirect("pages/edit.php?refreshcollectionframe=true&ref=" . $ref."&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
 		}	
 	}
@@ -70,6 +70,13 @@ function check(filename) {
 <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes">
 <div class="clearerleft"> </div>
 </div>
+
+<?php if($camera_autorotation){ ?>
+<div class="Question">
+<label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php if ($camera_autorotation_checked) {echo ' checked';}?>>
+<div class="clearerleft"> </div>
+</div>
+<?php } // end if camera autorotation ?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			

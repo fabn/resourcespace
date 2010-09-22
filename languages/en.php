@@ -979,4 +979,6 @@ $lang["subcategories"]="Subcategories";
 $lang["back"]="Back";
 
 $lang["pleasewait"]="Please wait...";
+
+$lang["autorotate"]="Autorotate images?";
 ?>

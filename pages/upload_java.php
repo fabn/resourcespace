@@ -162,7 +162,7 @@ if (array_key_exists("File0",$_FILES))
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
 	
-		$status=upload_file($ref,(getval("no_exif","")!=""));
+		$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
 		
 		echo "SUCCESS";
 		exit();
@@ -179,7 +179,7 @@ if (array_key_exists("File0",$_FILES))
 			$ref=trim($s[0]);
 			if (is_numeric($ref)) # is the first part of the filename numeric?
 				{
-				$status=upload_file($ref,(getval("no_exif","")!="")); # Upload to the specified ref.
+				$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
 				}
 			}
 
@@ -216,7 +216,7 @@ if (test==null || typeof(test)=="undefined") {
 		window.location.href="search.php";
 	}
 }
-popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo urlencode(getvalescaped("no_exif",""))?>');
+popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo urlencode(getvalescaped("no_exif",""))?>&autorotate=<?php echo urlencode(getvalescaped("autorotate",""))?>');
 
 </script>
 <?php }?>
@@ -254,7 +254,7 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
@@ -278,7 +278,8 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
-<p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
+<p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
+&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
 
 <p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p>
 
