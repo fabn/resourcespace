@@ -977,4 +977,6 @@ $lang["alternatetype"]="Alternative type";
 
 $lang["subcategories"]="Subcategories";
 $lang["back"]="Back";
+
+$lang["pleasewait"]="Please wait...";
 ?>
