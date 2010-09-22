@@ -978,7 +978,7 @@ $partial_index_min_word_length=3;
 
 # Thumbs Display Fields: array of fields to display on the large thumbnail view.
 $thumbs_display_fields=array(8,3);
-# array of additional thumbs_display_fields to apply CSS modifications to (via $search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
+# array of defined thumbs_display_fields to apply CSS modifications to (via $search_results_title_wordwrap, $search_results_title_height, $search_results_title_trim)
 $thumbs_display_extended_fields=array();
 	# $search_result_title_height=26;
 	$search_results_title_trim=40;
@@ -988,7 +988,7 @@ $thumbs_display_extended_fields=array();
 $xlthumbs=false;
 # Extra Large Display Fields:  array of fields to display on the xlarge thumbnail view.
 $xl_thumbs_display_fields=array(8,3);
-# array of additional xl_thumbs_display_fields to apply CSS modifications to (via $xl_search_results_title_wordwrap, $xl_search_results_title_height, $xl_search_results_title_trim)
+# array of defined xl_thumbs_display_fields to apply CSS modifications to (via $xl_search_results_title_wordwrap, $xl_search_results_title_height, $xl_search_results_title_trim)
 $xl_thumbs_display_extended_fields=array();
 	# $xl_search_result_title_height=26;
 	$xl_search_results_title_trim=40;
@@ -998,7 +998,7 @@ $xl_thumbs_display_extended_fields=array();
 $smallthumbs=true;	
 # Small Thumbs Display Fields: array of fields to display on the small thumbnail view.
 $small_thumbs_display_fields=array();
-# array of additional small_thumbs_display_fields to apply CSS modifications to ($small_search_results_title_wordwrap, $small_search_results_title_height, $small_search_results_title_trim)
+# array of defined small_thumbs_display_fields to apply CSS modifications to ($small_search_results_title_wordwrap, $small_search_results_title_height, $small_search_results_title_trim)
 $small_thumbs_display_extended_fields=array();
 	# $small_search_result_title_height=26;
 	$small_search_results_title_trim=30;
