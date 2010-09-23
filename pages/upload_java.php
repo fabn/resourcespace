@@ -286,5 +286,8 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 </div>
 
 <?php
+
+hook("upload_page_bottom");
+
 include "../include/footer.php";
 ?>

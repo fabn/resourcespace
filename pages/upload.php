@@ -89,5 +89,7 @@ function check(filename) {
 </div>
 
 <?php
+hook("upload_page_bottom");
+
 include "../include/footer.php";
 ?>
