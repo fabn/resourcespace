@@ -981,4 +981,11 @@ $lang["back"]="Back";
 $lang["pleasewait"]="Please wait...";
 
 $lang["autorotate"]="Autorotate images?";
+
+
+$lang["period"]="Period";
+$lang["lastndays"]="Last ? days"; # ? is replaced by the system with the number of days, for example "Last 100 days".
+$lang["specificdays"]="Specific number of days";
+$lang["specificdaterange"]="Specific date range";
+
 ?>
