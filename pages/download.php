@@ -117,7 +117,7 @@ $mime="application/octet-stream";
 #
 # Note : Videos... we should re-encode to a single type for video previews at some point (flash file?)
 # For now, support the basic types as direct in-browser previews of the source file. DH 20071117
-if ($noattach!="")
+if ($noattach=="")
 	{
 	if (isset($mime_type_by_extension[$ext]))
 		{
