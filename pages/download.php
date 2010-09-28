@@ -111,20 +111,22 @@ if ($noattach=="")
 # We assign a default mime-type, in case we can find the one associated to the file extension.
 $mime="application/octet-stream";
 
-# For online previews, set the mime type.
-# We only need to add the types we'll be using for previews here, not all supported file types.
-# Mime types are defined in configuration. This allow to easily add new mime types when needed.
-#
-# Note : Videos... we should re-encode to a single type for video previews at some point (flash file?)
-# For now, support the basic types as direct in-browser previews of the source file. DH 20071117
+
 if ($noattach=="")
-	{
+	{		
+	# Get mime type via exiftool if possible
+	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
+		{	
+		$command=$exiftool_path."/exiftool -s -s -s -t -mimetype " . escapeshellarg($path);
+		$mime=shell_exec($command);
+		}	
+	# Override or correct for lack of exiftool with config mappings	
 	if (isset($mime_type_by_extension[$ext]))
 		{
 		$mime = $mime_type_by_extension[$ext];
 		}
 	}
-
+	
 # We declare the downloaded content mime type.
 header("Content-Type: $mime");
 
