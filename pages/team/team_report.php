@@ -50,12 +50,43 @@ $from=getvalescaped("from","");
 $to=getvalescaped("to","");
 $output="";
 
-if ($report!="")
+
+# Execute report.
+if ($report!="" && (getval("createemail","")==""))
 	{
 	$download=getval("download","")!="";
 	$output=do_report($report, $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,$download);
 	}
+	
+	
+if (getval("createemail","")!="")
+	{
+	# Create a new periodic e-mail report
+	create_periodic_email($userref,$report,$period,getval("email_days",""));
+	?>
+	<script type="text/javascript">
+	alert("<?php echo $lang["newemailreportcreated"] ?>");
+	</script>
+	<?php
+	}
+	
 include "../../include/header.php";
+
+$unsubscribe=getvalescaped("unsubscribe","");
+if ($unsubscribe!="")
+	{
+	unsubscribe_periodic_report($unsubscribe);
+	?>
+	<div class="BasicsBox"> 
+	  <h2>&nbsp;</h2>
+	  <h1><?php echo $lang["unsubscribed"]?></h1>
+	  <p><?php echo $lang["youhaveunsubscribedreport"]?></p>
+	</div>
+	<?php
+	}
+else
+	{
+	# Normal behaviour.
 ?>
 
 <div class="BasicsBox"> 
@@ -84,6 +115,17 @@ for ($n=0;$n<count($reports);$n++)
 <label for="period"><?php echo $lang["period"]?></label><select id="period" name="period" class="stdwidth" onChange="
 if (this.value==-1) {document.getElementById('DateRange').style.display='block';} else {document.getElementById('DateRange').style.display='none';}
 if (this.value==0) {document.getElementById('SpecificDays').style.display='block';} else {document.getElementById('SpecificDays').style.display='none';}
+if (this.value!=-1) {document.getElementById('EmailMe').style.display='block';} else {document.getElementById('EmailMe').style.display='none';}
+// Copy reporting period to e-mail period
+if (document.getElementById('period').value==0)
+	{
+	// Copy from specific day box
+	document.getElementById('email_days').value=document.getElementById('period_days').value;
+	}
+else
+	{
+	document.getElementById('email_days').value=document.getElementById('period').value;		
+	}
 ">
 <?php
 foreach ($reporting_periods_default as $period_default)
@@ -155,7 +197,68 @@ $dd=getval($name . "-d",date("d"));
 
 
 
-<div class="QuestionSubmit">
+
+
+
+
+
+<!-- E-mail Me function -->
+<div id="EmailMe" <?php if ($period_init==-1) { ?>style="display:none;"<?php } ?>>
+<div class="Question">
+<label for="email"><?php echo $lang["emailperiodically"]?></label>
+<input type="checkbox" onClick="
+if (this.checked)
+	{
+	document.getElementById('EmailSetup').style.display='block';
+	
+	// Copy reporting period to e-mail period
+	if (document.getElementById('period').value==0)
+		{
+		// Copy from specific day box
+		document.getElementById('email_days').value=document.getElementById('period_days').value;
+		}
+	else
+		{
+		document.getElementById('email_days').value=document.getElementById('period').value;		
+		}
+	}
+else
+	{
+	document.getElementById('EmailSetup').style.display='none';
+	}
+	">
+<div class="clearerleft"> </div>
+</div>
+
+<div id="EmailSetup" style="display:none;">
+
+<!-- E-mail Period select -->
+<div class="Question">
+<label for="email_days">&nbsp;</label>
+<?php
+$textbox="<input type=\"text\" id=\"email_days\" name=\"email_days\" size=\"4\" value=\"7\">";
+echo str_replace("?",$textbox,$lang["emaileveryndays"]);
+?>
+&nbsp;&nbsp;<input name="createemail" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"] ?>&nbsp;&nbsp;" />
+
+<div class="clearerleft"> </div>
+</div>
+<!-- End of E-mail Period Select -->
+
+</div>
+</div>
+<!-- End of E-mail Me function -->
+
+
+
+
+
+
+
+
+
+
+<div class="QuestionSubmit" id="SubmitBlock">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"] ?>&nbsp;&nbsp;" />
 <input name="download" type="submit" value="&nbsp;&nbsp;<?php echo $lang["downloadreport"] ?>&nbsp;&nbsp;" />
@@ -167,5 +270,6 @@ $dd=getval($name . "-d",date("d"));
 </div>
 
 <?php
+}
 include "../../include/footer.php";
 ?>

@@ -1,0 +1,6 @@
+ref,int(11),NO,PRI,,auto_increment
+user,int(11),NO,,,
+report,int(11),NO,,,
+period,int(11),NO,,,
+email_days,int(11),NO,,,
+last_sent,datetime,YES,,,

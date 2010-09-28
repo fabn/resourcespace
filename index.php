@@ -65,6 +65,14 @@ if (getval("q","")!="")
 	$q=getvalescaped("q","");
 	$topurl="pages/team/team_request_edit.php?ref=" . $q;
 	}
+
+if (getval("ur","")!="")
+	{
+	# quick redirect to periodic report unsubscriptions.
+	$ur=getvalescaped("ur","");
+	$topurl="pages/team/team_report.php?unsubscribe=" . $ur;
+	}
+
 	
 if (getval("url","")!="")
 	{

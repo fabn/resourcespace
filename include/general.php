@@ -1235,7 +1235,7 @@ function i18n_get_indexable($text)
 	return $out;
 	}
 
-function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
+function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="",$html=false)
 	{
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	
@@ -1323,7 +1323,14 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
    	//$headers .= "Delivered-to: $email" . $eol;
    	$headers .= "MIME-Version: 1.0" . $eol;
    	$headers .= "X-Mailer: PHP Mail Function" . $eol;
-	$headers .= "Content-Type: text/plain; charset=\"UTF-8\"" . $eol;
+   	if (!$html)
+   		{
+		$headers .= "Content-Type: text/plain; charset=\"UTF-8\"" . $eol;
+		}
+	else
+		{
+		$headers .= "Content-Type: text/html; charset=\"UTF-8\"" . $eol;
+		}
 	$headers .= "Content-Transfer-Encoding: quoted-printable" . $eol;
 	mail ($email,$subject,$message,$headers);
 	}

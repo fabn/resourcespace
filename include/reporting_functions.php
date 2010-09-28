@@ -7,7 +7,7 @@ function get_reports()
 	return sql_query("select * from report order by name");
 	}
 
-function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true)
+function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true,$add_border=false)
 	{
 	# Run report with id $ref for the date range specified. Returns a result array.
 	$report=sql_query("select * from report where ref='$ref'");$report=$report[0];
@@ -69,7 +69,9 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 	else
 		{
 		# Not downloading - output a table
-		$output="<br /><style>.InfoTable td {padding:5px;}</style><table class=\"InfoTable\">";
+		$border="";
+		if ($add_border) {$border="border=\"1\"";}
+		$output="<br /><style>.InfoTable td {padding:5px;}</style><table $border class=\"InfoTable\">";
 		for ($n=0;$n<count($results);$n++)
 			{
 			$result=$results[$n];
@@ -94,11 +96,100 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 			$output.="</tr>";
 			}
 		$output.="</table>";
+		if (count($results)==0) {global $lang;$output.=$lang["reportempty"];}
 		return $output;
 		}
 		
 	exit();
 	}
+	
+function create_periodic_email($user,$report,$period,$email_days)
+	{
+	# Creates a new automatic periodic e-mail report.
+#	echo ("user=$user, report=$report, period=$period, email_days=$email_days");
+
+	# Delete any matching rows for this report/period.
+	sql_query("delete from report_periodic_emails where user='$user' and report='$report' and period='$period'");
+
+	# Insert a new row.
+	sql_query("insert into report_periodic_emails(user,report,period,email_days) values ('$user','$report','$period','$email_days')");
+	
+	# Return
+	return true;
+	}
+	
+	
+function send_periodic_report_emails()
+	{
+	# For all configured periodic reports, send a mail if necessary.
+	global $lang,$baseurl;
+	
+	# Query to return all 'pending' report e-mails, i.e. where we haven't sent one before OR one is now overdue.
+	$reports=sql_query("select pe.*,u.email,r.name from report_periodic_emails pe join user u on pe.user=u.ref join report r on pe.report=r.ref where pe.last_sent is null or date_add(pe.last_sent,interval pe.email_days day)<=now()");
+	foreach ($reports as $report)
+		{
+		$start=time()-(60*60*24*$report["period"]);
+		
+		$from_y = date("Y",$start);
+		$from_m = date("m",$start);
+		$from_d = date("d",$start);
+			
+		$to_y = date("Y");
+		$to_m = date("m");
+		$to_d = date("d");
+		
+		# Generate remote HTML table.
+		$output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true);
+
+		# Append the unsubscribe link.
+		$output.="<br>" . $lang["unsubscribereport"] . "<br>" . $baseurl . "/?ur=" . $report["ref"];
+
+		# Formulate a title
+		$title = i18n_get_translated($report["name"]) . ": " . str_replace("?",$report["period"],$lang["lastndays"]);
+				
+		# Send mail.
+		echo "Sending report to " . $report["email"] . "<br>";
+		send_mail($report["email"],$title,$output,"","","",null,"","",true);
+	
+		# Mark as done.
+		sql_query("update report_periodic_emails set last_sent=now() where ref='" . $report["ref"] . "'");
+		}
+	}
+
+function unsubscribe_periodic_report($unsubscribe)
+	{
+	global $userref;
+	sql_query("delete from report_periodic_emails where user='$userref' and ref='$unsubscribe'");
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

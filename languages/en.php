@@ -988,4 +988,12 @@ $lang["lastndays"]="Last ? days"; # ? is replaced by the system with the number 
 $lang["specificdays"]="Specific number of days";
 $lang["specificdaterange"]="Specific date range";
 
+$lang["emailperiodically"]="Create new periodic e-mail";
+$lang["emaileveryndays"]="E-mail me this report every ? days";
+$lang["create"]="Create";
+$lang["newemailreportcreated"]="A new periodic e-mail has been created. You can cancel this using the link at the bottom of the e-mail.";
+$lang["unsubscribereport"]="To unsubscribe from this report, click the link below:";
+$lang["unsubscribed"]="Unsubscribed";
+$lang["youhaveunsubscribedreport"]="You have been unsubscribed from the periodic report e-mail.";
+$lang["reportempty"]="No matching data was found for the selected report and period.";
 ?>
