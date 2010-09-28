@@ -21,6 +21,7 @@ function HookDiscount_codePurchaseAdjust_item_price ($origprice)
 	global $discount_error,$discount_applied;
 	
 	$discount_code=trim(strtoupper(getvalescaped("discount_code","")));
+	if ($discount_code=="") {return $origprice;} # No code specified
 	
 	# Check that the discount code exists.
 	$discount_info=sql_query("select * from discount_code where upper(code)='$discount_code'");
