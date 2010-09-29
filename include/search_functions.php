@@ -6,6 +6,8 @@
 if (!function_exists("do_search")) {
 function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
 	{	
+	debug("search=$search restypes=$restypes archive=$archive");
+	
 	# globals needed for hooks	 
 	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order;
 	
@@ -178,7 +180,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						# Fetch field info
 
 						$fieldinfo=sql_query("select ref,type from resource_type_field where name='" . escape_check($kw[0]) . "'",0);
-						if (count($fieldinfo)==0) {return false;} else {$fieldinfo=$fieldinfo[0];}
+						if (count($fieldinfo)==0) {debug("Field short name not found.");return false;} else {$fieldinfo=$fieldinfo[0];}
 						
 						# Special handling for dates
 						if ($fieldinfo["type"]==4 || $fieldinfo["type"]==6) 
@@ -347,6 +349,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if ($suggested==$keywords)
 			{
 			# Nothing different to suggest.
+			debug("No alternative keywords to suggest.");
 			return "";
 			}
 		else
@@ -362,6 +365,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					$suggest.=$suggested[$n];
 					}
 				}
+			debug ("Suggesting $suggest");
 			return $suggest;
 			}
 		}
@@ -610,9 +614,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Since there will only be one special search executed at a time, only one of the
 	# hook implementations will set the value.  So, you know that the value set
 	# will always be the correct one (unless two plugins use the same !<type> value).
+	$sql="";
 	hook ("addspecialsearch");	
 	if($sql != "")
 	{
+		debug("Addspecialsearch hook returned useful results.");
 		return sql_query($sql,false,$fetchrows);
 	}
 
@@ -646,6 +652,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 	# Execute query
 	$result=sql_query($sql,false,$fetchrows);
+	debug("Search found $result results");
 	if (count($result)>0) {return $result;}
 	
 	# (temp) - no suggestion for field-specific searching for now - TO DO: modify function below to support this
