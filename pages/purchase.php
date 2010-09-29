@@ -5,6 +5,15 @@ include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
+if (getval("purchaseonaccount","")!="" && $userrequestmode==3)
+	{
+	# Invoice mode.
+	# Mark as payment complete.
+	payment_set_complete($usercollection);
+	redirect("pages/search.php?search=!collection" . $usercollection);
+	}
+
+
 include "../include/header.php";
 
 
@@ -127,18 +136,40 @@ else
 	<?php hook ("price_display_extras"); ?>
 	
 	<p><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?></p>
-	<form name="_xclick" class="form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-	<input type="hidden" name="cmd" value="_cart">
-	<input type="hidden" name="upload" value="1">
-	<input type="hidden" name="business" value="<?php echo $payment_address ?>">
-	<input type="hidden" name="currency_code" value="<?php echo $payment_currency ?>">
-	<input type="hidden" name="cancel_return" value="<?php echo $baseurl?>">
-	<input type="hidden" name="notify_url" value="<?php echo $baseurl?>/pages/purchase_callback.php">
-	<input type="hidden" name="return" value="<?php echo $baseurl?>/pages/purchase_download.php">
-	<input type="hidden" name="custom" value="<?php echo $usercollection ?>">
-	<?php echo $paypal?>
-	<p><input type="submit" name="submit" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["proceedtocheckout"]?>&nbsp;&nbsp;&nbsp;"></p>
-	</form>
+	
+	<?php if ($userrequestmode==2)
+		{
+		# Payment immediate - use PayPal.
+		if (!hook("paymentgateway")) # Allow other payment gateways to be hooked in, instead of PayPal.
+			{
+			?>
+			<form name="_xclick" class="form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_cart">
+			<input type="hidden" name="upload" value="1">
+			<input type="hidden" name="business" value="<?php echo $payment_address ?>">
+			<input type="hidden" name="currency_code" value="<?php echo $payment_currency ?>">
+			<input type="hidden" name="cancel_return" value="<?php echo $baseurl?>">
+			<input type="hidden" name="notify_url" value="<?php echo $baseurl?>/pages/purchase_callback.php">
+			<input type="hidden" name="return" value="<?php echo $baseurl?>/pages/purchase_download.php">
+			<input type="hidden" name="custom" value="<?php echo $usercollection ?>">
+			<?php echo $paypal?>
+			<p><input type="submit" name="submit" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["proceedtocheckout"]?>&nbsp;&nbsp;&nbsp;"></p>
+			</form>
+			<?php
+			}
+		}
+	?>
+	
+	<?php if ($userrequestmode==3)
+		{
+		# Invoice payment.
+		?>
+		<form method="post" action="purchase.php" onsubmit="return confirm('<?php echo $lang["areyousurepayaccount"] ?>');">
+		<p><input type="submit" name="purchaseonaccount"  value="&nbsp;&nbsp;&nbsp;<?php echo $lang["purchaseonaccount"]?>&nbsp;&nbsp;&nbsp;"></p>		
+		</form>
+		<?php
+		}
+	?>
 	</div>
 <?php
 }

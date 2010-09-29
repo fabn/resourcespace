@@ -1,0 +1,4 @@
+name: flickr_theme_publish
+author: Dan Huby
+version: 1.0
+desc: Publishes selected resources within selected themes to Flickr.

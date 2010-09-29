@@ -996,4 +996,8 @@ $lang["unsubscribereport"]="To unsubscribe from this report, click the link belo
 $lang["unsubscribed"]="Unsubscribed";
 $lang["youhaveunsubscribedreport"]="You have been unsubscribed from the periodic report e-mail.";
 $lang["reportempty"]="No matching data was found for the selected report and period.";
+
+$lang["purchaseonaccount"]="Purchase Via Invoice";
+$lang["areyousurepayaccount"]="Are you sure you wish to add this purchase to your account?";
+
 ?>
