@@ -6,6 +6,28 @@ include "../../include/image_processing.php";
 
 set_time_limit(60*60*40);
 
+if ($argc == 2)
+{
+	if ( in_array($argv[1], array('--help', '-help', '-h', '-?')) )
+	{
+		echo "To clear the lock after a failed run, ";
+  		echo "pass in '--clearlock', '-clearlock', '-c' or '--c'.\n";
+  		exit("Bye!");
+  	}
+	else if ( in_array($argv[1], array('--clearlock', '-clearlock', '-c', '--c')) )
+	{
+		if ( is_process_lock("staticsync") )
+		{
+			clear_process_lock("staticsync");
+		}
+	}
+	else
+	{
+		exit("Unknown argv: " . $argv[1]);
+	}
+} 
+
+
 # Check for a process lock
 if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
 set_process_lock("staticsync");
