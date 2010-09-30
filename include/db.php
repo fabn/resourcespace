@@ -471,7 +471,7 @@ function CheckDBStruct($path)
 							{
 							# Add this column.
 							$sql="alter table $table add column ";
-							$sql.=$col[0] . " " . $col[1];
+							$sql.=$col[0] . " " . str_replace("§",",",$col[1]); # Allow commas to be entered using '§', necessary for a type such as decimal(2,10)
 							if ($col[4]!="") {$sql.=" default " . $col[4];}
 							if ($col[3]=="PRI") {$sql.=" primary key";}
 							if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}

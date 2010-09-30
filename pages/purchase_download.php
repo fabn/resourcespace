@@ -47,7 +47,7 @@ else
 		?><tr class="DownloadDBlend"><?php
 		$size=$resource["purchase_size"];
 		$title=get_data_by_field($resource["ref"],$view_title_field);
-		?><td><?php echo $title ?></td>
+		?><td><h2><?php echo i18n_get_translated($title) ?></h2></td>
 		<td class="DownloadButton">
 		<a href="download.php?ref=<?php echo $resource["ref"] ?>&size=<?php echo $size ?>"><?php echo $lang["download"]?></a>
 		</td>

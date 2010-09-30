@@ -808,7 +808,7 @@ function copy_resource($from,$resource_type=-1)
 	return $to;
 	}
 	
-function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=0)
+function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=0,$purchase_size="",$purchase_price=0)
 	{
 	global $userref;
 	
@@ -822,12 +822,12 @@ function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue=""
 		$diff=log_diff($fromvalue,$tovalue);
 		}
 	
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage')");
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption,purchase_size,purchase_price) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage','$purchase_size','$purchase_price')");
 	}
 
 function get_resource_log($resource)
 	{
-	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff,r.usageoption from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
+	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff,r.usageoption,r.purchase_price,r.purchase_size from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
 	}
 	
 function get_resource_type_name($type)
@@ -1573,13 +1573,22 @@ function get_custom_access_user($resource,$user)
 	return sql_value("select access value from resource_custom_access where resource='$resource' and user='$user' and (user_expires is null or user_expires>now())",false);
 	}
 
-function resource_download_allowed($resource,$size)
+function resource_download_allowed($resource,$size,$resource_type)
 	{
 
 	# For the given resource and size, can the curent user download it?
 	# resource type and access may already be available in the case of search, so pass them along to get_resource_access to avoid extra queries
 	# $resource can be a resource-specific search result array.
 	$access=get_resource_access($resource);
+
+	if (checkperm('X' . $resource_type . "_" . $size))
+		{
+		# Block access to this resource type / size?
+		# Only if no specific user access override (i.e. they have successfully requested this size).
+		global $userref;
+		$usercustomaccess = get_custom_access_user($resource,$userref);
+		if ($usercustomaccess === false || !($usercustomaccess==='0')) {return false;}
+		}
 
 	# Full access
 	if ($access==0)

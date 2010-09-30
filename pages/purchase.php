@@ -10,7 +10,7 @@ if (getval("purchaseonaccount","")!="" && $userrequestmode==3)
 	# Invoice mode.
 	# Mark as payment complete.
 	payment_set_complete($usercollection);
-	redirect("pages/search.php?search=!collection" . $usercollection);
+	redirect("pages/purchase_download.php");
 	}
 
 
@@ -105,8 +105,6 @@ else
 				$id=$size["id"];
 				if ($id=="") {$id="hpr";}
 								
-				# Store the selected size for use by the download page later.
-				purchase_set_size($usercollection,$resource["ref"],$size["id"]);
 								
 				if (array_key_exists($id,$pricing)) {$price=$pricing[$id];}	else {$price=999;}
 				
@@ -123,6 +121,9 @@ else
 				$paypal.="<input type=\"hidden\" name=\"amount_" . $n . "\" value=\"" . $price . "\">\n";
 				$paypal.="<input type=\"hidden\" name=\"quantity_" . $n . "\" value=\"1\">\n";
 				$n++;
+
+				# Store the selected size for use by the download page later; also store the price so it can be logged in the resource log if/when the purchase is completed.
+				purchase_set_size($usercollection,$resource["ref"],$size["id"],$price);
 				}
 			}
 		}	
@@ -132,7 +133,7 @@ else
 	?>
 	<div class="BasicsBox"> 
 	<h2>&nbsp;</h2>
-	<h1><?php echo $lang["proceedtocheckout"] ?></h1>
+	<h1><?php echo ($userrequestmode==2)?$lang["proceedtocheckout"]:$lang["accountholderpayment"] ?></h1>
 	<?php hook ("price_display_extras"); ?>
 	
 	<p><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?></p>

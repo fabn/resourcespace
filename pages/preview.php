@@ -74,7 +74,7 @@ if (!file_exists(get_resource_path($ref,true,"scr",false,$ext,-1,$nextpage,$use_
 $path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,$use_watermark,"",$alternative);
 $path_orig=get_resource_path($ref,true,"",false,$ext,-1,$page,$use_watermark,"",$alternative);
 
-if (file_exists($path) && resource_download_allowed($ref,"scr"))
+if (file_exists($path) && resource_download_allowed($ref,"scr",$resource["resource_type"]))
 	{
 	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,$use_watermark,"",$alternative);
 	}

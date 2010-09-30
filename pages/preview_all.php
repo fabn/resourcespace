@@ -106,6 +106,7 @@ include "../include/header.php";?>
 for ($x=0;$x<count($collection);$x++){
 # Load access level
 $ref=$collection[$x]['ref'];
+$resource_data=get_resource_data($ref);
 
 $access=get_resource_access($collection[$x]);
 
@@ -121,7 +122,7 @@ $url="";
 	if ($access==1&&(checkperm('w')|| ($k!="" && isset($watermark)))){$watermark=true;} else {$watermark=false;}
 $path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
 
-if (file_exists($path) && resource_download_allowed($collection[$x],"scr"))
+if (file_exists($path) && resource_download_allowed($collection[$x],"scr",$resource_data["resource_type"]))
 	{
 	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
 	}

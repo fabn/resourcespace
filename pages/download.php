@@ -15,8 +15,10 @@ $page=getvalescaped("page",1);
 $usage=getval("usage","-1");
 $usagecomment=getval("usagecomment","");
 
+$resource_data=get_resource_data($ref);
+
 # Permissions check
-$allowed=resource_download_allowed($ref,$size);
+$allowed=resource_download_allowed($ref,$size,$resource_data["resource_type"]);
 if (!$allowed)
 	{
 	# This download is not allowed. How did the user get here?

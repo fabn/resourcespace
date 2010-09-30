@@ -1779,7 +1779,7 @@ function image_size_restricted_access($id)
 	
 function get_user_log($user)
 	{
-	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title,l.purchase_size,l.purchase_price from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
 	}
 	
 function get_breadcrumbs()
@@ -2602,15 +2602,24 @@ function decrypt_api_key($key){
 	return explode("|",$key);
 	}	
 
-function purchase_set_size($collection,$resource,$size)
+function purchase_set_size($collection,$resource,$size,$price)
 	{
 	// Set the selected size for an item in a collection. This is used later on when the items are downloaded.
-	sql_query("update collection_resource set purchase_size='" . escape_check($size) . "' where collection='$collection' and resource='$resource'");
+	sql_query("update collection_resource set purchase_size='" . escape_check($size) . "',purchase_price='" . escape_check($price) . "' where collection='$collection' and resource='$resource'");
 	return true;
 	}
 
 function payment_set_complete($collection)
 	{
+	# Mark items in the collection as paid so they can be downloaded.
 	sql_query("update collection_resource set purchase_complete=1 where collection='$collection'");
+	
+	#ÊFor each resource, add an entry to the log to show it has been purchased.
+	$resources=sql_query("select * from collection_resource where collection='$collection'");
+	foreach ($resources as $resource)
+		{
+		resource_log($resource["resource"],"p",0,"","","",0,$resource["purchase_size"],$resource["purchase_price"]);
+		}
+	
 	return true;
 	}

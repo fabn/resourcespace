@@ -85,12 +85,14 @@ function sync_flickr($search,$new_only=false,$photoset=0,$photoset_name="",$priv
 				}
 
 			# Add to photoset
-			flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photosets.addPhoto","auth_token"=>$flickr_token, "photoset_id"=>$photoset, "primary_photo_id"=>$photoid));
+			flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photosets.addPhoto","auth_token"=>$flickr_token, "photoset_id"=>$photoset, "photo_id"=>$photoid));
 			echo "<li>Added photo $photoid to photoset $photoset.";
+			global $last_xml;echo nl2br(htmlspecialchars($last_xml));
 			
 			# Set permissions
 			echo "<li>Setting permissions to " . ($private==0?"public":"private");
 			flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photos.setPerms","auth_token"=>$flickr_token, "photo_id"=>$photoid, "is_public"=>($private==0?1:0),"is_friend"=>0,"is_family"=>0,"perm_comment"=>0,"perm_addmetadata"=>0),"","POST");
+
 			
 			}
 		}
