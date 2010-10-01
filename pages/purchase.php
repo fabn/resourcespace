@@ -161,7 +161,7 @@ else
 			<input type="hidden" name="currency_code" value="<?php echo $payment_currency ?>">
 			<input type="hidden" name="cancel_return" value="<?php echo $baseurl?>">
 			<input type="hidden" name="notify_url" value="<?php echo $baseurl?>/pages/purchase_callback.php">
-			<input type="hidden" name="return" value="<?php echo $baseurl?>/pages/purchase_download.php">
+			<input type="hidden" name="return" value="<?php echo $baseurl?>/pages/purchase_download.php?collection=<?php echo $usercollection ?>">
 			<input type="hidden" name="custom" value="<?php echo $usercollection ?>">
 			<?php echo $paypal?>
 			<p><input type="submit" name="submit" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["proceedtocheckout"]?>&nbsp;&nbsp;&nbsp;"></p>
