@@ -337,6 +337,14 @@ if ($resource["has_image"]==1 && $download_multisize)
 		$price_id=$sizes[$n]["id"];if ($price_id=="") {$price_id="hpr";}
 		$price=999; # If price cannot be found
 		if (array_key_exists($price_id,$pricing)) {$price=$pricing[$price_id];}
+		
+		# Pricing adjustment hook (for discounts or other price adjustments plugin).
+		$priceadjust=hook("adjust_item_price","",array($price,$ref,$sizes[$n]["id"]));
+		if ($priceadjust!==false)
+			{
+			$price=$priceadjust;
+			}
+		
 		 ?>
 		<td><?php echo $currency_symbol . " " . number_format($price,2) ?></td>
 		<?php } ?>

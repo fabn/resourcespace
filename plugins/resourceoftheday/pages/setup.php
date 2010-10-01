@@ -7,9 +7,11 @@ include "../../../include/general.php";
 if (getval("submit","")!="")
 	{
 	$rotd_field=getvalescaped("rotd_field","");
-	
+	$rotd_discount=getvalescaped("rotd_discount","");
+		
 	$f=fopen("../config/config.php","w");
 	fwrite($f,"<?php \$rotd_field='$rotd_field'; ?>");
+	fwrite($f,"<?php \$rotd_discount='$rotd_discount'; ?>");
 	fclose($f);
 	redirect("pages/team/team_home.php");
 	}
@@ -36,6 +38,11 @@ include "../../../include/header.php";
    <?php } ?>
    </select>
 	</p>
+
+   <p><label for="$rotd_discount">Resource Of The Day Discount Percent:</label>
+   <input size="3" type="text" name="rotd_discount" value="<?php echo (isset($rotd_discount)?$rotd_discount:0) ?>">%
+	</p>
+
 
 <input type="submit" name="submit" value="<?php echo $lang["save"]?>">   
 

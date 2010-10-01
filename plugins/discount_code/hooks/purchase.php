@@ -16,9 +16,14 @@ function HookDiscount_codePurchasePurchase_extra_options ()
 
 
 
-function HookDiscount_codePurchaseAdjust_item_price ($origprice)
+function HookDiscount_codePurchaseAdjust_item_price ($origprice,$resource,$size)
 	{
 	global $discount_error,$discount_applied;
+	
+	# Discount pipeline support, allow multiple hook calls to modify the price multiple times
+	global $purchase_pipeline_price;
+	if (isset($purchase_pipeline_price[$resource][$size])) {$origprice=$purchase_pipeline_price[$resource][$size];}
+	
 	
 	$discount_code=trim(strtoupper(getvalescaped("discount_code","")));
 	if ($discount_code=="") {return $origprice;} # No code specified
@@ -50,7 +55,9 @@ function HookDiscount_codePurchaseAdjust_item_price ($origprice)
 	global $usercollection;
 	sql_query("update collection_resource set discount_code='" . $discount_code . "' where collection='" . $usercollection . "'");
 	
-	return round(((100-$discount_info["percent"])/100) * $origprice,2);
+	$return=round(((100-$discount_info["percent"])/100) * $origprice,2);
+	$purchase_pipeline_price[$resource][$size]=$return; # Use this price instead for future hook calls.
+	return $return;
 	}
 
 

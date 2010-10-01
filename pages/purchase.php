@@ -6,7 +6,6 @@ include "../include/resource_functions.php";
 include "../include/search_functions.php";
 include "../include/collections_functions.php";
 
-
 if (getval("purchaseonaccount","")!="" && $userrequestmode==3)
 	{
 	# Invoice mode.
@@ -74,6 +73,14 @@ if (getval("submit","")=="")
 					$price=999; # Error.
 					}
 				
+				# Pricing adjustment hook (for discounts or other price adjustments plugin).
+				$priceadjust=hook("adjust_item_price","",array($price,$resource["ref"],$size["id"]));
+				if ($priceadjust!==false)
+					{
+					$price=$priceadjust;
+					}
+		
+				
 				?>
 				<option value="<?php echo $size["id"] ?>"  <?php if ($size["id"]==$resource["purchase_size"]) { ?>selected<?php } ?>><?php echo i18n_get_translated($name) . " - " . $currency_symbol . " " . number_format($price,2)  ?></option>
 				<?php
@@ -119,7 +126,7 @@ else
 				if (array_key_exists($id,$pricing)) {$price=$pricing[$id];}	else {$price=999;}
 				
 				# Pricing adjustment hook (for discounts or other price adjustments plugin).
-				$priceadjust=hook("adjust_item_price","",array($price));
+				$priceadjust=hook("adjust_item_price","",array($price,$resource["ref"],$size["id"]));
 				if ($priceadjust!==false)
 					{
 					$price=$priceadjust;

@@ -274,7 +274,7 @@ $feedback=$cinfo["request_feedback"];
 
 
 # E-commerce functionality. Work out total price, if $basket_stores_size is enabled so that they've already selected a suitable size.
-$price=0;
+$totalprice=0;
 if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
 	{
 	foreach ($result as $resource)
@@ -284,11 +284,20 @@ if (($userrequestmode==2 || $userrequestmode==3) && $basket_stores_size)
 		if ($id=="") {$id="hpr";} # Treat original size as "hpr".
 		if (array_key_exists($id,$pricing))
 			{
-			$price+=$pricing[$id];
+			$price=$pricing[$id];
+			
+			# Pricing adjustment hook (for discounts or other price adjustments plugin).
+			$priceadjust=hook("adjust_item_price","",array($price,$resource["ref"],$resource["purchase_size"]));
+			if ($priceadjust!==false)
+				{
+				$price=$priceadjust;
+				}
+			
+			$totalprice+=$price;
 			}
 		else
 			{
-			$price+=999; # Error.
+			$totalprice+=999; # Error.
 			}
 		}
 	}
@@ -340,7 +349,7 @@ if ($basket)
 
 	<?php if ($basket_stores_size) {
 	# If they have already selected the size, we can show a total price here.
-	?><br/><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($price,2) ?><?php } ?>
+	?><br/><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?><?php } ?>
 	
 	</p>
 
@@ -615,7 +624,7 @@ if ($basket)
 
 	<?php if ($basket_stores_size) {
 	# If they have already selected the size, we can show a total price here.
-	?><li><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($price,2) ?><?php } ?></li>
+	?><li><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?><?php } ?></li>
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
 	<li><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></li>
 	<?php } ?>
