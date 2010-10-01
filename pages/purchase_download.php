@@ -4,15 +4,23 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
+include "../include/collections_functions.php";
+
+$collection=getvalescaped("collection","");
+
+# Reload collection frame to show new (empty) basket
+refresh_collection_frame($usercollection);
+
 
 include "../include/header.php";
+
 ?>
 <div class="BasicsBox"> 
 <h2>&nbsp;</h2>
 <h1><?php echo $lang["downloadpurchaseitems"]?></h1>
 <?php
 
-$resources=do_search("!collection" . $usercollection);
+$resources=do_search("!collection" . $collection);
 $valid=true;
 foreach ($resources as $resource)
 		{

@@ -1597,10 +1597,10 @@ function resource_download_allowed($resource,$size,$resource_type)
 		}
 
 	# Special case for purchased downloads.
-	global $usercollection;
-	if (isset($usercollection))
+	global $userref;
+	if (isset($userref))
 		{
-		$complete=sql_value("select purchase_complete value from collection_resource where collection='$usercollection' and resource='$resource' and purchase_size='" . escape_check($size) . "'",0);
+		$complete=sql_value("select cr.purchase_complete value from collection_resource cr join collection c on cr.collection=c.ref where c.user='$userref' and cr.resource='$resource' and cr.purchase_size='" . escape_check($size) . "'",0);
 		if ($complete==1) {return true;}
 		}
 

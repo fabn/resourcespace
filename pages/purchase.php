@@ -4,13 +4,23 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
+include "../include/collections_functions.php";
+
 
 if (getval("purchaseonaccount","")!="" && $userrequestmode==3)
 	{
 	# Invoice mode.
 	# Mark as payment complete.
 	payment_set_complete($usercollection);
-	redirect("pages/purchase_download.php");
+	
+	# Set new user collection to empty the basket (without destroying the old basket which contains the 'paid' flag to enable the download).
+	$oldcollection=$usercollection;
+	$name=get_mycollection_name($userref);
+	$newcollection=create_collection ($userref,$name,0,1); // make not deletable
+	set_user_collection($userref,$newcollection);
+	
+	# Redirect to basket (old) collection for download.
+	redirect("pages/purchase_download.php?collection=" . $oldcollection);
 	}
 
 
