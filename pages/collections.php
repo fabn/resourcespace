@@ -37,7 +37,7 @@ else
 <title><?php echo $applicationname?></title>
 <link href="../css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" />
 <?php if (!hook("adjustcolortheme")){?>
-<link href="../css/Col-<?php echo (isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu")?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
+<link href="../css/Col-<?php echo (isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss"/>
 <?php } ?>
 <!--[if lte IE 6]> <link href="../css/globalIE.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="../css/globalIE5.css" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
