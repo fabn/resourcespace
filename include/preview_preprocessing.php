@@ -610,7 +610,7 @@ if (!isset($newfile))
 				
 			# Add a watermarked image too?
 			global $watermark;
-    			if (isset($watermark))
+    			if (isset($watermark) && $alternative==-1)
     				{
 				$path=get_resource_path($ref,true,$size,false,"",-1,$n,true,"",$alternative);
 				if (file_exists($path)) {unlink($path);}

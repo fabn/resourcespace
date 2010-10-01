@@ -763,7 +763,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				# echo $runcommand."<br>";
 				# Add a watermarked image too?
 				global $watermark;
-				if (isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
+				if ($alternative==-1 && isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
 					{
 					$path=get_resource_path($ref,true,$ps[$n]["id"],false,"",-1,1,true);
 					if (file_exists($path)) {unlink($path);}
