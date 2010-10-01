@@ -654,13 +654,13 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Set thumbonly=true to (re)generate thumbnails only.
 		if($previewbased)
 			{
-			$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"",$alternative);	
+			$file=get_resource_path($ref,true,"lpr",false,"jpg",-1,1,false,"");	
 			if (!file_exists($file))
 				{
-				$file=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"",$alternative);		
+				$file=get_resource_path($ref,true,"scr",false,"jpg",-1,1,false,"");		
 				if (!file_exists($file))
 					{
-					$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"",$alternative);		
+					$file=get_resource_path($ref,true,"pre",false,"jpg",-1,1,false,"");		
 					}
 				}
 			}
@@ -747,8 +747,8 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				# Debug
 				debug("Generating preview size " . $ps[$n]["id"] . " to " . $path);
 
-				# Delete any file at the target path.				
-				if (file_exists($path)){unlink($path);}
+				# Delete any file at the target path. Unless using the previewbased option, in which case we need it.			
+				if (!$previewbased){if (file_exists($path)){unlink($path);}}
 
 				# Also try the watermarked version.
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
