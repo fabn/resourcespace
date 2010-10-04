@@ -1225,6 +1225,12 @@ $request_adds_to_collection=false;
 # $image_alternatives[0]["params"]="-density 300"; # 300 dpi
 
 
+# For reports, the list of default reporting periods
+$reporting_periods_default=array(7,30,100,365);
+
+
+# For checkbox list searching, perform logical AND instead of OR when ticking multiple boxes.
+$checkbox_and=false;
 
 
 
@@ -1248,8 +1254,15 @@ $basket_stores_size=true;
 # Ability to set a field which will store 'Portrait' or 'Landscape' depending on image dimensions
 # $portrait_landscape_field=1;
 
-# For reports, the list of default reporting periods
-$reporting_periods_default=array(7,30,100,365);
+
+
+
+
+
+
+
+
+
 
 
 

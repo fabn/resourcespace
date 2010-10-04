@@ -9,7 +9,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("search=$search restypes=$restypes archive=$archive");
 	
 	# globals needed for hooks	 
-	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order;
+	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and;
 	
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
@@ -191,7 +191,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						$field=$fieldinfo["ref"];
 
 						#special SQL generation for category trees to use AND instead of OR
-						if( $fieldinfo["type"] == 7 && $category_tree_search_use_and ) {
+						if(
+							($fieldinfo["type"] == 7 && $category_tree_search_use_and)
+						||
+							($fieldinfo["type"] == 2 && $checkbox_and)
+						) {
 							for ($m=0;$m<count($ckeywords);$m++) {
 								$keyref=resolve_keyword($ckeywords[$m]);
 								if (!($keyref===false)) {
@@ -976,7 +980,7 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 	#
 	# This is used to take the advanced search form and assemble it into a search query.
 	
-	global $auto_order_checkbox;
+	global $auto_order_checkbox,$checkbox_and;
 	$search="";
 	if (getval("year","")!="")
 		{
@@ -1056,9 +1060,9 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 						$p.=strtolower(i18n_get_translated($options[$m]));
 						}
 					}
-				if ($c==count($options))
+				if ($c==count($options) && !$checkbox_and)
 					{
-					# all options ticked - omit from the search
+					# all options ticked - omit from the search (unless using AND matching)
 					$p="";
 					}
 				if ($p!="")
