@@ -1000,7 +1000,8 @@ $lang["reportempty"]="No matching data was found for the selected report and per
 $lang["purchaseonaccount"]="Add To Account";
 $lang["areyousurepayaccount"]="Are you sure you wish to add this purchase to your account?";
 $lang["accountholderpayment"]="Account Holder Payment";
-
+$lang["subtotal"]="Subtotal";
+$lang["discountsapplied"]="Discounts applied";
 $lang["log-p"]="Purchased resource";
 
 ?>

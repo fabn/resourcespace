@@ -106,10 +106,14 @@ if (getval("submit","")=="")
 else
 	{
 	# ----------------------------------- Show the PayPal integration instead ------------------------------------
+	$pricing_discounted=$pricing; # Copy the pricing, which may be group specific
+	include "../include/config.php"; # Reinclude the config so that $pricing is now the default, and we can work out group discounts
+	
 	$resources=do_search("!collection" . $usercollection);
 	$n=1;
 	$paypal="";
 	$totalprice=0;
+	$totalprice_ex_discount=0;
 	foreach ($resources as $resource)
 		{
 		$sizes=get_image_sizes($resource["ref"]);
@@ -121,10 +125,14 @@ else
 				$name=$size["name"];
 				$id=$size["id"];
 				if ($id=="") {$id="hpr";}
-								
-								
-				if (array_key_exists($id,$pricing)) {$price=$pricing[$id];}	else {$price=999;}
 				
+				# Add to total price				
+				if (array_key_exists($id,$pricing_discounted)) {$price=$pricing_discounted[$id];}	else {$price=999;}
+
+				# Add to ex-discount price also
+				if (array_key_exists($id,$pricing)) {$price_ex_discount=$pricing[$id];}	else {$price_ex_discount=999;}
+				$totalprice_ex_discount+=$price_ex_discount;
+								
 				# Pricing adjustment hook (for discounts or other price adjustments plugin).
 				$priceadjust=hook("adjust_item_price","",array($price,$resource["ref"],$size["id"]));
 				if ($priceadjust!==false)
@@ -152,8 +160,21 @@ else
 	<h2>&nbsp;</h2>
 	<h1><?php echo ($userrequestmode==2)?$lang["proceedtocheckout"]:$lang["accountholderpayment"] ?></h1>
 	<?php hook ("price_display_extras"); ?>
-	
-	<p><?php echo $lang["totalprice"] ?>: <?php echo $currency_symbol . " " . number_format($totalprice,2) ?></p>
+
+	<table class="InfoTable">
+	<tr><td><?php echo $lang["subtotal"] ?></td><td align="right"><?php echo $currency_symbol . " " . number_format($totalprice_ex_discount,2) ?></td></tr>
+
+	<?php if ($totalprice!=$totalprice_ex_discount || true) { 
+		# Display discount (always for now)
+		?>	
+		<tr><td><?php echo $lang["discountsapplied"] ?></td><td align="right"><?php echo $currency_symbol . " " . number_format($totalprice_ex_discount-$totalprice,2) ?></td></tr>
+		<?php
+		}
+	?>
+			
+	<tr><td><strong><?php echo $lang["totalprice"] ?></strong></td><td align="right"><strong><?php echo $currency_symbol . " " . number_format($totalprice,2) ?></strong></td></tr>
+	</table>
+	<br>
 	
 	<?php if ($userrequestmode==2)
 		{
