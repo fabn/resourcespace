@@ -1,5 +1,5 @@
 1,Administrators,"s,g,c,e,t,h,r,u,i,e-2,e-1,e0,e1,e3,v,o,m,q,n,f*,j*,k,R",,0,,,,,,,0,0
-2,"General Users","s,e-1,e-2,g,d,q,n,f*,j*",,0,,,,,,,0,1
+2,"General Users","s,e-1,e-2,g,d,q,n,f*,j*",,0,,,,,,,1,1
 3,"Super Admin","s,g,c,e,a,t,h,u,r,i,e-2,e-1,e0,e1,e2,e3,o,m,g,v,q,n,f*,j*,k,R",,0,,,,,,,0,0
 4,Archivists,"s,g,c,e,t,h,r,u,i,e1,e2,e3,v,q,n,f*,j*",,0,,,,,,,0,0
 5,"Restricted User - Requests Emailed","s,f*,j*,q",,0,,,,,,,0,0
