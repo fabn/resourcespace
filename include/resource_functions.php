@@ -810,7 +810,7 @@ function copy_resource($from,$resource_type=-1)
 	
 function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=0,$purchase_size="",$purchase_price=0)
 	{
-	global $userref;
+	global $userref,$k;
 	
 	# Do not log edits to user templates.
 	if ($resource<0) {return false;}
@@ -822,12 +822,12 @@ function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue=""
 		$diff=log_diff($fromvalue,$tovalue);
 		}
 	
-	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption,purchase_size,purchase_price) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage','$purchase_size','$purchase_price')");
+	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption,purchase_size,purchase_price,access_key) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage','$purchase_size','$purchase_price'," . (isset($k)?"'$k'":"null") . ")");
 	}
 
 function get_resource_log($resource)
 	{
-	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff,r.usageoption,r.purchase_price,r.purchase_size from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field where resource='$resource' order by r.date");
+	return sql_query("select r.date,u.username,u.fullname,r.type,f.title,r.notes,r.diff,r.usageoption,r.purchase_price,r.purchase_size,r.access_key,ekeys_u.fullname shared_by from resource_log r left outer join user u on u.ref=r.user left outer join resource_type_field f on f.ref=r.resource_type_field left outer join external_access_keys ekeys on r.access_key=ekeys.access_key left outer join user ekeys_u on ekeys.user=ekeys_u.ref where r.resource='$resource' order by r.date");
 	}
 	
 function get_resource_type_name($type)

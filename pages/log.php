@@ -44,7 +44,7 @@ for ($n=0;$n<count($log);$n++)
 	<!--List Item-->
 	<tr>
 	<td nowrap><?php echo nicedate($log[$n]["date"],true,true)?></td>
-	<td nowrap><?php echo $log[$n]["fullname"]?></td>
+	<td nowrap><?php echo $log[$n]["access_key"]!=""?$lang["externalusersharing"] . ": " . $log[$n]["access_key"] . " " . $lang["viauser"] . " " . $log[$n]["shared_by"]:$log[$n]["fullname"]?></td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]]." ".$log[$n]["notes"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
 	<td><?php echo nl2br(htmlspecialchars($log[$n]["diff"])) . (($log[$n]["notes"]=="" || $log[$n]["notes"]=="-1")?"":$lang["usage"] . ": " . nl2br(htmlspecialchars($log[$n]["notes"])) . "<br>" . $lang["indicateusagemedium"] . ": " . @$download_usage_options[$log[$n]["usageoption"]]);
