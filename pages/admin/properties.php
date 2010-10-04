@@ -363,6 +363,15 @@ else
         <?php
         # include plugin
         if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
+        
+        if ($curid=4 && $key=="permissions")
+        	{
+        	# Special case to include permissions manager
+        	?>
+       		<button style="width:100%" onClick="document.location.href='permissions.php?ref=<?php echo $ref?>';return false;">Launch Permissions Manager</button>
+       		<?php
+        	}
+        
         if (!hook("field" . $curid . "_" . $key)) # Hook to optionally replace this field (if hook returns true) or add HTML above field (if hook returns false)
         	{
 	        switch ($type)
