@@ -28,7 +28,8 @@ function ResolveKB($value)
 
 <div class="BasicsBox"> 
   <h1><?php echo $lang["installationcheck"]?></h1>
-  
+  <a href="">&gt; <?php echo $lang["repeatinstallationcheck"]?></a>
+  <br/><br/>
 <table class="InfoTable">
 <?php
 # Check PHP version
@@ -253,6 +254,7 @@ else
 	}
 ?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr>
 
+<?php hook("addinstallationcheck");?>
 
 <tr>
 <td>Last scheduled task execution (days)</td>

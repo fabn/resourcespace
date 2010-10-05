@@ -1004,4 +1004,6 @@ $lang["subtotal"]="Subtotal";
 $lang["discountsapplied"]="Discounts applied";
 $lang["log-p"]="Purchased resource";
 $lang["viauser"]="via user";
+
+$lang["repeatinstallationcheck"]="Repeat Installation Check";
 ?>
