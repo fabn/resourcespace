@@ -282,8 +282,11 @@ behavior: url('../css/iepngfix.htc');
 .NewFlag {display:inline;font-size:9px;margin-left:5px;padding:1px 3px 1px 3px;}
 .Breadcrumbs {float:left;margin-top:4px;}
 
-.CategoryBox {border:1px solid black;background-color:#ffffff;overflow:auto;width:500px;height:80px;padding:2px;font-size:12px;color: black;font-weight: normal;}
+.CategoryBox {border:1px solid black;background-color:#ffffff;overflow:auto;width:550px;height:80px;padding:2px;font-size:12px;color: black;font-weight: normal;}
+.MiniCategoryBox {border:1px solid black;background-color:#ffffff;overflow:auto;width:152px;height:80px;padding:2px;font-size:12px;color: black;font-weight: normal;}
+
 .CategoryTree {border-top:1px solid black;border-left:1px solid black;border-bottom:2px solid black;border-right:2px solid black;background-color:white;overflow:auto;width:550px;height:400px;display:none;color: black;font-weight: normal;}
+
 
 .URLDisplay {width: 500px;font: 11px Tahoma, Arial, Helvetica, sans-serif;}
 

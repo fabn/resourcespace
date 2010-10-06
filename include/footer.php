@@ -133,6 +133,7 @@ function SwapCSS(css)
 	}
 ?>
 
+<?php echo $extrafooterhtml; ?>
 <?php hook("footerbottom"); ?>
 
 

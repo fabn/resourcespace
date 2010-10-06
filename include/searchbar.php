@@ -150,7 +150,6 @@ if (!$basic_simple_search)
 			case 0: # -------- Text boxes?><?php
 			case 1:
 			case 5:
-			case 7:
 			?>	
 			<input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" id="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
 			if ($autocomplete_search) { 
@@ -248,7 +247,40 @@ if (!$basic_simple_search)
 				document.getElementById('field_" . $fields[$n]["name"] . "_day').selectedIndex=0;
 				";
 			break;
+			case 7:
+			 
 			
+			
+			
+			#-------------------- Category Tree (launches popup window)
+			
+			# Show a smaller version of the selected node box, plus the hidden value that submits the form.
+			
+			# Reprocess provided value into expected format.
+			$value=str_replace(";",",",$value);
+			?>
+			
+			<div id="<?php echo $fields[$n]["name"]?>_statusbox" class="MiniCategoryBox"></div>
+			<input type="hidden" name="field_cat_<?php echo $fields[$n]["name"]?>" id="<?php echo $fields[$n]["name"]?>_category" value="<?php echo $value?>">
+			
+			
+			<?php
+			# Add floating frame HTML. This must go in the footer otherwise it appears in the wrong place in IE due to it existing within a floated parent (the search bar).
+			$extrafooterhtml.="
+			<div class=\"RecordPanel\" style=\"display:none;position:absolute;top:100px;left:200px;text-align:left;\" id=\"cattree_" . $fields[$n]["name"] . "\">" . $lang["pleasewait"] . "</div>
+			<script type=\"text/javascript\">
+			// Load Category Tree
+			new Ajax.Updater ('cattree_" . $fields[$n]["name"] . "','" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "', { method: 'post', evalScripts: true });
+			</script>		
+			";
+			?>
+			<a href="#" onClick="document.getElementById('cattree_<?php echo $fields[$n]["name"]?>').style.display='block';return false;
+			"><?php echo $lang["select"] ?></a>
+			<?php
+			# Add to clear function
+			$clear_function.="DeselectAll('" . $fields[$n]["name"] ."');";
+			
+			break;			
 			
 			
 			}

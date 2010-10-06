@@ -56,7 +56,10 @@ for ($n=0;$n<count($plugins);$n++)
 	}
 ?>
 
-<?php echo $headerinsert?>
+<?php
+echo $headerinsert;
+$extrafooterhtml="";
+?>
 
 <?php
 # Check for the frameset, and if necessary, redirect to index.php so the frameset is drawn.

@@ -124,6 +124,16 @@ if (!is_numeric($search)) # Don't do this when the search query is numeric, as u
 				# Add keyword exactly as it is as the full value is indexed as a single keyword for dropdown boxes.
 				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,11) . ":" . $value;
 				}		
+			elseif (strpos($key,"_cat_")!==false)
+				{
+				# Category tree field
+				# Add keyword exactly as it is as the full value is indexed as a single keyword for dropdown boxes.
+				$value=str_replace(",",";",$value);
+				if (substr($value,0,1)==";") {$value=substr($value,1);}
+				
+				$search=(($search=="")?"":join(", ",split_keywords($search)) . ", ") . substr($key,10) . ":" . $value;
+				}		
+
 			elseif (strpos($key,"_month")===false && strpos($key,"_day")===false)
 				{
 				# Standard field
