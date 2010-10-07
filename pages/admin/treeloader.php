@@ -15,6 +15,9 @@ if ($web_config_edit){
 	$tree[]="999  ;;config.default.php;false;true;txt;;url fileedit.php?file=../../include/config.default.php";
 	$tree[]="999  ;;config.php;false;true;txt;;url fileedit.php?file=../../include/config.php";
 }
+if ($web_css_edit){
+		$tree[]="999  ;;global.css;false;true;txt;;url fileedit.php?file=../../css/global.css";
+	}
 
 $node=$_GET["node"];
 $id=$_GET["id"];

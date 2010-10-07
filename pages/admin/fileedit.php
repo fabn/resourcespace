@@ -93,13 +93,15 @@ if ($filename!="config.php" && $filename!="config.default.php"){
 </form>
 
 </div>
-
+<?php $pathinfo=pathinfo($file);
+if ($pathinfo['extension']=="css"){$parserfile='"parsecss.js"';} 
+else {$parserfile='"parsexml.js", "tokenizejavascript.js", "parsejavascript.js",
+                     "../contrib/php/js/tokenizephp.js", "../contrib/php/js/parsephp.js",
+                     "../contrib/php/js/parsephphtmlmixed.js"';}?>
 <script type="text/javascript">
     var editor = CodeMirror.fromTextArea('code', {
     height: "80%",
-    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
-                     "../contrib/php/js/tokenizephp.js", "../contrib/php/js/parsephp.js",
-                     "../contrib/php/js/parsephphtmlmixed.js"],
+    parserfile: [<?php echo $parserfile?>],
 	stylesheet: ["../../lib/CodeMirror/css/xmlcolors.css", "../../lib/CodeMirror/css/jscolors.css", "../../lib/CodeMirror/css/csscolors.css", "../../lib/CodeMirror/contrib/php/css/phpcolors.css"],
     path: "../../lib/CodeMirror/js/",
     continuousScanning: 500,
