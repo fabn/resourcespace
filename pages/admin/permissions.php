@@ -75,7 +75,7 @@ include "include/header.php";
 DrawOption ("s","Search capability");
 DrawOption ("v","Can download restricted resources and view confidential resources (normally admin only)",false);
 DrawOption ("g","Restrict access to all available resources",true);
-DrawOption ("q","Can make resource requests",true);
+DrawOption ("q","Can make resource requests",false);
 DrawOption ("w","Show watermarked previews/thumbnails");
 
 ?><tr><td colspan=3 class="permheader">Metadata Fields</td></tr><?php
