@@ -1570,7 +1570,6 @@ $direct_download_allow_opera=false; // opera can also allow popups, but this is 
 # must make config.php writable. 
 # note that caution must be used not to break syntax, or else you must edit the file server side to fix the site.
 $web_config_edit=false;
-$web_css_edit=false; // experimental, global.css only
 
 # enable option to autorotate new images based on embedded camera orientation data
 # requires ImageMagick to work.
