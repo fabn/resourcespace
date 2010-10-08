@@ -212,6 +212,10 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	# If configured, and if the resource itself is not an FLV file (in which case the FLV can already be downloaded), then allow the FLV file to be downloaded.
 	if ($flv_preview_downloadable && $resource["file_extension"]!="flv") {$flv_download=true;}
 	}
+elseif ($resource['file_extension']=="swf" && $display_swf){
+	$swffile=get_resource_path($ref,true,"",false,"swf");
+	if (file_exists($swffile)) { include "swf_play.php";}	
+	}
 elseif ($resource["has_image"]==1)
 	{
 	$use_watermark=check_use_watermark();
