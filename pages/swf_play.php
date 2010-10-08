@@ -3,7 +3,7 @@
 
 if (file_exists(get_resource_path($ref,true,"",false,"swf")))
 	{
-	$swfpath=get_resource_path($ref,false,"",false,"swf",-1,1,false,"",-1,false);
+	$swfpath=get_resource_path($ref,false,"",false,"swf",-1,1,false,date("now"),-1,true);
 	}
 
 # The default is a neutral grey which should be acceptable for most user generated themes.
