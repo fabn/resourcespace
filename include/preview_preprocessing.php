@@ -166,6 +166,30 @@ if ($extension=="psd" && !isset($newfile))
 	}
 	
 /* ----------------------------------------
+	Try SWF
+   ----------------------------------------
+*/
+# Note: gnash-dump must be compiled on the server. http://www.xmission.com/~ink/gnash/gnash-dump/README.txt
+# Ubuntu: ./configure --prefix=/usr/local/gnash-dump --enable-renderer=agg \
+# --enable-gui=gtk,dump --disable-kparts --disable-nsapi --disable-menus
+# several dependencies will also be necessary, according to ./configure
+
+if ($extension=="swf" && !isset($newfile))
+	{
+	global $dump_gnash_path;
+	if (isset($dump_gnash_path))
+		{
+		shell_exec($dump_gnash_path.'/dump-gnash -t 1 --screenshot 5 --screenshot-file '.$target.' '.$file);
+		}
+	if (file_exists($target))
+		{
+		#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
+		if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+		}
+		
+	}	
+	
+/* ----------------------------------------
 	Try CR2 preview extraction via exiftool
    ----------------------------------------
 */

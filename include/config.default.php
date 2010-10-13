@@ -1578,3 +1578,9 @@ $camera_autorotation_checked = true;
 
 # display swf in full on the view page (note that jpg previews aren't created yet)
 $display_swf=false;
+# if gnash_dump (gnash w/o gui) is compiled, previews are possible:
+# Note: gnash-dump must be compiled on the server. http://www.xmission.com/~ink/gnash/gnash-dump/README.txt
+# Ubuntu: ./configure --prefix=/usr/local/gnash-dump --enable-renderer=agg \
+# --enable-gui=gtk,dump --disable-kparts --disable-nsapi --disable-menus
+# several dependencies will also be necessary, according to ./configure
+# $dump_gnash_path="/usr/local/gnash-dump/bin";
