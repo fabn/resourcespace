@@ -585,7 +585,11 @@ hook ("resourceactions") ?>
 	<?php if ($edit_access) { ?>
 		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; 
 			<?php echo $lang["edit"]?></a>
-	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["delete"]?></a><?php } ?></li><?php } ?>
+	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["delete"]?></a><?php } ?></li>
+	<?php if (! $disable_alternative_files) { ?><br />
+	<li><a href="alternative_files.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a></li><?php } ?>
+
+	<?php } ?>
 	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>
 <?php } /* End replaceresourceactions */ 
 		hook("afterresourceactions");
