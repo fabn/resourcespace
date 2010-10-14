@@ -278,8 +278,11 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
+
+<?php if ($alternative=="") { ?>
 <p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo getvalescaped("collection_add",""); ?>&entercolname=<?php echo urlencode(getvalescaped("entercolname","")); ?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
 &no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
+<?php } ?>
 
 <p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p>
 
