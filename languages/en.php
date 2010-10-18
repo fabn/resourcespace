@@ -1006,5 +1006,6 @@ $lang["log-p"]="Purchased resource";
 $lang["viauser"]="via user";
 $lang["close"]="Close";
 $lang["repeatinstallationcheck"]="Repeat Installation Check";
+$lang["generateexternalurl"]="Generate External URL";
 
 ?>

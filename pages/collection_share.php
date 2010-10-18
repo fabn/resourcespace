@@ -110,7 +110,7 @@ include "../include/header.php";
 		
 		<div class="QuestionSubmit" style="padding-top:0;margin-top:0;">
 		<label for="buttons"> </label>
-		<input name="generateurl" type="submit" value="&nbsp;&nbsp;<?php echo $lang["generateurl"]?>&nbsp;&nbsp;" />
+		<input name="generateurl" type="submit" value="&nbsp;&nbsp;<?php echo $lang["generateexternalurl"]?>&nbsp;&nbsp;" />
 		</div>
 		<?php
 		}
