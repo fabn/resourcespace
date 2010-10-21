@@ -104,14 +104,14 @@ if (!$basic_simple_search)
 		if (checkcount==tickboxes.length-1){$('tickall').checked=true;}	
 	}
 	</script>
-	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}  HideInapplicableSimpleSearchFields(); '/>&nbsp;<?php echo $lang['all']?></div>
+	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}  HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
 	$clear_function="";
 	for ($n=0;$n<count($types);$n++)
 		{
-		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $types[$n]["ref"]?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> onClick="HideInapplicableSimpleSearchFields();<?php if ($searchbar_selectall){?>resetTickAll();<?php } ?>"/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
+		?><div class="tick"><?php if ($searchbar_selectall){ ?>&nbsp;&nbsp;<?php } ?><input class="tickbox" id="TickBox<?php echo $types[$n]["ref"]?>" type="checkbox" name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if (((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) {?>checked="true"<?php } ?> onClick="HideInapplicableSimpleSearchFields(true);<?php if ($searchbar_selectall){?>resetTickAll();<?php } ?>"/>&nbsp;<?php echo $types[$n]["name"]?></div><?php	
 		$clear_function.="document.getElementById('TickBox" . $types[$n]["ref"] . "').checked=true;";
 		if ($searchbar_selectall) {$clear_function.="resetTickAll();";}
 		}
@@ -176,7 +176,7 @@ if (!$basic_simple_search)
 			
 			$optionfields[]=$fields[$n]["name"]; # Append to the option fields array, used by the AJAX dropdown filtering
 			?>
-			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_drop_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions('<?php echo $fields[$n]["name"]?>');">
+			<select id="field_<?php echo $fields[$n]["name"]?>" name="field_drop_<?php echo $fields[$n]["name"]?>" class="SearchWidth" onChange="FilterBasicSearchOptions('<?php echo $fields[$n]["name"]?>',<?php echo $fields[$n]["resource_type"]?>);">
 			  <option selected="selected" value="">&nbsp;</option>
 			  <?php
 			  for ($m=0;$m<count($options);$m++)
@@ -290,8 +290,27 @@ if (!$basic_simple_search)
 		}
 	?>
 	<script type="text/javascript">
-	function FilterBasicSearchOptions(clickedfield)
+	function FilterBasicSearchOptions(clickedfield,resourcetype)
 		{
+		if (resourcetype!=0)
+			{
+			// When selecting resource type specific fields, automatically untick all other resource types, because selecting something from this field will never produce resources from the other resource types.
+			
+			// Always untick the Tick All box
+			if ($('tickall')) {$('tickall').checked=false;}
+			<?php
+			# Untick all other resource types.
+			for ($n=0;$n<count($types);$n++)
+				{
+				?>
+				if (resourcetype!=<?php echo $types[$n]["ref"]?>) {$("TickBox<?php echo $types[$n]["ref"]?>").checked=false;} else {$("TickBox<?php echo $types[$n]["ref"]?>").checked=true;}
+				<?php
+				}
+				?>
+			// Hide any fields now no longer relevant.	
+			HideInapplicableSimpleSearchFields(false);
+			}
+
 		<?php
 		// When using more than one dropdown field, automatically filter field options using AJAX
 		// in a attempt to avoid blank results sets through excessive selection of filters.
@@ -320,7 +339,7 @@ if (!$basic_simple_search)
 		<?php } ?>
 		}
 		
-	function HideInapplicableSimpleSearchFields()
+	function HideInapplicableSimpleSearchFields(reset)
 		{
 		<?php
 		# Consider each of the fields. Hide if the resource type for this field is not checked
@@ -329,8 +348,18 @@ if (!$basic_simple_search)
 			if ($fields[$n]["resource_type"]!=0)
 				{
 				?>
+				if (reset)
+					{
+					// When clicking checkboxes, always reset any resource type specific fields.
+					document.getElementById('field_<?php echo $fields[$n]["name"]?>').value='';
+					}
+					
 				if (!document.getElementById('TickBox<?php echo $fields[$n]["resource_type"] ?>').checked)
-					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='none';}
+					{
+					document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='none';
+					// Also deselect it.
+					document.getElementById('field_<?php echo $fields[$n]["name"]?>').value='';
+					}
 				else
 					{document.getElementById('simplesearch_<?php echo $fields[$n]["ref"] ?>').style.display='block';}
 				<?php

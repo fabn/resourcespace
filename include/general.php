@@ -236,7 +236,7 @@ function get_resource_field_data_batch($refs)
 function get_resource_types()
 	{
 	# Returns a list of resource types.
-	$r=sql_query("select * from resource_type order by ref");
+	$r=sql_query("select * from resource_type order by order_by,ref");
 	$return=array();
 	# Translate names and check permissions
 	for ($n=0;$n<count($r);$n++)
