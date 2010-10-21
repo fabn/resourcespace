@@ -2,7 +2,7 @@
 include "../include/db.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
-if (getval("user","")!="") {include "../include/authenticate.php";} #Authenticate if already logged in, so the correct theme is displayed when using user group specific themes.
+if (getval("user","")!="" || isset($anonymous_login)) {include "../include/authenticate.php";} #Authenticate if already logged in, so the correct theme is displayed when using user group specific themes.
 
 if (getval("refreshcollection","")!="")
 	{
@@ -29,7 +29,7 @@ include "../include/header.php";
     <p><?php echo text(getvalescaped("text",""))?></p>
 
    
-    <?php if (getval("user","")!="" || getval("k","")!="") { # User logged in? ?>
+    <?php if (getval("user","")!="" || getval("k","")!="" || isset($anonymous_login)) { # User logged in? ?>
  
  	<?php
  	# Ability to link back to a resource page
