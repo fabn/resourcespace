@@ -1067,5 +1067,16 @@ for ($n=0;$n<count($keywords);$n++)
 
 
 <?php
+if ($show_resource_title_in_titlebar){
+	$title =  htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field)));
+	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
+	if (strlen($title) > 0){
+		echo "<script language='javascript'>\n";
+		echo $parentword . "document.title = \"$applicationname - $title\";\n";
+		echo "onunload = function() {\n" . $parentword . "document.title = \"$applicationname\";\n}";
+		echo "</script>";
+	}
+}
+
 include "../include/footer.php";
 ?>

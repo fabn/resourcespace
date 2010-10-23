@@ -1584,3 +1584,6 @@ $display_swf=false;
 # --enable-gui=gtk,dump --disable-kparts --disable-nsapi --disable-menus
 # several dependencies will also be necessary, according to ./configure
 # $dump_gnash_path="/usr/local/gnash-dump/bin";
+
+# show the title of the resource being viewed in the browser title bar
+$show_resource_title_in_titlebar = false;
