@@ -267,6 +267,29 @@ if ($extension=="nef" && !isset($newfile))
 	}		
 	
 	
+/* ----------------------------------------
+	Try DNG preview extraction via exiftool
+   ----------------------------------------
+*/
+
+if ($extension=="dng" && !isset($newfile))
+	{
+	global $dng_thumb_extract;
+	if ($dng_thumb_extract)
+		{
+		global $exiftool_path;
+		if (isset($exiftool_path))
+			{
+			shell_exec($exiftool_path.'/exiftool -b -previewimage '.$file.' > '.$target);
+			}
+		if (file_exists($target))
+			{
+			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
+			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+			}
+		}
+	}		
+		
 	
 /* ----------------------------------------
 	Unoconv is a python-based utility to run files through OpenOffice. It is available in Ubuntu.
