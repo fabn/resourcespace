@@ -1587,3 +1587,5 @@ $display_swf=false;
 
 # show the title of the resource being viewed in the browser title bar
 $show_resource_title_in_titlebar = false;
+
+$psd_transparency_checkerboard=false;

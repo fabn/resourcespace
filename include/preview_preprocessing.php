@@ -166,6 +166,24 @@ if ($extension=="psd" && !isset($newfile))
 	}
 	
 /* ----------------------------------------
+	Photoshop Transparency Checkerboard
+   ----------------------------------------
+*/
+# composite checkerboard for PSD transparency. Not applicable to $photoshop_thumb_extract.
+global $psd_transparency_checkerboard;
+if ($extension=="psd" && !isset($newfile) && $psd_transparency_checkerboard)
+	{
+	global $imagemagick_path;
+	$wait=shell_exec($imagemagick_path."/composite  -compose Dst_Over -tile pattern:checkerboard ".$file." ".$target);
+	if (file_exists($target)){
+		$newfile=$target;
+	}
+		
+}	
+		
+	
+	
+/* ----------------------------------------
 	Try SWF
    ----------------------------------------
 */
