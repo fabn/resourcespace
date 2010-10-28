@@ -325,6 +325,13 @@ if ($resource["has_image"]==1 && $download_multisize)
 		
 		$counter++;
 		$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
+
+		if ($direct_link_previews) {
+
+			$direct_link = "download.php?direct=1&ref=$ref&size=" . $sizes[$n]['id'] . "&ext=" . $sizes[$n]['extension'];
+			$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
+		}
+
 		?>
 		<tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
 		<td><h2><?php echo $headline?></h2>

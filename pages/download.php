@@ -1,11 +1,15 @@
 <?php
 include "../include/db.php";
 include "../include/general.php";
-
-# External access support (authenticate only if no key provided, or if invalid access key provided)
-$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref","",true),$k))) {include "../include/authenticate.php";}
-
 include "../include/resource_functions.php";
+
+if(strlen(getval('direct',''))>0){$direct = true;} else { $direct = false;}
+
+# if direct downloading without authentication is enabled, skip the authentication step entirely
+if (!($direct_download_noauth && $direct)){
+	# External access support (authenticate only if no key provided, or if invalid access key provided)
+	$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref","",true),$k))) {include "../include/authenticate.php";}
+}
 
 $ref=getvalescaped("ref","",true);
 $size=getvalescaped("size","");
@@ -15,10 +19,17 @@ $page=getvalescaped("page",1);
 $usage=getval("usage","-1");
 $usagecomment=getval("usagecomment","");
 
+
 $resource_data=get_resource_data($ref);
 
-# Permissions check
-$allowed=resource_download_allowed($ref,$size,$resource_data["resource_type"]);
+if ($direct_download_noauth && $direct){
+	# if this is a direct download and direct downloads w/o authentication are enabled, allow regardless of permissions
+	$allowed = true;
+} else {
+	# Permissions check
+	$allowed=resource_download_allowed($ref,$size,$resource_data["resource_type"]);
+}
+
 if (!$allowed)
 	{
 	# This download is not allowed. How did the user get here?
@@ -105,9 +116,11 @@ if ($noattach=="")
 	
 	# Remove critical characters from filename
 	$filename = preg_replace('/:/', '_', $filename);
-		
-	# We use quotes around the filename to handle filenames with spaces.
-	header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
+	
+	if (!$direct){		
+		# We use quotes around the filename to handle filenames with spaces.
+		header(sprintf('Content-Disposition: attachment; filename="%s"', $filename));
+	}
 	}
 
 # We assign a default mime-type, in case we can find the one associated to the file extension.

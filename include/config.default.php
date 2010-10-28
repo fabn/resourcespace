@@ -1589,4 +1589,11 @@ $display_swf=false;
 # show the title of the resource being viewed in the browser title bar
 $show_resource_title_in_titlebar = false;
 
+# add direct link to original file for each image size
+$direct_link_previews = false;
+
+# set to true to allow direct resource downloads without authentication
+# SECURITY WARNING: This will effectively allow anyone to download any resource without logging in. Be careful!!!! 
+$direct_download_noauth = false; 
+
 $psd_transparency_checkerboard=false;
