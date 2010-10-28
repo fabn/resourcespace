@@ -1326,6 +1326,25 @@ function extract_text($ref,$extension)
 		}
 	
 	}
+	
+function get_image_orientation($file){
+	global $exiftool_path;
+	if (isset($exiftool_path))
+		{
+		$orientation=shell_exec($exiftool_path.'/exiftool -s -s -s -orientation '.$file);
+		$orientation=str_replace("Rotate","",$orientation);
+		//only handles CW rotation, haven't seen CCW yet
+		if (strpos($orientation,"CCW")){$rotation="CCW";} else {$rotation="CW";}
+		if ($rotation=="CW"){
+			$orientation=trim(str_replace("CW","",$orientation));
+		}
+		else {
+			$orientation=trim(str_replace("CCW","",360-$orientation));
+		}
+		return $orientation;
+	}
+	else return 0;
+}
 
 function AutoRotateImage ($src_image){
 	global $imagemagick_path;

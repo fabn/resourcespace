@@ -212,20 +212,62 @@ if ($extension=="swf" && !isset($newfile))
    ----------------------------------------
 */
 
-if ($extension=="cr2" && !isset($newfile))
+if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($newfile))
 	{
 	global $cr2_thumb_extract;
-	if ($cr2_thumb_extract)
+	global $nef_thumb_extract;
+	global $dng_thumb_extract;
+	
+	global $exiftool_path;
+	if (($extension=="cr2" && $cr2_thumb_extract) || ($extension=="nef" && $nef_thumb_extract) || ($extension=="dng" && $dng_thumb_extract))
 		{
-		global $exiftool_path;
 		if (isset($exiftool_path))
-			{
-			shell_exec($exiftool_path.'/exiftool -b -previewimage '.$file.' > '.$target);
-			}
-		if (file_exists($target))
-			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
-			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+			{	
+			// previews are stored in a couple places, and some nef files have large previews in -otherimage
+			if ($extension=="nef"){$bin_tag=" -otherimage ";}
+			if ($extension=="cr2"||$extension=="dng"){$bin_tag=" -previewimage ";}
+			// attempt
+			$wait=shell_exec($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+
+			// check for nef -otherimage failure
+			if ($extension=="nef"&&!filesize($target)>0)
+				{
+				unlink($target);	
+				$bin_tag=" -previewimage ";
+				//2nd attempt
+				$wait=shell_exec($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+				}
+				
+			// NOTE: in case of failures, other suboptimal possibilities 
+			// may be explored in the future such as -thumbnailimage and -jpgfromraw, like this:
+			// //check for failure
+			//if (!filesize($target)>0)
+				//{
+				//unlink($target);	
+				//$bin_tag=" -thumbnailimage ";
+				//attempt
+				//$wait=shell_exec($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+				//}
+			
+			if (filesize($target)>0)
+				{
+				$orientation=get_image_orientation($file);
+				if ($orientation!=0)
+					{
+					$command=$imagemagick_path . "/mogrify";
+					$command .= ' -rotate +' .$orientation.' '. $target ;
+					$wait=shell_exec($command);	
+					//imagemagick is much faster than this:
+					//$source = imagecreatefromjpeg($target);
+					//$source=AltImageRotate($source,$orientation);
+					//imagejpeg($source,$target,95);
+					}
+				$newfile = $target;
+				}
+			else
+				{
+				unlink($target);
+				}	
 			}
 		}
 	}	
@@ -240,55 +282,7 @@ if ( (($extension=="pages") || ($extension=="numbers") || ($extension=="key")) &
 	{ 
     shell_exec("unzip -p $file \"QuickLook/Thumbnail.jpg\" > $target"); 
 	$newfile = $target; 
-	} 
-
-
-/* ----------------------------------------
-	Try NEF preview extraction via exiftool
-   ----------------------------------------
-*/
-
-if ($extension=="nef" && !isset($newfile))
-	{
-	global $nef_thumb_extract;
-	if ($nef_thumb_extract)
-		{
-		global $exiftool_path;
-		if (isset($exiftool_path))
-			{
-			shell_exec($exiftool_path.'/exiftool -b -jpgfromraw '.$file.' > '.$target);
-			}
-		if (file_exists($target))
-			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
-			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
-			}
-		}
-	}		
-	
-	
-/* ----------------------------------------
-	Try DNG preview extraction via exiftool
-   ----------------------------------------
-*/
-
-if ($extension=="dng" && !isset($newfile))
-	{
-	global $dng_thumb_extract;
-	if ($dng_thumb_extract)
-		{
-		global $exiftool_path;
-		if (isset($exiftool_path))
-			{
-			shell_exec($exiftool_path.'/exiftool -b -previewimage '.$file.' > '.$target);
-			}
-		if (file_exists($target))
-			{
-			#if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
-			if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
-			}
-		}
-	}		
+	} 	
 		
 	
 /* ----------------------------------------
