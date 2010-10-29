@@ -713,7 +713,7 @@ for ($n=0;$n<count($fields);$n++)
 	if (($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
 		{
 		$title=htmlspecialchars(str_replace("Keywords - ","",i18n_get_translated($fields[$n]["title"])));
-		if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
+		//if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
 
 		# Value formatting
 		$value=i18n_get_translated($value);
@@ -740,6 +740,9 @@ for ($n=0;$n<count($fields);$n++)
 				eval($fields[$n]['value_filter']);
 			}
 			else if (file_exists($plugin)) {include $plugin;}
+			else if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) { 
+				$value=NiceDate($value,false,true);
+			}
 			
 			# Highlight keywords
 			$value=highlightkeywords($value,$search,$fields[$n]["partial_index"],$fields[$n]["name"],$fields[$n]["keywords_index"]);
@@ -758,14 +761,16 @@ for ($n=0;$n<count($fields);$n++)
 			if ($value!=""){
 				# Draw this field normally.
 				
-				if ($fields[$n]["type"]!=4) { // nicedate is already applied here
+				
 					# value filter plugin should be used regardless of whether a display template is used.
 					$plugin="../plugins/value_filter_" . $fields[$n]["name"] . ".php";
 					if ($fields[$n]['value_filter']!=""){
 						eval($fields[$n]['value_filter']);
 					}
 					else if (file_exists($plugin)) {include $plugin;}
-				}
+				    else if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) { 
+						$value=NiceDate($value,false,true);
+					}
 				
 				# Extra word wrapping to break really large words (e.g. URLs)
 				$value=wordwrap($value,20,"<br />",true);
