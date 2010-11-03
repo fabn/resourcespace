@@ -1,0 +1,5 @@
+name: video_splice
+author: Dan Huby
+version: 1.0
+desc: Adds video cutting and splicing capability
+config_url: /plugins/video_splice/pages/setup.php
