@@ -92,9 +92,11 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 			sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
 
 			# Set the session cookie.
-			if ($global_cookies){$cookie_path="/";} else {$cookie_path="";}
+			if ($global_cookies){$cookie_path="/";setcookie("user",$username . "|" . $session_hash,1);} 
+			else {$cookie_path="";setcookie("user",$username . "|" . $session_hash,1,"/");}
+			
 			setcookie("user",$username . "|" . $session_hash,$expires,$cookie_path);
-	        
+	       
 	        # Set default resource types
 	        setcookie("restypes",$default_res_types);
 
