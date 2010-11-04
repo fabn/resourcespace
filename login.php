@@ -92,8 +92,8 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 			sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
 
 			# Set the session cookie.
-			if ($global_cookies){$cookie_path="/";setcookie("user",$username . "|" . $session_hash,1);} 
-			else {$cookie_path="";setcookie("user",$username . "|" . $session_hash,1,"/");}
+			if ($global_cookies){$cookie_path="/";setcookie("user","",1);//clear} 
+			else {$cookie_path="";setcookie("user","",1,"/");//clear}
 			
 			setcookie("user",$username . "|" . $session_hash,$expires,$cookie_path);
 	       
