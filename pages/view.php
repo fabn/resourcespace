@@ -326,7 +326,12 @@ if ($resource["has_image"]==1 && $download_multisize)
 		$counter++;
 		$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
 
-		if ($direct_link_previews) {
+		# Should we allow this download?
+		# If the download is allowed, show a download button, otherwise show a request button.
+		$downloadthissize=resource_download_allowed($ref,$sizes[$n]["id"],$resource["resource_type"]);
+
+
+		if ($direct_link_previews && $downloadthissize) {
 
 			$direct_link = "download.php?direct=1&ref=$ref&size=" . $sizes[$n]['id'] . "&ext=" . $sizes[$n]['extension'];
 			$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
@@ -362,9 +367,6 @@ if ($resource["has_image"]==1 && $download_multisize)
 
 		<?php
 
-		# Should we allow this download?
-		# If the download is allowed, show a download button, otherwise show a request button.
-		$downloadthissize=resource_download_allowed($ref,$sizes[$n]["id"],$resource["resource_type"]);
 		if ($downloadthissize)
 			{
 			?>
