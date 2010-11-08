@@ -2415,6 +2415,15 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 		return $try;
 		}
 	
+	# --- Legacy ---
+	# Support the old location for resource type and GIF format (root of gfx folder)
+	# Some installations use custom types in this location.
+	$try="type" . $resource_type . $col . ".gif";
+	if (file_exists($folder . $try))
+		{
+		return $try;
+		}
+
 
 	# Try resource type (language specific)
 	$try="no_preview/resource_type/type" . $resource_type . $col . "_" . $language . ".png";
@@ -2429,16 +2438,6 @@ function get_nopreview_icon($resource_type,$extension,$col_size,$contactsheet=fa
 		return $try;
 		}
 
-
-	# --- Legacy ---
-	# Support the old location for resource type and GIF format (root of gfx folder)
-	# Some installations use custom types in this location.
-	$try="type" . $resource_type . $col . ".gif";
-	if (file_exists($folder . $try))
-		{
-		return $try;
-		}
-	
 	# Fall back to the 'no preview' icon used for type 1.
 	return "no_preview/resource_type/type1" . $col . ".png";
 	}
