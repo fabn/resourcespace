@@ -82,15 +82,20 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	<div class="HomePanel"><div class="HomePanelIN">
 	<h2><a href="themes.php"><?php echo $lang["themes"]?></a></h2>
 	<?php echo text("themes")?>
+	<br />	<br />
+	<select style="width:140px;" onChange="window.location=this.value;">
+	<option value=""><?php echo $lang["select"] ?></option>
 	<?php
 	$headers=get_theme_headers();
 	for ($n=0;$n<count($headers);$n++)
 		{
 		?>
-		<p>&gt;&nbsp;<a href="themes.php?header=<?php echo urlencode($headers[$n])?>"><?php echo i18n_get_translated(str_replace("*","",$headers[$n]))?></a></p>
+		<option value="themes.php?header=<?php echo urlencode($headers[$n])?>"><?php echo i18n_get_translated(str_replace("*","",$headers[$n]))?></option>
 		<?php
 		}
 	?>
+	</select>
+	<br />&gt;&nbsp;<a href="themes.php"><?php echo $lang["viewall"] ?></a>
 	</div>
 	<div class="PanelShadow"></div>
 	</div>
