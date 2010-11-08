@@ -1597,3 +1597,6 @@ $direct_link_previews = false;
 $direct_download_noauth = false; 
 
 $psd_transparency_checkerboard=false;
+
+# Search for a minimum number of stars in Simple search/Advanaced Search (requires $$display_user_rating_stars)
+$star_search=false;

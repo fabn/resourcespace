@@ -4,7 +4,7 @@
 #  - For resource indexing / keyword creation, see resource_functions.php
 
 if (!function_exists("do_search")) {
-function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false)
+function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false,$starsearch="")
 	{	
 	debug("search=$search restypes=$restypes archive=$archive");
 	
@@ -40,6 +40,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		$sql_filter.="resource_type in ($restypes)";
 		}
+	
+	if ($starsearch!="")
+		{
+		if ($sql_filter!="") {$sql_filter.=" and ";}
+		$sql_filter.="user_rating >= $starsearch";
+		}	
 
 	# append resource type restrictions based on 'T' permission	
 	# look for all 'T' permissions and append to the SQL filter.

@@ -46,7 +46,43 @@ $found_year="";if (isset($set_fields["year"])) {$found_year=$set_fields["year"];
 $found_month="";if (isset($set_fields["month"])) {$found_month=$set_fields["month"];}
 $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 
-?>
+setcookie("starsearch","");
+
+if ($display_user_rating_stars && $star_search){
+	# if seardch is not a special search (ie. !recent), use starsearchvalue.
+	if (getval("search","")!="" && strpos(getval("search",""),"!")!==false)
+		{
+		$starsearch="";
+		}
+	else
+		{
+		$starsearch=getvalescaped("starsearch","");	
+		setcookie("starsearch",$starsearch);
+	}
+	?>
+
+	<script type="text/javascript">
+	function StarSearchRatingDisplay(rating,hiclass)
+		{
+		if (window['StarSearchRatingDone']) {return false;}
+		for (var n=1;n<=5;n++)
+			{
+			$('RatingStar-'+n).removeClassName('StarEmpty');
+			$('RatingStar-'+n).removeClassName('StarCurrent');
+			$('RatingStar-'+n).removeClassName('StarSelect');
+			if (n<=rating)
+				{
+				$('RatingStar-'+n).addClassName(hiclass);
+				}
+			else
+				{
+				$('RatingStar-'+n).addClassName('StarEmpty');
+				}
+			}
+		}	
+	</script>
+<?php } ?>
+
 <div id="SearchBox">
 
 
@@ -123,6 +159,7 @@ if (!$basic_simple_search)
 	<?php $searchbuttons="<div class=\"SearchItem\">";
 	if (!$basic_simple_search) { $searchbuttons.="<input name=\"Clear\" type=\"button\" value=\"&nbsp;&nbsp;".$lang['clearbutton']."&nbsp;&nbsp;\" onClick=\"document.getElementById('ssearchbox').value=''; document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';";
 	if ($searchbyday) { $searchbuttons.="document.getElementById('basicday').value='';"; } 
+	if ($display_user_rating_stars && $star_search) { $searchbuttons.="StarSearchRatingDisplay(0,'StarCurrent');document.getElementById('starsearch').value='';window['StarSearchRatingDone']=true;"; } 
 	$searchbuttons.="ResetTicks();\"/>"; } 
 	$searchbuttons.="<input name=\"Submit\" type=\"submit\" value=\"&nbsp;&nbsp;". $lang['searchbutton']."&nbsp;&nbsp;\" /></div>";?>
 	
@@ -409,12 +446,26 @@ if (!$basic_simple_search)
 	  ?>
 	</select>
 	<?php } ?>
-
-       <?php if (isset($resourceid_simple_search) and $resourceid_simple_search){ ?>
-                <div class="SearchItem"><?php echo $lang["resourceid"]?><br />
-                <input id="searchresourceid" name="searchresourceid" type="text" class="SearchWidth" value="" />
-                </div>
-        <?php } ?>
+	
+    <?php if ($star_search && $display_user_rating_stars){?>
+	<div class="SearchItem"><?php echo $lang["starsminsearch"];?><br />
+	<input type="hidden" id="starsearch" name="starsearch" class="SearchWidth" value="<?php echo $starsearch;?>">
+		<?php if ($starsearch=="") {$starsearch=0;}?>		
+		<div  class="RatingStars" onMouseOut="StarSearchRatingDisplay(<?php echo $starsearch?>,'StarCurrent');">&nbsp;<?php 
+		for ($z=1;$z<=5;$z++)
+			{
+			?><a href="#" onMouseOver="StarSearchRatingDisplay(<?php echo $z?>,'StarSelect');" onClick="if (window['StarSearchRatingDone']==true){return false;} document.getElementById('starsearch').value=<?php echo $z?>;window['StarSearchRatingDone']=true;return false;"><span id="RatingStar-<?php echo $z?>" class="Star<?php echo ($z<=$starsearch?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			}
+		?>
+		</div>
+	</div>
+	<?php } ?>
+	
+    <?php if (isset($resourceid_simple_search) and $resourceid_simple_search){ ?>
+             <div class="SearchItem"><?php echo $lang["resourceid"]?><br />
+             <input id="searchresourceid" name="searchresourceid" type="text" class="SearchWidth" value="" />
+             </div>
+    <?php } ?>
 
 
 	</div>

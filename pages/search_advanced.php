@@ -5,6 +5,9 @@ include "../include/general.php";
 include "../include/search_functions.php";
 
 $archive=getvalescaped("archive",0);
+$starsearch=getvalescaped("starsearch","");	
+setcookie("starsearch",$starsearch);
+
 
 if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 	{
@@ -30,7 +33,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			}
 		else
 			{
-			$result=do_search($search,$restypes,"relevance",$archive,0);
+			$result=do_search($search,$restypes,"relevance",$archive,0,"",false,$starsearch);
 			if (is_array($result))
 				{
 				$count=count($result);
@@ -64,6 +67,8 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		}
 	}
 
+
+
 # Reconstruct a values array based on the search keyword, so we can pre-populate the form from the current search
 $search=@$_COOKIE["search"];
 $keywords=explode(", ",$search);
@@ -89,9 +94,10 @@ for ($n=0;$n<count($keywords);$n++)
 		}
 	}
 $allwords=str_replace(",","",$allwords);
-if (getval("resetform","")!="") {$found_year="";$found_month="";$found_day="";$allwords="";}
+if (getval("resetform","")!="") {$found_year="";$found_month="";$found_day="";$allwords="";$starsearch="";}
 include "../include/header.php";
 ?>
+
 <div class="BasicsBox">
 <h1><?php echo ($archive==0)?$lang["advancedsearch"]:$lang["archiveonlysearch"]?> </h1>
 <p class="tight"><?php echo text("introtext")?></p>
@@ -174,6 +180,18 @@ for ($n=0;$n<count($types);$n++)
 </select>
 <div class="clearerleft"> </div>
 </div>
+<?php if ($star_search && $display_user_rating_stars){?>
+<div class="Question"><label><?php echo $lang["starsminsearch"];?></label>
+<select id="starsearch" name="starsearch" class="SearchWidth" onChange="UpdateResultCount();">
+<option value="">none</option>
+<?php for ($n=1;$n<=5;$n++){?>
+	 <option value="<?php echo $n;?>" <?php if ($n==$starsearch){?>selected<?php } ?>><?php for ($x=0;$x<$n;$x++){?>&#9733;<?php } ?></option>
+<?php } ?>
+</select>
+<div class="clearerleft"> </div>
+</div>
+<?php } ?>
+
 <iframe src="blank.html" name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <?php
 # Fetch fields
@@ -217,6 +235,8 @@ for ($n=0;$n<count($fields);$n++)
 </div>
 </form>
 </div>
+<?php // show result count as it stands ?>
+<script type="text/javascript">UpdateResultCount();</script>
 <?php
 include "../include/footer.php";
 ?>

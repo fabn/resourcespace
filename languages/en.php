@@ -1008,4 +1008,5 @@ $lang["close"]="Close";
 $lang["repeatinstallationcheck"]="Repeat Installation Check";
 $lang["generateexternalurl"]="Generate External URL";
 
+$lang["starsminsearch"]="Stars (Minimum)";
 ?>

@@ -20,6 +20,7 @@ $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
 $offset=getvalescaped("offset",0,true);
 $restypes=getvalescaped("restypes","");
+$starsearch=getvalescaped("starsearch","");
 if (strpos($search,"!")!==false) {$restypes="";}
 $archive=getvalescaped("archive",0,true);
 
@@ -34,7 +35,7 @@ if ($go!="")
 	$origref=$ref; # Store the reference of the resource before we move, in case we need to revert this.
 	
 	# Re-run the search and locate the next and previous records.
-	$result=do_search($search,$restypes,$order_by,$archive,240+$offset+1,$sort);
+	$result=do_search($search,$restypes,$order_by,$archive,240+$offset+1,$sort,false,$starsearch);
 	if (is_array($result))
 		{
 		# Locate this resource

@@ -269,7 +269,18 @@ else
 	# This is a new search, log this activity
 	if ($archive==2) {daily_stat("Archive search",0);} else {daily_stat("Search",0);}
 	}
-	
+
+# if search is not a special search (ie. !recent), use starsearchvalue.
+if (getval("search","")!="" && strpos(getval("search",""),"!")!==false)
+	{
+	$starsearch="";
+	}
+else
+	{
+	$starsearch=getvalescaped("starsearch","");	
+	setcookie("starsearch",$starsearch);
+}
+
 # If returning to an old search, restore the page/order by
 if (!array_key_exists("search",$_GET))
 	{
@@ -328,7 +339,7 @@ $refs=array();
 if (strpos($search,"!")!==false) {$restypes="";}
 
 # Do the search!
-$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort);
+$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
 # Do the public collection search if configured.
 

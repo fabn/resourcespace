@@ -22,6 +22,7 @@ $offset=getvalescaped("offset","",true);
 $order_by=getvalescaped("order_by","");
 $archive=getvalescaped("archive","",true);
 $restypes=getvalescaped("restypes","");
+$starsearch=getvalescaped("starsearch","");
 $page=getvalescaped("page",1);
 $alternative=getvalescaped("alternative",-1);
 if (strpos($search,"!")!==false) {$restypes="";}
@@ -45,7 +46,7 @@ $go=getval("go","");
 if ($go!="")
 	{
 	# Re-run the search and locate the next and previous records.
-	$result=do_search($search,$restypes,$order_by,$archive,72+$offset+1,$sort);
+	$result=do_search($search,$restypes,$order_by,$archive,72+$offset+1,$sort,false,$starsearch);
 	if (is_array($result))
 		{
 		# Locate this resource
