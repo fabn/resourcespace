@@ -417,7 +417,7 @@ function DisplayTheme($themes=array())
 			?>
 			<tr>
 			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
-			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*30)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
+			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			
