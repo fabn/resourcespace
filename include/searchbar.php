@@ -1,4 +1,5 @@
 <?php
+
 # pull values from cookies if necessary, for non-search pages where this info hasn't been submitted
 if (!isset($restypes)) {$restypes=@$_COOKIE["restypes"];}
 if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=(isset($_COOKIE["search"])?$_COOKIE["search"]:"");} else {$quicksearch=$search;}
@@ -46,20 +47,8 @@ $found_year="";if (isset($set_fields["year"])) {$found_year=$set_fields["year"];
 $found_month="";if (isset($set_fields["month"])) {$found_month=$set_fields["month"];}
 $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 
-setcookie("starsearch","");
 
-if ($display_user_rating_stars && $star_search){
-	# if seardch is not a special search (ie. !recent), use starsearchvalue.
-	if (getval("search","")!="" && strpos(getval("search",""),"!")!==false)
-		{
-		$starsearch="";
-		}
-	else
-		{
-		$starsearch=getvalescaped("starsearch","");	
-		setcookie("starsearch",$starsearch);
-	}
-	?>
+if ($display_user_rating_stars && $star_search){?>
 
 	<script type="text/javascript">
 	function StarSearchRatingDisplay(rating,hiclass)
