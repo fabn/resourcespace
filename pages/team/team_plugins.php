@@ -181,9 +181,7 @@ while (false !== ($file = readdir($dirh))) {
     }
 }
 closedir($dirh);
-?>
-
-<?php include "../../include/header.php"; ?>
+?><?php include "../../include/header.php"; ?>
 <script src="../../lib/js/jquery-1.3.1.min.js" type="text/javascript"> </script>
 <script type="text/javascript">
         function actionPost(action, value){
@@ -307,4 +305,4 @@ closedir($dirh);
 <?php include "../../include/footer.php";
 if (isset($rejected) && $rejected){ ?>
 	<script>alert("<?php echo $rej_reason.'\\n\\r'.$lang['plugins-rejremedy']; ?>");</script>
-<?php } ?>
+<?php } 

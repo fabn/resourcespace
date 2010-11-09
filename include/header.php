@@ -15,9 +15,7 @@ if ($display_user_rating_stars && $star_search){
 		setcookie("starsearch",$starsearch);
 	    }
 	}
-?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
 <?php if ($include_rs_header_info){?>
 <!--
