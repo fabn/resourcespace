@@ -19,9 +19,9 @@ function revertToPage1(){
 $('previewpage').options.length=0;$('previewpage').options[1]=new Option(1,1,selected,selected);$('previewpage').value=1;$('previewPageOptions').style.display='none';
 }
 </script>
-";?>
+";
 
-<?php
+?><?php
 $bodyattribs="onload=\"previewContactSheet();\"";
 include "../include/header.php";
 ?>
