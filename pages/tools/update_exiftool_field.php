@@ -12,10 +12,11 @@ include "../../include/image_processing.php";
 set_time_limit(60*60*40);
 
 # ex. pages/tools/update_exiftool_field.php?fieldrefs=75,3&blanks=true
-$fieldrefs=getval("fieldrefs","");
+$fieldrefs=getval("fieldrefs",0);
+if ($fieldrefs==0){die ("Please add a list of refs to the fieldrefs url parameter, which are the ref numbers of the fields that you would like exiftool to extract from. <br /><br />For example: pages/tools/update_exiftool_field.php?fieldrefs=75,3");}
+
 $blanks=getval("blanks","true"); // if new value is blank, it will replace the old value.
 $fieldrefs=explode(",",$fieldrefs);
-if (count($fieldrefs)==0){die ("Please add a list of refs to the fieldrefs array, which are the ref numbers of the fields that you would like exiftool to extract from.");}
 
 foreach ($fieldrefs as $fieldref){
 	$fieldref_info= sql_query("select exiftool_field,exiftool_filter,title,resource_type,name from resource_type_field where ref='$fieldref'");
