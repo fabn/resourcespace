@@ -289,6 +289,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo strtoupper($resource
 	<?php if ($allow_metadata_revert){?><br />
 	<a href="edit.php?ref=<?php echo $ref?>&exif=true&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" onClick="return confirm('<?php echo $lang["confirm-revertmetadata"]?>');">&gt; 
 	<?php echo $lang["action-revertmetadata"]?></a><?php } ?>
+	<?php hook("afterfileoptions"); ?>
 </div>
 <div class="clearerleft"> </div>
 </div>
