@@ -807,7 +807,6 @@ function email_user_welcome($email,$username,$password,$usergroup)
 	send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
 	}
 
-
 function email_reminder($email)
 	{
 	if ($email=="") {return false;}
@@ -822,7 +821,8 @@ function email_reminder($email)
 	
 	$templatevars['username']=$details["username"];
 	$templatevars['password']=$password;
-	$templatevars['url']=$baseurl;
+	if (trim($email_url_save_user)!=""){$templatevars['url']=$email_url_remind_user;}
+	else {$templatevars['url']=$baseurl;}
 	
 	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
 	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);

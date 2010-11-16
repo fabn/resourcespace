@@ -944,9 +944,10 @@ $enable_find_similar=true;
 ##  Hide the 'link' link on view.php (link is back to the same page)
 $disable_link_in_view = false;
 
-##  The URL that goes in the bottom of the 'new user' email (save_user function in general.php)
+##  The URL that goes in the bottom of the 'emaillogindetails' / 'emailreminder' email templates (save_user function in general.php)
 ##  If blank, uses $baseurl 
-$email_url_save_user = ""; 
+$email_url_save_user = ""; //emaillogindetails
+$email_url_remind_user = ""; //emailreminder
 
 # edit.php - disable links to upload preview and manage alternative files
 $disable_upload_preview = false;
