@@ -532,7 +532,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && in_array($extens
 	Try ImageMagick
    ----------------------------------------
 */
-if (!isset($newfile))
+if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 	{
     $prefix="";
 

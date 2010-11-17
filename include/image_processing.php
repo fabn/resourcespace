@@ -102,8 +102,9 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
      		{
 		
 		global $camera_autorotation;
+		global $ffmpeg_audio_extensions;
 		if ($camera_autorotation){
-			if ($autorotate){
+			if ($autorotate && (!in_array($extension,$ffmpeg_audio_extensions))){
 				AutoRotateImage($filepath);
 			}
 		}
