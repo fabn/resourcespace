@@ -11,6 +11,8 @@ a:active {color:#CCC;}
 
 #Header {border-bottom: 1px solid #777;background: url(../gfx/black/titles/title.gif) no-repeat;}
 #Footer {border-top: 1px solid #AAA;}
+#TextHeader{color:#d8d8d8;}
+#TextDesc{color:#d8d8d8;}
 
 .TopInpageNav {border-bottom: 1px solid #777;}
 

@@ -11,6 +11,8 @@ a:active {color:#B5C3D4;}
 
 #Header {border-bottom: 1px solid #5A7599;background: url(../gfx/greyblu/titles/title.gif) no-repeat;}
 #Footer {border-top: 1px solid #94A7C0;}
+#TextHeader{color:#c2e066;}
+#TextDesc{color:#c2e066;}
 
 .TopInpageNav {border-bottom: 1px solid #5A7599;}
 

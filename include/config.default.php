@@ -104,7 +104,10 @@ and running.
 #$storageurl="http://my.storage.server/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
 
 include "version.php";
+
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
+$applicationdesc=""; # Subtitle if $header_text_title=true;
+$header_text_title=false; //replace header logo with text, application name and description above
 
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
@@ -1601,3 +1604,5 @@ $psd_transparency_checkerboard=false;
 
 # Search for a minimum number of stars in Simple search/Advanaced Search (requires $$display_user_rating_stars)
 $star_search=false;
+
+

@@ -11,6 +11,8 @@ a:active {color:#737373;}
 
 #Header {border-bottom: 1px solid #BBBBBB;background: url(../gfx/whitegry/titles/title.gif) no-repeat;}
 #Footer {border-top: 1px solid #BBBBBB;}
+#TextHeader{color:#616161;}
+#TextDesc{color:#616161;}
 
 .TopInpageNav {border-bottom: 1px solid #BBBBBB;}
 

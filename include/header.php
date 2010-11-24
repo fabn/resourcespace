@@ -102,8 +102,15 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 <?php
 if (($pagename=="terms") && (getval("url","")=="index.php")) {$loginterms=true;} else {$loginterms=false;}
 if ($pagename!="preview" && $pagename!="preview_all") { ?>
-<div id="Header">
-<?php 
+
+<div id="Header" <?php if ($header_text_title){?>style="background:url();"<?php } ?>>
+<?php if ($header_text_title){?>
+    <div id="TextHeader"><?php echo $applicationname;?></div>
+    <?php if ($applicationdesc!=""){?>
+        <div id="TextDesc"><?php echo $applicationdesc;?></div>
+    <?php } ?>
+<?php }
+
 
 hook("headertop");
 
