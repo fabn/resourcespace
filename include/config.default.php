@@ -1596,9 +1596,13 @@ $show_resource_title_in_titlebar = false;
 # add direct link to original file for each image size
 $direct_link_previews = false;
 
-# set to true to allow direct resource downloads without authentication
-# SECURITY WARNING: This will effectively allow anyone to download any resource without logging in. Be careful!!!! 
-$direct_download_noauth = false; 
+# SECURITY WARNING: The next two options will  effectively allow anyone
+# to download any resource without logging in. Be careful!!!!
+// allow direct resource downloads without authentication
+$direct_download_noauth = false;
+// make preview direct links go directly to filestore rather than through download.php
+// (note that filestore must be served through the web server for this to work.)
+$direct_link_previews_filestore = false;
 
 $psd_transparency_checkerboard=false;
 

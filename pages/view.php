@@ -333,9 +333,13 @@ if ($resource["has_image"]==1 && $download_multisize)
 
 
 		if ($direct_link_previews && $downloadthissize) {
-
-			$direct_link = "download.php?direct=1&ref=$ref&size=" . $sizes[$n]['id'] . "&ext=" . $sizes[$n]['extension'];
-			$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
+			if ($direct_link_previews_filestore){
+				$direct_link = "" . get_resource_path($ref,false,$sizes[$n]['id'],false,$sizes[$n]['extension']);
+				$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
+			} else {
+				$direct_link = "download.php?direct=1&ref=$ref&size=" . $sizes[$n]['id'] . "&ext=" . $sizes[$n]['extension'];
+				$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
+			}
 		}
 
 		?>
