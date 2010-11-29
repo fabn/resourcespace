@@ -105,7 +105,7 @@ if ($pagename!="preview" && $pagename!="preview_all") { ?>
 
 <div id="Header" <?php if ($header_text_title){?>style="background:url();"<?php } ?>>
 <?php if ($header_text_title){?>
-    <div id="TextHeader"><?php echo $applicationname;?></div>
+    <div id="TextHeader"><a href="<?php echo $baseurl;?>/pages/home.php"><?php echo $applicationname;?></a></div>
     <?php if ($applicationdesc!=""){?>
         <div id="TextDesc"><?php echo $applicationdesc;?></div>
     <?php } ?>

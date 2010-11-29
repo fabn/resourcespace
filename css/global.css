@@ -33,6 +33,7 @@ a:active {text-decoration:underline;}
 /*General layout*/
 #Header {margin:20px 25px;padding:0;text-align:left;}
 #TextHeader{font-size:25px;float:left;}
+#TextHeader a {text-decoration:none;}
 #TextDesc{font-size:12px;float:left;display:block;clear:left;}
 #HeaderNav1 {text-align:right;}
 #HeaderNav2 {text-align:right;margin-top: 28px;margin-bottom: 4px;}
