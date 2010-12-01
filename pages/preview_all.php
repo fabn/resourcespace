@@ -45,18 +45,6 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 	}
 if ($allow_reorder || $infobox)
 	{
-	?>
-	<script src="../lib/js/prototype.js" type="text/javascript"></script>
-	<script src="../lib/js/scriptaculous.js" type="text/javascript"></script>
-	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	function ReorderResources(id1,id2,reverse)
-		{
-		top.main.location.href='preview_all.php?reorder=' + id1 + '-' + id2+'&ref=<?php echo $colref?>&vertical=<?php echo $vertical?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>';
-		top.collections.location='collections.php?ref=<?php echo $colref?>';
-		}
-	</script>
-	<?php
 	
 	# Also check for the parameter and reorder as necessary.
 	$reorder=getvalescaped("reorder","");
@@ -94,15 +82,22 @@ $collection=do_search("!collection" . $colref,'',$order_by,$archive,-1,$sort);
 }
 
 include "../include/header.php";?>
+<script type="text/javascript">
+function ReorderResources(id1,id2,reverse)
+    {
+    top.main.location.href='preview_all.php?reorder=' + id1 + '-' + id2+'&ref=<?php echo $colref?>&vertical=<?php echo $vertical?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>';
+    top.collections.location='collections.php?ref=<?php echo $colref?>';
+    }
+</script>
 <br/>
-
-<table id="preview_all_table"  >
+<table id="preview_all_table">
 <tr><p style="margin:7px 0 7px 0;padding:0;"><a href="search.php?search=!collection<?php echo $colref?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&offset=<?php echo $offset?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoresults"]?></a>
 &nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=h&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Horizontal </a>
 &nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=v&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Vertical </a>
-</tr>	<tr>
-		<?php
-		$n=0;
+</tr>
+<tr>
+<?php
+$n=0;
 for ($x=0;$x<count($collection);$x++){
 # Load access level
 $ref=$collection[$x]['ref'];
