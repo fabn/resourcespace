@@ -86,8 +86,7 @@ if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result=
 
 <?php
 # Check filestore folder browseability
-# $output=@file_get_contents($baseurl . "/filestore");
-$output="";
+$output=@file_get_contents($baseurl . "/filestore");
 if (strpos($output,"Index of")===false)
 	{
 	$result="OK";
