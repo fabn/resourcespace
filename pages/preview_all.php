@@ -50,9 +50,8 @@ if ($allow_reorder || $infobox)
 	$reorder=getvalescaped("reorder","");
 	if ($reorder!="")
 		{
-		$reverse=getvalescaped("reverse",false);	
 		$r=explode("-",$reorder);
-		swap_collection_order($r[0],$r[1],$usercollection,$reverse);
+		swap_collection_order($r[0],$r[1],$usercollection);
 		}
 	}	
 
@@ -83,10 +82,10 @@ $collection=do_search("!collection" . $colref,'',$order_by,$archive,-1,$sort);
 
 include "../include/header.php";?>
 <script type="text/javascript">
-function ReorderResources(id1,id2,reverse)
+function ReorderResources(id1,id2)
     {
     top.main.location.href='preview_all.php?reorder=' + id1 + '-' + id2+'&ref=<?php echo $colref?>&vertical=<?php echo $vertical?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>';
-    top.collections.location='collections.php?ref=<?php echo $colref?>';
+    top.collections.location.href='collections.php?ref=<?php echo $colref?>';
     }
 </script>
 <br/>

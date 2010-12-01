@@ -312,23 +312,16 @@ if ($infobox)
 # Include function for reordering
 if ($allow_reorder && $display!="list")
 	{
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&offset=" . $offset;
-	?>
-	<script type="text/javascript">
-	function ReorderResources(id1,id2)
-		{
-		document.location='<?php echo $url?>&reorder=' + id1 + '-' + id2;
-		}
-	</script>
-	<?php
+	$url="search.php?search=" . urlencode($search) ;
 	
 	# Also check for the parameter and reorder as necessary.
 	$reorder=getvalescaped("reorder","");
 	if ($reorder!="")
 		{
 		$r=explode("-",$reorder);
-		swap_collection_order(substr($r[0],13),$r[1],substr($search,11));
-		refresh_collection_frame();
+		$wait=swap_collection_order(substr($r[0],13),$r[1],substr($search,11));
+        refresh_collection_frame();
+		?><script>document.location='<?php echo $url?>';top.collections.location.href='collections.php?ref=<?php echo substr($search,11);?>';</script><?php
 		}
 	}
 
@@ -337,9 +330,6 @@ $refs=array();
 
 # Special query? Ignore restypes
 if (strpos($search,"!")!==false) {$restypes="";}
-
-# Do the search!
-$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
 # Do the public collection search if configured.
 
@@ -357,6 +347,17 @@ if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0
 # Include the page header to and render the search results
 include "../include/header.php";
 
+if ($allow_reorder && $display!="list")
+	{
+	$url="search.php?search=" . urlencode($search) ;
+	?>
+	<script type="text/javascript">
+	function ReorderResources(id1,id2)
+		{
+		document.location='<?php echo $url?>&reorder=' + id1 + '-' + id2;
+		}
+	</script><?php
+}
 
 # Extra CSS to support more height for titles on thumbnails.
 if (isset($result_title_height))
@@ -391,6 +392,8 @@ if ($infobox_image_mode)
 	
 	}
 
+# Do the search!
+$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
 if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
