@@ -331,6 +331,9 @@ $refs=array();
 # Special query? Ignore restypes
 if (strpos($search,"!")!==false) {$restypes="";}
 
+# Do the search!
+$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
+
 # Do the public collection search if configured.
 
 if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
@@ -391,9 +394,6 @@ if ($infobox_image_mode)
 	<?php
 	
 	}
-
-# Do the search!
-$result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
 if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	{
