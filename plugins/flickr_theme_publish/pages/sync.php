@@ -14,6 +14,13 @@ $theme=getvalescaped("theme","");
 <h1><?php echo $lang["flickr_title"] ?></h1>
 <?php
 
+# Handle clear photo IDs
+if (getval("clear_photoid","")!="")
+	{
+	sql_query("update resource set flickr_photo_id=null where ref in (select resource from collection_resource where collection='$theme')");
+	
+	}
+
 # Handle log out
 if (getval("logout","")!="")
 	{
@@ -181,6 +188,11 @@ if ($validtoken)
 			<?php
 			}
 		?>
+
+		<br /><br /><br /><br /><br /><hr /><h2><?php echo $lang["flickr_clear_photoid"] ?></h2>
+		<p><?php echo $lang["flickr_clear_photoid_help"] ?></p>
+		<input type="submit" name="clear_photoid" value="<?php echo $lang["flickr_clear_photoid"]; ?>">
+
 		</form>
 		<?php
 		}

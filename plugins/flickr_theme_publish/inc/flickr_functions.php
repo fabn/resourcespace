@@ -7,7 +7,7 @@ function sync_flickr($search,$new_only=false,$photoset=0,$photoset_name="",$priv
 	{
 	# For the resources matching $search, synchronise with Flickr.
 	
-	global $flickr_api_key, $flickr_token, $flickr_caption_field, $flickr_keywords_field;
+	global $flickr_api_key, $flickr_token, $flickr_caption_field, $flickr_keywords_field, $flickr_prefix_id_title;
 			
 	$results=do_search($search);
 	
@@ -21,7 +21,12 @@ function sync_flickr($search,$new_only=false,$photoset=0,$photoset_name="",$priv
 		$keywords=sql_value("select value from resource_data where resource_type_field=$flickr_keywords_field and resource='" . $result["ref"] . "'","");
 		$photoid=sql_value("select flickr_photo_id value from resource where ref='" . $result["ref"] . "'","");
 
-				
+		# Prefix ID to title?
+		if ($flickr_prefix_id_title)
+			{
+			$title=$result["ref"] . ") " . $title;
+			}
+			
 		if (!$new_only || $photoid=="")
 			{
 			echo "<li>Processing: " . $title . "\n";
@@ -72,6 +77,7 @@ function sync_flickr($search,$new_only=false,$photoset=0,$photoset_name="",$priv
 				sql_query("update resource set flickr_photo_id='" . escape_check($photoid) . "' where ref='" . $result["ref"] . "'");
 				}
 
+			$created_new_photoset=false;
 			if ($photoset==0)
 				{
 				# Photoset must be created.
@@ -82,13 +88,17 @@ function sync_flickr($search,$new_only=false,$photoset=0,$photoset_name="",$priv
 				$pos_2=strpos($last_xml,"\"",$pos_1+5);
 				$photoset=substr($last_xml,$pos_1+4,$pos_2-$pos_1-4);
 				echo "<li>Created new photoset: '" . $photoset_name . "' with ID " . $photoset;
+				$created_new_photoset=true;
 				}
 
 			# Add to photoset
-			flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photosets.addPhoto","auth_token"=>$flickr_token, "photoset_id"=>$photoset, "photo_id"=>$photoid));
-			echo "<li>Added photo $photoid to photoset $photoset.";
-			global $last_xml;echo nl2br(htmlspecialchars($last_xml));
-			
+			if (!$created_new_photoset) # If we've just created a photoset then this will already be present within it as the primary photo (added during the create photoset request).
+				{
+				flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photosets.addPhoto","auth_token"=>$flickr_token, "photoset_id"=>$photoset, "photo_id"=>$photoid));
+				echo "<li>Added photo $photoid to photoset $photoset.";
+				#global $last_xml;echo nl2br(htmlspecialchars($last_xml));
+				}
+						
 			# Set permissions
 			echo "<li>Setting permissions to " . ($private==0?"public":"private");
 			flickr_api("http://flickr.com/services/rest/",array("api_key"=>$flickr_api_key,"method"=>"flickr.photos.setPerms","auth_token"=>$flickr_token, "photo_id"=>$photoid, "is_public"=>($private==0?1:0),"is_friend"=>0,"is_family"=>0,"perm_comment"=>0,"perm_addmetadata"=>0),"","POST");

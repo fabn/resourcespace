@@ -25,4 +25,7 @@ $lang["flickr_publish_as"]="Publish as:";
 $lang["flickr_public"]="Public";
 $lang["flickr_private"]="Private";
 
+$lang["flickr_clear_photoid_help"]="You can clear the stored Flickr photo IDs for all photos in this set. This will cause them to be republished to Flickr even if they have been previously published. This may be useful if you have deleted the photos from Flickr and wish to add them again.";
+$lang["flickr_clear_photoid"]="Clear photo IDs";
+
 ?>
