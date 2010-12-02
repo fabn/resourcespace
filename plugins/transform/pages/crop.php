@@ -361,6 +361,9 @@ if (!$download && !$original){
     sql_query("delete from resource_dimensions where resource='$ref'");
     sql_query("insert into resource_dimensions (resource, width, height, file_size) values ('$ref', '$newfilewidth', '$newfileheight', '$newfilesize')");
 
+    # call remove annotations, since they will not apply to transformed
+    hook("removeannotations");
+
     // remove the cached transform preview, since it will no longer be accurate
     if (file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
 	unlink("../../../filestore/tmp/transform_plugin/pre_$ref.jpg");
