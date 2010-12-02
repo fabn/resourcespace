@@ -10,6 +10,10 @@
 //You must open permissions on the output folder. 
 //Afterwards, You may have to mount it with -o uid=1000,gid=1000 to fix access
 $drive_path="/home/tom/Desktop/out/";
+
+// set to true to process file with Exiftool against resource_data before copying
+$write_metadata=false;
+
 // You may also need to modify some php limits here 
 set_time_limit(60*60*5);
 
@@ -71,7 +75,17 @@ foreach($resources as $resource){
       fwrite($fp, "copying ".$drive_path.$filename."\n");
       // allow to re-run script without re-copying files
       if(!file_exists($drive_path.$filename))
-        {copy($scrambled,$drive_path.$filename);}
+        {
+        // optionally write metadata    
+        if ($write_metadata){
+            $tmpfile=write_metadata($scrambled,$resource['ref']);
+            if ($tmpfile!==false && file_exists($tmpfile)){$scrambled=$tmpfile;}
+            }
+        copy($scrambled,$drive_path.$filename);
+        if ($write_metadata && $tmpfile!==false && file_exists($tmpfile)){
+            unlink($tmpfile);
+            }
+        }
       echo "<br />";
    // if file exists but no filename exists, export ref   
    } else if (file_exists($scrambled)){
