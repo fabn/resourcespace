@@ -225,7 +225,7 @@ concat(u.username,' (',u.fullname,' )') 'Downloaded By User',
 g.name 'User Group',
 r.ref 'Resource ID',
 r.view_title_field 'Resource Title'
-
+us
 from
 resource_log rl
 join resource r on r.ref=rl.resource
@@ -240,6 +240,7 @@ order by rl.date"
 u.username 'Username',
 u.email 'E-mail address',
 u.fullname 'Full Name',
+u.created 'Created',
 u.last_active 'Last Seen',
 g.name 'Group name'
 
