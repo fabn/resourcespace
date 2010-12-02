@@ -115,7 +115,13 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 				{
 				if (isset($simcommands[$tag]['value'])){ $newvalue=	$simcommands[$tag]['value'];}
 				else if (isset($simcommands[$group.":".$tag]['value'])){ $newvalue=	$simcommands[$group.":".$tag]['value'];}	
-					
+
+                // remove a leading comma from value in database when comparing.
+                if (substr($newvalue,0,1) == ',')
+					{
+					$newvalue = substr($newvalue,1);
+					}
+                	
 				if ($value!=$newvalue)
 					{
 					echo "<td>- ".$value."</td><td>+ ".$newvalue."</td>";
