@@ -200,6 +200,7 @@ if ($defaultlanguage!='en'){
 <html>
 <head>
 <title>ResourceSpace: Initial Configuration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" /> 
 <link href="../css/Col-greyblu.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" /> 
 <script type="text/javascript" src="../lib/js/jquery-1.3.1.min.js"></script> 
