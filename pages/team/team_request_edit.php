@@ -62,11 +62,20 @@ include "../../include/header.php";
 <label><?php echo $lang["expires"]?></label>
 <select name="expires" class="stdwidth">
 <option value=""><?php echo $lang["never"]?></option>
-<?php for ($n=1;$n<=150;$n++)
+<?php
+$sel=false;
+ for ($n=1;$n<=150;$n++)
 	{
 	$date=time()+(60*60*24*$n);
 	$dateval=date("Y-m-d",$date);
-	?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo $dateval ?>" <?php if ($dateval==$request["expires"]) { ?>selected<?php } ?>><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>
+	?><option <?php $d=date("D",$date);if (($d=="Sun") || ($d=="Sat")) { ?>style="background-color:#cccccc"<?php } ?> value="<?php echo $dateval ?>" <?php if ($dateval==$request["expires"]) { $sel=true;?>selected<?php } ?>><?php echo nicedate(date("Y-m-d",$date),false,true)?></option>
+	<?php
+	}
+if ($request["expires"]!="" && $sel==false)
+	{
+	# Option is out of range, but show it anyway.
+	?>
+	<option value="<?php echo $request["expires"] ?>" selected><?php echo nicedate(date("Y-m-d",strtotime($request["expires"])),false,true)?></option>
 	<?php
 	}
 ?>
