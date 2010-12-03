@@ -1512,7 +1512,7 @@ function get_resource_access($resource)
 	if ($k!="")
 		{
 		# External access - check how this was shared.
-		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "'",-1);
+		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "' and (expires is null or expires>now())",-1);
 		if ($extaccess!=-1) {return $extaccess;}
 		}
 	
@@ -1548,7 +1548,7 @@ function get_resource_access($resource)
 		}
 
 		
-	if ($userspecific!="")
+	if ($userspecific!==false)
 		{
 		return $userspecific;
 		}
