@@ -1580,6 +1580,7 @@ $web_config_edit=false;
 # requires ImageMagick to work.
 $camera_autorotation = false;
 $camera_autorotation_checked = true;
+$camera_autorotation_ext = array('jpg','jpeg','tif','tiff','png','dng'); // only try to autorotate these formats
 
 # display swf in full on the view page (note that jpg previews aren't created yet)
 $display_swf=false;

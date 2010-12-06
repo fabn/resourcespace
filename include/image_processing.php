@@ -1349,6 +1349,8 @@ function get_image_orientation($file){
 
 function AutoRotateImage ($src_image){
 	global $imagemagick_path;
+	global $camera_autorotation_ext;
+
 	if (!isset($imagemagick_path)){
 		return false; // for the moment, this only works for imagemagick
 			      // note that it would be theoretically possible to implement this
@@ -1364,6 +1366,10 @@ function AutoRotateImage ($src_image){
 	$ext = $exploded_src[count($exploded_src)-1];
 	$triml = strlen($src_image) - (strlen($ext)+1);
 	$noext = substr($src_image,0,$triml);
+
+	if (count($camera_autorotation_ext) > 0 && (!in_array(strtolower($ext),$camera_autorotation_ext))) { 
+		return false; // if the autorotation extensions are set, make sure it is allowed for this extension
+	}
 
 	$new_image = $noext . '-autorotated.' . $ext ;
 	$src_image = $src_image;
