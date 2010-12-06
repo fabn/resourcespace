@@ -388,3 +388,87 @@ all,emailbulk,"[img_../../gfx/whitegry/titles/title.gif]<br><br>
 [text]<br><br>
 [text_footer]
 ",270,en,,,1
+change_language,introtext,"Bitte wählen Sie Ihre Sprache aus:",271,de,,,0
+all,researchrequest,"Lassen Sie unser Team nach den benötigten Resourcen suchen.",272,de,,,0
+all,searchpanel,"Suche nach Beschreibung, Schlagworten und Ressourcen IDs",273,de,,,0
+about,about,"Ihr Text zu ""Über uns"" hier.",274,de,,,0
+change_password,introtext,"Neues Passwort unten eingeben, um es zu ändern.",275,de,,,0
+collection_edit,introtext,"Organisieren und verwalten Sie Ihre Arbeit, indem Sie Ressourcen in Gruppen zusammenstellen. Erstellen Sie Kollektionen wie Sie sie benötigen.
+
+<br>
+
+Alle Kollektionen in Ihrer Liste erscheinen im ""Meine Kollektionen"" Menü am unteren Ende des Fensters.
+
+<br><br>
+
+<strong>Privater Zugriff</strong> erlaubt nur Ihnen und ausgewählten Benutzern, die Kollektion zu anzusehen. Ideal, um Ressourcen für die eigene Arbeit zusammenzustellen und im Team weiterzugeben.
+
+<br><br>
+
+<strong>Öffentlicher Zugriff</strong> erlaubt allen Benutzern, die Kollektion zu finden und anzusehen.
+
+<br><br>
+
+Sie können aussuchen, ob Sie anderen Benutzern (öffentlicher Zugriff oder ausgewählte Benutzer beim privaten Zugriff) erlauben, Ressourcen hinzuzufügen oder zu löschen.",276,de,,,0
+collection_email,introtext,"Bitte füllen Sie das untenstehende Formular aus, um die Kollektion per E-Mail weiterzugeben. Der/die Benutzer werden statt eines Dateianhangs einen Link zu dieser Kollektion erhalten und können dann die passenden Ressourcen auswählen und herunterladen.",277,de,,,0
+collection_manage,findpublic,"Öffentliche Kollektionen sind für alle Benutzer zugängliche Gruppen von Ressourcen. Um öffentliche Kollektionen zu finden, geben Sie die ID, oder einen Teil des Kollektions- bzw. Benutzernamens ein. Fügen Sie dann die Kollektion zu Ihren Kollektionen hinzu, um auf die Ressourcen zuzugreifen.",278,de,,,0
+collection_manage,introtext,"Organisieren und verwalten Sie Ihre Arbeit, indem Sie Ressourcen in Gruppen zusammenstellen. Erstellen Sie Kollektionen wie Sie sie benötigen. Sie können Kollektionen an andere weitergeben oder einfach Gruppen von Ressourcen zusammen halten. Alle Kollektionen in Ihrer Liste finden Sie im ""Meine Kollektionen"" Menü am unteren Ende des Fensters.",279,de,,,0
+collection_manage,newcollection,"Um eine neue Kollektion zu erstellen, geben Sie bitte einen Kurznamen an.",280,de,,,0
+collection_public,introtext,"Öffentliche Kollektionen werden von anderen Benutzern erstellt und freigegeben.",281,de,,,0
+contact,contact,"Ihre Kontaktdaten hier.",282,de,,,0
+contribute,introtext,"Sie können Ihre eigenen Ressourcen hochladen. Wenn Sie eine Ressource erstellen, wird diese zunächst durch uns geprüft. Nachdem Sie die Datei hochgeladen und die Felder ausgefüllt haben, setzen Sie bitte den Status auf ""Benutzer-Beiträge: Überprüfung noch nicht erledigt"".",283,de,,,0
+delete,introtext,"Bitte geben Sie Ihr Passwort ein, um zu bestätigen, dass Sie diese Ressource löschen wollen.",284,de,,,0
+done,collection_email,"Eine E-Mail mit Link zur Kollektion wurde an die angegebenen Benutzer gesendet. Die Kollektion wurde zur Liste Ihrer Kollektionen hinzugefügt.",285,de,,,0
+done,deleted,"Die Ressource wurde gelöscht.",286,de,,,0
+done,research_request,"Ein Mitglied unseres Teams wird sich um Ihre Anfrage kümmern. Wir werden Sie per e-mail über den aktuellen Stand informieren. Wenn Ihre Anfrage bearbeitet ist, erhalten Sie eine e-mail mit einem Link zu den Ressourcen, die wir für Ihre Anfrage empfehlen.",287,de,,,0
+done,resource_email,"Eine E-Mail mit Link zur Ressource wurde an die angegebenen Benutzer gesendet.",288,de,,,0
+done,resource_request,"Ihre Anfrage wurde abgeschickt und wird in Kürze bearbeitet.",289,de,,,0
+done,user_password,"Eine E-Mail mit Ihrem Benutzernamen und Passwort wurde an Sie gesendet.",290,de,,,0
+done,user_request,"Ihre Anfrage nach einem Zugang wurde abgeschickt und wird in Kürze bearbeitet.",291,de,,,0
+download_click,introtext,"Um die Datei herunterzuladen, clicken Sie bitte mit der rechten Maustaste auf den untenstehenden Link und wählen Sie ""Speichern unter..."". Sie können dann auswählen an welchem Ort Sie die Datei abspeichern wollen. Um die Datei im Browser zu öffnen, clicken Sie den Link bitte mit der linken Maustaste.",292,de,,,0
+download_progress,introtext,"Ihr Download wird in Kürze starten. Nachdem der Download abgeschlossen ist, wählen Sie bitte einen der folgenden Links.",293,de,,,0
+edit,batch,"Bitte geben Sie die gemeinsamen Inhalte und Stichworte für die Dateien, die Sie hochladen.",294,de,,,0
+edit,multiple,"Bitte wählen Sie die Felder aus, die Sie verändern wollen. Felder, die Sie nicht anwählen, werden nicht verändert.",295,de,,,0
+help,introtext,"Diese Anleitungen helfen Ihnen, ResourceSpace und Ihre Medien effektiv zu nutzen.</p>
+<p>Benutzen Sie ""Themen"", um Ressourcen nach Themen zu erkunden oder nutzen Sie die Suche um spezifische Ressourcen zu finden.</p>
+<p><a href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">User Guide</a> (PDF, englisch)<br /><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Online Dokumentation</a> (Wiki)</p>",296,de,,,0
+home,help,"Hilfe für die Arbeit mit ResourceSpace",297,de,,,0
+home,mycollections,"Hier können Sie Ihre Kollektionen organisieren, verwalten und weitergeben.",298,de,,,0
+home,restrictedtext,"Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um auf die für Sie ausgesuchten Ressourcen zuzugreifen.",299,de,,,0
+home,restrictedtitle,"<h1>Willkommen bei ResourceSpace</h1>",300,de,,,0
+home,themes,"Von unserem Team vorausgewählte Bilder",301,de,,,0
+home,welcometext,"Ihr Einleitungstext hier",302,de,,,0
+home,welcometitle,"Willkommen bei ResourceSpace",303,de,,,0
+login,welcomelogin,"Willkommen bei ResourceSpace. Bitte loggen Sie sich ein...",304,de,,,0
+research_request,introtext,"Unser Team unterstützt Sie dabei, die optimalen Ressourcen für Ihre Projekte zu finden. Füllen Sie dieses Formular bitte möglichst vollständig aus, damit wir Ihre Anforderungen erfüllen können.
+<br /><br />
+Wir werden Sie kontinuierlich informieren. Sobald wir Ihre Anfrage bearbeitet haben, werden Sie eine E-Mail mit einem Link zu den von uns empfohlenen Bildern erhalten.",305,de,,,0
+resource_email,introtext,"Geben Sie dieses Bild per E-Mail weiter. Es wird ein Link versendet. Sie können außerdem eine persönliche Nachricht in die E-Mail einfügen.",306,de,,,0
+resource_request,introtext,"Die Ressource, die Sie herunterladen möchten, ist nicht online verfügbar. Die Informationen zur Ressource werden automatisch per E-Mail versendet. Zusätzlich können Sie weitere Bemerkungen hinzufügen.",307,de,,,0
+search_advanced,introtext,"<strong>Suchtipp</strong><br>
+Jeder Bereich, den Sie nicht ausfüllen / anclicken, liefert alle Resultate aus dem Bereich.",308,de,,,0
+tag,introtext,"Verbessern Sie die Suchergebnisse, indem Sie Ressourcen taggen. Sagen Sie, was Sie sehen, getrennt durch Leerzeichen oder Komma... z.B.: Hund, Haus, Ball, Geburtstag, Kuchen. Geben Sie den vollen Namen von Personen in Fotos und die Ort der Aufnahme an, wenn bekannt.",309,de,,,0
+terms,introtext,"Sie müssen zuerst die Nutzungsbedingungen akzeptieren.
+
+",310,de,,,0
+terms,terms,"Ihre Nutzungsbedingungen hier.",311,de,,,0
+"terms and conditions","terms and conditions","Ihre Nutzungsbedingungen hier.",312,de,,,0
+themes,findpublic,"Öffentliche Kollektionen sind Kollektionen, die von anderen Benutzern freigegeben wurden.",313,de,,,0
+themes,introtext,"Themen sind von unserem Team zusammengestellte Gruppen von Ressourcen.",314,de,,,0
+user_password,introtext,"Bitte geben Sie Ihre E-Mail Adresse ein. Ihre Zugangsdaten werden dann an per E-Mail an Sie versendet.",315,de,,,0
+user_request,introtext,"Um einen Zugang anzufordern, füllen Sie bitte das untenstehende Formular aus.",316,de,,,0
+team_archive,introtext,"Um einzelne Ressourcen im Archiv zu bearbeiten, suchen Sie einfach nach den Ressourcen und klicken auf ""bearbeiten"" unter ""Ressourcen-Werkzeuge"". Alle Ressourcen, die archiviert werden sollen, werden in der Liste ""Archivierung noch nicht erledigt"" angezeigt. Von dieser Liste aus können Sie weitere Informationen ergänzen und die Ressource ins Archiv verschieben.",317,de,,,0
+team_batch,introtext,"Sie können einen Stapel Ressourcen hochladen, indem Sie sie auf einen FTP Server legen. Nachdem die Dateien importiert wurden, können sie vom FTP Server gelöscht werden.",318,de,,,0
+team_batch_select,introtext,"Sie können einen Stapel Ressourcen hochladen, indem Sie sie auf einen FTP Server legen. Nachdem die Dateien importiert wurden, können sie vom FTP Server gelöscht werden.",319,de,,,0
+team_batch_upload,introtext,"Sie können einen Stapel Ressourcen hochladen, indem Sie sie auf einen FTP Server legen. Nachdem die Dateien importiert wurden, können sie vom FTP Server gelöscht werden.",320,de,,,0
+team_copy,introtext,"Geben Sie die ID der Ressource ein, die Sie kopieren möchten. Nur die Metadaten der Ressource werden kopiert – hochgeladene Dateien werden nicht kopiert.",321,de,,,0
+team_home,introtext,"Willkommen in der Administration. Bitte benutzen Sie die untenstehenden Links, um die Ressourcen zu verwalten, auf Ressourcenanfragen zu antworten, Themen zu verwalten und die Systemeinstellungen zu bearbeiten.",322,de,,,0
+team_report,introtext,"Bitte wählen Sie einen Bericht und einen Zeitraum. Der Bericht kann in Microsoft Excel oder einer anderen Tabellenkalkulation geöffnet werden.",323,de,,,0
+team_research,introtext,"Organisieren und verwalten Sie Ihre ""Ressourcenanfragen"".<br /><br />Wählen Sie ""Anfrage bearbeiten"", um die Details der Anfrage zu sehen und sie einem Teammitglied zuzuweisen. Es ist möglich, eine Antwort auf einer existierenden Kollektion aufzubauen. Geben Sie dazu die Kollektions-ID in der Ansicht zur Bearbeitung ein.<br /><br />Wenn die Ressourcenanfrage zugewiesen ist, wählen Sie ""Kollektion bearbeiten"", um die Anfrage zu Ihren Kollektionen hinzuzufügen. So können Sie Ressourcen zu dieser Kollektion hinzufügen.<br /><br />Wenn die Kollektion vollständig ist, wählen Sie ""Anfrage bearbeiten"", stellen Sie den Status auf ""abgeschlossen"" und eine E-Mail wird automatisch an den Anfrager geschickt. Diese E-Mail enthält einen Link zur erstellten Kollektion, welche außerdem automatisch zu den Kollektionen des Benutzers hinzugefügt wird.",324,de,,,0
+view,storyextract,Story:,325,de,,,0
+team_resource,introtext,"Fügen Sie einzelne Ressourcen hinzu oder nutzen Sie den Stapelupload. Um einzelne Ressourcen zu bearbeiten, suchen Sie nach der Ressource und wählen Sie ""bearbeiten"" unter den ""Ressourcen-Werkzeugen"".",326,de,,,0
+team_stats,introtext,"Statistiken werden auf Basis der aktuellsten Daten erstellt. Aktivieren Sie die Checkbox, um alle Statistiken für das gewählte Jahr auszugeben.",327,de,,,0
+team_user,introtext,"In diesem Bereich können Sie Benutzer hinzufügen, löschen und verändern.",328,de,,,0
+themes,manage,"Organisieren und bearbeiten Sie Ihre Themen. Themen sind besonders hervorgehobene Kollektionen. <br /><br /><strong>1 Um einen neuen Eintrag in einem Thema anzulegen, müssen Sie zuerst eine neue Kollektion anlegen</strong><br />Wählen Sie <strong>Meine Kollektionen</strong> aus der oberen Navigation und legen Sie eine neue <strong>öffentliche</strong> Kollektion an. Stellen Sie sicher, dass Sie einen Namen für Ihr Thema eingeben. Um die aktuelle Kollektion einem bestehenden Thema zuzuordnen, nutzen Sie einen bestehenden Themennamen. Wenn Sie einen noch nicht vergebenen Themennamen angeben, erstellen Sie ein neues Thema. <br /><br /><strong>2 Um den Inhalt eines bestehenden Themas zu ändern, </strong><br>wählen Sie <strong>'Kollektion bearbeiten'</strong>. Die Ressourcen in dieser Kollektion erscheinen unten im <strong>'Meine Kollektionen'</strong> Bereich. Nutzen Sie die Standardwerkzeuge um Resourcen zu bearbeiten, hizuzufügen oder zu löschen.<br /><br /><strong>3 Um eine Kollektion umzubenennen oder unter einem anderen Thema anzuzeigen,</strong><br />wählen Sie <strong>'bearbeiten'</strong> und bearbeiten Sie die Themenkategorie oder die Kollektionsnamen. <br /><br /><strong>4 Um eine Kollektion aus einem Thema zu entfernen,</strong><br>wählen Sie<strong> 'bearbeiten'</strong> und löschen Sie den Eintrag im Feld ""Themen-Kategorie"".",329,de,,,0
+upload,introtext,"Nutzen Sie das untenstehende Formular, um eine Datei hochzuladen.",330,de,,,0
+upload_swf,introtext,"Klicken Sie auf die Schaltfläche unten, um Dateien hochzuladen. Sie können mehrere Dateien hochladen, wenn Sie beim Markieren die 'Shift'-Taste gedrückt halten.",331,de,,,0
