@@ -18,7 +18,9 @@ if ($type!="")
 	if ($type=="xml") { $param="--xml";$extension="xml";}
 
 	# Check for mysqldump at configured location
-	if (!file_exists($mysql_bin_path . "/mysqldump")) {exit("Error: mysqldump not found at '$mysql_bin_path' - please check config.php");}
+	$path=$mysql_bin_path . "/mysqldump";
+	if (!file_exists($path)) {$path.=".exe";} # Try windows.
+	if (!file_exists($path)) {exit("Error: mysqldump not found at '$mysql_bin_path' - please check config.php");}
 	
 	# Add options to ignore index tables, which are very large and are easily regenerated (using tools/reindex.php)
 	$param.=" --ignore-table=$mysql_db.resource_keyword --ignore-table=$mysql_db.keyword";
@@ -26,7 +28,7 @@ if ($type!="")
 	# Send them the export.
 	header("Content-type: application/octet-stream");
 	header("Content-disposition: attachment; filename=RS_Export_" . date("Y_m_d") . "." . $extension . "");
-	passthru($mysql_bin_path . "/mysqldump -h $mysql_server -u $mysql_username " . ($mysql_password==""?"":"-p'" . $mysql_password . "'") . " $param $mysql_db");
+	passthru($path . " -h $mysql_server -u $mysql_username " . ($mysql_password==""?"":"-p'" . $mysql_password . "'") . " $param $mysql_db");
 	
 	exit();
 	}
