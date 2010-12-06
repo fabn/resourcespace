@@ -405,7 +405,7 @@ $lang["action-email"]="E-Mail";
 $lang["action-edit"]="bearbeiten";
 $lang["action-delete"]="löschen";
 $lang["action-remove"]="entfernen";
-$lang["complete"]="komplett";
+$lang["complete"]="Fertig";
 $lang["backtohome"]="zurück zur Startseite";
 $lang["backtohelphome"]="zurück zur Hilfeseite";
 $lang["backtosearch"]="zurück zu meinen Suchresultaten";
@@ -923,4 +923,38 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  
  $lang["subcategories"]="Unterkategorien";
  $lang["back"]="Zurück";
+
+ $lang["pleasewait"]="Bitte warten...";
+
+ $lang["autorotate"]="Bilder automatisch drehen?";
+
+
+ $lang["period"]="Zeitraum";
+ $lang["lastndays"]="Letzte ? Tage"; # ? is replaced by the system with the number of days, for example "Last 100 days".
+ $lang["specificdays"]="Spezifische Anzahl von Tagen";
+ $lang["specificdaterange"]="Spezifischer Zeitraum";
+
+ $lang["emailperiodically"]="Neue regelmäßige E-Mail erstellen";
+ $lang["emaileveryndays"]="Diesen Bericht regelmäßig alle ? per E-Mail versenden";
+ $lang["create"]="Erstellen";
+ $lang["newemailreportcreated"]="Eine neue regelmäßige E-Mail wurde erstellt. Sie können die E-Mail stoppen, indem Sie den Link am Ende der E-Mail anklicken.";
+ $lang["unsubscribereport"]="Um sich von diesem Bericht abzumelden, klicken Sie bitte diesen Link an:";
+ $lang["unsubscribed"]="Abgemeldet";
+ $lang["youhaveunsubscribedreport"]="Sie wurden von dieser regelmäßigen E-Mail abgemeldet.";
+ $lang["reportempty"]="Keine passenden Daten für den ausgewählen Bericht und Zeitraum gefunden.";
+
+ $lang["purchaseonaccount"]="Zum Konto hinzufügen";
+ $lang["areyousurepayaccount"]="Sind Sie sicher, dass Sie diesen Einkauf zu Ihrem Konto hinzufügen wollen?";
+ $lang["accountholderpayment"]="Zahlung Kontoinhaber";
+ $lang["subtotal"]="Zwischensumme";
+ $lang["discountsapplied"]="Angewendete Rabatte";
+ $lang["log-p"]="Gekaufte Ressource";
+ $lang["viauser"]="durch Benutzer";
+ $lang["close"]="Schließen";
+ $lang["repeatinstallationcheck"]="Installation erneut überprüfen";
+ $lang["generateexternalurl"]="Externe URL generieren";
+
+ $lang["starsminsearch"]="Sterne (Minimum)";
+ $lang["anynumberofstars"]="Beliebige Anzahl Sterne";
+
 ?>
