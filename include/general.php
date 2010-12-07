@@ -2080,7 +2080,7 @@ if (!function_exists("auto_create_user_account")){
 function auto_create_user_account()
 	{
 	# Automatically creates a user account (which requires approval unless $auto_approve_accounts is true).
-	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts;
+	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts,$auto_approve_domains;
 	
 	# Add custom fields
 	$c="";
@@ -2130,13 +2130,35 @@ function auto_create_user_account()
 	$check=sql_value("select email value from user where email = '$user_email'","");
 	if ($check!=""){return $lang["useremailalreadyexists"];}
 
-	# Create the user
-	$email=getvalescaped("email","") ;
+	# Prepare to create the user.
+	$email=trim(getvalescaped("email","")) ;
 	$password=make_password();
-	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . $password . "','" . getvalescaped("name","") . "','" . $email . "','" . $usergroup . "','" . escape_check($c) . "'," . (($auto_approve_accounts)?1:0) . ")");
+
+	# Work out if we should automatically approve this account based on $auto_approve_accounts or $auto_approve_domains
+	$approve=false;
+	if ($auto_approve_accounts==true)
+		{
+		$approve=true;
+		}
+	elseif (count($auto_approve_domains)>0)
+		{
+		# Check e-mail domain.
+		foreach ($auto_approve_domains as $domain)
+			{
+			if (substr(strtolower($email),strlen($email)-strlen($domain)-1)==("@" . strtolower($domain)))
+				{
+				# E-mail domain match.
+				$approve=true;
+				}
+			}
+		}
+	
+
+	# Create the user
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . $password . "','" . getvalescaped("name","") . "','" . $email . "','" . $usergroup . "','" . escape_check($c) . "'," . (($approve)?1:0) . ")");
 	$new=sql_insert_id();
 
-	if ($auto_approve_accounts)
+	if ($approve)
 		{
 		# Auto approving, send mail direct to user
 		email_user_welcome($email,$username,$password,$usergroup);

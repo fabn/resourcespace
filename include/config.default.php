@@ -934,6 +934,11 @@ $user_account_auto_creation_usergroup=2; # which user group for auto-created acc
 # Automatically approve account requests (created via $user_account_auto_creation above)?
 $auto_approve_accounts=false;
 
+# Automatically approve accounts that have e-mails ending in given domain names.
+# E.g. $auto_approve_domains=array("mycompany.com","othercompany.org");
+#
+# NOTE - only used if $user_account_auto_creation=true above.
+$auto_approve_domains=array();
 
 # Display a larger preview image on the edit page?
 $edit_large_preview=false;
