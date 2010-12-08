@@ -159,6 +159,7 @@ $lang["showthumbnails"]="Show thumbs";
 $lang["contactsheet"]="Contact sheet";
 $lang["mycollection"]="My Collection";
 $lang["editresearchrequests"]="Edit research requests";
+$lang["research"]="Research";
 $lang["savedsearch"]="Saved Search";
 $lang["findapubliccollection"]="Find a Public Collection";
 $lang["mustspecifyoneusername"]="You must specify at least one username";
@@ -172,6 +173,7 @@ $lang["purgeanddelete"]="Purge";
 $lang["purgecollectionareyousure"]="Are you sure you want to remove this collection AND DELETE all resources in it?";
 $lang["collectionsdeleteempty"]="Delete Empty Collections";
 $lang["collectionsdeleteemptyareyousure"]="Are you sure you want to delete all of your own empty collections?";
+$lang["collectionsnothemeselected"]="You must select or enter a theme category name.";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";
@@ -250,7 +252,8 @@ $lang["pixels"]="pixels";
 $lang["download"]="Download";
 $lang["preview"]="Preview";
 $lang["fullscreenpreview"]="Full screen preview";
-$lang["file"]="File"; # e.g. PDF File
+$lang["originalfileoftype"]="Original ? File"; # ? will be replaced, e.g. "Original PDF File"
+$lang["fileoftype"]="? File"; # ? will be replaced, e.g. "MP4 File"
 $lang["edit"]="Edit";
 $lang["delete"]="Delete";
 $lang["log"]="Log";
@@ -274,6 +277,7 @@ $lang["savethissearchtocollection"]="Save search query to collection";
 $lang["mustspecifyonekeyword"]="You must specify at least one search keyword.";
 $lang["hasemailedyouaresource"]="has e-mailed you a resource."; # Suffixed to user name, e.g. Fred has e-mailed you a resource
 $lang["clicktoviewresource"]="Click the link below to view the resource.";
+$lang["statuscode"]="Status Code";
 
 # Resource log - actions
 $lang["resourcelog"]="Resource Log";
@@ -452,6 +456,19 @@ $lang["termsandconditions"]="Terms and Conditions";
 $lang["iaccept"]="I Accept";
 $lang["contributedby"]="Contributed by";
 $lang["format"]="Format";
+$lang["notavailableshort"]="N/A";
+$lang["allmonths"]="All months";
+$lang["allgroups"]="All groups";
+$lang["status-ok"]="OK";
+$lang["status-fail"]="FAIL";
+$lang["status-warning"]="WARNING";
+$lang["status-notinstalled"]="Not installed";
+$lang["status-never"]="Never";
+$lang["softwareversion"]="? version"; # E.g. "PHP version"
+$lang["softwarebuild"]="? Build"; # E.g. "ResourceSpace Build"
+$lang["softwarenotfound"]="'?'  not found"; # ? will be replaced.
+$lang["browseruseragent"]="Browser User-Agent";
+$lang['serverplatform']="Server Platform";
 
 # Pager
 $lang["next"]="Next";
@@ -698,6 +715,7 @@ $lang["setup-mysqlerrorserver"]="Unable to reach server.";
 $lang["setup-mysqlerrorlogin"]="Login failed. (Check username and password.)";
 $lang["setup-mysqlerrordbase"]="Unable to access database.";
 $lang["setup-mysqlerrorperns"]="Check user permissions.  Unable to create tables.";
+$lang["setup-mysqltestfailed"]="Test failed (unable to verify MySQL)";
 $lang["setup-mysqlserver"]="MySQL Server:";
 $lang["setup-mysqlusername"]="MySQL Username:";
 $lang["setup-mysqlpassword"]="MySQL Password:";
@@ -876,12 +894,14 @@ $lang['plugins-rejremedy'] = 'If you trust this plugin you can install it manual
 $lang['plugins-uploadsuccess'] = 'Plugin uploaded succesfully.';
 $lang['plugins-headertext'] = 'Plugins extend the functionality of ResourceSpace.';
 $lang['plugins-legacyinst'] = 'Activated via config.php';
+$lang['plugins-uploadbutton'] = 'Upload Plugin';
 
 #Location Data
 $lang['location-title'] = 'Location Data';
 $lang['location-add'] = 'Add Location';
 $lang['location-edit'] = 'Edit Location';
 $lang['location-details'] = 'Double-click map to place pin.  Once the pin has been placed, you can drag the pin to refine the location.';
+$lang['location-noneselected']="No Location Selected";
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
@@ -897,6 +917,7 @@ $lang["downloadreport"]="Download Report";
 $lang['reportbug']="Prepare bug report for ResourceSpace team";
 $lang['reportbug-detail']="The following information has been compiled for inclusion in the bug report.  You'll be able to change all values before submitting a report.";
 $lang['reportbug-login']="NOTE: Click here to login to the bug tracker BEFORE clicking prepare.";
+$lang['reportbug-preparebutton']="Prepare Bug Report";
 
 $lang["enterantispamcode"]="<strong>Anti-Spam</strong><br /> Please enter the following code:";
 
@@ -923,6 +944,7 @@ $lang["metadatawritewillbeattempted"]="Metadata write will be attempted.";
 $lang["embeddedvalue"]="Embedded Value";
 $lang["exiftooltag"]="Exiftool Tag";
 $lang["error"]="Error";
+$lang["exiftoolnotfound"]="Could not find Exiftool";
 
 $lang["indicateusage"]="Please describe your planned use for this resource.";
 $lang["usage"]="Usage";
@@ -1007,7 +1029,20 @@ $lang["discountsapplied"]="Discounts applied";
 $lang["log-p"]="Purchased resource";
 $lang["viauser"]="via user";
 $lang["close"]="Close";
+
+# Installation Check
 $lang["repeatinstallationcheck"]="Repeat Installation Check";
+$lang["shouldbeversion"]="should be ? or greater"; # E.g. "should be 4.4 or greater"
+$lang["phpinivalue"]="PHP.INI value for '?'"; # E.g. "PHP.INI value for 'memory_limit'"
+$lang["writeaccesstofilestore"]="Write access to 'filestore' directory";
+$lang["nowriteaccesstofilestore"]="$storagedir not writable";
+$lang["blockedbrowsingoffilestore"]="Blocked browsing of 'filestore' directory";
+$lang["noblockedbrowsingoffilestore"]="filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
+$lang["executionofconvertfailed"]="Execution failed; unexpected output when executing convert command. Output was '?'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki."; # ? will be replaced.
+$lang["lastscheduledtaskexection"]="Last scheduled task execution (days)";
+$lang["executecronphp"]="Relevance matching will not be effective and periodic e-mail reports will not be sent. Ensure <a href='../batch/cron.php'>batch/cron.php</a> is executed at least once daily via a cron job or similar.";
+$lang["shouldbeormore"]="should be ? or greater"; # E.g. should be 200M or greater
+
 $lang["generateexternalurl"]="Generate External URL";
 
 $lang["starsminsearch"]="Stars (Minimum)";

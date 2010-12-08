@@ -34,13 +34,13 @@ function ResolveKB($value)
 <?php
 # Check PHP version
 $phpversion=phpversion();
-if ($phpversion<'4.4') {$result="FAIL: should be 4.4 or greater";} else {$result="OK";}
-?><tr><td>PHP version</td><td><?php echo $phpversion?></td><td><b><?php echo $result?></b></td></tr><?php
+if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "4.4", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
+?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check MySQL version
 $mysqlversion=mysql_get_server_info();
-if ($mysqlversion<'5') {$result="FAIL: should be 5 or greater";} else {$result="OK";}
-?><tr><td>MySQL version</td><td><?php echo $mysqlversion?></td><td><b><?php echo $result?></b></td></tr><?php
+if ($mysqlversion<'5') {$result=$lang["status-fail"] . ": " . str_replace("?", "5", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
+?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
 if (function_exists("gd_info"))
@@ -49,39 +49,39 @@ if (function_exists("gd_info"))
 	if (is_array($gdinfo))
 		{
 		$version=$gdinfo["GD Version"];
-		$result="OK";
+		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$version="Not installed.";
-		$result="FAIL";
+		$version=$lang["status-notinstalled"];
+		$result=$lang["status-fail"];
 		}
 	}
 else
 	{
-	$version="Not installed.";
-	$result="FAIL";
+	$version=$lang["status-notinstalled"];
+	$result=$lang["status-fail"];
 	}
-?><tr><td>GD version</td><td><?php echo $version?></td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td><?php echo str_replace("?", "GD", $lang["softwareversion"]); ?></td><td><?php echo $version?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check ini values for memory_limit, post_max_size, upload_max_filesize
 $memory_limit=ini_get("memory_limit");
-if (ResolveKB($memory_limit)<(200*1024)) {$result="WARNING: should be 200M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'memory_limit'</td><td><?php echo $memory_limit?></td><td><b><?php echo $result?></b></td></tr><?php
+if (ResolveKB($memory_limit)<(200*1024)) {$result=$lang["status-warning"] . ": " . str_replace("?", "200M", $lang["shouldbeormore"]);} else {$result=$lang["status-ok"];}
+?><tr><td><?php echo str_replace("?", "memory_limit", $lang["phpinivalue"]); ?></td><td><?php echo $memory_limit?></td><td><b><?php echo $result?></b></td></tr><?php
 
 $post_max_size=ini_get("post_max_size");
-if (ResolveKB($post_max_size)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'post_max_size'</td><td><?php echo $post_max_size?></td><td><b><?php echo $result?></b></td></tr><?php
+if (ResolveKB($post_max_size)<(100*1024)) {$result=$lang["status-warning"] . ": " . str_replace("?", "100M", $lang["shouldbeormore"]);} else {$result=$lang["status-ok"];}
+?><tr><td><?php echo str_replace("?", "post_max_size", $lang["phpinivalue"]); ?></td><td><?php echo $post_max_size?></td><td><b><?php echo $result?></b></td></tr><?php
 
 $upload_max_filesize=ini_get("upload_max_filesize");
-if (ResolveKB($upload_max_filesize)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
-?><tr><td>PHP.INI value for 'upload_max_filesize'</td><td><?php echo $upload_max_filesize?></td><td><b><?php echo $result?></b></td></tr><?php
+if (ResolveKB($upload_max_filesize)<(100*1024)) {$result=$lang["status-warning"] . ": " . str_replace("?", "100M", $lang["shouldbeormore"]);} else {$result=$lang["status-ok"];}
+?><tr><td><?php echo str_replace("?", "upload_max_filesize", $lang["phpinivalue"]); ?></td><td><?php echo $upload_max_filesize?></td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check write access to filestore
 $success=is_writable($storagedir);
-if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result="OK";}
-?><tr><td colspan="2">Write access to 'filestore' directory</td><td><b><?php echo $result?></b></td></tr>
+if ($success===false) {$result=$lang["status-fail"] . ": " . $lang["nowriteaccesstofilestore"];} else {$result=$lang["status-ok"];}
+?><tr><td colspan="2"><?php echo $lang["writeaccesstofilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
 
 
 <?php
@@ -89,20 +89,20 @@ if ($success===false) {$result="FAIL: $storagedir not writable";} else {$result=
 $output=@file_get_contents($baseurl . "/filestore");
 if (strpos($output,"Index of")===false)
 	{
-	$result="OK";
+	$result=$lang["status-ok"];
 	}
 else
 	{
-	$result="FAIL: filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
+	$result=$lang["status-fail"] . ": " . $lang["noblockedbrowsingoffilestore"];
 	}
-?><tr><td colspan="2">Blocked browsing of 'filestore' directory</td><td><b><?php echo $result?></b></td></tr>
+?><tr><td colspan="2"><?php echo $lang["blockedbrowsingoffilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
 
 <?php
 $imagemagick_version="";
 function CheckImagemagick()
 	{
- 	global $imagemagick_path;
- 	
+ 	global $imagemagick_path, $lang;
+ 
  	# Check for path
  	$path=$imagemagick_path . "/convert";
 	if (!file_exists($path)) {$path=$imagemagick_path . "/convert.exe";}
@@ -112,7 +112,7 @@ function CheckImagemagick()
 	$version=@shell_exec(escapeshellcmd($path) . " -version");
 	if (strpos($version,"ImageMagick")===false && strpos($version,"GraphicsMagick")===false)
 		{
-		return "Execution failed; unexpected output when executing convert command. Output was '$version'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki.";
+		return str_replace("?", "$version", $lang["executionofconvertfailed"]);
 		}	
 		
 	# Set version
@@ -125,7 +125,7 @@ function CheckImagemagick()
 $ffmpeg_version="";
 function CheckFfmpeg()
 {
- 	global $ffmpeg_path;
+ 	global $ffmpeg_path, $lang;
  	
  	# Check for path
  	$path=$ffmpeg_path . "/ffmpeg";
@@ -136,7 +136,7 @@ function CheckFfmpeg()
 	$version=@shell_exec(escapeshellcmd($path));
 	if (strpos(strtolower($version),"ffmpeg")===false)
 		{
-		return "Execution failed; unexpected output when executing ffmpeg command. Output was '$version'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki.";
+		return str_replace("?", "$version", $lang["executionofconvertfailed"]);
 		}	
 		
 	# Set version
@@ -166,16 +166,16 @@ if (isset($imagemagick_path))
 	$result=CheckImagemagick();
 	if ($result===true)
 		{
-		$result="OK";
+		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$result="FAIL: " . $result;
+		$result=$lang["status-fail"] . ": " . $result;
 		}
 	}
 else
 	{
-	$result="(not installed)";
+	$result=$lang["status-notinstalled"];
 	}
 ?><tr><td <?php if ($imagemagick_version=="") { ?>colspan="2"<?php } ?>>ImageMagick</td>
 <?php if ($imagemagick_version!="") { ?><td><?php echo $imagemagick_version ?></td><?php } ?>
@@ -187,16 +187,16 @@ if (isset($ffmpeg_path))
 	{
 	if (CheckFfmpeg())
 		{
-		$result="OK";
+		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$result="FAIL: '$ffmpeg_path/ffmpeg' not found";
+		$result= $lang["status-fail"] . ": " . str_replace("?", "$ffmpeg_path/ffmpeg", $lang["softwarenotfound"]);
 		}
 	}
 else
 	{
-	$result="(not installed)";
+	$result=$lang["status-notinstalled"];
 	}
 ?><tr><td <?php if ($ffmpeg_version=="") { ?>colspan="2"<?php } ?>>FFmpeg</td>
 <?php if ($ffmpeg_version!="") { ?><td><?php echo $ffmpeg_version ?></td><?php } ?>
@@ -208,16 +208,16 @@ if (isset($ghostscript_path))
 	{
 	if (CheckGhostscript())
 		{
-		$result="OK";
+		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$result="FAIL: '$ghostscript_path/gs' not found";
+		$result= $lang["status-fail"] . ": " . str_replace("?", "$ghostscript_path/gs", $lang["softwarenotfound"]);
 		}
 	}
 else
 	{
-	$result="(not installed)";
+	$result=$lang["status-notinstalled"];
 	}
 ?><tr><td colspan="2">Ghostscript</td><td><b><?php echo $result?></b></td></tr><?php
 
@@ -225,14 +225,14 @@ else
 # Check Exif function
 if (function_exists('exif_read_data')) 
 	{
-	$result="OK";
+	$result=$lang["status-ok"];
 	}
 else
 	{
-	$version="Not installed.";
-	$result="FAIL";
+	$version=$lang["status-notinstalled"];
+	$result=$lang["status-fail"];
 	}
-?><tr><td colspan="2">EXIF extension installed</td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td colspan="2">EXIF extension</td><td><b><?php echo $result?></b></td></tr><?php
 
 
 # Check Exiftool path
@@ -240,25 +240,25 @@ if (isset($exiftool_path))
 	{
 	if (CheckExiftool())
 		{
-		$result="OK";
+		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$result="FAIL: '$exiftool_path/exiftool' not found";
+		$result=$lang["status-fail"] . ": " . str_replace("?", "$exiftool_path/exiftool", $lang["softwarenotfound"]);
 		}
 	}
 else
 	{
-	$result="(not installed)";
+	$result=$lang["status-notinstalled"];
 	}
 ?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr>
 
 <?php hook("addinstallationcheck");?>
 
 <tr>
-<td>Last scheduled task execution (days)</td>
-<td><?php $last_cron=sql_value("select datediff(now(),value) value from sysvars where name='last_cron'","Never");echo $last_cron ?></td>
-<td><?php if ($last_cron>2 || $last_cron=="Never") { ?><b>WARNING</b><br/>Relevance matching will not be effective and periodic e-mail reports will not be sent. Ensure <a href="../batch/cron.php">batch/cron.php</a> is executed at least once daily via a cron job or similar.<?php } else {?><b>OK</b><?php } ?></td>
+<td><?php echo $lang["lastscheduledtaskexection"] ?></td>
+<td><?php $last_cron=sql_value("select datediff(now(),value) value from sysvars where name='last_cron'",$lang["status-never"]);echo $last_cron ?></td>
+<td><?php if ($last_cron>2 || $last_cron==$lang["status-never"]) { ?><b><?php echo $lang["status-warning"] ?></b><br/><?php echo $lang["executecronphp"] ?><?php } else {?><b><?php echo $lang["status-ok"] ?></b><?php } ?></td>
 
 </tr>
 

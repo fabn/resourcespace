@@ -74,7 +74,7 @@ $ll_field = get_data_by_field($ref, $gps_field);
                     geo_loc_initialize();
                     $("form#map-form").submit(function(e){
                         if (geo_mark==false){
-                            alert("No Location Selected");
+                            alert('<?php echo $lang['location-noneselected'] ?>');
                             e.preventDefault();
                             return false;
                         }

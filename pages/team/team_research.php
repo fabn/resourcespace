@@ -59,7 +59,7 @@ $jumpcount=1;
 </tr>
 
 <?php
-$statusname=array("Unassigned","In progress","Complete");
+$statusname=array($lang["requeststatus0"],$lang["requeststatus1"],$lang["requeststatus2"]);
 for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	{
 	?>

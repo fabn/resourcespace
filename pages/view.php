@@ -53,7 +53,7 @@ if ($go!="")
 			{
 			?>
 			<script type="text/javascript">
-			alert("<?php echo $lang["resourcenotinresults"] ?>");
+			alert('<?php echo $lang["resourcenotinresults"] ?>');
 			</script>
 			<?php
 			}
@@ -325,7 +325,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 		if ($sizes[$n]["id"]=="") {$fulldownload=true;}
 		
 		$counter++;
-		$headline = ($sizes[$n]['id'] == '') ? $lang["original"] . " " . strtoupper($resource["file_extension"]) . " " . $lang["file"] : i18n_get_translated($sizes[$n]["name"]);
+		$headline = ($sizes[$n]['id'] == '') ? str_replace("?",strtoupper($resource["file_extension"]),$lang["originalfileoftype"]) : i18n_get_translated($sizes[$n]["name"]);
 
 		# Should we allow this download?
 		# If the download is allowed, show a download button, otherwise show a request button.
@@ -419,7 +419,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 				<?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td></td><?php } # Blank spacer column if displaying a price above (basket mode).
 				?>
 				<td class="DownloadButton">
-				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><?php echo $lang["preview"]?></a>
+				<a href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["file_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><?php echo $lang["action-view"]?></a>
 				</td>
 				</tr>
 				<?php
@@ -436,7 +436,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		{
 		?>
 		<tr class="DownloadDBlend">
-		<td><h2><?php echo (isset($original_download_name))?str_replace("?",strtoupper($resource["file_extension"]),$original_download_name):strtoupper($resource["file_extension"]). " " . $lang["file"]?></h2></td>
+		<td><h2><?php echo (isset($original_download_name))?str_replace("?",strtoupper($resource["file_extension"]),$original_download_name): str_replace("?",strtoupper($resource["file_extension"]),$lang["fileoftype"])?></h2></td>
 		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton">
 		<?php if (!$direct_download || $save_as){ ?>
@@ -460,7 +460,7 @@ if ($nodownloads || $counter==0)
 	?>
 	<tr class="DownloadDBlend">
 	<td><h2><?php echo ($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
-	<td>N/A</td>
+	<td><?php echo $lang["notavailableshort"]?></td>
 
 	<?php if (checkperm("q"))
 		{
@@ -533,7 +533,7 @@ if ($access==0) # open access only (not restricted)
 		<td>
 		<?php if ($alt_thm!="") { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $altfiles[$n]["ref"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><img src="<?php echo $alt_thm?>" class="AltThumb"></a><?php } ?>
 		<h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
-		<!--<p><?php echo strtoupper($altfiles[$n]["file_extension"])?> <?php echo $lang["file"]?></p>-->
+		<!--<p><?php echo str_replace("?",strtoupper($altfiles[$n]["file_extension"]),$lang["fileoftype"])?></p>-->
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>
 		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
@@ -847,7 +847,7 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
                     geocoder = new GClientGeocoder;
                     geocoder.getLocations(latlng, function(response){
                         if (!response || response.Status.code != 200){
-                            alert("Status Code:" + response.Status.code);
+                            alert('<?php echo $lang["statuscode"] . ":" ?>' + response.Status.code);
                             }
                         else {
                             place = response.Placemark[0];

@@ -297,7 +297,7 @@ $('.mysqlconn').keyup(function(){
 				$('#al-testconn').hide();
 			},
 			error: function(){
-				alert("Test failed (unable to verify MySQL)");
+				alert('<?php echo $lang["setup-mysqltestfailed"] ?>');
 				$('#mysqlserver').addClass('warn');
 				$('#mysqlusername').addClass('warn');
 				$('#mysqlpassword').addClass('warn');

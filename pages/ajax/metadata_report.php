@@ -69,7 +69,7 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 
 	# build report:		
 	if(!isset($file_writability)){$file_writability=true;$writability_comment=$lang['notallfileformatsarewritable'];}else{$writability_comment="";}
-	($exiftool_write&&$file_writability)?$write_status=$lang['metadatawritewillbeattempted']. $writability_comment:$write_status=$lang['nowritewillbeattempted'];?>
+	($exiftool_write&&$file_writability)?$write_status=$lang['metadatawritewillbeattempted']." ".$writability_comment:$write_status=$lang['nowritewillbeattempted'];?>
 	
 	<?php
 	echo "<table class=\"InfoTable\">";
@@ -143,5 +143,5 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	}
 	else 
 		{
-		echo "Could not find Exiftool";
+		echo $lang["exiftoolnotfound"];
 		}

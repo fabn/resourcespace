@@ -107,7 +107,7 @@ if ($pagename!="preview" && $pagename!="preview_all") { ?>
 <?php if ($header_text_title){?>
     <div id="TextHeader"><a href="<?php echo $baseurl;?>/pages/home.php"><?php echo $applicationname;?></a></div>
     <?php if ($applicationdesc!=""){?>
-        <div id="TextDesc"><?php echo $applicationdesc;?></div>
+        <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
     <?php } ?>
 <?php }
 

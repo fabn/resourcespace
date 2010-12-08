@@ -250,7 +250,8 @@ if ($research!="")
 	if ($col==false)
 		{
 		$rr=get_research_request($research);
-		$new=create_collection ($rr["user"],"Request: " . $rr["name"],1);
+		$name=$lang["research"] . ": " . $rr["name"];
+		$new=create_collection ($rr["user"],$name,1);
 		set_user_collection($userref,$new);
 		set_research_collection($research,$new);
 		}

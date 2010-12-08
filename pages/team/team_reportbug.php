@@ -36,19 +36,19 @@ else {
 } 
 $p_version = $productversion == 'SVN'?'Trunk (SVN)':$productversion;
 $custom_field_2 = $_SERVER['HTTP_USER_AGENT'];
-$custom_field_4 = 'N/A';
+$custom_field_4 = $lang["notavailableshort"];
 if (isset($imagemagick_path)){
    $out = array();
    exec($imagemagick_path.'/convert -v', $out);
    if (isset($out[0])) {$custom_field_4 = $out[0];}
 }
-$custom_field_5 = 'N/A';
+$custom_field_5 = $lang["notavailableshort"];
 if (isset($exiftool_path)){
     $out = array();
     exec($exiftool_path.'/exiftool -ver', $out);
     if (isset($out[0])) {$custom_field_5 = $out[0];}
 }
-$custom_field_6 = 'N/A';
+$custom_field_6 = $lang["notavailableshort"];
 if (isset($ffmpeg_path)){
     $out = array();
     exec($ffmpeg_path.'/ffmpeg -version', $out);
@@ -77,17 +77,17 @@ else {
         <h1><?php echo $lang["reportbug"]?></h1>
         <p><?php echo $lang['reportbug-detail']?></p>
         <table class="InfoTable">
-        <tr><td>ResourceSpace Version</td><td><?php echo $p_version?></td></tr>
-        <tr><td>ResourceSpace Build</td><td><?php echo $build?></td></tr>
-        <tr><td>Server Platform</td><td><?php echo $serverversion?></td></tr>
-        <tr><td>PHP Version</td><td><?php echo $custom_field_3?></td></tr>
-        <tr><td>ExifTool Version</td><td><?php echo $custom_field_5?></td></tr>
-        <tr><td>FFmpeg Version</td><td><?php echo $custom_field_6?></td></tr>
-        <tr><td>ImageMagick Version</td><td><?php echo $custom_field_4?></td></tr>
-        <tr><td>Browser User-Agent</td><td><?php echo $custom_field_2?></td></tr>
+        <tr><td><?php echo str_replace("?", "ResourceSpace", $lang["softwareversion"]); ?></td><td><?php echo $p_version?></td></tr>
+        <tr><td><?php echo str_replace("?", "ResourceSpace", $lang["softwarebuild"]); ?></td><td><?php echo $build?></td></tr>
+        <tr><td><?php echo $lang['serverplatform']; ?></td><td><?php echo $serverversion?></td></tr>
+        <tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_3?></td></tr>
+        <tr><td><?php echo str_replace("?", "ExifTool", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_5?></td></tr>
+        <tr><td><?php echo str_replace("?", "FFmpeg", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_6?></td></tr>
+        <tr><td><?php echo str_replace("?", "ImageMagick", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_4?></td></tr>
+        <tr><td><?php echo $lang["browseruseragent"]; ?></td><td><?php echo $custom_field_2?></td></tr>
         </table>
         <br /><p><b><a href="http://bugs.resourcespace.org/login_page.php" target="_blank"><?php echo $lang['reportbug-login']?></a></b></p>
-        <form method="post"><input type="submit" name="submit" value="Prepare Bug Report"/></form>
+        <form method="post"><input type="submit" name="submit" value="<?php echo $lang["reportbug-preparebutton"] ?>"/></form>
     </div>
     <?php include ("../../include/footer.php");
 }

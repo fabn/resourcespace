@@ -224,7 +224,7 @@ closedir($dirh);
     <td><?php echo $lang['description']; ?></td>
     <td><?php echo $lang['plugins-author']; ?></td>
     <td><?php echo $lang['plugins-instversion']; ?></td>
-    <td><?php echo $lang['action']; ?></td>
+    <td><?php echo $lang['tools']; ?></td>
     </tr></thead>
     <tbody>
     
@@ -261,7 +261,7 @@ closedir($dirh);
     <td><?php echo $lang['description']; ?></td>
     <td><?php echo $lang['plugins-author']; ?></td>
     <td><?php echo $lang['plugins-version']; ?></td>
-    <td><?php echo $lang['action']; ?></td>
+    <td><?php echo $lang['tools']; ?></td>
     </tr></thead>
     <tbody>
     <?php 
@@ -291,7 +291,7 @@ closedir($dirh);
     <form enctype="multipart/form-data" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
 	<p><?php echo $lang['plugins-uploadtext']; ?><input type="file" name="pfile" /><br /></p>
-	<input type="submit" name="submit" value="Upload Plugin" />
+	<input type="submit" name="submit" value="<?php echo $lang['plugins-uploadbutton'] ?>" />
 	</form>
 	<?php if (isset($rejected)&& !$rejected) { ?>	
 	    <p><?php echo $lang['plugins-uploadsuccess']; ?></p>

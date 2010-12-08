@@ -106,14 +106,14 @@ and running.
 include "version.php";
 
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
-$applicationdesc=""; # Subtitle if $header_text_title=true;
+$applicationdesc=""; # Subtitle (i18n translated) if $header_text_title=true;
 $header_text_title=false; //replace header logo with text, application name and description above
 
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
 
 # Available languages
-$defaultlanguage="en"; # default language, uses iso codes (en, es etc.)
+$defaultlanguage="en"; # default language, uses ISO 639-1 language codes ( en, es etc.)
 $languages["en"]="British English";
 $languages["en-US"]="American English";
 $languages["ar"]="العربية";
@@ -152,7 +152,16 @@ $allow_password_change=true;
 
 # search params
 # Common keywords to ignore both when searching and when indexing.
-$noadd=array("", "a","the","this","then","another","is","with","in","and","where","how","on","of","to", "from", "at", "for", "-", "by", "be");
+# Copy this block to config.php and uncomment the languages you would like to use.
+
+$noadd=array();
+
+# English stop words
+$noadd=array_merge($noadd, array("", "a","the","this","then","another","is","with","in","and","where","how","on","of","to", "from", "at", "for", "-", "by", "be"));
+
+# Swedish stop words (copied from http://snowball.tartarus.org/algorithms/swedish/stop.txt 20101124)
+#$noadd=array_merge($noadd, array("och", "det", "att", "i", "en", "jag", "hon", "som", "han", "på", "den", "med", "var", "sig", "för", "så", "till", "är", "men", "ett", "om", "hade", "de", "av", "icke", "mig", "du", "henne", "då", "sin", "nu", "har", "inte", "hans", "honom", "skulle", "hennes", "där", "min", "man", "ej", "vid", "kunde", "något", "från", "ut", "när", "efter", "upp", "vi", "dem", "vara", "vad", "över", "än", "dig", "kan", "sina", "här", "ha", "mot", "alla", "under", "någon", "eller", "allt", "mycket", "sedan", "ju", "denna", "själv", "detta", "åt", "utan", "varit", "hur", "ingen", "mitt", "ni", "bli", "blev", "oss", "din", "dessa", "några", "deras", "blir", "mina", "samma", "vilken", "er", "sådan", "vår", "blivit", "dess", "inom", "mellan", "sånt", "varför", "varje", "vilka", "ditt", "vem", "vilket", "sitta", "sådana", "vart", "dina", "vars", "vårt", "våra", "ert", "era", "vilkas"));
+
 $suggest_threshold=-1; # How many results trigger the 'suggestion' feature, -1 disables the feature
 $max_results=50000;
 $minyear=1980; # The year of the earliest resource record, used for the date selector on the search form. Unless you are adding existing resources to the system, probably best to set this to the current year at the time of installation.

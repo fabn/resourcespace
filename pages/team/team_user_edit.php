@@ -84,7 +84,7 @@ for ($n=0;$n<count($groups);$n++)
 	else
 		{
 		?>
-		<option value="<?php echo $groups[$n]["ref"]?>" <?php if ($user["usergroup"]==$groups[$n]["ref"]) {?>selected<?php } ?>><?php echo $groups[$n]["name"]?></option>	
+		<option value="<?php echo $groups[$n]["ref"]?>" <?php if ($user["usergroup"]==$groups[$n]["ref"]) {?>selected<?php } ?>><?php echo i18n_get_translated($groups[$n]["name"])?></option>	
 		<?php
 		}
 	}

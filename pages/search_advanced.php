@@ -164,7 +164,7 @@ for ($n=0;$n<count($types);$n++)
   for ($n=1;$n<=12;$n++)
 	{
 	$m=str_pad($n,2,"0",STR_PAD_LEFT);
-	?><option <?php if ($n==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo date("F",mktime(0,0,0,$n,1,2000))?></option><?php
+	?><option <?php if ($n==$found_month) { ?>selected<?php } ?> value="<?php echo $m?>"><?php echo $lang["months"][$n-1]?></option><?php
 	}
   ?>
 </select>

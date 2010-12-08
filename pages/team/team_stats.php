@@ -79,7 +79,7 @@ for ($n=0;$n<count($years);$n++)
 
 <div class="Question">
 <label for="month"><?php echo $lang["month"]?></label><select id="month" name="month" class="shrtwidth">
-<option value=""><?php echo $lang["viewall"] ?></option>
+<option value=""><?php echo $lang["allmonths"] ?></option>
 <?php 
 for ($n=1;$n<=12;$n++)
 	{
@@ -95,7 +95,7 @@ for ($n=1;$n<=12;$n++)
 <label for="groupselect"><?php echo $lang["group"]?></label><select id="groupselect" name="groupselect" class="shrtwidth"
 onchange="if (this.value=='viewall') {document.getElementById('groupselector').style.display='none';}
 else {document.getElementById('groupselector').style.display='block';}">
-<?php if (!checkperm("U")) { ?><option <?php if ($groupselect=="viewall") { ?>selected<?php } ?> value="viewall"><?php echo $lang["viewall"]?></option><?php } ?>
+<?php if (!checkperm("U")) { ?><option <?php if ($groupselect=="viewall") { ?>selected<?php } ?> value="viewall"><?php echo $lang["allgroups"]?></option><?php } ?>
 <option <?php if ($groupselect=="select") { ?>selected<?php } ?> value="select"><?php echo $lang["select"]?></option>
 </select>
 <div class="clearerleft"> </div>
@@ -106,7 +106,7 @@ else {document.getElementById('groupselector').style.display='block';}">
 		{
 		?>
 		<tr>
-		<td valign=middle nowrap><?php echo htmlspecialchars($grouplist[$n]["name"])?>&nbsp;&nbsp;</td>
+		<td valign=middle nowrap><?php echo i18n_get_translated(htmlspecialchars($grouplist[$n]["name"]))?>&nbsp;&nbsp;</td>
 		<td width=10 valign=middle><input type=checkbox name="groups[]" value="<?php echo $grouplist[$n]["ref"]?>" <?php if (in_array($grouplist[$n]["ref"],$groups)) { ?>checked<?php } ?>></td>
 		</tr>
 		<?php

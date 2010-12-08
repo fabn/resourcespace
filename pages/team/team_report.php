@@ -91,12 +91,12 @@ else
 
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1><?php echo $lang["viewreport"]?></h1>
+  <h1><?php echo $lang["viewreports"]?></h1>
   <p><?php echo text("introtext")?></p>
   
 <form method="post">
 <div class="Question">
-<label for="report"><?php echo $lang["viewreports"]?></label><select id="report" name="report" class="stdwidth">
+<label for="report"><?php echo $lang["viewreport"]?></label><select id="report" name="report" class="stdwidth">
 <?php
 $reports=get_reports(); 
 for ($n=0;$n<count($reports);$n++)

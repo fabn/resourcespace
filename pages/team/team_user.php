@@ -101,7 +101,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo $users[$n]["fullname"]?></td>
 	<?php } ?>
 	<?php if (!hook("replacegroupnamerow")){?>
-	<td><?php echo $users[$n]["groupname"]?></td>
+	<td><?php echo i18n_get_translated($users[$n]["groupname"])?></td>
 	<?php } ?>
 	<?php if (!hook("replaceemailrow")){?>
 	<td><?php echo htmlentities($users[$n]["email"])?></td>
