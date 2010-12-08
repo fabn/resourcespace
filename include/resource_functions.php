@@ -945,8 +945,8 @@ function update_resource_type($ref,$type)
 	sql_query("update resource set resource_type='$type' where ref='$ref'");
 	
 	# Clear data that is no longer needed (data/keywords set for other types).
-	sql_query("delete from resource_data where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 and resource_type=0)");
-	sql_query("delete from resource_keyword where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 and resource_type=0)");	
+	sql_query("delete from resource_data where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 or resource_type=0)");
+	sql_query("delete from resource_keyword where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 or resource_type=0)");	
 	
 	}
 	

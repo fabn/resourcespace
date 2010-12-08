@@ -218,7 +218,7 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     # just fetch $fetchrows row but pad the array to the full result set size with empty values.
     # This has been added retroactively to support large result sets, yet a pager can work as if a full
     # result set has been returned as an array (as it was working previously).
-    global $db,$querycount,$querytime,$config_show_performance_footer,$querylog;
+    global $db,$querycount,$querytime,$config_show_performance_footer,$querylog,$debug_log;
     $counter=0;
     if ($config_show_performance_footer)
     	{
@@ -228,9 +228,11 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
    	    $querycount++;
     	}
     	
+    if ($debug_log) {debug("SQL: " . $sql);}
+    
     # Execute query
     $result=mysql_query($sql);
-
+	
     if ($config_show_performance_footer)
     	{
     	# Stats
@@ -905,4 +907,16 @@ function get_resource_table_joins(){
 	return $return;
 	}
     
+function debug($text)
+	{
+	# Output some text to a debug file.
+	# For developers only
+	global $storagedir,$debug_log;
+	if (!$debug_log) {return true;} # Do not execute if switched off.
+	
+	$f=fopen($storagedir . "/tmp/debug.txt","a");
+	fwrite($f,$text . "\n");
+	fclose ($f);
+	return true;
+	}
 	
