@@ -814,7 +814,7 @@ function email_reminder($email)
 	$details=sql_query("select username from user where email like '$email' and approved=1");
 	if (count($details)==0) {return false;}
 	$details=$details[0];
-	global $applicationname,$email_from,$baseurl,$lang;
+	global $applicationname,$email_from,$baseurl,$lang,$email_url_remind_user;
 	$password=make_password();
 	$password_hash=md5("RS" . $details["username"] . $password);
 	
@@ -822,7 +822,9 @@ function email_reminder($email)
 	
 	$templatevars['username']=$details["username"];
 	$templatevars['password']=$password;
-	$templatevars['url']=$baseurl;
+    if (trim($email_url_remind_user)!=""){$templatevars['url']=$email_url_remind_user;}
+    else {$templatevars['url']=$baseurl;}
+
 	
 	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
 	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);
