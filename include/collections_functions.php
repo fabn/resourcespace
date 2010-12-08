@@ -357,12 +357,6 @@ function save_collection($ref)
 	}
 
 	index_collection($ref,$index_string);
-	
-	# Reset archive status if specified
-	if (getval("archive","")!="")
-		{
-		sql_query("update resource set archive='" . getvalescaped("archive",0) . "' where ref in (select resource from collection_resource where collection='$ref')");
-		}
 		
 	# If 'users' is specified (i.e. access is private) then rebuild users list
 	$users=getvalescaped("users",false);

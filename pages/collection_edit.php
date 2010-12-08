@@ -248,27 +248,7 @@ if ($enable_collection_copy)
 
 <?php } ?>
 
-<?php if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
-<!-- Archive Status -->
-<div class="Question">
-<label for="archive"><?php echo $lang["resetarchivestatus"]?></label>
-<select class="stdwidth" name="archive" id="archive">
-<option value=""><?php echo $lang["select"]?></option>
-<?php for ($n=-2;$n<=2;$n++) { ?>
-<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>"><?php echo $lang["status" . $n]?></option><?php } ?>
-<?php } ?>
-</select>
-<div class="clearerleft"> </div>
-</div>
-<div class="Question">
-<label for="archive"><?php echo $lang["editallresources"]?></label>
-<div class="Fixed">
-<?php if (allow_multi_edit($ref)) { ?>
-<a href="edit.php?collection=<?php echo $ref?>"><?php echo $lang["editresources"]?> &gt;</a>
-<?php } else { ?><?php echo $lang["multieditnotallowed"]?><?php } ?></div>
-<div class="clearerleft"> </div>
-</div>
-<?php } ?>
+
 
 <div class="Question">
 <label><?php echo $lang["collectionlog"]?></label>

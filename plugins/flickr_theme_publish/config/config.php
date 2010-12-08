@@ -14,6 +14,6 @@ $flickr_api_secret="64e4b1b4daacae06";
 $flickr_caption_field=18;
 $flickr_keywords_field=1;
 
-$flickr_prefix_id_title=false;
+$flickr_prefix_id_title=true;
 
 ?>

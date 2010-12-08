@@ -807,13 +807,14 @@ function email_user_welcome($email,$username,$password,$usergroup)
 	send_mail($email,$applicationname . ": " . $lang["youraccountdetails"],$message,"","","emaillogindetails",$templatevars);
 	}
 
+
 function email_reminder($email)
 	{
 	if ($email=="") {return false;}
 	$details=sql_query("select username from user where email like '$email' and approved=1");
 	if (count($details)==0) {return false;}
 	$details=$details[0];
-	global $applicationname,$email_from,$baseurl,$lang,$email_url_remind_user;
+	global $applicationname,$email_from,$baseurl,$lang;
 	$password=make_password();
 	$password_hash=md5("RS" . $details["username"] . $password);
 	
@@ -821,8 +822,7 @@ function email_reminder($email)
 	
 	$templatevars['username']=$details["username"];
 	$templatevars['password']=$password;
-	if (trim($email_url_remind_user)!=""){$templatevars['url']=$email_url_remind_user;}
-	else {$templatevars['url']=$baseurl;}
+	$templatevars['url']=$baseurl;
 	
 	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
 	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);
@@ -2080,7 +2080,7 @@ if (!function_exists("auto_create_user_account")){
 function auto_create_user_account()
 	{
 	# Automatically creates a user account (which requires approval unless $auto_approve_accounts is true).
-	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts,$auto_approve_domains;
+	global $applicationname,$user_email,$email_from,$baseurl,$email_notify,$lang,$custom_registration_fields,$custom_registration_required,$user_account_auto_creation_usergroup,$registration_group_select,$auto_approve_accounts;
 	
 	# Add custom fields
 	$c="";
@@ -2130,35 +2130,13 @@ function auto_create_user_account()
 	$check=sql_value("select email value from user where email = '$user_email'","");
 	if ($check!=""){return $lang["useremailalreadyexists"];}
 
-	# Prepare to create the user.
-	$email=trim(getvalescaped("email","")) ;
-	$password=make_password();
-
-	# Work out if we should automatically approve this account based on $auto_approve_accounts or $auto_approve_domains
-	$approve=false;
-	if ($auto_approve_accounts==true)
-		{
-		$approve=true;
-		}
-	elseif (count($auto_approve_domains)>0)
-		{
-		# Check e-mail domain.
-		foreach ($auto_approve_domains as $domain)
-			{
-			if (substr(strtolower($email),strlen($email)-strlen($domain)-1)==("@" . strtolower($domain)))
-				{
-				# E-mail domain match.
-				$approve=true;
-				}
-			}
-		}
-	
-
 	# Create the user
-	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . $password . "','" . getvalescaped("name","") . "','" . $email . "','" . $usergroup . "','" . escape_check($c) . "'," . (($approve)?1:0) . ")");
+	$email=getvalescaped("email","") ;
+	$password=make_password();
+	sql_query("insert into user (username,password,fullname,email,usergroup,comments,approved) values ('" . $username . "','" . $password . "','" . getvalescaped("name","") . "','" . $email . "','" . $usergroup . "','" . escape_check($c) . "'," . (($auto_approve_accounts)?1:0) . ")");
 	$new=sql_insert_id();
 
-	if ($approve)
+	if ($auto_approve_accounts)
 		{
 		# Auto approving, send mail direct to user
 		email_user_welcome($email,$username,$password,$usergroup);

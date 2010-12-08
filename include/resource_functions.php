@@ -138,7 +138,7 @@ function save_resource_data($ref,$multi)
 
 				# Write this edit to the log (including the diff)
 				resource_log($ref,'e',$fields[$n]["ref"],"",$fields[$n]["value"],$val);
-				
+
 				# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 				if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
 
@@ -207,7 +207,7 @@ function save_resource_data($ref,$multi)
 	if (count($ok)>0) {sql_query("insert into resource_related(resource,related) values ($ref," . join("),(" . $ref . ",",$ok) . ")");}
 					
 	// Notify the resources team ($email_notify) if moving from pending review->submission.
-	$archive=getvalescaped("archive",0);
+	$archive=getvalescaped("archive",0,true);
 	$oldarchive=sql_value("select archive value from resource where ref='$ref'",0);
 	if ($oldarchive==-2 && $archive==-1 && $ref>0)
 		{
@@ -223,9 +223,23 @@ function save_resource_data($ref,$multi)
 	if ($expiry_field_edited) {$expirysql=",expiry_notification_sent=0";}
 
 	# Also update archive status and access level
+	$oldaccess=sql_value("select access value from resource where ref='$ref'",0);
+	$access=getvalescaped("access",0,true);
 	if (getvalescaped("archive","")!="") # Only if archive has been sent
 		{
-		sql_query("update resource set archive='" . getvalescaped("archive",0,true) . "',access='" . getvalescaped("access",0,true) . "' $expirysql where ref='$ref'");
+		sql_query("update resource set archive='" . $archive . "',access='" . $access . "' $expirysql where ref='$ref'");
+		
+		if ($archive!=$oldarchive)
+			{
+			resource_log($ref,"s",0,"",$oldarchive,$archive);
+			}
+
+		if ($access!=$oldaccess)
+			{
+			resource_log($ref,"a",0,"",$oldaccess,$access);
+			}
+
+		
 		}
 		
 	# For access level 3 (custom) - also save custom permissions
@@ -431,6 +445,9 @@ function save_resource_data_multi($collection)
 				{
 				sql_query("update resource set archive='" . $archive . "' where ref='$ref'");
 
+				# Log
+				resource_log($ref,"s",0,"",$oldarchive,$archive);
+
 				if ($oldarchive==-2 && $archive==-1)
 					{
 					# Notify the admin users of this change.
@@ -461,7 +478,14 @@ function save_resource_data_multi($collection)
 			{
 			$ref=$list[$m];
 			$access=getvalescaped("access",0);
-			sql_query("update resource set access='$access' where ref='$ref'");
+			$oldaccess=sql_value("select access value from resource where ref='$ref'","");
+			
+			if ($access!=$oldaccess)
+				{
+				sql_query("update resource set access='$access' where ref='$ref'");
+				
+				resource_log($ref,"a",0,"",$oldaccess,$access);
+				}
 			
 			# For access level 3 (custom) - also save custom permissions
 			if ($access==3) {save_resource_custom_access($ref);}
@@ -626,7 +650,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			}
 		
 		# make vars available to template
-		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,($access==1)?true:false);
+		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,$watermarked=true);
 		$templatevars['url']=$baseurl . "/?r=" . $resource . $key;
 		$templatevars['fromusername']=$fromusername;
 		$templatevars['message']=$message;
@@ -662,8 +686,9 @@ function delete_resource($ref)
 		
 		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
 
-                # log this so that administrator can tell who requested deletion
-                resource_log($ref,'x','');
+
+        # log this so that administrator can tell who requested deletion
+        resource_log($ref,'x','');
 		
 		# Remove the resource from any collections
 		sql_query("delete from collection_resource where resource='$ref'");
@@ -810,16 +835,26 @@ function copy_resource($from,$resource_type=-1)
 	
 function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=0,$purchase_size="",$purchase_price=0)
 	{
-	global $userref,$k;
+	global $userref,$k,$lang;
 	
 	# Do not log edits to user templates.
 	if ($resource<0) {return false;}
 	
 	# Add difference to file.
 	$diff="";
-	if ($field!="" && ($fromvalue !== $tovalue))
+	if (($type=="e" || $type=="m") && $field!="" && ($fromvalue !== $tovalue))
 		{
 		$diff=log_diff($fromvalue,$tovalue);
+		}
+
+	if ($type=="s")
+		{
+		$diff=$lang["status" . $fromvalue] . " -> " . $lang["status" . $tovalue];
+		}
+
+	if ($type=="a")
+		{
+		$diff=$lang["access" . $fromvalue] . " -> " . $lang["access" . $tovalue];
 		}
 	
 	sql_query("insert into resource_log(date,user,resource,type,resource_type_field,notes,diff,usageoption,purchase_size,purchase_price,access_key) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$resource','$type'," . (($field!="")?"'$field'":"null") . ",'" . escape_check($notes) . "','" . escape_check($diff) . "','$usage','$purchase_size','$purchase_price'," . (isset($k)?"'$k'":"null") . ")");
@@ -1512,7 +1547,7 @@ function get_resource_access($resource)
 	if ($k!="")
 		{
 		# External access - check how this was shared.
-		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "' and (expires is null or expires>now())",-1);
+		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "'",-1);
 		if ($extaccess!=-1) {return $extaccess;}
 		}
 	
@@ -1548,7 +1583,7 @@ function get_resource_access($resource)
 		}
 
 		
-	if ($userspecific!==false)
+	if ($userspecific!="")
 		{
 		return $userspecific;
 		}

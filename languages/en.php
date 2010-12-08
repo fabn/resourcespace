@@ -287,6 +287,8 @@ $lang["log-v"]="Viewed resource";
 $lang["log-x"]="Deleted resource";
 $lang["log-l"]="Logged in"; # For user entries only.
 $lang["log-t"]="Transformed file";
+$lang["log-s"]="Change status";
+$lang["log-a"]="Change access";
 
 $lang["backtoresourceview"]="Back to resource view";
 
