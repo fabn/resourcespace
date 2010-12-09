@@ -152,7 +152,24 @@ set_time_limit(0);
 #echo file_get_contents($path);
 # The above required that the downloaded file was read into PHP's memory space first.
 # Perhaps this is not the case for readfile().
-readfile($path);
+
+# Old method
+#readfile($path);
+
+# New method
+$blocksize = (2 << 20); //2M chunks
+$sent = 0;
+$handle = fopen($path, "r");
+
+// Now we need to loop through the file and echo out chunks of file data
+while($sent < $filesize)
+	{
+	echo fread($handle, $blocksize);
+	$sent += $blocksize;
+	}
+
+
+
 
 #Deleting Exiftool temp File:
 if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
