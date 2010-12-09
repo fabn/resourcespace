@@ -47,8 +47,10 @@ for ($n=0;$n<count($log);$n++)
 	<td nowrap><?php echo $log[$n]["access_key"]!=""?$lang["externalusersharing"] . ": " . $log[$n]["access_key"] . " " . $lang["viauser"] . " " . $log[$n]["shared_by"]:$log[$n]["fullname"]?></td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]]." ".$log[$n]["notes"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
-	<td><?php echo nl2br(htmlspecialchars($log[$n]["diff"])) . (($log[$n]["notes"]=="" || $log[$n]["notes"]=="-1")?"":$lang["usage"] . ": " . nl2br(htmlspecialchars($log[$n]["notes"])) . "<br>" . $lang["indicateusagemedium"] . ": " . @$download_usage_options[$log[$n]["usageoption"]]);
-	
+	<td><?php if ($log[$n]["usageoption"]!="-1"){
+        // if usageoption is set to -1 when logging, you can avoid the usage description here
+        echo nl2br(htmlspecialchars($log[$n]["diff"])) . (($log[$n]["notes"]=="" || $log[$n]["notes"]=="-1")?"":$lang["usage"] . ": " . nl2br(htmlspecialchars($log[$n]["notes"])) . "<br>" . $lang["indicateusagemedium"] . ": " . @$download_usage_options[$log[$n]["usageoption"]]);
+	}
 	# For purchases, append size and price
 	if ($log[$n]["type"]=="p") {echo " (" . ($log[$n]["purchase_size"]==""?$lang["collection_download_original"]:$log[$n]["purchase_size"]) . ", " . $currency_symbol . number_format($log[$n]["purchase_price"],2) . ")";}
 	

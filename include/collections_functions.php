@@ -1185,7 +1185,7 @@ function collection_min_access($collection)
 		{
 		$ref=$result[$n]["ref"];
 		# Load access level
-		$access=get_resource_access($ref);
+		$access=get_resource_access($result[$n]);
 		if ($access>$minaccess) {$minaccess=$access;}
 		}
 	return $minaccess;
