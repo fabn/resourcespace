@@ -931,18 +931,7 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	$file=get_resource_path($ref,true,"pre",false,$extension);}
 	if (!file_exists($file)) {return false;}
 	
-	if ($extension=="png")
-		{
-	    $source = imagecreatefrompng($file);
-		}
-	elseif ($extension=="gif")
-		{
-	    $source = imagecreatefromgif($file);
-		}
-	else
-		{
-	    $source = imagecreatefromjpeg($file);
-		}
+    $source = imagecreatefromjpeg($file);
 		
 	# Apply tweaks
 	if ($rotateangle!=0)
@@ -961,18 +950,9 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	if ($gamma!=0) {imagegammacorrect($source,1.0,$gamma);}
 
 	# Save source image and fetch new dimensions
-	if ($extension=="png")
-		{
-		imagepng($source,$file);
-		}
-	elseif ($extension=="gif")
-		{
-		imagegif($source,$file);
-		}
-	else
-		{
-		imagejpeg($source,$file,95);
-		}
+
+    imagejpeg($source,$file,95);
+		
 
     list($tw,$th) = @getimagesize($file);	
     
@@ -1002,6 +982,7 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 			imagejpeg($target,$file,95);
 			}
 		}
+
 	if ($rotateangle!=0)
 		{
 		# Swap thumb heights/widths
@@ -1043,8 +1024,52 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 		} else {
 			$newgamma = $oldgamma;
 		}
-		sql_query("update resource set preview_tweaks = '$newrotate|$newgamma' where ref = $ref");
+        global $watermark;
+        if ($watermark){
+            tweak_wm_preview_images($ref,$rotateangle,$gamma);
+        }
+        
+        sql_query("update resource set preview_tweaks = '$newrotate|$newgamma' where ref = $ref");
+        
 	}
+
+function tweak_wm_preview_images($ref,$rotateangle,$gamma,$extension="jpg"){
+
+    $ps=sql_query("select * from preview_size where (internal=1 or allow_preview=1)");
+    for ($n=0;$n<count($ps);$n++)
+        {
+        $wm_file=get_resource_path($ref,true,$ps[$n]["id"],false,$extension,-1,1,true);
+        if (!file_exists($wm_file)) {return false;}
+        list($sw,$sh) = @getimagesize($wm_file);
+        
+        $wm_source = imagecreatefromjpeg($wm_file);
+        
+        # Apply tweaks
+        if ($rotateangle!=0)
+            {
+            # Use built-in function if available, else use function in this file
+            if (function_exists("imagerotate"))
+                {
+                $wm_source=imagerotate($wm_source,$rotateangle,0);
+                }
+            else
+                {
+                $wm_source=AltImageRotate($wm_source,$rotateangle);
+                }
+            }
+            
+        if ($gamma!=0) {imagegammacorrect($wm_source,1.0,$gamma);}
+        imagejpeg($wm_source,$wm_file,95);
+	            list($tw,$th) = @getimagesize($wm_file);
+        if ($rotateangle!=0) {$temp=$sw;$sw=$sh;$sh=$temp;}
+		
+        # Rescale image
+        $wm_target = imagecreatetruecolor($sw,$sh);
+        imagecopyresampled($wm_target,$wm_source,0,0,0,0,$sw,$sh,$tw,$th);
+        imagejpeg($wm_target,$wm_file,95);
+    }
+}
+
 
 function AltImageRotate($src_img, $angle) {
 
