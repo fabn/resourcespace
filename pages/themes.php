@@ -323,7 +323,8 @@ if ($header=="" && !isset($themes[0]))
 				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["action-view"]?></a>
 				<?php if ($themes_category_split_pages) { ?>
 				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
-				<?php } ?>
+				<?php }
+                hook("additionalsmartthemetool");?>
 				</div></td>
 				</tr>
 				<?php
