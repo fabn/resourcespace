@@ -435,6 +435,7 @@ $lang["passwordnotvalid"]="This is not a valid password";
 $lang["passwordnotmatch"]="The entered passwords did not match";
 $lang["wrongpassword"]="Incorrect password, please try again";
 $lang["action-view"]="View";
+$lang["action-preview"]="Preview";
 $lang["action-viewmatchingresources"]="View Matching Resources";
 $lang["action-expand"]="Expand";
 $lang["action-select"]="Select";

@@ -44,7 +44,7 @@ $pageheight=$pagesize[0]=$width;
 $pagewidth=$pagesize[0]=$width;
 $pageheight=$pagesize[1]=$height;
 }
-$date= date("m-d-Y h:i a");
+$date= date("Y-m-d H:i:s");
 $leading=2;
 
 # back compatibility  
@@ -109,10 +109,10 @@ class MYPDF extends TCPDF {
 
     //Page header
     public function Header() {
-        global $contact_sheet_font,$titlefontsize,$applicationname,$collectiondata,$date,$subsetting;
+        global $contact_sheet_font,$titlefontsize,$applicationname,$collectiondata,$date,$subsetting,$lang;
         $this->SetFont($contact_sheet_font,'',$titlefontsize,'',$subsetting);
-		$title = $applicationname.' - '. $collectiondata['name'].' - '.$date;
-		$pagenumber=$this->getAliasNumPage().' of '.$this->getAliasNbPages();
+		$title = $applicationname.' - '. $collectiondata['name'].' - '.nicedate($date,true,true);
+		$pagenumber=$this->getAliasNumPage(). " " . $lang["of"] . " " .$this->getAliasNbPages();
 		$this->Text(1,.8,$title.'   '.$pagenumber);
     }
 
@@ -125,9 +125,9 @@ class MYPDF extends TCPDF {
 
 
 $pdf = new MYPDF($orientation , 'in', $pagesize, true, 'UTF-8', false); 
-$pdf->SetTitle($collectiondata['name'].' '.$date);
+$pdf->SetTitle($collectiondata['name'].' - '.nicedate($date, true, true));
 $pdf->SetAuthor($user['fullname'].' '.$user['email']);
-$pdf->SetSubject($applicationname.' Contact Sheet');
+$pdf->SetSubject($applicationname . " - " . $lang["contactsheet"]);
 $pdf->SetMargins(1,1.2,.7);
 $pdf->SetAutoPageBreak(false);
 $pdf->SetCellPadding(0); 

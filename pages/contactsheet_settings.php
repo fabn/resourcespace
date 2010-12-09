@@ -118,7 +118,7 @@ foreach ($all_field_info as $sortable_field)
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>	
-<?php if ($contact_sheet_previews==true){?> <input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["preview"]?>&nbsp;&nbsp;" onClick="previewContactSheet();"/><?php } ?>
+<?php if ($contact_sheet_previews==true){?> <input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["action-preview"]?>&nbsp;&nbsp;" onClick="previewContactSheet();"/><?php } ?>
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
 </form>
