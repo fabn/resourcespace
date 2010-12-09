@@ -956,7 +956,7 @@ $lang["smartcollection"]="Smart Collection";
 
 
 $lang["uploadertryflash"]="If you are having problems with this uploader, try the <strong>Flash uploader</strong>.";
-$lang["uploadertryjava"]="If you are having problems with this uploader, try the <strong>Java uploader</strong>.";
+$lang["uploadertryjava"]="If you are having problems with this uploader, or if <strong>uploading large files</strong>, try the <strong>Java uploader</strong>.";
 $lang["getjava"]="To ensure that you have the latest Java software on your system, visit the Java website.";
 $lang["getflash"]="To ensure that you have the latest Flash player on your system, visit the Flash website.";
 
