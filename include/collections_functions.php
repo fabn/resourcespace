@@ -490,8 +490,8 @@ function get_smart_themes($field,$node=0,$themebar=false)
 	if (count($fielddata)>0) {$fielddata=$fielddata[0];} else {return false;}
 	
 	# Return a list of keywords that are in use for this field
-	$inuse=sql_array("select distinct k.keyword value from keyword k join resource_keyword rk on k.ref=rk.keyword where 
-		resource_type_field='$field' and resource>0");
+    global $smart_themes_omit_archived;
+	$inuse=sql_array("select distinct k.keyword value from keyword k join resource_keyword rk on k.ref=rk.keyword ".(($smart_themes_omit_archived)?"join resource r on rk.resource=r.ref":"")." where resource_type_field='$field' and resource>0 ".(($smart_themes_omit_archived)?"and archive=0":""));
 
 	if ($fielddata["type"]==7)
 		{

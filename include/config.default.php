@@ -1624,4 +1624,7 @@ $psd_transparency_checkerboard=false;
 # Search for a minimum number of stars in Simple search/Advanaced Search (requires $$display_user_rating_stars)
 $star_search=false;
 
-
+# Omit archived resources from get_smart_themes (so if all resources are archived, the header won't show)
+# Generally it's not possible to check for the existence of results based on permissions,
+# but in the case of archived files, an extra join can help narrow the smart theme results to active resources.
+$smart_themes_omit_archived=false;
