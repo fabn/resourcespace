@@ -1628,3 +1628,6 @@ $star_search=false;
 # Generally it's not possible to check for the existence of results based on permissions,
 # but in the case of archived files, an extra join can help narrow the smart theme results to active resources.
 $smart_themes_omit_archived=false;
+
+# Set to false to omit results for public collections on numeric searches.
+$search_public_collections_ref=true;
