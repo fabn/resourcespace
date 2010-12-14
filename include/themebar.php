@@ -37,7 +37,7 @@ for ($n=0;$n<count($headers);$n++)
 
 function DisplayThemeBar($theme1)
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$n;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$n,$baseurl;
 
 	# Work out theme name
 	$themename=$theme1;
@@ -62,7 +62,7 @@ return false;">
 		<?php
 		for ($m=0;$m<count($themes);$m++)
 			{ ?><br>
-			&nbsp;&nbsp;&nbsp;<a href="search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
+			&nbsp;&nbsp;&nbsp;<a href="<?php echo $baseurl?>/pages/search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
 			<?php
 			}
 		?><br><br></div><?php
