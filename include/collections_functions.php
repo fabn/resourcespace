@@ -224,8 +224,8 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			{
 			$keysql="";
 			}
-        global $search_public_collections_ref;    
-        if ($search_public_collections_ref){$spcr="or c.ref='$search'";}    
+        global $search_public_collections_ref;
+        if ($search_public_collections_ref){$spcr="or c.ref='$search'";} else {$spcr="";}    
 		$sql.="and (c.name rlike '$search' or u.username='$search' $spcr $keysql)";
 		}
 	
