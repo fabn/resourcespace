@@ -9,7 +9,10 @@ $resource_type=getvalescaped("resource_type","");
 $status="";
 if ($ref!=""){
 $allowed_extensions=get_allowed_extensions($ref);
-} else {$allowed_extensions="";}
+}
+if ($resource_type!=""){
+    $allowed_extensions=get_allowed_extensions_by_type($resource_type);
+}
 # fetch the current search 
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
