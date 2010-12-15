@@ -23,9 +23,9 @@ include "../../include/header.php";
 	
 	<?php if (checkperm("c")): // Check if user can create resources ?>
 
-		<?php if($upload_methods['single_upload']): // Test if single upload is allowed. ?>
-			<li><a href="../create.php"><?php echo $lang["addresource"]?></a></li>
-		<?php endif // Test if single upload is allowed ?>
+        <?php if($upload_methods['single_upload']): // Test if in browser is allowed. ?>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;single=true"><?php echo $lang["addresource"]?></a></li>
+		<?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['in_browser_upload_java']): // Test if in browser is allowed. ?>
 			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;java=true"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>

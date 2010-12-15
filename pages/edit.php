@@ -138,6 +138,11 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 					# Save button pressed? Move to next step.
 					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
+                elseif (getval("single","")!="") // Test if single upload.
+					{
+					# Save button pressed? Move to next step.
+					if (getval("save","")!="") {redirect("pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					}    
 				else
 					{
 					# Save button pressed? Move to next step.
@@ -147,12 +152,8 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 			}
 		elseif (getval("save","")!="")
 			{
-			?>
-			<script type="text/javascript">
-			alert('<?php echo addslashes($lang["requiredfields"]) ?>');
-			</script>
-			<?php
-			}
+			$show_error=true;
+            }
 		}
 	else
 		{
@@ -511,8 +512,7 @@ for ($n=0;$n<count($fields);$n++)
 		||			
 			checkperm("F" . $fields[$n]["ref"])
 		||
-			($ref<0 && $fields[$n]["hide_when_uploading"])
-		))
+			($ref<0 && $fields[$n]["hide_when_uploading"] && $fields[$n]["required"]==0)		))
 		
 		{
 
@@ -923,6 +923,12 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
 </div>
 
+<?php if (isset($show_error)){?>
+    <script type="text/javascript">
+    alert('<?php echo addslashes($lang["requiredfields"]) ?>');
+    </script><?php
+    }
+?>
 <!--<p><a href="view.php?ref=<?php echo $ref?>">Back to view</a></p>-->
 <?php
 include "../include/footer.php";

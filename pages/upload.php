@@ -5,10 +5,11 @@ include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
 $ref=getvalescaped("ref","",true);
+$resource_type=getvalescaped("resource_type","");
 $status="";
-
+if ($ref!=""){
 $allowed_extensions=get_allowed_extensions($ref);
-
+} else {$allowed_extensions="";}
 # fetch the current search 
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
@@ -24,7 +25,9 @@ $sort=getval("sort",$default_sort);
 #handle posts
 if (array_key_exists("userfile",$_FILES))
     {
-
+    if ($ref==""){
+      $ref=copy_resource(0-$userref);
+    }
 	if(verify_extension($_FILES['userfile']['name'],$allowed_extensions))
 		{	
 		# Log this			
