@@ -29,7 +29,7 @@ for ($n=0;$n<count($s);$n++)
 			if ($k===false) {$k=-1;}
 			
 			# Filter using this value
-			$sql.=" join resource_keyword rk" . $n . " on rk" . $n . ".resource=r.ref and rk" . $n . ".keyword='" . $k . "' and rk" . $n . ".resource_type_field='" . $field[$n]["ref"] . "'";
+			$sql.=" join resource_keyword rk" . $n . " on rk" . $n . ".resource=rk.resource and rk" . $n . ".keyword='" . $k . "' and rk" . $n . ".resource_type_field='" . $field[$n]["ref"] . "'";
 			}
 		}
 	}
@@ -40,8 +40,9 @@ for ($n=0;$n<count($s);$n++)
 	$e=explode(":",$s[$n]);
 	if (count($e)==2 && $n!=$nofilter)
 		{
-		$values=sql_array("select distinct k.keyword value from resource r join resource_keyword rk on rk.resource=r.ref and r.archive=0 and r.ref>0 and rk.resource_type_field='" . $field[$n]["ref"] . "' join keyword k on rk.keyword=k.ref " . $sql);
-		#print_r($values);
+#		$values=sql_array("select distinct k.keyword value from resource r join resource_keyword rk on rk.resource=r.ref and r.archive=0 and r.ref>0 and rk.resource_type_field='" . $field[$n]["ref"] . "' join keyword k on rk.keyword=k.ref " . $sql);
+
+		$values=sql_array("select distinct k.keyword value from resource_keyword rk join keyword k on rk.keyword=k.ref " . $sql . " where rk.resource>0 and rk.resource_type_field='" . $field[$n]["ref"] . "'");
 		
 		# Fetch the full list of available options
 		$options=trim_array(explode(",",$field[$n]["options"]));
@@ -50,16 +51,17 @@ for ($n=0;$n<count($s);$n++)
 
 		# Remove existing options for this field
 		#echo "<h2>" . $field[$n]["title"] . "</h2><ul>";
-		$select="<option value=''>&nbsp;</option>";
+		$select="<option value=''>" . $lang["select"] . "</option>";
 
 		for ($m=0;$m<count($options);$m++)
 			{
-			if (in_array(cleanse_string(i18n_get_translated($options[$m]),true),$values))
+			$value=i18n_get_translated($options[$m]);
+			if (in_array(cleanse_string($value,true),$values))
 				{
 				#echo "<li>" . i18n_get_translated($options[$m]);
 				$select.="<option";
-				if ($e[1]==i18n_get_translated($options[$m])) {$select.=" selected";}
-				$select.=">" . i18n_get_translated($options[$m]) . "</option>";
+				if ($e[1]==$value) {$select.=" selected";}
+				$select.=">" . $value . "</option>";
 				}
 			}
 		?>

@@ -350,7 +350,10 @@ if (!$basic_simple_search)
 			// Display waiting message
 			if (clickedfield!='<?php echo $optionfields[$n]?>')
 				{
-				$('field_<?php echo $optionfields[$n]?>').innerHTML="<option><?php echo $lang["pleasewaitsmall"] ?></option>";
+				if ($('field_<?php echo $optionfields[$n]?>').selectedIndex==0)
+					{
+					$('field_<?php echo $optionfields[$n]?>').innerHTML="<option value=''><?php echo $lang["pleasewaitsmall"] ?></option>";
+					}
 				}
 			else
 				{
