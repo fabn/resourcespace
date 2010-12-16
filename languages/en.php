@@ -1048,4 +1048,6 @@ $lang["generateexternalurl"]="Generate External URL";
 
 $lang["starsminsearch"]="Stars (Minimum)";
 $lang["anynumberofstars"]="Any Number of Stars";
+
+$lang["blankresource"]="Blank Resource";
 ?>

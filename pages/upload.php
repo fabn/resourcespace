@@ -25,14 +25,22 @@ $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
+if (getval("createblank","")!=""){
+    if ($ref==""){
+        $ref=copy_resource(0-$userref);
+    }
+    redirect("pages/edit.php?refreshcollectionframe=true&ref=" . $ref."&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
+}
+
 #handle posts
 if (array_key_exists("userfile",$_FILES))
     {
-    if ($ref==""){
-      $ref=copy_resource(0-$userref);
-    }
 	if(verify_extension($_FILES['userfile']['name'],$allowed_extensions))
-		{	
+		{
+        if ($ref==""){
+            $ref=copy_resource(0-$userref);
+        }
+
 		# Log this			
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,"u",0);
@@ -73,7 +81,7 @@ function check(filename) {
 </div>
 
 <div class="Question">
-<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes">
+<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
 <div class="clearerleft"> </div>
 </div>
 
@@ -86,6 +94,7 @@ function check(filename) {
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
+<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['blankresource'];}?>&nbsp;&nbsp;" />
 <input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
