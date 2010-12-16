@@ -94,7 +94,7 @@ function check(filename) {
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['blankresource'];}?>&nbsp;&nbsp;" />
+<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['noupload'];}?>&nbsp;&nbsp;" />
 <input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
