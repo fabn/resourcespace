@@ -251,7 +251,7 @@ if ($multiple) { ?>
 <?php } ?>
 
 
-<div class="Question" style="border-top:none;">
+<div class="Question" id="resource_ref_div" style="border-top:none;">
 <label><?php echo $lang["resourceid"]?></label>
 <div class="Fixed"><?php echo $ref?></div>
 <div class="clearerleft"> </div>
