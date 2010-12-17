@@ -650,7 +650,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			}
 		
 		# make vars available to template
-		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,$watermarked=true);
+        $templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,($access==1)?true:false);
 		$templatevars['url']=$baseurl . "/?r=" . $resource . $key;
 		$templatevars['fromusername']=$fromusername;
 		$templatevars['message']=$message;
