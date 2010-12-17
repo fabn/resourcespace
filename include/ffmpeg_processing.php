@@ -78,6 +78,8 @@ if($width>$ffmpeg_preview_max_width)
 if ($width % 2){$width++;}
 if ($height % 2) {$height++;}
 
+$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
+
 global $config_windows;
 if ($config_windows)
 	{
@@ -86,7 +88,6 @@ if ($config_windows)
 	$shell_exec_cmd="e:/resourcespace/filestore/tmp/ffmpeg.bat";
 	}
 
-$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 $output=shell_exec($shell_exec_cmd);
 
 if (!file_exists($targetfile))
