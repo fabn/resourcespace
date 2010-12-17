@@ -95,7 +95,7 @@ foreach ($sort_fields as $sort_field)
 $n=0;	
 
 # Append extra search parameters from the quick search.
-if (!is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
+if (!$config_search_for_number || !is_numeric($search)) # Don't do this when the search query is numeric, as users typically expect numeric searches to return the resource with that ID and ignore country/date filters.
 	{
 	// For the simple search fields, collect from the GET request and assemble into the search string.
 	reset ($_GET);
