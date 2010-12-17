@@ -24,7 +24,6 @@ if (getval("saveform","")!="")
 		}	
 	if (getval("other","")!="") {$perms[]=getvalescaped("other","");}
 	sql_query("update usergroup set permissions='" . join(",",$perms) . "' where ref='$ref'");
-	echo "<font color=white>" . join(",",$perms) . "</font>";
 	}
 
 
