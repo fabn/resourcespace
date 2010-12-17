@@ -235,7 +235,8 @@ function get_resource_field_data_batch($refs)
 	
 function get_resource_types()
 	{
-	# Returns a list of resource types.
+	# Returns a list of resource types. The standard resource types are translated using $lang. Custom resource types are i18n translated.
+
 	$r=sql_query("select * from resource_type order by order_by,ref");
 	$return=array();
 	# Translate names and check permissions
@@ -243,7 +244,7 @@ function get_resource_types()
 		{
 		if (!checkperm('T' . $r[$n]['ref']))
 			{
-			$r[$n]["name"]=i18n_get_translated($r[$n]["name"]);	# Translate name
+			$r[$n]["name"]=lang_or_i18n_get_translated($r[$n]["name"], "resourcetype-");	# Translate name
 			$return[]=$r[$n]; # Add to return array
 			}
 		}
@@ -365,7 +366,7 @@ function resolve_keyword($keyword,$create=false)
 
 function add_partial_index($keywords)
 	{
-	# For each keywords in the supplied keywords list add all possible infixes and return the combined array.
+	# For each keywords in the supplied keywords list add all possible infixes and return the combined array.
 	# This therefore returns all keywords that need indexing for the given string.
 	# Only for fields with 'partial_index' enabled.
 	$return=$keywords;
@@ -699,38 +700,87 @@ function get_users_with_permission($permission)
 	
 
 function get_usergroups($usepermissions=false,$find="")
-	{
-	# Returns a list of user groups. Put anything starting with 'General Staff Users' at the top (e.g. General Staff)
-	$sql="";
-	if ($usepermissions && checkperm("U"))
-		{
-		# Only return users in children groups to the user's group
-		global $usergroup,$U_perm_strict;
-		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
-		if ($U_perm_strict){
-               //$sql.="(parent='$usergroup')";
-               $sql.="find_in_set('" . $usergroup . "',parent)";
-               }
-        else {
-               //$sql.="(ref='$usergroup' or parent='$usergroup')";
-               $sql.="(ref='$usergroup' or find_in_set('" . $usergroup . "',parent))";
-               }
-            }
+{
+    # Returns a list of user groups. The standard user groups are translated using $lang. Custom user groups are i18n translated.
+    # Puts anything starting with 'General Staff Users' - in the English default names - at the top (e.g. General Staff).
 
-	if (strlen($find)>0)
-		{
-		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
-		$sql.="name like '%$find%'";
-		}
-	global $default_group;
-	return sql_query("select * from usergroup $sql order by (ref='$default_group') desc,name");
-	}
-	
+    # Creates a query, taking (if required) the permissions  into account.
+    $sql = "";
+    if ($usepermissions && checkperm("U")) {
+        # Only return users in children groups to the user's group
+        global $usergroup,$U_perm_strict;
+        if ($sql=="") {$sql = "where ";} else {$sql.= " and ";}
+        if ($U_perm_strict) {
+            //$sql.= "(parent='$usergroup')";
+            $sql.= "find_in_set('" . $usergroup . "',parent)";
+        }
+        else {
+            //$sql.= "(ref='$usergroup' or parent='$usergroup')";
+            $sql.= "(ref='$usergroup' or find_in_set('" . $usergroup . "',parent))";
+        }
+    }
+
+    # Executes query.
+    global $default_group;
+    $r = sql_query("select * from usergroup $sql order by (ref='$default_group') desc,name");
+
+    # Translates group names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["name"] = lang_or_i18n_get_translated($r[$n]["name"], "usergroup-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+
+    if (strlen($find)>0) {
+        # Searches for groups with names which contains the string defined in $find.
+        $initial_length = count($return);
+        for ($n = 0;$n<$initial_length;$n++) {
+            if (strpos(strtolower($return[$n]["name"]),strtolower($find))==false) {
+                unset($return[$n]); # Removes this group.
+            }
+        }
+        $return = array_values($return); # Reassigns the indices.
+    }
+
+    return $return;
+
+}    
+
+function lang_or_i18n_get_translated($text, $mixedprefix)
+{
+    # Translates field names / values using two methods:
+    # First it checks if $text exists in the current $lang (after $text is sanitized and $mixedprefix - one by one if an array - is added).
+    # If not found in the $lang, it tries to translate $text using the i18n_get_translated function.
+
+    $text=trim($text);
+    global $lang;
+
+    if (is_array($mixedprefix)) {$prefix = $mixedprefix;}
+    else {$prefix = array($mixedprefix);}
+    for ($n = 0;$n<count($prefix);$n++) {
+        $langindex = $prefix[$n] . strtolower(str_replace(array(" ", "\t", "/"), array("_", "_","and"), $text));
+
+        # Checks if there is a $lang (should be defined for all standard field names / values).
+        if (isset($lang[$langindex])) {
+            $return = $lang[$langindex];
+            break;
+        }
+    }    
+        if (isset($return)) {return $return;}
+        else {return i18n_get_translated($text);} # Performs an i18n translation (of probably a custom field name / value).
+}
+
 function get_usergroup($ref)
-	{
-	$return=sql_query("select * from usergroup where ref='$ref'");
-	if (count($return)==0) {return false;} else {return $return[0];}
-	}
+{
+    # Returns the user group corresponding to the $ref. A standard user group name is translated using $lang. A custom user group name is i18n translated.
+
+    $return = sql_query("select * from usergroup where ref='$ref'");
+    if (count($return)==0) {return false;}
+    else {
+        $return[0]["name"] = lang_or_i18n_get_translated($return[0]["name"], "usergroup-");
+        return $return[0];
+    }
+}
 
 function get_user($ref)
 	{
@@ -1142,7 +1192,7 @@ function make_password()
 	# Shuffle the password.
 	$password=str_shuffle($password);
 	
-	# Check the password
+	# Check the password
 	$check=check_password($password);
 	if ($check!==true) {exit("Error: unable to automatically produce a password that met the criteria. Please check the password criteria in config.php. Generated password was '$password'. Error was: " . $check);}
 	
@@ -2602,7 +2652,7 @@ function payment_set_complete($collection)
 	# Mark items in the collection as paid so they can be downloaded.
 	sql_query("update collection_resource set purchase_complete=1 where collection='$collection'");
 	
-	#ÊFor each resource, add an entry to the log to show it has been purchased.
+	# For each resource, add an entry to the log to show it has been purchased.
 	$resources=sql_query("select * from collection_resource where collection='$collection'");
 	foreach ($resources as $resource)
 		{

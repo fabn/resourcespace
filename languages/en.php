@@ -4,6 +4,23 @@
 # -------
 # Note: when translating to a new language, preserve the original case if possible.
 
+# User group names (for the default user groups)
+$lang["usergroup-administrators"]="Administrators";
+$lang["usergroup-general_users"]="General Users";
+$lang["usergroup-super_admin"]="Super Admin";
+$lang["usergroup-archivists"]="Archivists";
+$lang["usergroup-restricted_user_-_requests_emailed"]="Restricted User - Requests Emailed";
+$lang["usergroup-restricted_user_-_requests_managed"]="Restricted User - Requests Managed";
+$lang["usergroup-restricted_user_-_payment_immediate"]="Restricted User - Payment Immediate";
+$lang["usergroup-restricted_user_-_payment_invoice"]="Restricted User - Payment Invoice";
+
+# Resource type names (for the default resource types)
+$lang["resourcetype-photo"]="Photo";
+$lang["resourcetype-document"]="Document";
+$lang["resourcetype-video"]="Video";
+$lang["resourcetype-audio"]="Audio";
+$lang["resourcetype-global_fields"]="Global Fields";
+$lang["resourcetype-archive_only"]="Archive Only";
 
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Log Out";
@@ -1050,4 +1067,20 @@ $lang["starsminsearch"]="Stars (Minimum)";
 $lang["anynumberofstars"]="Any Number of Stars";
 
 $lang["noupload"]="No Upload";
+
+# System Setup
+$lang["treenode-root"]="Root";
+$lang["treenode-group_management"]="Group Management";
+$lang["treenode-new_group"]="New Group";
+$lang["treenode-new_subgroup"]="New Subgroup";
+$lang["treenode-resource_types_and_fields"]="Resource Types / Fields";
+$lang["treenode-new_resource_type"]="New Resource Type";
+$lang["treenode-new_field"]="New Field";
+$lang["treenode-reports"]="Reports";
+$lang["treenode-new_report"]="New Report";
+$lang["treenode-downloads_and_preview_sizes"]="Downloads / Preview Sizes";
+$lang["treenode-new_download_and_preview_size"]="New Download / Preview Size";
+$lang["treenode-database_statistics"]="Database Statistics";
+$lang["treenode-permissions_search"]="Permissions Search";
+$lang["treenode-no_name"]="(no name)";
 ?>

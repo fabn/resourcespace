@@ -184,7 +184,7 @@ for ($n=1;$n<count($tree);$n++)
 					if (!in_array($result[$m]["name"],$user_restrict))
 						{
 						?>
-						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?'(no name)':$name))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
+						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?$lang["treenode-no_name"]:$name),array("usergroup-", "resourcetype-"))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
 						<?php
 						}
 					}
@@ -224,7 +224,8 @@ for ($n=1;$n<count($tree);$n++)
             
 			if (!in_array(trim($s[2]),$user_restrict))
 				{
-				?>            parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","<?php echo (trim($s[2])=="")?"?":$s[2]?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>",0);
+				$nodename = lang_or_i18n_get_translated($s[2], "treenode-");
+				?>            parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","<?php echo (trim($s[2])=="")?"?":$nodename?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>",0);
 				<?php
 				}
             }

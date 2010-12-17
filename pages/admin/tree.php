@@ -19,7 +19,7 @@ include "include/header.php";
 <script type="text/javascript">
 
 var TreeParents=new Array();TreeParents[0]=-1;
-var TreeNames=new Array();TreeNames[0]='Root';
+var TreeNames=new Array();TreeNames[0]="<?php echo $lang["treenode-root"] ?>";
 var TreeExpand=new Array();TreeExpand[0]=false;
 var TreeFolder=new Array();TreeFolder[0]=true;
 var TreeID=new Array();TreeID[0]="";
@@ -62,7 +62,7 @@ function DrawFromNode(node,inner)
 				icon2="<img src=\"gfx/icons/" + ifile + ".gif\" width=16 height=16 vspace=1>";
 			
 				result+="<table cellpadding=0 cellspacing=0 valign=middle style='margin-bottom:0;padding:0;'><tr><td valign=middle class='" + blclass2 + "'>" + icon + "</td><td valign=middle>" + icon2 + "</td><td width=3>&nbsp;</td><td valign=middle nowrap class='treetext'>";
-				if (TreeClickable[i]) {result+="<a target=right href='properties.php?id=" + TreeID[i] + "&parent=" + TreeParents[i] +  "&gparent=" + TreeParents[TreeParents[i]] + "&name=" + escape(TreeNames[i]) + "'>";}
+				if (TreeClickable[i]) {result+="<a target=right href='properties.php?id=" + TreeID[i] + "&parent=" + TreeParents[i] +  "&gparent=" + TreeParents[TreeParents[i]] + "&name=" + encodeURIComponent(TreeNames[i]) + "'>";}
 				result+=TreeNames[i];
 				if (TreeClickable[i]) {result+="</a>";}
 				result+="</font></td>";
@@ -135,7 +135,7 @@ function SwapNodes(node1,node2)
 	            }
             }
         }
-	document.getElementById("treeloader").src="treeloader.php?node=" + node1 + "&id=" + TreeID[node1] + "&reorder=" + escape(reorder);
+	document.getElementById("treeloader").src="treeloader.php?node=" + node1 + "&id=" + TreeID[node1] + "&reorder=" + encodeURIComponent(reorder);
 	}
 
 function ToggleNode(node)
@@ -167,7 +167,7 @@ function ReloadNode(node)
     {
     //load children
     var url="";
-    if (TreeSearch[node]!="") {url="&search=" + escape(TreeSearch[node]) + "&submit=true";}
+    if (TreeSearch[node]!="") {url="&search=" + encodeURIComponent(TreeSearch[node]) + "&submit=true";}
     document.getElementById("treeloader").src="treeloader.php?nocache=" + nocache + "&node=" + node + "&id=" + TreeID[node] + url;
     nocache++;
     }
