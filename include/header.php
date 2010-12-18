@@ -103,7 +103,7 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 if (($pagename=="terms") && (getval("url","")=="index.php")) {$loginterms=true;} else {$loginterms=false;}
 if ($pagename!="preview" && $pagename!="preview_all") { ?>
 
-<div id="Header" <?php if ($header_text_title){?>style="background:url();"<?php } ?>>
+<div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
 <?php if ($header_text_title){?>
     <div id="TextHeader"><a href="<?php echo $baseurl;?>/pages/home.php"><?php echo $applicationname;?></a></div>
     <?php if ($applicationdesc!=""){?>
