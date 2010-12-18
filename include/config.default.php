@@ -1629,5 +1629,8 @@ $star_search=false;
 # but in the case of archived files, an extra join can help narrow the smart theme results to active resources.
 $smart_themes_omit_archived=false;
 
+# Remove archived resources from collections results unless user has e2 permission (admins).
+$collections_omit_archived=false;
+
 # Set to false to omit results for public collections on numeric searches.
 $search_public_collections_ref=true;

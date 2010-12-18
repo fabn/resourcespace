@@ -9,7 +9,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("search=$search restypes=$restypes archive=$archive");
 	
 	# globals needed for hooks	 
-	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and;
+	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and,$collections_omit_archived;
 	
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
@@ -73,7 +73,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}
 		
 	# append archive searching (don't do this for collections, archived resources can still appear in collections)
-	if (substr($search,0,11)!="!collection")
+	if (substr($search,0,11)!="!collection" || ($collections_omit_archived && !checkperm("e2")))
 		{
 		global $pending_review_visible_to_all;
 		if ($archive==0 && $pending_review_visible_to_all)
