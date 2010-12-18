@@ -207,6 +207,7 @@ $lang["image"]="Image";
 $lang["previewimage"]="Preview Image";
 $lang["file"]="File";
 $lang["upload"]="Upload";
+$lang["action-upload"]="Upload";
 $lang["uploadafile"]="Upload a file";
 $lang["replacefile"]="Replace file";
 $lang["imagecorrection"]="Image Correction";

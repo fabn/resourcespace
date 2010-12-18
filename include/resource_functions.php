@@ -870,7 +870,7 @@ function get_resource_type_name($type)
 	{
 	global $lang;
 	if ($type==999) {return $lang["archive"];}
-	return i18n_get_translated(sql_value("select name value from resource_type where ref='$type'",""));
+	return lang_or_i18n_get_translated(sql_value("select name value from resource_type where ref='$type'",""),"resourcetype-");
 	}
 	
 function get_resource_custom_access($resource)

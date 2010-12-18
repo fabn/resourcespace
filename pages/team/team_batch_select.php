@@ -117,7 +117,7 @@ for ($n=0;$n<count($files);$n++)
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["upload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>
