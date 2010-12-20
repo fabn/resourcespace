@@ -82,7 +82,7 @@ if (getval("submit","")=="")
 		
 				
 				?>
-				<option value="<?php echo $size["id"] ?>"  <?php if ($size["id"]==$resource["purchase_size"]) { ?>selected<?php } ?>><?php echo i18n_get_translated($name) . " - " . $currency_symbol . " " . number_format($price,2)  ?></option>
+				<option value="<?php echo $size["id"] ?>"  <?php if ($size["id"]==$resource["purchase_size"]) { ?>selected<?php } ?>><?php echo $name . " - " . $currency_symbol . " " . number_format($price,2)  ?></option>
 				<?php
 				}
 			?></select><?php
@@ -142,7 +142,7 @@ else
 								
 				$totalprice+=$price;
 				# Build up the paypal string...
-				$paypal.="<input type=\"hidden\" name=\"item_name_" . $n . "\" value=\"" . $title . " (" . i18n_get_translated($size["name"]) . ")\">\n";
+				$paypal.="<input type=\"hidden\" name=\"item_name_" . $n . "\" value=\"" . $title . " (" . $size["name"] . ")\">\n";
 				$paypal.="<input type=\"hidden\" name=\"amount_" . $n . "\" value=\"" . $price . "\">\n";
 				$paypal.="<input type=\"hidden\" name=\"quantity_" . $n . "\" value=\"1\">\n";
 				$n++;

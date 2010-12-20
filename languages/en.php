@@ -22,6 +22,14 @@ $lang["resourcetype-audio"]="Audio";
 $lang["resourcetype-global_fields"]="Global Fields";
 $lang["resourcetype-archive_only"]="Archive Only";
 
+# Image size names (for the default image sizes)
+$lang["imagesize-thumbnail"]="Thumbnail";
+$lang["imagesize-preview"]="Preview";
+$lang["imagesize-screen"]="Screen";
+$lang["imagesize-low_resolution_print"]="Low resolution print";
+$lang["imagesize-high_resolution_print"]="High resolution print";
+$lang["imagesize-collection"]="Collection";
+
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Log Out";
 $lang["contactus"]="Contact Us";

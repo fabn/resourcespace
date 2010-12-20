@@ -325,7 +325,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 		if ($sizes[$n]["id"]=="") {$fulldownload=true;}
 		
 		$counter++;
-		$headline = ($sizes[$n]['id'] == '') ? str_replace("?",strtoupper($resource["file_extension"]),$lang["originalfileoftype"]) : i18n_get_translated($sizes[$n]["name"]);
+		$headline = ($sizes[$n]['id'] == '') ? str_replace("?",strtoupper($resource["file_extension"]),$lang["originalfileoftype"]) : $sizes[$n]["name"];
 
 		# Should we allow this download?
 		# If the download is allowed, show a download button, otherwise show a request button.

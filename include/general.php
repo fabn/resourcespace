@@ -438,7 +438,7 @@ function copy_hitcount_to_live()
 	
 function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=true)
 	{
-	# Returns a table of available image sizes for resource $ref.
+	# Returns a table of available image sizes for resource $ref. The standard image sizes are translated using $lang. Custom image sizes are i18n translated.
 	# The original image file assumes the name of the 'nearest size (up)' in the table
 
 	global $imagemagick_calculate_sizes;
@@ -451,7 +451,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	if (file_exists($path2))
 	{
 		$returnline=array();
-		$returnline["name"]=$lastname;
+		$returnline["name"]=lang_or_i18n_get_translated($lastname, "imagesize-");
 		$returnline["allow_preview"]=$lastpreview;
 		$returnline["allow_restricted"]=$lastrestricted;
 		$returnline["path"]=$path2;
@@ -537,7 +537,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 			if (($sizes[$n]["internal"]==0) || ($internal))
 				{
 				$returnline=array();
-				$returnline["name"]=$sizes[$n]["name"];
+				$returnline["name"]=lang_or_i18n_get_translated($sizes[$n]["name"], "imagesize-");
 				$returnline["allow_preview"]=$sizes[$n]["allow_preview"];
 
 				# The ability to restrict download size by user group and resource type.
@@ -564,7 +564,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$return[]=$returnline;
 				}
 			}
-		$lastname=$sizes[$n]["name"];
+		$lastname=lang_or_i18n_get_translated($sizes[$n]["name"], "imagesize-");
 		$lastpreview=$sizes[$n]["allow_preview"];
 		$lastrestricted=$sizes[$n]["allow_restricted"];
 		}
