@@ -60,7 +60,6 @@ $lang["diskusage"]="ディスク使用量";
 $lang["available"]="利用可能量";
 $lang["used"]="使用済";
 $lang["free"]="空き容量";
-$lang["editcollection"]="コレクションの編集";
 $lang["editresearch"]="調査の編集";
 $lang["editproperties"]="プロパティの編集";
 $lang["selectfiles"]="ファイル選択";
@@ -132,7 +131,6 @@ $lang["emailcollection"]="Eメール コレクション";
 $lang["collectionname"]="コレクション名";
 $lang["collectionid"]="コレクションID";
 $lang["emailtousers"]="ユーザへEメール<br />(非ユーザのためのメールアドレスを使用)";
-$lang["emailcollection"]="Eメール コレクション";
 $lang["removecollectionareyousure"]="あなたのリストから本コレクションを本当に削除しますか?";
 $lang["managemycollections"]="'マイコレクション'の管理";
 $lang["createnewcollection"]="新規コレクション作成";
@@ -234,7 +232,6 @@ $lang["pixels"]="pixels";
 $lang["download"]="ダウンロード";
 $lang["preview"]="プレビュー";
 $lang["fullscreenpreview"]="全画面表示";
-$lang["file"]="ファイル"; # e.g. PDF File
 $lang["edit"]="編集";
 $lang["delete"]="削除";
 $lang["log"]="ログ";
@@ -420,7 +417,7 @@ $lang["backtouser"]="ユーザログインへ戻る";
 $lang["termsandconditions"]="使用条件";
 $lang["iaccept"]="同意";
 $lang["contributedby"]="投稿者:";
-$lang["format"]="書式";
+$lang["format"]="フォーマット"; # This $lang was accidently defined twice. If you need $lang["format"]="書式" as the translation was at the first occurrence, it's possible to add a new $lang to the system.
 
 # Pager
 $lang["next"]="次へ";
@@ -522,7 +519,6 @@ $lang["requiredfields"]="記入してない必須項目がいくつかありま�
 $lang["viewduplicates"]="重複しているリソース表示";
 $lang["userlog"]="ユーザログ";
 $lang["ipaddressrestriction"]="IPアドレス制限(オプション)";
-$lang["format"]="フォーマット";
 $lang["wildcardpermittedeg"]="ワイルドカード使用可 e.g.";
 
 # New for 1.6

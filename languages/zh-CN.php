@@ -62,7 +62,6 @@ $lang["diskusage"]="磁盘用量";
 $lang["available"]="可用";
 $lang["used"]="已用空间";
 $lang["free"]="未使用的空间";
-$lang["editcollection"]="编辑收藏夹";
 $lang["editresearch"]="编辑资源";
 $lang["editproperties"]="编辑属性";
 $lang["selectfiles"]="选取档案";
@@ -139,7 +138,6 @@ $lang["emailcollection"]="发送收藏夹";
 $lang["collectionname"]="收藏夹名称";
 $lang["collectionid"]="收藏夹编号";
 $lang["emailtousers"]="向用户发送资料<br><br><b>现有的用户</b> 输入用户名称以作搜索, 点击该用户以加入该用户<br><br><b>向未登记的用户发送</b> 输入电邮地址，然后按加入";
-$lang["emailcollection"]="发送资源";
 $lang["removecollectionareyousure"]="你确定要从清单中删除吗?";
 $lang["managemycollections"]="管理'我的收藏夹'";
 $lang["createnewcollection"]="建立新的收藏夹";
@@ -250,7 +248,6 @@ $lang["pixels"]="像素";
 $lang["download"]="下载";
 $lang["preview"]="预览";
 $lang["fullscreenpreview"]="全屏预览";
-$lang["file"]="文件档"; # e.g. PDF 档
 $lang["edit"]="编辑";
 $lang["delete"]="删除";
 $lang["log"]="纪录";
@@ -449,7 +446,7 @@ $lang["backtouser"]="返回用户登入";
 $lang["termsandconditions"]="条款与条件";
 $lang["iaccept"]="我接受";
 $lang["contributedby"]="资源的贡献者";
-$lang["format"]="形式";
+$lang["format"]="格式"; # This $lang was accidently defined twice. If you need $lang["format"]="形式" as the translation was at the first occurrence, it's possible to add a new $lang to the system.
 
 # Pager
 $lang["next"]="下一页";
@@ -558,7 +555,6 @@ $lang["requiredfields"]="一些必填的项目未完成，请重新填写";
 $lang["viewduplicates"]="查看重复的资源";
 $lang["userlog"]="用户纪录";
 $lang["ipaddressrestriction"]="IP 地址限制 (选择性的)";
-$lang["format"]="格式";
 $lang["wildcardpermittedeg"]="Wildcard允许 e.g.";
 
 # New for 1.6

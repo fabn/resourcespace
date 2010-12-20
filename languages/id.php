@@ -60,7 +60,6 @@ $lang["diskusage"]="pengunaan ruang Disk";
 $lang["available"]="tersedia";
 $lang["used"]="dipakai";
 $lang["free"]="bebas";
-$lang["editcollection"]="Ubah Koleksi";
 $lang["editresearch"]="Ubah Telusuran";
 $lang["editproperties"]="Ubah Catatan";
 $lang["selectfiles"]="Memilih berkas";
@@ -115,7 +114,7 @@ $lang["viewcontributedpr"]="Lihat Tambahan Saya - Menunggu Tinjauan Regu Aset";
 $lang["viewcontributedsubittedl"]="Lihat Tambahan Saya - Langsung";
 
 # Collections
-$lang["editcollection"]="Merubah Koleksi";
+$lang["editcollection"]="Merubah Koleksi"; # This $lang was accidently defined twice. If you need $lang["editcollection"]="Ubah Koleksi" as the translation was at the first occurrence, it's possible to add a new $lang to the system.
 $lang["access"]="Akses";
 $lang["private"]="Pribadi";
 $lang["public"]="Publik";
@@ -132,7 +131,6 @@ $lang["emailcollection"]="Koleksi E-mail";
 $lang["collectionname"]="Nama Koleksi";
 $lang["collectionid"]="ID Koleksi";
 $lang["emailtousers"]="E-mail ke pengguna<br />(gunakan alamat email dari bukan pengguna)";
-$lang["emailcollection"]="Koleksi E-mail";
 $lang["removecollectionareyousure"]="Apakah anda yakin anda akan menyingkirkan koleksi ini dari daftar anda?";
 $lang["managemycollections"]="Mengatur 'Koleksi Saya'";
 $lang["createnewcollection"]="Membuatkan Koleksi Baru";
@@ -234,7 +232,6 @@ $lang["pixels"]="pixels";
 $lang["download"]="Download";
 $lang["preview"]="Preview";
 $lang["fullscreenpreview"]="Full screen preview";
-$lang["file"]="File"; #contoh PDF File
 $lang["edit"]="Ubah";
 $lang["delete"]="Hapus";
 $lang["log"]="Catat";
@@ -419,7 +416,7 @@ $lang["backtouser"]="Kembali ke login pengguna";
 $lang["termsandconditions"]="Terminologi dan Persyaratab";
 $lang["iaccept"]="Saya terima";
 $lang["contributedby"]="Kontribusi oleh";
-$lang["format"]="Format";
+$lang["format"]="Bentuk"; # This $lang was accidently defined twice. If you need $lang["format"]="Format" as the translation was at the first occurrence, it's possible to add a new $lang to the system.
 
 # Pager
 $lang["next"]="Lanjutan";
@@ -521,7 +518,6 @@ $lang["requiredfields"]="Sebagian dari kolom isian yang diperlukan belum terisi.
 $lang["viewduplicates"]="Tampilkan aset yang berduplikasi";
 $lang["userlog"]="Catatan pengguna";
 $lang["ipaddressrestriction"]="alamat IP tertutup (pilihan)";
-$lang["format"]="Bentuk";
 $lang["wildcardpermittedeg"]="contoh Wildcard diperbolehkan";
 
 # New for 1.6
