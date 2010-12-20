@@ -68,8 +68,8 @@ include "include/header.php";
 <div class=propbox style="font-weight:bold;color:red;"><?php echo $error?></div><br><br>
 <?php } ?>
 
-<div class="proptitle">File: <?php echo str_replace("../","",$file); if (basename($file)=="config.default.php"){echo " (copy and paste options from here)";}
-if (basename($file)=="config.php"){echo " (BE CAREFUL not to make syntax errors. If you break this file, you must fix server-side!)";}?></div>
+<div class="proptitle"><?php echo $lang["file"] . ": "  . str_replace("../","",$file); if (basename($file)=="config.default.php"){echo "<br />" . $lang["configdefault-title"];}
+if (basename($file)=="config.php"){echo "<br />" . $lang["config-title"];}?></div>
 <div class="propbox">
 
 <form method=post>
@@ -82,12 +82,12 @@ if (basename($file)=="config.php"){echo " (BE CAREFUL not to make syntax errors.
 $filename=basename($file); 
 if ($filename!="config.php" && $filename!="config.default.php"){
 	?>
-	<td align=left><input type="submit" name="delete" value="delete" style="width:100px;" onclick="return confirm('Are you sure?');"></td>
+	<td align=left><input type="submit" name="delete" value="<?php echo $lang["delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["filedeleteconfirm"] ?>');"></td>
 <?php } ?>
 
 <?php if ($filename!="config.default.php"){
 ?>
-<td align=right><input type="submit" name="submit" value="Save" style="width:150px;" onclick="this.value='please wait';"></td></tr>
+<td align=right><input type="submit" name="submit" value="<?php echo $lang["save"] ?>" style="width:150px;" onclick="this.value='<?php echo $lang["pleasewait"] ?>';"></td></tr>
 <?php } ?>
 </table>
 </form>

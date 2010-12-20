@@ -1108,6 +1108,7 @@ $lang["anynumberofstars"]="Any Number of Stars";
 $lang["noupload"]="No Upload";
 
 # System Setup
+# System Setup Tree Nodes
 $lang["treenode-root"]="Root";
 $lang["treenode-group_management"]="Group Management";
 $lang["treenode-new_group"]="New Group";
@@ -1124,4 +1125,8 @@ $lang["treenode-permissions_search"]="Permissions Search";
 $lang["treenode-no_name"]="(no name)";
 
 $lang["permissions"]="Permissions";
+
+# System Setup File Editor
+$lang["configdefault-title"]="(copy and paste options from here)";
+$lang["config-title"]="(BE CAREFUL not to make syntax errors. If you break this file, you must fix server-side!)";
 ?>
