@@ -49,7 +49,7 @@ function DrawFromNode(node,inner)
             {
             if (TreeNames[i]=="Search:")
             	{
-            	result+="<table cellpadding=0 cellspacing=0 valign=middle style='margin-bottom:0;padding:0;'><tr><td valign=middle class='" + blclass2 + "' style='padding-left:5px;'><form class='searchform' target='treeloader' method=post action='treeloader.php?node=" + TreeParents[i] + "&id=" + TreeID[TreeParents[i]] + "&reloadnode=true'><span class=treetext>Search:</span><input type=text name=search value='" + TreeSearch[TreeParents[i]] + "'><input type=submit name=submit value='Go'></form></td></tr></table>";
+            	result+="<table cellpadding=0 cellspacing=0 valign=middle style='margin-bottom:0;padding:0;'><tr><td valign=middle class='" + blclass2 + "' style='padding-left:5px;'><form class='searchform' target='treeloader' method=post action='treeloader.php?node=" + TreeParents[i] + "&id=" + TreeID[TreeParents[i]] + "&reloadnode=true'><span class=treetext><?php echo $lang['permissions'] . ':' ?></span><input type=text name=search value='" + TreeSearch[TreeParents[i]] + "'><input type=submit name=submit value='<?php echo $lang['searchbutton']?>'></form></td></tr></table>";
             	}
             else
             	{

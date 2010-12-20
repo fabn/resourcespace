@@ -209,7 +209,7 @@ for ($n=1;$n<count($tree);$n++)
              		$newid=$id."-".$n . ":" . $result[$m]["ref"];
             		if (array_key_exists("id",$result[$m])) {$newid=$result[$m]["id"];}
             	    ?>
-                	parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo str_replace(array("\n","\r","\"")," ",((trim($result[$m]["name"])=="")?"???":$result[$m]["name"]))?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",0);
+                	parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r","\"")," ",((trim($result[$m]["name"])=="")?"???":$result[$m]["name"])),"usergroup-") ?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",0);
                 	<?php
                 	}
 				}

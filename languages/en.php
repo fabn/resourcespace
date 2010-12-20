@@ -1122,4 +1122,6 @@ $lang["treenode-new_download_and_preview_size"]="New Download / Preview Size";
 $lang["treenode-database_statistics"]="Database Statistics";
 $lang["treenode-permissions_search"]="Permissions Search";
 $lang["treenode-no_name"]="(no name)";
+
+$lang["permissions"]="Permissions";
 ?>
