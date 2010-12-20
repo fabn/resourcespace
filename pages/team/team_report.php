@@ -57,7 +57,8 @@ if ($report!="" && (getval("createemail","")==""))
 	$download=getval("download","")!="";
 	$output=do_report($report, $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,$download);
 	}
-	
+
+include "../../include/header.php";	
 	
 if (getval("createemail","")!="")
 	{
@@ -70,8 +71,6 @@ if (getval("createemail","")!="")
 	<?php
 	}
 	
-include "../../include/header.php";
-
 $unsubscribe=getvalescaped("unsubscribe","");
 if ($unsubscribe!="")
 	{
@@ -101,7 +100,7 @@ else
 $reports=get_reports(); 
 for ($n=0;$n<count($reports);$n++)
 	{
-	?><option value="<?php echo $reports[$n]["ref"]?>" <?php if ($report==$reports[$n]["ref"]) { ?>selected<?php } ?>><?php echo i18n_get_translated($reports[$n]["name"])?></option><?php
+	?><option value="<?php echo $reports[$n]["ref"]?>" <?php if ($report==$reports[$n]["ref"]) { ?>selected<?php } ?>><?php echo $reports[$n]["name"]?></option><?php
 	}
 ?>
 </select>

@@ -2,19 +2,35 @@
 # Reporting functions
 
 function get_reports()
-	{
-	# Returns all reports in a result array.
-	return sql_query("select * from report order by name");
-	}
+{
+    # Returns an array of reports. The standard reports are translated using $lang. Custom reports are i18n translated.
+    # The reports are always listed in the same order - regardless of the used language. 
+    
+    # Executes query.
+    $r = sql_query("select * from report order by name");
+    
+    # Translates report names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["name"] = lang_or_i18n_get_translated($r[$n]["name"], "report-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+    return $return;
+}
 
 function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true,$add_border=false)
 	{
 	# Run report with id $ref for the date range specified. Returns a result array.
+	global $lang;
+
 	$report=sql_query("select * from report where ref='$ref'");$report=$report[0];
+
+    # Translates the report name.
+    $report["name"]=lang_or_i18n_get_translated($report["name"], "report-");
 
 	if ($download)
 		{
-		$filename=str_replace(array(" ","(",")","-","/"),"_",$report["name"]) . "_" . $from_y . "_" . $from_m . "_" . $from_d . "_to_" . $to_y . "_" . $to_m . "_" . $to_d . ".csv";
+		$filename=str_replace(array(" ","(",")","-","/"),"_",$report["name"]) . "_" . $from_y . "_" . $from_m . "_" . $from_d . "_" . $lang["to"] . "_" . $to_y . "_" . $to_m . "_" . $to_d . ".csv";
 		header("Content-type: application/octet-stream");
 		header("Content-disposition: attachment; filename=" . $filename . "");
 		}
@@ -52,7 +68,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 					{
 					$f++;
 					if ($f>1) {echo ",";}
-					echo "\"" . $key . "\"";
+					echo "\"" . lang_or_i18n_get_translated($key,"columnheader-") . "\"";
 					}
 				echo "\n";
 				}
@@ -61,7 +77,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 				{
 				$f++;
 				if ($f>1) {echo ",";}
-				echo "\"" . $value . "\"";
+				echo "\"" . lang_or_i18n_get_translated($value, "usergroup-") . "\"";
 				}
 			echo "\n";
 			}
@@ -82,7 +98,7 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 				foreach ($result as $key => $value)
 					{
 					$f++;
-					$output.="<td><strong>" . $key . "</strong></td>";
+					$output.="<td><strong>" . lang_or_i18n_get_translated($key,"columnheader-") . "</strong></td>";
 					}
 				$output.="</tr>";
 				}
@@ -91,12 +107,12 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 			foreach ($result as $key => $value)
 				{
 				$f++;
-				$output.="<td>" . $value . "</td>";
+				$output.="<td>" . lang_or_i18n_get_translated($value, "usergroup-") . "</td>";
 				}
 			$output.="</tr>";
 			}
 		$output.="</table>";
-		if (count($results)==0) {global $lang;$output.=$lang["reportempty"];}
+		if (count($results)==0) {$output.=$lang["reportempty"];}
 		return $output;
 		}
 		
@@ -137,7 +153,10 @@ function send_periodic_report_emails()
 		$to_y = date("Y");
 		$to_m = date("m");
 		$to_d = date("d");
-		
+
+		# Translates the report name.		
+		$report["name"] = lang_or_i18n_get_translated($report["name"]);
+
 		# Generate remote HTML table.
 		$output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true);
 
@@ -145,10 +164,10 @@ function send_periodic_report_emails()
 		$output.="<br>" . $lang["unsubscribereport"] . "<br>" . $baseurl . "/?ur=" . $report["ref"];
 
 		# Formulate a title
-		$title = i18n_get_translated($report["name"]) . ": " . str_replace("?",$report["period"],$lang["lastndays"]);
+		$title = $report["name"] . ": " . str_replace("?",$report["period"],$lang["lastndays"]);
 				
 		# Send mail.
-		echo "Sending report to " . $report["email"] . "<br>";
+		echo $lang["sendingreportto"] . " " . $report["email"] . "<br>";
 		send_mail($report["email"],$title,$output,"","","",null,"","",true);
 	
 		# Mark as done.

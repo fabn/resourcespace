@@ -1025,11 +1025,48 @@ $lang["pleasewait"]="Please wait...";
 
 $lang["autorotate"]="Autorotate images?";
 
+# Reports
+# Report names (for the default reports)
+$lang["report-keywords_used_in_resource_edits"]="Keywords used in resource edits";
+$lang["report-keywords_used_in_searches"]="Keywords used in searches";
+$lang["report-resource_download_summary"]="Resource download summary";
+$lang["report-resource_views"]="Resource views";
+$lang["report-resources_sent_via_e-mail"]="Resources sent via e-mail";
+$lang["report-resources_added_to_collection"]="Resources added to collection";
+$lang["report-resources_created"]="Resources created";
+$lang["report-resources_with_zero_downloads"]="Resources with zero downloads";
+$lang["report-resources_with_zero_views"]="Resources with zero views";
+$lang["report-resource_downloads_by_group"]="Resource downloads by group";
+$lang["report-resource_download_detail"]="Resource download detail";
+$lang["report-user_details_including_group_allocation"]="User details including group allocation";
+
+#Column headers (for the default reports)
+$lang["columnheader-keyword"]="Keyword";
+$lang["columnheader-entered_count"]="Entered Count";
+$lang["columnheader-searches"]="Searches";
+$lang["columnheader-date_and_time"]="Date / Time";
+$lang["columnheader-downloaded_by_user"]="Downloaded By User";
+$lang["columnheader-user_group"]="User Group";
+$lang["columnheader-resource_id"]="Resource ID";
+$lang["columnheader-resource_title"]="Resource Title";
+$lang["columnheader-title"]="Title";
+$lang["columnheader-downloads"]="Downloads";
+$lang["columnheader-group_name"]="Group Name";
+$lang["columnheader-resource_downloads"]="Resource Downloads";
+$lang["columnheader-views"]="Views";
+$lang["columnheader-added"]="Added";
+$lang["columnheader-creation_date"]="Creation Date";
+$lang["columnheader-sent"]="Sent";
+$lang["columnheader-username"]="Username";
+$lang["columnheader-e-mail_address"]="E-mail address";
+$lang["columnheader-full_name"]="Full Name";
+$lang["columnheader-last_seen"]="Last Seen";
 
 $lang["period"]="Period";
 $lang["lastndays"]="Last ? days"; # ? is replaced by the system with the number of days, for example "Last 100 days".
 $lang["specificdays"]="Specific number of days";
 $lang["specificdaterange"]="Specific date range";
+$lang["to"]="to";
 
 $lang["emailperiodically"]="Create new periodic e-mail";
 $lang["emaileveryndays"]="E-mail me this report every ? days";
@@ -1038,6 +1075,7 @@ $lang["newemailreportcreated"]="A new periodic e-mail has been created. You can 
 $lang["unsubscribereport"]="To unsubscribe from this report, click the link below:";
 $lang["unsubscribed"]="Unsubscribed";
 $lang["youhaveunsubscribedreport"]="You have been unsubscribed from the periodic report e-mail.";
+$lang["sendingreportto"]="Sending report to";
 $lang["reportempty"]="No matching data was found for the selected report and period.";
 
 $lang["purchaseonaccount"]="Add To Account";

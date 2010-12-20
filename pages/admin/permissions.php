@@ -118,7 +118,7 @@ foreach ($fields as $field)
 $rtypes=sql_query("select * from resource_type order by name");
 foreach ($rtypes as $rtype)
 	{
-	DrawOption ("T" . $rtype["ref"],"Can see resource type '" . i18n_get_translated($rtype["name"]) . "'",true);
+	DrawOption ("T" . $rtype["ref"],"Can see resource type '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'",true);
 	}
 
 
@@ -126,7 +126,7 @@ foreach ($rtypes as $rtype)
 $rtypes=sql_query("select * from resource_type order by name");
 foreach ($rtypes as $rtype)
 	{
-	DrawOption ("X" . $rtype["ref"],"Restricted access only to resource type '" . i18n_get_translated($rtype["name"]) . "'",false);
+	DrawOption ("X" . $rtype["ref"],"Restricted access only to resource type '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'",false);
 	}
 
 

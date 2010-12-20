@@ -184,7 +184,7 @@ for ($n=1;$n<count($tree);$n++)
 					if (!in_array($result[$m]["name"],$user_restrict))
 						{
 						?>
-						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?$lang["treenode-no_name"]:$name),array("usergroup-", "resourcetype-"))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
+						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?$lang["treenode-no_name"]:$name),array("usergroup-", "resourcetype-", "report-"))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
 						<?php
 						}
 					}
