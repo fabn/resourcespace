@@ -63,7 +63,7 @@ include "../../include/header.php";
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["assignedtoteammember"]?></label>
-<select class="shrtwidth" name="assigned_to"><option value="0"><?php echo $lang["unassigned"]?></option>
+<select class="shrtwidth" name="assigned_to"><option value="0"><?php echo $lang["requeststatus0"]?></option>
 <?php $users=get_users_with_permission("r");
 for ($n=0;$n<count($users);$n++)
 	{

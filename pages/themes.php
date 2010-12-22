@@ -464,13 +464,12 @@ function DisplayTheme($themes=array())
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
 	<h2>&nbsp;</h2>
-    <h1><?php echo $lang["findapubliccollection"]?></h1>
+    <h1><?php echo $lang["findpubliccollection"]?></h1>
     <p class="tight"><?php echo text("findpublic")?></p>
-    <p><a href="collection_public.php"><?php echo $lang["findapubliccollection"]?>&nbsp;&gt;</a></p>
+    <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
 <?php } ?>
 
 <?php
 include "../include/footer.php";
 ?>
-

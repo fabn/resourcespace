@@ -1,5 +1,6 @@
 <?php
 include "../../include/db.php";
+include "../../include/general.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 
 # Work out the path to the top of the DOM (for updating the left frame)
@@ -133,7 +134,7 @@ if (array_key_exists("userfile",$_FILES))
     $result=move_uploaded_file($_FILES['userfile']['tmp_name'], "$filename");
     if ($result==false)
         {
-        if (file_exists($filename)) {unlink($filename);} else {echo "<div class=propbox>File too large.</div><br><br>";}
+        if (file_exists($filename)) {unlink($filename);} else {echo "<div class=propbox>" . $lang["file_too_large"] . "." . "</div><br><br>";}
         }
     }
 elseif (array_key_exists("submit",$_POST))
@@ -260,13 +261,13 @@ document.onkeypress = stopRKey;
 include "include/header.php";
 ?>
 <body style="background-position:0px -85px;margin:0;padding:10px;">
-<div class="proptitle"><?php echo (($t[2]==$name)?$name:$t[2]) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
+<div class="proptitle"><?php echo (($t[2]==$name)?$name:lang_or_i18n_get_translated($t[2],array("treenode-","treeobjecttype-"))) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
 
 <div class="propbox" id="propbox">
 
 <?php if ($saved) { ?>
 <table width=100% style="border:1px solid black;">
-<tr><td width=40><img src="gfx/icons/apply.gif" width=32 height=32></td><td valign=middle align=left>Field updated</td></tr>
+<tr><td width=40><img src="gfx/icons/apply.gif" width=32 height=32></td><td valign=middle align=left><?php echo $lang["field_updated"] ?></td></tr>
 </table>
 <?php } ?>
 
@@ -286,8 +287,8 @@ if (substr($t[7],0,6)=="upload")
         $scale=100;
         while ($width>350) {$width=$width/2;$height=$height/2;$scale=$scale/2;}
         ?>
-        <p align=center><a href="<?php echo $filename?>" target="_blank"><img src="<?php echo $filename?>?<?php echo time()?>" width="<?php echo $width?>" height="<?php echo $height?>" border=0></a><br>Zoom: <?php echo floor($scale)?>%</p>
-        <p>Leave blank and save to delete the file</p>
+        <p align=center><a href="<?php echo $filename?>" target="_blank"><img src="<?php echo $filename?>?<?php echo time()?>" width="<?php echo $width?>" height="<?php echo $height?>" border=0></a><br><?php echo $lang["zoom"] . ": " . floor($scale)?>%</p>
+        <p><?php echo $lang["deletion_instruction"] ?></p>
         <?php
         }
     #echo "$filename<br>../assets/B1B3A2005B4A09B5A1B6.jpg";
@@ -296,7 +297,7 @@ if (substr($t[7],0,6)=="upload")
     <p>
     <input type="hidden" name="MAX_FILE_SIZE" value="200000">
     <input type="hidden" name="extension" value="<?php echo $extension?>">
-    <label for="uploader">Upload file</label>
+    <label for="uploader"><?php echo $lang["upload_file"] ?></label>
     <input id="uploader" name="userfile" type="file" size=55>
     </p>
     <?php
@@ -308,7 +309,7 @@ else
     <?php
     #echo $t[7];
     $result=sql_query(str_replace($transfrom,$transto,$t[7]));
-    if (count($result)==0) {exit("Item deleted.</div></body></html>");}
+    if (count($result)==0) {exit($lang["item_deleted"] . ".</div></body></html>");}
     $result=$result[0];
     
     #if viewing history, load history data
@@ -326,7 +327,7 @@ else
             parse_str($file[$historyview],$history);
             ?>
             <input type="hidden" name="historyview" value="<?php echo $historyview?>">
-            <p><b style="color:red">Viewing version created by <?php echo $history["username"]?> on <?php echo $history["datetime"]?></b></p>
+            <p><b style="color:red"><?php echo $lang["viewing_version_created_by"] . " " . $history["username"] . " " . $lang["on_date"] ." " . $history["datetime"]?></b></p>
             <?php
             }
 
@@ -367,7 +368,7 @@ else
         	{
         	# Special case to include permissions manager
         	?>
-       		<button style="width:100%" onClick="document.location.href='permissions.php?ref=<?php echo $ref?>';return false;">Launch Permissions Manager</button>
+       		<button style="width:100%" onClick="document.location.href='permissions.php?ref=<?php echo $ref?>';return false;"><?php echo $lang["launchpermissionsmanager"] ?></button>
        		<?php
         	}
         
@@ -409,8 +410,8 @@ else
 	            #Yes or no
 	            ?>
 	            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;">
-	            <option <?php echo ($value==0)?" selected":""?> value="0">NO</option>
-	            <option <?php echo ($value==1)?" selected":""?> value="1">YES</option>
+	            <option <?php echo ($value==0)?" selected":""?> value="0"><?php echo $lang["no"] ?></option>
+	            <option <?php echo ($value==1)?" selected":""?> value="1"><?php echo $lang["yes"] ?></option>
 	            </select>
 	            <?php
 	            break;
@@ -426,12 +427,12 @@ else
 	            $drop=sql_query($query);reset($drop);
 	            if ($type!="drp") {$key=$type . "_" . $key;}
 	            ?>
-	            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value="">Please select:</option>
+	            <select id="<?php echo $key?>" name="<?php echo $key?>" style="width:100%;"><option value=""><?php echo $lang["select"] ?></option>
 	            <?php
 	            foreach ($drop as $item)
 	                {
 	                ?>
-	                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo $item["name"]?></option>
+	                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo lang_or_i18n_get_translated($item["name"], array("resourcetype-", "requesttype-"))?></option>
 	                <?php
 	                }
 	               ?>
@@ -466,8 +467,8 @@ Version
 -->
 </td>
 <td align=right>
-<?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="delete" style="width:100px;" xonclick="return confirm('Are you sure?');"><?php } ?>
-<?php if (isset($t[8])&&($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?"save":"revert"?>" style="width:100px;"><?php } ?>
+<?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="<?php echo $lang["delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["confirm-deletion"] ?>');"><?php } ?>
+<?php if (isset($t[8])&&($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?$lang["save"]:$lang["revert"] ?>" style="width:100px;"><?php } ?>
 </td></tr>
 </table>
 </form>

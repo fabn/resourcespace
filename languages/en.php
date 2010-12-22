@@ -79,7 +79,7 @@ $lang["managecontent"]="Manage Content";
 $lang["viewstatistics"]="View Statistics";
 $lang["viewreports"]="View Reports";
 $lang["viewreport"]="View Report";
-$lang["report"]="Report";
+$lang["treeobjecttype-report"]=$lang["report"]="Report";
 $lang["sendbulkmail"]="Send Bulk Mail";
 $lang["systemsetup"]="System Setup";
 $lang["usersonline"]="Users currently online (idle time minutes)";
@@ -200,7 +200,7 @@ $lang["collectionsnothemeselected"]="You must select or enter a theme category n
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";
-$lang["resourcetype"]="Resource Type";
+$lang["treeobjecttype-resource_type"]=$lang["resourcetype"]="Resource Type";
 $lang["resourcetypes"]="Resource Types";
 $lang["deleteresource"]="Delete Resource";
 $lang["downloadresource"]="Download Resource";
@@ -418,7 +418,7 @@ $lang["selectgroupuser"]="Select group/user...";
 $lang["select"]="Select...";
 $lang["add"]="Add";
 $lang["create"]="Create";
-$lang["group"]="Group";
+$lang["treeobjecttype-group"]=$lang["group"]="Group";
 $lang["confirmaddgroup"]="Are you sure you want to add all the members in this group?";
 $lang["backtoteamhome"]="back to team centre home";
 $lang["resourceid"]="Resource ID";
@@ -439,8 +439,9 @@ $lang["owner"]="Owner";
 $lang["message"]="Message";
 $lang["name"]="Name";
 $lang["action"]="Action";
-$lang["field"]="Field";
+$lang["treeobjecttype-field"]=$lang["field"]="Field";
 $lang["save"]="Save";
+$lang["revert"]="Revert";
 $lang["cancel"]="Cancel";
 $lang["view"]="View";
 $lang["type"]="Type";
@@ -869,10 +870,10 @@ $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field op
 $lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";
 
 $lang["requestall"]="Request all";
-$lang["resourcerequesttype0"]="Email Only";
-$lang["resourcerequesttype1"]="Managed Request";
-$lang["resourcerequesttype2"]="Payment - Immediate";
-$lang["resourcerequesttype3"]="Payment - Invoice";
+$lang["requesttype-email_only"]=$lang["resourcerequesttype0"]="Email Only";
+$lang["requesttype-managed"]=$lang["resourcerequesttype1"]="Managed Request";
+$lang["requesttype-payment_-_immediate"]=$lang["resourcerequesttype2"]="Payment - Immediate";
+$lang["requesttype-payment_-_invoice"]=$lang["resourcerequesttype3"]="Payment - Invoice";
 
 $lang["requestapprovedmail"]="Your request has been approved. Click the link below to view and download the requested resources.";
 $lang["requestdeclinedmail"]="Sorry, your request for the resources in the collection below has been declined.";
@@ -1112,7 +1113,7 @@ $lang["anynumberofstars"]="Any Number of Stars";
 $lang["noupload"]="No Upload";
 
 # System Setup
-# System Setup Tree Nodes
+# System Setup Tree Nodes (for the default setup tree)
 $lang["treenode-root"]="Root";
 $lang["treenode-group_management"]="Group Management";
 $lang["treenode-new_group"]="New Group";
@@ -1128,9 +1129,23 @@ $lang["treenode-database_statistics"]="Database Statistics";
 $lang["treenode-permissions_search"]="Permissions Search";
 $lang["treenode-no_name"]="(no name)";
 
+$lang["treeobjecttype-preview_size"]="Preview Size";
+
 $lang["permissions"]="Permissions";
 
 # System Setup File Editor
 $lang["configdefault-title"]="(copy and paste options from here)";
 $lang["config-title"]="(BE CAREFUL not to make syntax errors. If you break this file, you must fix server-side!)";
+
+# System Setup Properties Pane
+$lang["file_too_large"]="File too large";
+$lang["field_updated"]="Field updated";
+$lang["zoom"]="Zoom";
+$lang["deletion_instruction"]="Leave blank and save to delete the file";
+$lang["upload_file"]="Upload file";
+$lang["item_deleted"]="Item deleted";
+$lang["viewing_version_created_by"]="Viewing version created by";
+$lang["on_date"]="on";
+$lang["launchpermissionsmanager"]="Launch Permissions Manager";
+$lang["confirm-deletion"]="Are you sure?";
 ?>
