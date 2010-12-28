@@ -374,3 +374,7 @@ div.autocomplete ul li {
 .DownloadDisabled {font-weight: normal;}
 
 .AltThumb {float:left;padding-right:5px;}
+
+/* single file upload progress bar */
+.meter-wrap{position: relative;width:290px;border:1px solid #fff;}
+.meter-value {height: 10px;}

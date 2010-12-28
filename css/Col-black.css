@@ -113,3 +113,6 @@ a:active {color:#CCC;}
 .ListviewStyle tr:hover td {background-color: #727272;} 
 .ListviewStyle tr.ListviewTitleStyle:hover td, .ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;} 
 
+/* single file upload progress bar */
+.meter-value {background-color: #999999;}
+          

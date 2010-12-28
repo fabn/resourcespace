@@ -118,7 +118,7 @@ function check(filename) {
 <div class="Question" id="meter" style="display:none;">
 <label>Progress</label>
 <div class="Fixed">
-    <div class="Fixed meter-wrap" id="meter-wrap" name="meter-wrap" style="width:290px;border:1px solid #fff;">
+    <div class="Fixed meter-wrap" id="meter-wrap" name="meter-wrap">
         <div class="meter-value" id="meter-value" name="meter-value" style="width: 0%;"></div>
     </div><div id="meter-text"></div>
 </div><div class="clearerleft"> </div>

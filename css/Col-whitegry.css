@@ -113,3 +113,7 @@ a:active {color:#737373;}
 /* Mouseover effect on list views */
 .ListviewStyle tr:hover td {background-color: #eeeeee;} 
 .ListviewStyle tr.ListviewTitleStyle:hover td, .ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;} 
+
+/* single file upload progress bar */
+.meter-value {background-color: #BBBBBB;}
+.meter-wrap{position: relative;width:290px;border:1px solid #BBBBBB;}
