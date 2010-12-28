@@ -4,6 +4,35 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
+
+if (extension_loaded('uploadprogress')){
+// progress bar if uploadprogress pecl extension is installed
+$uid = md5(uniqid(mt_rand()));
+$headerinsert.="<script type=\"text/javascript\">
+function showprogress(){
+        var started='no';
+progressbar = new Ajax.PeriodicalUpdater('progress-bar', 'ajax/get_progress.php?uid=".$uid."',
+	{frequency:1,
+	onSuccess: function(response) {
+            var status=response.responseText;
+            $('meter').style.display='block';
+            if (status<=100 && started=='yes'){      
+                $('meter-value').morph('width:'+status+'%',{duration:.2});
+                $('meter-text').innerHTML=status+'%'; 
+            }
+            if (status==100 && started=='yes'){
+                $('meter-text').innerHTML='".$lang['pleasewait']."';
+            }
+            if (status<100){      
+                started='yes';
+            }                         
+            }
+	 });
+}
+
+</script>";
+}
+
 $ref=getvalescaped("ref","",true);
 $resource_type=getvalescaped("resource_type","");
 $status="";
@@ -53,6 +82,7 @@ if (array_key_exists("userfile",$_FILES))
 
 include "../include/header.php";
 ?>
+
 <div id="test"></div>
 <div class="BasicsBox"> 
 <h2>&nbsp;</h2>
@@ -75,10 +105,25 @@ function check(filename) {
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 <div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".$allowed_extensions?></div>
 <div class="Question">
+
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
+<?php if (extension_loaded('uploadprogress')){?>
+<input type="hidden" id="uid" name="UPLOAD_IDENTIFIER" value="<?php echo $uid; ?>" >
+<?php }?>
 <input type=file name=userfile id=userfile>
 <div class="clearerleft"> </div>
 </div>
+
+<?php if (extension_loaded('uploadprogress')){?>
+<div class="Question" id="meter" style="display:none;">
+<label>Progress</label>
+<div class="Fixed">
+    <div class="Fixed meter-wrap" id="meter-wrap" name="meter-wrap" style="width:290px;border:1px solid #fff;">
+        <div class="meter-value" id="meter-value" name="meter-value" style="width: 0%;"></div>
+    </div><div id="meter-text"></div>
+</div><div class="clearerleft"> </div>
+</div>
+<?php } ?>
 
 <div class="Question">
 <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
@@ -95,7 +140,7 @@ function check(filename) {
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['noupload'];}?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="showprogress();if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
 <p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>
