@@ -1634,3 +1634,8 @@ $collections_omit_archived=false;
 
 # Set to false to omit results for public collections on numeric searches.
 $search_public_collections_ref=true;
+
+# Set path to Calibre to allow ebook conversion to PDF.
+# $calibre_path="/usr/bin";
+# Files with these extensions will be passed to calibre (if enabled above) for conversion to PDF and auto thumb-preview generation.
+$calibre_extensions=array("epub");
