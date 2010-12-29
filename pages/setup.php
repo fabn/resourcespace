@@ -573,8 +573,6 @@ h2#dbaseconfig{  min-height: 32px;}
 			else $config_output .= "\$pdftotext_path = '$pdftotext_path';\r\n\r\n";
 		
 		//Deal with some checkboxes
-		if ($secure = get_post_bool('secure'))
-			$config_output .= "\$secure = true;\r\n";
 		if (!$allow_account_request = get_post_bool('allow_account_request'))
 			$config_output .= "\$allow_account_request = false;\r\n";
 		if (!$allow_password_change = get_post_bool('allow_password_change'))
@@ -837,10 +835,6 @@ else{
 					<?php } ?>
 					<label for="scramblekey"><?php echo $lang["setup-scramblekey"];?></label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><a class="iflink" href="#if-scramblekey">?</a>
 					<p id="if-scramblekey" class="iteminfo"><?php echo $lang["setup-if_scramblekey"];?></p>
-				</div>
-				<div class="configitem">
-					<label for="secure"><?php echo $lang["setup-secure"];?></label><input id="secure" type="checkbox" name="secure" value="true" <?php echo ($secure==true?'checked="checked"':'');?>/><a class="iflink" href="#if-secure">?</a>
-					<p id="if-secure" class="iteminfo"><?php echo $lang["setup-if_secure"];?></p>
 				</div>
 			</p>
 			<p class="configsection">
