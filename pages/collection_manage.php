@@ -3,7 +3,6 @@ include "../include/db.php";
 include "../include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
 include "../include/collections_functions.php";
-if ($video_playlists){include "../include/search_functions.php";}
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
@@ -243,7 +242,6 @@ $url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
-	if($video_playlists){$videocount=get_collection_videocount($collections[$n]["ref"]);}else{$videocount="";}		
 	?><tr>
 	<td><div class="ListTitle">
 	<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){$collection_tag="";} else {$collection_tag=$lang['smartcollection'].": ";}?>
@@ -278,10 +276,6 @@ if (!hook('collectionaccessmode')) {
 	<?php if (isset($zipcommand)) { ?>
 	&nbsp;<a href="collection_download.php?collection=<?php echo $collections[$n]["ref"]?>"
 	>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
-	<?php } ?>
-	
-	<?php if ($videocount>0) { ?>
-    &nbsp;<a href="video_playlist.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["videoplaylist"]?></a>
 	<?php } ?>
 	
 	<?php if ($contact_sheet==true && $manage_collections_contact_sheet_link) { ?>
