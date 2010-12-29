@@ -331,7 +331,7 @@ if (in_array($extension,$calibre_extensions) && isset($calibre_path) && !isset($
 	$basename_minus_extension=remove_extension($path_parts['basename']);
 	$pdffile=$path_parts['dirname']."/".$basename_minus_extension.".pdf";
 
-	$wait=shell_exec("xvfb-run ". $calibrecommand . " " . $file . " " .$pdffile." --output-profile nook") ;
+	$wait=shell_exec("xvfb-run ". $calibrecommand . " " . $file . " " .$pdffile." --custom-size=8.5x11 --pretty-print --insert-blank-line --margin-bottom=72 --margin-left=72 --margin-right=72 --margin-top=72") ;
 
     if (file_exists($pdffile))
 		{
