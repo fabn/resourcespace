@@ -57,8 +57,8 @@ if ($ref!="")
 		$thumbnail=$baseurl."/gfx/type" . $resource["resource_type"] . "_col.gif";
 		}
 	?><html><head>
-	<meta name="country" content="<?php echo TidyList($resource["country"])?>">
-	<meta name="date" content="<?php echo $resource["creation_date"]?>">
+	<meta name="country" content="<?php echo TidyList($resource["field3"])?>">
+	<meta name="date" content="<?php echo $resource["field".$date_field]?>">
 	<meta name="thumbnail" content="<?php echo $thumbnail?>">
 	<meta name="target" content="<?php echo $baseurl?>/pages/view.php?ref=<?php echo $ref?>">
 	<?php
@@ -88,8 +88,8 @@ if ($ref!="")
 			}
 		}
 	?>
-	<title><?php echo trim($resource["title"])?></title></head>
-	<body><h1><?php echo trim($resource["title"])?></h1>
+	<title><?php echo trim($resource["field".$view_title_field])?></title></head>
+	<body><h1><?php echo trim($resource["field".$view_title_field])?></h1>
 	<?php echo $textblock?>
 	</body></html><?php
 	}
