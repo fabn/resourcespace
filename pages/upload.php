@@ -5,14 +5,25 @@ include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
 
-if (extension_loaded('uploadprogress')){
+// disable file upload progress bar for WebKit browsers (chrome and safari).
+// also doesn't work on Opera. Firefox and IE should work
+
+$checkagent= substr($_SERVER["HTTP_USER_AGENT"],0,250);
+$pos = strpos($checkagent, 'AppleWebKit');
+$show_progress=false;
+if ($pos!==true && extension_loaded('uploadprogress')){
+    $show_progress=true;
+}
+
+if ($show_progress){
 // progress bar if uploadprogress pecl extension is installed
 $uid = md5(uniqid(mt_rand()));
 $headerinsert.="<script type=\"text/javascript\">
 function showprogress(){
         var started='no';
-progressbar = new Ajax.PeriodicalUpdater('progress-bar', 'ajax/get_progress.php?uid=".$uid."',
+progressbar = new Ajax.PeriodicalUpdater('progress-bar', '".$baseurl."/pages/ajax/get_progress.php',
 	{frequency:1,
+    parameters: { uid:'".$uid."'},
 	onSuccess: function(response) {
             var status=response.responseText;
             $('meter').style.display='block';
@@ -30,7 +41,9 @@ progressbar = new Ajax.PeriodicalUpdater('progress-bar', 'ajax/get_progress.php?
 	 });
 }
 
-</script>";
+
+</script>
+";
 }
 
 $ref=getvalescaped("ref","",true);
@@ -99,7 +112,7 @@ function check(filename) {
 }
 </script>
 
-<form method="post" class="form" enctype="multipart/form-data">
+<form method="post" class="form" enctype="multipart/form-data" onsubmit="showprogress();">
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
@@ -107,14 +120,14 @@ function check(filename) {
 <div class="Question">
 
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
-<?php if (extension_loaded('uploadprogress')){?>
+<?php if ($show_progress){?>
 <input type="hidden" id="uid" name="UPLOAD_IDENTIFIER" value="<?php echo $uid; ?>" >
 <?php }?>
 <input type=file name=userfile id=userfile>
 <div class="clearerleft"> </div>
 </div>
 
-<?php if (extension_loaded('uploadprogress')){?>
+<?php if ($show_progress){?>
 <div class="Question" id="meter" style="display:none;">
 <label>Progress</label>
 <div class="Fixed">
@@ -140,7 +153,7 @@ function check(filename) {
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['noupload'];}?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="showprogress();if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
 <p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>
