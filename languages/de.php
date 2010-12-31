@@ -176,8 +176,8 @@ $lang["upload"]="Upload";
 $lang["uploadafile"]="Datei hochladen";
 $lang["imagecorrection"]="Bild-Korrekture";
 $lang["previewthumbonly"]="(nur Vorschaubild anzeigen)";
-$lang["rotateclockwise"]="im Uhrzeigersinn drehen";
-$lang["rotateanticlockwise"]="gegen den Uhrzeigersinn drehen";
+$lang["rotateclockwise"]="gegen den Uhrzeigersinn drehen"; # Verkehrte Zuordnung in der Funktion, daher hier vertauscht
+$lang["rotateanticlockwise"]="im Uhrzeigersinn drehen"; # Verkehrte Zuordnung in der Funktion, daher hier vertauscht
 $lang["increasegamma"]="Gamma-Wert erhöhen (heller)";
 $lang["decreasegamma"]="Gamma-Wert verringern (dunkler)";
 $lang["restoreoriginal"]="Original wiederhestellen";
@@ -198,7 +198,7 @@ $lang["matchingresources"]="passende Ressourcen"; # e.g. 17 matching resources
 $lang["advancedsearch"]="Erweiterte Suche";
 $lang["archiveonlysearch"]="nur im Archiv suchen";
 $lang["allfields"]="alle Felder";
-$lang["typespecific"]="spezifisch";
+$lang["typespecific"]="Spezifisch";
 $lang["youfound"]="Sie haben"; # e.g. you found 17 resources
 $lang["youfoundresources"]="Ressourcen gefunden"; # e.g. you found 17 resources
 $lang["display"]="Anzeige"; # e.g. Display: thumbnails / list
@@ -237,7 +237,7 @@ $lang["log"]="Protokoll";
 $lang["resourcedetails"]="Ressourcen-Details";
 $lang["offlineresource"]="Offline-Ressource";
 $lang["request"]="Anfrage";
-$lang["searchforsimilarresources"]="nach ähnlichen Ressourcen suchen";
+$lang["searchforsimilarresources"]="Nach ähnlichen Ressourcen suchen";
 $lang["clicktoviewasresultset"]="diese Ressourcen zusammenfassend anzeigen";
 $lang["searchnomatches"]="Keine passenden Suchergebnisse verfügbar.";
 $lang["try"]="Versuchen Sie";
@@ -497,7 +497,7 @@ $lang["findandreplace"]="Suchen und ersetzen";
 $lang["appendtext"]="Text hinzufügen";
 $lang["find"]="Finden";
 $lang["andreplacewith"]="...und ersetzen mit...";
-$lang["relateallresources"]="Alle Kollektionen dieser Ressource zuordnen.";
+$lang["relateallresources"]="Alle Ressourcen dieser Kollektion miteinander verknüpfen";
 $lang["country"]="Land";
 
 # New for 1.5
@@ -950,4 +950,42 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["starsminsearch"]="Sterne (Minimum)";
  $lang["anynumberofstars"]="Beliebige Anzahl Sterne";
 
-?>
+ $lang["noupload"]="Kein Upload";
+
+ # System Setup
+ # System Setup Tree Nodes (for the default setup tree)
+ $lang["treenode-root"]="Root";
+ $lang["treenode-group_management"]="Gruppenverwaltung";
+ $lang["treenode-new_group"]="Neue Gruppe";
+ $lang["treenode-new_subgroup"]="Neue Untergruppe";
+ $lang["treenode-resource_types_and_fields"]="Ressourcen Typen / Felder";
+ $lang["treenode-new_resource_type"]="Neuen Ressourcen Typ";
+ $lang["treenode-new_field"]="Neues Feld";
+ $lang["treenode-reports"]="Berichte";
+ $lang["treenode-new_report"]="Neuer Bericht";
+ $lang["treenode-downloads_and_preview_sizes"]="Download- / Vorschaugrößen";
+ $lang["treenode-new_download_and_preview_size"]="Neue Download- / Vorschaugröße";
+ $lang["treenode-database_statistics"]="Datenbank Statistiken";
+ $lang["treenode-permissions_search"]="Suche nach Berechtigungen";
+ $lang["treenode-no_name"]="(ohne Namen)";
+
+ $lang["treeobjecttype-preview_size"]="Vorschaugröße";
+
+ $lang["permissions"]="Berechtigungen";
+
+ # System Setup File Editor
+ $lang["configdefault-title"]="(Optionen von hier kopieren und einfügen)";
+ $lang["config-title"]="(BITTE BEACHTEN: Sollte diese Datei nicht mehr ausführbar sein (z.B. durch Syntaxfehler), muss der Fehler direkt auf dem Server behoben werden!)";
+
+ # System Setup Properties Pane
+ $lang["file_too_large"]="Datei zu groß";
+ $lang["field_updated"]="Feld aktualisiert";
+ $lang["zoom"]="Zoom";
+ $lang["deletion_instruction"]="Leer lassen und speichern, um die Datei zu löschen";
+ $lang["upload_file"]="Datei hochladen";
+ $lang["item_deleted"]="Eintrag gelöscht";
+ $lang["viewing_version_created_by"]="Ansichtsversion erstellt durch";
+ $lang["on_date"]="am";
+ $lang["launchpermissionsmanager"]="Berechtigungs-Manager öffnen";
+ $lang["confirm-deletion"]="Sind Sie sicher?";
+ ?>
