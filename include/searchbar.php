@@ -533,7 +533,7 @@ if (!$basic_simple_search)
 	<div class="PanelShadow"></div>
 	<?php } ?>
 
-	<?php if ($frameless_collections && !checkperm("b"))
+	<?php if ($pagename!="login" && $pagename!="user_password" && $pagename!="user_request" && $frameless_collections && !checkperm("b"))
 		{ 
 		# Support for frameless collections.
 
