@@ -919,7 +919,7 @@ function get_themes_by_resource($ref)
 	$themes=sql_query("select c.ref $themestring ,c.name,u.fullname from collection_resource cr join collection c on cr.collection=c.ref and cr.resource='$ref' and c.public=1 left outer join user u on c.user=u.ref order by length(theme) desc");
 	# Combine the theme categories into one string so multiple category levels display correctly.
 	$return=array();
-	
+
 	for ($n=0;$n<count($themes);$n++)
 		{
 		if (checkperm("j*") || checkperm("j" . $themes[$n]["theme"]))
@@ -927,17 +927,18 @@ function get_themes_by_resource($ref)
 			$theme="";
 			for ($x=1;$x<=$theme_category_levels;$x++){
 				if ($x==1){$themeindex="";}else{$themeindex=$x;}
-				if ($themes[0]["theme".$themeindex]==""){break;}
+				if ($themes[$n]["theme".$themeindex]==""){break;}
 				if ($themeindex!=""){$theme.=" / ";}
 
-				if ($themes[0]["theme".$themeindex]!="") {
-					$theme.=$themes[0]["theme".$themeindex];
+				if ($themes[$n]["theme".$themeindex]!="") {
+					$theme.=$themes[$n]["theme".$themeindex];
 				}
 			}
-			$themes[$n]["theme"]=$theme;			
+			$themes[$n]["theme"]=$theme;
 			$return[]=$themes[$n];
 			}
 		}
+      
 	return $return;
 	}
 
