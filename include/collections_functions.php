@@ -1071,7 +1071,7 @@ function add_to_collection_link($resource,$search="",$extracode="",$size="")
 	global $frameless_collections,$lang;
 	if ($frameless_collections)
 		{
-		return "<a href=\"#\" onClick=\"AddResourceToCollection('" . $resource . "');" . $extracode . "return false;\">";
+		return "<a href=\"#\" title=\"" . $lang["addtocurrentcollection"] . "\" onClick=\"AddResourceToCollection('" . $resource . "');" . $extracode . "return false;\">";
 		}
 	else
 		{
@@ -1086,14 +1086,14 @@ function remove_from_collection_link($resource,$search="")
 	global $frameless_collections,$lang,$pagename;
 	if ($frameless_collections)
 		{
-		return "<a href=\"#\" onClick=\"RemoveResourceFromCollection('" . $resource . "','" . $pagename . "');return false;\">";
+		return "<a href=\"#\" title=\"" . $lang["removefromcurrentcollection"] . "\" onClick=\"RemoveResourceFromCollection('" . $resource . "','" . $pagename . "');return false;\">";
 		}
 	else
 		{
 		return "<a href=\"collections.php?remove=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["removefromcurrentcollection"] . "\">";
 		}
 	}
-	
+
 function change_collection_link($collection)
 	{
 	# Generates a HTML link for adding a changing the current collection
