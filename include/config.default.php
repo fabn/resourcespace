@@ -1263,7 +1263,7 @@ $pricing["scr"]=10;
 $pricing["lpr"]=20;
 $pricing["hpr"]=30; # (hpr is usually the original file download)
 $currency_symbol="&pound;";
-$payment_address="payment.address@goes.here";
+$payment_address="payment.address@goes.here"; // you must enable Instant Payment Notifications in your Paypal Account Settings.
 $payment_currency="GBP";
 # Should the "Add to basket" function appear on the download sizes, so the size of the file required is selected earlier and stored in the basket? This means the total price can appear in the basket.
 $basket_stores_size=true; 
