@@ -162,7 +162,7 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 <?php if (!hook("renderinnerresourceheader")) { ?>
 
 
-
+<?php if ($usearch!="") { ?>
 <div class="backtoresults">
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 <?php if ($k=="") { ?>
@@ -172,7 +172,7 @@ $edit_access=get_edit_access($ref,$resource["archive"],$fields);
 |
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
 </div>
-
+<?php } ?>
 
 
 <h1><?php if ($resource["archive"]==2) { ?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php } ?><?php 
