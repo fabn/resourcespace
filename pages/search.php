@@ -395,7 +395,8 @@ if ($infobox_image_mode)
 	
 	}
 
-if (is_array($result)||(isset($collections)&&(count($collections)>0)))
+#if (is_array($result)||(isset($collections)&&(count($collections)>0)))
+if (true) # Always show search header now.
 	{
 	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
 	?>
@@ -481,9 +482,61 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 	</div>
 	<?php echo $collection_title ?>
 	<?php		
+
 	hook("beforesearchresults");
 	
-	if ($display=="list")
+	# Archive link
+	if (($archive==0) && (strpos($search,"!")===false) && $archive_search) { 
+	$arcresults=do_search($search,$restypes,$order_by,2,0);
+	if (is_array($arcresults)) {$arcresults=count($arcresults);} else {$arcresults=0;}
+	if ($arcresults>0) 
+		{
+		?>
+		<div class="SearchOptionNav"><a href="search.php?search=<?php echo urlencode($search)?>&archive=2">&gt;&nbsp;<?php echo $lang["view"]?> <span class="Selected"><?php echo number_format($arcresults)?></span> <?php echo ($arcresults==1)?$lang["match"]:$lang["matches"]?> <?php echo $lang["inthearchive"]?></a></div>
+		<?php 
+		}
+	else
+		{
+		?>
+		<div class="InpageNavLeftBlock">&gt;&nbsp;<?php echo $lang["nomatchesinthearchive"]?></div>
+		<?php 
+		}
+	}
+	
+	hook("beforesearchresults2");
+	hook("beforesearchresultsexpandspace");
+	?>
+	<div class="clearerleft"></div>
+	<?php
+	if (!is_array($result))
+		{
+		?>
+		<div class="BasicsBox"> 
+		  <div class="NoFind">
+			<p><?php echo $lang["searchnomatches"]?></p>
+			<?php if ($result!="")
+			{
+			?>
+			<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
+			<?php
+			}
+			else
+			{
+			?>
+			<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
+			elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
+			elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
+			else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
+			<?php
+			}
+		  ?>
+		  </div>
+		</div>
+		<?php
+		}
+
+	
+	if ($display=="list" && is_array($result))
 		{
 		?>
 		<!--list-->
@@ -556,7 +609,7 @@ if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 		
 			
 				
-			if ($display=="thumbs") { #  ---------------------------- Thumbnails view ----------------------------
+			if ($display=="thumbs" && is_array($result)) { #  ---------------------------- Thumbnails view ----------------------------
 			?>
 		 
 <?php if (!hook("renderresultthumb")) { ?>
@@ -683,7 +736,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		
 		} 
 		
-					if ($display=="xlthumbs") { #  ---------------------------- X-Large Thumbnails view ----------------------------
+					if ($display=="xlthumbs" && is_array($result)) { #  ---------------------------- X-Large Thumbnails view ----------------------------
 			?>
 		 
 <?php if (!hook("renderresultlargethumb")) { ?>
@@ -899,7 +952,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		
 		
 		
-		} else if ($display=="list") { # ----------------  List view -------------------
+		} else if ($display=="list" && is_array($result)) { # ----------------  List view -------------------
 		?>
 		<?php if (!hook("replacelistitem")) {?>
 		<!--List Item-->
@@ -970,7 +1023,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 	
 		}
     }
-	if ($display=="list")
+	if ($display=="list" && is_array($result))
 		{
 		?>
 		</table>
@@ -985,7 +1038,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php if (!hook("replacesearchkey")){?>
 		<div class="BottomInpageKey"> 
 			<?php echo $lang["key"]?>:
-			<?php if ($display=="thumbs") { ?>
+			<?php if ($display=="thumbs" && is_array($result)) { ?>
 				
 				<?php if ($orderbyrating) { ?><div class="KeyStar"><?php echo $lang["verybestresources"]?></div><?php } ?>
 				<?php if ($allow_reorder) { ?><div class="KeyReorder"><?php echo $lang["reorderresources"]?></div><?php } ?>
@@ -1001,51 +1054,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php
 		}
 	}
-else
-	{
-	?>
-	<div class="BasicsBox"> 
-	  <div class="NoFind">
-		<p><?php echo $lang["searchnomatches"]?></p>
-		<?php if ($result!="")
-		{
-		?>
-		<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
-		<?php
-		}
-		else
-		{
-		?>
-		<p><?php if (strpos($search,"country:")!==false) { ?><p><?php echo $lang["tryselectingallcountries"]?> <?php } 
-		elseif (strpos($search,"year:")!==false) { ?><p><?php echo $lang["tryselectinganyyear"]?> <?php } 
-		elseif (strpos($search,"month:")!==false) { ?><p><?php echo $lang["tryselectinganymonth"]?> <?php } 
-		else 		{?><?php echo $lang["trybeinglessspecific"]?><?php } ?> <?php echo $lang["enteringfewerkeywords"]?></p>
-		<?php
-		}
-	  ?>
-	  </div>
-	</div>
-	<?php
-	}
 ?>
 <!--Bottom Navigation - Archive, Saved Search plus Collection-->
 <div class="BottomInpageNav">
-<?php if (($archive==0) && (strpos($search,"!")===false) && $archive_search) { 
-	$arcresults=do_search($search,$restypes,$order_by,2,0);
-	if (is_array($arcresults)) {$arcresults=count($arcresults);} else {$arcresults=0;}
-	if ($arcresults>0) 
-		{
-		?>
-		<div class="InpageNavLeftBlock"><a href="search.php?search=<?php echo urlencode($search)?>&archive=2">&gt;&nbsp;<?php echo $lang["view"]?> <span class="Selected"><?php echo number_format($arcresults)?></span> <?php echo ($arcresults==1)?$lang["match"]:$lang["matches"]?> <?php echo $lang["inthearchive"]?></a></div>
-		<?php 
-		}
-	else
-		{
-		?>
-		<div class="InpageNavLeftBlock">&gt;&nbsp;<?php echo $lang["nomatchesinthearchive"]?></div>
-		<?php 
-		}
-	} ?>
+
 	<?php if (!checkperm("b") && $k=="") { ?>
 	<?php if($allow_save_search) { ?><div class="InpageNavLeftBlock"><a href="collections.php?addsearch=<?php echo urlencode($search)?>&restypes=<?php echo urlencode($restypes)?>&archive=<?php echo $archive?>" target="collections">&gt;&nbsp;<?php echo $lang["savethissearchtocollection"]?></a></div><?php } ?>
 	<?php if($allow_smart_collections) { ?><div class="InpageNavLeftBlock"><a href="collections.php?addsmartcollection=<?php echo urlencode($search)?>&restypes=<?php echo urlencode($restypes)?>&archive=<?php echo $archive?>" target="collections">&gt;&nbsp;<?php echo $lang["savesearchassmartcollection"]?></a></div><?php } ?>

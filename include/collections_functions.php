@@ -991,7 +991,10 @@ function send_collection_feedback($collection,$comment)
 		{
 		$body.="\n\n" . $lang["resourceid"] . ": " . $f[$n]["resource"];
 		$body.="\n" . $lang["comment"] . ": " . trim($f[$n]["comment"]);
-		$body.="\n" . $lang["rating"] . ": " . substr("**********",0,$f[$n]["rating"]);
+		if (is_numeric($f[$n]["rating"]))
+			{
+			$body.="\n" . $lang["rating"] . ": " . substr("**********",0,$f[$n]["rating"]);
+			}
 		}
 	
 	if ($feedback_resource_select)

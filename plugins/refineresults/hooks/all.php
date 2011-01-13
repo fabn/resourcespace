@@ -7,7 +7,7 @@ function HookRefineresultsSearchBeforesearchresults()
 	
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
 	?>
-	<p style="padding-bottom:0;margin-bottom:5px;"><a href="#" onClick="
+	<div class="SearchOptionNav"><a href="#" onClick="
 	if ($('RefinePlus').innerHTML=='+')
 		{
 		Effect.SlideDown('RefineResults',{duration:0.5});
@@ -18,7 +18,17 @@ function HookRefineresultsSearchBeforesearchresults()
 		Effect.SlideUp('RefineResults',{duration:0.5});
 		$('RefinePlus').innerHTML='+';
 		}
-	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></p>
+	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></div>
+	<?php
+	return true;
+	}
+	
+function HookRefineresultsSearchBeforesearchresultsexpandspace()
+	{
+	global $lang,$search,$k,$archive;
+	if ($k!="") {return false;}
+	?>
+	<div class="clearerleft">
 	<div class="RecordBox" id="RefineResults" style="display:none;">
 	<div class="RecordPanel">  
 	

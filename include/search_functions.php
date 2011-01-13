@@ -4,7 +4,7 @@
 #  - For resource indexing / keyword creation, see resource_functions.php
 
 if (!function_exists("do_search")) {
-function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false,$starsearch="")
+function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false,$starsearch="",$ignore_filters=false)
 	{	
 	debug("search=$search restypes=$restypes archive=$archive");
 	
@@ -161,7 +161,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				{
 				global $date_field;
 				$field=0;#echo "<li>$keyword<br/>";
-				if (strpos($keyword,":")!==false)
+				if (strpos($keyword,":")!==false && !$ignore_filters)
 					{	
 					$kw=explode(":",$keyword);
 					if ($kw[0]=="day")
@@ -184,9 +184,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						$ckeywords=explode(";",$kw[1]);
 						
 						# Fetch field info
-
 						$fieldinfo=sql_query("select ref,type from resource_type_field where name='" . escape_check($kw[0]) . "'",0);
-						if (count($fieldinfo)==0) {debug("Field short name not found.");return false;} else {$fieldinfo=$fieldinfo[0];}
+						if (count($fieldinfo)==0)
+							{
+							debug("Field short name not found.");return false;
+							}
+						else
+							{
+							$fieldinfo=$fieldinfo[0];
+							}
 						
 						# Special handling for dates
 						if ($fieldinfo["type"]==4 || $fieldinfo["type"]==6) 
@@ -264,6 +270,16 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					}
 				else
 					{
+
+					# Normal keyword (not tied to a field) - searches all fields
+					
+					# If ignoring field specifications then remove them.
+					if (strpos($keyword,":")!==false && $ignore_filters)
+						{
+						$s=explode(":",$keyword);$keyword=$s[1];
+						}
+
+					
 					global $noadd, $wildcard_always_applied;
 					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
 						{

@@ -106,6 +106,8 @@ $querylog=array();
 $pagename=str_replace(".php","",pagename());
 if (isset($defaultlanguage)) {$language=$defaultlanguage;} else {$language="en";}
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
+if (isset($_GET["language_set"])) {$language=$_GET["language_set"];setcookie("language",$_GET["language_set"]);}
+
 # Fix due to rename of US English language file
 if ($language=="us") {$language="en-US";}
 

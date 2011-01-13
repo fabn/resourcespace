@@ -378,3 +378,5 @@ div.autocomplete ul li {
 /* single file upload progress bar */
 .meter-wrap{position: relative;width:290px;border:1px solid #fff;}
 .meter-value {height: 10px;}
+
+.SearchOptionNav {padding-bottom:0;margin-bottom:5px;margin-right:20px;float:left;}
