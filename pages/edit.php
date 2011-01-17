@@ -835,7 +835,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<!-- Archive Status -->
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false)
 		{ 
-		# Do not display
+		?><input type=hidden name="archive" id="archive" value="<?php echo $archive?>"><?php
 		}
 	else { ?>
 	<?php if(!hook("replacestatusselector")){?>
