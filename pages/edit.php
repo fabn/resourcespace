@@ -844,7 +844,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<label for="archive"><?php echo $lang["status"]?></label>
 	<select class="stdwidth" name="archive" id="archive">
 	<?php for ($n=-2;$n<=3;$n++) { ?>
-	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
+	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n  || $archive==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
 	<?php } ?>
 	</select>
 	<div class="clearerleft"> </div>

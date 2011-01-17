@@ -14,7 +14,7 @@ include "../../include/header.php";
   
 	<div class="VerticalNav">
 	<ul>
-	<li><a target="main" href="../create.php?archive=2"><?php echo $lang["newarchiveresource"]?></a></li>
+	<li><a target="main" href="../edit.php?ref=-<?php echo $userref?>&single=true&archive=2"><?php echo $lang["newarchiveresource"]?></a></li>
 
 	<li><a href="../search_advanced.php?archive=2"><?php echo $lang["searcharchivedresources"]?></a></li>
 

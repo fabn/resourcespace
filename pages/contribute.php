@@ -44,16 +44,16 @@ include "../include/header.php";
 	<?php }  ?>
 
 	<?php if (!$batchenabled){ ?>
-	<li><a href="create.php<?php
+	<li><a href="edit.php?ref=-<?php echo $userref?>&single=true<?php
 		if (checkperm('e-2')){
 			// resources go into submitted first
-			echo '?archive=-2';
+			echo '&archive=-2';
 		} elseif (checkperm('e0')&&checkperm('c')){
 			// user can edit/create in live state
 			// use without archive parameter
 		} else {
 			// default to waiting for review
-			echo '?archive=-1';
+			echo '&archive=-1';
 		} 
 	?>"><?php echo $lang["contributenewresource"]?></a></li>
 	<?php } ?>
