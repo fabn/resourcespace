@@ -273,7 +273,7 @@ closedir($dirh);
 			echo '<td>'.$p['version'].'</td>';
         echo '<td>';
         echo '<a href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
-        echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang['delete'].'</a> ';
+        echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang["action-delete"].'</a> ';
         if ($p['info_url']!='')
             echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
