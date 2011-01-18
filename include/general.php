@@ -665,39 +665,61 @@ function get_data_by_field($resource,$field)
 	
 if (!function_exists("get_users")){		
 function get_users($group=0,$find="",$order_by="u.username",$usepermissions=false,$fetchrows=-1)
-	{
-	# Returns a user list. Group or search tearm is optional.
-	$sql="";
-	if ($group>0) {$sql="where usergroup='$group'";}
-	if (strlen($find)>1) {$sql="where (username like '%$find%' or fullname like '%$find%' or email like '%$find%')";}
-	if (strlen($find)==1) {$sql="where username like '$find%'";}
-	if ($usepermissions && checkperm("U"))
-		{
-		# Only return users in children groups to the user's group
-		global $usergroup;
-		if ($sql=="") {$sql="where ";} else {$sql.=" and ";}
-		$sql.="find_in_set('" . $usergroup . "',g.parent) ";
-		$sql.=hook("getuseradditionalsql");
-		}
-	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
-	}
+{
+    # Returns a user list. Group or search term is optional.
+    # The standard user group names are translated using $lang. Custom user group names are i18n translated.
+
+    $sql = "";
+    if ($group>0) {$sql = "where usergroup='$group'";}
+    if (strlen($find)>1) {$sql = "where (username like '%$find%' or fullname like '%$find%' or email like '%$find%')";}
+    if (strlen($find)==1) {$sql = "where username like '$find%'";}
+    if ($usepermissions && checkperm("U")) {
+        # Only return users in children groups to the user's group
+        global $usergroup;
+        if ($sql=="") {$sql = "where ";} else {$sql.= " and ";}
+        $sql.= "find_in_set('" . $usergroup . "',g.parent) ";
+        $sql.= hook("getuseradditionalsql");
+    }
+    # Executes query.
+    $r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
+
+    # Translates group names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+
+    return $return;
+
+}
 }	
 
 function get_users_with_permission($permission)
-	{
-	# Returns all the users who have the permission $permission.
-	
-	# First find all matching groups
-	$groups=sql_query("select ref,permissions from usergroup");
-	$matched=array();
-	for ($n=0;$n<count($groups);$n++)
-		{
-		$perms=trim_array(explode(",",$groups[$n]["permissions"]));
-		if (in_array($permission,$perms)) {$matched[]=$groups[$n]["ref"];}
-		}
-	return sql_query ("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref where g.ref in ('" . join("','",$matched) . "') order by username",false);
-	}
-	
+{
+    # Returns all the users who have the permission $permission.
+    # The standard user group names are translated using $lang. Custom user group names are i18n translated.	
+
+    # First find all matching groups.
+    $groups = sql_query("select ref,permissions from usergroup");
+    $matched = array();
+    for ($n = 0;$n<count($groups);$n++) {
+        $perms = trim_array(explode(",",$groups[$n]["permissions"]));
+        if (in_array($permission,$perms)) {$matched[] = $groups[$n]["ref"];}
+    }
+    # Executes query.
+	$r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref where g.ref in ('" . join("','",$matched) . "') order by username",false);
+
+    # Translates group names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+
+    return $return;
+
+}
 
 function get_usergroups($usepermissions=false,$find="")
 {
@@ -2260,9 +2282,22 @@ function make_username($name)
 	}
 	
 function get_registration_selectable_usergroups()
-	{
-	return sql_query("select ref,name from usergroup where allow_registration_selection=1 order by name");
-	}
+{
+    # Returns a list of  user groups selectable in the registration . The standard user groups are translated using $lang. Custom user groups are i18n translated.
+
+    # Executes query.
+    $r = sql_query("select ref,name from usergroup where allow_registration_selection=1 order by name");
+
+    # Translates group names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["name"] = lang_or_i18n_get_translated($r[$n]["name"], "usergroup-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+
+    return $return;
+
+}
 
 function remove_extension($strName)
 {
