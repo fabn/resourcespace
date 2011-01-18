@@ -59,34 +59,34 @@ include "include/header.php";
 .permheader, .permheader td {background-color:#ddd;font-weight:bold;}
 </style>
 <body style="background-position:0px -85px;margin:0;padding:10px;">
-<div class="proptitle">Permissions Manager: <?php echo $group["name"] ?></div>
+<div class="proptitle"><?php echo $lang["permissionsmanager"] . ": " . $group["name"] ?></div>
 
 <div class="propbox" id="propbox">
-<p><a href="<?php echo $baseurl?>/pages/admin/properties.php?id=-1-4:<?php echo $ref?>&parent=8&gparent=1&name=<?php echo urlencode($group["name"])?>">&lt; Back to Group Management</a></p>
+<p><a href="<?php echo $baseurl?>/pages/admin/properties.php?id=-1-4:<?php echo $ref?>&parent=8&gparent=1&name=<?php echo urlencode($group["name"])?>">&lt; <?php echo $lang["backtogroupmanagement"] ?></a></p>
 
 <form method="post" id="permform">
 <input type="hidden" name="saveform" value="true">
 <table width="100%" class="permissionstable">
 
-<tr><td colspan=3 class="permheader">Searching / Access</td></tr>
+<tr><td colspan=3 class="permheader"><?php echo $lang["searching_and_access"] ?></td></tr>
 
 <?php
-DrawOption ("s","Search capability");
-DrawOption ("v","Can download restricted resources and view confidential resources (normally admin only)",false);
-DrawOption ("g","Restrict access to all available resources",true);
-DrawOption ("q","Can make resource requests",false);
-DrawOption ("w","Show watermarked previews/thumbnails");
+DrawOption("s", $lang["searchcapability"]);
+DrawOption("v", $lang["access_to_restricted_and_confidential_resources"], false);
+DrawOption("g", $lang["restrict_access_to_all_available_resources"], true);
+DrawOption("q", $lang["can_make_resource_requests"], false);
+DrawOption("w", $lang["show_watermarked_previews_and_thumbnails"]);
 
-?><tr><td colspan=3 class="permheader">Metadata Fields</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["metadatafields"] ?></td></tr><?php
 
 # ------------ View access to fields
-DrawOption ("f*","Can see all fields?",false,true);
+DrawOption("f*", $lang["can_see_all_fields"], false, true);
 $fields=sql_query("select * from resource_type_field order by order_by");
 foreach ($fields as $field)
 	{
 	if (!in_array("f*",$permissions))
 		{
-		DrawOption ("f" . $field["ref"],"&nbsp;&nbsp; - Can see field '" . i18n_get_translated($field["title"]) . "'");
+		DrawOption("f" . $field["ref"], "&nbsp;&nbsp; - " . $lang["can_see_field"] . " '" . lang_or_i18n_get_translated($field["title"], "fieldtitle-") . "'");
 		}
 	else
 		{
@@ -95,13 +95,13 @@ foreach ($fields as $field)
 		}
 	}
 
-DrawOption ("F*","Can edit all fields? (for editable resources)",true,true);
+DrawOption("F*", $lang["can_edit_all_fields"], true, true);
 $fields=sql_query("select * from resource_type_field order by order_by");
 foreach ($fields as $field)
 	{
 	if (in_array("F*",$permissions))	
 		{
-		DrawOption ("F-" . $field["ref"],"&nbsp;&nbsp; - Can edit field '" . i18n_get_translated($field["title"]) . "'",true);
+		DrawOption("F-" . $field["ref"], "&nbsp;&nbsp; - " . $lang["can_edit_field"] . " '" . lang_or_i18n_get_translated($field["title"], "fieldtitle-") . "'", true);
 		}
 	else
 		{
@@ -112,13 +112,13 @@ foreach ($fields as $field)
 
 
 
-?><tr><td colspan=3 class="permheader">Resource Types</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["resourcetypes"] ?></td></tr><?php
 
 # ------------ View access to resource types
 $rtypes=sql_query("select * from resource_type order by name");
 foreach ($rtypes as $rtype)
 	{
-	DrawOption ("T" . $rtype["ref"],"Can see resource type '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'",true);
+	DrawOption("T" . $rtype["ref"], $lang["can_see_resource_type"] ." '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'", true);
 	}
 
 
@@ -126,41 +126,41 @@ foreach ($rtypes as $rtype)
 $rtypes=sql_query("select * from resource_type order by name");
 foreach ($rtypes as $rtype)
 	{
-	DrawOption ("X" . $rtype["ref"],"Restricted access only to resource type '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'",false);
+	DrawOption("X" . $rtype["ref"], $lang["restricted_access_only_to_resource_type"] . " '" . lang_or_i18n_get_translated($rtype["name"], "resourcetype-") . "'", false);
 	}
 
 
 
-?><tr><td colspan=3 class="permheader">Resource Creation / Management</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["resource_creation_and_management"] ?></td></tr><?php
 
 # ------------ Edit access to workflow states
 for ($n=-2;$n<=3;$n++)
 	{
-	DrawOption ("e" . $n,"Edit access to workflow state '" . $lang["status" . $n] . "'",false);
+	DrawOption("e" . $n, $lang["edit_access_to_workflow_state"] . " '" . $lang["status" . $n] . "'", false);
 	}
 
-DrawOption ("c","Can create resources / upload files (admin users; resources go to 'Live' state)");
-DrawOption ("d","Can create resources / upload files (normal users; resources go to 'Pending Submission' state via My Contributions)");
+DrawOption("c", $lang["can_create_resources_and_upload_files-admins"]);
+DrawOption("d", $lang["can_create_resources_and_upload_files-general_users"]);
 
-DrawOption ("D","Can delete resources (to which the user has write access)",true);
+DrawOption("D", $lang["can_delete_resources"], true);
 
-DrawOption ("i","Can manage archive resources");
-DrawOption ("n","Can tag resources using 'Speed Tagging' (if enabled in the configuration)");
+DrawOption("i", $lang["can_manage_archive_resources"]);
+DrawOption("n", $lang["can_tag_resources_using_speed_tagging"]);
 
 
-?><tr><td colspan=3 class="permheader">Themes / Collections</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["themes_and_collections"] ?></td></tr><?php
 
-DrawOption ("b","Enable bottom collection bar ('Lightbox')",true);
-DrawOption ("h","Can publish collections as themes");
+DrawOption("b", $lang["enable_bottom_collection_bar"], true);
+DrawOption("h", $lang["can_publish_collections_as_themes"]);
 
 # ------------ Access to theme categories
-DrawOption ("j*","Can see all theme categories",false,true);
+DrawOption("j*", $lang["can_see_all_theme_categories"], false, true);
 $themes=sql_array("select distinct theme value from collection where length(theme)>0 order by theme");
 foreach ($themes as $theme)
 	{
 	if (!in_array("j*",$permissions))
 		{
-		DrawOption ("j" . $theme,"&nbsp;&nbsp; - Can see theme category '" . i18n_get_translated($theme) . "'",false);
+		DrawOption("j" . $theme, "&nbsp;&nbsp; - " . $lang["can_see_theme_category"] . " '" . i18n_get_translated($theme) . "'", false);
 		}
 	else
 		{
@@ -169,23 +169,23 @@ foreach ($themes as $theme)
 		}
 	}
 	
-DrawOption ("J","When searching, display only resources that exist within themes to which the user has access");
+DrawOption("J", $lang["display_only_resources_within_accessible_themes"]);
 
 
 
-?><tr><td colspan=3 class="permheader">Administration</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["administration"] ?></td></tr><?php
 
-DrawOption ("t","Can access the Team Centre area",false,true);
+DrawOption("t", $lang["can_access_team_centre"], false, true);
 if (in_array("t",$permissions))
 	{
 	# Team Centre options	
-	DrawOption ("r","Can manage research requests");
-	DrawOption ("R","Can manage resource requests");
-	DrawOption ("o","Can manage content (intro/help text)");
-	DrawOption ("m","Can bulk-mail users");
-	DrawOption ("u","Can manage users");
-	DrawOption ("k","Can manage keywords");
-	DrawOption ("a","Can access the System Setup area");
+	DrawOption("r", $lang["can_manage_research_requests"]);
+	DrawOption("R", $lang["can_manage_resource_requests"]);
+	DrawOption("o", $lang["can_manage_content"]);
+	DrawOption("m", $lang["can_bulk-mail_users"]);
+	DrawOption("u", $lang["can_manage_users"]);
+	DrawOption("k", $lang["can_manage_keywords"]);
+	DrawOption("a", $lang["can_access_system_setup"]);
 	}
 else
 	{
@@ -199,20 +199,20 @@ else
 	}
 
 
-?><tr><td colspan=3 class="permheader">Other</td></tr><?php
+?><tr><td colspan=3 class="permheader"><?php echo $lang["other"] ?></td></tr><?php
 
-DrawOption ("p","Can change own account password",true);
-DrawOption ("U","Can manage users in children groups to the user's group only");
-DrawOption ("E","Can email resources to users in the user's own group, children groups and parent group only.");
+DrawOption("p", $lang["can_change_own_password"], true);
+DrawOption("U", $lang["can_manage_users_in_children_groups"]);
+DrawOption("E", $lang["can_email_resources_to_own_and_children_and_parent_groups"]);
 
 ?>
 </table>
 
-<p>Custom Permissions:</p>
+<p><?php echo $lang["custompermissions"] . ":" ?></p>
 <?php $not_handled=array_diff($permissions,$permissions_done); ?>
 <textarea name="other" style="width:100%;"><?php echo join(",",$not_handled) ?></textarea>
 
-<p align="right"><input type="submit" name="save" value="&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;"></p>
+<p align="right"><input type="submit" name="save" value="<?php echo $lang["save"] ?>" style="width:100px;"></p>
 </form>
 
 </div>
