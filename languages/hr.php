@@ -1,4 +1,10 @@
 <?php
+# Croatian
+# Language File for ResourceSpace
+# -------
+# Note: when translating to a new language, preserve the original case if possible.
+
+
 $lang["logout"]="Log Out";
 $lang["contactus"]="Kontaktirajte nas";
 $lang["home"]="Početna stranica";
@@ -119,14 +125,13 @@ $lang["cantmodifycollection"]="Ne možete mijenjati ovu zbirku.";
 $lang["currentcollection"]="Trenutne zbirke";
 $lang["viewcollection"]="Prikaži zbirku";
 $lang["viewall"]="Prikaži sve";
-$lang["editall"]="Uredite sve";
+$lang["action-editall"]="Uredite sve";
 $lang["hidethumbnails"]="Hide Thumbs";
 $lang["showthumbnails"]="Pokaži znak";
 $lang["contactsheet"]="Kontakt list";
 $lang["mycollection"]="Moja Kolekcija";
 $lang["editresearchrequests"]="Uredi istraživanje zahtjeva";
 $lang["savedsearch"]="Spremljena pretraživanja";
-$lang["findapubliccollection"]="Pronađi Javna Collection";
 $lang["mustspecifyoneusername"]="Morate navesti barem jedno korisničko ime";
 $lang["couldnotmatchallusernames"]="Nisu mogli odgovarati svih korisničkih imena";
 $lang["emailcollectionmessage"]="ima li e-poštom zbirka resursa od $ applicationname kojima je dodan u Vašu &#39;Moj kolekciźe&#39; stranicu.";
@@ -167,7 +172,7 @@ $lang["emailresource"]="E-mail";
 $lang["resourcetitle"]="Resource Title";
 $lang["filename"]="Original Filename";
 $lang["requestresource"]="Resource Zahtjev";
-$lang["viewmatchingresources"]="Pregled podudaranja resursi";
+$lang["action-viewmatchingresources"]="Pregled podudaranja resursi";
 $lang["nomatchingresources"]="Nema pronađenih resursi";
 $lang["matchingresources"]="odgovarajućih sredstava";
 $lang["advancedsearch"]="Advanced Search";
@@ -205,8 +210,6 @@ $lang["pixels"]="piksela";
 $lang["download"]="Preuzimanje";
 $lang["preview"]="Preview";
 $lang["fullscreenpreview"]="Full screen preview";
-$lang["edit"]="Uredi";
-$lang["delete"]="Izbrisati";
 $lang["log"]="Prijavite se";
 $lang["resourcedetails"]="Resource Detalji";
 $lang["offlineresource"]="Offline Resource";
@@ -265,7 +268,7 @@ $lang["useralreadyexists"]="Suradnički račun s e-mail ili korisničko ime već
 $lang["ticktoemail"]="E-mail this user njihov korisničko ime i lozinku";
 $lang["ticktodelete"]="Tick za brisanje ovog korisnika";
 $lang["edituser"]="Uredi suradničke";
-$lang["fullname"]="Full Name";
+$lang["columnheader-full_name"]=$lang["fullname"]="Full Name";
 $lang["email"]="E-mail";
 $lang["emailaddress"]="E-mail Adresa";
 $lang["suggest"]="Ponudi";
@@ -278,7 +281,6 @@ $lang["emailnotfound"]="E-mail adresa je navedeno nije mogao biti pronađen";
 $lang["yourname"]="Ime i prezime";
 $lang["youremailaddress"]="Vaš E-mail Adresa";
 $lang["sendreminder"]="Pošalji Podsjetnik";
-$lang["passwordreminder"]="Nova zaporka";
 $lang["requestuserlogin"]="Zahtjeva Korisnik Lozinka";
 $lang["nameofproject"]="Naziv projekta";
 $lang["descriptionofproject"]="Opis Projekta";
@@ -297,14 +299,13 @@ $lang["landscape"]="Pejzaž";
 $lang["either"]="Ili";
 $lang["sendrequest"]="Pošalji upit";
 $lang["editresearchrequest"]="Uredi Istraživanja Upit";
-$lang["requeststatus0"]="Unassigned";
+$lang["requeststatus0"]=$lang["unassigned"]="Unassigned";
 $lang["requeststatus1"]="U tijeku";
 $lang["requeststatus2"]="Cijela";
 $lang["copyexistingresources"]="Kopirajte resursa u postojeću zbirku ovom istraživanju kratak";
 $lang["deletethisrequest"]="Izbriši ovaj zahtjev?";
 $lang["requestedby"]="Zahtjev";
 $lang["assignedtoteammember"]="Dodijeljeno tima";
-$lang["unassigned"]="unassigned";
 $lang["typecollectionid"]="(Zbirka Vrsta ID dolje)";
 $lang["researchid"]="Istraživanje ID";
 $lang["assignedto"]="Dodijeljeno";
@@ -324,7 +325,7 @@ $lang["create"]="Napravi";
 $lang["group"]="Grupa";
 $lang["confirmaddgroup"]="Jeste li sigurni da želite dodati sve članove u ovoj grupi?";
 $lang["backtoteamhome"]="povratak na početnu momčad centar";
-$lang["resourceid"]="Resource ID";
+$lang["columnheader-resource_id"]=$lang["resourceid"]="Resource ID";
 $lang["id"]="ID";
 $lang["date"]="Datum";
 $lang["todate"]="Do danas";
@@ -349,7 +350,6 @@ $lang["text"]="Tekst";
 $lang["yes"]="Da";
 $lang["no"]="Ne";
 $lang["key"]="Ključ";
-$lang["search"]="Pretraživanje";
 $lang["languageselection"]="Odabir jezika";
 $lang["language"]="Jezik";
 $lang["changeyourpassword"]="Promijeniti zaporku";

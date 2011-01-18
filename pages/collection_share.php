@@ -137,7 +137,7 @@ include "../include/header.php";
 	<div class="Question">
 	<label for="users"><?php echo $lang["attachedusers"]?></label>
 	<div class="Fixed"><?php echo (($collection["users"]=="")?$lang["noattachedusers"]:htmlspecialchars($collection["users"])); ?><br /><br />
-	<a href="collection_edit.php?ref=<?php echo $ref; ?>">&gt;&nbsp;<?php echo $lang["edit"];?></a>
+	<a href="collection_edit.php?ref=<?php echo $ref; ?>">&gt;&nbsp;<?php echo $lang["action-edit"];?></a>
 	</div>
 	<div class="clearerleft"> </div>
 	</div>
@@ -182,7 +182,7 @@ include "../include/header.php";
 			<td><?php echo ($keys[$n]["expires"]=="")?$lang["never"]:nicedate($keys[$n]["expires"],false)?></td>
 			<td><?php echo ($keys[$n]["access"]==-1)?"":$lang["access" . $keys[$n]["access"]]; ?></td>
 			<td><div class="ListTools">
-			<a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccess"]?>')) {document.getElementById('deleteaccess').value='<?php echo $keys[$n]["access_key"] ?>';document.getElementById('collectionform').submit(); }">&gt;&nbsp;<?php echo $lang["delete"]?></a>
+			<a href="#" onClick="if (confirm('<?php echo $lang["confirmdeleteaccess"]?>')) {document.getElementById('deleteaccess').value='<?php echo $keys[$n]["access_key"] ?>';document.getElementById('collectionform').submit(); }">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>
 			</div></td>
 			</tr>
 			<?php

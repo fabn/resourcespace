@@ -1,5 +1,4 @@
 <?php
-
 # Greek
 # Language File for ResourceSpace
 # -------
@@ -125,14 +124,13 @@ $lang["cantmodifycollection"]="Δεν μπορείτε να τροποποιήσ
 $lang["currentcollection"]="Ρεύματος";
 $lang["viewcollection"]="Δείτε τη συλλογή";
 $lang["viewall"]="Προβολή όλων";
-$lang["editall"]="Επεξεργασία όλων των";
+$lang["action-editall"]="Επεξεργασία όλων των";
 $lang["hidethumbnails"]="Απόκρυψη αντίχειρες";
 $lang["showthumbnails"]="Δείτε αντίχειρες";
 $lang["contactsheet"]="Επικοινωνία φύλλο";
 $lang["mycollection"]="My Collection";
 $lang["editresearchrequests"]="Επεξεργασία των αιτήσεων έρευνας";
 $lang["savedsearch"]="Αποθηκ Αναζήτηση";
-$lang["findapubliccollection"]="Βρείτε ένα Δημόσια Συγκέντρωση";
 $lang["mustspecifyoneusername"]="Πρέπει να ορίσετε τουλάχιστον ένα όνομα χρήστη";
 $lang["couldnotmatchallusernames"]="Μήπως δεν ταιριάζουν με όλα τα ονόματα χρηστών";
 $lang["emailcollectionmessage"]="έχει e-mail σας μια συλλογή από πόρους που προέρχονται από $ applicationname η οποία προστέθηκε με το &quot;My Συλλογές &#39;σελίδα.";
@@ -173,7 +171,7 @@ $lang["emailresource"]="E-mail";
 $lang["resourcetitle"]="Τίτλος Πόρων";
 $lang["filename"]="Αρχικό αρχείου";
 $lang["requestresource"]="Αίτηση Resource";
-$lang["viewmatchingresources"]="Δείτε αντιστοίχηση των πόρων";
+$lang["action-viewmatchingresources"]="Δείτε αντιστοίχηση των πόρων";
 $lang["nomatchingresources"]="Δεν βρέθηκαν πόρων";
 $lang["matchingresources"]="αντιστοίχηση των πόρων";
 $lang["advancedsearch"]="Advanced Search";
@@ -211,8 +209,6 @@ $lang["pixels"]="εικονοστοιχεία";
 $lang["download"]="Λήψη";
 $lang["preview"]="Προεπισκόπηση";
 $lang["fullscreenpreview"]="Πλήρης οθόνη προεπισκόπησης";
-$lang["edit"]="Επεξεργασία";
-$lang["delete"]="Διαγράφω";
 $lang["log"]="Εγγραφή";
 $lang["resourcedetails"]="Πληροφορίες πόρου";
 $lang["offlineresource"]="Offline Πόρων";
@@ -271,7 +267,7 @@ $lang["useralreadyexists"]="Ένας λογαριασμός με αυτό το e
 $lang["ticktoemail"]="Στείλτε e-mail στο χρήστη τους όνομα χρήστη και τον νέο κωδικό πρόσβασης";
 $lang["ticktodelete"]="Σημειώστε να διαγράψετε αυτό το χρήστη";
 $lang["edituser"]="Επεξεργασία Χρηστών";
-$lang["fullname"]="Ονοματεπώνυμο";
+$lang["columnheader-full_name"]=$lang["fullname"]="Ονοματεπώνυμο";
 $lang["email"]="E-mail";
 $lang["emailaddress"]="Διεύθυνση E-mail";
 $lang["suggest"]="Προτείνετε";
@@ -284,7 +280,6 @@ $lang["emailnotfound"]="Το e-mail διεύθυνση που δεν θα μπο
 $lang["yourname"]="Το πλήρες όνομά σας";
 $lang["youremailaddress"]="Το e-mail σας";
 $lang["sendreminder"]="Αποστολή Υπενθύμιση";
-$lang["passwordreminder"]="Νέος Κωδικός";
 $lang["requestuserlogin"]="Αίτηση Είσοδος χρήστη";
 $lang["nameofproject"]="Όνομα του έργου";
 $lang["descriptionofproject"]="Περιγραφή του Έργου";
@@ -303,14 +298,13 @@ $lang["landscape"]="Τοπίο";
 $lang["either"]="Είτε";
 $lang["sendrequest"]="Αποστολή Αιτήματος";
 $lang["editresearchrequest"]="Επεξεργασία Έρευνας Αίτηση";
-$lang["requeststatus0"]="Ανεκχώρητο";
+$lang["requeststatus0"]=$lang["unassigned"]="Ανεκχώρητο";
 $lang["requeststatus1"]="Σε εξέλιξη";
 $lang["requeststatus2"]="Ολοκλήρωση";
 $lang["copyexistingresources"]="Αντιγραφή των πόρων σε μια υπάρχουσα συλλογή έρευνα σε αυτό το σύντομο";
 $lang["deletethisrequest"]="Να διαγραφεί αυτό το αίτημα;";
 $lang["requestedby"]="Ζητούνται από";
 $lang["assignedtoteammember"]="Ανατέθηκε σε μέλος της ομάδας";
-$lang["unassigned"]="ανεκχώρητο";
 $lang["typecollectionid"]="(Τύπος συλλογή ID παρακάτω)";
 $lang["researchid"]="Έρευνα ID";
 $lang["assignedto"]="Ανατέθηκε σε";
@@ -330,7 +324,7 @@ $lang["create"]="Δημιουργήστε";
 $lang["group"]="Ομάδα";
 $lang["confirmaddgroup"]="Είστε σίγουροι ότι θέλετε να προσθέσετε όλα τα μέλη αυτής της ομάδας;";
 $lang["backtoteamhome"]="επιστροφή στην ομάδα του κέντρου σπίτι";
-$lang["resourceid"]="Resource ID";
+$lang["columnheader-resource_id"]=$lang["resourceid"]="Resource ID";
 $lang["id"]="ID";
 $lang["date"]="Ημερομηνία";
 $lang["todate"]="Για την ημερομηνία";
@@ -355,7 +349,6 @@ $lang["text"]="Κείμενο";
 $lang["yes"]="Ναι";
 $lang["no"]="Δεν";
 $lang["key"]="Κλειδί";
-$lang["search"]="Αναζήτηση";
 $lang["languageselection"]="Επιλογή Γλώσσας";
 $lang["language"]="Γλώσσα";
 $lang["changeyourpassword"]="Αλλαγή κωδικού";

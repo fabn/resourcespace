@@ -877,7 +877,7 @@ function email_reminder($email)
 
 	
 	$message=$lang["newlogindetails"] . "\n\n" . $lang["username"] . ": " . $templatevars['username'] . "\n" . $lang["password"] . ": " . $templatevars['password'] . "\n\n". $templatevars['url'];
-	send_mail($email,$applicationname . ": " . $lang["passwordreminder"],$message,"","","emailreminder",$templatevars);
+	send_mail($email,$applicationname . ": " . $lang["newpassword"],$message,"","","emailreminder",$templatevars);
 	return true;
 	}
 

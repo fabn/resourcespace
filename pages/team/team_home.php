@@ -90,7 +90,7 @@ for ($n=0;$n<count($active);$n++) {if($n>0) {echo", ";}echo "<b>" . $active[$n][
 ?>
 </p>	
 
-<p><?php echo $lang["diskusage"]?>:  <?php if (getval("showdisk","")!="") { ?><b><?php echo round(($avail?$used/$avail:0)*100,0)?>%</b> (<?php echo $lang["available"]?>: <?php echo formatfilesize($avail)?>; <?php echo $lang["used"]?>: <?php echo formatfilesize($used)?>; <?php echo $lang["free"]?>:  <?php echo formatfilesize($free)?>)<?php } else { ?><a href="team_home.php?showdisk=true"><?php echo $lang["view"]?></a><?php } ?>
+<p><?php echo $lang["diskusage"]?>:  <?php if (getval("showdisk","")!="") { ?><b><?php echo round(($avail?$used/$avail:0)*100,0)?>%</b> (<?php echo $lang["available"]?>: <?php echo formatfilesize($avail)?>; <?php echo $lang["used"]?>: <?php echo formatfilesize($used)?>; <?php echo $lang["free"]?>:  <?php echo formatfilesize($free)?>)<?php } else { ?><a href="team_home.php?showdisk=true"><?php echo $lang["action-view"]?></a><?php } ?>
 </p>
 <?php } ?>
 

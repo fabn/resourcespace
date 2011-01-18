@@ -467,7 +467,7 @@ Version
 -->
 </td>
 <td align=right>
-<?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="<?php echo $lang["delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["confirm-deletion"] ?>');"><?php } ?>
+<?php if (isset($t[9])&&$t[9]!="") {?><input type="submit" name="delete" value="<?php echo $lang["action-delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["confirm-deletion"] ?>');"><?php } ?>
 <?php if (isset($t[8])&&($t[8]!="") || (substr($t[7],0,6)=="upload")) {?><input type="submit" name="submit" value="<?php echo ($historyview==-1)?$lang["save"]:$lang["revert"] ?>" style="width:100px;"><?php } ?>
 </td></tr>
 </table>

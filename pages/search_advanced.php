@@ -121,7 +121,7 @@ function UpdateResultCount()
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="resetform" id="resetform2" type="submit" value="&nbsp;&nbsp;<?php echo $lang["clearform"]?>&nbsp;&nbsp;" />&nbsp;
+<input name="resetform" id="resetform2" type="submit" value="&nbsp;&nbsp;<?php echo $lang["clearbutton"]?>&nbsp;&nbsp;" />&nbsp;
 
 </div>
 
@@ -229,9 +229,9 @@ for ($n=0;$n<count($fields);$n++)
 ?>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>
-<input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["viewmatchingresources"]?>" />
+<input name="dosearch" id="dosearch" type="submit" value="<?php echo $lang["action-viewmatchingresources"]?>" />
 &nbsp;
-<input name="resetform" id="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />
+<input name="resetform" id="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />
 </div>
 </form>
 </div>

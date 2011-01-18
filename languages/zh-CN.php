@@ -1,5 +1,4 @@
 <?php
-
 # Chinese Simplified
 # Language File for ResourceSpace
 # -------
@@ -151,14 +150,13 @@ $lang["cantmodifycollection"]="你不能修改这收藏夹.";
 $lang["currentcollection"]="现有的收藏夹";
 $lang["viewcollection"]="查看收藏夹";
 $lang["viewall"]="查看所有";
-$lang["editall"]="编辑所有";
+$lang["action-editall"]="编辑所有";
 $lang["hidethumbnails"]="隐藏缩图";
 $lang["showthumbnails"]="列出缩图";
 $lang["contactsheet"]="相版";
 $lang["mycollection"]="我的收藏夹";
 $lang["editresearchrequests"]="编辑搜索要求";
 $lang["savedsearch"]="已储存的搜索";
-$lang["findapubliccollection"]="寻找一个公共收藏夹";
 $lang["mustspecifyoneusername"]="请指定最少一位用户";
 $lang["couldnotmatchallusernames"]="未能找到所有匹配的用户";
 $lang["emailcollectionmessage"]="相关的资源已发送."; 
@@ -209,7 +207,7 @@ $lang["emailresource"]="发送";
 $lang["resourcetitle"]="资源名称";
 $lang["filename"]="原有的档案名称";
 $lang["requestresource"]="资源搜索要求";
-$lang["viewmatchingresources"]="查看匹配的资源";
+$lang["action-viewmatchingresources"]="查看匹配的资源";
 $lang["nomatchingresources"]="未发现匹配的资源";
 $lang["matchingresources"]="资源匹配中"; 
 $lang["advancedsearch"]="高级搜索";
@@ -248,8 +246,6 @@ $lang["pixels"]="像素";
 $lang["download"]="下载";
 $lang["preview"]="预览";
 $lang["fullscreenpreview"]="全屏预览";
-$lang["edit"]="编辑";
-$lang["delete"]="删除";
 $lang["log"]="纪录";
 $lang["resourcedetails"]="资源详情";
 $lang["offlineresource"]="离线资源";
@@ -322,7 +318,7 @@ $lang["useremailalreadyexists"]="该电邮已存在.";
 $lang["ticktoemail"]="向用户发送账户名称和密码";
 $lang["ticktodelete"]="点击这里以删除该用户";
 $lang["edituser"]="编辑用户";
-$lang["fullname"]="全名";
+$lang["columnheader-full_name"]=$lang["fullname"]="全名";
 $lang["email"]="电邮";
 $lang["emailaddress"]="电邮地址";
 $lang["suggest"]="建议";
@@ -336,7 +332,6 @@ $lang["yourname"]="你的全名";
 $lang["youremailaddress"]="你的电邮地址";
 $lang["sendreminder"]="发送提示";
 $lang["sendnewpassword"]="发送新密码";
-$lang["passwordreminder"]="新密码";
 $lang["requestuserlogin"]="账号申请";
 
 # Research request
@@ -357,7 +352,7 @@ $lang["landscape"]="横向的";
 $lang["either"]="任何一项";
 $lang["sendrequest"]="发送请求";
 $lang["editresearchrequest"]="编辑搜索要求";
-$lang["requeststatus0"]="未指定";
+$lang["requeststatus0"]=$lang["unassigned"]="未指定"; # or "未指定资源小组的成员处理此搜索要求" ?
 $lang["requeststatus1"]="进行中";
 $lang["requeststatus2"]="完成";
 $lang["copyexistingresources"]="复制现有的资源资料";
@@ -365,7 +360,6 @@ $lang["deletethisrequest"]="确定要删除这个搜索要求吗?";
 $lang["requestedby"]="搜索者";
 $lang["requesteditems"]="搜索项目";
 $lang["assignedtoteammember"]="已指定资源小组的成员处理此搜索要求";
-$lang["unassigned"]="未指定资源小组的成员处理此搜索要求";
 $lang["typecollectionid"]="(请在下面输入资源编号)";
 $lang["researchid"]="资源编号";
 $lang["assignedto"]="已分配给";
@@ -388,7 +382,7 @@ $lang["create"]="建立";
 $lang["group"]="群体";
 $lang["confirmaddgroup"]="你确定要把这些用户加入该用户群吗?";
 $lang["backtoteamhome"]="返回团队中心";
-$lang["resourceid"]="资源编号";
+$lang["columnheader-resource_id"]=$lang["resourceid"]="资源编号";
 $lang["id"]="编号";
 $lang["date"]="日期";
 $lang["todate"]="至";
@@ -415,7 +409,6 @@ $lang["text"]="文字";
 $lang["yes"]="是";
 $lang["no"]="否";
 $lang["key"]="要诀"; # e.g. 搜索页面图标的解释
-$lang["search"]="搜索";
 $lang["languageselection"]="语言选项";
 $lang["language"]="语言";
 $lang["changeyourpassword"]="更改你的密码";

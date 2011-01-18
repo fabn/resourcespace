@@ -340,7 +340,7 @@ else
 	?>
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
-	<input name="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />&nbsp;
+	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;
 	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["next"]?>&nbsp;&nbsp;" /><br><br>
 	<div class="clearerleft"> </div>
 	</div>
@@ -914,7 +914,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
-	<input name="resetform" type="submit" value="<?php echo $lang["clearform"]?>" />&nbsp;
+	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;
 	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" /><br><br>
 	<div class="clearerleft"> </div>
 	</div>

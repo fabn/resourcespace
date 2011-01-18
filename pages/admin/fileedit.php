@@ -82,7 +82,7 @@ if (basename($file)=="config.php"){echo "<br />" . $lang["config-title"];}?></di
 $filename=basename($file); 
 if ($filename!="config.php" && $filename!="config.default.php"){
 	?>
-	<td align=left><input type="submit" name="delete" value="<?php echo $lang["delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["filedeleteconfirm"] ?>');"></td>
+	<td align=left><input type="submit" name="delete" value="<?php echo $lang["action-delete"] ?>" style="width:100px;" onclick="return confirm('<?php echo $lang["filedeleteconfirm"] ?>');"></td>
 <?php } ?>
 
 <?php if ($filename!="config.default.php"){

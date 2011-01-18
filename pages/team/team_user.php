@@ -108,7 +108,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<?php } ?>
 	<td><?php 
 	# Forumulate a sensible last active date that also includes a non-approved indication.
-	$last_active=$lang["never"];
+	$last_active=$lang["status-never"];
 	if ($users[$n]["approved"]==0)
 		{
 		$last_active=$lang["notapproved"];		
@@ -122,7 +122,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<td><?php if (($usergroup==3) || ($users[$n]["usergroup"]!=3)) { ?><div class="ListTools">
 	<a href="team_user_log.php?ref=<?php echo $users[$n]["ref"]?>&backurl=<?php echo urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?php echo $lang["log"]?></a>
 	&nbsp;
-	<a href="team_user_edit.php?ref=<?php echo $users[$n]["ref"]?>&backurl=<?php echo urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?php echo $lang["edit"]?></a></div><?php } ?></td>
+	<a href="team_user_edit.php?ref=<?php echo $users[$n]["ref"]?>&backurl=<?php echo urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a></div><?php } ?></td>
 	</tr>
 	<?php
 	}
