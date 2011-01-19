@@ -172,38 +172,39 @@ function get_resource_type_field($field)
 		}
 	}
 function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false)
-	{
-	# Returns field data and field properties (resource_type_field and resource_data tables)
-	# for this resource, for display in an edit / view form.
+{
+    # Returns field data and field properties (resource_type_field and resource_data tables)
+    # for this resource, for display in an edit / view form.
+    # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
 
-	# Find the resource type
-	if ($originalref==-1) {$originalref=$ref;} # When a template has been selected, only show fields for the type of the original resource ref, not the template (which shows fields for all types)
-	$rtype=sql_value("select resource_type value from resource where ref='$originalref'",0);
+    # Find the resource type.
+    if ($originalref==-1) {$originalref = $ref;} # When a template has been selected, only show fields for the type of the original resource ref, not the template (which shows fields for all types)
+    $rtype = sql_value("select resource_type value from resource where ref='$originalref'",0);
 
-	# If using metadata templates, 
-	$templatesql="";
-	global $metadata_template_resource_type;
-	if (isset($metadata_template_resource_type) && $metadata_template_resource_type==$rtype)
-		{
-		# Show all resource fields, just as with editing multiple resources.
-		$multi=true;
-		}
+    # If using metadata templates, 
+    $templatesql = "";
+    global $metadata_template_resource_type;
+    if (isset($metadata_template_resource_type) && $metadata_template_resource_type==$rtype) {
+        # Show all resource fields, just as with editing multiple resources.
+        $multi = true;
+    }
 
-	$return=array();
-	$fields=sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index,f.external_user_access,f.hide_when_uploading from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
-	
-	# Build an array of valid types and only return fields of this type.
-	$validtypes=sql_array("select ref value from resource_type");
-	$validtypes[]=0;$validtypes[]=999;# Support archive and global.
+    $return = array();
+    $fields = sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index,f.external_user_access,f.hide_when_uploading from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
 
-	for ($n=0;$n<count($fields);$n++)
-		{
-		if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && 
-		!checkperm("f-" . $fields[$n]["fref"])))
-		&& in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"]) && (!($external_access && !$fields[$n]["external_user_access"]))) {$return[]=$fields[$n];}
-		}
-	return $return;
-	}
+    # Build an array of valid types and only return fields of this type. Translate field titles. 
+    $validtypes = sql_array("select ref value from resource_type");
+    $validtypes[] = 0; $validtypes[] = 999; # Support archive and global.
+
+    for ($n = 0;$n<count($fields);$n++) {
+        if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && !checkperm("f-" . $fields[$n]["fref"])))
+        && in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"]) && (!($external_access && !$fields[$n]["external_user_access"]))) {
+            $fields[$n]["title"] = lang_or_i18n_get_translated($fields[$n]["title"], "fieldtitle-"); 
+            $return[] = $fields[$n];
+        }
+    }
+    return $return;
+}
 
 function get_resource_field_data_batch($refs)
 	{
@@ -780,7 +781,7 @@ function lang_or_i18n_get_translated($text, $mixedprefix)
     if (is_array($mixedprefix)) {$prefix = $mixedprefix;}
     else {$prefix = array($mixedprefix);}
     for ($n = 0;$n<count($prefix);$n++) {
-        $langindex = $prefix[$n] . strtolower(str_replace(array(" ", "\t", "/"), array("_", "_","and"), $text));
+        $langindex = $prefix[$n] . strtolower(str_replace(array(" ", "\t", "/", "(", ")"), array("_", "_", "and", "", ""), $text));
 
         # Checks if there is a $lang (should be defined for all standard field names / values).
         if (isset($lang[$langindex])) {
@@ -1852,9 +1853,22 @@ function image_size_restricted_access($id)
 	}
 	
 function get_user_log($user)
-	{
-	return sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title,l.purchase_size,l.purchase_price from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
-	}
+{
+    # Returns a user action log for $user.
+    # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
+
+    # Executes query.
+    $r = sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title,l.purchase_size,l.purchase_price from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+
+    # Translates field titles in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["title"] = lang_or_i18n_get_translated($r[$n]["title"], "fieldtitle-");
+        $return[] = $r[$n];
+    }
+    return $return;
+
+}
 	
 function get_breadcrumbs()
 	{
@@ -2052,33 +2066,32 @@ function resolve_users($users)
 	}
 
 function get_simple_search_fields()
-	{
-	# Returns a list of fields suitable for the simple search box.	
-	$return=array();
-	$sql="";
-	
-	# Include the country field even if not selected?
-	# This is to provide compatibility for older systems on which the simple search box was not configurable
-	# and had a simpler 'country search' option.
-	global $country_search;
-	if (isset($country_search) && $country_search)
-		{
-		$sql=" or ref=3";
-		}
-		
-	# Return all appropriate fields.
-	$fields=sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by resource_type,order_by");
-	for ($n=0;$n<count($fields);$n++)
-		{
-		# Check permissions
-		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
-		&& !checkperm("f-" . $fields[$n]["ref"]))
-			{
-			$return[]=$fields[$n];
-			}
-		}
-	return $return;
-	}
+{
+    # Returns a list of fields suitable for the simple search box.
+    # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
+
+    $sql = "";
+
+    # Include the country field even if not selected?
+    # This is to provide compatibility for older systems on which the simple search box was not configurable
+    # and had a simpler 'country search' option.
+    global $country_search;
+    if (isset($country_search) && $country_search) {$sql=" or ref=3";}
+
+    # Executes query.
+    $fields = sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by resource_type,order_by");
+
+    # Applies field permissions and translates field titles in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($fields);$n++) {
+        if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+        && !checkperm("f-" . $fields[$n]["ref"])) {
+            $fields[$n]["title"] = lang_or_i18n_get_translated($fields[$n]["title"], "fieldtitle-");            
+            $return[] = $fields[$n];
+        }
+    }
+    return $return;
+}
 	
 
 function check_access_key($resource,$key)
@@ -2326,21 +2339,30 @@ function get_fields($field_refs)
 	}
 	
 function get_fields_for_search_display($field_refs)
-	{
-	# Returns a list of fields/properties with refs matching the supplied field refs, for search display setup
-	# This returns fewer columns and doesn't require that the fields be indexed, as in this case it's only used to judge whether the field should be highlighted.
-	if (!is_array($field_refs)) {print_r($field_refs);exit(" passed to getfields() is not an array. ");}
-	$return=array();
-	$fields=sql_query("select ref, name, title, keywords_index, partial_index, value_filter from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
-	# Apply field permissions
-	for ($n=0;$n<count($fields);$n++)
-		{
-		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
-		&& !checkperm("f-" . $fields[$n]["ref"]))
-		{$return[]=$fields[$n];}
-		}
-	return $return;
-	}	
+{
+    # Returns a list of fields/properties with refs matching the supplied field refs, for search display setup
+    # This returns fewer columns and doesn't require that the fields be indexed, as in this case it's only used to judge whether the field should be highlighted.
+    # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
+
+    if (!is_array($field_refs)) {
+        print_r($field_refs);
+        exit(" passed to getfields() is not an array. ");
+    }
+
+    # Executes query.
+    $fields = sql_query("select ref, name, title, keywords_index, partial_index, value_filter from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
+
+    # Applies field permissions and translates field titles in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($fields);$n++) {
+        if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+        && !checkperm("f-" . $fields[$n]["ref"])) {
+            $fields[$n]["title"] = lang_or_i18n_get_translated($fields[$n]["title"], "fieldtitle-");
+            $return[] = $fields[$n];
+        }
+    }
+    return $return;
+}
 
 function verify_extension($filename,$allowed_extensions=""){
 	# Allowed extension?

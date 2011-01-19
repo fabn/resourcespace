@@ -1343,28 +1343,42 @@ function notify_user_contributed_unsubmitted($refs)
 	
 	
 function get_fields_with_options()
-	{
-	# Returns a list of fields that have option lists (checking user permissions)
-	# Used for 'manage field options' page.
-	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where type=2 or type=3 order by resource_type,order_by");
-	$return=array();
-	# Apply permissions.
-	for ($n=0;$n<count($fields);$n++)
-		{
-		if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"])) && 
-		!checkperm("f-" . $fields[$n]["ref"]))
-			{
-			$return[]=$fields[$n];
-			}
-		}
-	return $return;
-	}
+{
+    # Returns a list of fields that have option lists (checking user permissions).
+    # The standard field titles are translated using $lang. Custom field titles are i18n translated.
+    # Used for 'manage field options' page.
+
+    # Executes query.
+    $fields = sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where type=2 or type=3 order by resource_type,order_by");
+
+    # Applies permissions and translates field titles in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($fields);$n++) {
+        if ((checkperm("f*") || checkperm("f" . $fields[$n]["ref"]))
+        && !checkperm("f-" . $fields[$n]["ref"])) {
+            $fields[$n]["title"] = lang_or_i18n_get_translated($fields[$n]["title"], "fieldtitle-");
+            $return[] = $fields[$n];
+        }
+    }
+    return $return;
+}
 
 function get_field($field)
-	{
-	$return=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where ref='$field'");
-	if (count($return)>0) {return $return[0];} else {return false;}
-	}
+{
+    # A standard field title is translated using $lang.  A custom field title is i18n translated.
+
+    # Executes query.
+    $r = sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where ref='$field'");
+
+    # Translates the field title if the searched field is found.
+    if (count($r)==0) {
+        return false;
+    }
+    else {
+        $r[0]["title"] = lang_or_i18n_get_translated($r[0]["title"], "fieldtitle-");
+        return $r[0];
+    }
+}
 
 function get_field_options_with_stats($field)
 	{

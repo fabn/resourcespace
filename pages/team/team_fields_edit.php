@@ -34,7 +34,7 @@ $options=get_field_options_with_stats($field);
 <p>
 <a href="team_fields.php">&lt;&nbsp;<?php echo $lang["backtofieldlist"]?></a>
 </p>
-<h1><?php echo $lang["managefieldoptions"] . " - " . i18n_get_translated($fieldinfo["title"])?></h1>
+<h1><?php echo $lang["managefieldoptions"] . ": " . $fieldinfo["title"] ?></h1>
   
 <?php if ($show_all_languages)
 	{

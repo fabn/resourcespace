@@ -150,7 +150,7 @@ if ($submitted != "")
 					$text.= "Ref: ".$ref.$sizetext." \r\n-----------------------------------------------------------------\r\n";
 						for ($i=0;$i<count($fields);$i++){
 							$value=$fields[$i]["value"];
-							$title=str_replace("Keywords - ","",i18n_get_translated($fields[$i]["title"]));
+							$title=str_replace("Keywords - ","",$fields[$i]["title"]);
 							if ((trim($value)!="")&&(trim($value)!=",")){$text.=wordwrap ("* ".$title.": ".$value."\r\n",65);}
 						}
 					if(trim($commentdata['comment'])!=""){$text.=wordwrap ("Comment: ".$commentdata['comment']."\r\n",65);}	

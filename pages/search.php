@@ -453,7 +453,7 @@ if (true) # Always show search header now.
 				if (!isset($metadata_template_title_field)){$metadata_template_title_field=false;} 
 				if ($sf[$x]['ref']!=$metadata_template_title_field){?>
 				&nbsp;|&nbsp;
-				<?php if ($order_by=="field".$sf[$x]['ref']) {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($sf[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($sf[$x]['title'])?></a><?php } ?>
+				<?php if ($order_by=="field".$sf[$x]['ref']) {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $sf[$x]['title']?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $sf[$x]['title']?></a><?php } ?>
 				<?php } ?>
 				<?php } ?>	
 			<?php } ?>		
@@ -552,7 +552,7 @@ if (true) # Always show search header now.
 
 		for ($x=0;$x<count($df);$x++)
 			{?>
-			<?php if ($order_by=="field".$df[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $df[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($df[$x]['title'])?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $df[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo i18n_get_translated($df[$x]['title'])?></a></td><?php } ?>
+			<?php if ($order_by=="field".$df[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $df[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $df[$x]['title']?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $df[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $df[$x]['title']?></a></td><?php } ?>
 			<?php }
 		
 		if ($display_user_rating_stars && $k=="" ){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>

@@ -161,7 +161,7 @@ if (!$basic_simple_search)
 	for ($n=0;$n<count($fields);$n++)
 		{
 		hook("modifysearchfieldtitle");?>
-		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>"><?php echo i18n_get_translated($fields[$n]["title"])?><br />
+		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>"><?php echo $fields[$n]["title"]?><br />
 		<?php
 		
 		$value=""; # to do, fetch set value.

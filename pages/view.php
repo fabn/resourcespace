@@ -719,7 +719,7 @@ for ($n=0;$n<count($fields);$n++)
 	
 	if (($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
 		{
-		$title=htmlspecialchars(str_replace("Keywords - ","",i18n_get_translated($fields[$n]["title"])));
+		$title=htmlspecialchars(str_replace("Keywords - ","",$fields[$n]["title"]));
 		//if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
 
 		# Value formatting

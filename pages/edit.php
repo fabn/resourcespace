@@ -542,7 +542,7 @@ for ($n=0;$n<count($fields);$n++)
 
 	?>
 	<?php if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
-	?><div><input name="editthis_<?php echo $name?>" id="editthis_<?php echo $n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?php echo $n?>');var m=document.getElementById('modeselect_<?php echo $n?>');var f=document.getElementById('findreplace_<?php echo $n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?php echo $n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?></label></div><?php } ?>
+	?><div><input name="editthis_<?php echo $name?>" id="editthis_<?php echo $n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?php echo $n?>');var m=document.getElementById('modeselect_<?php echo $n?>');var f=document.getElementById('findreplace_<?php echo $n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?php echo $n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo htmlspecialchars($fields[$n]["title"])?></label></div><?php } ?>
 
 	<?php
 	if ($multiple)
@@ -577,7 +577,7 @@ for ($n=0;$n<count($fields);$n++)
 	?>
 
 	<div class="Question" id="question_<?php echo $n?>" <?php if ($multiple) {?>style="display:none;border-top:none;"<?php } ?>>
-	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars(i18n_get_translated($fields[$n]["title"]))?> <?php if (!$is_template && $fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
+	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars($fields[$n]["title"])?> <?php if (!$is_template && $fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
 	<?php
 
 	# Define some Javascript for help actions (applies to all fields)

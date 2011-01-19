@@ -748,7 +748,7 @@ function get_advanced_search_fields($archive=false)
 function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$forsearchbar=false,$limit_keywords=array())
 	{
 	# Renders the HTML for the provided $field for inclusion in a search form, for example the
-	#�advanced search page.
+	# advanced search page. Standard field titles are translated using $lang.  Custom field titles are i18n translated.
 	#
 	# $field	an associative array of field data, i.e. a row from the resource_type_field table.
 	# $name		the input name to use in the form (post name)
@@ -761,14 +761,14 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		{
 		?>
 		<div class="Question">
-		<label><?php echo i18n_get_translated($field["title"])?></label>
+		<label><?php echo lang_or_i18n_get_translated($field["title"], "fieldtitle-")?></label>
 		<?php
 		}
 	else
 		{
 		?>
 		<div class="SearchItem">
-		<?php echo i18n_get_translated($field["title"])?></br>
+		<?php echo lang_or_i18n_get_translated($field["title"], "fieldtitle-")?></br>
 		<?php
 		}
 
