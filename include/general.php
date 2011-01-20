@@ -758,7 +758,7 @@ function get_usergroups($usepermissions=false,$find="")
         # Searches for groups with names which contains the string defined in $find.
         $initial_length = count($return);
         for ($n = 0;$n<$initial_length;$n++) {
-            if (strpos(strtolower($return[$n]["name"]),strtolower($find))==false) {
+            if (strpos(strtolower($return[$n]["name"]),strtolower($find))===false) {
                 unset($return[$n]); # Removes this group.
             }
         }
