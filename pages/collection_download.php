@@ -273,6 +273,7 @@ $sizes=get_all_image_sizes(false,$maxaccess>=1);
 $available_sizes=array_reverse($available_sizes,true);
 
 # analyze available sizes and present options
+if (count($available_sizes)==0) { echo "<div class=Fixed>" . $lang["nodownloadcollection"] . "</div>"; } else {
 ?><select name="size" class="stdwidth" id="downloadsize">
 <?php if (array_key_exists('original',$available_sizes)){?>
 <option value="original"><?php echo $lang['original']; echo " (".count($available_sizes['original'])." of ".count($result)." available)";?></option>
@@ -285,7 +286,7 @@ foreach ($available_sizes as $key=>$value)
 	?><option value="<?php echo $key?>"><?php echo i18n_get_translated($sizename);echo " (".count($value)." of ".count($result)." available)";?></option><?php
 	}
 	} ?>
-	</select>
+	</select><?php } ?>
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
 

@@ -687,8 +687,8 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
     # Translates group names in the newly created array.
     $return = array();
     for ($n = 0;$n<count($r);$n++) {
-        $r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
-        $return[] = $r[$n]; # Adds to return array.
+       @$r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
+      $return[] = $r[$n]; # Adds to return array.
     }
 
     return $return;
