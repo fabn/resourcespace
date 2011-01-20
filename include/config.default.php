@@ -207,6 +207,9 @@ $exiftool_remove_existing=false;
 # If Exiftool path is set, write metadata to files upon download if possible.
 $exiftool_write=true;
 
+# Set metadata_read to false to omit the option to extract metadata.
+$metadata_read=true;
+
 # If Exiftool path is set, do NOT send files with the following extensions to exiftool for processing
 # For example: $exiftool_no_process=array("eps","png");
 $exiftool_no_process=array();

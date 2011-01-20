@@ -348,10 +348,14 @@ else
 	}
 ?>
 
+<?php if ($metadata_read){?>
 <div class="Question">
 <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
 <div class="clearerleft"> </div>
 </div>
+<?php } else { ?>
+<input type=hidden id="no_exif" name="no_exif" value="no">
+<?php } ?>
 
 <?php if($camera_autorotation){ ?>
 <div class="Question">
