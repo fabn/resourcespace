@@ -155,7 +155,7 @@ function send_periodic_report_emails()
 		$to_d = date("d");
 
 		# Translates the report name.		
-		$report["name"] = lang_or_i18n_get_translated($report["name"]);
+		$report["name"] = lang_or_i18n_get_translated($report["name"], "report-");
 
 		# Generate remote HTML table.
 		$output=do_report($report["report"], $from_y, $from_m, $from_d, $to_y, $to_m, $to_d,false,true);

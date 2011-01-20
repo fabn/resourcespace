@@ -704,7 +704,7 @@ elseif ($k!="")
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
     <?php } ?>
    	<?php if (isset($zipcommand)) { ?>
-    <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["zipall"]?></a></li>
+    <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
     <?php if (count($result)>0 && $k=="" && checkperm("q"))
     	{ 
