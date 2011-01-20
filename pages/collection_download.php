@@ -14,10 +14,10 @@ $includetext=getvalescaped("text","false");
 $collectiondata=get_collection($collection);
 
 # initiate text file
-if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
-$text=$collectiondata['name']."
-Downloaded ". date("D, F d, Y, H:i:s e")."\r\n
-Contents:\r\n\r\n";
+if (($zipped_collection_textfile==true)&&($includetext=="true")) { 
+    $text = $collectiondata['name'] . "\r\n" . 
+    $lang["downloaded"] . " " . nicedate(date("Y-m-d H:i:s"), true, true) . "\r\n\r\n" .
+    $lang["contents"] . ":\r\n\r\n";
 }
 
 # get collection
@@ -147,14 +147,14 @@ if ($submitted != "")
 					$fields=get_resource_field_data($ref);
 					$commentdata=get_collection_resource_comment($ref,$collection);
 					if (count($fields)>0){ 
-					$text.= "Ref: ".$ref.$sizetext." \r\n-----------------------------------------------------------------\r\n";
+					$text.= $lang["resourceid"] . ": " . $ref . ($sizetext=="" ? "" :" " . $sizetext) . "\r\n-----------------------------------------------------------------\r\n";
 						for ($i=0;$i<count($fields);$i++){
 							$value=$fields[$i]["value"];
 							$title=str_replace("Keywords - ","",$fields[$i]["title"]);
-							if ((trim($value)!="")&&(trim($value)!=",")){$text.=wordwrap ("* ".$title.": ".$value."\r\n",65);}
+							if ((trim($value)!="")&&(trim($value)!=",")){$text.= wordwrap("* " . $title . ": " . $value . "\r\n", 65);}
 						}
-					if(trim($commentdata['comment'])!=""){$text.=wordwrap ("Comment: ".$commentdata['comment']."\r\n",65);}	
-					if(trim($commentdata['rating'])!=""){$text.=wordwrap ("Rating: ".$commentdata['rating']."\r\n",65);}	
+					if(trim($commentdata['comment'])!=""){$text.= wordwrap($lang["comment"] . ": " . $commentdata['comment'] . "\r\n", 65);}	
+					if(trim($commentdata['rating'])!=""){$text.= wordwrap($lang["rating"] . ": " . $commentdata['rating'] . "\r\n", 65);}	
 					$text.= "-----------------------------------------------------------------\r\n\r\n";	
 					}
 				}
@@ -179,28 +179,56 @@ if ($submitted != "")
 	if ($path=="") {exit("Nothing to download.");}	
 	
 	
-	# append summary notes about the completeness of the package, write the text file, add to zip, and schedule for deletion 	
-	if (($zipped_collection_textfile==true)&&($includetext=="true")){
-	
-	$text.="NOTE: ".count($available_sizes[$size])." of ".count($result)." resources were available for this package.\r\n\r\n";
-	
-	foreach ($result as $resource)
-	{if (!in_array($resource['ref'],$used_resources)){$text.="Did not include: ".$resource['ref']." \r\n\r\n";}}
-	
-	$textfile = $storagedir . "/tmp/".$collection."-".safe_file_name($collectiondata['name']).$sizetext.".txt";
-	$fh = fopen($textfile, 'w') or die("can't open file");
-	fwrite($fh, $text);
-	fclose($fh);
+    # append summary notes about the completeness of the package, write the text file, add to zip, and schedule for deletion 	
+    if (($zipped_collection_textfile==true)&&($includetext=="true")){
+        $qty_sizes = count($available_sizes[$size]);
+        $qty_total = count($result);
+        $text.= $lang["status-note"] . ": " . $qty_sizes . " " . $lang["of"] . " " . $qty_total . " ";
+        switch ($qty_total) {
+        case 0:
+            $text.= $lang["resource-0"] . " ";
+            break;
+        case 1:
+            $text.= $lang["resource-1"] . " ";
+            break;
+        default:
+            $text.= $lang["resource-2"] . " ";
+            break;
+        }
 
-	$path.=$textfile . "\r\n";	
-	$deletion_array[]=$textfile;	
-	}
+        switch ($qty_sizes) {
+        case 0:
+            $text.= $lang["were_available-0"] . " ";
+            break;
+        case 1:
+            $text.= $lang["were_available-1"] . " ";
+            break;
+        default:
+            $text.= $lang["were_available-2"] . " ";
+            break;
+        }
+        $text.= $lang["forthispackage"] . ".\r\n\r\n";
+    
+        foreach ($result as $resource) {
+            if (!in_array($resource['ref'],$used_resources)) {
+                $text.= $lang["didnotinclude"] . ": " . $resource['ref'] . "\r\n\r\n";
+            }
+        }
+
+        $textfile = $storagedir . "/tmp/" . $collection . "-" . safe_file_name($collectiondata['name']) . $sizetext . ".txt";
+        $fh = fopen($textfile, 'w') or die("can't open file");
+        fwrite($fh, $text);
+        fclose($fh);
+
+        $path.=$textfile . "\r\n";	
+        $deletion_array[]=$textfile;	
+    }
 
 	# Create and send the zipfile
-	$file="Col_ID" . $collection . "_" . $size . ".zip";	
+	$file = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";	
 		
 	# Write command parameters to file.
-	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection."_" . $size . ".txt";
+	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection . "-" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
@@ -230,12 +258,12 @@ if ($submitted != "")
 	if ($use_collection_name_in_zip_name)
 		{
 		# Use collection name (if configured)
-		$filename="Col_ID" . $collection . "_".safe_file_name($collectiondata['name']) . "_" . $size . ".zip";
+		$filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name($collectiondata['name']) . "-" . $size . ".zip";
 		}
 	else
 		{
 		# Do not include the collection name in the filename (default)
-		$filename="Col_ID" . $collection . "_" . $size . ".zip";
+		$filename= $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
 		}
 		
 	header("Content-Disposition: attachment; filename=" . $filename);
@@ -255,11 +283,6 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["downloadzip"]?></h1>
 
-<?php
-$available_sizes=array_reverse($available_sizes,true);
-if (count($available_sizes)==0) { echo "<div class=Fixed>" . $lang["nodownloadcollection"] . "</div>"; } else {
-?>
-
 <form method=post>
 <input type=hidden name="collection" value="<?php echo $collection?>">
 
@@ -275,21 +298,54 @@ hook("collectiondownloadmessage");
 $maxaccess=collection_max_access($collection);
 $sizes=get_all_image_sizes(false,$maxaccess>=1);
 
+$available_sizes=array_reverse($available_sizes,true);
 
 # analyze available sizes and present options
-?><select name="size" class="stdwidth" id="downloadsize">
-<?php if (array_key_exists('original',$available_sizes)){?>
-<option value="original"><?php echo $lang['original']; echo " (".count($available_sizes['original'])." of ".count($result)." available)";?></option>
-<?php } ?>
+?><select name="size" class="stdwidth" id="downloadsize"><?php
+
+if (array_key_exists('original',$available_sizes)) {
+    ?><option value="original"><?php
+    $qty_originals = count($available_sizes['original']);
+    echo $lang['original'] . " (" . $qty_originals . " " . $lang["of"] . " " . count($result) . " ";
+    switch ($qty_originals) {
+    case 0:
+        echo $lang["are_available-0"];
+        break;
+    case 1:
+        echo $lang["are_available-1"];
+        break;
+    default:
+        echo $lang["are_available-2"];
+        break;
+    }
+    echo ")";
+    ?></option><?php
+} ?>
+
 <?php
-foreach ($available_sizes as $key=>$value)
-	{
-	foreach($sizes as $size){if ($size['id']==$key) {$sizename=$size['name'];}}
-	if ($key!='original'){
-	?><option value="<?php echo $key?>"><?php echo i18n_get_translated($sizename);echo " (".count($value)." of ".count($result)." available)";?></option><?php
-	}
-	} ?>
-	</select>
+
+foreach ($available_sizes as $key=>$value) {
+    foreach($sizes as $size){if ($size['id']==$key) {$sizename=$size['name'];}}
+	if ($key!='original') {
+	    ?><option value="<?php echo $key?>"><?php
+	    $qty_values = count($value);
+        echo $sizename . " (" . $qty_values . " " . $lang["of"] . " " . count($result) . " ";
+        switch ($qty_values) {
+        case 0:
+            echo $lang["are_available-0"];
+            break;
+        case 1:
+            echo $lang["are_available-1"];
+            break;
+        default:
+            echo $lang["are_available-2"];
+            break;
+        }
+        echo ")";
+        ?></option><?php
+    }
+} ?></select>
+
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
 
@@ -309,7 +365,6 @@ if ($zipped_collection_textfile=="true") { ?>
 <div class="clearerleft"> </div>
 </div>
 </form>
-<?php } ?>
 
 </div>
 <?php 

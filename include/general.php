@@ -1841,10 +1841,22 @@ function pager($break=true)
 	}
 	
 function get_all_image_sizes($internal=false,$restricted=false)
-	{
-	# Returns all image sizes available.
-	return sql_query("select * from preview_size " . (($internal)?"":"where internal!=1") . (($restricted)?" and allow_restricted=1":"") . " order by width asc");
-	}
+{
+    # Returns all image sizes available.
+    # Standard image sizes are translated using $lang.  Custom image sizes are i18n translated.
+
+    # Executes query.
+    $r = sql_query("select * from preview_size " . (($internal)?"":"where internal!=1") . (($restricted)?" and allow_restricted=1":"") . " order by width asc");
+
+    # Translates image sizes in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["name"] = lang_or_i18n_get_translated($r[$n]["name"], "imagesize-");
+        $return[] = $r[$n];
+    }
+    return $return;
+
+}
 	
 function image_size_restricted_access($id)
 	{

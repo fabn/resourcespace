@@ -198,6 +198,7 @@ $lang["multieditnotallowed"]="Mult-edit not allowed - all the resources are not 
 $lang["emailcollection"]="E-mail Collection";
 $lang["collectionname"]="Collection Name";
 $lang["collectionid"]="Collection ID";
+$lang["collectionidprefix"]="Col_ID";
 $lang["emailtousers"]="E-mail to users<br><br><b>For existing users</b> start typing the user's name to search, click the user when found and then click plus<br><br><b>For non-registered users</b> type the e-mail address then click plus";
 $lang["removecollectionareyousure"]="Are you sure you wish to remove this collection from your list?";
 $lang["managemycollections"]="Manage 'My Collections'";
@@ -232,6 +233,10 @@ $lang["purgecollectionareyousure"]="Are you sure you want to remove this collect
 $lang["collectionsdeleteempty"]="Delete Empty Collections";
 $lang["collectionsdeleteemptyareyousure"]="Are you sure you want to delete all of your own empty collections?";
 $lang["collectionsnothemeselected"]="You must select or enter a theme category name.";
+$lang["downloaded"]="Downloaded";
+$lang["contents"]="Contents";
+$lang["forthispackage"]="for this package";
+$lang["didnotinclude"]="Did not include";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";
@@ -521,6 +526,16 @@ $lang["softwarebuild"]="? Build"; # E.g. "ResourceSpace Build"
 $lang["softwarenotfound"]="'?'  not found"; # ? will be replaced.
 $lang["browseruseragent"]="Browser User-Agent";
 $lang['serverplatform']="Server Platform";
+$lang["are_available-0"]="are available";
+$lang["are_available-1"]="is available";
+$lang["are_available-2"]="are available";
+$lang["were_available-0"]="were available";
+$lang["were_available-1"]="was available";
+$lang["were_available-2"]="were available";
+$lang["resource-0"]="resources";
+$lang["resource-1"]="resource";
+$lang["resource-2"]="resources";
+$lang["status-note"]="NOTE";
 
 # Pager
 $lang["next"]="Next";
