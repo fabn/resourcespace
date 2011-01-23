@@ -1231,4 +1231,5 @@ $lang["can_email_resources_to_own_and_children_and_parent_groups"]="Can email re
 $lang["nodownloadcollection"]="You do not have access to download any of the resources in this collection.";
 
 $lang["progress"]="Progress";
+$lang["ticktodeletethisresearchrequest"]="Tick to delete this request";
 ?>

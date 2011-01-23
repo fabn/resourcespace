@@ -89,7 +89,7 @@ for ($n=0;$n<count($users);$n++)
 <strong><?php echo $collection_prefix?></strong> <input name="copyexistingref" type="text" class="shrtwidth">
 <div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["deletethisrequest"]?></label>
+<div class="Question"><label><?php echo $lang["ticktodeletethisresearchrequest"]?></label>
 <input name="delete" type="checkbox" value="yes">
 <div class="clearerleft"> </div></div>
 
