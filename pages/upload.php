@@ -129,7 +129,7 @@ function check(filename) {
 
 <?php if ($show_progress){?>
 <div class="Question" id="meter" style="display:none;">
-<label>Progress</label>
+<label><?php echo $lang["progress"] ?></label>
 <div class="Fixed">
     <div class="Fixed meter-wrap" id="meter-wrap" name="meter-wrap">
         <div class="meter-value" id="meter-value" name="meter-value" style="width: 0%;"></div>
