@@ -456,7 +456,7 @@ elseif ($k!="")
     
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
-    if (($count_result>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
+    if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
     <li class="clearerleft"><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
     <li><a href="edit.php?collection=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["action-editall"]?></a></li>
 
