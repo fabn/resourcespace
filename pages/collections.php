@@ -269,6 +269,8 @@ hook("processusercommand");
 <?php 
 $searches=get_saved_searches($usercollection);
 $result=do_search("!collection" . $usercollection);
+$count_result=count($result);
+$hook_count=hook("countresult","",array($usercollection,$count_result));if (is_numeric($hook_count)) {$count_result=$hook_count;} # Allow count display to be overridden by a plugin (e.g. that adds it's own resources from elsewhere e.g. ResourceConnect).
 $cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
 
@@ -323,7 +325,7 @@ if(!hook("updatemaincheckboxesfromcollectionframe")){
 if ($thumbs=="show") { 
 
 # Too many to show?
-if (count($result)>$max_collection_thumbs && $k=="")
+if ($count_result>$max_collection_thumbs && $k=="")
 	{
 	?>
 	<script type="text/javascript">
@@ -343,10 +345,10 @@ if ($basket)
 	<h2><?php echo $lang["yourbasket"] ?></h2>
 	<form target="main" action="purchase.php">
 
-	<?php if (count($result)==0) { ?>
+	<?php if ($count_result==0) { ?>
 	<p><br /><?php echo $lang["yourbasketisempty"] ?></p><br /><br /><br />
 	<?php } else { ?>
-	<p><br /><?php echo str_replace("?",count($result),$lang["yourbasketcontains"]) ?>
+	<p><br /><?php echo str_replace("?",$count_result,$lang["yourbasketcontains"]) ?>
 
 	<?php if ($basket_stores_size) {
 	# If they have already selected the size, we can show a total price here.
@@ -372,12 +374,12 @@ elseif ($k!="")
   <h2><?php echo $tempcol["name"]?></h2>
 	<br />
 	<?php echo $lang["created"] . " " . nicedate($tempcol["created"])?><br />
-  	<?php echo count($result) . " " . $lang["youfoundresources"]?><br />
+  	<?php echo $count_result . " " . $lang["youfoundresources"]?><br />
   	<?php if (isset($zipcommand)) { ?>
 	<a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
-    <?php if (count($result)>0 && checkperm("q"))
+    <?php if ($count_result>0 && checkperm("q"))
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
 		$min_access=collection_min_access($usercollection);
@@ -399,7 +401,7 @@ elseif ($k!="")
 <?php if (!hook("thumbsmenu")) { ?>
   <h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2>
   <form method="get" id="colselect">
-		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
+		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
 		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
 		<?php
 		$list=get_user_collections($userref);
@@ -454,7 +456,7 @@ elseif ($k!="")
     
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
-    if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
+    if (($count_result>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
     <li class="clearerleft"><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
     <li><a href="edit.php?collection=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["action-editall"]?></a></li>
 
@@ -462,7 +464,7 @@ elseif ($k!="")
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main">&gt; <?php echo $lang["viewall"]?></a></li>
     <?php } ?>
     
-    <?php if (count($result)>0)
+    <?php if ($count_result>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
 		$min_access=collection_min_access($usercollection);
@@ -511,7 +513,7 @@ for ($n=0;$n<count($searches);$n++)
 }		
 
 # Loop through thumbnails
-if (count($result)>0) 
+if ($count_result>0) 
 	{
 	# loop and display the results
 	for ($n=0;$n<count($result);$n++)			
@@ -594,6 +596,8 @@ if (count($result)>0)
 
 	# Plugin for additional collection listings	(deprecated)
 	if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
+	
+	hook("thumblistextra");
 	?>
 	</div>
 	<?php
@@ -619,7 +623,7 @@ if ($basket)
 	<form target="main" action="purchase.php">
 	<ul>
 	
-	<?php if (count($result)==0) { ?>
+	<?php if ($count_result==0) { ?>
 	<li><?php echo $lang["yourbasketisempty"] ?></li>
 	<?php } else { ?>
 
@@ -630,7 +634,7 @@ if ($basket)
 	<li><input type="submit" name="buy" value="&nbsp;&nbsp;&nbsp;<?php echo $lang["buynow"] ?>&nbsp;&nbsp;&nbsp;" /></li>
 	<?php } ?>
 
-    <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
+    <?php if ($count_result<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show&collection=<?php echo $usercollection ?>&k=<?php echo $k?>" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
     </ul>
 	</form>
@@ -649,7 +653,7 @@ elseif ($k!="")
 	<li><a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo $lang["sendfeedback"]?></a></li><?php } ?>
-   	<?php if (count($result)>0)
+   	<?php if ($count_result>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
 		$min_access=collection_min_access($usercollection);
@@ -697,7 +701,7 @@ elseif ($k!="")
 	<?php } ?>
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
-    if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
+    if (($count_result>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
     <li><a href="edit.php?collection=<?php echo $usercollection?>" target="main"><?php echo $lang["action-editall"]?></a></li>    
     <?php } else { ?>
@@ -706,7 +710,7 @@ elseif ($k!="")
    	<?php if (isset($zipcommand)) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
-    <?php if (count($result)>0 && $k=="" && checkperm("q"))
+    <?php if ($count_result>0 && $k=="" && checkperm("q"))
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
 		$min_access=collection_min_access($usercollection);
@@ -719,7 +723,7 @@ elseif ($k!="")
 	    }
 	?>
 	<?php hook("collectiontoolmin");?>
-    <?php if (count($result)<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
+    <?php if ($count_result<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
   </ul>
 </div>
@@ -763,7 +767,7 @@ elseif ($k!="")
 <?php } ?>
 <?php } ?>
 <!--Collection Count-->	
-<div id="CollectionMinitems"><strong><?php echo count($result)?></strong>&nbsp;<?php if (count($result)==1){echo $lang["item"];} else {echo $lang["items"];}?></div>		
+<div id="CollectionMinitems"><strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?></div>		
 <?php } ?>
 
 
