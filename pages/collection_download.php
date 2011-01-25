@@ -271,25 +271,12 @@ if ($submitted != "")
 	header("Content-Length: " . $filesize);
 	
 	set_time_limit(0);
-	$chunksize = 1 * (1024 * 1024); // how many bytes per chunk
-	if ($filesize > $chunksize) {
-		$handle = fopen($storagedir . "/tmp/" . $file, 'rb');
-		$buffer = '';
-		while (!feof($handle)) {
-			$buffer = fread($handle, $chunksize);
-			echo $buffer;
-			ob_flush();
-			flush();
-		}
-		fclose($handle);
-	} else {
-		readfile($storagedir . "/tmp/" . $file);
-	}
+	readfile($storagedir . "/tmp/" . $file);
+	
 	# Remove zip file.
 	unlink($storagedir . "/tmp/" . $file);
-	exit();
-    }
-	
+	exit();	
+	}
 include "../include/header.php";
 
 ?>
