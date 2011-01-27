@@ -840,7 +840,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false)
 		{
         // for Team Center uploads directly to archive status:
-		?><input type=hidden name="archive" id="archive" value="<?php echo (getval("archive","")==2)?"2":$resource["archive"]?>"><?php
+		if ($archive==2){ ?><input type=hidden name="archive" id="archive" value="2"><?php }
 		}
 	else { ?>
 	<?php if(!hook("replacestatusselector")){?>
