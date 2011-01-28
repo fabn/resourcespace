@@ -36,7 +36,7 @@ function SwapCSS(css)
 	
 <?php for ($n=0;$n<count($plugins);$n++)
 	{
-	$csspath=$storagedir."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
+	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
 	if (file_exists($csspath))
 		{
 		?>

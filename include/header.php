@@ -63,7 +63,7 @@ for ($n=0;$n<count($plugins);$n++)
 		<?php
 		}
 	$theme=((isset($userfixedtheme) && $userfixedtheme!=""))?$userfixedtheme:getval("colourcss",$defaulttheme);
-	$csspath=$storagedir."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
+	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
 	if (file_exists($csspath))
 		{
 		?>
