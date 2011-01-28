@@ -98,6 +98,10 @@ and running.
 
 
 # Uncomment and set next two lines to configure storage locations (to use another server for file storage)
+#
+# Note - these are really only useful on Windows systems where mapping filestore to a remote drive or other location is not trivial.
+# On Unix based systems it's usually much easier just to make '/filestore' a symbolic link to another location.
+#
 #$storagedir="/path/to/filestore"; # Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash
 #$storageurl="http://my.storage.server/filestore"; # Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash
 
