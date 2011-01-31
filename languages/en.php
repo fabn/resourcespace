@@ -1232,4 +1232,12 @@ $lang["nodownloadcollection"]="You do not have access to download any of the res
 
 $lang["progress"]="Progress";
 $lang["ticktodeletethisresearchrequest"]="Tick to delete this request";
+
+# SWFUpload
+$lang["queued_too_many_files"]="You have attempted to queue too many files.";
+$lang["creatingthumbnail"]="Creating thumbnail...";
+$lang["uploading"]="Uploading...";
+$lang["thumbnailcreated"]="Thumbnail Created.";
+$lang["done"]="Done.";
+$lang["stopped"]="Stopped."; 
 ?>

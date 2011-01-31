@@ -81,9 +81,17 @@ if (array_key_exists("Filedata",$_FILES))
 		}
     }
     
-$headerinsert.="
+$headerinsert.= "
 <script type=\"text/javascript\" src=\"../lib/swfupload/swfupload.js?" . $css_reload_key . "\"></script>
 <script type=\"text/javascript\" src=\"../lib/swfupload/handlers.js?" . $css_reload_key . "\"></script>
+<script type=\"text/javascript\">
+queued_too_many_files = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["queued_too_many_files"])) . "';
+creatingthumbnail = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["creatingthumbnail"])) . "';
+uploading = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["uploading"])) . "';
+thumbnailcreated = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["thumbnailcreated"])) . "';
+done = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["done"])) . "';
+stopped = '" . preg_replace("/\r?\n/", "\\n", addslashes($lang["stopped"])) . "';
+</script>
 ";
 
 include "../include/header.php";

@@ -20,6 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
+# Uppdaterad av Henrik Frizén 20110201 för version 2308, la till översättning av SWFUpload (och ändrade recent: Nya->Nytillagt)
 #
 #
 # User group names (for the default user groups)
@@ -605,7 +606,7 @@ $lang["deleteallresourcesfromcollection"]="Radera själva materialet i den här 
 $lang["deleteallsure"]="Är du säker på att du vill RADERA detta material? Detta kommer att radera själva materialet, inte bara ta bort det från denna samling.";
 $lang["batchdonotaddcollection"]="(Inte lägga till i en samling)";
 $lang["collectionsthemes"]="Relaterade teman och publika samlingar";
-$lang["recent"]="Nya";
+$lang["recent"]="Nytillagt";
 $lang["batchcopyfrom"]="Kopiera metadata från materialnummer";
 $lang["copy"]="Kopiera";
 $lang["zipall"]="Zippa alla";
@@ -1250,4 +1251,12 @@ $lang["nodownloadcollection"]="Du har inte behörighet att ladda ner material fr
 
 $lang["progress"]="Förlopp";
 $lang["ticktodeletethisresearchrequest"]="Markera kryssrutan och klicka på 'Spara' för att radera förfrågan";
+
+# SWFUpload
+$lang["queued_too_many_files"]="Du har försökt att köa för många filer.";
+$lang["creatingthumbnail"]="Skapar miniatyrbild...";
+$lang["uploading"]="Laddar upp...";
+$lang["thumbnailcreated"]="En miniatyrbild är skapad.";
+$lang["done"]="Slutförd.";
+$lang["stopped"]="Stoppad."; 
 ?>
