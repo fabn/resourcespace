@@ -151,6 +151,8 @@ if (isset($ffmpeg_alternatives))
 
 if (!mysql_ping())
 	{
+	global $mysql_server,$mysql_username,$mysql_password,$mysql_db,$mysql_charset;
+	
 	mysql_connect($mysql_server,$mysql_username,$mysql_password,true);
 	mysql_select_db($mysql_db);
 	// If $mysql_charset is defined, we use it
