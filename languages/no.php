@@ -854,4 +854,6 @@ $lang['location-details'] = 'Dobbelt-klikk på kartet for å plassere nål. Når
 $lang["publiccollections"]="Åpne lysbord";
 $lang["viewmygroupsonly"]="Vis kun mine grupper";
 
+$lang["generateexternalurl"]="Lag ekstern URL";
+
 ?>
