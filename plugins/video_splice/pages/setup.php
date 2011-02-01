@@ -29,7 +29,7 @@ $resource_types=get_resource_types();
 <p>Please specify which resource type the cut and splice functionality should appear for.</p>
    <p><label for="resourcetype">Video Resource Type:</label>
    
-   <select name="resourcetype"?
+   <select name="resourcetype">
    <?php foreach ($resource_types as $rt) { ?>
    <option value="<?php echo $rt["ref"] ?>" <?php if ($rt["ref"]==$videosplice_resourcetype) {echo "selected"; } ?>><?php echo $rt["name"] ?></option>
    <?php } ?>
@@ -50,4 +50,4 @@ $resource_types=get_resource_types();
 
 
 </form>
-</div>	
+</div>
