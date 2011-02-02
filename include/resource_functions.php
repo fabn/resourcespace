@@ -978,10 +978,10 @@ function write_metadata($path,$ref)
 		{
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
-		      if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
+		      # Since get_temp_dir method does this check, omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 				$filename = pathinfo($path);
 				$filename = $filename['basename'];	
-				$tmpfile=$storagedir . "/tmp/" . $filename;				
+				$tmpfile=get_temp_dir() . "/" . $filename;
 				copy($path,$tmpfile);
 			
 					#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile

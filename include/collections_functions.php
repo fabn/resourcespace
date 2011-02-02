@@ -112,7 +112,7 @@ function add_resource_to_collection($resource,$collection,$smartadd=false,$size=
 				global $userref;
 				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
 				#log this
-				collection_log($collection,"s",$resource, '#new_resource');
+				collection_log($collection,"s",$resource, $keys[$n]["access_key"]);
 				}
 			
 			}
@@ -785,7 +785,7 @@ function add_saved_search_items($collection)
 				$resource=$results[$r]["ref"];
 				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
 				#log this
-				collection_log($collection,"s",$resource, '#new_resource');
+				collection_log($collection,"s",$resource, $keys[$n]["access_key"]);
 				}
 			}
 		}

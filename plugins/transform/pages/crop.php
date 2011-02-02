@@ -44,7 +44,7 @@ if ($access!=0 || ($original && !$edit_access)){
 
 
 // generate a preview image for the operation if it doesn't already exist
-if (!file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
+if (!file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
 	generate_transform_preview($ref) or die("Error generating transform preview.");
 }
 
@@ -66,7 +66,7 @@ $preview_ext = sql_value("select preview_extension value from resource where ref
 
 // retrieve image paths for preview image and original file
 //$previewpath = get_resource_path($ref,true,$cropper_cropsize,false,$preview_ext);
-$previewpath = "$storagedir/tmp/transform_plugin/pre_$ref.jpg";
+$previewpath = get_temp_dir() . "/transform_plugin/pre_$ref.jpg";
 $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
 
 
@@ -170,7 +170,7 @@ if (!$download && !$original)
 	}
 else
 	{
-	$tmpdir = "$storagedir/tmp";
+	$tmpdir = get_temp_dir();
 	$newpath = "$tmpdir/transform_plugin/download_$ref." . $new_ext;
 	}
 	
@@ -365,8 +365,8 @@ if (!$download && !$original){
     hook("removeannotations");
 
     // remove the cached transform preview, since it will no longer be accurate
-    if (file_exists("../../../filestore/tmp/transform_plugin/pre_$ref.jpg")){
-	unlink("../../../filestore/tmp/transform_plugin/pre_$ref.jpg");
+    if (file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
+	unlink(get_temp_dir() . "/transform_plugin/pre_$ref.jpg");
     }
 
     header("Location:../../../pages/view.php?ref=$ref\n\n");
@@ -399,7 +399,7 @@ $resource = get_resource_data($ref);
 // retrieve path to image and figure out size we're using
 if ($resource["has_image"]==1)
         {
-		$imageurl = "../../../filestore/tmp/transform_plugin/pre_$ref.jpg";
+		$imageurl = get_temp_dir(true) . "/transform_plugin/pre_$ref.jpg";
 		$imagepath = $imageurl;
 
         	//$imagepath=get_resource_path($ref,true,$cropper_cropsize,false,$resource["preview_extension"],-1,1);

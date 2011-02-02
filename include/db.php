@@ -913,12 +913,57 @@ function debug($text)
 	{
 	# Output some text to a debug file.
 	# For developers only
-	global $storagedir,$debug_log;
+	global $debug_log;
 	if (!$debug_log) {return true;} # Do not execute if switched off.
 	
-	$f=fopen($storagedir . "/tmp/debug.txt","a");
+	# Cannot use the general.php: get_temp_dir() method here since general may not have been included.
+	$f=fopen(get_debug_log_dir() . "/debug.txt","a");
 	fwrite($f,$text . "\n");
 	fclose ($f);
 	return true;
 	}
 	
+/**
+ * Determines where the debug log will live.  Typically, same as tmp dir (See general.php: get_temp_dir().
+ * Since general.php may not be included, we cannot use that method so I have created this one too.
+ * @return string - The path to the debug_log directory.
+ */
+function get_debug_log_dir()
+{
+    // Set up the default.
+    $result = dirname(dirname(__FILE__)) . "/filestore/tmp";
+
+    // if $tempdir is explicity set, use it.
+    if(isset($tempdir))
+    {
+        // Make sure the dir exists.
+        if(!is_dir($tempdir))
+        {
+            // If it does not exist, create it.
+            mkdir($tempdir, 0777);
+        }
+        $result = $tempdir;
+    }
+    // Otherwise, if $storagedir is set, use it.
+    else if (isset($storagedir))
+    {
+        // Make sure the dir exists.
+        if(!is_dir($storagedir . "/tmp"))
+        {
+            // If it does not exist, create it.
+            mkdir($storagedir . "/tmp", 0777);
+        }
+        $result = $storagedir . "/tmp";
+    }
+    else
+    {
+        // Make sure the dir exists.
+        if(!is_dir($result))
+        {
+            // If it does not exist, create it.
+            mkdir($result, 0777);
+        }
+    }
+    // return the result.
+    return $result;
+}

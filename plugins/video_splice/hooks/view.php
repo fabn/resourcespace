@@ -73,7 +73,7 @@ function HookVideo_spliceViewAfterresourceactions()
 			if ($preview)
 				{
 				# Preview only.
-				$target="../filestore/tmp/video_splice_preview_" . $userref . "." . $ffmpeg_preview_extension;
+				$target=get_temp_dir() . "/video_splice_preview_" . $userref . "." . $ffmpeg_preview_extension;
 				}
 			else
 				{
@@ -174,7 +174,7 @@ if (isset($preview) && $preview)
     <param name="allowFullScreen" value="true" />
 	
      <param name="movie" value="../lib/flashplayer/player_flv_maxi.swf" />
-     <param name="FlashVars" value="flv=<?php echo $baseurl . "/pages/" . $target ?>&amp;width=240&amp;height=135&amp;margin=0&amp;buffer=10&amp;showvolume=0&amp;volume=200&amp;showtime=0&amp;autoplay=1&amp;autoload=1&amp;showfullscreen=0&amp;showstop=0&amp;playercolor=<?php echo $colour?>" />
+     <param name="FlashVars" value="flv=<?php echo convert_path_to_url($target) ?>&amp;width=240&amp;height=135&amp;margin=0&amp;buffer=10&amp;showvolume=0&amp;volume=200&amp;showtime=0&amp;autoplay=1&amp;autoload=1&amp;showfullscreen=0&amp;showstop=0&amp;playercolor=<?php echo $colour?>" />
 	</object>
 	</p>
 	<?php

@@ -65,9 +65,9 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file.
 	    require "../../lib/pcltar/pcltar.lib.php";
 	    
 	    # Create tmp folder if not existing
-	    if (!file_exists(dirname(__FILE__).'/../../filestore/tmp')) {mkdir(dirname(__FILE__).'/../../filestore/tmp',0777);}
+	    # Since get_temp_dir() method does this, omit: if (!file_exists(dirname(__FILE__).'/../../filestore/tmp')) {mkdir(dirname(__FILE__).'/../../filestore/tmp',0777);}
 	    
-	    $tmp_file = dirname(__FILE__).'/../../filestore/tmp/'.basename($_FILES['pfile']['name'].'.tgz');
+	    $tmp_file = get_temp_dir() . '/'.basename($_FILES['pfile']['name'].'.tgz');
 	    if(move_uploaded_file($_FILES['pfile']['tmp_name'], $tmp_file)==true){
 	         $rejected = false;
 	         $filelist = PclTarList($tmp_file);

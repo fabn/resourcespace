@@ -67,7 +67,7 @@ if (getval("splice","")!="" && count($videos)>1)
 			exit("Error: Video " . $videos[$n]["ref"] . " does not have an $ffmpeg_preview_extension file attached as it's main file. Was it the output of a crop operation?");
 			}
 		# Encode intermediary
-		$intermediary="../../../filestore/tmp/video_splice_temp_" . $videos[$n]["ref"] . ".mpg";
+		$intermediary=get_temp_dir() . "/video_splice_temp_" . $videos[$n]["ref"] . ".mpg";
 		$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($source) . " -sameq " . escapeshellarg($intermediary);
 		#echo $shell_exec_cmd;
 		$output=exec($shell_exec_cmd);

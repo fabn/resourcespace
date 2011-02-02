@@ -4,7 +4,7 @@ function generate_transform_preview($ref){
 	global $storagedir;	
         global $imagemagick_path;
 
-	$tmpdir = "$storagedir/tmp";
+	$tmpdir = get_temp_dir();
 
         // get imagemagick path
         $command=$imagemagick_path . "/bin/convert";
@@ -15,19 +15,19 @@ function generate_transform_preview($ref){
         $orig_ext = sql_value("select file_extension value from resource where ref = '$ref'",'');
         $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
 
-	if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
-	if(!is_dir($storagedir."/tmp/transform_plugin")){mkdir($storagedir."/tmp/transform_plugin",0777);}
+	# Since this check is in get_temp_dir() omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
+	if(!is_dir(get_temp_dir() . "/transform_plugin")){mkdir(get_temp_dir() . "/transform_plugin",0777);}
 
         $command .= " \"$originalpath\" +matte -flatten -colorspace RGB -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         shell_exec($command);
 	
 
 	// while we're here, clean up any old files still hanging around
-	$dp = opendir("$storagedir/tmp/transform_plugin");
+	$dp = opendir(get_temp_dir() . "/transform_plugin");
 	while ($file = readdir($dp)) {
 		if ($file <> '.' && $file <> '..'){
-			if ((filemtime("$storagedir/tmp/transform_plugin/$file")) < (strtotime('-2 days'))) {
-				unlink("$storagedir/tmp/transform_plugin/$file");
+			if ((filemtime(get_temp_dir() . "/transform_plugin/$file")) < (strtotime('-2 days'))) {
+				unlink(get_temp_dir() . "/transform_plugin/$file");
 			}
 		}
 	}

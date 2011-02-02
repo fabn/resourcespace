@@ -66,7 +66,7 @@ if ($submitted != "")
 	$deletion_array=array();
 	
 	# No temporary folder? Create one
-	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
+	# Since this check is done in get_temp_dir() method, omit: if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 	
 	# Build a list of files to download
 	for ($n=0;$n<count($result);$n++)
@@ -100,7 +100,7 @@ if ($submitted != "")
 				# If using original filenames when downloading, copy the file to new location so the name is included.
 				if ($original_filenames_when_downloading)	
 					{
-					if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
+					# Since this check is done in get_temp_dir() method, omit: if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 					# Retrieve the original file name		
 
 					$filename=get_data_by_field($ref,$filename_field);	
@@ -130,7 +130,7 @@ if ($submitted != "")
 						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
 						
 						# Copy to a new location
-						$newpath=$storagedir . "/tmp/" . $filename;
+						$newpath=get_temp_dir() . "/" . $filename;
 						copy($p,$newpath);
 						
 						# Add the temporary file to the post-zip deletion list.
@@ -215,7 +215,7 @@ if ($submitted != "")
             }
         }
 
-        $textfile = $storagedir . "/tmp/" . $collection . "-" . safe_file_name($collectiondata['name']) . $sizetext . ".txt";
+        $textfile = get_temp_dir() . "/". $collection . "-" . safe_file_name($collectiondata['name']) . $sizetext . ".txt";
         $fh = fopen($textfile, 'w') or die("can't open file");
         fwrite($fh, $text);
         fclose($fh);
@@ -228,7 +228,7 @@ if ($submitted != "")
 	$file = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";	
 		
 	# Write command parameters to file.
-	$cmdfile = $storagedir . "/tmp/zipcmd" . $collection . "-" . $size . ".txt";
+	$cmdfile = get_temp_dir() . "/zipcmd" . $collection . "-" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
@@ -237,13 +237,13 @@ if ($submitted != "")
 	if ($config_windows)
 		{
 		# Use the Zzip format to specify the external file
-		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " @" . $cmdfile);
+		exec("$zipcommand " . get_temp_dir() . "/" . $file . " @" . $cmdfile);
 		}
 	else
 		{
 		# UNIX et al.
 		# Pipe the file containing the filenames to zip
-		exec("$zipcommand " . $storagedir . "/tmp/" . $file . " -@ < " . $cmdfile);
+		exec("$zipcommand " . get_temp_dir() . "/" . $file . " -@ < " . $cmdfile);
 		}
 	
 	# Zip done, add the 
@@ -253,7 +253,7 @@ if ($submitted != "")
 	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
 	
 	# Get the file size of the zip.
-	$filesize=@filesize($storagedir . "/tmp/" . $file);
+	$filesize=@filesize(get_temp_dir() . "/" . $file);
 	
 	if ($use_collection_name_in_zip_name)
 		{
@@ -271,10 +271,10 @@ if ($submitted != "")
 	header("Content-Length: " . $filesize);
 	
 	set_time_limit(0);
-	readfile($storagedir . "/tmp/" . $file);
+	readfile(get_temp_dir() . "/" . $file);
 	
 	# Remove zip file.
-	unlink($storagedir . "/tmp/" . $file);
+	unlink(get_temp_dir() . "/" . $file);
 	exit();	
 	}
 include "../include/header.php";

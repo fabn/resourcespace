@@ -54,8 +54,8 @@ if (array_key_exists("File0",$_FILES))
 		
 		# Move the chunk to a temporary location.
 		$uploadedchunk=$_FILES["Filedata"]['tmp_name'];
-		if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);} # check tmp dir exists
-		$chunkpath=$storagedir . "/tmp/jupload_chunk_part_" . $userref . ".tmp";
+		# Since this check is done in get_temp_dir(), omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);} # check tmp dir exists
+		$chunkpath=get_temp_dir() . "/jupload_chunk_part_" . $userref . ".tmp";
 		if (file_exists($chunkpath)) {unlink ($chunkpath);} # remove any existing chunk file
 		$result=move_uploaded_file($uploadedchunk, $chunkpath);
 		
@@ -68,7 +68,7 @@ if (array_key_exists("File0",$_FILES))
    		chmod($chunkpath,0777); # Make the chunk writeable.
 
 		# Add this to the assembled file.
-		$assembledpath=$storagedir . "/tmp/jupload_chunk_assembled_" . $userref . ".tmp";
+		$assembledpath=get_temp_dir() . "/jupload_chunk_assembled_" . $userref . ".tmp";
 		if ($jupart==1)
 			{
 			# First part - simply move the chunk to the assembled file location
@@ -80,7 +80,7 @@ if (array_key_exists("File0",$_FILES))
 		else
 			{
 			# Subsequent parts - append the chunk to the main file location
-			$f=fopen($assembledpath,"a"); # Open assembled file for appending.
+			$f=fopen($assembledpath,"a"); #ï¿½Open assembled file for appending.
 			fwrite($f,file_get_contents($chunkpath));
 			fclose($f);
 			unlink($chunkpath); # Delete the temporary chunk file.

@@ -84,8 +84,9 @@ global $config_windows;
 if ($config_windows)
 	{
 	# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
-	file_put_contents("e:/resourcespace/filestore/tmp/ffmpeg.bat",$shell_exec_cmd);
-	$shell_exec_cmd="e:/resourcespace/filestore/tmp/ffmpeg.bat";
+	//FIXME: Why is there a hardcoded path to e: here?
+	file_put_contents(get_temp_dir() . "/ffmpeg.bat",$shell_exec_cmd);
+	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
 	}
 
 $output=shell_exec($shell_exec_cmd);

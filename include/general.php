@@ -7,6 +7,9 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 	# returns the correct path to resource $ref of size $size ($size==empty string is original resource)
 	# If one or more of the folders do not exist, and $generate=true, then they are generated
 	
+	    $override=hook("get_resource_path_override","general",array($ref,$getfilepath,$size,$generate,$extension,$scramble,$page,$watermarked,$file_modified,$alternative,$includemodified));
+	    if (is_string($override)) {return $override;}
+
 	global $storagedir;
 
 	if ($size=="")
@@ -2596,13 +2599,13 @@ function is_process_lock($name)
 	global $storagedir,$process_locks_max_seconds;
 	
 	# Check that tmp/process_locks exists, create if not.
-	if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
-	if(!is_dir($storagedir . "/tmp/process_locks")){mkdir($storagedir . "/tmp/process_locks",0777);}	
+	# Since the get_temp_dir() method does this checking, omit: if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
+	if(!is_dir(get_temp_dir() . "/process_locks")){mkdir(get_temp_dir() . "/process_locks",0777);}
 	
 	# No lock file? return false
-	if (!file_exists($storagedir . "/tmp/process_locks/" . $name)) {return false;}
+	if (!file_exists(get_temp_dir() . "/process_locks/" . $name)) {return false;}
 	
-	$time=trim(file_get_contents($storagedir . "/tmp/process_locks/" . $name));
+	$time=trim(file_get_contents(get_temp_dir() . "/process_locks/" . $name));
 	if ((time()-$time)>$process_locks_max_seconds) {return false;} # Lock has expired
 	
 	return true; # Lock is valid
@@ -2611,18 +2614,16 @@ function is_process_lock($name)
 function set_process_lock($name)
 	{
 	# Set a process lock
-	global $storagedir;
 	
-	file_put_contents($storagedir . "/tmp/process_locks/" . $name,time());
+	file_put_contents(get_temp_dir() . "/process_locks/" . $name,time());
 	return true;
 	}
 	
 function clear_process_lock($name)
 	{
 	# Clear a process lock
-	global $storagedir;
 	
-	unlink($storagedir . "/tmp/process_locks/" . $name);
+	unlink(get_temp_dir() . "/process_locks/" . $name);
 	return true;
 	}
 	
@@ -2756,3 +2757,72 @@ function payment_set_complete($collection)
 	
 	return true;
 	}
+
+
+/**
+ * Determines where the tmp directory is.  There are three options here:
+ * 1. tempdir - If set in config.php, use this value.
+ * 2. storagedir ."/tmp" - If storagedir is set in config.php, use it and create a subfolder tmp.
+ * 3. generate default path - use filestore/tmp if all other attempts fail.
+ * @param bool $asUrl - If we want the return to be like http://my.resourcespace.install/path set this as true.
+ * @return string Path to the tmp directory.
+ */
+function get_temp_dir($asUrl = false)
+{
+    global $storagedir, $tempdir;
+    // Set up the default.
+    $result = dirname(dirname(__FILE__)) . "/filestore/tmp";
+
+    // if $tempdir is explicity set, use it.
+    if(isset($tempdir))
+    {
+        // Make sure the dir exists.
+        if(!is_dir($tempdir))
+        {
+            // If it does not exist, create it.
+            mkdir($tempdir, 0777);
+        }
+        $result = $tempdir;
+    }
+    // Otherwise, if $storagedir is set, use it.
+    else if (isset($storagedir))
+    {
+        // Make sure the dir exists.
+        if(!is_dir($storagedir . "/tmp"))
+        {
+            // If it does not exist, create it.
+            mkdir($storagedir . "/tmp", 0777);
+        }
+        $result = $storagedir . "/tmp";
+    }
+    else
+    {
+        // Make sure the dir exists.
+        if(!is_dir($result))
+        {
+            // If it does not exist, create it.
+            mkdir($result, 0777);
+        }
+    }
+    // return the result.
+    if($asUrl==true)
+    {
+        $result = convert_path_to_url($result);
+    }
+    return $result;
+}
+
+/**
+ * Converts a path to a url relative to the installation.
+ * @param string $abs_path: The absolute path.
+ * @return Url that is the relative path.
+ */
+function convert_path_to_url($abs_path)
+{
+    // Get the root directory of the app:
+    $rootDir = dirname(dirname(__FILE__));
+    // Get the baseurl:
+    global $baseurl;
+    // Replace the $rootDir with $baseurl in the path given:
+    return str_ireplace($rootDir, $baseurl, $abs_path);
+}
