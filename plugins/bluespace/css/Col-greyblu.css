@@ -4,13 +4,6 @@
 	background: none;
 	}
 
-
-.HomePicturePanelIN, #image1
-	{
-	border: none;
-	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
-	}
-
 .TabSelected a 
 	{	
 	border-top-right-radius:5px;border-top-left-radius:5px;	

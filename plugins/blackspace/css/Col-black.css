@@ -8,14 +8,14 @@ body,html {background: #111 ;}
 
 .HomePicturePanel
 	{
-	border: 1px solid #333 ;
+	border: 1px solid #111 ;
 	width: 517px;
 	}
 
 .HomePicturePanelIN, #image1
 	{
 	border: none;
-	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+
 	}
 
 .TabSelected a 
