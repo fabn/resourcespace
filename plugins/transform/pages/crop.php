@@ -92,6 +92,7 @@ $new_width = $_REQUEST['new_width'];
 $new_height = $_REQUEST['new_height'];
 $alt_type = $_REQUEST['alt_type'];
 
+
 if (isset($_REQUEST['flip']) && $_REQUEST['flip'] == 1){
     $flip = true;
 } else {
@@ -137,7 +138,8 @@ if ($width == 0 && $height == 0 && ($new_width > 0||$new_height > 0)) {
 
 // determine output format
 // prefer what the user requested. If nothing, look for configured default. If nothing, use same as original
-if (isset($_REQUEST['new_ext']) && strlen($_REQUEST['new_ext']) == 3){
+if (getval("slideshow","")!=""){$new_ext="jpg";}
+else if (isset($_REQUEST['new_ext']) && strlen($_REQUEST['new_ext']) == 3){
 	// is this an allowed extension?
 	$new_ext = strtolower($_REQUEST['new_ext']);
 	if (!in_array(strtoupper($new_ext),$cropper_formatarray)){
@@ -606,8 +608,8 @@ include "../../../include/header.php";
     <input type='hidden' name='origwidth' id='origwidth'  value='<?php echo $origwidth ?>' />
     <input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
     <?php if ($original){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
-	<?php echo $lang['replaceslideshowimage']; ?>
-	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/>
+	<?php if (substr(sprintf('%o', fileperms((__DIR__)."/../../../".$homeanim_folder)), -4)=="0777"){ echo $lang['replaceslideshowimage']; ?>
+	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/><?php } ?>
 	
     <table id="transform_slideshow_options" style="display:none;">
     <tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
