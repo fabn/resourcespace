@@ -608,7 +608,7 @@ include "../../../include/header.php";
     <input type='hidden' name='origwidth' id='origwidth'  value='<?php echo $origwidth ?>' />
     <input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
     <?php if ($original){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
-	<?php if (substr(sprintf('%o', fileperms((__DIR__)."/../../../".$homeanim_folder)), -4)=="0777"){ echo $lang['replaceslideshowimage']; ?>
+	<?php if (substr(sprintf('%o', fileperms(dirname(__FILE__)."/../../../".$homeanim_folder)), -4)=="0777"){ echo $lang['replaceslideshowimage']; ?>
 	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/><?php } ?>
 	
     <table id="transform_slideshow_options" style="display:none;">
