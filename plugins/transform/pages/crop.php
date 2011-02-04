@@ -163,7 +163,7 @@ $mydesc = mysql_real_escape_string($description);
 # Is this a download only?
 $download=(getval("download","")!="");
 
-if (!$download && !$original)
+if (!$download && !$original && getval("slideshow","")=="")
 	{
 	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','',0,mysql_real_escape_string($alt_type));
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
@@ -261,7 +261,7 @@ if ($flip || $rotation > 0){
 
 $command .= " \"$newpath\"";
 
-if ($cropper_debug && !$download){
+if ($cropper_debug && !$download && getval("slideshow","")==""){
 	error_log($command);
 	if (isset($_REQUEST['showcommand'])){
 		echo "$command";
@@ -285,7 +285,7 @@ $newfileheight = $newfiledimensions[1];
 
 // generate previews if needed
 global $alternative_file_previews;
-if ($alternative_file_previews && !$download && !$original)
+if ($alternative_file_previews && !$download && !$original && getval("slideshow","")=="")
 	{
 	create_previews($ref,false,$new_ext,false,false,$newfile);
 	}
@@ -303,7 +303,7 @@ $filename = preg_replace("/[^A-Za-z0-9_\- ]/",'',$filename);
 if ( $cropper_custom_filename && strlen($filename) > 0){
 	$filename = "$filename";
 } else {
-	if ($download)
+	if ($download || getval("slideshow","")!="")
 		{
 		$filename=$ref . "_" . strtolower($lang['transform']);
 		}
@@ -578,12 +578,7 @@ include "../../../include/header.php";
 				return false;
 			}
 
-			if (theform.xcoord.value == 0 && document.getElementById('slideshow').checked){
-				alert('<?php echo addslashes($lang['errormustchoosecropscale']); ?>');
-				return false;
-			}
-
-			
+	
 			<?php if (!$cropper_allow_scale_up) { ?>
 				if (Number(theform.new_width.value) > Number(theform.origwidth.value) || Number(theform.new_height.value) > Number(theform.origheight.value)){
 					alert('<?php echo addslashes($lang['errorspecifiedbiggerthanoriginal']); ?>');
@@ -614,11 +609,12 @@ include "../../../include/header.php";
 	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/>
 	
     <table id="transform_slideshow_options" style="display:none;">
+    <tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
       <tr>
         <td style='text-align:right'><?php echo $lang["slideshowsequencenumber"]; ?>: </td>
         <td><input type='text' name='sequence' id='sequence' value='' size='4' /></td>
 		</tr>
-	<tr><td colspan="4"><input type="submit" name="submit" value="<?php echo $lang['replaceslideshowimage'] ?>"></td></td></tr>
+	<tr><td colspan="4"><input type="submit" name="submit" value="<?php echo $lang['replaceslideshowimage'] ?>"></td></tr>
 	</table>
 	
     <table id="transform_options">
