@@ -15,12 +15,16 @@ if (!hook("replaceslideshow")) {
 # Count the files in the configured $homeanim_folder.
 $dir = dirname(__FILE__) . "/../" . $homeanim_folder; 
 $filecount = 0; 
+$checksum=0; # Work out a checksum which is the total of all the image files in bytes - used in image URLs to force a refresh if any of the images change.
 $d = dir($dir); 
 while ($f = $d->read()) { 
- if(preg_match("/[0-9]+\.(jpg)/",$f)) { 
- if(!is_dir($f)) $filecount++; 
+ if(preg_match("/[0-9]+\.(jpg)/",$f))
+ 	{ 
+ 	$filecount++; 
+	$checksum+=filesize($dir . "/" . $f);
+	}
  } 
-} 
+
 $homeimages=$filecount;
 
 if ($filecount>1) { # Only add Javascript if more than one image.
@@ -50,14 +54,14 @@ function nextPhoto()
 	  	{
 	    // image1.style.visibility='hidden';
 	    Effect.Fade(image1);
-	    window.setTimeout("image1.src='../<?php echo $homeanim_folder?>/" + next_photo + ".jpg';",1000);
+	    window.setTimeout("image1.src='../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>';",1000);
      	flip=1;
      	}
 	  else
 	  	{
 	    // image1.style.visibility='visible';
 	    Effect.Appear(image1);
-	    setTimeout("image2.style.background='url(../<?php echo $homeanim_folder?>/" + next_photo + ".jpg)';",1000);
+	    setTimeout("image2.style.background='url(../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>)';",1000);
 	    flip=0;
 		}	  	
      
@@ -70,7 +74,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 <?php } ?>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg');"><img src='../<?php echo $homeanim_folder?>/2.jpg' alt='' id='image1' width=517 height=350 style="display:none;"></div>
+<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' width=517 height=350 style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
 <?php } # End of hook replaceslideshow
