@@ -380,7 +380,7 @@ if (!$download && !$original && getval("slideshow","")==""){
 	$sequence=getval("sequence","");
 	if (!is_numeric($sequence)) {exit("Invalid sequence number. Please enter a numeric value.");}
 	if (!checkperm("t")) {exit ("Permission denied.");}
-	rename($newpath,dirname(__FILE__) . "/../../../gfx/homeanim/gfx/" . $sequence . ".jpg");
+	rename($newpath,dirname(__FILE__) . "/../../../".$homeanim_folder."/" . $sequence . ".jpg");
 	}
 else
 	{
