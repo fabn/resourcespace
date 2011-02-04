@@ -25,7 +25,7 @@ $lang['fliphorizontal']="Flip horizontally?";
 $lang['transform_original']="Transform original";
 $lang['priorversion']="Prior version";
 $lang['replaced']="Replaced";
-
-
+$lang['replaceslideshowimage']="Replace slideshow image";
+$lang['slideshowsequencenumber']="Sequence number (1, 2, 3 etc.)";
 
 ?>

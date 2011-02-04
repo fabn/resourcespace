@@ -333,12 +333,12 @@ if ($mpcalc > 0){
 if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
 	
 // Do something with the final file:
-if (!$download && !$original){
+if (!$download && !$original && getval("slideshow","")==""){
     // we are supposed to make an alternative
 	$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext',file_size = '$newfilesize',  description = concat(description,'" . $deschyphen . $newfilewidth . " x " . 		$newfileheight . " pixels $mptext') where ref='$newfile'");
 	resource_log($ref,'a','',"$new_ext " . strtolower($verb) . " to $newfilewidth x $newfileheight");
 
-} elseif ($original) {
+} elseif ($original && getval("slideshow","")=="") {
     // we are supposed to replace the original file
 
     $origalttitle = $lang['priorversion'];
@@ -372,8 +372,15 @@ if (!$download && !$original){
     header("Location:../../../pages/view.php?ref=$ref\n\n");
     exit;
 
-} else {
-
+} elseif (getval("slideshow","")!="")
+	{
+	# Produce slideshow.
+	$sequence=getval("sequence","");
+	if (!is_numeric($sequence)) {exit("Invalid sequence number. Please enter a numeric value.");}
+	rename($newpath,dirname(__FILE__) . "/../../../gfx/homeanim/gfx/" . $sequence . ".jpg");
+	}
+else
+	{
     // we are supposed to download
 	# Output file, delete file and exit
 	$filename.="." . $new_ext;
@@ -403,7 +410,6 @@ if ($resource["has_image"]==1)
 		$imagepath = get_temp_dir(false) . "/transform_plugin/pre_$ref.jpg";
 
         	//$imagepath=get_resource_path($ref,true,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
-        	echo $imagepath;
         	if (!file_exists($imagepath)){
 				echo $lang['noimagefound'];
 				exit;
@@ -571,6 +577,12 @@ include "../../../include/header.php";
 				alert('<?php echo addslashes($lang['errormustchoosecropscale']); ?>');
 				return false;
 			}
+
+			if (theform.xcoord.value == 0 && document.getElementById('slideshow').checked){
+				alert('<?php echo addslashes($lang['errormustchoosecropscale']); ?>');
+				return false;
+			}
+
 			
 			<?php if (!$cropper_allow_scale_up) { ?>
 				if (Number(theform.new_width.value) > Number(theform.origwidth.value) || Number(theform.new_height.value) > Number(theform.origheight.value)){
@@ -598,7 +610,19 @@ include "../../../include/header.php";
     <input type='hidden' name='origwidth' id='origwidth'  value='<?php echo $origwidth ?>' />
     <input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
     <?php if ($original){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
-    <table>
+	<?php echo $lang['replaceslideshowimage']; ?>
+	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/>
+	
+    <table id="transform_slideshow_options" style="display:none;">
+      <tr>
+        <td style='text-align:right'><?php echo $lang["slideshowsequencenumber"]; ?>: </td>
+        <td><input type='text' name='sequence' id='sequence' value='' size='4' /></td>
+		</tr>
+	<tr><td colspan="4"><input type="submit" name="submit" value="<?php echo $lang['replaceslideshowimage'] ?>"></td></td></tr>
+	</table>
+	
+    <table id="transform_options">
+    
       <tr>
         <td style='text-align:right'><?php echo $lang["width"]; ?>: </td>
         <td><input type='text' name='new_width' id='new_width' value='' size='4'  onblur='evaluate_values()' />
@@ -674,7 +698,7 @@ if ($cropper_debug){
 	echo "<input type='checkbox'  name='showcommand' value='1'>Debug IM Command</checkbox>";
 }
 ?>
-    <p style='text-align:right;margin-top:15px;'>
+    <p style='text-align:right;margin-top:15px;' id='transform_actions'>
       <input type='button' value="<?php echo $lang['cancel']; ?>" onclick="javascript:window.location='../../../pages/view.php?ref=<?php echo $ref ?>';" />
       <?php if ($original){ ?>
              <input type='submit' name='replace' value="<?php echo $lang['transform_original']; ?>" />
