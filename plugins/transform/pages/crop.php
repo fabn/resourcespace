@@ -400,10 +400,10 @@ $resource = get_resource_data($ref);
 if ($resource["has_image"]==1)
         {
 		$imageurl = get_temp_dir(true) . "/transform_plugin/pre_$ref.jpg";
-		$imagepath = $imageurl;
+		$imagepath = get_temp_dir(false) . "/transform_plugin/pre_$ref.jpg";
 
         	//$imagepath=get_resource_path($ref,true,$cropper_cropsize,false,$resource["preview_extension"],-1,1);
-        	
+        	echo $imagepath;
         	if (!file_exists($imagepath)){
 				echo $lang['noimagefound'];
 				exit;
