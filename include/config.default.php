@@ -74,7 +74,8 @@ $config_windows=false;
 # Enables extraction of text from PDF files
 # $pdftotext_path="/usr/bin";
 
-
+# Path to blender
+# $blender_path="/usr/bin/blender";
 
 
 
@@ -1316,7 +1317,7 @@ $basket_stores_size=true;
 # StaticSync (staticsync.php)
 # The ability to synchronise ResourceSpace with a separate and stand-alone filestore.
 # ------------------------------------------------------------------------------------------------------------------
-$syncdir="/path/to/static/files"; # The sync folder
+$syncdir="/var/www/r2000/accounted"; # The sync folder
 $nogo="[folder1]"; # A list of folders to ignore within the sign folder.
 $staticsync_autotheme=true; # Automatically create themes based on the first and second levels of the sync folder structure.
 # Allow unlimited theme levels to be created based on the folder structure. 

@@ -382,8 +382,8 @@ if ((($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($e
 
 if ($extension=="blend" && !isset($newfile))
 	{
-	$blendercommand="blender";	
-	if (!file_exists($blendercommand)) {$blendercommand="/Applications/blender.app/Contents/MacOS/blender";}
+    global $blender_path;
+	$blendercommand=$blender_path;	
 	if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
 	shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
 	if (file_exists($target."0001.jpg"))
