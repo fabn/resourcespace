@@ -20,7 +20,8 @@ else
 	$target=get_resource_path($ref,true,"tmp",false,"jpg");
 	}
 	
-# Set up ImageMagick 
+# Set up ImageMagick
+
 putenv("MAGICK_HOME=" . $imagemagick_path); 
 putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 putenv("PATH=/bin:" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
@@ -385,13 +386,20 @@ if ($extension=="blend" && !isset($newfile))
     global $blender_path;
 	$blendercommand=$blender_path;	
 	if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
-	shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
-	if (file_exists($target."0001.jpg"))
+	$error=shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
+
+    if (file_exists($target."0001"))
+		{
+		copy($target."0001","$target");
+		unlink($target."0001");
+		$newfile = $target;
+		}
+    if (file_exists($target."0001.jpg"))
 		{
 		copy($target."0001.jpg","$target");
 		unlink($target."0001.jpg");
 		$newfile = $target;
-		}
+		}    
 	}
 
 
