@@ -83,8 +83,14 @@ $success=is_writable($storagedir);
 if ($success===false) {$result=$lang["status-fail"] . ": " . $lang["nowriteaccesstofilestore"];} else {$result=$lang["status-ok"];}
 ?><tr><td colspan="2"><?php echo $lang["writeaccesstofilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
 
-
 <?php
+if (in_array("transform",$plugins)){
+# Check write access to homeanim
+$success=is_writable(dirname(__FILE__) . "/../".$homeanim_folder);
+if ($success===false) {$result=$lang["status-fail"] . ": " . $lang["nowriteaccesstohomeanim"];} else {$result=$lang["status-ok"];}
+?><tr><td colspan="2"><?php echo $lang["writeaccesstohomeanim"] ?></td><td><b><?php echo $result?></b></td></tr>
+<?php } 
+
 # Check filestore folder browseability
 $output=@file_get_contents($baseurl . "/filestore");
 if (strpos($output,"Index of")===false)
@@ -233,7 +239,6 @@ else
 	$result=$lang["status-fail"];
 	}
 ?><tr><td colspan="2">EXIF extension</td><td><b><?php echo $result?></b></td></tr><?php
-
 
 # Check Exiftool path
 if (isset($exiftool_path))
