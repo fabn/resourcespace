@@ -2727,14 +2727,43 @@ function make_api_key($username,$password){
 	// this is simply an encryption for username and password that will work as an alternative way to log in for remote access pages such as rss and apis
 	// this is simply to avoid sending username and password plainly in the url.
 	global $api_scramble_key;
-	return strtr(base64_encode(convert($username."|".$password,$api_scramble_key)), '+/=', '-_,');
+    if (extension_loaded('mcrypt')){
+        $cipher = new Cipher($api_scramble_key);
+        return $cipher->encrypt($username."|".$password,$api_scramble_key);
+        }
+    else{
+        return strtr(base64_encode(convert($username."|".$password,$api_scramble_key)), '+/=', '-_,');
+        }
 	}
 	
 function decrypt_api_key($key){
 	global $api_scramble_key;
+    if (extension_loaded('mcrypt')){
+        $cipher = new Cipher($api_scramble_key);
+        $key=$cipher->decrypt($key);
+        }
+    else{
 	$key=convert(base64_decode(strtr($key, '-_,', '+/=')),$api_scramble_key);
+        }
 	return explode("|",$key);
-	}	
+	}
+
+// alternative encryption using mcrypt extension
+//from http://php.net/manual/en/function.mcrypt-encrypt.php
+class Cipher {
+    private $securekey, $iv;
+    function __construct($textkey) {
+        $this->securekey = hash('sha256',$textkey,TRUE);
+        $this->iv = mcrypt_create_iv(32,MCRYPT_DEV_URANDOM);
+    }
+    function encrypt($input) {
+        return strtr(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->securekey, $input, MCRYPT_MODE_ECB, $this->iv)), '+/=', '-_,');
+    }
+    function decrypt($input) {
+        return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->securekey, base64_decode(strtr($input, '-_,', '+/=')), MCRYPT_MODE_ECB, $this->iv));
+    }
+}
+    
 
 function purchase_set_size($collection,$resource,$size,$price)
 	{

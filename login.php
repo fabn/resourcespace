@@ -107,8 +107,10 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
 	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
 	        if ($api && $enable_remote_apis ){
 				# send the cookie back to authenticate.php
-				include_once('include/rest_utils.php');
-				RestUtils::sendResponse(200, json_encode(array("cookie"=>$username . "|" . $session_hash,"expires"=>$expires)), 'application/json');  
+				$status_header = 'HTTP/1.1 200 ';
+                header($status_header);
+                header('Content-type: application/json');
+                echo json_encode(array("cookie"=>$username . "|" . $session_hash,"expires"=>$expires));
 				}
 				
 			if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
@@ -117,8 +119,10 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
     else
         {		
 		if ($api && $enable_remote_apis ){
-			include_once('include/rest_utils.php');
-			RestUtils::sendResponse(200,  json_encode(array("cookie"=>"no")), 'application/json');  
+                $status_header = 'HTTP/1.1 200 ';
+                header($status_header);
+                header('Content-type: application/json');
+                echo json_encode(array("cookie"=>"no"));
 		}
         $error=$lang["loginincorrect"];
         

@@ -8,21 +8,34 @@ if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.ph
 
 if ($api && $enable_remote_apis ){
 	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
-	include_once ('rest_utils.php'); //for sending response
-	include_once ('rest_request.php'); //for requesting to the login page
 	if (getval("key","")){ // key is provided within the website when logged in (encrypted username and password)
-		$key=decrypt_api_key(getval("key",""));
-		if (count($key)!=2){
+
+		$decrypted=decrypt_api_key(getval("key",""));
+
+        if (count($decrypted)!=2){
 			$data['cookie']="no";
 			} 
 		else{
-			$username=$key[0];
-			$password=$key[1];
-			$request = new RestRequest($baseurl.'/login.php', 'POST', array("api"=>true,"username"=>$username,"password"=>$password,"userkey"=>md5($username . $scramble_key)));
-			$request->execute();
-			$data=json_decode($request->getResponseBody(),true);
-		}
-		if ($data['cookie']!="no"){
+			$username=$decrypted[0];
+			$password=$decrypted[1];
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array("api"=>true,"username"=>$username,"password"=>$password,"userkey"=>md5($username . $scramble_key)),'','&'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_URL, $baseurl.'/login.php');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array ('Accept: application/json'));
+            curl_setopt($ch, CURLOPT_USERAGENT, "API Client"); 
+            //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            $responseBody = curl_exec($ch);
+            $responseInfo	= curl_getinfo($ch);
+            curl_close($ch);
+
+            $data=json_decode($responseBody,true);
+
+            }
+		if ($data['cookie']!="no" && $data['cookie']!=''){
 		$_COOKIE['user']=$data['cookie'];
 		}
 	}
@@ -33,7 +46,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
     if (array_key_exists("user",$_COOKIE))
     	{
 	    $s=explode("|",$_COOKIE["user"]);
-	    $username=mysql_escape_string($s[0]);
+        $username=mysql_escape_string($s[0]);
 	    $session_hash=mysql_escape_string($s[1]);
 	    }
 	elseif (array_key_exists("user",$_GET))
@@ -170,7 +183,7 @@ else
     setcookie("cookiecheck","true",0,'/');
     }
 
-if (!$valid)
+if (!$valid && !$api)
     {
 	$_SERVER['REQUEST_URI'] = ( isset($_SERVER['REQUEST_URI']) ?
 	$_SERVER['REQUEST_URI'] : $_SERVER['SCRIPT_NAME'] . (( isset($_SERVER
@@ -183,6 +196,7 @@ if (!$valid)
 	<?php
     exit();
     }
+if (!$valid && $api){echo "invalid login";exit();}    
 
 # Handle IP address restrictions
 $ip=get_ip();
