@@ -688,13 +688,12 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
     $r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 
     # Translates group names in the newly created array.
-    $return = array();
     for ($n = 0;$n<count($r);$n++) {
-       @$r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
-      $return[] = $r[$n]; # Adds to return array.
+        if (!is_array($r[$n])) {break;} # The padded rows can't be and don't need to be translated.
+        $r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
     }
 
-    return $return;
+    return $r;
 
 }
 }	
