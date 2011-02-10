@@ -45,10 +45,11 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor($user['userfullname']);
-$pdf->SetTitle($resource['field'.$view_title_field].' '.$date);
+$pdf->SetAuthor($userfullname);
+$pdf->SetTitle($resourcedata['field'.$view_title_field].' '.$date);
 $pdf->SetSubject($lang['annotations']);
-
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
 
 // ---------------------------------------------------------
 
@@ -84,6 +85,6 @@ $pdf->AddPage();
 		exit();
 		}
 
-echo "1";
+
 $pdf->Output('test.pdf','D');
 
