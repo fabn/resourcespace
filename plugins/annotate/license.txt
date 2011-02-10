@@ -1,0 +1,9 @@
+ResourceSpace Annotate Plugin v. 0.1
+	a plugin for the ResourceSpace Digital Asset Management system to creation of image annotations.
+	Copyright Tom Gleason, 3/9/2010
+	theorysavage at gmail dot com
+	http://resourcespace.blogspot.com
+
+Based on the GPL jquery library:
+http://blog.flipbit.co.uk/2009/03/jquery-image-annotation-plugin.html
+
