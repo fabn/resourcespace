@@ -6,12 +6,12 @@
     display: block;
     float: left;
     font-family: Verdana, Sans-Serif;
-    font-size: 12px;    
-    height: 18px;
+    font-size: 10px;    
+    height: 16px;
     line-height: 18px;    
     padding: 2px 0 2px 24px;
     margin: 5px 0;
-    width: 64px;
+    width: 50px;
     text-decoration: none;
 }
 .image-annotate-add:hover {
@@ -52,7 +52,7 @@
     color: #000;
     display: none;
     font-family: Verdana, Sans-Serif;
-    font-size: 12px;
+    font-size: 10px;
     max-width: 200px;
     padding: 3px 7px;
     position: absolute;
@@ -65,11 +65,10 @@
     display: none;
 }
 #image-annotate-edit-form {
-    border: 1px solid #000000;
-    height: 85px;
+    height: 82px;
     padding: 7px;
     position: absolute;
-    width: 251px;
+    width: 252px;
 }
 
 #image-annotate-edit-form form {
@@ -87,7 +86,7 @@
 #image-annotate-edit-form textarea {
     height: 50px;
     font-family: Verdana, Sans-Serif;
-    font-size: 12px;    
+    font-size: 10px;    
     width: 248px;
 }
 #image-annotate-edit-form fieldset {
@@ -109,12 +108,12 @@
     display: block;
     float: left;    
     font-family: Verdana, Sans-Serif;
-    font-size: 12px;        
-    height: 18px;
-    line-height: 18px;
+    font-size: 10px;        
+    height: 16px;
+    line-height: 16px;
     padding: 2px 0 2px 24px;
     margin: 3px 6px 3px 0;
-    width: 48px;
+    width: 40px;
 }
 #image-annotate-edit-form a:hover {
     background-color: #eee;
@@ -123,7 +122,7 @@
     border: 2px solid yellow;
     cursor: move;
     display: block;
-    height: 60px;
+    height: 20px;
     left: 10px;
     margin: 0;
     padding: 0;
