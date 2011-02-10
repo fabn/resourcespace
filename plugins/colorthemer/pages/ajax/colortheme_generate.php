@@ -126,12 +126,13 @@ a:active {color:".convert_html_color('B5C3D4').";}
 
 #CollectionMenu {border-right: 1px solid ".convert_html_color('79899C').";}
 
-#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid ".convert_html_color('94A7C0').";border-bottom: 1px solid ".convert_html_color('94A7C0').";border-left: 1px solid ".convert_html_color('94A7C0').";}
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge,  .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid ".convert_html_color('94A7C0').";border-bottom: 1px solid ".convert_html_color('94A7C0').";border-left: 1px solid ".convert_html_color('94A7C0').";}
 
 #ThemeBoxPanel , #SearchBoxPanel {background: ".convert_html_color('5A7599')." url(SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: ".convert_html_color('5A7599')." url(researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: ".$panelback." url(resourcepanel.gif) repeat-x;}
 .ResourcePanelSmall {background: ".$panelback." url(resourcepanel.gif) repeat-x;}
+.ResourcePanelLarge {background: ".$panelback." url(resourcepanel.gif) repeat-x;}
 .IconVideo {background: url(IcVideo.gif) no-repeat 140px 5px;}
 
 .ImageBorder, .RecordPanel .Picture {border: 1px solid #FFFFFF;}
@@ -244,12 +245,13 @@ a:active {color:#737373;}
 
 #CollectionMenu {border-right: 1px solid ".convert_html_color('79899C').";}
 
-#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
 
 #ThemeBoxPanel, #SearchBoxPanel {background: #DBDBDB url(SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: #DCDCDC url(researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #FFFFFF;}
 .ResourcePanelSmall {background: #FFFFFF url(resourcepanel.gif) repeat-x;}
+.ResourcePanelLarge {background: #FFFFFF  repeat-x;}
 .IconVideo {background: url(IcVideo.gif) no-repeat 140px 5px;}
 
 .ImageBorder, .RecordPanel .Picture, .VideoBorder {border: 1px solid #000000;}	
