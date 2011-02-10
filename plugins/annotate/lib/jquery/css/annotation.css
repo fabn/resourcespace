@@ -1,6 +1,6 @@
 .image-annotate-add {
     background: #fff url(../images/asterisk_yellow.png) no-repeat 3px 3px;
-    border: solid 1px #ccc !important;
+    border: solid 2px #ccc !important;
     color: #000 !important;
     cursor: pointer;
     display: block;
@@ -30,7 +30,7 @@
     position: relative;
 }
 .image-annotate-area {
-    border: 1px solid #000000;
+    border: 2px solid #000000;
     position: absolute;
 }
 .image-annotate-area div {
@@ -64,14 +64,8 @@
 .image-annotate-edit {
     display: none;
 }
-#image-annotate-edit-form {
-    background: #FFFEE3 none repeat scroll 0 0;
-    border: 1px solid #000000;
-    height: 78px;
-    padding: 7px;
-    position: absolute;
-    width: 250px;
-}
+
+
 #image-annotate-edit-form form {
     clear: right;
     margin: 0 !important;
@@ -120,7 +114,7 @@
     background-color: #eee;
 }
 .image-annotate-edit-area {
-    border: 1px solid black;
+    border: 2px solid yellow;
     cursor: move;
     display: block;
     height: 60px;
