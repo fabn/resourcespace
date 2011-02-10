@@ -27,6 +27,8 @@ for($n=0;$n<count($results);$n++){
     }
 }
 
+if (!is_array($results)){$results=array();}
+
 $json=json_encode($results);
 if (getval("content","")=="json"){
 header('Content-type: application/json');
