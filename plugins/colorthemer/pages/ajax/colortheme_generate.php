@@ -325,7 +325,7 @@ a:active {color:#737373;}
  break;
 }
 
-if ($rounded){
+if ($rounded=="true"){
 $data.="
 .PanelShadow
 	{

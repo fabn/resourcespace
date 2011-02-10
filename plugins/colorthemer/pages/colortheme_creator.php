@@ -49,7 +49,7 @@ include "../../../include/header.php";
 <label>Square/Rounded (no preview)</label>
 <select class="shrtwidth" name="rounded" id="rounded" value="greyblu">
 <option value="true">Rounded</option>
-<option value="false" selected>Square</option>
+<option value="false">Square</option>
 </select>
 </div>
 
