@@ -1,0 +1,4 @@
+name    : rss2
+author  : Camillo Ferraris/Colorhythm LLC/Tom Gleason
+version : 0.9
+desc    : Enables the authenticated generation of RSS feeds of new content, including configurable fields.
