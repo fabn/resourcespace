@@ -51,6 +51,27 @@ shell_exec($command);
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment.gif";
 shell_exec($command);
 
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarRed.gif ".$storagedir."/colorthemes/$ref/RatingStarRed.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarBlank.gif ".$storagedir."/colorthemes/$ref/RatingStarBlank.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarLightGrey.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarGrey.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert ../../../../gfx/interface/RatingStarYellow.gif ".$storagedir."/colorthemes/$ref/RatingStarYellow.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightBlue.gif ".$storagedir."/colorthemes/$ref/RatingStarLightBlue.gif";
+shell_exec($command);
+
+$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarWhite.gif ".$storagedir."/colorthemes/$ref/RatingStarWhite.gif";
+shell_exec($command);
+
 
 	# also do title.gif
 	switch($style){
@@ -66,6 +87,7 @@ shell_exec($command);
 # convert title colors
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$titlepath." ".$storagedir."/colorthemes/$ref/title.gif";
 shell_exec($command);
+
 
 
 
@@ -200,6 +222,13 @@ a:active {color:".convert_html_color('B5C3D4').";}
 .CollectionPanelInfo .IconCommentAnim	{	background: url(ColIcComment_anim.gif) no-repeat;}
 .CollectionPanelInfo .IconRemove	{	background: url(ColIcRemove.gif) no-repeat;}
 
+
+.IconUserRatingStar	{	background: url(RatingStarYellow.gif) no-repeat;}
+.IconUserRatingSpace	{	background: url(RatingStarBlank.gif) no-repeat;}
+.StarSelect {  background: transparent url(RatingStarYellow.gif) no-repeat;}
+.StarEmpty {  background: transparent url('RatingStarLightBlue.gif') no-repeat;}
+.StarCurrent { background: transparent url('RatingStarWhite.gif') no-repeat;}
+
 ";
 break;
 
@@ -246,8 +275,9 @@ a:active {color:#737373;}
 #CollectionMenu {border-right: 1px solid ".convert_html_color('79899C').";}
 
 #ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
+ #SearchBoxPanel {background: url() repeat-x;}
 
-#ThemeBoxPanel, #SearchBoxPanel {background: #DBDBDB url(SearchBox.gif) repeat-x;}
+#ThemeBoxPanel, #SearchBoxPanel {background: #FFFFFF;}
 #ResearchBoxPanel, .HomePanelIN {background: #DCDCDC url(researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: #FFFFFF;}
 .ResourcePanelSmall {background: #FFFFFF url(resourcepanel.gif) repeat-x;}
@@ -318,6 +348,12 @@ a:active {color:#737373;}
 .CollectionPanelInfo .IconComment	{	background: url(ColIcComment.gif) no-repeat;}
 .CollectionPanelInfo .IconCommentAnim	{	background: url(ColIcComment_anim.gif) no-repeat;}
 .CollectionPanelInfo .IconRemove	{	background: url(ColIcRemove.gif) no-repeat;}
+
+.IconUserRatingStar	{	background: url(RatingStarRed.gif) no-repeat;}
+.IconUserRatingSpace	{	background: url(RatingStarBlank.gif) no-repeat;}
+.StarSelect {background: transparent url(RatingStarRed.gif) no-repeat;}
+.StarEmpty {background: transparent url('RatingStarLightGrey.gif') no-repeat;}
+.StarCurrent {background: transparent url('RatingStarGrey.gif') no-repeat;}
 
 ";
 
