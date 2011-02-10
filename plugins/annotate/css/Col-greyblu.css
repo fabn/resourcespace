@@ -1,9 +1,4 @@
 .IconNotes {background: url(../../../plugins/annotate/lib/jquery/images/asterisk_yellow.png) no-repeat 140px 5px;}
 #image-annotate-edit-form {
     background: #B5C3D4 none repeat scroll 0 0;
-    border: 1px solid #000000;
-    height: 85px;
-    padding: 7px;
-    position: absolute;
-    width: 251px;
 }

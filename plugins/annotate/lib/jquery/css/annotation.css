@@ -64,7 +64,13 @@
 .image-annotate-edit {
     display: none;
 }
-
+#image-annotate-edit-form {
+    border: 1px solid #000000;
+    height: 85px;
+    padding: 7px;
+    position: absolute;
+    width: 251px;
+}
 
 #image-annotate-edit-form form {
     clear: right;
