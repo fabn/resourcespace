@@ -45,6 +45,14 @@ include "../../../include/header.php";
 </select>
 </div>
 
+<div id="StyleOptions2" class="Question"  onChange="previewColortheme();">
+<label>Square/Rounded (no preview)</label>
+<select class="shrtwidth" name="rounded" id="rounded" value="greyblu">
+<option value="true">Rounded</option>
+<option value="false" selected>Square</option>
+</select>
+</div>
+
 <div class="Question">
 <label>Hue</label>
 

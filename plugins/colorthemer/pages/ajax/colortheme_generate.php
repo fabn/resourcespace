@@ -321,8 +321,63 @@ a:active {color:#737373;}
 
 ";
 
+
  break;
 }
+
+if ($rounded){
+$data.="
+.PanelShadow
+	{
+	background: none;
+	}
+
+.TabSelected a 
+	{	
+	border-top-right-radius:5px;border-top-left-radius:5px;	
+	-moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+	-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+	}
+	
+.Tab a 
+	{	
+	border-top-right-radius:5px;border-top-left-radius:5px;	
+	-moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+	-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+	}
+	
+.StyledTabbedPanel 
+	{	
+	border-bottom-right-radius:10px;border-bottom-left-radius:10px;	border-top-right-radius:10px;
+	-moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
+	-webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
+	}
+		
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+	
+.ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+.RecordPanel
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+.RecordDownloadSpace	
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+.RecordStory{border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;}
+
+";
+
+    }
 
 fwrite($fh, $data);
 fclose($fh);

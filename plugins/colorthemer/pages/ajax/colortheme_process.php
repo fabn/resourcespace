@@ -17,6 +17,7 @@ putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagic
 $ref=1;
 
 $sat=getval("sat","100");
+$rounded=getval("rounded",false);
 $hue=getval("hue","0");
 $style=getval("style","greyblu");
 $generate=getval("generate",false);
