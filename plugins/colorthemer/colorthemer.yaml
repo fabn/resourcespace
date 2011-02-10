@@ -1,0 +1,5 @@
+name: colorthemer
+author: Tom Gleason
+version: 0.93
+desc: Creation of custom color theme. Activate then Options to configure.
+config_url: /plugins/colorthemer/pages/colortheme_creator.php
