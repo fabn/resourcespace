@@ -163,6 +163,34 @@ function url_exists($url)
     fclose($fp);
     return false;
 }   
+/**
+ * Sets the language to be used.
+ *
+ * @param string $defaultlanguage
+ * @return array 
+ */
+
+function set_language($defaultlanguage)
+{
+	global $languages;
+	global $storagedir, $applicationname, $homeanim_folder; # Used in the language files.
+	if (file_exists("../languages/en.php")) {include "../languages/en.php";}
+	if ($defaultlanguage==''){ 
+		//See if we can auto-detect the most likely language.  The user can override this.
+		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
+			$httplanguage = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			if(array_key_exists($httplanguage[0],$languages)){
+				$defaultlanguage = $httplanguage[0];
+			}
+		}
+	}
+	if ($defaultlanguage!='en'){
+		if (file_exists("../languages/".$defaultlanguage.".php")){
+			include "../languages/".$defaultlanguage.".php";
+		}
+	}
+	return $lang;
+}
 
 
 //Development Mode:  Set to true to change the config.php check to devel.config.php and output to devel.config.php instead.  Also displays the config file output in a div at the bottom of the page.
@@ -175,31 +203,16 @@ else
 // Define some vars to prevent warnings (quick fix)
 $configstoragelocations=false;	
 $storageurl="";
+$storagedir=""; # This variable is used in the language files.
 
 if (file_exists("../include/config.default.php")) {include "../include/config.default.php";}
-if (file_exists("../languages/en.php")) {include "../languages/en.php";}
 $defaultlanguage = get_post('defaultlanguage');
-if ($defaultlanguage==''){ 
-	//See if we can auto-detect the most likely language.  The user can override this.
-	if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
-		$httplanguage = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
-		if(array_key_exists($httplanguage[0],$languages))
-			$defaultlanguage=$httplanguage[0];
-	}
-}
-if ($defaultlanguage!='en'){
-	if (file_exists("../languages/".$defaultlanguage.".php")){
-		include "../languages/".$defaultlanguage.".php";
-	}
-}
-
-
-
+$lang = set_language($defaultlanguage);
 
 ?>
 <html>
 <head>
-<title>ResourceSpace: Initial Configuration</title>
+<title><?php echo $lang["setup-rs_initial_configuration"];?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" /> 
 <link href="../css/Col-greyblu.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" /> 
@@ -388,7 +401,11 @@ h2#dbaseconfig{  min-height: 32px;}
 	die(0);
 	}
 	if (!(isset($_REQUEST['submit']))){ //No Form Submission, lets setup some defaults
-		if (!isset($storagedir)) {$storagedir=dirname(__FILE__)."/../filestore";}
+		if (!isset($storagedir) | $storagedir=="")
+			{
+			$storagedir = dirname(__FILE__)."/../filestore";
+			$lang = set_language($defaultlanguage); # Updates $lang with $storagedir which is used in some strings.
+			}
 		if (isset($_SERVER['HTTP_HOST']))
 			$baseurl = 'http://'.$_SERVER['HTTP_HOST'].substr($_SERVER['PHP_SELF'],0,strlen($_SERVER['PHP_SELF'])-16);
 		else
@@ -636,10 +653,10 @@ if ((isset($_REQUEST['submit'])) && (!isset($errors))){
 		<ul>
 			<li><?php echo $lang["setup-successremovewrite"]; ?></li>
 			<li><?php echo $lang["setup-visitwiki"]; ?></li>
-			<li><a href="<?php echo $baseurl;?>/login.php">Login to <?php echo $applicationname;?></a>
+			<li><a href="<?php echo $baseurl;?>/login.php"><?php echo $lang["setup-login_to"] . " " . $applicationname; ?></a>
 				<ul>
-					<li>Username: admin</li>
-					<li>Password: admin</li>
+					<li><?php echo $lang["username"] . ": admin"; ?></li>
+					<li><?php echo $lang["password"] . ": admin"; ?></li>
 				</ul>
 			</li>
 		</ul>
@@ -654,57 +671,110 @@ else{
 			<div id="preconfig">
 				<h2><?php echo $lang["installationcheck"]; ?></h2>
 				<?php 
-				$continue=true;
-				$phpversion=phpversion();
-				if ($phpversion<'4.4') {$result="FAIL: should be 4.4 or greater";$continue=false;} else {$result="OK";}?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">PHP version: <?php echo $phpversion;?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+					$continue = true;
+					$phpversion = phpversion();
+					if ($phpversion<'4.4')
+						{
+						$result = $lang["status-fail"] . ": " . str_replace("?", "4.4", $lang["shouldbeversion"]);
+						$pass = false;
+						$continue = false;
+						} 
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
+				?>
+				<p class="<?php echo ($pass!=false?'':'failure'); ?>"><?php echo str_replace("?", "PHP", $lang["softwareversion"]) . ": " . $phpversion . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
-					$gdinfo=gd_info();
+					$gdinfo = gd_info();
 					if (is_array($gdinfo))
 						{
-						$version=$gdinfo["GD Version"];
-						$result="OK";
+						$version = $gdinfo["GD Version"];
+						$result = $lang["status-ok"];
+						$pass = true;
 						}
 					else
 						{
-						$version="Not installed.";
-						$result="FAIL";
-						$continue=false;
+						$version = $lang["status-notinstalled"];
+						$result = $lang["status-fail"];
+						$pass = false;
+						$continue = false;
 						}
 				?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">GD version: <?php echo $version?>  <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "GD", $lang["softwareversion"]) . ": " . $version . ($pass!=true?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
 					$memory_limit=ini_get("memory_limit");
-					if (ResolveKB($memory_limit)<(200*1024)) {$result="WARNING: should be 200M or greater";} else {$result="OK";}
+					if (ResolveKB($memory_limit)<(200*1024))
+						{
+						$result = $lang["status-warning"] . ": " . str_replace("?", "200M", $lang["shouldbeormore"]);
+						$pass = false;
+						}
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
 				?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">PHP.INI value for 'memory_limit': <?php echo $memory_limit?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "memory_limit", $lang["phpinivalue"]) . ": " . $memory_limit . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
-					$post_max_size=ini_get("post_max_size");
-					if (ResolveKB($post_max_size)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
+					$post_max_size = ini_get("post_max_size");
+					if (ResolveKB($post_max_size)<(100*1024))
+						{
+						$result = $lang["status-warning"] . ": " . str_replace("?", "100M", $lang["shouldbeormore"]);
+						$pass = false;
+						}
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
 				?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">PHP.INI value for 'post_max_size': <?php echo $post_max_size?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "post_max_size", $lang["phpinivalue"]) . ": " . $post_max_size . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
-					$upload_max_filesize=ini_get("upload_max_filesize");
-					if (ResolveKB($upload_max_filesize)<(100*1024)) {$result="WARNING: should be 100M or greater";} else {$result="OK";}
+					$upload_max_filesize = ini_get("upload_max_filesize");
+					if (ResolveKB($upload_max_filesize)<(100*1024))
+						{
+						$result = $lang["status-warning"] . ": " . str_replace("?", "100M", $lang["shouldbeormore"]);
+						$pass = false;
+						}
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
 				?>
-				<p class="<?php echo ($result=='OK'?'':'failure');?>">PHP.INI value for 'upload_max_filesize': <?php echo $upload_max_filesize?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "upload_max_filesize", $lang["phpinivalue"]) . ": " . $upload_max_filesize . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
-					$success=is_writable('../include');
-					if ($success===false) {
-						$result="FAIL: '/include' not writable. (Only required during setup)";
-						$continue=false;
-					}	
-					else {
-						$result="OK";
-					}
+					$success = is_writable('../include');
+					if ($success===false)
+						{
+						$result = $lang["status-fail"] . ": " . $lang["setup-include_not_writable"];
+						$pass = false;
+						$continue = false;
+						}	
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
 				?>
-					<p class="<?php echo ($result=='OK'?'':'failure');?>"><?php echo $lang["setup-checkconfigwrite"];?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+					<p class="<?php echo ($pass==true?'':'failure');?>"><?php echo $lang["setup-checkconfigwrite"] . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
 					if (!file_exists($storagedir)) {@mkdir ($storagedir,0777);}
-					$success=is_writable($storagedir);
-					if ($success===false) {$result="WARN: '$storagedir' not writable. <br/> (Override location in 'Advanced Settings'.)";} else {$result="OK";}
+					$success = is_writable($storagedir);
+					if ($success===false)
+						{
+						$result = $lang["status-warning"] . ": " . $lang["nowriteaccesstofilestore"] . "<br/>" . $lang["setup-override_location_in_advanced"];
+						$pass = false;
+						}
+					else
+						{
+						$result = $lang["status-ok"];
+						$pass = true;
+						}
 				?>
-					<p class="<?php echo ($result=='OK'?'':'failure');?>"><?php echo $lang["setup-checkstoragewrite"];?> <?php echo($result!='OK'?'<br>':'');?>(<?php echo $result?>)</p>
+					<p class="<?php echo ($result=='OK'?'':'failure'); ?>"><?php echo $lang["setup-checkstoragewrite"] . ($result!='OK'?'<br>':'') . "(" . $result . ")"; ?></p>
 			</div>
 			<h1><?php echo $lang["setup-welcome"];?></h1>
 			<p><?php echo $lang["setup-introtext"];?><p>
@@ -720,7 +790,7 @@ else{
 							}
 						?>
 					</select>
-					<input type="submit" id="changelanguage" name="changelanguage" value="Change Language"/>
+					<input type="submit" id="changelanguage" name="changelanguage" value="<?php echo $lang["action-changelanguage"]; ?>"/>
 				</div>
 			<div id="introbottom">
 			<?php if ($continue===false) { ?>
@@ -743,7 +813,7 @@ else{
 	<div id="tabs" class="starthidden">
 		<ul>
 			<li><a href="#tab-1"><?php echo $lang["setup-basicsettings"];?></a></li>
-			<li><a href="#tab-2">Advanced Settings</a></li>
+			<li><a href="#tab-2"><?php echo $lang["setup-advancedsettings"];?></a></li>
 		</ul>
 		<div class="tabs" id="tab-1">
 			<h1><?php echo $lang["setup-basicsettings"];?></h1>
@@ -769,7 +839,7 @@ else{
 						
 				<div class="configitem">
 					<label for="mysqlserver"><?php echo $lang["setup-mysqlserver"];?></label><input class="mysqlconn" type="text" id="mysqlserver" name="mysql_server" value="<?php echo $mysql_server;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-server">?</a>
-					<p class="iteminfo" id="if-mysql-server">;<?php echo $lang["setup-if_mysqlserver"];?></p>
+					<p class="iteminfo" id="if-mysql-server"><?php echo $lang["setup-if_mysqlserver"];?></p>
 				</div>
 				<div class="configitem">
 					<label for="mysqlusername"><?php echo $lang["setup-mysqlusername"];?></label><input class="mysqlconn" type="text" id="mysqlusername" name="mysql_username" value="<?php echo $mysql_username;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-username">?</a>
@@ -781,7 +851,7 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="mysqldb"><?php echo $lang["setup-mysqldb"];?></label><input id="mysqldb" class="mysqlconn" type="text" name="mysql_db" value="<?php echo $mysql_db;?>"/><strong>*</strong><a class="iflink" href="#if-mysql-db">?</a>
-					<p class="iteminfo" id="if-mysql-db">;<?php echo $lang["setup-if_mysqldb"];?></p>
+					<p class="iteminfo" id="if-mysql-db"><?php echo $lang["setup-if_mysqldb"];?></p>
 				</div>
 				
 				<div class="configitem">
@@ -844,104 +914,104 @@ else{
 					<?php if(isset($errors['imagemagick_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'convert'.</div>
 					<?php } ?>
-					<label for="imagemagickpath">Imagemagick Path:</label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo @$imagemagick_path ?>"/>
+					<label for="imagemagickpath"><?php echo str_replace("%bin", "Imagemagick", $lang["setup-binpath"]) . ":"; ?></label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo @$imagemagick_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ghostscript_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'gs'.</div>
 					<?php } ?>
-					<label for="ghostscriptpath">Ghostscript Path:</label><input id="ghostscriptpath" type="text" name="ghostscript_path" value="<?php echo @$ghostscript_path; ?>"/>
+					<label for="ghostscriptpath"><?php echo str_replace("%bin", "Ghostscript", $lang["setup-binpath"]) . ":"; ?></label><input id="ghostscriptpath" type="text" name="ghostscript_path" value="<?php echo @$ghostscript_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ffmpeg_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'ffmpeg'.</div>
 					<?php } ?>
-					<label for="ffmpegpath">FFMpeg Path:</label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
+					<label for="ffmpegpath"><?php echo str_replace("%bin", "FFMpeg", $lang["setup-binpath"]) . ":"; ?></label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['exiftool_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'exiftool'.</div>
 					<?php } ?>
-					<label for="exiftoolpath">Exiftool Path:</label><input id="exiftoolpath" type="text" name="exiftool_path" value="<?php echo @$exiftool_path; ?>"/>
+					<label for="exiftoolpath"><?php echo str_replace("%bin", "Exiftool", $lang["setup-binpath"]) . ":"; ?></label><input id="exiftoolpath" type="text" name="exiftool_path" value="<?php echo @$exiftool_path; ?>"/>
 				</div>
 				<div class="configitem">
 				<?php if(isset($errors['antiword_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'AntiWord'.</div>
 					<?php } ?>
-					<label for="antiwordpath">AntiWord Path:</label><input id="antiwordpath" type="text" name="antiword_path" value="<?php echo @$antiword_path; ?>"/>
+					<label for="antiwordpath"><?php echo str_replace("%bin", "AntiWord", $lang["setup-binpath"]) . ":"; ?></label><input id="antiwordpath" type="text" name="antiword_path" value="<?php echo @$antiword_path; ?>"/>
 				</div>
 				
 				<div class="configitem">
 					<?php if(isset($errors['pdftotext_path'])){?>
 						<div class="erroritem"><?php echo @$lang["setup-err_path"];?> 'pdftotext'.</div>
 					<?php } ?>
-					<label for="pdftotextpath">PDFtotext Path:</label><input id="pdftotextpath" type="text" name="pdftotext_path" value="<?php echo @$pdftotext_path; ?>"/>
+					<label for="pdftotextpath"><?php echo str_replace("%bin", "PDFtotext", $lang["setup-binpath"]) . ":"; ?></label><input id="pdftotextpath" type="text" name="pdftotext_path" value="<?php echo @$pdftotext_path; ?>"/>
 				</div>
 			</p>
 			<p><?php echo $lang["setup-basicsettingsfooter"];?></p>
 		</div>
 		<div class="tabs" id="tab-2">
-			<h1>Advanced Settings</h2>
-			<h2>General Options</h2>
+			<h1><?php echo $lang["setup-advancedsettings"];?></h2>
+			<h2><?php echo $lang["setup-generaloptions"];?></h2>
 			<div class="advsection" id="generaloptions">
 				<div class="configitem">
-					<label for="allow_password_change">Allow password change? </label><input id="allow_password_change" type="checkbox" name="allow_password_change" <?php echo ($allow_password_change==true?'checked':'');?>/><a class="iflink" href="#if-allow_password_change">?</a>
-					<p class="iteminfo" id="if-allow_password_change">Allow end users to change their passwods</p>
+					<label for="allow_password_change"><?php echo $lang["setup-allow_password_change"];?></label><input id="allow_password_change" type="checkbox" name="allow_password_change" <?php echo ($allow_password_change==true?'checked':'');?>/><a class="iflink" href="#if-allow_password_change">?</a>
+					<p class="iteminfo" id="if-allow_password_change"><?php echo $lang["setup-if_allowpasswordchange"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="allow_account_request">Allow users to request accounts? </label><input id="allow_account_request" type="checkbox" name="allow_account_request" <?php echo ($allow_account_request==true?'checked':'');?>/>
+					<label for="allow_account_request"><?php echo $lang["setup-allow_account_requests"];?></label><input id="allow_account_request" type="checkbox" name="allow_account_request" <?php echo ($allow_account_request==true?'checked':'');?>/>
 				</div>
 				<div class="configitem">
-					<label for="research_request">Display the Research Request functionality? </label><input id="research_request" type="checkbox" name="research_request" <?php echo ($research_request==true?'checked':'');?>/><a class="iflink" href="#if-research_request">?</a>
-					<p class="iteminfo" id="if-research_request">Allows users to request resources via a form, which is e-mailed.</p>
+					<label for="research_request"><?php echo $lang["setup-display_research_request"];?></label><input id="research_request" type="checkbox" name="research_request" <?php echo ($research_request==true?'checked':'');?>/><a class="iflink" href="#if-research_request">?</a>
+					<p class="iteminfo" id="if-research_request"><?php echo $lang["setup-if_displayresearchrequest"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="use_theme_as_home"> Use the themes page as the home page? </label><input id="use_theme_as_home" type="checkbox" name="use_theme_as_home" <?php echo ($use_theme_as_home==true?'checked':'');?>/>
+					<label for="use_theme_as_home"><?php echo $lang["setup-themes_as_home"];?></label><input id="use_theme_as_home" type="checkbox" name="use_theme_as_home" <?php echo ($use_theme_as_home==true?'checked':'');?>/>
 				</div>
 				
 			</div>	
-			<h2>Remote Storage Locations</h2>
+			<h2><?php echo $lang["setup-remote_storage_locations"];?></h2>
 			<div class="advsection" id="storagelocations">
 				<div class="configitem">
-					<label for="configstoragelocations">Use remote storage?</label><input id="configstoragelocations" type="checkbox" name="configstoragelocations" value="true" <?php echo ($configstoragelocations==true?'checked':'');?>/><a class="iflink" href="#if-remstorage">?</a>
-					<p class="iteminfo" id="if-remstorage">Check this box to configure remote storage locations for RS. (To use another server for filestore)</p>
+					<label for="configstoragelocations"><?php echo $lang["setup-use_remote_storage"];?></label><input id="configstoragelocations" type="checkbox" name="configstoragelocations" value="true" <?php echo ($configstoragelocations==true?'checked':'');?>/><a class="iflink" href="#if-remstorage">?</a>
+					<p class="iteminfo" id="if-remstorage"><?php echo $lang["setup-if_useremotestorage"];?></p>
 				</div>
 				<div id="remstorageoptions" class="starthidden">
 					<div class="configitem">
-						<label for="storagedir">Storage Directory:</label><input id="storagedir" type="text" name="storagedir" value="<?php echo $storagedir;?>"/><a class="iflink" href="#if-storagedir">?</a>
-						<p class="iteminfo" id="if-storagedir">Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. Note: no trailing slash</p>
+						<label for="storagedir"><?php echo $lang["setup-storage_directory"] . ":"; ?></label><input id="storagedir" type="text" name="storagedir" value="<?php echo $storagedir;?>"/><a class="iflink" href="#if-storagedir">?</a>
+						<p class="iteminfo" id="if-storagedir"><?php echo $lang["setup-if_storagedirectory"];?></p>
 					</div>
 					<div class="configitem">
-						<label for="storageurl">Storage URL:</label><input id="storageurl" type="text" name="storageurl" value="<?php echo $storageurl;?>"/><a class="iflink" href="#if-storageurl">?</a>
-						<p class="iteminfo" id="if-storageurl"> Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. Note: no trailing slash</p>
+						<label for="storageurl"><?php echo $lang["setup-storage_url"] . ":"; ?></label><input id="storageurl" type="text" name="storageurl" value="<?php echo $storageurl;?>"/><a class="iflink" href="#if-storageurl">?</a>
+						<p class="iteminfo" id="if-storageurl"><?php echo $lang["setup-if_storageurl"];?></p>
 					</div>
 				</div>
 			</div>
 			
-			<h2>FTP Settings</h2>
+			<h2><?php echo $lang["setup-ftp_settings"];?></h2>
 			<div class="advsection" id="ftpsettings">
 				<div class="configitem">
-					<label for="ftp_server">FTP Server</label><input id="ftp_server" name="ftp_server" type="text" value="<?php echo $ftp_server;?>"/><a class="iflink" href="#if-ftpserver">?</a>
-					<p class="iteminfo" id="if-ftpserver">Only necessary if you plan to use the FTP upload feature.</p>
+					<label for="ftp_server"><?php echo $lang["ftpserver"] . ":"; ?></label><input id="ftp_server" name="ftp_server" type="text" value="<?php echo $ftp_server;?>"/><a class="iflink" href="#if-ftpserver">?</a>
+					<p class="iteminfo" id="if-ftpserver"><?php echo $lang["setup-if_ftpserver"];?></p>
 				</div>
 				<div class="configitem">
-					<label for="ftp_username">FTP Username</label><input id="ftp_username" name="ftp_username" type="text" value="<?php echo $ftp_username;?>"/>
+					<label for="ftp_username"><?php echo $lang["ftpusername"] . ":"; ?></label><input id="ftp_username" name="ftp_username" type="text" value="<?php echo $ftp_username;?>"/>
 				</div>
 				<div class="configitem">
-					<label for="ftp_password">FTP Password</label><input id="ftp_password" name="ftp_password" type="text" value="<?php echo $ftp_password;?>"/>
+					<label for="ftp_password"><?php echo $lang["ftppassword"] . ":"; ?></label><input id="ftp_password" name="ftp_password" type="text" value="<?php echo $ftp_password;?>"/>
 				</div>
 				<div class="configitem">
-					<label for="ftp_defaultfolder">FTP Default Folder</label><input id="ftp_defaultfolder" name="ftp_defaultfolder" type="text" value="<?php echo $ftp_defaultfolder;?>"/>
+					<label for="ftp_defaultfolder"><?php echo $lang["ftpfolder"] . ":"; ?></label><input id="ftp_defaultfolder" name="ftp_defaultfolder" type="text" value="<?php echo $ftp_defaultfolder;?>"/>
 				</div>
 			</div>
 		</div>
-		<input type="submit" id="submit" name="submit" value="Begin Installation!"/>
+		<input type="submit" id="submit" name="submit" value="<?php echo $lang["setup-begin_installation"];?>"/>
 	</div>
 </form>
 <?php } ?>
 <?php if (($develmode)&& isset($config_output)){?>
 		<div id="configoutput">
-			<h1>Configuration File Ouput:</h1>
+			<h1><?php echo $lang["setup-configuration_file_output"] . ":"; ?></h1>
 			<pre><?php echo $config_output; ?></pre>
 		</div>
 	<?php } ?>	

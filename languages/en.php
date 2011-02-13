@@ -536,6 +536,7 @@ $lang["resource-0"]="resources";
 $lang["resource-1"]="resource";
 $lang["resource-2"]="resources";
 $lang["status-note"]="NOTE";
+$lang["action-changelanguage"]="Change Language";
 
 # Pager
 $lang["next"]="Next";
@@ -758,13 +759,14 @@ $lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? U
 $lang["noexternalsharing"]="No external sharing.";
 $lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
 $lang["addresourcebatchlocalfolder"]="Add Resource Batch - Fetch from local upload folder";
+
 # Setup Script
 $lang["setup-alreadyconfigured"]="Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
 $lang["setup-successheader"]="Congratulations!";
 $lang["setup-successdetails"]="Your initial ResourceSpace setup is complete.  Be sure to check out 'include/default.config.php' for more configuration options.";
 $lang["setup-successnextsteps"]="Next steps:";
 $lang["setup-successremovewrite"]="You can now remove write access to 'include/'.";
-$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation';
+$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation.';
 $lang["setup-checkconfigwrite"]="Write access to config directory:";
 $lang["setup-checkstoragewrite"]="Write access to storage directory:";
 $lang["setup-welcome"]="Welcome to ResourceSpace";
@@ -815,6 +817,30 @@ $lang["setup-err_spiderpassword"]="The password required for spider.php.  IMPORT
 $lang["setup-err_scramblekey"]="If this is a public installation, setting the scramble key is recommended.";
 $lang["setup-err_path"]="Unable to verify location of";
 $lang["setup-emailerr"]="Not a valid email address.";
+$lang["setup-rs_initial_configuration"]="ResourceSpace: Initial Configuration";
+$lang["setup-include_not_writable"]="'/include' not writable. Only required during setup.";
+$lang["setup-override_location_in_advanced"]="Override location in 'Advanced Settings'.";
+$lang["setup-advancedsettings"]="Advanced Settings";
+$lang["setup-binpath"]="%bin Path"; #%bin will be replaced, e.g. "Imagemagick Path"
+$lang["setup-begin_installation"]="Begin Installation!";
+$lang["setup-generaloptions"]="General Options";
+$lang["setup-allow_password_change"]="Allow password change?";
+$lang["setup-if_allowpasswordchange"]="Allow end users to change their passwords.";
+$lang["setup-allow_account_requests"]="Allow users to request accounts?";
+$lang["setup-display_research_request"]="Display the Research Request functionality?";
+$lang["setup-if_displayresearchrequest"]="Allows users to request resources via a form, which is e-mailed.";
+$lang["setup-themes_as_home"]="Use the themes page as the home page?";
+$lang["setup-remote_storage_locations"]="Remote Storage Locations";
+$lang["setup-use_remote_storage"]="Use remote storage?";
+$lang["setup-if_useremotestorage"]="Check this box to configure remote storage locations for RS. (To use another server for filestore.)";
+$lang["setup-storage_directory"]="Storage Directory";
+$lang["setup-if_storagedirectory"]="Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. NOTE: No trailing slash.";
+$lang["setup-storage_url"]="Storage URL";
+$lang["setup-if_storageurl"]="Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. NOTE: No trailing slash.";
+$lang["setup-ftp_settings"]="FTP Settings";
+$lang["setup-if_ftpserver"]="Only necessary if you plan to use the FTP upload feature.";
+$lang["setup-login_to"]="Login to";
+$lang["setup-configuration_file_output"]="Configuration File Ouput";
 
 # Collection log - actions
 $lang["collectionlog"]="Collection Log";

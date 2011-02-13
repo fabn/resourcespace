@@ -20,7 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110210 för version 2327.
+# Senast uppdaterad av Henrik Frizén 20110213 för version 2341.
 #
 #
 # User group names (for the default user groups)
@@ -555,6 +555,7 @@ $lang["resource-0"]="material";
 $lang["resource-1"]="material";
 $lang["resource-2"]="material";
 $lang["status-note"]="OBSERVERA";
+$lang["action-changelanguage"]="Byt språk";
 
 # Pager
 $lang["next"]="Nästa";
@@ -777,22 +778,23 @@ $lang["confirmdeleteaccess"]="Är du säker på att du vill radera denna åtkoms
 $lang["noexternalsharing"]="Ingen extern utdelning.";
 $lang["sharedcollectionaddwarning"]="Varning: Den här samlingen har delats ut till externa användare. Materialet du har lagt till har därmed gjorts tillgängligt för dessa användare. Klicka på 'Dela ut' för att hantera extern åtkomst för denna samling.";
 $lang["addresourcebatchlocalfolder"]="Gruppuppladda material - hämta från lokal mapp";
+
 # Setup Script
 $lang["setup-alreadyconfigured"]="Din installation av ResourceSpace är redan konfigurerad. För att göra om konfigurationen kan du radera <pre>include/config.php</pre> och peka webbläsaren till den här sidan igen.";
 $lang["setup-successheader"]="Gratulerar!";
 $lang["setup-successdetails"]="Den grundläggande delen av installationen av ResourceSpace är klar. Gå igenom filen 'include/default.config.php' för att hitta fler konfigurationsmöjligheter.";
 $lang["setup-successnextsteps"]="Nästa steg:";
-$lang["setup-successremovewrite"]="Du bör nu avlägsna skrivåtkomsten till mappen 'include/'.";
-$lang["setup-visitwiki"]='Besök <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> (engelskspråkig wiki) för att hitta mer information om hur du skräddarsyr din installation';
-$lang["setup-checkconfigwrite"]="Skrivåtkomst till konfigurationskatalog:";
-$lang["setup-checkstoragewrite"]="Skrivåtkomst till lagringskatalog:";
+$lang["setup-successremovewrite"]="Du bör nu avlägsna skrivrättigheten till mappen 'include/'.";
+$lang["setup-visitwiki"]='Besök <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> (engelskspråkig wiki) för att hitta mer information om hur du skräddarsyr din installation.';
+$lang["setup-checkconfigwrite"]="Skrivrättighet till konfigurationsmapp:";
+$lang["setup-checkstoragewrite"]="Skrivrättighet till lagringsmapp:";
 $lang["setup-welcome"]="Välkommen till ResourceSpace";
 $lang["setup-introtext"]="Tack för att du väljer ResourceSpace. Detta konfigurationsskript hjälper dig att installera ResourceSpace. Detta behöver endast göras en gång.";
-$lang["setup-checkerrors"]="Fel upptäcktes i din systemkonfiguration.<br/> Var vänlig åtgärda dessa fel och kom sen tillbaka till den här sidan för att fortsätta.";
+$lang["setup-checkerrors"]="Fel upptäcktes i din systemkonfiguration.<br/> Var vänlig åtgärda dessa fel och peka sen webbläsaren till den här sidan igen för att fortsätta.";
 $lang["setup-errorheader"]="Fel upptäcktes i din konfiguration. Se detaljerade felmeddelanden nedan.";
 $lang["setup-warnheader"]="Några av dina inställningar genererade varningsmeddelanden, se nedan. Detta betyder inte nödvändigtvis att det är ett problem med din konfiguration.";
-$lang["setup-basicsettings"]="Grundinställningar";
-$lang["setup-basicsettingsdetails"]="Här gör du de grundläggande inställningarna för din installation av ResourceSpace. Obligatoriska fält är markerade med <strong>*</strong>";
+$lang["setup-basicsettings"]="Grundläggande inställningar";
+$lang["setup-basicsettingsdetails"]="Här gör du de grundläggande inställningarna för din installation av ResourceSpace.<br><strong>*</strong>Obligatoriskt fält";
 $lang["setup-dbaseconfig"]="Databaskonfiguration";
 $lang["setup-mysqlerror"]="Det finns ett fel i dina MySQL-inställningar:";
 $lang["setup-mysqlerrorversion"]="MySQL-versionen måste vara 5 eller senare.";
@@ -817,16 +819,16 @@ $lang["setup-pathsdetail"]="Ange sökväg utan efterföljande snedstreck för va
 $lang["setup-applicationname"]="Webbplats-/installationsnamn:";
 $lang["setup-basicsettingsfooter"]="OBS! Alla <strong>obligatoriska</strong> inställningar är alla samlade på den här sidan. Om du inte är intresserad av att kontrollera de avancerade inställningarna kan du klicka nedan för att starta installationen.";
 $lang["setup-if_mysqlserver"]='IP-adress eller <abbr title="Fullständigt kvalificerat domännamn">FQDN</abbr> för din MySQL-server. Ange "localhost" om MySQL är installerad på samma server som din webbserver.';
-$lang["setup-if_mysqlusername"]="Användarnamnet som ska användas för att ansluta till MySQL-servern. Användaren måste ha rättigheter för att skapa tabeller i den namngivna databasen nedan.";
-$lang["setup-if_mysqlpassword"]="Lösenord för MySQL-användare som angetts ovan.";
-$lang["setup-if_mysqldb"]="Namnet på MySQL-databasen som ResourceSpace kommer att använda. (Denna databas måste redan existera.)";
+$lang["setup-if_mysqlusername"]="Användarnamnet som ska användas för att ansluta till MySQL-servern. Användaren måste ha rättighet att skapa tabeller i databasen nedan.";
+$lang["setup-if_mysqlpassword"]="Lösenordet för MySQL-användaren ovan.";
+$lang["setup-if_mysqldb"]="Namnet på MySQL-databasen som ResourceSpace ska använda. Databasen måste redan existera.";
 $lang["setup-if_mysqlbinpath"]="Sökvägen till MySQL-klientens programfiler - t.ex. mysqldump. OBS! Detta behövs bara om du avser att använda exportverktyg.";
-$lang["setup-if_baseurl"]="'Baswebbadressen' för den här installationen. OBS! Utan efterföljande snedstreck.";
+$lang["setup-if_baseurl"]="Baswebbadressen för den här installationen. OBS! Utan efterföljande snedstreck.";
 $lang["setup-if_emailfrom"]="Den adress som e-post från ResourceSpace tycks komma ifrån.";
 $lang["setup-if_emailnotify"]="E-postadressen som ansökningar och förfrågningar ska skickas till.";
 $lang["setup-if_spiderpassword"]="Spindellösenordet är ett obligatoriskt fält.";
 $lang["setup-if_scramblekey"]="Ange en sträng (svår att gissa) som krypteringsnyckel för att aktivera kryptering av materialsökvägar. Om detta är en installation nåbar från Internet rekommenderas kryptering. Lämna fältet tomt för att inaktivera kryptering. Innehållet i fältet har redan slumpats fram för dig, men du kan ändra det så att det motsvarar en befintlig installation, om det behövs.";
-$lang["setup-if_applicationname"]="Namnet på webbplatsen/installationen (ex. [företag]s mediaarkiv).";
+$lang["setup-if_applicationname"]="Namnet på webbplatsen/installationen (ex. 'MittFöretags mediaarkiv').";
 $lang["setup-err_mysqlbinpath"]="Det går inte att verifiera sökvägen. Lämna tomt för att inaktivera.";
 $lang["setup-err_baseurl"]="Baswebbadressen är ett obligatoriskt fält.";
 $lang["setup-err_baseurlverify"]="Baswebbadressen verkar inte vara korrekt (kunde inte ladda license.txt).";
@@ -834,6 +836,30 @@ $lang["setup-err_spiderpassword"]="Lösenordet som krävs för spider.php. VIKTI
 $lang["setup-err_scramblekey"]="Om detta är en installation nåbar från Internet rekommenderas kryptering";
 $lang["setup-err_path"]="Det går inte att verifiera sökvägen för";
 $lang["setup-emailerr"]="Ogiltig e-postadress.";
+$lang["setup-rs_initial_configuration"]="ResourceSpace: Inledande konfiguration";
+$lang["setup-include_not_writable"]="Skrivrättighet till mappen '/include' saknas. Krävs bara under installationen.";
+$lang["setup-override_location_in_advanced"]="Sökvägen kan åsidosättas i 'Avancerade inställningar'.";
+$lang["setup-advancedsettings"]="Avancerade inställningar";
+$lang["setup-binpath"]="Sökväg till %bin"; #%bin will be replaced, e.g. "Imagemagick Path"
+$lang["setup-begin_installation"]="Starta installation";
+$lang["setup-generaloptions"]="Allmänna val";
+$lang["setup-allow_password_change"]="Tillåt byte av lösenord?";
+$lang["setup-if_allowpasswordchange"]="Tillåt användarna att byta sina egna lösenord.";
+$lang["setup-allow_account_requests"]="Tillåt ansökningar om användarkonton?";
+$lang["setup-display_research_request"]="Visa funktionen researchfrågan?";
+$lang["setup-if_displayresearchrequest"]="Tillåt användarna att skicka in researchförfrågningar via ett formulär, som sen skickas per e-post.";
+$lang["setup-themes_as_home"]="Använd sidan Teman som startsida?";
+$lang["setup-remote_storage_locations"]="Platser för fjärrlagring";
+$lang["setup-use_remote_storage"]="Använd fjärrlagring?";
+$lang["setup-if_useremotestorage"]="Markera den här kryssrutan för att konfigurera fjärrlagring för RS. (För att placera lagringsmappen på en annan server.)";
+$lang["setup-storage_directory"]="Lagringsmapp";
+$lang["setup-if_storagedirectory"]="Var materialfilerna lagras. Kan vara en absolut sökväg (/var/www/blah/blah) eller relativ till installationen. OBS! Inget efterföljande snedstreck.";
+$lang["setup-storage_url"]="Lagringsmappens webbadress";
+$lang["setup-if_storageurl"]="Var lagringsmappen finns tillgänglig. Kan vara absolut (http://filer.exempel.se) eller relativ till installationen. OBS! Inget efterföljande snedstreck.";
+$lang["setup-ftp_settings"]="FTP-inställningar";
+$lang["setup-if_ftpserver"]="Krävs endast om du planerar att hämta material från en FTP-server.";
+$lang["setup-login_to"]="Logga in på";
+$lang["setup-configuration_file_output"]="Utmatning till konfigurationsfilen";
 
 # Collection log - actions
 $lang["collectionlog"]="Samlingslogg";
@@ -1229,7 +1255,7 @@ $lang["restricted_access_only_to_resource_type"]="Tillåts åtkomst endast till 
 $lang["edit_access_to_workflow_state"]="Kan redigera material med statusen";
 $lang["can_create_resources_and_upload_files-admins"]="Kan skapa material / ladda upp filer<br>(administratörer; materialet får statusen 'Aktivt')";
 $lang["can_create_resources_and_upload_files-general_users"]="Kan skapa material / ladda upp filer<br>(vanliga användare; materialet får statusen 'Redo för granskning'";
-$lang["can_delete_resources"]="Kan radera material<br>(till vilket användaren har skrivåtkomst)";
+$lang["can_delete_resources"]="Kan radera material<br>(till vilket användaren har skrivrättighet)";
 $lang["can_manage_archive_resources"]="Kan hantera arkivmaterial";
 $lang["can_tag_resources_using_speed_tagging"]="Kan etikettera material med 'Snabbetikettering'<br>(måste vara aktiverat i config.php)";
 $lang["enable_bottom_collection_bar"]="Aktivera samlingsfältet i nederkant av skärmen";
