@@ -1,9 +1,15 @@
 <?php
-
+# English
+# Language File for the Transform Plugin
+# -------
+#
+#
 # Resource log - actions
 $lang["log-a"]="Created alternate";
+
 $lang['transform']="Transform";
 $lang['transformimage']="Transform Image";
+$lang['transformed']="Transform";
 $lang['transformblurb']="To crop the image, drag your pointer across the image. You can move and resize the crop box once you have created it. When you are done, enter a name for the crop and press save or download. Optionally, you can choose a width and/or height to rescale the cropped image.<br/><br/><strong>All the options below can be left blank.</strong> If you don't provide a width and height, the original height and width of the crop area will be used.";
 $lang['width']="Width";
 $lang['height']="Height";
@@ -28,5 +34,5 @@ $lang['replaced']="Replaced";
 $lang['replaceslideshowimage']="Replace slideshow image";
 $lang['slideshowsequencenumber']="Sequence number (1, 2, 3 etc.)";
 $lang['transformcrophelp']="Click and drag on the image to the left to select a crop area.";
-
+$lang['originalsize']="Original Size";
 ?>

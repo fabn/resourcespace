@@ -154,7 +154,7 @@ else if (isset($_REQUEST['new_ext']) && strlen($_REQUEST['new_ext']) == 3){
 if ( $cropper_custom_filename && strlen($filename) > 0){
 	$mytitle = $filename;
 } else{
-	$mytitle = mysql_real_escape_string("$verb " . strtoupper($new_ext) . ' ' . $lang['file']);
+	$mytitle = mysql_real_escape_string("$verb " . str_replace("?",strtoupper($new_ext),$lang["fileoftype"]));
 }
 
 if (strlen($alt_type)>0){ $mytitle .= " - $alt_type"; }
@@ -307,7 +307,7 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 } else {
 	if ($download || getval("slideshow","")!="")
 		{
-		$filename=$ref . "_" . strtolower($lang['transform']);
+		$filename=$ref . "_" . strtolower($lang['transformed']);
 		}
 	elseif ($original)
 		{
@@ -625,10 +625,10 @@ include "../../../include/header.php";
       <tr>
         <td style='text-align:right'><?php echo $lang["width"]; ?>: </td>
         <td><input type='text' name='new_width' id='new_width' value='' size='4'  onblur='evaluate_values()' />
-          px </td>
-        <td style='text-align:right'><?php echo $lang["height"]; ?></td>
+          <?php echo $lang['px']; ?></td>
+        <td style='text-align:right'><?php echo $lang["height"]; ?>: </td>
         <td><input type='text' name='new_height'  id='new_height' value='' size='4'  onblur='evaluate_values()' />
-          px </td>
+          <?php echo $lang['px']; ?></td>
       </tr>
       <?php if ($cropper_rotation){ ?>
       <tr>
@@ -702,7 +702,7 @@ if ($cropper_debug){
       <?php if ($original){ ?>
              <input type='submit' name='replace' value="<?php echo $lang['transform_original']; ?>" />
       <?php } else { ?>
-        <input type='submit' name='download' value="<?php echo $lang['download']; ?>" />
+        <input type='submit' name='download' value="<?php echo $lang["action-download"]; ?>" />
         <?php if ($edit_access) { ?><input type='submit' name='submit' value="<?php echo $lang['savealternative']; ?>" /><?php } ?>
       <?php } // end of if $original ?>
     </p>
@@ -718,7 +718,7 @@ if ($cropper_debug){
 			$orig_mptext = '';
 		}
 		
-		echo $lang['original'] . ' ' . $lang['size'];
+		echo $lang['originalsize'];
 		echo ": $origwidth x $origheight ";
 		echo $lang['pixels'];
 		echo " $orig_mptext";
