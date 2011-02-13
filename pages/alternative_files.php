@@ -80,7 +80,7 @@ for ($n=0;$n<count($files);$n++)
 	<tr>
 	<td><?php echo htmlspecialchars($files[$n]["name"])?></td>	
 	<td><?php echo htmlspecialchars($files[$n]["description"])?>&nbsp;</td>	
-	<td><?php echo ($files[$n]["file_extension"]==""?$lang["notuploaded"]:htmlspecialchars(strtoupper($files[$n]["file_extension"])) . " " . $lang["file"])?></td>	
+	<td><?php echo ($files[$n]["file_extension"]==""?$lang["notuploaded"]:htmlspecialchars(str_replace("?",strtoupper($files[$n]["file_extension"]),$lang["fileoftype"]))); ?></td>	
 	<td><?php echo formatfilesize($files[$n]["file_size"])?></td>	
 	<td><?php echo nicedate($files[$n]["creation_date"],true)?></td>
 	<?php if(count($alt_types) > 1){ ?><td><?php echo $files[$n]["alt_type"] ?></td><?php } ?>

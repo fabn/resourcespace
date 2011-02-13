@@ -337,7 +337,7 @@ if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
 // Do something with the final file:
 if (!$download && !$original && getval("slideshow","")==""){
     // we are supposed to make an alternative
-	$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext',file_size = '$newfilesize',  description = concat(description,'" . $deschyphen . $newfilewidth . " x " . 		$newfileheight . " pixels $mptext') where ref='$newfile'");
+	$result = sql_query("update resource_alt_files set file_name='{$filename}.".$lcext."',file_extension='$lcext', file_size = '$newfilesize', description = concat(description,'" . $deschyphen . $newfilewidth . " x " . $newfileheight . " " . $lang['pixels'] . " $mptext') where ref='$newfile'");
 	resource_log($ref,'a','',"$new_ext " . strtolower($verb) . " to $newfilewidth x $newfileheight");
 
 } elseif ($original && getval("slideshow","")=="") {
