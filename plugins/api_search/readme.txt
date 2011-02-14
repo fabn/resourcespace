@@ -13,3 +13,10 @@ archive=[integer]        Archive Status (default 0 (active))
 starsearch=[integer]     Minimum # of stars (User Rated)
 previewsize=[string]     return a 'preview' url (ex: "thm")
 content=[string]         Return results as json with json headers (xml not implemented yet)
+
+If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
+Your hash key is a shared secret available from plugins/api_core.
+The query string you hash this with must not include a leading '?', and must not include an skey parameter.
+
+The simplest example of a signed call is:
+url/plugins/api_search/?key=aBCdEf...&skey=md5("yourhaskey"."key=aBCdEf...")

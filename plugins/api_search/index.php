@@ -25,6 +25,33 @@ echo file_get_contents("readme.txt");
 die();
 }
 
+
+if ($api_search['signed']){
+
+// test signature? get query string minus leading ? and skey parameter
+$test_query="";
+parse_str($_SERVER["QUERY_STRING"],$parsed);
+foreach ($parsed as $parsed_parameter=>$value){
+    if ($parsed_parameter!="skey"){
+        $test_query.=$parsed_parameter.'='.$value."&";
+    }
+    }
+$test_query=rtrim($test_query,"&");
+
+    // get hashkey that should have been used to create a signature.
+    $hashkey=md5($api_scramble_key.getval("key",""));
+
+    // generate the signature required to match against given skey to continue
+    $keytotest = md5($hashkey.$test_query);
+
+    if ($keytotest <> getval('skey','')){
+		header("HTTP/1.0 403 Forbidden.");
+		echo "HTTP/1.0 403 Forbidden. Invalid Signature";
+		exit;
+	}
+}
+
+
 $results=do_search($search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
 
 if (getval("previewsize","")!=""){

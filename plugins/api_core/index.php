@@ -18,8 +18,9 @@ echo $lang["yourauthkey"];?>
 
 <p><input type="text" size=80 value="<?php echo $apikey?>"></p>
 
-<?php echo $lang["yourhashkey"]?>
-<p><input type="text" size=35 value="<?php echo md5($api_scramble_key.$apikey);?>"></p>
+<?php echo $lang["yourhashkey"]; $hashkey=md5($api_scramble_key.$apikey);?>
+
+<p><input type="text" size=35 value="<?php echo $hashkey;?>"></p>
 
 <?php if (extension_loaded('mcrypt')){
 echo $lang['mcryptenabled'];
@@ -42,7 +43,14 @@ foreach($plugins as $plugin){
        <tr class="ListviewTitleStyle">
        <td width="10%"><?php echo $plugin?></td>
        <td width="10%"><a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/readme.txt">readme.txt</a></td>
-       <td width="10%"><a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?></a></td>
+       <td width="10%"><?php if (${$plugin}['signed']){
+           echo "Signed Request: ";
+           ?><a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?></a>
+           <?php }
+           else { ?>
+            <a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?></a>
+           <?php } ?> 
+           </td>
        </tr>
 <?php
     }
