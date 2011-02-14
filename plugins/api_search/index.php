@@ -14,12 +14,18 @@ if (!in_array("api_search",$plugins)){die("no access");}
 $search=getval("search","");
 $restypes=getval("restypes","");
 $order_by=getval("order_by","relevance");
-$archive=getval("archive",0);
-$fetchrows=getval("fetchrows",-1);
 $sort=getval("sort","desc");
+$archive=getval("archive",0);
 $starsearch=getval("starsearch","");
 
-$results=do_search($search,$restypes,$order_by,$archive,$fetchrows,$sort,false,$starsearch);
+$help=getval("help","");
+if ($help!=""){
+header('Content-type: text/plain');
+echo file_get_contents("readme.txt");
+die();
+}
+
+$results=do_search($search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
 
 if (getval("previewsize","")!=""){
 for($n=0;$n<count($results);$n++){
@@ -29,9 +35,29 @@ for($n=0;$n<count($results);$n++){
 
 if (!is_array($results)){$results=array();}
 
-$json=json_encode($results);
+
 if (getval("content","")=="json"){
 header('Content-type: application/json');
+echo json_encode($results);
 }
 
-echo $json;
+else if (getval("content","")=="xml"){
+    header('Content-type: application/xml');
+    echo '<?xml version="1.0" encoding="UTF-8"?><results>';
+    foreach ($results as $result){
+        echo '<resource>';
+        foreach ($result as $resultitem=>$value){
+            echo '<'.$resultitem.'>';
+            echo $value;
+            echo '</'.$resultitem.'>';
+        }
+        echo '</resource>';
+    }
+    echo '</results>';
+}
+
+else echo json_encode($results); // echo json without headers by default
+
+
+
+
