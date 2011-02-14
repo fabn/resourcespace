@@ -414,6 +414,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		//Generate default random keys.
 		$scramble_key = generatePassword();
 		$spider_password = generatePassword();
+        $api_scramble_key = generatePassword();
 		//Setup search paths (Currently only Linux/Mac OS X)
 		$os=php_uname('s');
 		if($os=='Linux' || $os=="Darwin"){
@@ -555,6 +556,11 @@ h2#dbaseconfig{  min-height: 32px;}
 			$config_output .= "\$scramble_key = '$scramble_key';\r\n\r\n";
 		else
 			$warnings['scramble_key']=true;
+        $api_scramble_key = get_post('api_scramble_key');    
+        if ($api_scramble_key!='')
+			$config_output .= "\$api_scramble_key = '$api_scramble_key';\r\n\r\n";
+		else
+			$warnings['api_scramble_key']=true;    
 			
 		$config_output .= "# Paths\r\n";
 		//Verify paths actually point to a useable binary
@@ -592,6 +598,8 @@ h2#dbaseconfig{  min-height: 32px;}
 		//Deal with some checkboxes
 		if (!$allow_account_request = get_post_bool('allow_account_request'))
 			$config_output .= "\$allow_account_request = false;\r\n";
+        if ($enable_remote_apis = get_post_bool('enable_remote_apis'))
+			$config_output .= "\$enable_remote_apis = true;\r\n";    
 		if (!$allow_password_change = get_post_bool('allow_password_change'))
 			$config_output .= "\$allow_password_change = false;\r\n";
 		if (!$research_request = get_post_bool('research_request'))
@@ -906,6 +914,14 @@ else{
 					<label for="scramblekey"><?php echo $lang["setup-scramblekey"];?></label><input id="scramblekey" type="text" name="scramble_key" value="<?php echo $scramble_key;?>"/><a class="iflink" href="#if-scramblekey">?</a>
 					<p id="if-scramblekey" class="iteminfo"><?php echo $lang["setup-if_scramblekey"];?></p>
 				</div>
+                <div class="configitem">
+					<?php if(isset($warnings['api_scramble_key'])){?>
+						<div class="warnitem"><?php echo $lang["setup-err_apiscramblekey"];?></div>
+					<?php } ?>
+					<label for="scramblekey"><?php echo $lang["setup-apiscramblekey"];?></label><input id="apiscramblekey" type="text" name="api_scramble_key" value="<?php echo $api_scramble_key;?>"/><a class="iflink" href="#if-apiscramblekey">?</a>
+					<p id="if-apiscramblekey" class="iteminfo"><?php echo $lang["setup-if_apiscramblekey"];?></p>
+				</div>
+
 			</p>
 			<p class="configsection">
 				<h2><?php echo $lang["setup-paths"];?></h2>
@@ -967,6 +983,10 @@ else{
 				</div>
 				<div class="configitem">
 					<label for="use_theme_as_home"><?php echo $lang["setup-themes_as_home"];?></label><input id="use_theme_as_home" type="checkbox" name="use_theme_as_home" <?php echo ($use_theme_as_home==true?'checked':'');?>/>
+				</div>
+                <div class="configitem">
+					<label for="enable_remote_apis"><?php echo $lang["setup-enable_remote_apis"];?></label><input id="enable_remote_apis" type="checkbox" name="enable_remote_apis" <?php echo ($enable_remote_apis==true?'checked':'');?>/><a class="iflink" href="#if-enable_remote_apis">?</a>
+					<p class="iteminfo" id="if-enable_remote_apis"><?php echo $lang["setup-if_enableremoteapis"];?></p>
 				</div>
 				
 			</div>	
