@@ -50,7 +50,7 @@ include "../include/header.php";
 		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resource['ref'],false,"col",false);?>"/><?php } 
 	} ?>
 	<?php if ($alternative_file_resource_title){ 
-		echo "<h2>".$resource['field'.$view_title_field]."</h2><br/>";
+		echo "<h2>" . i18n_get_translated($resource['field'.$view_title_field]) . "</h2><br/>";
 	}?>
 <h1><?php echo $lang["managealternativefilestitle"]?></h1>
 </div>

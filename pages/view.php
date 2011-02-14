@@ -490,7 +490,7 @@ if (isset($flv_download) && $flv_download)
 	# Allow the FLV preview to be downloaded. $flv_download is set when showing the FLV preview video above.
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2><?php echo (isset($ffmpeg_preview_download_name))?$ffmpeg_preview_download_name:strtoupper($ffmpeg_preview_extension) . " " . $lang["file"]?></h2></td>
+	<td><h2><?php echo (isset($ffmpeg_preview_download_name))?$ffmpeg_preview_download_name:str_replace("?",strtoupper($ffmpeg_preview_extension),$lang["fileoftype"]); ?></h2></td>
 	<td><?php echo formatfilesize(filesize($flvfile))?></td>
 	<td class="DownloadButton">
 	<?php if (!$direct_download || $save_as){?>
