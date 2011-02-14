@@ -2,7 +2,7 @@
 include "../../include/db.php";
 include "../../include/authenticate.php";
 include "../../include/general.php";
-if (!in_array("api_search",$plugins)){die("no access");}
+if (!in_array("api_core",$plugins)){die("no access");}
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
