@@ -54,13 +54,13 @@ $test_query=rtrim($test_query,"&");
 
 $results=do_search($search,$restypes,$order_by,$archive,-1,$sort,false,$starsearch);
 
+if (!is_array($results)){$results=array();}
+
 if (getval("previewsize","")!=""){
 for($n=0;$n<count($results);$n++){
     $results[$n]['preview']=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,false,"",-1);
     }
 }
-
-if (!is_array($results)){$results=array();}
 
 
 if (getval("content","")=="json"){
