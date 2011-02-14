@@ -105,6 +105,7 @@ $colbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/CollectBack.gi
 $dlbuttonbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/DownloadButton.gif");
 $recordbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/recordpanel.gif");
 $searchpanelbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/SearchBox.gif");
+$dlcellbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/DownloadCell.gif");
 
 switch($style){
 	
@@ -185,7 +186,7 @@ a:active {color:".convert_html_color('B5C3D4').";}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: ".$dlbuttonbg." url(DownloadButton.gif?nc=1) repeat-x;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: ".convert_html_color('758FB1').";text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #FFFFFF;text-align: left;}
-.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: ".convert_html_color('1A447C')." url(DownloadCell.gif) repeat-x;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: ".$dlcellbg." url(DownloadCell.gif) repeat-x;}
 
 .ArchiveResourceTitle {color: ".convert_html_color('C2E066').";}
 .RecordStory{color: #000000;background: #FFFFFF url(StoryShadow.gif) repeat-x;}
