@@ -8,5 +8,5 @@ $lang["api"]="API";
 $lang["helpfile"]="Help File";
 $lang["basecall"]="Base Call";
 $lang["mcryptenabled"]="This Installation uses Mcrypt";
-$lang["mcryptenabled"]="This Installation uses a simple encryption function. Ask your administrator to install mcrypt";
+$lang["mcryptdisabled"]="This Installation uses a simple encryption function. Ask your administrator to install mcrypt";
 ?>
