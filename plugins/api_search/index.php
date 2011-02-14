@@ -3,7 +3,7 @@
 include(dirname(__FILE__)."/../../include/db.php");
 include(dirname(__FILE__)."/../../include/general.php");
 include(dirname(__FILE__)."/../../include/search_functions.php");
-
+include(dirname(__FILE__)."/../../include/resource_functions.php");
 $api=true;
 
 include(dirname(__FILE__)."/../../include/authenticate.php");
@@ -58,7 +58,9 @@ if (!is_array($results)){$results=array();}
 
 if (getval("previewsize","")!=""){
 for($n=0;$n<count($results);$n++){
-    $results[$n]['preview']=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,false,"",-1);
+    $access=get_resource_access($results[$n]);
+	$use_watermark=check_use_watermark();
+    $results[$n]['preview']=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,$use_watermark,"",-1);
     }
 }
 
