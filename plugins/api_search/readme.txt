@@ -12,7 +12,7 @@ sort=[string]            Sort order ("ASC" or "DESC")
 archive=[integer]        Archive Status (default 0 (active))
 starsearch=[integer]     Minimum # of stars (User Rated)
 previewsize=[string]     return a 'preview' url (ex: "thm")
-content=[string]         Return results as json with json headers (xml not implemented yet)
+content=[string]         Return results as json or xml (default json without json headers)
 
 If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
 Your hash key is a shared secret available from plugins/api_core.
