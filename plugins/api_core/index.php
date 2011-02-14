@@ -6,7 +6,7 @@ if (!in_array("api_core",$plugins)){die("no access");}
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?php echo $lang["apiavailability"]?></h1>
+<h1><?php echo $lang["apiaccess"]?></h1>
 </div>
 
 <?php if (!$enable_remote_apis){echo $lang["remoteapisnotavailable"]; exit();}?>
@@ -26,7 +26,8 @@ echo $lang["yourauthkey"];?>
 echo $lang['mcryptenabled'];
 } else {echo $lang['mcryptdisabled'];}
 ?>
-
+<br/><br/><br/>
+<h1><?php echo $lang["availableapis"]?></h1>
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <!--Title row-->	
