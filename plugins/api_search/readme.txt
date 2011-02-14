@@ -1,7 +1,7 @@
 Search API
 
 Usage:
-http://url/plugins/api_search?key=[authkey]&[optional parameters]
+http://url/plugins/api_search/?key=[authkey]&[optional parameters]
 
 Parameters:
 help=true                display this file
