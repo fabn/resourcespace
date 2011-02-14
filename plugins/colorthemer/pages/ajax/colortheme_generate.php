@@ -104,7 +104,7 @@ $panelback=get_bottom_color_from_image($storagedir."/colorthemes/$ref/resourcepa
 $colbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/CollectBack.gif");
 $dlbuttonbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/DownloadButton.gif");
 $recordbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/recordpanel.gif");
-
+$searchpanelbg=get_bottom_color_from_image($storagedir."/colorthemes/$ref/SearchBox.gif");
 
 switch($style){
 	
@@ -150,7 +150,7 @@ a:active {color:".convert_html_color('B5C3D4').";}
 
 #ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge,  .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid ".convert_html_color('94A7C0').";border-bottom: 1px solid ".convert_html_color('94A7C0').";border-left: 1px solid ".convert_html_color('94A7C0').";}
 
-#ThemeBoxPanel , #SearchBoxPanel {background: ".convert_html_color('5A7599')." url(SearchBox.gif) repeat-x;}
+#ThemeBoxPanel , #SearchBoxPanel {background: ".$searchpanelbg." url(SearchBox.gif) repeat-x;}
 #ResearchBoxPanel, .HomePanelIN {background: ".convert_html_color('5A7599')." url(researchpanel.jpg) repeat-x;}
 .ResourcePanel {background: ".$panelback." url(resourcepanel.gif) repeat-x;}
 .ResourcePanelSmall {background: ".$panelback." url(resourcepanel.gif) repeat-x;}
