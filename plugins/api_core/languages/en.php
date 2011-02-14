@@ -9,4 +9,5 @@ $lang["helpfile"]="Help File";
 $lang["basecall"]="Base Call";
 $lang["mcryptenabled"]="This Installation uses Mcrypt, which is especially secure.";
 $lang["mcryptdisabled"]="This Installation uses a simple encryption function. Ask your administrator to install mcrypt for expert security.";
+$lang["sslrecommended"]="We recommend that you secure this http server with SSL. Please contact your administrator";
 ?>

@@ -26,6 +26,8 @@ echo $lang["yourauthkey"];?>
 echo $lang['mcryptenabled'];
 } else {echo $lang['mcryptdisabled'];}
 ?>
+
+<?php if ($_SERVER["SERVER_PORT"] !=443) {echo $lang["sslrecommended"];}?>
 <br/><br/><br/>
 <h1><?php echo $lang["availableapis"]?></h1>
 <div class="Listview">
