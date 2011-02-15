@@ -12,9 +12,17 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",
 include "../include/search_functions.php";
 include "../include/resource_functions.php";
 include "../include/collections_functions.php";
+include "../include/image_processing.php";
 
 $ref=getvalescaped("ref","",true);
 
+# Dev feature - regenerate exif data.
+if (getval("regenexif","")!="")
+	{
+	extract_exif_comment($ref);
+	}
+	
+	
 # fetch the current search (for finding simlar matches)
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
@@ -826,7 +834,7 @@ if ($metadata_report && isset($exiftool_path) && $k==""){?>
 <?php 
 $gps_field = sql_value('SELECT ref as value from resource_type_field '. 
                        'where name="geolocation" AND (resource_type="'.$resource['resource_type'].'" OR resource_type="0")','');
-if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
+if (!$disable_geocoding && $gps_field!=''){ ?>
     <!-- Begin Geolocation Section -->
     <div class="RecordBox">
     <div class="RecordPanel">
@@ -838,7 +846,13 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
             $lat_long = explode(',', get_data_by_field($ref,$gps_field));
         ?>
             <?php if ($edit_access) { ?>
-            <ul class="HorizontalNav"><li><a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></li></ul><?php } ?>
+            <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
+            
+            <?php if ( isset($gmaps_apikey)) { 
+            #
+            #  ----------------- Map window - Google Maps version
+            #            
+            ?>
             <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
                     type="text/javascript"></script>
             <script type="text/javascript">
@@ -871,8 +885,38 @@ if (!$disable_geocoding && isset($gmaps_apikey) && $gps_field!=''){ ?>
                
                 Event.observe(window, 'load', geo_loc_initialize);
                 Event.observe(window, 'unload', GUnload);
-            </script>
-            <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
+	            </script>
+	            <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
+	            <?php
+	            } else {
+	            #
+	            #  ----------------- Map window - OpenStreetMap version
+    	        #            
+				?>
+				  <div id="mapdiv" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
+				  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+				  <script>
+				    map = new OpenLayers.Map("mapdiv");
+				    map.addLayer(new OpenLayers.Layer.OSM());
+				 
+				    var lonLat = new OpenLayers.LonLat( <?php echo $lat_long[1] ?> , <?php echo $lat_long[0] ?> )
+				          .transform(
+				            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+				            map.getProjectionObject() // to Spherical Mercator Projection
+				          );
+				 
+				    var zoom=13;
+				 
+				    var markers = new OpenLayers.Layer.Markers( "Markers" );
+				    map.addLayer(markers);
+				 
+				    markers.addMarker(new OpenLayers.Marker(lonLat));
+				 
+				    map.setCenter (lonLat, zoom);
+				  </script>
+            	<?php
+            	}
+            	?>
     <?php } else {?>
         <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>
     <?php }?>

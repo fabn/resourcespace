@@ -1273,4 +1273,7 @@ $lang["uploading"]="Uploading...";
 $lang["thumbnailcreated"]="Thumbnail Created.";
 $lang["done"]="Done.";
 $lang["stopped"]="Stopped."; 
+
+$lang["latlong"]="Lat / Long";
+
 ?>

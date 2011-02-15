@@ -292,9 +292,10 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				}
 			}
 
+
+		# Geolocation Metadata Support
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
 		if (!$disable_geocoding && isset($metadata['GPSLATITUDE'])){
-			
 			# Set vars
             $dec_long=0;$dec_lat=0;
 
@@ -315,6 +316,8 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
                 update_field($ref, $gps_field_ref, $dec_lat.','.$dec_long);
             }
         }
+        
+        
 		# now we lookup fields from the database to see if a corresponding value
 		# exists in the uploaded file
 		for($i=0;$i< count($read_from);$i++)

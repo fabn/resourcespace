@@ -1479,13 +1479,22 @@ $xml_metadump_dc_map=array
 # Use Plugins Manager
 $use_plugins_manager = true;
 
-#Disable geocoding features?
-$disable_geocoding = true;
 
-# To enable Google Maps Geolocation displays, uncomment the following line and 
+# ------------- Geocoding / geolocation -------------
+# To enable the geolocation feature you must have a field with the name 'geolocation' which will be used for storing the lat/long coordinates.
+# New installations should have this field.
+# By default OpenStreetMap / OpenLayers will be used, however if you uncomment and set the gmaps_apikey parameter below you can use Google Maps instead.
+
+#Disable geocoding features?
+$disable_geocoding = false;
+
+# To enable Google Maps Geolocation displays (instead of the default OpenStreetMaps), uncomment the following line and 
 # add your Google Maps API Key. Requires exiftool.
 # Get an api key at: http://code.google.com/apis/maps/signup.html
 #$gmaps_apikey = '';
+
+
+
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
 $frameless_collections=false;
