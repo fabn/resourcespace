@@ -43,4 +43,3 @@
 71,,"Image Size",0,,1602,0,0,1,,1,1,,,,0,,imagesize,1,0,,0,1,,0,,
 72,text,"Extracted Text",5,,50,1,0,0,,0,0,,"<div class=""item""><h3>[title]</h3><p>[value]</p></div><div class=""clearerleft""> </div>",,0,,,1,0,,0,1,,0,,
 73,filesize,"File Size",,,130,0,0,0,,1,1,,,,0,,filesize,1,0,,0,1,,0,"if ($value==0){$value="""";}else{$value=str_replace(""&nbsp;"","" "",formatfilesize($value));}",$value=filesize2bytes($value);
-74,geolocation,Geolocation,0,,140,1,0,0,,0,0,,,,0,,,0,0,,0,1,,0,,

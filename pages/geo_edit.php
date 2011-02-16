@@ -4,6 +4,9 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/header.php";
+
+if ($disable_geocoding){exit("Geomapping disabled.");}
+
 # Fetch resource data.
 $ref = getvalescaped('ref','');
 if ($ref=='') {die;}
@@ -15,20 +18,20 @@ if (!get_edit_access($ref,$resource["archive"])) {exit ("Permission denied.");}
 
 ?>
 <?php
-$gps_field = sql_value('SELECT ref as value from resource_type_field '. 
-                       'where name="geolocation" AND (resource_type="'.$resource['resource_type'].'" OR resource_type="0")','');
 
-if (isset($_POST['submit'])){
-    update_field($ref,$gps_field,getvalescaped('geo-loc',''));
-}
+if (isset($_POST['submit']))
+	{
+    $s=explode(",",getvalescaped('geo-loc',''));
+    if (count($s)==2)
+    	{
+    	sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "' where ref='$ref'");
+    	
+    	#Reload resource data
+		$resource=get_resource_data($ref,false);
+    	}
+	}
 
-if ($disable_geocoding || $gps_field==''){exit("Geomapping disabled.");}
-$ll_field = get_data_by_field($ref, $gps_field);
-        if ($ll_field!=''){
-            $lat_long = explode(',', $ll_field);
-        } else {
-            $lat_long = false;
-        }    
+
  ?>
 
 <div class="RecordBox">
@@ -55,8 +58,8 @@ $ll_field = get_data_by_field($ref, $gps_field);
                                     }
                     }
                     map = new GMap2(document.getElementById("map_canvas"),mapOptions);
-                    <?php if ($lat_long!==false) {?>
-                    map.setCenter(new GLatLng(<?php echo $lat_long[0];?>, <?php echo $lat_long[1]; ?>), 8);
+                    <?php if ($resource["geo_long"]!=="") {?>
+                    map.setCenter(new GLatLng(<?php echo $resource["geo_long"];?>, <?php echo $resource["geo_long"]; ?>), 8);
                     geo_mark = new GMarker(map.getCenter(), {draggable: true})
                     map.addOverlay(geo_mark);
                     <?php } else { ?>
@@ -102,18 +105,25 @@ $ll_field = get_data_by_field($ref, $gps_field);
             # ---------------- OpenStreetMap version -----------------
             ?>
 			  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+			  <script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+			  <script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1"></script> 
 			  <script>
 			    map = new OpenLayers.Map("map_canvas");
-			    map.addLayer(new OpenLayers.Layer.OSM());
-			 
-                <?php if ($lat_long!==false) {?>
-			    var lonLat = new OpenLayers.LonLat( <?php echo $lat_long[1] ?> , <?php echo $lat_long[0] ?> )
+			    
+				var osm = new OpenLayers.Layer.OSM();
+		        var gmap = new OpenLayers.Layer.Google("Google Streets", {visibility: false});
+			    map.addLayers([osm, gmap]);
+			 	
+                <?php if ($resource["geo_long"]!=="") {?>
+			    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
 			          .transform(
 			            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 			            map.getProjectionObject() // to Spherical Mercator Projection
 			          );
-				<?php } ?>			 
-			    var zoom=13;
+				<?php } else { ?>			 
+				var lonLat = new OpenLayers.LonLat(0,0);
+				<?php } ?>
+				var zoom=13;
 			 
 			    var markers = new OpenLayers.Layer.Markers( "Markers" );
 			    map.addLayer(markers);
@@ -152,23 +162,21 @@ $ll_field = get_data_by_field($ref, $gps_field);
                 }
    		        });map.addControl(control);
 
-                <?php if ($lat_long!==false) {?>			 
+                <?php if ($resource["geo_long"]!=="") {?>			 
 			    map.setCenter (lonLat, zoom);
 			    <?php } else { ?>
-			    map.zoomToMaxExtent();
+				var defaultbounds=new OpenLayers.Bounds(<?php echo $geolocation_default_bounds ?>); // A good world view.
+				map.zoomToExtent(defaultbounds);
+
 			    <?php } ?>
-				
-				function onCompleteMove(feature)
-					{
-					alert('11');
-					}			    
-			    
+
+		        map.addControl(new OpenLayers.Control.LayerSwitcher());
 			  </script>
 			 <?php } ?>
             <p><?php echo $lang['location-details']; ?></p>
             <form id="map-form" method="post">
             <input name="ref" type="hidden" value="<?php echo $ref; ?>" />
-            <?php echo $lang['latlong']; ?>: <input name="geo-loc" type="text" size="50" value="<?php echo $ll_field ?>" id="map-input" />
+            <?php echo $lang['latlong']; ?>: <input name="geo-loc" type="text" size="50" value="<?php echo $resource["geo_long"]==""?"":($resource["geo_lat"] . "," . $resource["geo_long"]) ?>" id="map-input" />
             <input name="submit" type="submit" value="<?php echo $lang['save']; ?>" />
             </form>
     </div>

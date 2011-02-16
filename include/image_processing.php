@@ -311,10 +311,11 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
                 $dec_lat = -1 * $dec_lat;
             if (substr($metadata['GPSLONGITUDEREF'],0,1)=='W') # Support iPhone 3GS which uses 'West' not 'W'.
                 $dec_long = -1 * $dec_long;
-            $gps_field_ref = sql_value('SELECT ref as value FROM resource_type_field WHERE name="geolocation"', '');
-            if ($gps_field_ref!='' && $dec_long!=0 && $dec_lat!=0){
-                update_field($ref, $gps_field_ref, $dec_lat.','.$dec_long);
-            }
+
+            if ($dec_long!=0 && $dec_lat!=0)
+            	{
+                sql_query("update resource set geo_long='" . escape_check($dec_long) . "',geo_lat='" . escape_check($dec_lat) . "' where ref='$ref'");
+            	}
         }
         
         

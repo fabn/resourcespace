@@ -1481,8 +1481,6 @@ $use_plugins_manager = true;
 
 
 # ------------- Geocoding / geolocation -------------
-# To enable the geolocation feature you must have a field with the name 'geolocation' which will be used for storing the lat/long coordinates.
-# New installations should have this field.
 # By default OpenStreetMap / OpenLayers will be used, however if you uncomment and set the gmaps_apikey parameter below you can use Google Maps instead.
 
 #Disable geocoding features?
@@ -1492,6 +1490,11 @@ $disable_geocoding = false;
 # add your Google Maps API Key. Requires exiftool.
 # Get an api key at: http://code.google.com/apis/maps/signup.html
 #$gmaps_apikey = '';
+
+# OpenLayers: The default bounds for the map view when searching or selecting a new location. This is a world view.
+# For example, to specify the USA use: #$geolocation_default_bounds="-14000000,2000000,-5500000,6000000";
+
+$geolocation_default_bounds="-18726460.430287,-7827151.695,18726460.430288,11740727.5425";
 
 
 

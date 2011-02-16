@@ -132,7 +132,7 @@ function get_resource_data($ref,$cache=true)
 	# For 'dynamic' field data, see get_resource_field_data
 	global $default_resource_type, $get_resource_data_cache,$resource_hit_count_on_downloads,$always_record_resource_creator;
 	if ($cache && isset($get_resource_data_cache[$ref])) {return $get_resource_data_cache[$ref];}
-	$resource=sql_query("select * from resource where ref='$ref'");
+	$resource=sql_query("select *,geo_lat,geo_long from resource where ref='$ref'");
 	if (count($resource)==0) 
 		{
 		if ($ref>0)
@@ -148,7 +148,7 @@ function get_resource_data($ref,$cache=true)
                 			$user=$userref;
                 		} else {$user=-1;}
 			$wait=sql_query("insert into resource (ref,resource_type,created_by) values ('$ref','$default_resource_type','$user')");
-			$resource=sql_query("select * from resource where ref='$ref'");
+			$resource=sql_query("select *,geo_lat,geo_long from resource where ref='$ref'");
 			}
 		}
 

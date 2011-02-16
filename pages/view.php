@@ -832,19 +832,15 @@ if ($metadata_report && isset($exiftool_path) && $k==""){?>
 
 <?php } ?>
 <?php 
-$gps_field = sql_value('SELECT ref as value from resource_type_field '. 
-                       'where name="geolocation" AND (resource_type="'.$resource['resource_type'].'" OR resource_type="0")','');
-if (!$disable_geocoding && $gps_field!=''){ ?>
+if (!$disable_geocoding) { ?>
     <!-- Begin Geolocation Section -->
     <div class="RecordBox">
     <div class="RecordPanel">
     <div class="Title"><?php echo $lang['location-title']; ?></div>
     <?php 
-    
-        $ll_field = get_data_by_field($ref, $gps_field);
-        if ($ll_field!=''){
-            $lat_long = explode(',', get_data_by_field($ref,$gps_field));
-        ?>
+    if ($resource["geo_lat"]!="" && $resource["geo_long"]!="")
+    	{
+		?>
             <?php if ($edit_access) { ?>
             <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
             
@@ -859,7 +855,7 @@ if (!$disable_geocoding && $gps_field!=''){ ?>
                 function geo_loc_initialize() {
                   if (GBrowserIsCompatible()) {
                     var map = new GMap2(document.getElementById("map_canvas"));
-                    latlng = new GLatLng(<?php echo $lat_long[0]; ?>, <?php echo $lat_long[1];?>);
+                    latlng = new GLatLng(<?php echo $resource["geo_lat"]; ?>, <?php echo $resource["geo_long"];?>);
                     marker = new GMarker(latlng)
                     map.setCenter(marker.getLatLng(), 13);
                     map.setUIToDefault();
@@ -899,7 +895,7 @@ if (!$disable_geocoding && $gps_field!=''){ ?>
 				    map = new OpenLayers.Map("mapdiv");
 				    map.addLayer(new OpenLayers.Layer.OSM());
 				 
-				    var lonLat = new OpenLayers.LonLat( <?php echo $lat_long[1] ?> , <?php echo $lat_long[0] ?> )
+				    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
 				          .transform(
 				            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 				            map.getProjectionObject() // to Spherical Mercator Projection
