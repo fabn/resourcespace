@@ -1491,12 +1491,10 @@ $disable_geocoding = false;
 # Get an api key at: http://code.google.com/apis/maps/signup.html
 #$gmaps_apikey = '';
 
-# OpenLayers: The default bounds for the map view when searching or selecting a new location. This is a world view.
-# For example, to specify the USA use: #$geolocation_default_bounds="-14000000,2000000,-5500000,6000000";
-# To specify Utah, use $geolocation_default_bounds="-13400000, 4200000, -11196659.041806, 5364110.1552654";
-$geolocation_default_bounds="-18726460.430287,-7827151.695,18726460.430288,11740727.5425";
-
-
+# OpenLayers: The default center and zoom for the map view when searching or selecting a new location. This is a world view.
+# For example, to specify the USA use: #$geolocation_default_bounds="-10494743.596017,4508852.6025659,4";
+# For example, to specify Utah, use $geolocation_default_bounds="-12328577.96607,4828961.5663655,6";
+$geolocation_default_bounds="-3.058839178216e-9,2690583.3951564,2";
 
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.
