@@ -562,6 +562,24 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		order by $order_by;",false,$fetchrows);
 		}
 		
+	# Geographic search
+	if (substr($search,0,4)=="!geo")
+		{
+		$geo=explode("t",str_replace(array("m","p"),array("-","."),substr($search,4))); # Specially encoded string to avoid keyword splitting
+		$bl=explode("b",$geo[0]);
+		$tr=explode("b",$geo[1]);	
+		$sql="select r.hit_count score, $select from resource r $sql_join where 
+
+					geo_lat > '" . escape_check($bl[0]) . "'
+              and   geo_lat < '" . escape_check($tr[0]) . "'		
+              and   geo_long > '" . escape_check($bl[1]) . "'		
+              and   geo_long < '" . escape_check($tr[1]) . "'		
+                          
+		 and $sql_filter group by r.ref order by $order_by";
+		return sql_query($sql,false,$fetchrows);
+		}
+		
+		
 	# Similar to a colour
 	if (substr($search,0,4)=="!rgb")
 		{
