@@ -50,9 +50,13 @@ if (isset($exiftool_path)){
 }
 $custom_field_6 = $lang["notavailableshort"];
 if (isset($ffmpeg_path)){
-    $out = array();
-    exec($ffmpeg_path.'/ffmpeg -version', $out);
-    if (isset($out[0])) {$custom_field_6 = $out[0];}
+	$path = $ffmpeg_path . "/ffmpeg";
+	if (!file_exists($path)) {$path = $ffmpeg_path . "/ffmpeg.exe";}
+	if (file_exists($path)){
+		$out = array();
+		$out = run_external(escapeshellcmd($path) . " -version", $code);
+		if (isset($out[0])) {$custom_field_6 = $out[0];}
+	}
 }
 
 $serverversion = $_SERVER['SERVER_SOFTWARE'];

@@ -2854,3 +2854,60 @@ function convert_path_to_url($abs_path)
     // Replace the $rootDir with $baseurl in the path given:
     return str_ireplace($rootDir, $baseurl, $abs_path);
 }
+
+function run_external($cmd,&$code)
+{
+# Thanks to dk at brightbyte dot de
+# http://php.net/manual/en/function.shell-exec.php
+# Returns an array with the resulting output (stdout & stderr). 
+
+    $descriptorspec = array(
+        0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+        1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+        2 => array("pipe", "w") // stderr is a file to write to
+    );
+
+    $pipes = array();
+    $process = proc_open($cmd, $descriptorspec, $pipes);
+
+    $output = array();
+
+    if (!is_resource($process)) {return false;}
+
+    # Close child's input immediately
+    fclose($pipes[0]);
+
+    stream_set_blocking($pipes[1], false);
+    stream_set_blocking($pipes[2], false);
+
+    while (true)
+        {
+        $read = array();
+        if (!feof($pipes[1])) {$read[] = $pipes[1];}
+        if (!feof($pipes[2])) {$read[] = $pipes[2];}
+
+        if (!$read) {break;}
+
+        $write = NULL;
+        $ex = NULL;
+        $ready = stream_select($read, $write, $ex, 2);
+
+        if ($ready===false)
+            {
+            break; # Should never happen - something died
+            }
+
+        foreach ($read as $r)
+            {
+            $s = rtrim(fgets($r, 1024),"\r\n"); # Reads a line and strips newline and carriage return from the end. 
+            $output[] = $s;
+            }
+        }
+
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+
+    $code = proc_close($process);
+
+    return $output;
+}

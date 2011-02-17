@@ -139,7 +139,8 @@ function CheckFfmpeg()
 	if (!file_exists($path)) {return false;}
 	
 	# Check execution and return version
-	$version=@shell_exec(escapeshellcmd($path));
+		$out = run_external(escapeshellcmd($path) . " -version", $code);
+    if (isset($out[0])) {$version = $out[0];}
 	if (strpos(strtolower($version),"ffmpeg")===false)
 		{
 		return str_replace("?", "$version", $lang["executionofconvertfailed"]);
