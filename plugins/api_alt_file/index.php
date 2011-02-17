@@ -46,23 +46,22 @@ if ($alt_file=="" && $resource!=""){$results=get_alternative_files($resource);}
 // if a specific alt file and resource are specified, return a single result
 if ($alt_file!="" && $resource!=""){$results[0]=get_alternative_file($resource,$alt_file);}
 
-if (!is_array($results)){$results=array();}
-
 
 for ($n=0;$n<count($results);$n++){
-$thepath = get_resource_path($resource,true,'',false,$results[$n]['file_extension'],-1,1,false,"",$results[$n]["ref"]);
+    $thepath = get_resource_path($resource,true,'',false,$results[$n]['file_extension'],-1,1,false,"",$results[$n]["ref"]);
         if (file_exists($thepath)){
             $results[$n]['file_path']=$thepath;
         }
 
 if (getval("previewsize","")!=""){
 $thepath = get_resource_path($resource,true,getval("previewsize",""),false,'jpg',-1,1,false,"",$results[$n]["ref"]);
-        if (file_exists($thepath)){
+         if (file_exists($thepath)&& count ($results[$n])!=1){
             $results[$n]['preview']=$thepath;
         }
-}
+    }
 }
 
+if (!is_array($results)|| (isset ($results[0])&&count($results[0])==1)){$results=array();}
 
 if (getval("content","")=="json"){
 header('Content-type: application/json');
