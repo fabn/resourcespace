@@ -11,9 +11,9 @@ include(dirname(__FILE__)."/../../include/authenticate.php");
 // required: check that this plugin is available to the user
 if (!in_array("api_upload",$plugins)){die("no access");}
 
-$ref=create_resource(getval("resourcetype",1),getval("archive",0),$userref);
 
 if (isset($_FILES['userfile'])){
+ $ref=create_resource(getval("resourcetype",1),getval("archive",0),$userref);
  $path_parts=pathinfo($_FILES['userfile']['name']);
  $extension=$path_parts['extension'];  
  $filepath=get_resource_path($ref,true,"",true,$extension);
