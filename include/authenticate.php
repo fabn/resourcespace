@@ -238,7 +238,9 @@ if ($ip_restrict!="")
 #update activity table
 global $pagename;
 $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_terms=1";} # Accepted terms
-sql_query("update user set last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,250)) . "'$terms where ref='$userref'");
+if (!$api){$last_browser=mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,250));}
+else {$last_browser="API Client";}
+sql_query("update user set last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . $last_browser . "'$terms where ref='$userref'");
 
 # Add group specific text (if any) when logged in.
 if (hook("replacesitetextloader"))

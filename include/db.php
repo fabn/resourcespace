@@ -664,7 +664,8 @@ function resolve_user_agent($agent)
                     "msie 10."=>"IE10",
                     "msie"=>"IE",
                     "netscape"=>"Netscape",
-                    "mozilla"=>"Mozilla" #catch all for mozilla references not specified above
+                    "mozilla"=>"Mozilla"
+                    #catch all for mozilla references not specified above
                     );
     $osmatches=array(
                     "iphone"=>"iPhone",                    
@@ -680,7 +681,8 @@ function resolve_user_agent($agent)
                     "os x"=>"OS X",
                     "mac_powerpc"=>"Mac",
                     "sunos"=>"Sun",
-                    "psp"=>"Sony PSP"
+                    "psp"=>"Sony PSP",
+                    "api"=>"Api Client"
                     );
     $b="???";$os="???";
     foreach($bmatches as $key => $value)

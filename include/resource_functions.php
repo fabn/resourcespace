@@ -1790,8 +1790,8 @@ function log_diff($fromvalue,$tovalue)
 
 	# For standard strings, use Text_Diff
 		
-	require_once '../lib/Text_Diff/Diff.php';
-	require_once '../lib/Text_Diff/Diff/Renderer/inline.php';
+	require_once dirname(__FILE__).'/../lib/Text_Diff/Diff.php';
+	require_once dirname(__FILE__).'/../lib/Text_Diff/Diff/Renderer/inline.php';
 
 	$lines1 = explode("\n",$fromvalue);
 	$lines2 = explode("\n",$tovalue);
