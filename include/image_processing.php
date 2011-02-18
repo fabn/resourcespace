@@ -789,7 +789,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				if($icc_extraction && file_exists($iccpath)){
 					// we have an extracted ICC profile, so use it as source
 					$targetprofile = dirname(__FILE__) . '/../iccprofiles/' . $icc_preview_profile;
-					$profile  = " +profile \"*\" -profile $iccpath $icc_preview_options -profile $targetprofile ";
+					$profile  = " +profile \"*\" -profile $iccpath $icc_preview_options -profile $targetprofile +profile \"*\" ";
 				} else {
 					// use existing strategy for color profiles
 					# Preserve colour profiles? (omit for smaller sizes)   
