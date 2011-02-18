@@ -68,6 +68,7 @@ include "../include/header.php";
 	map.setCenter(new OpenLayers.LonLat(<?php echo $bounds[0] ?>,<?php echo $bounds[1] ?>),<?php echo $bounds[2] ?>);
 
 
+	
   </script>
 </div>
 
