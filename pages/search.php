@@ -238,7 +238,15 @@ if ($search_titles){
 	}
 	if (substr($search,0,14)=="!contributions") {
 		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-2){$collection_title = '<h1>'.$lang["viewcontributedps"].'</h1> ';}
+		if ($cuser==$userref && $archive==-2){$collection_title = '<h1>'.$lang["contributedps"].'</h1> ';}
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-1){$collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';}
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-0){$collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';}
 	}
 	if (substr($search,0,7)=="!unused") {
 		$collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';

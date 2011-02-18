@@ -180,6 +180,9 @@ $lang["contributenewresource"]="Contribute New Resource";
 $lang["viewcontributedps"]="View My Contributions - Pending Submission";
 $lang["viewcontributedpr"]="View My Contributions - Pending Resource Team Review";
 $lang["viewcontributedsubittedl"]="View My Contributions - Live";
+$lang["contributedps"]="My Contributions - Pending Submission";
+$lang["contributedpr"]="My Contributions - Pending Resource Team Review";
+$lang["contributedsubittedl"]="My Contributions - Live";
 
 # Collections
 $lang["editcollection"]="Edit Collection";

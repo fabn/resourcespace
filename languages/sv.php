@@ -20,7 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110218 för version 2374.
+# Senast uppdaterad av Henrik Frizén 20110218 för version 2377.
 #
 #
 # User group names (for the default user groups)
@@ -199,6 +199,9 @@ $lang["contributenewresource"]="Bidra med nytt material";
 $lang["viewcontributedps"]="Visa mina bidrag som är under registrering";
 $lang["viewcontributedpr"]="Visa mina bidrag som är redo för granskning";
 $lang["viewcontributedsubittedl"]="Visa mina bidrag som är aktiva";
+$lang["contributedps"]="Mina bidrag - under registrering";
+$lang["contributedpr"]="Mina bidrag - redo för granskning";
+$lang["contributedsubittedl"]="Mina bidrag - aktiva";
 
 # Collections
 $lang["editcollection"]="Redigera samling";
@@ -372,7 +375,7 @@ $lang["log-t"]="Transformerade fil";
 $lang["log-s"]="Ändrade status";
 $lang["log-a"]="Ändrade åtkomst";
 
-$lang["backtoresourceview"]="Tillbaka till att visa material";
+$lang["backtoresourceview"]="Tillbaka till 'Visa material'";
 
 # Resource status
 $lang["status"]="Status"; # Ska kunna inleda med "Materialet är..." följt av statusen.
