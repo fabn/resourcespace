@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Image processing functions
@@ -74,6 +75,10 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
     	$old_path=get_resource_path($ref,true,"",true,$old_extension);
     	if (file_exists($old_path)) {unlink($old_path);}
     	}
+
+	// also remove any existing extracted icc profiles
+    	$icc_path=get_resource_path($ref,true,"",true,'icc');
+    	if (file_exists($icc_path)) {unlink($icc_path);}
 	}	
 
 	if (!$revert){
@@ -110,7 +115,14 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		}
 
      		chmod($filepath,0777);
-			$status="Your file has been uploaded.";
+
+		global $icc_extraction;
+		if ($icc_extraction){
+			extract_icc_profile($filepath);
+		}
+
+
+		$status="Your file has been uploaded.";
     	 	}
     	}
     }	
@@ -759,13 +771,36 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
 				if (file_exists($wpath)){unlink($wpath);}
 	
-				# Preserve colour profiles? (omit for smaller sizes)   
-				$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
-				if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
+
+				# EXPERIMENTAL CODE TO USE EXISTING ICC PROFILE IF PRESENT
+				global $icc_extraction, $icc_preview_profile, $icc_preview_options;
+				if ($icc_extraction){
+					$iccpath = get_resource_path($ref,true,'',false,'icc');
+					if (!file_exists($iccpath) && !isset($iccfound)) {
+						// extracted profile doesn't exist. Try extracting.
+						if (extract_icc_profile($file)){
+							$iccfound = true;
+						} else {
+							$iccfound = false;
+						}
+					}
+				}
+
+				if($icc_extraction && file_exists($iccpath)){
+					// we have an extracted ICC profile, so use it as source
+					$targetprofile = dirname(__FILE__) . '/../iccprofiles/' . $icc_preview_profile;
+					$profile  = " +profile \"*\" -profile $iccpath $icc_preview_options -profile $targetprofile ";
+				} else {
+					// use existing strategy for color profiles
+					# Preserve colour profiles? (omit for smaller sizes)   
+					$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
+				}
+
 
 				$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
 				$output=shell_exec($runcommand);  
-				# echo $runcommand."<br>";
+				# echo $runcommand."<br>\n";
 				# Add a watermarked image too?
 				global $watermark;
 				if ($alternative==-1 && isset($watermark) && ($ps[$n]["internal"]==1 || $ps[$n]["allow_preview"]==1))
@@ -1414,5 +1449,42 @@ function AutoRotateImage ($src_image){
 	}
 }
 	
+
+function extract_icc_profile($infile) {
+   global $config_windows, $imagemagick_path;
+
+   # Locate imagemagick, or fail this if it isn't installed
+   $command=$imagemagick_path . "/bin/convert";
+   if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
+   if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
+   if (!file_exists($command)) {return false;}
+
+   if ($config_windows){ $stderrclause = ''; } else { $stderrclause = '2>&1'; }
+
+   // outfile will be same name as infile, except with icc ext
+   $ext = strrchr($infile,'.');
+   if ($ext !== false){
+      $outfile = substr($infile,0,-strlen($ext)) . '.icc';
+   } else {
+      $outfile = $infile . '.icc';
+   }
+
+   if (file_exists($outfile)){
+      // extracted profile already existed. We'll remove it and start over
+      unlink($outfile);
+   }
+
+   $cmdout= shell_exec("$command $infile $outfile $stderrclause ");
+   
+   if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize($outfile) == 0){
+   // the icc profile extraction failed. So delete file.
+   if (file_exists($outfile)){ unlink ($outfile); };
+   return false;
+   }
+
+   if (file_exists($outfile)) { return true; } else { return false; }
+
+}
+
 
 ?>

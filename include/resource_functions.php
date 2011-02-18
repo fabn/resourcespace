@@ -710,6 +710,7 @@ function delete_resource($ref)
 	$extensions[]=$resource['file_extension']?$resource['file_extension']:"jpg";
 	$extensions[]=$resource['preview_extension']?$resource['preview_extension']:"jpg";
 	$extensions[]=$GLOBALS['ffmpeg_preview_extension'];
+	$extensions[]='icc'; // also remove any extracted icc profiles
 	$extensions=array_unique($extensions);
 
 	foreach ($extensions as $extension)
@@ -1128,6 +1129,7 @@ function delete_alternative_file($resource,$ref)
 	$extensions[]=isset($info['preview_extension'])?$info['preview_extension']:"jpg";
 	$extensions[]=$GLOBALS['ffmpeg_preview_extension'];
         $extensions[]='jpg'; // always look for jpegs, just in case
+	$extensions[]='icc'; // always look for extracted icc profiles
 	$extensions=array_unique($extensions);
         $sizes = sql_array('select id value from preview_size');
 	
@@ -1988,8 +1990,15 @@ function get_resource_files($ref,$includeorphan=false){
     	unset($file_checklist[$original]);
     }
 
-    // in some cases, the system also generates a jpeg equivalent of the original, so check for that
+    // in some cases, the system also generates an mp3 equivalent of the original, so check for that
     $original = get_resource_path($ref,true,'',false,'mp3');
+    if (file_exists($original)){
+    	array_push($filearray,$original);
+    	unset($file_checklist[$original]);
+    }
+
+    // in some cases, the system also generates an extracted icc profile, so check for that
+    $original = get_resource_path($ref,true,'',false,'icc');
     if (file_exists($original)){
     	array_push($filearray,$original);
     	unset($file_checklist[$original]);
@@ -2032,7 +2041,7 @@ function get_resource_files($ref,$includeorphan=false){
             array_push($filearray,$thepath);
             unset($file_checklist[$thepath]);
         }
-        
+
 
         // now check for previews
         foreach($sizearray as $size){
@@ -2064,6 +2073,13 @@ function get_resource_files($ref,$includeorphan=false){
 
         // in some cases, the system also generates a mp3 equivalent of the original, so check for that
         $original = get_resource_path($ref,true,'',false,'mp3',-1,1,'','',$altfile['ref']);
+	if (file_exists($original)){
+	        array_push($filearray,$original);
+       		unset($file_checklist[$original]);
+	}
+
+        // in some cases, the system also generates an extracted icc profile, so check for that
+        $original = get_resource_path($ref,true,'',false,'icc',-1,1,'','',$altfile['ref']);
 	if (file_exists($original)){
 	        array_push($filearray,$original);
        		unset($file_checklist[$original]);

@@ -1661,3 +1661,21 @@ $search_public_collections_ref=true;
 # $calibre_path="/usr/bin";
 # Files with these extensions will be passed to calibre (if enabled above) for conversion to PDF and auto thumb-preview generation.
 $calibre_extensions=array("epub","mobi","lrf","pdb","chm","cbr","cbz");
+
+
+
+# ICC Color Management Features (Experimental)
+# Note that ImageMagick must be installed and configured with LCMS support
+# for this to work
+
+# Enable extraction and use of ICC profiles from original images
+$icc_extraction = false;
+
+# target color profile for preview generation
+# the file must be located in the /iccprofiles folder
+# this target preview will be used for the conversion
+# but will not be embedded
+$icc_preview_profile = 'sRGB_IEC61966-2-1_black_scaled.icc';
+
+# additional options for profile conversion during preview generation
+$icc_preview_options = '-intent relative -black-point-compensation'; 
