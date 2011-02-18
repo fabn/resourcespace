@@ -23,7 +23,7 @@
 </div>",,0,,JobID,1,0,,0,1,,0,,
 29,person,"Named Person(s)",0,,70,1,0,0,,1,1,,,,0,,People,1,0,,0,1,,0,,
 52,camera,"Camera Make / Model",0,,1600,0,0,1,,1,0,,,,0,,Model,1,0,,0,1,,0,,
-51,original_filename,"Original Filename",0,,20,1,0,0,file_path,0,1,,,,0,,,1,0,,0,1,,0,,
+51,originalfilename,"Original Filename",0,,20,1,0,0,file_path,0,1,,,,0,,,1,0,,0,1,,0,,
 53,vidcontents,"Video Contents List",1,,9999,1,0,3,,1,1,,,,0,,,1,0,,0,1,,0,,
 54,source,Source,3,",Digital Camera, Scanned Negative, Scanned Photo",1601,0,0,1,,1,1,,,,0,,,1,0,,0,1,,0,,
 55,,Website,0,,120,0,0,0,,1,1,,,,0,,WebStatement,1,0,,0,1,,0,,
