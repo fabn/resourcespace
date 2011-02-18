@@ -2,3 +2,4 @@ name    : api_core
 author  : Tom Gleason
 version : 0.1
 desc    : Allows access to API authentication key and available API listing
+config_url: /plugins/api_core/index.php
