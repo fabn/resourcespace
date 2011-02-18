@@ -135,7 +135,7 @@ elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file.
 
 $inst_plugins = sql_query('SELECT name, config_url, descrip, author, '.
 						  'inst_version, update_url, info_url '.
-						  'FROM plugins WHERE inst_version>=0');
+						  'FROM plugins WHERE inst_version>=0 order by name');
 /**
  * Ad hoc function for array_walk through plugins array.
  * 
@@ -181,6 +181,7 @@ while (false !== ($file = readdir($dirh))) {
     }
 }
 closedir($dirh);
+ksort ($plugins_avail);
 ?><?php include "../../include/header.php"; ?>
 <script src="../../lib/js/jquery-1.3.1.min.js" type="text/javascript"> </script>
 <script type="text/javascript">
