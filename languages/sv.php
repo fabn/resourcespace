@@ -20,7 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110213 för version 2341.
+# Senast uppdaterad av Henrik Frizén 20110218 för version 2374.
 #
 #
 # User group names (for the default user groups)
@@ -43,7 +43,7 @@ $lang["resourcetype-archive_only"]="Arkiverat material";
 
 # Image size names (for the default image sizes)
 $lang["imagesize-thumbnail"]="Miniatyrbild";
-$lang["imagesize-preview"]="Förhandsvisning";
+$lang["imagesize-preview"]="Förhandsgranskning";
 $lang["imagesize-screen"]="Bildskärm";
 $lang["imagesize-low_resolution_print"]="Lågupplöst utskrift";
 $lang["imagesize-high_resolution_print"]="Högupplöst utskrift";
@@ -120,7 +120,7 @@ $lang["list"]="Lista";
 $lang["perpage"]="per sida";
 
 $lang["gotoadvancedsearch"]="Gå till avancerad sökning";
-$lang["viewnewmaterial"]="Visa nytt material"; # Se hänvisning
+$lang["viewnewmaterial"]="Visa nytt material";
 $lang["researchrequestservice"]="Researchförfrågan";
 
 # Team Centre
@@ -169,10 +169,10 @@ $lang["couldnotmatchusers"]="Ett eller flera användarnamn är felaktigt eller d
 $lang["comments"]="Kommentarer";
 
 # Team Centre - Resource management
-$lang["viewuserpending"]="Visa material med status 'Redo för granskning'";
-$lang["viewuserpendingsubmission"]="Visa material med status 'Under registrering'";
+$lang["viewuserpending"]="Visa material som är redo för granskning";
+$lang["viewuserpendingsubmission"]="Visa material som är under registrering";
 $lang["searcharchivedresources"]="Sök arkiverat material";
-$lang["viewresourcespendingarchive"]="Visa material med status 'Redo för arkivering'";
+$lang["viewresourcespendingarchive"]="Visa material som är redo för arkivering";
 $lang["uploadresourcebatch"]="Ladda upp material";
 $lang["uploadinprogress"]="Uppladdning och skalning pågår";
 $lang["transferringfiles"]="Överför filer, var god vänta.";
@@ -185,7 +185,7 @@ $lang["uploadfailedfor"]="Uppladdningen misslyckades för"; # E.g. upload failed
 $lang["uploadcomplete"]="Uppladdningen slutförd.";
 $lang["resourcesuploadedok"]="filer korrekt uppladdade"; # E.g. 17 resources uploaded OK
 $lang["failed"]="misslyckades";
-$lang["clickviewnewmaterial"]="Klicka på 'Visa nytt material' för att se uppladdat material."; # Se ["viewnewmaterial"]
+$lang["clickviewnewmaterial"]="Klicka på 'Visa nytt material' för att se uppladdat material.";
 $lang["specifyftpserver"]="Ange FTP-server";
 $lang["ftpserver"]="FTP-server";
 $lang["ftpusername"]="Användarnamn (FTP)";
@@ -196,9 +196,9 @@ $lang["uselocalupload"]="ELLER: Använd en lokal 'uppladdningsmapp' i stället f
 
 # User contributions
 $lang["contributenewresource"]="Bidra med nytt material";
-$lang["viewcontributedps"]="Visa mina bidrag med status 'Under registrering'";
-$lang["viewcontributedpr"]="Visa mina bidrag med status 'Redo för granskning'";
-$lang["viewcontributedsubittedl"]="Visa mina bidrag med status 'Aktivt'";
+$lang["viewcontributedps"]="Visa mina bidrag som är under registrering";
+$lang["viewcontributedpr"]="Visa mina bidrag som är redo för granskning";
+$lang["viewcontributedsubittedl"]="Visa mina bidrag som är aktiva";
 
 # Collections
 $lang["editcollection"]="Redigera samling";
@@ -814,9 +814,10 @@ $lang["setup-emailfrom"]="E-post skickas från adress:";
 $lang["setup-emailnotify"]="E-post skickas till adress:";
 $lang["setup-spiderpassword"]="Spindellösenord:";
 $lang["setup-scramblekey"]="Krypteringsnyckel:";
+$lang["setup-apiscramblekey"]="Krypteringsnyckel för API:et:";
 $lang["setup-paths"]="Sökvägar";
 $lang["setup-pathsdetail"]="Ange sökväg utan efterföljande snedstreck för varje program. Lämna sökvägen tom för att inaktivera ett program. En del sökvägar upptäcktes och fylldes i automatiskt.";
-$lang["setup-applicationname"]="Webbplats-/installationsnamn:";
+$lang["setup-applicationname"]="Webbplatsens/installationens namn:";
 $lang["setup-basicsettingsfooter"]="OBS! Alla <strong>obligatoriska</strong> inställningar är alla samlade på den här sidan. Om du inte är intresserad av att kontrollera de avancerade inställningarna kan du klicka nedan för att starta installationen.";
 $lang["setup-if_mysqlserver"]='IP-adress eller <abbr title="Fullständigt kvalificerat domännamn">FQDN</abbr> för din MySQL-server. Ange "localhost" om MySQL är installerad på samma server som din webbserver.';
 $lang["setup-if_mysqlusername"]="Användarnamnet som ska användas för att ansluta till MySQL-servern. Användaren måste ha rättighet att skapa tabeller i databasen nedan.";
@@ -828,12 +829,14 @@ $lang["setup-if_emailfrom"]="Den adress som e-post från ResourceSpace tycks kom
 $lang["setup-if_emailnotify"]="E-postadressen som ansökningar och förfrågningar ska skickas till.";
 $lang["setup-if_spiderpassword"]="Spindellösenordet är ett obligatoriskt fält.";
 $lang["setup-if_scramblekey"]="Ange en sträng (svår att gissa) som krypteringsnyckel för att aktivera kryptering av materialsökvägar. Om detta är en installation nåbar från Internet rekommenderas kryptering. Lämna fältet tomt för att inaktivera kryptering. Innehållet i fältet har redan slumpats fram för dig, men du kan ändra det så att det motsvarar en befintlig installation, om det behövs.";
+$lang["setup-if_apiscramblekey"]="Ange en sträng (svår att gissa) som krypteringsnyckel för API:et. Om du planerar att använda API:er rekommenderas detta i högsta grad.";
 $lang["setup-if_applicationname"]="Namnet på webbplatsen/installationen (ex. 'MittFöretags mediaarkiv').";
 $lang["setup-err_mysqlbinpath"]="Det går inte att verifiera sökvägen. Lämna tomt för att inaktivera.";
 $lang["setup-err_baseurl"]="Baswebbadressen är ett obligatoriskt fält.";
 $lang["setup-err_baseurlverify"]="Baswebbadressen verkar inte vara korrekt (kunde inte ladda license.txt).";
 $lang["setup-err_spiderpassword"]="Lösenordet som krävs för spider.php. VIKTIGT! Slumpa fram detta för varje ny installation. Ditt material kommer att kunna läsas av den som kan detta lösenord. Innehållet i fältet har redan slumpats fram för dig, men du kan ändra det så att det motsvarar en befintlig installation, om det behövs.";
 $lang["setup-err_scramblekey"]="Om detta är en installation nåbar från Internet rekommenderas kryptering";
+$lang["setup-err_apiscramblekey"]="Om detta är en installation nåbar från Internet rekommenderas användning av krypteringsnyckel för API:et.";
 $lang["setup-err_path"]="Det går inte att verifiera sökvägen för";
 $lang["setup-emailerr"]="Ogiltig e-postadress.";
 $lang["setup-rs_initial_configuration"]="ResourceSpace: Inledande konfiguration";
@@ -844,14 +847,16 @@ $lang["setup-binpath"]="Sökväg till %bin"; #%bin will be replaced, e.g. "Image
 $lang["setup-begin_installation"]="Starta installation";
 $lang["setup-generaloptions"]="Allmänna val";
 $lang["setup-allow_password_change"]="Tillåt byte av lösenord?";
+$lang["setup-enable_remote_apis"]="Tillåt API-anrop utifrån?";
 $lang["setup-if_allowpasswordchange"]="Tillåt användarna att byta sina egna lösenord.";
+$lang["setup-if_enableremoteapis"]="Tillåt fjärråtkomst till API-tilläggen.";
 $lang["setup-allow_account_requests"]="Tillåt ansökningar om användarkonton?";
 $lang["setup-display_research_request"]="Visa funktionen researchfrågan?";
 $lang["setup-if_displayresearchrequest"]="Tillåt användarna att skicka in researchförfrågningar via ett formulär, som sen skickas per e-post.";
 $lang["setup-themes_as_home"]="Använd sidan Teman som startsida?";
 $lang["setup-remote_storage_locations"]="Platser för fjärrlagring";
 $lang["setup-use_remote_storage"]="Använd fjärrlagring?";
-$lang["setup-if_useremotestorage"]="Markera den här kryssrutan för att konfigurera fjärrlagring för RS. (För att placera lagringsmappen på en annan server.)";
+$lang["setup-if_useremotestorage"]="Markera den här kryssrutan för att konfigurera fjärrlagring för ResourceSpace. (För att placera lagringsmappen på en annan server.)";
 $lang["setup-storage_directory"]="Lagringsmapp";
 $lang["setup-if_storagedirectory"]="Var materialfilerna lagras. Kan vara en absolut sökväg (/var/www/blah/blah) eller relativ till installationen. OBS! Inget efterföljande snedstreck.";
 $lang["setup-storage_url"]="Lagringsmappens webbadress";
@@ -973,9 +978,9 @@ $lang["removethisfilter"]="(ta bort detta filter)";
 $lang["no_exif"]="Importera inte EXIF-, IPTC- eller XMP-metadata vid denna uppladdning";
 $lang["difference"]="Ändring";
 $lang["viewdeletedresources"]="Visa raderat material";
-$lang["finaldeletion"]="Detta material har redan statusen 'Raderat'. Denna handling kommer att radera materialet fullständigt från systemet.";
+$lang["finaldeletion"]="Detta material är redan markerat som raderat. Denna handling kommer att radera materialet permanent.";
 
-$lang["nocookies"]="En kaka kunde inte sparas korrekt. Kontrollera att kakor är aktiverade i din webbläsare.";
+$lang["nocookies"]="En kaka kunde inte sparas korrekt. Kontrollera att din webbläsare tillåter kakor.";
 
 $lang["selectedresourceslightroom"]="Valt material (lista kompatibel med Adobe Lightroom):";
 
@@ -1182,7 +1187,7 @@ $lang["writeaccesstohomeanim"]="Skrivrättighet till mappen $homeanim_folder fin
 $lang["nowriteaccesstohomeanim"]="Skrivrättighet till mappen $homeanim_folder saknas. Skrivrättighet måste finnas för att tillägget 'transform' ska kunna infoga bilder i startsidans bildspel.";
 $lang["blockedbrowsingoffilestore"]="Åtkomsten till mappen 'filestore' är blockerad för webbläsare?";
 $lang["noblockedbrowsingoffilestore"]="Mappen 'filestore' är inte blockerad för webbläsare. Ta bort 'Indexes' från 'Options' i Apache.";
-$lang["executionofconvertfailed"]="Oväntat svar vid konverteringen. Svaret var '?'.<br>I Windows och IIS 6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
+$lang["executionofconvertfailed"]="Exekveringen misslyckades. Oväntat svar när kommandot exekverades. Svaret var '?'.<br>I Windows och IIS 6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
 $lang["lastscheduledtaskexection"]="Senaste schemalagda uppgiftskörning (dagar)";
 $lang["executecronphp"]="Sökningar efter liknande material kommer inte att fungera och schemalagda e-postrapporter kommer inte att skickas. Se till att <a href='../batch/cron.php'>batch/cron.php</a> körs åtminstone en gång per dag som ett cronjobb eller liknande.";
 $lang["shouldbeormore"]="Bör vara ? eller mer."; # E.g. should be 200M or greater
@@ -1287,4 +1292,9 @@ $lang["uploading"]="Laddar upp...";
 $lang["thumbnailcreated"]="En miniatyrbild är skapad.";
 $lang["done"]="Slutförd.";
 $lang["stopped"]="Stoppad."; 
+
+$lang["latlong"]="Latitud, longitud";
+$lang["geographicsearch"]="Geografisk sökning";
+ 
+$lang["geographicsearch_help"]="Klicka och dra för att välja ett sökområde.";
 ?>
