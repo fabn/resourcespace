@@ -385,6 +385,8 @@ if ($extension=="blend" && !isset($newfile))
 	{
     global $blender_path;
 	$blendercommand=$blender_path;	
+	if (!file_exists($blendercommand)|| is_dir($blendercommand)) {$blendercommand=$blender_path . "/blender";}
+	if (!file_exists($blendercommand)) {$blendercommand=$blender_path . "\blender.exe";}
 	if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
 	$error=shell_exec($blendercommand. " -b $file -F JPEG -o $target -f 1");
 

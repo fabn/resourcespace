@@ -75,7 +75,7 @@ $config_windows=false;
 # $pdftotext_path="/usr/bin";
 
 # Path to blender
-# $blender_path="/usr/bin/blender";
+# $blender_path="/usr/bin/";
 
 
 
