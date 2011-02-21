@@ -208,7 +208,6 @@ function extract_exif_comment($ref,$extension="")
 
 	$image=get_resource_path($ref,true,"",false,$extension);
 	if (!file_exists($image)) {return false;}
-	
 	hook("pdfsearch");
 
 global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
@@ -304,8 +303,9 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			}
 
 
-		# Geolocation Metadata Support
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
+
+		# Geolocation Metadata Support
 		if (!$disable_geocoding && isset($metadata['GPSLATITUDE'])){
 			# Set vars
             $dec_long=0;$dec_lat=0;
@@ -317,10 +317,10 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             if (preg_match("/^(?<degrees>\d?[\.\d]?) deg (?<minutes>\d?[\.\d]?)' (?<seconds>\d?[\.\d]+)\"/", $metadata['GPSLONGITUDE'], $longitude)){
                 $dec_long = $longitude['degrees'] + $longitude['minutes']/60 + $longitude['seconds']/(60*60);           
             }
-            
-            if (substr($metadata['GPSLATITUDEREF'],0,1)=='S')
+           
+            if (strpos($metadata['GPSLATITUDE'],'S')!==false)
                 $dec_lat = -1 * $dec_lat;
-            if (substr($metadata['GPSLONGITUDEREF'],0,1)=='W') # Support iPhone 3GS which uses 'West' not 'W'.
+            if (strpos($metadata['GPSLONGITUDE'],'W')!==false) 
                 $dec_long = -1 * $dec_long;
 
             if ($dec_long!=0 && $dec_lat!=0)

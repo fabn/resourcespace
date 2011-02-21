@@ -123,7 +123,6 @@ function AddRange()
 
 function RemoveRange(r)
 	{
-	console.log(r);
 	var ranges = document.getElementById("ranges").value;
 	var rs=ranges.split(",");
 	var new_ranges="";

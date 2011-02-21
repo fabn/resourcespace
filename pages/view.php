@@ -16,12 +16,6 @@ include "../include/image_processing.php";
 
 $ref=getvalescaped("ref","",true);
 
-# Dev feature - regenerate exif data.
-if (getval("regenexif","")!="")
-	{
-	extract_exif_comment($ref);
-	}
-	
 	
 # fetch the current search (for finding simlar matches)
 $search=getvalescaped("search","");
@@ -76,6 +70,13 @@ if ($go!="")
 # Load resource data
 $resource=get_resource_data($ref);
 if ($resource===false) {exit("Resource not found.");}
+
+# Dev feature - regenerate exif data.
+if (getval("regenexif","")!="")
+	{
+	extract_exif_comment($ref,$resource["file_extension"]);
+	$resource=get_resource_data($ref,false);
+	}
 
 # Load access level
 $access=get_resource_access($ref);
