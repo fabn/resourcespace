@@ -77,7 +77,7 @@ function save_resource_data($ref,$multi)
 
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
+					$name=$fields[$n]["ref"] . "_" . base64_encode($options[$m]);
 					if (getval($name,"")=="yes")
 						{
 						if ($val!=",") {$val.=",";}
@@ -299,7 +299,7 @@ function save_resource_data_multi($collection)
 				
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
+					$name=$fields[$n]["ref"] . "_" . base64_encode($options[$m]);
 					if (getval($name,"")=="yes")
 						{
 						if ($val!=",") {$val.=",";}

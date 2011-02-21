@@ -648,7 +648,7 @@ for ($n=0;$n<count($fields);$n++)
 						$option=$options[$o];
 						$trans=$option_trans[$option];
 
-						$name=$fields[$n]["ref"] . "_" . urlencode($option);
+						$name=$fields[$n]["ref"] . "_" . base64_encode($option);
 						if ($option!="")
 							{
 							?>
@@ -670,7 +670,7 @@ for ($n=0;$n<count($fields);$n++)
 	
 			foreach ($option_trans as $option=>$trans)
 				{
-				$name=$fields[$n]["ref"] . "_" . urlencode($option);
+				$name=$fields[$n]["ref"] . "_" . base64_encode($option);
 				$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 				?>
 				<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
