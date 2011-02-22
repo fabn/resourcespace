@@ -338,35 +338,23 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 
 
 function cleanse_string($string,$preserve_separators)
-	{
-	# Removes characters from a string prior to keyword splitting, for example full stops
-	# Also makes the string lower case ready for indexing.
-    # updated to omit config separators on short name
-	global $config_separators;
-    $return="";
-    $string=explode(", ",$string);
-    foreach ($string as $stringelement){
-        
-        $stringelement=explode(":",$stringelement);
-        if (count($stringelement)==1){$return.= $stringelement[0];}
-        else if ($preserve_separators)
-            {
-            if (strlen($return)!=0){$return.=", ";}    
-            $return.= $stringelement[0].":".strtolower(trim_spaces(str_replace($config_separators," ",$stringelement[1])));
-            }
+        {
+        # Removes characters from a string prior to keyword splitting, for example full stops
+        # Also makes the string lower case ready for indexing.
+        global $config_separators;
+        if ($preserve_separators)
+                {
+                return strtolower(trim_spaces(str_replace($config_separators," ",$string)));
+                }
         else
-            {
-            # Also strip out the separators used when specifying multiple field/keyword pairs (comma and colon)
-            $s=$config_separators;
-            $s[]=",";
-            $s[]=":";
-            if (strlen($return)!=0){$return.=", ";}  
-            $return.= $stringelement[0].":".strtolower(trim_spaces(str_replace($s," ",$stringelement[1])));
-            }
+                {
+                # Also strip out the separators used when specifying multiple field/keyword pairs (comma and colon)
+                $s=$config_separators;
+                $s[]=",";
+                $s[]=":";
+                return strtolower(trim_spaces(str_replace($s," ",$string)));
+                }
         }
-       return $return; 
-            
-	}
 
 function resolve_keyword($keyword,$create=false)
 	{
