@@ -90,7 +90,6 @@ $atoz.="</div>";
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="approved")?"approved+desc":"approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] ?></a></td>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active")?"last_active+desc":"last_active")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastactive"]?></a></td>
 
-<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_browser")?"last_browser+desc":"last_browser")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastbrowser"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
