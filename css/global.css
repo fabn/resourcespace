@@ -190,7 +190,7 @@ a:active {text-decoration:underline;}
 .RecordPanel {padding: 6px 6px 16px;}
 .RecordPanel .RecordHeader {}
 .RecordPanel h1 {}
-.RecordPanel .backtoresults {float: right;margin: 0.4em 0 0 0.25em;} 
+.backtoresults {float: right;margin: 0.4em 0 0 0.25em;} 
 
 .RecordPanel .RecordResouce {position:relative;clear: left;} 
 .RecordPanel .Picture {float: left;margin: 0px 10px 10px 0px;}
