@@ -240,6 +240,7 @@ $lang["downloaded"]="Downloaded";
 $lang["contents"]="Contents";
 $lang["forthispackage"]="for this package";
 $lang["didnotinclude"]="Did not include";
+$lang["selectcollection"]="Select Collection";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Create New Resource";

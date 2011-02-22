@@ -259,6 +259,7 @@ $lang["downloaded"]="Nedladdad";
 $lang["contents"]="Innehåll";
 $lang["forthispackage"]="för det här paketet";
 $lang["didnotinclude"]="Utelämnades";
+$lang["selectcollection"]="Välj samlingen";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Skapa nytt material";

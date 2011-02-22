@@ -988,7 +988,7 @@ $hide_access_column = false;
 $show_edit_all_link = false;
 
 # If displaying a collection in search.php, display collection title at top.
-$display_collection_title = false;
+$display_collection_title = true;
 
 #Bypass share.php and go straight to e-mail
 $bypass_share_screen = false;
@@ -1532,7 +1532,7 @@ $debug_log=false;
 $view_resource_collections=false;
 
 # enable titles on the search page that help describe the current context
-$search_titles=false;
+$search_titles=true;
 
 # $collections_compact_style switches on some experimental UI changes in the collections frame. (making My Collections header a link to Manage page, 
 # removing Manage My Collections and adding a direct link to contact sheets
