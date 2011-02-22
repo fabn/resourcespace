@@ -6,6 +6,7 @@ include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
 $ref=getvalescaped("ref","",true);
+$k=getvalescaped("k","");
 
 # fetch the current search (for finding simlar matches)
 $search=getvalescaped("search","");
