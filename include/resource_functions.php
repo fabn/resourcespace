@@ -491,7 +491,16 @@ function save_resource_data_multi($collection)
 			if ($access==3) {save_resource_custom_access($ref);}
 			}
 		}
-		
+	
+	# Update resource type?
+	if (getval("editresourcetype","")!="")
+		{
+		for ($m=0;$m<count($list);$m++)
+			{
+			$ref=$list[$m];
+			update_resource_type($ref,getvalescaped("resource_type",""));
+			}
+		}
 		
 	# Update XML metadata dump file for all edited resources.
 	for ($m=0;$m<count($list);$m++)

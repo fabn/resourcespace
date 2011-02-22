@@ -381,7 +381,25 @@ for ($n=0;$n<count($types);$n++)
 ?></select>
 <div class="clearerleft"> </div>
 </div>
+<?php } else {
+# Multiple method of changing resource type.
+ ?>
+<h1><?php echo $lang["resourcetype"] ?></h1>
+<div><input name="editresourcetype" id="editresourcetype" type="checkbox" value="yes" onClick="var q=document.getElementById('editresourcetype_question');if (this.checked) {q.style.display='block';alert('<?php echo $lang["editallresourcetypewarning"] ?>');} else {q.style.display='none';}">&nbsp;<label for="editresourcetype"><?php echo $lang["resourcetype"] ?></label></div>
+<div class="Question" style="display:none;" id="editresourcetype_question">
+<label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
+<select name="resource_type" id="resourcetype" class="stdwidth">
+<?php
+$types=get_resource_types();
+for ($n=0;$n<count($types);$n++)
+	{
+	?><option value="<?php echo $types[$n]["ref"]?>" <?php if ($resource["resource_type"]==$types[$n]["ref"]) {?>selected<?php } ?>><?php echo $types[$n]["name"]?></option><?php
+	}
+?></select>
+<div class="clearerleft"> </div>
+</div>
 <?php } ?>
+
 
 <?php
 if (getval("swf","")!="" || getval("java","")!="") { 

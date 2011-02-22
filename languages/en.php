@@ -1289,4 +1289,7 @@ $lang["purgeuserscommand"]="Delete users accounts that have not been active in t
 $lang["purgeusersconfirm"]="This will delete % user accounts. Are you sure?";
 $lang["pleaseenteravalidnumber"]="Please enter a valid number";
 $lang["purgeusersnousers"]="There are no users to purge.";
+
+$lang["editallresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for the selected resources.";
+
 ?>
