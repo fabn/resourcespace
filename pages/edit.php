@@ -932,6 +932,20 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	</div>
 	<?php } 
 }
+
+if ($multiple)
+	{
+	# Multiple method of changing location.
+	 ?>
+	<br /><h1><?php echo $lang["location-title"] ?></h1>
+	<div><input name="editlocation" id="editlocation" type="checkbox" value="yes" onClick="var q=document.getElementById('editlocation_question');if (this.checked) {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editlocation"><?php echo $lang["location-edit"] ?></label></div>
+	<div class="Question" style="display:none;" id="editlocation_question">
+	<label for="resourcetype"><?php echo $lang["latlong"]?></label>
+	<input type="text" name="location" id="location" class="stdwidth">
+	<div class="clearerleft"> </div>
+	</div>
+	<?php
+	} 
 ?>
 	
 	

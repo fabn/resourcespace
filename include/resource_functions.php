@@ -502,6 +502,18 @@ function save_resource_data_multi($collection)
 			}
 		}
 		
+	# Update location?
+	if (getval("editlocation","")!="")
+		{
+		$location=explode(",",getvalescaped("location",""));
+		if (count($list)>0 && count($location)==2)
+			{
+			$geo_lat=(float)$location[0];
+			$geo_long=(float)$location[1];
+			sql_query("update resource set geo_lat=$geo_lat,geo_long=$geo_long where ref in (" . join(",",$list) . ")");
+			}
+		}
+		
 	# Update XML metadata dump file for all edited resources.
 	for ($m=0;$m<count($list);$m++)
 		{
