@@ -20,7 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110218 för version 2377.
+# Senast uppdaterad av Henrik Frizén 20110222 för version 2397.
 #
 #
 # User group names (for the default user groups)
@@ -605,8 +605,8 @@ $lang["months"]=array("januari","februari","mars","april","maj","juni","juli","a
 
 # New for 1.3
 $lang["savesearchitemstocollection"]="Lägg till funna poster i aktiv samling";
-$lang["removeallresourcesfromcollection"]="Ta bort allt material från den här samlingen";
-$lang["deleteallresourcesfromcollection"]="Radera själva materialet i den här samlingen";
+$lang["removeallresourcesfromcollection"]="Markera kryssrutan och klicka på 'Spara' för att ta bort allt material från den här samlingen";
+$lang["deleteallresourcesfromcollection"]="Markera kryssrutan och klicka på 'Spara' för att radera själva materialet i den här samlingen";
 $lang["deleteallsure"]="Är du säker på att du vill RADERA detta material? Detta kommer att radera själva materialet, inte bara ta bort det från denna samling.";
 $lang["batchdonotaddcollection"]="(Lägg inte till i en samling)";
 $lang["collectionsthemes"]="Relaterade teman och publika samlingar";
@@ -1298,6 +1298,17 @@ $lang["stopped"]="Stoppad.";
 
 $lang["latlong"]="Latitud, longitud";
 $lang["geographicsearch"]="Geografisk sökning";
- 
+
 $lang["geographicsearch_help"]="Klicka och dra för att välja ett sökområde.";
+
+$lang["purge"]="Rensa ut";
+$lang["purgeuserstitle"]="Rensa ut användare";
+$lang["purgeusers"]="Rensa ut användare";
+$lang["purgeuserscommand"]="Radera användarkonton som inte har varit aktiva de senaste % månaderna, men som skapades före den perioden.";
+$lang["purgeusersconfirm"]="Är du säker på att du vill radera % användarkonton?";
+$lang["pleaseenteravalidnumber"]="Var vänlig att ange ett korrekt nummer";
+$lang["purgeusersnousers"]="Det finns inga användare att rensa ut.";
+
+$lang["editallresourcetypewarning"]="Varning: Om du ändrar materialtypen kommer eventuell redan lagrad typspecifik metadata för materialet att raderas.";
+
 ?>
