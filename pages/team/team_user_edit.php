@@ -102,6 +102,22 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?php echo $lang["comments"]?></label><textarea name="comments" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($user["comments"])?></textarea><div class="clearerleft"> </div></div>
 
+<div class="Question"><label><?php echo $lang["created"]?></label>
+<div class="Fixed"><?php echo nicedate($user["created"],true) ?></div>
+<div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?php echo $lang["lastactive"]?></label>
+<div class="Fixed"><?php echo nicedate($user["last_active"],true) ?></div>
+<div class="clearerleft"> </div></div>
+
+
+<div class="Question"><label><?php echo $lang["lastbrowser"]?></label>
+<div class="Fixed"><?php echo resolve_user_agent($user["last_browser"],true)?></div>
+<div class="clearerleft"> </div></div>
+
+
+
+
 <?php 
 # Only allow sending of password when this is not an MD5 string (i.e. only when first created or 'Suggest' is used).
 ?>

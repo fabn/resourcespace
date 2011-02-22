@@ -698,7 +698,7 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
         $sql.= hook("getuseradditionalsql");
     }
     # Executes query.
-    $r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
+    $r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent,u.approved,u.created from user u left outer join usergroup g on u.usergroup=g.ref $sql order by $order_by",false,$fetchrows);
 
     # Translates group names in the newly created array.
     for ($n = 0;$n<count($r);$n++) {
@@ -823,7 +823,7 @@ function get_usergroup($ref)
 function get_user($ref)
 	{
 	# Return a user's credentials.
-	$return=sql_query("select * from user where ref='$ref'");
+	$return=sql_query("select *,created from user where ref='$ref'");
 	if (count($return)>0) {return $return[0];} else {return false;}
 	}
 	

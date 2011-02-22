@@ -86,7 +86,10 @@ $atoz.="</div>";
 <?php if (!hook("replaceemailheader")){?>
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="email")?"email+desc":"email")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["email"]?></a></td>
 <?php } ?>
-<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active,approved")?"last_active+desc,approved+desc":"last_active,approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] . " / " . $lang["lastactive"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="created")?"created+desc,created+desc":"created")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="approved")?"approved+desc":"approved")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["approved"] ?></a></td>
+<td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_active")?"last_active+desc":"last_active")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastactive"]?></a></td>
+
 <td><a href="team_user.php?offset=0&order_by=<?php echo (($order_by=="last_browser")?"last_browser+desc":"last_browser")?>&find=<?php echo urlencode($find)?>"><?php echo $lang["lastbrowser"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
@@ -106,19 +109,10 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 	<?php if (!hook("replaceemailrow")){?>
 	<td><?php echo htmlentities($users[$n]["email"])?></td>
 	<?php } ?>
-	<td><?php 
-	# Forumulate a sensible last active date that also includes a non-approved indication.
-	$last_active=$lang["status-never"];
-	if ($users[$n]["approved"]==0)
-		{
-		$last_active=$lang["notapproved"];		
-		}
-	elseif ($users[$n]["last_active"]!="")
-		{
-		$last_active=nicedate($users[$n]["last_active"],true);
-		}
-	echo $last_active?></td>
-	<td><?php echo resolve_user_agent($users[$n]["last_browser"],true)?></td>
+	<td><?php echo nicedate($users[$n]["created"]) ?></td>
+	<td><?php echo $users[$n]["approved"]?$lang["yes"]:$lang["no"] ?></td>
+	<td><?php echo nicedate($users[$n]["last_active"]) ?></td>
+
 	<td><?php if (($usergroup==3) || ($users[$n]["usergroup"]!=3)) { ?><div class="ListTools">
 	<a href="team_user_log.php?ref=<?php echo $users[$n]["ref"]?>&backurl=<?php echo urlencode($url . "&offset=" . $offset)?>">&gt;&nbsp;<?php echo $lang["log"]?></a>
 	&nbsp;
@@ -159,6 +153,15 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 		</div>
 	</form>
 </div>
+
+
+<div class="BasicsBox">
+<div class="Question"><label><?php echo $lang["purgeusers"]?></label>
+<div class="Fixed"><a href="team_user_purge.php">&gt;&nbsp;<?php echo $lang["purge"]?></a></div>
+<div class="clearerleft"> </div></div>
+</div>
+
+
 
 <?php
 include "../../include/footer.php";

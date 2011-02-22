@@ -1281,4 +1281,12 @@ $lang["latlong"]="Lat / Long";
 $lang["geographicsearch"]="Geographic search";
 
 $lang["geographicsearch_help"]="Drag to select a search area.";
+
+$lang["purge"]="Purge";
+$lang["purgeuserstitle"]="Purge Users";
+$lang["purgeusers"]="Purge users";
+$lang["purgeuserscommand"]="Delete users accounts that have not been active in the last % months, but were created before this period.";
+$lang["purgeusersconfirm"]="This will delete % user accounts. Are you sure?";
+$lang["pleaseenteravalidnumber"]="Please enter a valid number";
+$lang["purgeusersnousers"]="There are no users to purge.";
 ?>
