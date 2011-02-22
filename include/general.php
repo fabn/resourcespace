@@ -2727,7 +2727,7 @@ function make_api_key($username,$password){
 	// this is simply an encryption for username and password that will work as an alternative way to log in for remote access pages such as rss and apis
 	// this is simply to avoid sending username and password plainly in the url.
 	global $api_scramble_key;
-    if (extension_loaded('mcrypt')){
+    if (extension_loaded('mcrypt') && extension_loaded('hash')){
         $cipher = new Cipher($api_scramble_key);
         return $cipher->encrypt($username."|".$password,$api_scramble_key);
         }
@@ -2738,7 +2738,7 @@ function make_api_key($username,$password){
 	
 function decrypt_api_key($key){
 	global $api_scramble_key;
-    if (extension_loaded('mcrypt')){
+    if (extension_loaded('mcrypt') && extension_loaded('hash')){
         $cipher = new Cipher($api_scramble_key);
         $key=$cipher->decrypt($key);
         }

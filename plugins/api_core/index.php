@@ -22,7 +22,7 @@ echo $lang["yourauthkey"];?>
 
 <p><input type="text" size=35 value="<?php echo $hashkey;?>"></p>
 
-<?php if (extension_loaded('mcrypt')){
+<?php if (extension_loaded('mcrypt') && extension_loaded('hash')){
 echo $lang['mcryptenabled'];
 } else {echo $lang['mcryptdisabled'];}
 ?>
