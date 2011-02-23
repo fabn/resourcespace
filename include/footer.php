@@ -146,7 +146,7 @@ if ($show_resource_title_in_titlebar &&
 		echo "</script>";
     }
 else if ($show_resource_title_in_titlebar && $pagename!="preview"){
-    if (!isset($resource)){$resource=get_resource($ref);}
+    if (!isset($resource)){$resource=get_resource_data($ref);}
     $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
 	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
 	if (strlen($title) > 0){
