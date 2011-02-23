@@ -136,6 +136,25 @@ function SwapCSS(css)
 <?php echo $extrafooterhtml; ?>
 <?php hook("footerbottom"); ?>
 
+<?php
+if ($show_resource_title_in_titlebar &&
+($pagename!="view" && $pagename!="edit" && $pagename!="preview"  && $pagename!="log" && $pagename!="resource_email" && $pagename!="delete" && $pagename!="alternative_files" && $pagename!="alternative_file"))
+    {
+	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
+		echo "<script language='javascript'>\n";
+		echo $parentword . "document.title = \"$applicationname\";\n";
+		echo "</script>";
+    }
+else if ($show_resource_title_in_titlebar && $pagename!="preview"){
+    if (!isset($resource)){$resource=get_resource($ref);}
+    $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
+	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
+	if (strlen($title) > 0){
+		echo "<script language='javascript'>\n";
+		echo $parentword . "document.title = \"$applicationname - $title\";\n";
+		echo "</script>";
+	}}
+?>
 
 </body>
 </html>
