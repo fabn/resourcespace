@@ -1139,7 +1139,7 @@ if ($show_resource_title_in_titlebar){
 	if (strlen($title) > 0){
 		echo "<script language='javascript'>\n";
 		echo $parentword . "document.title = \"$applicationname - $title\";\n";
-		echo "onunload = function() {\n" . $parentword . "document.title = \"$applicationname\";\n}";
+		echo "onbeforeunload = function() {\n" . $parentword . "document.title = \"$applicationname\";\n}";
 		echo "</script>";
 	}
 }
