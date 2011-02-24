@@ -5,7 +5,7 @@
 #CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
 </style>
 <form method="get" name="colactions" id="colactions">
-<div class="SearchItem" style="padding:0;margin:0;">Actions:
+<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
 <select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value=='hide') {ToggleThumbs();top.collections.location.href='collections.php?thumbs=hide';}
 if (colactions.colactionselect.options[selectedIndex].value=='show')
 {ToggleThumbs();top.collections.location.href='collections.php?thumbs=show';}
