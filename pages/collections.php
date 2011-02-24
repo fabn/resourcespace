@@ -435,8 +435,12 @@ elseif ($k!="")
   </form>
 
   <ul>
+  <?php if ($collections_compact_style){
+    include("collections_compact_style.php");
+    }
+    else { ?>
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
-    <?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"]?></a></li><?php } ?>
+    <?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"];?></a></li>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
@@ -482,7 +486,8 @@ elseif ($k!="")
 	<?php } ?>
 	<?php hook("collectiontool");?>
     <li><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt; <?php echo $lang["hidethumbnails"]?></a></li>
-  </ul>
+<?php } /* end compact collections */?>
+</ul>
 <?php } ?>
 </div>
 
@@ -676,8 +681,12 @@ elseif ($k!="")
 
 <!--Menu-->	
 <div id="CollectionMinRightNav">
-  <ul>
-<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+  <?php if ($collections_compact_style){
+    include("collections_compact_style.php");
+    }
+    else { ?>
+    <ul>
+    <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     <?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a href="collection_manage.php" target="main"><?php echo $lang["managemycollections"]?></a></li><?php } ?>
     <?php if ($contact_sheet==true && $collections_compact_style) { ?>
     <li><a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&nbsp;<?php echo $lang["contactsheet"]?></a></li>
@@ -726,6 +735,7 @@ elseif ($k!="")
     <?php if ($count_result<=$max_collection_thumbs) { ?><li><a href="collections.php?thumbs=show" onClick="ToggleThumbs();"><?php echo $lang["showthumbnails"]?></a></li><?php } ?>
     
   </ul>
+  <?php } ?>
 </div>
 
 <!--Collection Dropdown-->	

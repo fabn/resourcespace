@@ -4,7 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include("../include/collections_functions.php");
 
-$collection=getvalescaped("c","");
+$collection=getvalescaped("ref","");
 $collectiondata= get_collection($collection);
 
 

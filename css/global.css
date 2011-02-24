@@ -83,10 +83,10 @@ a:active {text-decoration:underline;}
 .CollectionResourceAlign {width:77px;height:85px;text-align: center;vertical-align: middle;}
 
 #CollectionMinTitle{float: left;margin: 6px 10px 0px 25px;}
-#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 6px;}
+#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 8px;}
 #CollectionMinDrop{float: left;margin: 6px 0px 0px;padding:0.2em 0em}
 #CollectionMinDrop form{margin:0;padding:0}
-#CollectionMinitems{float: left;margin: 6px 10px 0px;padding:0.2em 0em}
+#CollectionMinitems{float: left;margin: 8px 10px 0px;padding:0.2em 0em}
 #CollectionMinRightNav{float: right;margin: 6px 25px 0px 0px;}
 
 #CollectionMinDrop .SearchWidth {width: 110px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
