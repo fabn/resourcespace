@@ -141,7 +141,7 @@ function SwapCSS(css)
 
 if ($show_resource_title_in_titlebar){
 $search_title_pages=array("search","preview_all","collection_edit","edit","collection_download","collection_share");
-$resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit");
+$resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit","preview");
 
     if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
     
