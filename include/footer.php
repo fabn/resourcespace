@@ -137,22 +137,53 @@ function SwapCSS(css)
 <?php hook("footerbottom"); ?>
 
 <?php
-if ($show_resource_title_in_titlebar &&
-($pagename!="view" && $pagename!="edit" && $pagename!="preview"  && $pagename!="log" && $pagename!="resource_email" && $pagename!="delete" && $pagename!="alternative_files" && $pagename!="alternative_file"))
-    {
-	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
+//titlebar modifications
+
+if ($show_resource_title_in_titlebar){
+$search_title_pages=array("search","preview_all","collection_edit","edit","collection_download","collection_share");
+$resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit");
+
+    if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
+    
+    // clear resource or search title for pages that don't apply:
+    if (!in_array($pagename,array_merge($search_title_pages,$resource_title_pages))){
 		echo "<script language='javascript'>\n";
 		echo $parentword . "document.title = \"$applicationname\";\n";
 		echo "</script>";
     }
-else if ($show_resource_title_in_titlebar && $pagename!="preview" && $pagename!="alternative_file"){
-    if ($pagename=="alternative_file"){$ref=$resource;} // on this page $ref == the alt file ref
-    $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
-	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
-    echo "<script language='javascript'>\n";
-    echo $parentword . "document.title = \"$applicationname - $title\";\n";
-    echo "</script>";
+    
+    // place resource titles
+    else if (in_array($pagename,$resource_title_pages) && getval("collection","")=="" /* for edit page */){
+        $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
+        echo "<script language='javascript'>\n";
+        echo $parentword . "document.title = \"$applicationname - $title\";\n";
+        echo "</script>";
+    }
+    
+    // place collection titles
+    else if (in_array($pagename,$search_title_pages)){
+        if (isset($collection_title)){
+            $title=strip_tags($collection_title);
+        }
+        else if ($pagename=="edit" && getval("collection","")!=""){
+            $collectiondata=get_collection($collection);
+            if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+            $title=$collection_tag.$collectiondata['name'];
+            }
+        else {
+            $collection=getval("ref","");
+            $collectiondata=get_collection($collection);
+            if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+            $title=$collection_tag.strip_tags($collectiondata['name']);
+            }
+        // add a hyphen if title exists  
+        if (strlen($title)!=0){$title="- $title";}    
+        echo "<script language='javascript'>\n";
+        echo $parentword . "document.title = \"$applicationname $title\";\n";
+        echo "</script>";
+    }
 }
+   
 
 ?>
 

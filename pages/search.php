@@ -186,6 +186,7 @@ $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 $allow_reorder=false;
 # display collection title if option set.
 $collection_title = "";
+$collection_title_links = "";
 
 if (substr($search,0,11)=="!collection")
 	{
@@ -202,13 +203,12 @@ if (substr($search,0,11)=="!collection")
 
 	if ($display_collection_title)
 		{
-		if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-		
-		$collection_title = '<div align="left"><h1>'.$collection_tag.$collectiondata ["name"].'</h1> ';
-		if ($k==""){$collection_title.='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
-		if ($k==""&&$preview_all){$collection_title.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
-		$collection_title.='</div>';
-		if ($display!="list"){$collection_title.= '<br>';}
+        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+        $collection_title = '<div align="left"><h1>'.$collection_tag.$collectiondata ["name"].'</h1> ';
+        if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
+        if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
+        $collection_title.='</div>';
+        if ($display!="list"){$collection_title_links.= '<br /><br />';}
 		}
 	}
 
@@ -488,7 +488,7 @@ if (true) # Always show search header now.
 	$draw_pager=true;
 	?>
 	</div>
-	<?php echo $collection_title ?>
+	<?php echo $collection_title.$collection_title_links ?>
 	<?php		
 
 	hook("beforesearchresults");
