@@ -149,12 +149,11 @@ else if ($show_resource_title_in_titlebar && $pagename!="preview" && $pagename!=
     if ($pagename=="alternative_file"){$ref=$resource;} // on this page $ref == the alt file ref
     $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
 	if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
-	if (strlen($title) > 0){
-		echo "<script language='javascript'>\n";
-		echo $parentword . "document.title = \"$applicationname - $title\";\n";
-		echo "</script>";
-	}
+    echo "<script language='javascript'>\n";
+    echo $parentword . "document.title = \"$applicationname - $title\";\n";
+    echo "</script>";
 }
+
 ?>
 
 </body>
