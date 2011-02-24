@@ -140,7 +140,7 @@ function SwapCSS(css)
 //titlebar modifications
 
 if ($show_resource_title_in_titlebar){
-$search_title_pages=array("contactsheet_settings","search","preview_all","collection_edit","edit","collection_download","collection_share");
+$search_title_pages=array("contactsheet_settings","search","preview_all","collection_edit","edit","collection_download","collection_share","collection_request");
 $resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit","preview");
 
     if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
@@ -165,11 +165,11 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
         if (isset($collection_title)){
             $title=strip_tags($collection_title);
         }
-        else if ($pagename=="edit" && getval("collection","")!=""){
+        else if (($pagename=="collection_download") || $pagename=="edit" && getval("collection","")!=""){
             $collectiondata=get_collection($collection);
             if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
             $title=$collection_tag.$collectiondata['name'];
-            }
+            }  
         else {
             $collection=getval("ref","");
             $collectiondata=get_collection($collection);
