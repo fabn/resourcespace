@@ -105,14 +105,28 @@ if (isset($_POST['submit']))
             # ---------------- OpenStreetMap version -----------------
             ?>
 			  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-			  <script src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+			  <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
 			  <script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1"></script> 
 			  <script>
 			    map = new OpenLayers.Map("map_canvas");
 			    
 				var osm = new OpenLayers.Layer.OSM();
-		        var gmap = new OpenLayers.Layer.Google("Google Streets", {visibility: false});
-			    map.addLayers([osm, gmap]);
+				var gphy = new OpenLayers.Layer.Google(
+					"Google Physical",
+					{type: google.maps.MapTypeId.TERRAIN}
+					// used to be {type: G_PHYSICAL_MAP}
+					);
+				var gmap = new OpenLayers.Layer.Google(
+					"Google Streets", // the default
+					{numZoomLevels: 20}
+					// default type, no change needed here
+					);
+				var gsat = new OpenLayers.Layer.Google(
+					"Google Satellite",
+					{type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+					// used to be {type: G_SATELLITE_MAP, numZoomLevels: 22}
+					);
+			    map.addLayers([osm, gmap, gsat, gphy]);
 			 	
                 <?php if ($resource["geo_long"]!=="") {?>
 			    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
@@ -165,8 +179,18 @@ if (isset($_POST['submit']))
                 <?php if ($resource["geo_long"]!=="") {?>			 
 			    map.setCenter (lonLat, zoom);
 			    <?php } else { ?>
-				var defaultbounds=new OpenLayers.Bounds(<?php echo $geolocation_default_bounds ?>); // A good world view.
-				map.zoomToExtent(defaultbounds);
+							    
+					<?php if (isset($_COOKIE["geobound"]))
+						{
+						$bounds=$_COOKIE["geobound"];
+						}
+					else
+						{
+						$bounds=$geolocation_default_bounds;
+						}
+					$bounds=explode(",",$bounds);
+					?>
+					map.setCenter(new OpenLayers.LonLat(<?php echo $bounds[0] ?>,<?php echo $bounds[1] ?>),<?php echo $bounds[2] ?>);
 
 			    <?php } ?>
 
