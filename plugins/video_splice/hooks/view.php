@@ -116,8 +116,8 @@ function HookVideo_spliceViewAfterresourceactions()
 		}
 
 ?>
-<a href="#" onClick="
-if (document.getElementById('videocut').style.display=='block') {document.getElementById('videocut').style.display='none';} else {document.getElementById('videocut').style.display='block';} return false;">&gt;&nbsp;<?php echo $lang["cut"]?></a>
+<li><a href="#" onClick="
+if (document.getElementById('videocut').style.display=='block') {document.getElementById('videocut').style.display='none';} else {document.getElementById('videocut').style.display='block';} return false;">&gt;&nbsp;<?php echo $lang["cut"]?></a></li>
 <form id="videocut" style="<?php if (!(isset($preview) && $preview)) { ?>display:none;<?php } ?>padding:10px 0 3px 0;" method="post">
 
 <table>
