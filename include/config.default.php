@@ -1481,20 +1481,18 @@ $use_plugins_manager = true;
 
 
 # ------------- Geocoding / geolocation -------------
-# By default OpenStreetMap / OpenLayers will be used, however if you uncomment and set the gmaps_apikey parameter below you can use Google Maps instead.
-
+# Note that a Google Maps API key is no longer required.
 #Disable geocoding features?
 $disable_geocoding = false;
-
-# To enable Google Maps Geolocation displays (instead of the default OpenStreetMaps), uncomment the following line and 
-# add your Google Maps API Key. Requires exiftool.
-# Get an api key at: http://code.google.com/apis/maps/signup.html
-#$gmaps_apikey = '';
 
 # OpenLayers: The default center and zoom for the map view when searching or selecting a new location. This is a world view.
 # For example, to specify the USA use: #$geolocation_default_bounds="-10494743.596017,4508852.6025659,4";
 # For example, to specify Utah, use $geolocation_default_bounds="-12328577.96607,4828961.5663655,6";
 $geolocation_default_bounds="-3.058839178216e-9,2690583.3951564,2";
+
+# The layers to make available. The first is the default.
+$geo_layers="osm, gmap, gsat, gphy";
+
 
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.

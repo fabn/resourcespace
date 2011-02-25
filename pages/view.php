@@ -842,80 +842,29 @@ if (!$disable_geocoding) { ?>
     if ($resource["geo_lat"]!="" && $resource["geo_long"]!="")
     	{
 		?>
-            <?php if ($edit_access) { ?>
-            <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
-            
-            <?php if ( isset($gmaps_apikey)) { 
-            #
-            #  ----------------- Map window - Google Maps version
-            #            
-            ?>
-            <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $gmaps_apikey; ?>&sensor=false"
-                    type="text/javascript"></script>
-            <script type="text/javascript">
-                function geo_loc_initialize() {
-                  if (GBrowserIsCompatible()) {
-                    var map = new GMap2(document.getElementById("map_canvas"));
-                    latlng = new GLatLng(<?php echo $resource["geo_lat"]; ?>, <?php echo $resource["geo_long"];?>);
-                    marker = new GMarker(latlng)
-                    map.setCenter(marker.getLatLng(), 13);
-                    map.setUIToDefault();
-                    map.addOverlay(marker);
-                    geocoder = new GClientGeocoder;
-                    geocoder.getLocations(latlng, function(response){
-                        if (!response || response.Status.code != 200){
-                            alert('<?php echo $lang["statuscode"] . ":" ?>' + response.Status.code);
-                            }
-                        else {
-                            place = response.Placemark[0];
-                            marker.bindInfoWindowHtml(
-                                    '<b>Latitude:</b> '+place.Point.coordinates[1]+'<br />' +
-                                    '<b>Longitude:</b> '+place.Point.coordinates[0]+'<br />' +
-                                    '<b>Address:</b> '+place.address+'<br />'+
-                                    '<b>Country Code:</b> '+place.AddressDetails.Country.CountryNameCode);
-                        }
-                    });
-                            
-                       
-                  }
-                }
-               
-                Event.observe(window, 'load', geo_loc_initialize);
-                Event.observe(window, 'unload', GUnload);
-	            </script>
-	            <div id="map_canvas" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
-	            <?php
-	            } else {
-	            #
-	            #  ----------------- Map window - OpenStreetMap version
-    	        #            
-				?>
-				  <div id="mapdiv" style="width: *; height: 300px; display:block; float:none;" class="Picture" ></div>
-				  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-				  <script>
-				    map = new OpenLayers.Map("mapdiv");
-				    map.addLayer(new OpenLayers.Layer.OSM());
-				 
-				    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
-				          .transform(
-				            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-				            map.getProjectionObject() // to Spherical Mercator Projection
-				          );
-				 
-				    var zoom=13;
-				 
-				    var markers = new OpenLayers.Layer.Markers( "Markers" );
-				    map.addLayer(markers);
-				 
-				    markers.addMarker(new OpenLayers.Marker(lonLat));
-				 
-				    map.setCenter (lonLat, zoom);
-				  </script>
-            	<?php
-            	}
-            	?>
+        <?php if ($edit_access) { ?>
+        <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
+        
+		<?php $mapheight=200;include "../include/geo_map.php"; ?>
+		<script>
+ 
+	    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
+	          .transform(
+	            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+	            map.getProjectionObject() // to Spherical Mercator Projection
+	          );
+	 
+	    var zoom=13;
+	 
+	    var markers = new OpenLayers.Layer.Markers( "Markers" );
+	    map.addLayer(markers);
+	 
+	    markers.addMarker(new OpenLayers.Marker(lonLat));
+	 
+	    map.setCenter (lonLat, zoom);
+	  </script>
     <?php } else {?>
-        <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>
+    <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>
     <?php }?>
     </div>
     <div class="PanelShadow"></div>
