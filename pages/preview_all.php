@@ -147,11 +147,12 @@ if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collec
 	$imageheight=$imageinfo[1];?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <script type="text/javascript">
-var maxheight=window.innerHeight-110; 
+var maxheight=window.innerHeight-110;
+if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-110;}
 if (maxheight><?php echo $imageheight?>){
 	
-	$('image<?php echo $ref?>').style.height=<?php echo $imageheight?>;}
-	else { $('image<?php echo $ref?>').style.height=maxheight;} </script>
+	document.getElementById('image<?php echo $ref?>').style.height='<?php echo $imageheight?>px';}
+	else { document.getElementById('image<?php echo $ref?>').style.height=maxheight+'px';} </script>
 </div></div>
 <?php if ($collection_reorder_caption && $allow_reorder) { 
 		# Javascript drag/drop enabling.
@@ -177,10 +178,11 @@ if (maxheight><?php echo $imageheight?>){
 
 	window.onresize=function(event){
 	var maxheight=window.innerHeight-110;
+    if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-110;}
 	$$('.image').each(function (elem) {
 
-		if (maxheight> elem.getAttribute("imageheight").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("imageheight"); }
-		else { elem.style.height=maxheight;} } );}
+		if (maxheight> elem.getAttribute("imageheight").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("imageheight")+'px'; }
+		else { elem.style.height=maxheight+'px';} } );}
 </script>
 </form>
 <?php
