@@ -89,7 +89,7 @@ function ReorderResources(id1,id2)
     }
 </script>
 <br/>
-<table id="preview_all_table">
+<table id="preview_all_table" style="width:100%;">
 <tr><p style="margin:7px 0 7px 0;padding:0;"><a href="search.php?search=!collection<?php echo $colref?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&offset=<?php echo $offset?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoresults"]?></a>
 &nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=h&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Horizontal </a>
 &nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=v&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Vertical </a>
