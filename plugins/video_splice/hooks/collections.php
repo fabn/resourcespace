@@ -18,7 +18,14 @@ function HookVideo_spliceCollectionsCollectiontoolmin()
 	<?php
 	}
 
-
+function HookVideo_spliceCollectionsCollectiontoolcompact()
+	{
+	# Link in collections bar (minimised)
+	global $usercollection;
+	?>
+    <option value="../plugins/video_splice/pages/splice.php?collection=<?php echo $usercollection ?>">Splice</option>
+	<?php
+	}
 
 
 

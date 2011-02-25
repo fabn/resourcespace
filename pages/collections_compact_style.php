@@ -51,6 +51,7 @@ if ((colactions.colactionselect.options[selectedIndex].value!='show') && (colact
    	<?php if (isset($zipcommand)) { ?>
     <option value="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></option>
 	<?php } ?>
+    <?php hook("collectiontoolcompact");?>
     <?php if ($thumbs=="show") { ?><option value='hide'><?php echo $lang["hidethumbnails"]?></option><?php } ?>
     <?php if ($thumbs=="hide") { ?><option value='show'><?php echo $lang["showthumbnails"]?></option><?php } ?>
     </select></div>
