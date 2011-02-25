@@ -495,7 +495,7 @@ if (true) # Always show search header now.
         }
     else {
     echo $collection_title;
-    ?><?php if (substr($search,0,11)=="!collection"){?><form method="get" name="colactions" id="colactions">
+    ?><?php if (substr($search,0,11)=="!collection" && $k==""){?><form method="get" name="colactions" id="colactions">
     <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
     <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value='';">
     <option value=""><?php echo $lang['select'];?></option>
