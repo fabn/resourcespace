@@ -27,24 +27,16 @@ $minaccess=collection_min_access($ref);
 
 if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower and sharing of restricted resources is not allowed. The user cannot share this collection.
 	{
-	?>
-	<script type="text/javascript">
-	alert("<?php echo $lang["restrictedsharecollection"]?>");
-	history.go(-1);
-	</script>
+	$show_error=true;
+    $error=$lang["restrictedsharecollection"];?>
 	<?php
-	exit();
 	}
 	
 if (count(get_collection_resources($ref))==0) # Sharing an empty collection?
 	{
-	?>
-	<script type="text/javascript">
-	alert("<?php echo $lang["cannotshareemptycollection"]?>");
-	history.go(-1);
-	</script>
+	$show_error=true;
+    $error=$lang["cannotshareemptycollection"];?>
 	<?php
-	exit();
 	}
 
 
@@ -204,6 +196,15 @@ include "../include/header.php";
 
 </form>
 </div>
+
+
+<?php if (isset($show_error)){?>
+    <script type="text/javascript">
+    alert('<?php echo $error;?>');
+    	history.go(-1);
+    </script><?php
+    }
+?>
 
 <?php
 include "../include/footer.php";

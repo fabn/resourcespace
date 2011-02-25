@@ -184,76 +184,6 @@ $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 ## If displaying a collection
 # Enable/disable the reordering feature. Just for collections for now.
 $allow_reorder=false;
-# display collection title if option set.
-$collection_title = "";
-$collection_title_links = "";
-
-if (substr($search,0,11)=="!collection")
-	{
-	$collection=substr($search,11);
-	$collectiondata=get_collection($collection);
-	if ($collection_reorder_caption)
-		{
-	# Check to see if this user can edit (and therefore reorder) this resource
-		if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
-			{
-			$allow_reorder=true;
-			}
-		}
-
-	if ($display_collection_title)
-		{
-        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $collection_title = '<div align="left"><h1>'.$collection_tag.$collectiondata ["name"].'</h1> ';
-        if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
-        if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
-        $collection_title.='</div>';
-        if ($display!="list"){$collection_title_links.= '<br /><br />';}
-		}
-	}
-
-
-if ($search_titles){
-	if (substr($search,0,5)=="!last"){
-		$collection_title = '<h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
-	}
-	if (substr($search,0,8)=="!related") {
-		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-		$collection_title = '<h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
-	}
-	if ($archive==-2){
-	$collection_title = '<h1>'.$lang["status-2"].'</h1> ';
-	}
-	if ($archive==-1){
-	$collection_title = '<h1>'.$lang["status-1"].'</h1> ';
-	}
-	if ($archive==2){
-	$collection_title = '<h1>'.$lang["status2"].'</h1> ';
-	}
-	if ($archive==3){
-	$collection_title = '<h1>'.$lang["status3"].'</h1> ';
-	}
-	if (substr($search,0,15)=="!archivepending") {
-		$collection_title = '<h1>'.$lang["status1"].'</h1> ';
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-2){$collection_title = '<h1>'.$lang["contributedps"].'</h1> ';}
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-1){$collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';}
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-0){$collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';}
-	}
-	if (substr($search,0,7)=="!unused") {
-		$collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';
-	}
-}
-	
-	
 
 # get current collection resources to pre-fill checkboxes
 if ($use_checkboxes_for_selection){
@@ -341,6 +271,78 @@ if (strpos($search,"!")!==false) {$restypes="";}
 
 # Do the search!
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
+
+
+# display collection title if option set.
+$collection_title = "";
+$collection_title_links = "";
+
+if (substr($search,0,11)=="!collection")
+	{
+	$collection=substr($search,11);
+	$collectiondata=get_collection($collection);
+	if ($collection_reorder_caption)
+		{
+	# Check to see if this user can edit (and therefore reorder) this resource
+		if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+			{
+			$allow_reorder=true;
+			}
+		}
+
+	if ($display_collection_title)
+		{
+        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+        $collection_title = '<div align="left"><h1>'.$collection_tag.$collectiondata ["name"].'</h1> ';
+        if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
+        if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
+        $collection_title.='</div>';
+        if ($display!="list"){$collection_title_links.= '<br /><br />';}
+		}
+	}
+
+
+if ($search_titles){
+	if (substr($search,0,5)=="!last"){
+		$collection_title = '<h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
+	}
+	if (substr($search,0,8)=="!related") {
+		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
+		$collection_title = '<h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
+	}
+	if ($archive==-2){
+	$collection_title = '<h1>'.$lang["status-2"].'</h1> ';
+	}
+	if ($archive==-1){
+	$collection_title = '<h1>'.$lang["status-1"].'</h1> ';
+	}
+	if ($archive==2){
+	$collection_title = '<h1>'.$lang["status2"].'</h1> ';
+	}
+	if ($archive==3){
+	$collection_title = '<h1>'.$lang["status3"].'</h1> ';
+	}
+	if (substr($search,0,15)=="!archivepending") {
+		$collection_title = '<h1>'.$lang["status1"].'</h1> ';
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-2){$collection_title = '<h1>'.$lang["contributedps"].'</h1> ';}
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-1){$collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';}
+	}
+	if (substr($search,0,14)=="!contributions") {
+		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		if ($cuser==$userref && $archive==-0){$collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';}
+	}
+	if (substr($search,0,7)=="!unused") {
+		$collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';
+	}
+}
+	
+
 
 # Do the public collection search if configured.
 
@@ -488,7 +490,56 @@ if (true) # Always show search header now.
 	$draw_pager=true;
 	?>
 	</div>
-	<?php echo $collection_title.$collection_title_links ?>
+	<?php if (!$collections_compact_style){
+        echo $collection_title.$collection_title_links;
+        }
+    else {
+    echo $collection_title;
+    ?><?php if (substr($search,0,11)=="!collection"){?><form method="get" name="colactions" id="colactions">
+    <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
+    <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;}">
+    <option value="">Select...</option>
+    <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
+	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
+    <?php if ($allow_share) { ?><option value="collection_share.php?ref=<?php echo $usercollection?>"><?php echo $lang["share"]?></option><?php } ?>
+    <?php if (($userref==$collectiondata["user"]) || (checkperm("h"))) {?><option value="collection_edit.php?ref=<?php echo $usercollection?>"><?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></option><?php } ?>
+	<?php if ($preview_all){?><option value="preview_all.php?ref=<?php echo $usercollection?>"><?php echo $lang["preview_all"]?></option><?php } ?>
+    <?php if ($collectiondata['request_feedback']) {?><option value="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo $lang["sendfeedback"]?></option><?php } ?>
+    <?php } else {
+    $research=sql_value("select ref value from research_request where collection='$usercollection'",0);	
+	?>
+    <option value="team/team_research.php"><?php echo $lang["manageresearchrequests"]?></option>    
+    <option value="team/team_research_edit.php?ref=<?php echo $research?>"><?php echo $lang["editresearchrequests"]?></option>    
+	<?php } ?>
+    
+    <?php 
+    # If this collection is (fully) editable, then display an extra edit all link
+    if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($usercollection)) { ?>
+    <option value="edit.php?collection=<?php echo $usercollection?>"><?php echo $lang["action-editall"]?></option>
+
+    <?php }  ?>
+    
+    <?php if (count($result)>0)
+    	{ 
+		# Ability to request a whole collection (only if user has restricted access to any of these resources)
+		$min_access=collection_min_access($usercollection);
+		if ($min_access!=0)
+			{
+		    ?>
+		    <option value="collection_request.php?ref=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo 	$lang["requestall"]?></option>
+		    <?php
+		    }
+	    }
+	?>
+    
+   	<?php if (isset($zipcommand)) { ?>
+    <option value="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></option>
+	<?php } ?>
+    </select></div>
+    </form>
+    <?php } ?>
+    <br /><br />
+    <?php } /*end if a collection search and compact_style - action selector*/?>
 	<?php		
 
 	hook("beforesearchresults");
