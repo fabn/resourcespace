@@ -11,8 +11,9 @@ if (colactions.colactionselect.options[selectedIndex].value=='show')
 {ToggleThumbs();top.collections.location.href='collections.php?thumbs=show';}
 if ((colactions.colactionselect.options[selectedIndex].value!='show') && (colactions.colactionselect.options[selectedIndex].value!='hide')
 && (colactions.colactionselect.options[selectedIndex].value!=''))
-{top.main.location.href=colactions.colactionselect.options[selectedIndex].value;}">
-<option value="">Select...</option>
+{top.main.location.href=colactions.colactionselect.options[selectedIndex].value;}
+colactions.colactionselect.value=''";>
+<option id="resetcolaction" value="">Select...</option>
 <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
     <?php if ($allow_share) { ?><option value="collection_share.php?ref=<?php echo $usercollection?>"><?php echo $lang["share"]?></option><?php } ?>
