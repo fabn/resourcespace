@@ -536,11 +536,11 @@ if (true) # Always show search header now.
     <option value="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></option>
 	<?php } ?>
     </select></div>
-    </form>
+    </form> <br /><br />
+    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
     <?php } ?>
-    <br /><br />
-    <?php } /*end if a collection search and compact_style - action selector*/?>
-	<?php		
+
+    <?php		
 
 	hook("beforesearchresults");
 	
