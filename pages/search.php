@@ -498,7 +498,7 @@ if (true) # Always show search header now.
     ?><?php if (substr($search,0,11)=="!collection"){?><form method="get" name="colactions" id="colactions">
     <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
     <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value='';">
-    <option value="">Select...</option>
+    <option value=""><?php echo $lang['select'];?></option>
     <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
     <?php if ($allow_share) { ?><option value="collection_share.php?ref=<?php echo $usercollection?>"><?php echo $lang["share"]?></option><?php } ?>
