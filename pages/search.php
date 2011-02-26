@@ -497,8 +497,9 @@ if (true) # Always show search header now.
     echo $collection_title;
     ?><?php if (substr($search,0,11)=="!collection" && $k==""){?><form method="get" name="colactions" id="colactions">
     <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
-    <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value='';">
+    <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!=''){if (colactions.colactionselect.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactions.colactionselect.options[selectedIndex].value;}else {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} } colactions.colactionselect.value='';">
     <option value=""><?php echo $lang['select'];?></option>
+    <option id="selectcollection" value="collections.php?collection=<?php echo $usercollection?>"><?php echo $lang['selectcollection'];?></option>
     <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
     <?php if ($allow_share) { ?><option value="collection_share.php?ref=<?php echo $usercollection?>"><?php echo $lang["share"]?></option><?php } ?>
