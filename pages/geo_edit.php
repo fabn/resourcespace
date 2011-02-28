@@ -39,6 +39,14 @@ if (isset($_POST['submit']))
 <div class="Title"><?php echo $lang['location-title']; ?></div>
 <p>&gt;&nbsp;<a href="view.php?ref=<?php echo $ref?>"><?php echo $lang['backtoview']; ?></a></p>
 
+<!-- Drag mode selector -->
+<div>
+<?php echo $lang["geodragmode"] ?>:&nbsp;
+<input type="radio" name="dragmode" id="dragmodearea" checked="true" onClick="control.point.activate()" /><label for="dragmodearea"><?php echo $lang["geodragmodearea"] ?></label>
+&nbsp;&nbsp;
+<input type="radio" name="dragmode" id="dragmodepan" onClick="control.point.deactivate();" /><label for="dragmodepan"><?php echo $lang["geodragmodepan"] ?></label>
+</div>
+
 <?php include "../include/geo_map.php"; ?>
 <script>
  	

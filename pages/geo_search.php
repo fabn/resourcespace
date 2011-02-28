@@ -10,6 +10,15 @@ include "../include/header.php";
 <h1><?php echo $lang["geographicsearch"] ?></h1>
 <p><?php echo $lang["geographicsearch_help"] ?></p>
 
+
+<!-- Drag mode selector -->
+<div>
+<?php echo $lang["geodragmode"] ?>:&nbsp;
+<input type="radio" name="dragmode" id="dragmodearea" checked="true" onClick="control.point.activate()" /><label for="dragmodearea"><?php echo $lang["geodragmodearea"] ?></label>
+&nbsp;&nbsp;
+<input type="radio" name="dragmode" id="dragmodepan" onClick="control.point.deactivate();" /><label for="dragmodepan"><?php echo $lang["geodragmodepan"] ?></label>
+</div>
+
 <?php include "../include/geo_map.php"; ?>
 <script>
 

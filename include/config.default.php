@@ -1491,7 +1491,7 @@ $disable_geocoding = false;
 $geolocation_default_bounds="-3.058839178216e-9,2690583.3951564,2";
 
 # The layers to make available. The first is the default.
-$geo_layers="osm, gmap, gsat, gphy";
+$geo_layers="gmap, osm, gsat, gphy";
 
 
 

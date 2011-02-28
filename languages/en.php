@@ -1294,3 +1294,8 @@ $lang["purgeusersnousers"]="There are no users to purge.";
 $lang["editallresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for the selected resources.";
 
 $lang["actions"]="Actions";
+
+$lang["geodragmode"]="Drag mode";
+$lang["geodragmodearea"]="selection";
+$lang["geodragmodepan"]="pan";
+
