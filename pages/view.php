@@ -472,7 +472,7 @@ if ($nodownloads || $counter==0)
 	# No file. Link to request form.
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2><?php echo ($counter==0)?$lang["access1"]:$lang["offlineresource"]?></h2></td>
+	<td><h2><?php echo ($counter==0)?$lang["offlineresource"]:$lang["access1"]?></h2></td>
 	<td><?php echo $lang["notavailableshort"]?></td>
 
 	<?php if (checkperm("q"))
