@@ -1299,3 +1299,5 @@ $lang["geodragmode"]="Drag mode";
 $lang["geodragmodearea"]="selection";
 $lang["geodragmodepan"]="pan";
 
+$lang["substituted_original"] = "substituted original";
+$lang["use_original_if_size"] = "Use original if selected size is unavailable?";

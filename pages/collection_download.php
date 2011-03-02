@@ -11,6 +11,7 @@ $collection=getvalescaped("collection","",true);
 $size=getvalescaped("size","");
 $submitted=getvalescaped("submitted","");
 $includetext=getvalescaped("text","false");
+$useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
 
 # initiate text file
@@ -60,6 +61,7 @@ for ($n=0;$n<count($result);$n++)
 	
 #print_r($available_sizes);
 $used_resources=array();
+$subbed_original_resources = array();
 if ($submitted != "")
 	{
 	$path="";
@@ -83,6 +85,16 @@ if ($submitted != "")
 			$pextension = ($size == 'original') ? $result[$n]["file_extension"] : 'jpg';
 			($size == 'original') ? $usesize="" : $usesize=$usesize;
 			$p=get_resource_path($ref,true,$usesize,false,$pextension,-1,1,$use_watermark);
+
+			if ((!file_exists($p)) && $useoriginal == 'yes' && resource_download_allowed($ref,'',$result[$n]['resource_type'])){
+				// this size doesn't exist, so we'll try using the original instead
+				$p=get_resource_path($ref,true,'',false,$result[$n]['file_extension'],-1,1,$use_watermark);
+				$subbed_original_resources[] = $ref;
+				$subbed_original = true;
+			} else {
+				$subbed_original = false;
+			}
+
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 
@@ -144,6 +156,7 @@ if ($submitted != "")
 				#Add resource data/collection_resource data to text file
 				if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
 					if ($size==""){$sizetext="";}else{$sizetext="-".$size;}
+					if ($subbed_original) { $sizetext = ' )' . $lang['substituted_original'] . ')'; }
 					$fields=get_resource_field_data($ref);
 					$commentdata=get_collection_resource_comment($ref,$collection);
 					if (count($fields)>0){ 
@@ -210,8 +223,13 @@ if ($submitted != "")
         $text.= $lang["forthispackage"] . ".\r\n\r\n";
     
         foreach ($result as $resource) {
-            if (!in_array($resource['ref'],$used_resources)) {
-                $text.= $lang["didnotinclude"] . ": " . $resource['ref'] . "\r\n\r\n";
+	    if (in_array($resource['ref'],$subbed_original_resources)){
+		$text.= $lang["didnotinclude"] . ": " . $resource['ref'];
+		$text.= " (".$lang["substituted_original"] . ")";
+		$text.= "\r\n";
+	    } elseif (!in_array($resource['ref'],$used_resources)) {
+                $text.= $lang["didnotinclude"] . ": " . $resource['ref'];
+		$text.= "\r\n";
             }
         }
 
@@ -348,6 +366,11 @@ foreach ($available_sizes as $key=>$value) {
 
 <div class="clearerleft"> </div></div>
 <div class="clearerleft"> </div></div>
+
+<div class="Question">
+<label for="use_original"><?php echo $lang['use_original_if_size']; ?> <br />(<?php echo $qty_originals . ' ' . $lang['available']; ?>)</label><input type=checkbox id="use_original" name="use_original" value="yes" >
+<div class="clearerleft"> </div>
+</div>
 
 <?php 
 
