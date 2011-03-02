@@ -156,7 +156,7 @@ if ($submitted != "")
 				#Add resource data/collection_resource data to text file
 				if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
 					if ($size==""){$sizetext="";}else{$sizetext="-".$size;}
-					if ($subbed_original) { $sizetext = ' )' . $lang['substituted_original'] . ')'; }
+					if ($subbed_original) { $sizetext = ' (' . $lang['substituted_original'] . ')'; }
 					$fields=get_resource_field_data($ref);
 					$commentdata=get_collection_resource_comment($ref,$collection);
 					if (count($fields)>0){ 
