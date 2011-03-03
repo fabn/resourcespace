@@ -18,8 +18,11 @@ if (getval("ref","")!="") {$sql="where r.ref='" . getvalescaped("ref","",true) .
 set_time_limit(60*60*5);
 echo "<pre>";
 
+$start = getval('start','0');
+if (!is_numeric($start)){ $start = 0; }
+
 $resources=sql_query("select r.ref,u.username,u.fullname from resource r left outer join user u on r.created_by=u.ref $sql order by ref");
-for ($n=0;$n<count($resources);$n++)
+for ($n=$start;$n<count($resources);$n++)
 	{
 	$ref=$resources[$n]["ref"];
 
