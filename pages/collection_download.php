@@ -368,9 +368,11 @@ foreach ($available_sizes as $key=>$value) {
 <div class="clearerleft"> </div></div>
 
 <div class="Question">
-<label for="use_original"><?php echo $lang['use_original_if_size']; ?> <br />(<?php echo $qty_originals . ' ' . $lang['available']; ?>)</label><input type=checkbox id="use_original" name="use_original" value="yes" >
+<label for="use_original"><?php echo $lang['use_original_if_size']; ?> <br />(<?php
+        if (isset($qty_originals)) { echo $qty_originals; } else { echo '0'; }
+        echo ' ' . $lang['available'];
+        ?>)</label><input type=checkbox id="use_original" name="use_original" value="yes" >
 <div class="clearerleft"> </div>
-</div>
 
 <?php 
 
