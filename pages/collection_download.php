@@ -89,12 +89,12 @@ if ($submitted != "")
 			if ((!file_exists($p)) && $useoriginal == 'yes' && resource_download_allowed($ref,'',$result[$n]['resource_type'])){
 				// this size doesn't exist, so we'll try using the original instead
 				$p=get_resource_path($ref,true,'',false,$result[$n]['file_extension'],-1,1,$use_watermark);
+				$pextension = $result[$n]['file_extension'];
 				$subbed_original_resources[] = $ref;
 				$subbed_original = true;
 			} else {
 				$subbed_original = false;
 			}
-
 
 			# Check file exists and, if restricted access, that the user has access to the requested size.
 			if ((file_exists($p) && $access==0) || 
@@ -132,8 +132,7 @@ if ($submitted != "")
 						if (isset($pathparts['extension'])){
 						if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
 						} else {$pextension="";}	
-						if ($usesize!=""){$append="-".$usesize;}else {$append="";}
-
+						if ($usesize!=""&&!$subbed_original){$append="-".$usesize;}else {$append="";}
 						$basename_minus_extension=remove_extension($pathparts['basename']);
 						$filename=$basename_minus_extension.$append.".".$pextension;
 
