@@ -111,6 +111,9 @@ include "version.php";
 $applicationname="ResourceSpace"; # The name of your implementation / installation (e.g. 'MyCompany Resource System')
 $applicationdesc=""; # Subtitle (i18n translated) if $header_text_title=true;
 $header_text_title=false; //replace header logo with text, application name and description above
+// alternatively, for custom header gfx:
+$header_link=false; // turn on to create a clickable area over a logo graphic (to go to home page).
+$header_link_width=400; // you may like to adjust the width for you own logo.
 
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
