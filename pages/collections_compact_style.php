@@ -1,14 +1,18 @@
 <?php
 // create a compact collections actions selector
 ?>
+<input type=hidden name="purge" id="collectionpurge" value="">
 <style type="text/css">
 #CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
 </style>
 <form method="get" name="colactions" id="colactions">
 <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
-<select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!='')
-{top.main.location.href=colactions.colactionselect.options[selectedIndex].value;}
-colactions.colactionselect.value=''";>
+<?php if ($pagename!="search"){
+    ?><select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}} if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value=''";>
+    <?php }
+else { ?>
+ <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].value!=''){if (colactions.colactionselect.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactions.colactionselect.options[selectedIndex].value;}else {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} } colactions.colactionselect.value='';">
+ <?php }?>
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
 <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
@@ -49,8 +53,17 @@ colactions.colactionselect.value=''";>
    	<?php if (isset($zipcommand)) { ?>
     <option value="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></option>
 	<?php } ?>
+    <?php if ($collection_purge){ 
+        if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
+			?><option id="purge" value="collection_manage.php?purge=<?php echo $cinfo['ref']?>"><?php echo $lang["purgeanddelete"]?></option><?php 
+		} 
+	}
+	?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_log.php?ref=<?php echo $cinfo["ref"]?>"><?php echo $lang["log"]?></option><?php } ?>
     <?php hook("collectiontoolcompact");?>
     </select>
-        <?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?>
-    <?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp; <?php echo $lang["showthumbnails"]?></a><?php } ?></div>
 </form>
+    <?php if ($pagename!="search"){?>
+        <?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?>
+        <?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp; <?php echo $lang["showthumbnails"]?></a><?php } ?></div>
+    <?php } ?>
