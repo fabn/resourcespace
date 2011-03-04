@@ -1810,6 +1810,9 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
     }
  
     $needle = (array) $needle;
+
+    usort($needle, "sorthighlights");
+
     foreach ($needle as $needle_s) {
         $needle_s = preg_quote($needle_s);
         $needle_s = str_replace("#","\\#",$needle_s);
@@ -1828,9 +1831,18 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
         $regex = sprintf($pattern, $needle_s);
         $text = preg_replace($regex, $highlight, $text);
     }
- 
+
     return $text;
 	}
+
+function sorthighlights($a, $b)
+    {
+    # fixes an odd problem for str_highlight related to the order of keywords
+    if (strlen($a) < strlen($b)) {
+        return 0;
+        }
+    return ($a < $b) ? -1 : 1;
+    }
 
 function pager($break=true)
 	{
