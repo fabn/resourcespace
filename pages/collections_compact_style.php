@@ -6,11 +6,7 @@
 </style>
 <form method="get" name="colactions" id="colactions">
 <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
-<select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value=='hide') {ToggleThumbs();top.collections.location.href='collections.php?thumbs=hide';}
-if (colactions.colactionselect.options[selectedIndex].value=='show')
-{ToggleThumbs();top.collections.location.href='collections.php?thumbs=show';}
-if ((colactions.colactionselect.options[selectedIndex].value!='show') && (colactions.colactionselect.options[selectedIndex].value!='hide')
-&& (colactions.colactionselect.options[selectedIndex].value!=''))
+<select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].value!='')
 {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;}
 colactions.colactionselect.value=''";>
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
@@ -54,7 +50,7 @@ colactions.colactionselect.value=''";>
     <option value="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></option>
 	<?php } ?>
     <?php hook("collectiontoolcompact");?>
-    <?php if ($thumbs=="show") { ?><option value='hide'><?php echo $lang["hidethumbnails"]?></option><?php } ?>
-    <?php if ($thumbs=="hide") { ?><option value='show'><?php echo $lang["showthumbnails"]?></option><?php } ?>
-    </select></div>
+    </select>
+        <?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?>
+    <?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp; <?php echo $lang["hidethumbnails"]?></a><?php } ?></div>
 </form>
