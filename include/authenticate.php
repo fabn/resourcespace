@@ -8,16 +8,21 @@ if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.ph
 
 if ($api && $enable_remote_apis ){
 	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
-	if (getval("key","")){ // key is provided within the website when logged in (encrypted username and password)
+	if (getval("key","") || (getval("username","")&& getval("password",""))){ // key is provided within the website when logged in (encrypted username and password)
 
-		$decrypted=decrypt_api_key(getval("key",""));
+        if (getval("username","")&& getval("password","")){
+            $u_p_array[0]=getval("username","");$u_p_array[1]=getval("password","");
+        }
+        else {
+            $u_p_array=decrypt_api_key(getval("key",""));
+        }
 
-        if (count($decrypted)!=2){
+        if (count($u_p_array)!=2){
 			$data['cookie']="no";
 			} 
 		else{
-			$username=$decrypted[0];
-			$password=$decrypted[1];
+			$username=$u_p_array[0];
+			$password=$u_p_array[1];
             
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array("api"=>true,"username"=>$username,"password"=>$password,"userkey"=>md5($username . $scramble_key)),'','&'));
