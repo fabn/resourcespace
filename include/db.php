@@ -529,24 +529,6 @@ function CheckDBStruct($path)
 	
 function getval($val,$default,$force_numeric=false)
     {
-
-    if (get_magic_quotes_gpc()) {
-        $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-        while (list($key, $val) = each($process)) {
-            foreach ($val as $k => $v) {
-                unset($process[$key][$k]);
-                if (is_array($v)) {
-                    $process[$key][stripslashes($k)] = $v;
-                    $process[] = &$process[$key][stripslashes($k)];
-                } else {
-                    $process[$key][stripslashes($k)] = stripslashes($v);
-                }
-            }
-        }
-        unset($process);
-    }
-
-        
     # return a value from POST, GET or COOKIE (in that order), or $default if none set
     if (array_key_exists($val,$_POST)) {return ($force_numeric && !is_numeric($_POST[$val])?$default:$_POST[$val]);}
     if (array_key_exists($val,$_GET)) {return ($force_numeric && !is_numeric($_GET[$val])?$default:$_GET[$val]);}
