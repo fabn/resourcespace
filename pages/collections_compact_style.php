@@ -14,6 +14,7 @@ else { ?>
  <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].value!=''){if (colactions.colactionselect.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactions.colactionselect.options[selectedIndex].value;}else {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} } colactions.colactionselect.value='';">
  <?php }?>
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
+<?php if ($pagename=="search"){?><option id="selectcollection" value="collections.php?collection=<?php echo $usercollection?>"><?php echo $lang['selectcollection'];?></option><?php } ?>
 <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><option value="contactsheet_settings.php?ref=<?php echo $usercollection?>"><?php echo $lang["contactsheet"]?></option><?php } ?>
     <?php if ($allow_share) { ?><option value="collection_share.php?ref=<?php echo $usercollection?>"><?php echo $lang["share"]?></option><?php } ?>
