@@ -62,9 +62,5 @@ else { ?>
 	?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_log.php?ref=<?php echo $cinfo["ref"]?>"><?php echo $lang["log"]?></option><?php } ?>
     <?php hook("collectiontoolcompact");?>
-    </select>
+    </select><?php if ($pagename!="search"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp; <?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
 </form>
-    <?php if ($pagename!="search"){?>
-        <?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?>
-        <?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp; <?php echo $lang["showthumbnails"]?></a><?php } ?></div>
-    <?php } ?>
