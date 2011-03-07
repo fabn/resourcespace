@@ -116,7 +116,7 @@ function check(filename) {
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
-<div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".str_replace(",",", ",$allowed_extensions)?></div>
+<div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".strtoupper(str_replace(",",", ",$allowed_extensions))?></div>
 <div class="Question">
 
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
