@@ -238,7 +238,12 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 <?php if ($alternative!=""){$lang["fileupload"]=$lang["alternativefiles"];}?>
 <h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
 <p><?php echo text("introtext")?></p>
-<?php if ($allowed_extensions!=""){?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions))?></p><?php } ?>
+<?php if ($allowed_extensions!=""){
+    $allowed_extensions=str_replace(", ",",",$allowed_extensions);
+    $list=explode(",",trim($allowed_extensions));
+    sort($list);
+    $allowed_extensions=implode(",",$list);
+    ?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions))?></p><?php } ?>
 
 <!---------------------------------------------------------------------------------------------------------
 -------------------     A SIMPLE AND STANDARD APPLET TAG, to call the JUpload applet  --------------------- 
