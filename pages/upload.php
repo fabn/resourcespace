@@ -116,7 +116,7 @@ function check(filename) {
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
-<div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".$allowed_extensions?></div>
+<div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".str_replace(",",", ",$allowed_extensions)?></div>
 <div class="Question">
 
 <label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
@@ -153,7 +153,7 @@ function check(filename) {
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['noupload'];}?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
 </div>
 
 <p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>
