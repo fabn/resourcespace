@@ -1567,7 +1567,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 				else if (substr($variable,0,5)=="text_"){
 					$$variable=text(substr($variable,5));
 				}
-				
+
 				# try to get the variable from POST
 				else{
 					$$variable=getval($variable,"");
@@ -1581,7 +1581,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 				{
 				foreach($templatevars as $key=>$value)
 					{
-					$template=str_replace("[" . $key . "]",$value,$template);
+					$template=str_replace("[" . $key . "]",nl2br($value),$template);
 					}
 				}
 			$body=$template;	
