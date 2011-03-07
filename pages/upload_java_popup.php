@@ -46,6 +46,7 @@ http://www.resourcespace.org/
 <!--[if lte IE 7]> <link href="<?php echo $baseurl?>/css/globalIE.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 <!--[if lte IE 5.6]> <link href="<?php echo $baseurl?>/css/globalIE5.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
 </head><body>
+<div id="height">
 <div id="Header">
 <div class="BasicsBox" id="uploadbox"> 
 
@@ -100,3 +101,6 @@ http://www.resourcespace.org/
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
 </div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()"><?php echo $lang['closethiswindow']?></A>  
+</div>
+<script type='text/javascript'>window.moveTo(0,0);
+window.resizeTo(690,document.getElementById('height').offsetHeight+100);</script>
