@@ -37,7 +37,15 @@ if ($api && $enable_remote_apis ){
             $responseInfo	= curl_getinfo($ch);
             curl_close($ch);
 
-            $data=json_decode($responseBody,true);
+            //fix for installs that don't json_decode curl response properly
+            $data['cookie']='no';
+            if (substr($responseBody,0,9)=='{"cookie"'){
+                $data=explode(":",$responseBody);
+                $data['cookie']=$data[1];
+                $data['cookie']=explode(",",$data['cookie']);
+                $data['cookie']=$data['cookie'][0];
+                $data['cookie']=str_replace('"',"",$data['cookie']);
+            }
 
             }
 		if ($data['cookie']!="no" && $data['cookie']!=''){
