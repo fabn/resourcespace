@@ -37,7 +37,11 @@ else { ?>
     <?php 
     # If this collection is (fully) editable, then display an extra edit all link
     if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($collection)) { ?>
-    <option value="search.php?search=<?php echo urlencode("!collection" . $collection)?>"><?php echo $lang["viewall"]?></option>
+
+    <?php if ($pagename!="search"){
+    ?><option value="search.php?search=<?php echo urlencode("!collection" . $collection)?>"><?php echo $lang["viewall"]?></option>
+    <?php } ?>
+    
     <option value="edit.php?collection=<?php echo $collection?>"><?php echo $lang["action-editall"]?></option>
 
     <?php } else { ?>
