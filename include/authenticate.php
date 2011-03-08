@@ -45,12 +45,13 @@ if ($api && $enable_remote_apis ){
                 $data['cookie']=explode(",",$data['cookie']);
                 $data['cookie']=$data['cookie'][0];
                 $data['cookie']=str_replace('"',"",$data['cookie']);
-		$data['cookie']=trim(str_replace("}",'',$data['cookie']));
+                $data['cookie']=trim(str_replace("}",'',$data['cookie']));
             }
-            }
-		if ($data['cookie']!="no" && $data['cookie']!=''){
+        }
+		if ($data['cookie']!="no" && !strlen($data['cookie'])>70 && $data['cookie']!=''){
 		$_COOKIE['user']=$data['cookie'];
 		}
+
 	}
 }
 
