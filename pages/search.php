@@ -896,7 +896,17 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		</td>
 		</tr></table>				
 		<?php } /* end Renderimagesmallthumb */?>
+        <?php if ($display_user_rating_stars && $k==""){ ?>
+		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
 		
+		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">&nbsp;<?php
+	    for ($z=1;$z<=5;$z++)
+			{
+			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			}
+		?>
+		</div>
+		<?php } ?>
 		
 		<?php
 		# smallthumbs_display_fields
@@ -936,18 +946,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		?>
 		
 		
-		
-		<?php if ($display_user_rating_stars && $k==""){ ?>
-		<?php if ($result[$n]['user_rating']=="") {$result[$n]['user_rating']=0;}?>
-		
-		<div  class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $result[$n]['user_rating']?>,'StarCurrent');">&nbsp;<?php
-	    for ($z=1;$z<=5;$z++)
-			{
-			?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $result[$n]['ref']?>,<?php echo $z?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $result[$n]['ref']?>,<?php echo $z?>);return false;" id="RatingStarLink<?php echo $result[$n]['ref'].'-'.$z?>"><span id="RatingStar<?php echo $result[$n]['ref'].'-'.$z?>" class="Star<?php echo ($z<=$result[$n]['user_rating']?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
-			}
-		?>
-		</div>
-		<?php } ?><?php hook("smallsearchfreeicon");?>
+		<?php hook("smallsearchfreeicon");?>
 		<div class="ResourcePanelSmallIcons">
 		<?php hook("smallsearchicon");?>
 		<span class="IconPreview">

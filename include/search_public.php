@@ -44,10 +44,22 @@ for ($n=0;$n<count($collections);$n++)
 		</div>
 		</td>
 		</tr></table>
+        <?php // for spacing
+        if ($display_user_rating_stars && $k==""){ ?>
+            <div  class="RatingStars">&nbsp;</div>
+        <?php } ?>
+        <?php hook("icons"); //for spacing ?>
+        <?php //add spacing for display fields to even out the box size
+        for ($x=0;$x<count($df);$x++){
+            ?><div class="ResourcePanelInfo">
+            <?php if (in_array($df[$x]['ref'],$thumbs_display_extended_fields)){
+                ?><div class="extended">
+            <?php } ?>
+            <?php if ($x==count($df)-1){?><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a><?php } ?>&nbsp;<?php if (in_array($df[$x]['ref'],$thumbs_display_extended_fields)){ ?></div>
+            <?php }
+        ?></div><?php } ?>
 
-		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
-
-		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
+        <div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
@@ -94,8 +106,20 @@ for ($n=0;$n<count($collections);$n++)
 		</div>
 		</td>
 		</tr></table>
-		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
-
+        <?php // for spacing
+        if ($display_user_rating_stars && $k==""){ ?>
+            <div  class="RatingStars">&nbsp;</div>
+        <?php } ?>
+        <?php hook("icons"); //for spacing ?>
+        <?php //add spacing for display fields to even out the box size
+        for ($x=0;$x<count($df);$x++){
+            ?><div class="ResourcePanelInfo">
+            <?php if (in_array($df[$x]['ref'],$xl_thumbs_display_extended_fields)){
+                ?><div class="extended">
+            <?php } ?>
+            <?php if ($x==count($df)-1){?><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a><?php } ?>&nbsp;<?php if (in_array($df[$x]['ref'],$xl_thumbs_display_extended_fields)){ ?></div>
+            <?php }
+        ?></div><?php } ?>
 		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
@@ -149,8 +173,16 @@ for ($n=0;$n<count($collections);$n++)
 		</a>
 		</div>
 		</td>
-		</tr></table>
-		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
+		</tr></table>	
+        <?php // for spacing
+        if ($display_user_rating_stars && $k==""){ ?><div  class="RatingStars">&nbsp;&nbsp;</div>
+        <?php } ?><?php //add spacing for display fields to even out the box size
+        for ($x=0;$x<count($df);$x++){
+            ?><div class="ResourcePanelInfo">
+            <?php if (in_array($df[$x]['ref'],$small_thumbs_display_extended_fields)){
+                ?><div class="extended"><?php } ?><?php if ($x==count($df)-1){?><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a><?php } ?>&nbsp;<?php if (in_array($df[$x]['ref'],$small_thumbs_display_extended_fields)){ ?></div>
+            <?php }
+        ?></div><?php } ?><div class="ResourcePanelInfo" style="font-size:9px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
 		</div>
