@@ -813,25 +813,6 @@ for ($n=0;$n<count($fields);$n++)
 <div class="PanelShadow"></div>
 </div>
 
-<?php hook("w2pspawn");?>
-
-<?php 
-// include collections listing
-if ($view_resource_collections){ 
-	include("resource_collection_list.php"); 
-	}
-
-// include optional ajax metadata report
-if ($metadata_report && isset($exiftool_path) && $k==""){?>
-        <div class="RecordBox">
-        <div class="RecordPanel">  
-        <div class="Title"><?php echo $lang['metadata-report']?></div>
-        <div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>);document.getElementById('metadata_report').innerHTML='<?php echo $lang['pleasewait']?>';return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br></div>
-        </div>
-        <div class="PanelShadow"></div>
-        </div>
-
-<?php } ?>
 <?php 
 if (!$disable_geocoding) { ?>
     <!-- Begin Geolocation Section -->
@@ -870,6 +851,26 @@ if (!$disable_geocoding) { ?>
     <div class="PanelShadow"></div>
     </div>
     <!-- End Geolocation Section -->
+<?php } ?>
+
+<?php hook("w2pspawn");?>
+
+<?php 
+// include collections listing
+if ($view_resource_collections){ 
+	include("resource_collection_list.php"); 
+	}
+
+// include optional ajax metadata report
+if ($metadata_report && isset($exiftool_path) && $k==""){?>
+        <div class="RecordBox">
+        <div class="RecordPanel">  
+        <div class="Title"><?php echo $lang['metadata-report']?></div>
+        <div id="metadata_report"><a onclick="metadataReport(<?php echo $ref?>);document.getElementById('metadata_report').innerHTML='<?php echo $lang['pleasewait']?>';return false;" class="itemNarrow" href="#"><?php echo $lang['viewreport'];?></a><br></div>
+        </div>
+        <div class="PanelShadow"></div>
+        </div>
+
 <?php } ?>
 
 <?php hook("customrelations"); //For future template/spawned relations in Web to Print plugin ?>
