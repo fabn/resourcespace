@@ -48,7 +48,7 @@ if ($api && $enable_remote_apis ){
                 $data['cookie']=trim(str_replace("}",'',$data['cookie']));
             }
         }
-		if ($data['cookie']!="no" && substr($data['cookie'],0,4)!="no<!" && substr($data['cookie'],0,4)!="no  " && $data['cookie']!=''){
+		if (substr($data['cookie'],0,2)!="no" && $data['cookie']!=''){
 		$_COOKIE['user']=$data['cookie'];
 		}
         else {unset($_COOKIE['user']);}
