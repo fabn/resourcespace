@@ -441,7 +441,7 @@ elseif ($k!="")
     else { ?>
   	<?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     <?php if (checkperm("s")) { ?><li><a href="collection_manage.php" target="main">&gt; <?php echo $lang["managemycollections"];?></a></li>
-	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
+	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
@@ -689,7 +689,7 @@ elseif ($k!="")
     <?php if ((!collection_is_research_request($usercollection)) || (!checkperm("r"))) { ?>
     <?php if (checkperm("s")) { ?><?php if (!$collections_compact_style){?><li><a href="collection_manage.php" target="main"><?php echo $lang["managemycollections"]?></a></li><?php } ?>
     <?php if ($contact_sheet==true && $collections_compact_style) { ?>
-    <li><a href="contactsheet_settings.php?c=<?php echo $usercollection?>" target="main">&nbsp;<?php echo $lang["contactsheet"]?></a></li>
+    <li><a href="contactsheet_settings.php?ref=<?php echo $usercollection?>" target="main">&nbsp;<?php echo $lang["contactsheet"]?></a></li>
 	<?php } ?>
 	<?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
     

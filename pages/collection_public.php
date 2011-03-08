@@ -108,7 +108,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
 	<?php if ($contact_sheet==true) { ?>
-   &nbsp;<a href="contactsheet_settings.php?c=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+   &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 	<?php } ?>
 	<?php if (!checkperm("b")) { ?>
 	&nbsp;<a href="#" onclick="document.getElementById('collectionadd').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?php echo $lang["addtomycollections"]?></a><?php } ?>

@@ -432,7 +432,7 @@ function DisplayTheme($themes=array())
 			<?php } ?>
 			
 			<?php if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?c=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+			&nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 			<?php } ?>
 		
 			<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>

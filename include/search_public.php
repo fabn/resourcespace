@@ -22,16 +22,22 @@ for ($n=0;$n<count($collections);$n++)
 		$resources=explode(",",$collections[$n]["resources"]);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
-			{
+            {
+            $border=true;    
 			$ref=$resources[$m];
-			if (file_exists(get_resource_path($ref, true, "col", false, "jpg", -1, 1, false)))
-				{
-				$images++;
-				$space=3+($images-1)*18;
-				?>
-				<img style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo get_resource_path($ref,false,"col",false,"jpg",-1,1,false)?>" class="ImageBorder">
-				<?php				
-				}
+            $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
+            if (file_exists($previewpath)){
+                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false);
+            }
+            else {
+                $resource=get_resource_data($ref);
+                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"col");$border=false;
+            }
+            $images++;
+            $space=3+($images-1)*18;
+            ?>
+            <img style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo $previewpath?>" <?php if ($border){?>class="ImageBorder"<?php } ?>>
+            <?php				
 			}
 		?>
 		</a>
@@ -61,28 +67,33 @@ for ($n=0;$n<count($collections);$n++)
 		
 		<div style="position: relative;height:330px;">
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
-		
+
 		<?php 
 		$resources=explode(",",$collections[$n]["resources"]);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
-			{
+            {
+            $border=true;    
 			$ref=$resources[$m];
-			if (file_exists(get_resource_path($ref, true, "thm", false, "jpg", -1, 1, false)))
-				{
-				$images++;
-				$space=3+($images-1)*45;
-				?>
-				<img style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo get_resource_path($ref,false,"thm",false,"jpg",-1,1,false)?>" class="ImageBorder">
-				<?php				
-				}
+            $previewpath=get_resource_path($ref, true, "thm", false, "jpg", -1, 1, false);
+            if (file_exists($previewpath)){
+                $previewpath=get_resource_path($ref,false,"thm",false,"jpg",-1,1,false);
+            }
+            else {
+                $resource=get_resource_data($ref);
+                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"");$border=false;
+            }
+            $images++;
+            $space=3+($images-1)*45;
+            ?>
+            <img style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo $previewpath?>" <?php if ($border){?>class="ImageBorder"<?php } ?>>
+            <?php				
 			}
 		?>
 		</a>
 		</div>
 		</td>
 		</tr></table>
-
 		<div class="ResourcePanelInfo"><a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>"><?php echo highlightkeywords(htmlspecialchars(tidy_trim(i18n_get_translated($collections[$n]["name"]),32)),$search)?></a>&nbsp;</div>
 
 		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
@@ -106,32 +117,39 @@ for ($n=0;$n<count($collections);$n++)
 		
 		<div style="position: relative;height:70px;">
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
-		
+
+
+
+        
 		<?php 
 		$resources=explode(",",$collections[$n]["resources"]);
 		$images=0;
+
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
-			{
+            {
+            $border=true;    
 			$ref=$resources[$m];
-			$path=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
-			if (file_exists($path))
-				{
-				if (list($sw,$sh) = @getimagesize($path))
-					{
-					$images++;
-					$space=3+($images-1)*9;
-					?>
-					<img width="<?php echo floor($sw/2)?>" height="<?php echo floor($sh/2)?>" style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo get_resource_path($ref,false,"col",false,"jpg",-1,1,false)?>" class="ImageBorder">
-					<?php				
-					}
-				}
+            $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
+            if (file_exists($previewpath)){
+                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false);
+            }
+            else {
+                $resource=get_resource_data($ref);
+                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"col");$border=false;
+            }
+            $images++;
+            $space=3+($images-1)*9;
+            if (list($sw,$sh) = @getimagesize($previewpath)){
+            ?>
+            <img width="<?php echo floor($sw/2)?>" height="<?php echo floor($sh/2)?>" style="position: absolute; top:<?php echo $space ?>px;left:<?php echo $space ?>px" src="<?php echo $previewpath?>" <?php if ($border){?>class="ImageBorder"<?php } ?>>
+            <?php
+            }
 			}
 		?>
 		</a>
 		</div>
 		</td>
 		</tr></table>
-
 		<div class="ResourcePanelCountry" style="float:right;height:12px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["action-view"]?></a></div>		
 
 		<div class="clearer"></div>
