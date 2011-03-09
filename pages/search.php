@@ -247,22 +247,6 @@ if ($display_user_rating_stars){
 if ($infobox)
 	$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
 
-# Include function for reordering
-if ($allow_reorder && $display!="list")
-	{
-	$url="search.php?search=" . urlencode($search) ;
-	
-	# Also check for the parameter and reorder as necessary.
-	$reorder=getvalescaped("reorder","");
-	if ($reorder!="")
-		{
-		$r=explode("-",$reorder);
-		$wait=swap_collection_order(substr($r[0],13),$r[1],substr($search,11));
-        refresh_collection_frame();
-		?><script>document.location='<?php echo $url?>';top.collections.location.href='collections.php?ref=<?php echo substr($search,11);?>';</script><?php
-		}
-	}
-
 # Initialise the results references array (used later for search suggestions)
 $refs=array();
 
@@ -301,6 +285,20 @@ if (substr($search,0,11)=="!collection")
 		}
 	}
 
+# Include function for reordering
+if ($allow_reorder && $display!="list")
+	{
+	$url="search.php?search=" . urlencode($search) ;
+	# Also check for the parameter and reorder as necessary.
+	$reorder=getvalescaped("reorder","");
+	if ($reorder!="")
+		{
+		$r=explode("-",$reorder);
+		$wait=swap_collection_order(substr($r[0],13),$r[1],substr($search,11));
+        refresh_collection_frame();
+		?><script>document.location='<?php echo $url?>';top.collections.location.href='collections.php?ref=<?php echo substr($search,11);?>';</script><?php
+		}
+	}
 
 if ($search_titles){
 	if (substr($search,0,5)=="!last"){
