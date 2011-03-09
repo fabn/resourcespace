@@ -1,6 +1,6 @@
 <?php
 // create a compact collections actions selector
-if (isset($search)){
+if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
     $collection=substr($search,11);
 } else {
     $collection=$usercollection;
