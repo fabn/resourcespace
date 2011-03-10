@@ -1299,3 +1299,7 @@ $lang["geodragmodepan"]="pan";
 
 $lang["substituted_original"] = "substituted original";
 $lang["use_original_if_size"] = "Use original if selected size is unavailable?";
+
+$lang["originals-available-0"] = "available"; # 0 (originals) available
+$lang["originals-available-1"] = "available"; # 1 (original) available
+$lang["originals-available-2"] = "available"; # 2+ (originals) available
