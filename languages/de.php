@@ -4,7 +4,75 @@
 # UTF-8 encoded
 # -------
 # Note: when translating to a new language, preserve the original case if possible.
+#
+# Updated by [Name] [Date] for version [svn version], [comments]
+# Updated by Henrik Frizén 20110124 for version 2296, added missing $lang from the en.php (search for #$lang to find the untranslated strings).
+# Updated by Stefan Wild 20110201 for version 2296, translated the missing $lang keys from the en.php that Henrik added.
+# Updated by Henrik Frizén 20110222 for version 2390+, added missing $lang from the en.php (search for #$lang to find the untranslated strings).
+# Updated by Stefan Wild 20110309 for version 2390+, translated the missing $lang keys from the en.php that Henrik added.
+#
+#
+# User group names (for the default user groups)
+$lang["usergroup-administrators"]="Administratoren";
+$lang["usergroup-general_users"]="Allgemeine Benutzer";
+$lang["usergroup-super_admin"]="Super Admin";
+$lang["usergroup-archivists"]="Archiv";
+$lang["usergroup-restricted_user_-_requests_emailed"]="Engeschränkte Benutzer - Anfragen per E-Mail";
+$lang["usergroup-restricted_user_-_requests_managed"]="Engeschränkte Benutzer - Anfragen verwaltet";
+$lang["usergroup-restricted_user_-_payment_immediate"]="Engeschränkte Benutzer - Bezahlung sofort";
+$lang["usergroup-restricted_user_-_payment_invoice"]="Engeschränkte Benutzer - Bezahlung auf Rechnung";
 
+# Resource type names (for the default resource types)
+$lang["resourcetype-photo"]="Foto";
+$lang["resourcetype-document"]="Dokument";
+$lang["resourcetype-video"]="Video";
+$lang["resourcetype-audio"]="Audio";
+$lang["resourcetype-global_fields"]="Globale Felder";
+$lang["resourcetype-archive_only"]="Nur Archiv";
+
+# Image size names (for the default image sizes)
+$lang["imagesize-thumbnail"]="Thumbnail";
+$lang["imagesize-preview"]="Vorschau";
+$lang["imagesize-screen"]="Bildschirm";
+$lang["imagesize-low_resolution_print"]="Druck (niedrige Auflösung)";
+$lang["imagesize-high_resolution_print"]="Druck (hohe Auflösung)";
+$lang["imagesize-collection"]="Kollektion";
+
+# Field titles (for the default fields)
+$lang["fieldtitle-keywords"]="Stichworte";
+$lang["fieldtitle-country"]="Land";
+$lang["fieldtitle-title"]="Titel";
+$lang["fieldtitle-story_extract"]=$lang["storyextract"]="Zusammenfassung";
+$lang["fieldtitle-credit"]="Urheber";
+$lang["fieldtitle-date"]=$lang["date"]="Datum";
+$lang["fieldtitle-expiry_date"]="Ablaufdatum";
+$lang["fieldtitle-caption"]="Beschriftung";
+$lang["fieldtitle-notes"]="Anmerkungen";
+$lang["fieldtitle-named_persons"]="Person(en)";
+$lang["fieldtitle-camera_make_and_model"]="Kamera";
+$lang["fieldtitle-original_filename"]="Original Dateiname";
+$lang["fieldtitle-video_contents_list"]="Video Inhaltsliste";
+$lang["fieldtitle-source"]="Quelle";
+$lang["fieldtitle-website"]="Website";
+$lang["fieldtitle-artist"]="Künstler";
+$lang["fieldtitle-album"]="Album";
+$lang["fieldtitle-track"]="Lied";
+$lang["fieldtitle-year"]="Jahr";
+$lang["fieldtitle-genre"]="Genre";
+$lang["fieldtitle-duration"]="Dauer";
+$lang["fieldtitle-channel_mode"]="Kanalmodus";
+$lang["fieldtitle-sample_rate"]="Sample Rate";
+$lang["fieldtitle-audio_bitrate"]="Audio Bitrate";
+$lang["fieldtitle-frame_rate"]="Bildrate";
+$lang["fieldtitle-video_bitrate"]="Video Bitrate";
+$lang["fieldtitle-aspect_ratio"]="Seitenverhältnis";
+$lang["fieldtitle-video_size"]="Videogröße";
+$lang["fieldtitle-image_size"]="Bildgröße";
+$lang["fieldtitle-extracted_text"]="Entnommener Text";
+$lang["fieldtitle-file_size"]=$lang["filesize"]="Dateigröße";
+$lang["fieldtitle-category"]="Kategorie";
+$lang["fieldtitle-subject"]="Betreff";
+$lang["fieldtitle-author"]="Autor";
 
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Abmelden";
@@ -14,6 +82,7 @@ $lang["home"]="Startseite";
 $lang["searchresults"]="Suchresultate";
 $lang["themes"]="Themen";
 $lang["mycollections"]="Meine Kollektionen";
+$lang["collections"]="Kollektionen";
 $lang["mycontributions"]="Meine Beiträge";
 $lang["researchrequest"]="Suchanfrage";
 $lang["helpandadvice"]="Hilfe & Unterstützung";
@@ -33,7 +102,8 @@ $lang["anymonth"]="beliebiger Monat";
 $lang["anyday"]="beliebiger Tag";
 $lang["anycountry"]="beliebiges Land";
 $lang["resultsdisplay"]="Resultate anzeigen";
-$lang["largethumbs"]="gross";
+$lang["xlthumbs"]="sehr groß";
+$lang["largethumbs"]="groß";
 $lang["smallthumbs"]="klein";
 $lang["list"]="Liste";
 $lang["perpage"]="pro Seite";
@@ -53,7 +123,7 @@ $lang["managecontent"]="Inhalte verwalten";
 $lang["viewstatistics"]="Statistiken ansehen";
 $lang["viewreports"]="Berichte ansehen";
 $lang["viewreport"]="Bericht ansehen";
-$lang["report"]="Bericht";
+$lang["treeobjecttype-report"]=$lang["report"]="Bericht";
 $lang["sendbulkmail"]="Massenmail senden";
 $lang["systemsetup"]="Systemeinstellungen";
 $lang["usersonline"]="Benutzer, die zur Zeit online sind (Leerlaufzeit in Minuten)";
@@ -65,12 +135,15 @@ $lang["editresearch"]="Suchanfragen verwalten";
 $lang["editproperties"]="Eigenschaften verwalten";
 $lang["selectfiles"]="Dateien auswählen";
 $lang["searchcontent"]="Inhalt durchsuchen";
+$lang["ticktodeletehelp"]="Anwählen, um diesen Abschnitt zu löschen";
+$lang["createnewhelp"]="Neuen Abschnitt erstellen";
 $lang["searchcontenteg"]="(Seite, Name oder Text)";
 $lang["copyresource"]="Ressource kopieren";
 $lang["resourceidnotfound"]="Die Ressourcen-ID konnte nicht gefunden werden";
 $lang["inclusive"]="(inklusive)";
 $lang["pluginssetup"]="Plugins verwalten";
 $lang["pluginmanager"]="Plugin Manager";
+
 
 # Team Centre - Bulk E-mails
 $lang["emailrecipients"]="E-Mail Empfänger";
@@ -86,6 +159,7 @@ $lang["comments"]="Kommentare";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="Überprüfung noch nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
+$lang["viewuserpendingsubmission"]="Freischalten noch nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
 $lang["searcharchivedresources"]="Archivierte Ressourcen durchsuchen";
 $lang["viewresourcespendingarchive"]="Archivierung noch nicht erledigt: Ressourcen anzeigen";
 $lang["uploadresourcebatch"]="Ressourcen-Stapel hochladen";
@@ -114,6 +188,9 @@ $lang["contributenewresource"]="Neue Ressource einreichen";
 $lang["viewcontributedps"]="Meine Beiträge anzeigen - Freischaltung noch nicht erledigt";
 $lang["viewcontributedpr"]="Meine Beiträge anzeigen - Prüfung und Freischaltung durch Ressourcen-Team noch nicht erledigt";
 $lang["viewcontributedsubittedl"]="Meine Beiträge anzeigen - freigeschalten bzw. online";
+$lang["contributedps"]="Meine Beiträge - Freischaltung noch nicht erledigt";
+$lang["contributedpr"]="Meine Beiträge - Prüfung und Freischaltung durch Ressourcen-Team noch nicht erledigt";
+$lang["contributedsubittedl"]="Meine Beiträge - Live";
 
 # Collections
 $lang["editcollection"]="Kollektion bearbeiten";
@@ -122,6 +199,7 @@ $lang["private"]="privat";
 $lang["public"]="öffentlich";
 $lang["attachedusers"]="zugeordnete Benutzer";
 $lang["themecategory"]="Themen-Kategorie";
+$lang["theme"]="Thema";
 $lang["newcategoryname"]="ODER: Tragen sie eine neue Themen-Kategorie ein...";
 $lang["allowothersaddremove"]="Anderen Benutzern das hinzufügen/entfernen von Ressourcen erlauben";
 $lang["resetarchivestatus"]="Archivierungsstatus für alle Ressourcen einer Kollektion zurücksetzen";
@@ -131,6 +209,7 @@ $lang["multieditnotallowed"]="Mehrfache Bearbeitung nicht erlaubt - die Ressourc
 $lang["emailcollection"]="Kollektion als E-Mail senden";
 $lang["collectionname"]="Name der Kollektion";
 $lang["collectionid"]="Kollektion (ID)";
+$lang["collectionidprefix"]="Kol_ID";
 $lang["emailtousers"]="E-Mail an Benutzer...";
 $lang["removecollectionareyousure"]="Möchten Sie diese Kollektion aus Ihrer Liste löschen?";
 $lang["managemycollections"]="'Meine Kollektionen' verwalten";
@@ -138,8 +217,9 @@ $lang["createnewcollection"]="Neue Kollektion erstellen";
 $lang["findpubliccollection"]="Öffentliche Kollektionen finden";
 $lang["searchpubliccollections"]="Öffentliche Kollektionen suchen";
 $lang["addtomycollections"]="zu meiner Kollektion hinzufügen";
-$lang["action-addtocollection"]="zur Kollektion hinzufügen";
-$lang["addtocollection"]="zur Kollektion hinzufügen";
+$lang["action-addtocollection"]="Zur Kollektion hinzufügen";
+$lang["action-removefromcollection"]="Aus Kollektion entfernen";
+$lang["addtocollection"]="Zur Kollektion hinzufügen";
 $lang["cantmodifycollection"]="Sie können diese Kollektion nicht bearbeiten.";
 $lang["currentcollection"]="Aktuelle Kollektion";
 $lang["viewcollection"]="Kollektion anzeigen";
@@ -150,16 +230,29 @@ $lang["showthumbnails"]="Vorschaubilder einblenden";
 $lang["contactsheet"]="Kontaktabzug";
 $lang["mycollection"]="Meine Kollektion";
 $lang["editresearchrequests"]="Suchanfragen bearbeiten";
+$lang["research"]="Recherche";
 $lang["savedsearch"]="Gespeicherte Suche";
 $lang["mustspecifyoneusername"]="Bitte geben Sie mindestens einen Benutzernamen an";
 $lang["couldnotmatchallusernames"]="Es konnten nicht alle passenden Benutzer gefunden werden";
 $lang["emailcollectionmessage"]="hat Ihnen eine Kollektion an Ressourcen von $applicationname gesendet, welche auf der Seite 'Meine Kollektionen' zu finden ist."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
+$lang["emailcollectionmessageexternal"]="hat Ihnen über $applicationname eine Kollektion von Ressourcen gesendet."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
 $lang["clicklinkviewcollection"]="Klicken Sie auf den untenstehenden Link um die Kollektion anzuzeigen.";
-$lang["collection_download_original"]="Originaldatei";
- 
+$lang["zippedcollectiontextfile"]="Textdatei mit Kollektions-/Ressourcendaten einfügen.";
+$lang["copycollectionremoveall"]="Alle Ressourcen vor dem Kopieren entfernen";
+$lang["purgeanddelete"]="Bereinigen und löschen";
+$lang["purgecollectionareyousure"]="Sind Sie sicher, dass Sie diese Kollektion entfernen und alle enthaltenen Ressourcen löschen wollen?";
+$lang["collectionsdeleteempty"]="Leere Kollektionen löschen";
+$lang["collectionsdeleteemptyareyousure"]="Sind Sie sicher dass Sie alle Ihre leeren Kollektionen löschen wollen?";
+$lang["collectionsnothemeselected"]="Bitte einen Themennamen auswählen oder eingeben.";
+$lang["downloaded"]="Heruntergeladen";
+$lang["contents"]="Inhalte";
+$lang["forthispackage"]="für dieses Paket";
+$lang["didnotinclude"]="Enthielt nicht";
+$lang["selectcollection"]="Kollektion auswählen";
+
 # Resource create / edit / view
 $lang["createnewresource"]="Neue Ressource erstellen";
-$lang["resourcetype"]="Ressourcen-Typ";
+$lang["treeobjecttype-resource_type"]=$lang["resourcetype"]="Ressourcen-Typ";
 $lang["resourcetypes"]="Ressourcen-Typen";
 $lang["deleteresource"]="Ressource löschen";
 $lang["downloadresource"]="Ressource herunterladen";
@@ -172,14 +265,18 @@ $lang["image"]="Bild";
 $lang["previewimage"]="Vorschaubild";
 $lang["file"]="Datei";
 $lang["upload"]="Upload";
+$lang["action-upload"]="Upload";
 $lang["uploadafile"]="Datei hochladen";
-$lang["imagecorrection"]="Bild-Korrekture";
+$lang["replacefile"]="Datei ersetzen";
+$lang["imagecorrection"]="Bild-Korrekturen";
 $lang["previewthumbonly"]="(nur Vorschaubild anzeigen)";
 $lang["rotateclockwise"]="gegen den Uhrzeigersinn drehen"; # Verkehrte Zuordnung in der Funktion, daher hier vertauscht
 $lang["rotateanticlockwise"]="im Uhrzeigersinn drehen"; # Verkehrte Zuordnung in der Funktion, daher hier vertauscht
 $lang["increasegamma"]="Gamma-Wert erhöhen (heller)";
 $lang["decreasegamma"]="Gamma-Wert verringern (dunkler)";
 $lang["restoreoriginal"]="Original wiederhestellen";
+$lang["recreatepreviews"]="Vorschaugrößen neu erstellen";
+$lang["retrypreviews"]="Vorschaugrößen erneut neu erstellen";
 $lang["specifydefaultcontent"]="Standard-Inhalt für neue Ressourcen festlegen";
 $lang["properties"]="Eigenschaften";
 $lang["relatedresources"]="Verwandte Ressourcen";
@@ -195,11 +292,12 @@ $lang["action-viewmatchingresources"]="Passende Ressourcen anzeigen";
 $lang["nomatchingresources"]="keine passenden Ressourcen";
 $lang["matchingresources"]="passende Ressourcen"; # e.g. 17 matching resources
 $lang["advancedsearch"]="Erweiterte Suche";
-$lang["archiveonlysearch"]="nur im Archiv suchen";
+$lang["archiveonlysearch"]="Nur im Archiv suchen";
 $lang["allfields"]="alle Felder";
 $lang["typespecific"]="Spezifisch";
 $lang["youfound"]="Sie haben"; # e.g. you found 17 resources
 $lang["youfoundresources"]="Ressourcen gefunden"; # e.g. you found 17 resources
+$lang["youfoundresource"]="Ressource gefunden"; # e.g. you found 1 resource
 $lang["display"]="Anzeige"; # e.g. Display: thumbnails / list
 $lang["sortorder"]="Sortierung";
 $lang["relevance"]="Relevanz";
@@ -212,16 +310,13 @@ $lang["jump"]="springe";
 $lang["titleandcountry"]="Titel / Land";
 $lang["torefineyourresults"]="Um Ihre Resultate zu verfeinern versuchen Sie";
 $lang["verybestresources"]="Die besten Ressourcen";
-$lang["emailresource"]="Ressource senden (E-Mail)";
 $lang["addtocurrentcollection"]="Zur aktuellen Kollektion hinzufügen";
-$lang["storyextract"]="Auszug";
 $lang["addresource"]="Ressource hinzufügen";
 $lang["addresourcebatch"]="Ressourcen-Stapel hinzufügen";
 $lang["fileupload"]="Datei-Upload";
 $lang["clickbrowsetolocate"]="für eine Dateiauswahl bitte klicken";
 $lang["resourcetools"]="Ressourcen-Werkzeuge";
 $lang["fileinformation"]="Datei-Information";
-$lang["filesize"]="Datei-Größe";
 $lang["options"]="Optionen";
 $lang["previousresult"]="vorige Resultate";
 $lang["viewallresults"]="alle Resultate anzeigen";
@@ -230,6 +325,8 @@ $lang["pixels"]="Pixel";
 $lang["download"]="Download";
 $lang["preview"]="Vorschau";
 $lang["fullscreenpreview"]="Vollbild-Vorschau";
+$lang["originalfileoftype"]="Original ? Datei"; # ? will be replaced, e.g. "Original PDF File"
+$lang["fileoftype"]="? Datei"; # ? will be replaced, e.g. "MP4 File"
 $lang["log"]="Protokoll";
 $lang["resourcedetails"]="Ressourcen-Details";
 $lang["offlineresource"]="Offline-Ressource";
@@ -251,6 +348,7 @@ $lang["savethissearchtocollection"]="Suchanfrage in der Kollektion speichern";
 $lang["mustspecifyonekeyword"]="Sie müssen mindestens einen Suchbegriff angeben.";
 $lang["hasemailedyouaresource"]="hat Ihnen eine Ressource gesendet"; # Suffixed to user name, e.g. Fred has e-mailed you a resource
 $lang["clicktoviewresource"]="Klicken Sie untestehenden Link um die Ressource anzuzeigen.";
+$lang["statuscode"]="Statuscode";
 
 # Resource log - actions
 $lang["resourcelog"]="Ressourcen-Protokoll";
@@ -259,6 +357,15 @@ $lang["log-c"]="Erstellte Ressourcen";
 $lang["log-d"]="heruntergeladene Datei(en)";
 $lang["log-e"]="Bearbeitetes Ressourcen-Feld";
 $lang["log-m"]="Bearbeitetes Ressourcen-Feld (Mehrfach-Bearbeitung)";
+$lang["log-e"]="Bearbeitetes Ressourcen-Feld";
+$lang["log-v"]="Ressource angesehen";
+$lang["log-x"]="Ressource gelöscht";
+$lang["log-l"]="Eingeloggt"; # For user entries only.
+$lang["log-t"]="Datei transformiert";
+$lang["log-s"]="Status geändert";
+$lang["log-a"]="Zugriff geändert";
+$lang["log-E"]="Ressource via E-Mail weitergegeben an ";//  + notes field
+
 $lang["backtoresourceview"]="zurück zur Ressourcen-Ansicht";
 
 # Resource status
@@ -268,12 +375,14 @@ $lang["status-1"]="Benutzer-Beiträge: Überprüfung noch nicht erledigt";
 $lang["status0"]="Aktiv";
 $lang["status1"]="Archivierung noch nicht erledigt";
 $lang["status2"]="Archiviert";
+$lang["status3"]="Gelöscht";
 
 # Charts
 $lang["activity"]="Aktivität";
 $lang["summary"]="Zusammenfassung";
 $lang["mostinaday"]="am meisten pro Tag";
 $lang["totalfortheyear"]="Gesamt für das Jahr";
+$lang["totalforthemonth"]="Gesamt für den Monat";
 $lang["dailyaverage"]="Tagesdurchschnitt für aktive Tage";
 $lang["nodata"]="Keine Daten für diesen Zeitabschnitt verfügbar.";
 $lang["max"]="max."; # i.e. maximum
@@ -284,18 +393,19 @@ $lang["printallforyear"]="Alle Statistiken dieses Jahres ausdrucken";
 $lang["nopassword"]="Klicken Sie hier, wenn Sie über keinen Zugang verfügen";
 $lang["forgottenpassword"]="Klicken Sie hier, wenn Sie Ihr Passwort vergessen haben";
 $lang["keepmeloggedin"]="Auf diesem Computer angemeldet bleiben";
-$lang["username"]="Benutzername";
+$lang["columnheader-username"]=$lang["username"]="Benutzername";
 $lang["password"]="Passwort";
 $lang["login"]="anmelden";
 $lang["loginincorrect"]="Fehler beim Benutzernamen bzw. Passwort. Bitte versuchen Sie es erneut.";
 $lang["accountexpired"]="Ihr Benutzer-Account ist abgelaufen. Bitte kontaktieren Sie das Ressourcen-Team.";
 $lang["useralreadyexists"]="Es existiert bereits ein Benutzer-Account mit diesem Benutzernamen bzw. dieser E-Mail Adresse. Änderungen wurden nicht gespeichert.";
+$lang["useremailalreadyexists"]="Es existiert bereits ein Benutzer-Account mit dieser E-Mail Adresse.";
 $lang["ticktoemail"]="Anklicken, um dem Benutzer den Benutzernamen und das Passwort zu senden (E-Mail)";
 $lang["ticktodelete"]="Anklicken, um diesen Benutzer zu löschen";
 $lang["edituser"]="Benutzer bearbeiten";
 $lang["columnheader-full_name"]=$lang["fullname"]="Vollständiger Name";
 $lang["email"]="E-Mail";
-$lang["emailaddress"]="E-Mail Adresse";
+$lang["columnheader-e-mail_address"]=$lang["emailaddress"]="E-Mail Adresse";
 $lang["suggest"]="vorschlagen";
 $lang["accountexpiresoptional"]="Account gültig bis (optional)";
 $lang["lastactive"]="Letzte Aktivität";
@@ -306,6 +416,7 @@ $lang["emailnotfound"]="die gesuchte E-Mail Adresse konnte nicht gefunden werden
 $lang["yourname"]="Ihr Name";
 $lang["youremailaddress"]="Ihre E-Mail Adresse";
 $lang["sendreminder"]="Erinnerung senden";
+$lang["sendnewpassword"]="Neues Passwort senden";
 $lang["requestuserlogin"]="Benutzer-Login anfordern";
 
 # Research request
@@ -332,6 +443,7 @@ $lang["requeststatus2"]="fertiggestellt";
 $lang["copyexistingresources"]="Ressource dieser Suchanfrage in eine existierende Kollektion kopieren";
 $lang["deletethisrequest"]="Diese Anfrage löschen?";
 $lang["requestedby"]="Angefragt von";
+$lang["requesteditems"]="Angefragte Objekte";
 $lang["assignedtoteammember"]="Zuordnung an Team-Mitglied";
 $lang["typecollectionid"]="(ID der Kolletion eintragen)";
 $lang["researchid"]="ID der Suchanfrage";
@@ -352,18 +464,19 @@ $lang["selectgroupuser"]="Gruppe/Benutzer auswählen...";
 $lang["select"]="auswählen...";
 $lang["add"]="hinzufügen";
 $lang["create"]="Erstellen";
-$lang["group"]="Gruppe";
+$lang["treeobjecttype-group"]=$lang["group"]="Gruppe";
 $lang["confirmaddgroup"]="Alle Benutzer dieser Gruppe zuordnen?";
 $lang["backtoteamhome"]="zurück zur Administration";
 $lang["columnheader-resource_id"]=$lang["resourceid"]="Ressource (ID)";
 $lang["id"]="ID";
-$lang["date"]="Datum";
 $lang["todate"]="bis";
 $lang["fromdate"]="von";
 $lang["day"]="Tag";
 $lang["month"]="Monat";
 $lang["year"]="Jahr";
-$lang["items"]="Objekt";
+$lang["hour-abbreviated"]="HH";
+$lang["minute-abbreviated"]="MM";
+$lang["itemstitle"]="Objekte";
 $lang["tools"]="Werkzeuge";
 $lang["created"]="erstellt";
 $lang["user"]="Benutzer";
@@ -371,8 +484,9 @@ $lang["owner"]="Besitzer";
 $lang["message"]="Nachricht";
 $lang["name"]="Name";
 $lang["action"]="Aktion";
-$lang["field"]="Feld";
+$lang["treeobjecttype-field"]=$lang["field"]="Feld";
 $lang["save"]="Speichern";
+$lang["revert"]="Wiederherstellen";
 $lang["cancel"]="abbrechen";
 $lang["view"]="anzeigen";
 $lang["type"]="Typ";
@@ -389,13 +503,18 @@ $lang["newpasswordretype"]="Neues Passwort (Eingabe wiederholen)";
 $lang["passwordnotvalid"]="Dies ist kein gültiges Passwort";
 $lang["passwordnotmatch"]="Die eingebenen Passwörter stimmen nicht überein";
 $lang["wrongpassword"]="Passwort nicht korrekt, bitte versuchen Sie es erneut";
-$lang["action-view"]="anzeigen";
-$lang["action-select"]="auswählen";
-$lang["action-download"]="download";
+$lang["action-view"]="Anzeigen";
+$lang["action-preview"]="Vorschau";
+$lang["action-viewmatchingresources"]="Passende Ressourcen anzeigen";
+$lang["action-expand"]="Ausklappel";
+$lang["action-select"]="Auswählen";
+$lang["action-download"]="Download";
 $lang["action-email"]="E-Mail";
-$lang["action-edit"]="bearbeiten";
-$lang["action-delete"]="löschen";
-$lang["action-remove"]="entfernen";
+$lang["action-edit"]="Bearbeiten";
+$lang["action-delete"]="Löschen";
+$lang["action-revertmetadata"]="Metadaten wiederherstellen";
+$lang["confirm-revertmetadata"]="Sind Sie sicher, dass Sie die ursprünglichen Metadaten aus dieser Datei neu einlesen wollen? Bei dieser Aktion gehen alle Änderungen an den Metadaten verloren.";
+$lang["action-remove"]="Entfernen";
 $lang["complete"]="Fertig";
 $lang["backtohome"]="zurück zur Startseite";
 $lang["backtohelphome"]="zurück zur Hilfeseite";
@@ -407,6 +526,30 @@ $lang["termsandconditions"]="Allg. Geschäfts- und Nutzungsbedingungen";
 $lang["iaccept"]="Ich akzeptiere";
 $lang["contributedby"]="Beigetragen von";
 $lang["format"]="Format";
+$lang["notavailableshort"]="N/A";
+$lang["allmonths"]="Alle Monate";
+$lang["allgroups"]="Alle Gruppen";
+$lang["status-ok"]="OK";
+$lang["status-fail"]="FEHLER";
+$lang["status-warning"]="WARNUNG";
+$lang["status-notinstalled"]="Nicht installiert";
+$lang["status-never"]="Niemals";
+$lang["softwareversion"]="? Version"; # E.g. "PHP version"
+$lang["softwarebuild"]="? Build"; # E.g. "ResourceSpace Build"
+$lang["softwarenotfound"]="'?' nicht gefunden"; # ? will be replaced.
+$lang["browseruseragent"]="Browser User-Agent";
+$lang['serverplatform']="Serverplattform";
+$lang["are_available-0"]="sind verfügbar";
+$lang["are_available-1"]="ist verfügbar";
+$lang["are_available-2"]="sind verfügbar";
+$lang["were_available-0"]="waren verfügbar";
+$lang["were_available-1"]="war verfügbar";
+$lang["were_available-2"]="waren verfügbar";
+$lang["resource-0"]="Ressourcen";
+$lang["resource-1"]="Ressource";
+$lang["resource-2"]="Ressourcen";
+$lang["status-note"]="HINWEIS";
+$lang["action-changelanguage"]="Sprache ändern";
 
 # Pager
 $lang["next"]="vor";
@@ -414,6 +557,7 @@ $lang["previous"]="zurück";
 $lang["page"]="Seite";
 $lang["of"]="von"; # e.g. page 1 of 2
 $lang["items"]="Objekte"; # e.g. 17 items
+$lang["item"]="Objekt"; # e.g. 1 item
 
 # Statistics
 $lang["stat-addpubliccollection"]="Öffentliche Kollektion hinzufügen";
@@ -438,6 +582,7 @@ $lang["stat-resourceupload"]="Ressource (Upload)";
 $lang["stat-resourceview"]="Ressource (Ansicht)";
 $lang["stat-search"]="Suchen";
 $lang["stat-usersession"]="Benutzersession";
+$lang["stat-addedsmartcollection"]="Smarte Kollektion hinzugefügt";
 
 # Access
 $lang["access0"]="Offen";
@@ -450,7 +595,7 @@ $lang["statusandrelationships"]="Status und Beziehungen";
 $lang["months"]=array("Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
 
 # New for 1.3
-$lang["savesearchitemstocollection"]="gesuchte Objekte in dieser Kollektion speichern";
+$lang["savesearchitemstocollection"]="Gefundene Objekte in der Kollektion speichern";
 $lang["removeallresourcesfromcollection"]="Alle Ressourcen aus dieser Kollektion entfernen";
 $lang["deleteallresourcesfromcollection"]="Alle Ressourcen dieser Kollektion löschen";
 $lang["deleteallsure"]="Sind Sie sicher, dass Sie diese Ressourcen LÖSCHEN möchten? Die Ressourcen werden gelöscht und nicht (nur) aus dieser Kollektion entfernt.";
@@ -468,6 +613,10 @@ $lang["existingkeywords"]="Existierende Suchbegriffe:";
 $lang["extrakeywords"]="zusätzliche Suchbegriffe";
 $lang["leaderboard"]="Rangliste";
 $lang["confirmeditall"]="Sind Sie sicher, dass Sie speichern möchten? Dies wird alle existierenden Werte der ausgewählten Felder für alle Ressourcen in Ihrer gegenwärtigen Kollektion überschreiben.";
+$lang["confirmsubmitall"]="Sind Sie sicher, dass Sie alles zur Überprüfung abschicken wollen? Dies wird alle existierenden Einträge für die ausgewählten Felder für alle Ressourcen in Ihrer aktuellen Kollektion überschreiben und sie zur Überprüfung abschicken.";
+$lang["confirmunsubmitall"]="Sind Sie sicher, dass Sie alles von der Überprüfung zurücknehmen wollen? Dies wird alle Einträge für die ausgewählten Felder für alle Ressourcen in Ihrer aktuellen Kollektion überschreiben und sie von der Überprüfung zurücknehmen.";
+$lang["confirmpublishall"]="Sind Sie sicher, dass Sie alles veröffentlichen wollen? Dies wird alle Einträge für die ausgewählten Felder für alle Ressourcen in Ihrer aktuellen Kollektion überschreiben und sie veröffentlichen.";
+$lang["confirmunpublishall"]="Sind Sie sicher, dass Sie alles von der Veröffentlichung zurücknehmen wollen? Dies wird alle Einträge für die ausgewählten Felder für alle Ressourcen in Ihrer aktuellen Kollektion überschreiben und sie von der Veröffentlichung zurücknehmen.";
 $lang["collectiondeleteconfirm"]="Sind Sie sicher, dass Sie diese Kollektion löschen möchten?";
 $lang["hidden"]="(versteckt)";
 $lang["requestnewpassword"]="Neues Passwort anfordern";
@@ -482,17 +631,19 @@ $lang["warningexpired"]="Ressource abgelaufen";
 $lang["warningexpiredtext"]="Warnung! Diese Ressource hat das Ablaufdatum überschritten. Klicken Sie den untenstehenden Link um die Download-Funktion wieder zu aktivieren..";
 $lang["warningexpiredok"]="&gt; Ressourcen-Download aktivieren";
 $lang["userrequestcomment"]="Kommentar";
-$lang["addresourcebatchbrowser"]="Ressourcen-Stapelverarbeitung: hinzufügen - Im Browser (empfohlen)";
+$lang["addresourcebatchbrowser"]="Ressourcen-Stapelverarbeitung: hinzufügen - Im Browser (Flash)";
+$lang["addresourcebatchbrowserjava"]="Ressourcen-Stapelverarbeitung: hinzufügen - Im Browser (Java, empfohlen)";
+
 $lang["addresourcebatchftp"]="Ressourcen-Stapelverarbeitung: hinzufügen - FTP";
 $lang["replaceresourcebatch"]="Ressourcen-Stapelverarbeitung: ersetzen";
 $lang["editmode"]="Bearbeitungsmodus";
 $lang["replacealltext"]="Alle Texte ersetzen";
 $lang["findandreplace"]="Suchen und ersetzen";
 $lang["appendtext"]="Text hinzufügen";
+$lang["removetext"]="Text entfernen / Option(en)";
 $lang["find"]="Finden";
 $lang["andreplacewith"]="...und ersetzen mit...";
 $lang["relateallresources"]="Alle Ressourcen dieser Kollektion miteinander verknüpfen";
-$lang["country"]="Land";
 
 # New for 1.5
 $lang["columns"]="Spalten";
@@ -508,10 +659,9 @@ $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschränkung (optional)";
 $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
 
-
 # New for 1.6
-$lang["newflag"]="NEUE!";
 $lang["collection_download_original"]="Originaldatei";
+$lang["newflag"]="NEUE!";
 $lang["link"]="Link";
 $lang["uploadpreview"]="Nur ein Vorschaubild hochladen";
 $lang["starttypingusername"]="(Bitte Anfangsbuchstaben vom Benutzernamen / Namen / Gruppennamen eingeben)";
@@ -562,6 +712,7 @@ $lang["keyword"]="Stichwort";
 $lang["relatedkeywords"]="Verknüpfte Stichworte";
 $lang["matchingrelatedkeywords"]="Passende verknüpfte Stichworte";
 $lang["newkeywordrelationship"]="Neue Verknüpfung für Stichworte hinzufügen...";
+$lang["searchkeyword"]="Stichwort für Suche";
 
 $lang["exportdata"]="Export Daten";
 $lang["exporttype"]="Export Typ";
@@ -576,6 +727,7 @@ $lang["editalternativefile"]="Alternative Datei bearbeiten";
 $lang["description"]="Beschreibung";
 $lang["notuploaded"]="Nicht hochgeladen";
 $lang["uploadreplacementfile"]="Datei ersetzen";
+$lang["backtomanagealternativefiles"]="Zurück zu Alternative Dateien verwalten";
 
 
 $lang["resourceistranscoding"]="Ressource wird momentan umgewandelt";
@@ -620,6 +772,7 @@ $lang["confirmdeleteaccess"]="Sind Sie sicher, dass Sie diesen Zugangscode lösc
 $lang["noexternalsharing"]="Nicht an externe Benutzer weitergegeben.";
 $lang["sharedcollectionaddwarning"]="Achtung: Diese Kollektion wurde an externe Benutzer weitergegeben. Die Ressource, die Sie zur Kollektion hinzugefügt haben, ist nun auch für diese Benutzer verfügbar. Klicken Sie auf 'Weitergeben', um die Einstellungen zu verwalten.";
 $lang["addresourcebatchlocalfolder"]="Ressourcen-Stapelverarbeitung: hinzufügen - aus Upload Ordner";
+
 # Setup Script
 $lang["setup-alreadyconfigured"]="Ihre ResourceSpace installation ist bereits konfiguriert. Um die Installation neu zu konfigurieren, können Sie die Datei <pre>include/config.php</pre> und dann diese Seite neu laden.";
 $lang["setup-successheader"]="Glückwunsch!";
@@ -643,6 +796,7 @@ $lang["setup-mysqlerrorserver"]="Server nicht erreichbar.";
 $lang["setup-mysqlerrorlogin"]="Login fehlgeschlagen. (Benutzername und Passwort prüfen)";
 $lang["setup-mysqlerrordbase"]="Zugriff auf Datenbank fehlgeschlagen.";
 $lang["setup-mysqlerrorperns"]="Bitte Benutzerrechte prüfen.  Konnte keine Tabelle erstellen.";
+$lang["setup-mysqltestfailed"]="Test fehlgeschlagen (MySQL konnte nicht bestätigt werden)";
 $lang["setup-mysqlserver"]="MySQL Server:";
 $lang["setup-mysqlusername"]="MySQL Benutzername:";
 $lang["setup-mysqlpassword"]="MySQL Passwort:";
@@ -654,6 +808,7 @@ $lang["setup-emailfrom"]="Absender für E-Mails:";
 $lang["setup-emailnotify"]="E-Mail Benachrichtigung:";
 $lang["setup-spiderpassword"]="Spider Passwort:";
 $lang["setup-scramblekey"]="Scramble Schlüssel:";
+$lang["setup-apiscramblekey"]="API Scramble Schlüssel:";
 $lang["setup-paths"]="Pfade";
 $lang["setup-pathsdetail"]="Geben Sie den Pfad zu den Tools ohne abschließenden Schrägstrich ein. Um ein Tool zu deaktivieren, lassen Sie die Angabe leer. Automatisch erkannte Pfade sind bereits eingetragen.";
 $lang["setup-applicationname"]="Name der Installation:";
@@ -668,24 +823,60 @@ $lang["setup-if_emailfrom"]="Diese E-Mail Adresse wird von ResourceSpace als Abs
 $lang["setup-if_emailnotify"]="An diese E-Mail Adresse werden Ressourcen-, Benutzer- und Suchanfragen gesendet.";
 $lang["setup-if_spiderpassword"]="Das Spider Passwort ist ein Pflichtfeld.";
 $lang["setup-if_scramblekey"]="Um verschlüsselte Pfade zu aktivieren, fügen Sie hier eine zufällige Zeichenkette (ähnlich einem Passwort) ein. Wenn diese Installation öffentlich zugänglich ist, wird dies dringend empfohlen. Um verschlüsselte Pfade nicht zu aktivieren, lassen Sie das Feld bitte leer. Eine zufällige Zeichenkette ist bereits vorgewählt worden, kann aber geändert werden, z.B. um die Einstellungen einer bestehenden Installation wiederherzustellen.";
+$lang["setup-if_apiscramblekey"]="Wählen Sie für den API Scramble Schlüssel eine zufällige Zeichenkette (ähnlich einem Passwort), wenn Sie planen, die API zu nutzen.";
 $lang["setup-if_applicationname"]="Name dieser Installation (z.B. 'Meine Firma Bilddatenbank').";
 $lang["setup-err_mysqlbinpath"]="Konnte Pfad nicht bestätigen. Leer lassen zum deaktivieren.";
 $lang["setup-err_baseurl"]="Basis URL muss ausgefüllt werden.";
 $lang["setup-err_baseurlverify"]="Basis URL scheint falsch zu sein (konnte license.txt nicht laden).";
 $lang["setup-err_spiderpassword"]="Passwort für spider.php. WICHTIG: Wählen Sie hier eine zufällige Zeichenkette für jede Installation. Ihre Ressourcen sind zugreifbar für jeden, der dieses Passwort kennt. Eine zufällige Zeichenkette ist bereits vorgewählt worden, kann aber geändert werden, z.B. um die Einstellungen einer bestehenden Installation wiederherzustellen.";
 $lang["setup-err_scramblekey"]="Wenn diese Installation öffentlich zugänglich ist, wird die Nutzung von verschlüsselten Pfaden dringend empfohlen.";
+$lang["setup-err_apiscramblekey"]="Wenn diese Installtion öffentlich zugänglich ist, wird das Setzen des API Scramble Schlüssels dringend empfohlen.";
 $lang["setup-err_path"]="Konnte Pfad nicht bestätigen von";
 $lang["setup-emailerr"]="Ungültige E-Mail Adresse.";
+$lang["setup-rs_initial_configuration"]="ResourceSpace: Erstkonfiguration";
+$lang["setup-include_not_writable"]="'/include' nicht beschreibbar. Nur während der Konfiguration nötig.";
+$lang["setup-override_location_in_advanced"]="Ort überschreiben in 'Erweiterte Einstellungen'.";
+$lang["setup-advancedsettings"]="Erweiterte Einstellungen";
+$lang["setup-binpath"]="%bin Pfad"; #%bin will be replaced, e.g. "Imagemagick Path"
+$lang["setup-begin_installation"]="Installation beginnen!";
+$lang["setup-generaloptions"]="Allgemeine Optionen";
+$lang["setup-allow_password_change"]="Änderung des Passworts erlauben?";
+$lang["setup-enable_remote_apis"]="APIs aktivieren?";
+$lang["setup-if_allowpasswordchange"]="Benutzern das Ändern ihres Passworts erlauben.";
+$lang["setup-if_enableremoteapis"]="Zugriff auf API Plugins erlauben.";
+$lang["setup-allow_account_requests"]="Benutzern erlauben, einen Account anzufragen?";
+$lang["setup-display_research_request"]="Suchanfragen Funktion anzeigen?";
+$lang["setup-if_displayresearchrequest"]="Benutzern erlauben, Ressourcen anzufragen mittels eines Formulars, das dann per E-Mail versandt wird.";
+$lang["setup-themes_as_home"]="Themen Seite als Startseite verwenden?";
+$lang["setup-remote_storage_locations"]="Remote Storage";
+$lang["setup-use_remote_storage"]="Remote Storage nutzen?";
+$lang["setup-if_useremotestorage"]="Auswählen, um Remote Storage (anderer Server für filestore) für RS zu nutzen.";
+$lang["setup-storage_directory"]="Storage Verzeichnis";
+$lang["setup-if_storagedirectory"]="In welchem Verzeichnis sollen die Dateien abgelegt werden. Kann absolut sein (/var/www/blah/blah) oder relativ zur RS Installation. HINWEIS: Kein / am Ende.";
+$lang["setup-storage_url"]="Storage URL";
+$lang["setup-if_storageurl"]="Wie kann per HTTP auf das Storage Verzeichnis zugegriffen werden? Kann absolut sein (http://files.example.com) oder relativ zur RS Installation. HINWEIS: Kein / am Ende.";
+$lang["setup-ftp_settings"]="FTP Einstellungen";
+$lang["setup-if_ftpserver"]="Nur notwendig, wenn Sie planen, die FTP Upload Funktion zu nutzen.";
+$lang["setup-login_to"]="Login zu";
+$lang["setup-configuration_file_output"]="Ausgabe der Konfigurationsdatei";
 
 # Collection log - actions
 $lang["collectionlog"]="Kollektionen Log";
 $lang["collectionlog-r"]="Ressource entfernt";
 $lang["collectionlog-R"]="Alle Ressourcen entfernt";
 $lang["collectionlog-D"]="Alle Ressourcen gelöscht";
+$lang["collectionlog-d"]="Ressource gelöscht"; // this shows external deletion of any resources related to the collection.
 $lang["collectionlog-a"]="Ressource hinzugefügt";
 $lang["collectionlog-c"]="Ressource hinzugefügt (kopiert)";
 $lang["collectionlog-m"]="Ressource kommentiert";
 $lang["collectionlog-*"]="Ressource bewertet";
+$lang["collectionlog-S"]="Kollektion weitergegeben an "; //  + notes field
+$lang["collectionlog-E"]="Kollektion per E-Mail weitergegeben an ";//  + notes field
+$lang["collectionlog-s"]="Ressource weitergegeben an ";//  + notes field
+$lang["collectionlog-T"]="Kollektion nicht mehr weitergegeben an ";//  + notes field
+$lang["collectionlog-t"]="Ressource  nicht mehr weitergegeben an ";//  + notes field
+$lang["collectionlog-X"]="Kollektion gelöscht";
+
 
 $lang["viewuncollectedresources"]="Ressourcen anzeigen, die nicht in einer Kollektion enthalten sind";
 
@@ -697,6 +888,7 @@ $lang["metadata-report"]="Metadaten Bericht";
 
 # Video Playlist
 $lang["videoplaylist"]="Video Wiedergabeliste";
+
 $lang["restrictedsharecollection"]="Sie haben eingeschränkten Zugriff auf eine oder mehrere Ressourcen in dieser Kollektion, daher ist die Weitergabe deaktiviert.";
 
 $lang["collection"]="Kollektion";
@@ -711,25 +903,25 @@ $lang["selectgenerateurlexternal"]="Um eine URL für Nutzer ohne Login zu generi
 $lang["externalselectresourceaccess"]="Wenn Sie die Ressourcen per E-Mail an Nutzer ohne Login weitergeben wollen, wählen Sie bitte die Zugriffsrechte aus, die Sie für diese Ressourcen gewähren wollen.";
 
 $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nutzer ohne Login weitergeben wollen, geben Sie bitte ein Ablaufdatum für den Link ein.";
- 
+
  $lang["externalshareexpired"]="Dieser Link ist leider abgelaufen und damit nicht mehr verfügbar.";
- 
+
  $lang["expires"]="Läuft ab";
  $lang["never"]="Niemals";
- 
+
  $lang["approved"]="Freigegeben";
  $lang["notapproved"]="Nicht freigegeben";
- 
+
  $lang["userrequestnotification3"]="Wenn diese Anfrage gültig ist, klicken Sie den untenstehenden Link, um die Details des Benutzers anzusehen und den Benutzer freizugeben.";
- 
+
  $lang["ticktoapproveuser"]="Sie müssen dieses Kästchen aktivieren, um den Benutzer zu aktivieren.";
- 
+
  $lang["managerequestsorders"]="Anfragen / Bestellungen verwalten";
  $lang["editrequestorder"]="Anfrage / Bestellung bearbeiten";
  $lang["requestorderid"]="Anfrage / Bestellung Nr.";
  $lang["viewrequesturl"]="Um diese Anfrage anzusehen, klicken Sie bitte diesen Link:";
  $lang["requestreason"]="Grund für die Anfrage";
- 
+
  $lang["resourcerequeststatus0"]="Warten";
  $lang["resourcerequeststatus1"]="Akzeptiert";
  $lang["resourcerequeststatus2"]="Abgelehnt";
@@ -747,7 +939,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["addremove"]="Hinzufügen/Entfernen";
 
- ##  Translations for standard log entries
+##  Translations for standard log entries
  $lang["all_users"]="alle Benutzer";
  $lang["new_resource"]="Neue Ressource";
 
@@ -761,10 +953,10 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["cannotshareemptycollection"]="Diese Kollektion ist leer und kann daher nicht weitergegeben werden.";
 
  $lang["requestall"]="Alle anfordern";
- $lang["resourcerequesttype0"]="Nur E-Mail";
- $lang["resourcerequesttype1"]="Verwaltete Anfrage";
- $lang["resourcerequesttype2"]="Bezahlung - sofort";
- $lang["resourcerequesttype3"]="Bezahlung - auf Rechnung";
+ $lang["requesttype-email_only"]=$lang["resourcerequesttype0"]="Nur E-Mail";
+ $lang["requesttype-managed"]=$lang["resourcerequesttype1"]="Verwaltete Anfrage";
+ $lang["requesttype-payment_-_immediate"]=$lang["resourcerequesttype2"]="Zahlung – sofort";
+ $lang["requesttype-payment_-_invoice"]=$lang["resourcerequesttype3"]="Zahlung – auf Rechnung";
 
  $lang["requestapprovedmail"]="Ihre Anfrage wurde akzeptiert. Bitte Klicken Sie den untenstehenden Link, um die angefragten Ressourcen anzuzeigen und herunterzuladen.";
  $lang["requestdeclinedmail"]="Es tut uns leid, Ihre Anfrage für die Ressourcen in der Kollektion wurde abgelehnt.";
@@ -786,7 +978,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["selectedresourceslightroom"]="Ausgewählte Ressourcen (Lightroom kompatible Liste):";
 
- # Plugins Manager
+# Plugins Manager
  $lang['plugins-noneinstalled'] = "Derzeit keine Plugins aktiviert.";
  $lang['plugins-noneavailable'] = "Derzeit keine Plugins verfügbar.";
  $lang['plugins-availableheader'] = 'Verfügbare Plugins';
@@ -799,7 +991,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang['plugins-deactivate'] = 'Deaktivieren';
  $lang['plugins-moreinfo'] = 'Weitere Infos';
  $lang['plugins-activate'] = 'Aktivieren';
- $lang['plugins-purge'] = 'Konfiguration löschen';
+ $lang['plugins-purge'] = 'Konfiguration bereinigen';
  $lang['plugins-rejmultpath'] = 'Archiv enthält mehrere Pfade. (Sicherheitsrisiko)';
  $lang['plugins-rejrootpath'] = 'Archiv enthält absolute Pfade. (Sicherheitsrisiko)';
  $lang['plugins-rejparentpath'] = 'Archiv enthält Pfade mit übergeordneten Verzeichnissen (../). (Sicherheitsrisiko)';
@@ -810,12 +1002,14 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang['plugins-uploadsuccess'] = 'Plugin erfolgreich hochgeladen.';
  $lang['plugins-headertext'] = 'Plugins erweitern die Funktionalität von ResourceSpace.';
  $lang['plugins-legacyinst'] = 'Aktiviert durch die Datei config.php';
+ $lang['plugins-uploadbutton'] = 'Plugin hochladen';
 
- #Location Data
+#Location Data
  $lang['location-title'] = 'Geodaten';
  $lang['location-add'] = 'Geodaten hinzufügen';
  $lang['location-edit'] = 'Geodaten bearbeiten';
  $lang['location-details'] = 'Karte doppelklicken, um einen Pin zu platzieren. Anschließend können Sie dann Pin an die gewünschte Stelle ziehen.';
+ $lang['location-noneselected']="Kein Ort ausgewählt";
 
  $lang["publiccollections"]="Öffentliche Kollektionen";
  $lang["viewmygroupsonly"]="Nur meine Gruppen anzeigen";
@@ -827,10 +1021,11 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["backtothemes"]="Zurück zu Themen";
  $lang["downloadreport"]="Download Bericht";
 
- #Bug Report Page
+#Bug Report Page
  $lang['reportbug']="Bug Bericht für ResourceSpace Team vorbereiten";
  $lang['reportbug-detail']="Die folgenden Informationen werden im Bug Bericht enthalten sein. Sie können alle Werte ändern, bevor Sie den Bericht abschicken.";
  $lang['reportbug-login']="HINWEIS: Klicken Sie hier, um sich einzuloggen, BEVOR Sie auf vorbereiten klicken.";
+ $lang['reportbug-preparebutton']="Fehlerbericht vorbereiten";
 
  $lang["enterantispamcode"]="<strong>Anti-Spam</strong><br /> Bitte geben Sie den folgenden Code ein:";
 
@@ -857,6 +1052,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["embeddedvalue"]="Eingebetteter Wert";
  $lang["exiftooltag"]="Exiftool Tag";
  $lang["error"]="Fehler";
+ $lang["exiftoolnotfound"]="Exiftool konnte nicht gefunden werden.";
 
  $lang["indicateusage"]="Bitte beschreiben Sie die geplante Nutzung dieser Ressource.";
  $lang["usage"]="Nutzung";
@@ -882,7 +1078,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["usagetotal"]="Downloads gesamt";
  $lang["usagetotalno"]="Gesamtzahl der Downloads";
  $lang["ok"]="OK";
- 
+
  $lang["random"]="Zufällig";
  $lang["userratingstatsforresource"]="Bewertungsstatistik für diese Ressource";
  $lang["average"]="Durchschnitt";
@@ -891,7 +1087,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["requestaddedtocollection"]="Diese Ressource wurde zu Ihrer aktuellen Kollektion hinzugefügt. Sie können die Ressourcen in Ihrer Kollektion mit dem Link \'Alle anfordern\' anfordern.";
 
- # E-commerce text
+# E-commerce text
  $lang["buynow"]="Jetzt kaufen";
  $lang["yourbasket"]="Ihr Warenkorb";
  $lang["addtobasket"]="Zum Warenkorb hinzufügen";
@@ -903,12 +1099,14 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["nodownloadsavailable"]="Für diese Ressource gibt es leider keine Downloads.";
  $lang["proceedtocheckout"]="Weiter zur Kasse";
  $lang["totalprice"]="Gesamtpreis";
+ $lang["price"]="Preis";
  $lang["waitingforpaymentauthorisation"]="Wir haben leider noch keine Zahlungsbestätigung erhalten. Bitte warten Sie einen Augenblick und klicken Sie dann 'Aktualisieren'.";
  $lang["reload"]="Aktualisieren";
  $lang["downloadpurchaseitems"]="Gekaufte Ressourcen herunterladen";
  $lang["downloadpurchaseitemsnow"]="Bitte benutzen Sie die untenstehenden Links, um Ihre gekauften Ressourcen jetzt herunterzuladen.<br><br>Verlassen Sie diese Seite nicht, bis Sie alle Ressourcen heruntergeladen haben.";
  $lang["alternatetype"]="Alternative Art";
- 
+
+
  $lang["subcategories"]="Unterkategorien";
  $lang["back"]="Zurück";
 
@@ -916,11 +1114,44 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["autorotate"]="Bilder automatisch drehen?";
 
+# Reports
+# Report names (for the default reports)
+$lang["report-keywords_used_in_resource_edits"]="Benutzte Stichworte beim Bearbeiten von Ressourcen";
+$lang["report-keywords_used_in_searches"]="Benutzte Stichworte in der Suche";
+$lang["report-resource_download_summary"]="Zusammenfassung der Ressourcendownloads";
+$lang["report-resource_views"]="Ressourcen Aufrufe";
+$lang["report-resources_sent_via_e-mail"]="Per E-Mail weitergegebene Ressourcen";
+$lang["report-resources_added_to_collection"]="Zu Kollektionen hinzugefügte Ressourcen";
+$lang["report-resources_created"]="Erstellte Ressourcen";
+$lang["report-resources_with_zero_downloads"]="Ressourcen ohne Downloads";
+$lang["report-resources_with_zero_views"]="Ressourcen ohne Aufrufe";
+$lang["report-resource_downloads_by_group"]="Ressourcendownloads nach Gruppe";
+$lang["report-resource_download_detail"]="Ressourcendownloads im Detail";
+$lang["report-user_details_including_group_allocation"]="Benutzer Details inkl. Gruppenzuordnung";
+
+#Column headers (for the default reports)
+$lang["columnheader-keyword"]="Stichwort";
+$lang["columnheader-entered_count"]="Anzahl";
+$lang["columnheader-searches"]="Suchanfragen";
+$lang["columnheader-date_and_time"]="Datum / Uhrzeit";
+$lang["columnheader-downloaded_by_user"]="Heruntergeladen von";
+$lang["columnheader-user_group"]="Benutzergruppe";
+$lang["columnheader-resource_title"]="Titel der Ressource";
+$lang["columnheader-title"]="Titel";
+$lang["columnheader-downloads"]="Downloads";
+$lang["columnheader-group_name"]="Gruppenname";
+$lang["columnheader-resource_downloads"]="Ressourcendownloads";
+$lang["columnheader-views"]="Aufrufe";
+$lang["columnheader-added"]="Hinzugefügt";
+$lang["columnheader-creation_date"]="Erstellungsdatum";
+$lang["columnheader-sent"]="Versendet";
+$lang["columnheader-last_seen"]="Zuletzt gesehen";
 
  $lang["period"]="Zeitraum";
  $lang["lastndays"]="Letzte ? Tage"; # ? is replaced by the system with the number of days, for example "Last 100 days".
  $lang["specificdays"]="Spezifische Anzahl von Tagen";
  $lang["specificdaterange"]="Spezifischer Zeitraum";
+ $lang["to"]="bis";
 
  $lang["emailperiodically"]="Neue regelmäßige E-Mail erstellen";
  $lang["emaileveryndays"]="Diesen Bericht regelmäßig alle ? per E-Mail versenden";
@@ -928,6 +1159,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["unsubscribereport"]="Um sich von diesem Bericht abzumelden, klicken Sie bitte diesen Link an:";
  $lang["unsubscribed"]="Abgemeldet";
  $lang["youhaveunsubscribedreport"]="Sie wurden von dieser regelmäßigen E-Mail abgemeldet.";
+ $lang["sendingreportto"]="Sende Bericht an";
  $lang["reportempty"]="Keine passenden Daten für den ausgewählen Bericht und Zeitraum gefunden.";
 
  $lang["purchaseonaccount"]="Zum Konto hinzufügen";
@@ -938,7 +1170,20 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["log-p"]="Gekaufte Ressource";
  $lang["viauser"]="durch Benutzer";
  $lang["close"]="Schließen";
+
+# Installation Check
  $lang["repeatinstallationcheck"]="Installation erneut überprüfen";
+ $lang["shouldbeversion"]="sollte Version ? oder höher sein"; # E.g. "should be 4.4 or greater"
+ $lang["phpinivalue"]="PHP.INI Wert für '?'"; # E.g. "PHP.INI value for 'memory_limit'"
+ $lang["writeaccesstofilestore"]="Schreibzugriff auf $storagedir";
+ $lang["nowriteaccesstofilestore"]="$storagedir beschreibbar";
+ $lang["blockedbrowsingoffilestore"]="Browsen des 'filestore' Verzeichnisses nicht erlaubt";
+ $lang["noblockedbrowsingoffilestore"]="filestore scheint durchsuchbar zu sein; entfernen Sie 'Indexes' aus den Apache 'Options'.";
+ $lang["executionofconvertfailed"]="Ausführung fehlgeschlagen; unerwartete Ausgabe des convert Befehls. Die Ausgabe war '?'.<br>Wenn Sie Windows und IIS 6 einsetzen, muss der Zugriff auf die Kommandozeile erlaubt werden. Bitte schauen Sie in den Installation Instructions im Wiki nach."; # ? will be replaced.
+ $lang["lastscheduledtaskexection"]="Letzte geplante Ausführung der Aufgaben (Tage)";
+ $lang["executecronphp"]="Relevanzberechnung wird nicht effektiv sein und regelmäßige E-Mail Berichte nicht versandt werden. Stellen Sie sicher, dass <a href='../batch/cron.php'>batch/cron.php</a> mindestens einmal täglich per cron job oder ähnlich gestartet wird.";
+ $lang["shouldbeormore"]="sollte ? oder höher sein"; # E.g. should be 200M or greater
+
  $lang["generateexternalurl"]="Externe URL generieren";
 
  $lang["starsminsearch"]="Sterne (Minimum)";
@@ -946,8 +1191,8 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["noupload"]="Kein Upload";
 
- # System Setup
- # System Setup Tree Nodes (for the default setup tree)
+# System Setup
+# System Setup Tree Nodes (for the default setup tree)
  $lang["treenode-root"]="Root";
  $lang["treenode-group_management"]="Gruppenverwaltung";
  $lang["treenode-new_group"]="Neue Gruppe";
@@ -967,11 +1212,11 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
 
  $lang["permissions"]="Berechtigungen";
 
- # System Setup File Editor
+# System Setup File Editor
  $lang["configdefault-title"]="(Optionen von hier kopieren und einfügen)";
  $lang["config-title"]="(BITTE BEACHTEN: Sollte diese Datei nicht mehr ausführbar sein (z.B. durch Syntaxfehler), muss der Fehler direkt auf dem Server behoben werden!)";
 
- # System Setup Properties Pane
+# System Setup Properties Pane
  $lang["file_too_large"]="Datei zu groß";
  $lang["field_updated"]="Feld aktualisiert";
  $lang["zoom"]="Zoom";
@@ -982,4 +1227,74 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["on_date"]="am";
  $lang["launchpermissionsmanager"]="Berechtigungs-Manager öffnen";
  $lang["confirm-deletion"]="Sind Sie sicher?";
- ?>
+
+# Permissions Manager
+$lang["permissionsmanager"]="Berechtigungsmanager";
+$lang["backtogroupmanagement"]="Zurück zur Gruppenverwaltung";
+$lang["searching_and_access"]="Suchen / Zugriff";
+$lang["metadatafields"]="Metadatenfelder";
+$lang["resource_creation_and_management"]="Ressourcen verwalten";
+$lang["themes_and_collections"]="Themen / Kollektionen";
+$lang["administration"]="Administration";
+$lang["other"]="Sonstiges";
+$lang["custompermissions"]="Eigene Berechtigungen";
+$lang["searchcapability"]="Suchmöglichkeiten";
+$lang["access_to_restricted_and_confidential_resources"]="Kann eingeschränkte Ressourcen herunterladen und vertrauliche Ressourcen ansehen<br>(normalerweise nur Administratoren)";
+$lang["restrict_access_to_all_available_resources"]="Zugriff auf alle verfügbaren Ressourcen einschränken";
+$lang["can_make_resource_requests"]="Kann Ressourcen anfragen";
+$lang["show_watermarked_previews_and_thumbnails"]="Vorschau/Thumbnails mit Wasserzeichen anzeigen";
+$lang["can_see_all_fields"]="Kann alle Felder sehen";
+$lang["can_see_field"]="Kann Feld sehen";
+$lang["can_edit_all_fields"]="Kann alle Felder bearbeiten<br>(für bearbeitbare Ressourcen)";
+$lang["can_edit_field"]="Kann Feld bearbeiten";
+$lang["can_see_resource_type"]="Kann Ressourcen-Typ sehen";
+$lang["restricted_access_only_to_resource_type"]="Eingeschränkter Zugriff nur auf Ressourcen-Typ";
+$lang["edit_access_to_workflow_state"]="Zugriff auf Workflow Status";
+$lang["can_create_resources_and_upload_files-admins"]="Kann Ressourcen erstellen / Dateien hochladen<br>(Administratoren; Ressourcen erhalten den Status 'Aktiv')";
+$lang["can_create_resources_and_upload_files-general_users"]="Kann Ressourcen erstellen / Dateien hochladen<br>(Normale Benutzer; Ressourcen erhalten den Status 'Benutzer-Beiträge: Freischaltung noch nicht erledigt')";
+$lang["can_delete_resources"]="Kann Ressourcen löschen<br>(die der Benutzer bearbeiten kann)";
+$lang["can_manage_archive_resources"]="Kann archivierte Ressourcen verwalten";
+$lang["can_tag_resources_using_speed_tagging"]="Kann Ressourcen via 'Speed Tagging' taggen<br>(falls konfiguriert)";
+$lang["enable_bottom_collection_bar"]="Kollektionen erlauben ('Leuchtkasten')";
+$lang["can_publish_collections_as_themes"]="Kann Kollektionen als Themen veröffentlichen";
+$lang["can_see_all_theme_categories"]="Kann alle Themenkategorien sehen";
+$lang["can_see_theme_category"]="Kann Themenkategorie sehen";
+$lang["display_only_resources_within_accessible_themes"]="Bei Suchabfragen nur Ressourcen anzeigen, die sich in Themen befinden, auf die der Benutzer Zugriff hat";
+$lang["can_access_team_centre"]="Kann auf die Administration zugreifen";
+$lang["can_manage_research_requests"]="Kann Suchanfragen verwalten";
+$lang["can_manage_resource_requests"]="Kann Ressourcenanfragen verwalten";
+$lang["can_manage_content"]="Kann Inhalte verwalten (Intro/Hilfetexte)";
+$lang["can_bulk-mail_users"]="Kann Massenmail senden";
+$lang["can_manage_users"]="Kann Benutzer verwalten";
+$lang["can_manage_keywords"]="Kann Stichworte verwalten";
+$lang["can_access_system_setup"]="Kann auf die Systemeinstellungen zugreifen";
+$lang["can_change_own_password"]="Kann das eigene Passwort ändern";
+$lang["can_manage_users_in_children_groups"]="Kann nur Benutzer in Untergruppen zur eigenen Benutzergruppe verwalten";
+$lang["can_email_resources_to_own_and_children_and_parent_groups"]="Kann Ressourcen nur an Benutzer aus der eigenen Gruppe oder Untergruppen weitergeben";
+
+$lang["nodownloadcollection"]="Sie haben keinen Zugriff, um Ressourcen aus dieser Kollektion herunterzuladen.";
+
+$lang["progress"]="Fortschritt";
+$lang["ticktodeletethisresearchrequest"]="Auswählen, um diese Anfrage zu löschen";
+
+# SWFUpload
+$lang["queued_too_many_files"]="Sie haben versucht, zu viele Dateien hochzuladen.";
+$lang["creatingthumbnail"]="Erstelle Thumbnail...";
+$lang["uploading"]="Hochladen...";
+$lang["thumbnailcreated"]="Thumbnail erstellt.";
+$lang["done"]="Fertig.";
+$lang["stopped"]="Abgebrochen."; 
+
+$lang["latlong"]="Breite / Länge";
+$lang["geographicsearch"]="Geographische Suche";
+
+$lang["geographicsearch_help"]="Ziehen, um einen Suchbereich zu erstellen.";
+
+$lang["purge"]="Bereinigen";
+$lang["purgeuserstitle"]="Benutzer bereinigen";
+$lang["purgeusers"]="Benutzer bereinigen";
+$lang["purgeuserscommand"]="Benutzer-Accounts löschen, die in den letzten % Monaten nicht aktiv waren, aber vor diesem Zeitraum erstellt wurden.";
+$lang["purgeusersconfirm"]="% Benutzer-Accounts löschen. Sind Sie sicher?";
+$lang["pleaseenteravalidnumber"]="Bitte geben Sie eine gültige Zahl ein";
+$lang["purgeusersnousers"]="Keine Benutzer-Accounts zu bereinigen.";
+?>
