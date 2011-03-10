@@ -255,7 +255,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Run the query
 	if ($include_resources)
 		{
-            return sql_query("select c.*,u.username,group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+            return sql_query("select c.*,u.username, group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources, count( DISTINCT cr.resource ) count from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	else
 		{

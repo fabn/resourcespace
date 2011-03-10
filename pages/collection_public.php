@@ -43,7 +43,7 @@ include "../include/header.php";
 	</form>
 </div>
 <?php
-$collections=search_public_collections($find,$order_by,$sort,$public_collections_exclude_themes,false,false,$override_group_restrict=="true");
+$collections=search_public_collections($find,$order_by,$sort,$public_collections_exclude_themes,false,true,$override_group_restrict=="true");
 
 # pager
 $per_page=15;
@@ -91,6 +91,7 @@ $url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 <td><?php if ($order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
@@ -105,6 +106,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
+    <td><?php echo $collections[$n]["count"]?></td>
 	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
 	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
 	<?php if ($contact_sheet==true) { ?>
