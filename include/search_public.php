@@ -19,12 +19,12 @@ for ($n=0;$n<count($collections);$n++)
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 		
 		<?php 
-		$resources=get_collection_resources($collections[$n]['ref']);
+		$resources=do_search("!collection".$collections[$n]['ref']);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
             $border=true;    
-			$ref=$resources[$m];
+			$ref=$resources[$m]['ref'];
             $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
                 $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
@@ -80,12 +80,12 @@ for ($n=0;$n<count($collections);$n++)
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 
 		<?php 
-		$resources=get_collection_resources($collections[$n]['ref']);
+		$resources=do_search("!collection".$collections[$n]['ref']);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
             $border=true;    
-            $ref=$resources[$m];
+            $ref=$resources[$m]['ref'];
             $previewpath=get_resource_path($ref, true, "thm", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
                 $previewpath=get_resource_path($ref,false,"thm",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
@@ -144,13 +144,13 @@ for ($n=0;$n<count($collections);$n++)
 
         
 		<?php 
-		$resources=get_collection_resources($collections[$n]['ref']);
+		$resources=do_search("!collection".$collections[$n]['ref']);
 		$images=0;
 
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
             $border=true;    
-            $ref=$resources[$m];
+            $ref=$resources[$m]['ref'];
             $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
                 $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
