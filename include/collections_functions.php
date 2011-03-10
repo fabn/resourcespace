@@ -208,8 +208,8 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 		$sql="and c.name like '$search%'";
 		}
 	elseif (strlen($search)>1)
-		{
-		$keywords=split_keywords($search,true);
+		{  
+		$keywords=split_keywords($search);
 		$keyrefs=array();
 		for ($n=0;$n<count($keywords);$n++)
 			{
@@ -228,7 +228,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
         if ($search_public_collections_ref){$spcr="or c.ref='$search'";} else {$spcr="";}    
 		$sql.="and (c.name rlike '$search' or u.username='$search' $spcr $keysql)";
 		}
-	
+
 	if ($exclude_themes) # Include only public collections.
 		{
 		$sql.=" and (length(c.theme)=0 or c.theme is null)";
