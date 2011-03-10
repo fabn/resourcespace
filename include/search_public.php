@@ -2,7 +2,7 @@
 
 # Perform the search
 if (!isset($collections)){
-    $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
+    $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,false);
 }
 for ($n=0;$n<count($collections);$n++)
 	{
@@ -19,7 +19,7 @@ for ($n=0;$n<count($collections);$n++)
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 		
 		<?php 
-		$resources=explode(",",$collections[$n]["resources"]);
+		$resources=get_collection_resources($collections[$n]['ref']);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
@@ -27,11 +27,10 @@ for ($n=0;$n<count($collections);$n++)
 			$ref=$resources[$m];
             $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
-                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false);
+                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
             }
             else {
-                $resource=get_resource_data($ref);
-                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"col");$border=false;
+                $previewpath="../gfx/".get_nopreview_icon($resources[$m]["resource_type"],$resources[$m]["file_extension"],"col");$border=false;
             }
             $images++;
             $space=3+($images-1)*18;
@@ -81,19 +80,18 @@ for ($n=0;$n<count($collections);$n++)
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
 
 		<?php 
-		$resources=explode(",",$collections[$n]["resources"]);
+		$resources=get_collection_resources($collections[$n]['ref']);
 		$images=0;
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
             $border=true;    
-			$ref=$resources[$m];
+            $ref=$resources[$m];
             $previewpath=get_resource_path($ref, true, "thm", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
-                $previewpath=get_resource_path($ref,false,"thm",false,"jpg",-1,1,false);
+                $previewpath=get_resource_path($ref,false,"thm",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
             }
             else {
-                $resource=get_resource_data($ref);
-                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"");$border=false;
+                $previewpath="../gfx/".get_nopreview_icon($resources[$m]["resource_type"],$resources[$m]["file_extension"],"");$border=false;
             }
             $images++;
             $space=3+($images-1)*45;
@@ -146,20 +144,19 @@ for ($n=0;$n<count($collections);$n++)
 
         
 		<?php 
-		$resources=explode(",",$collections[$n]["resources"]);
+		$resources=get_collection_resources($collections[$n]['ref']);
 		$images=0;
 
 		for ($m=0;$m<count($resources) && $images<=4;$m++)
             {
             $border=true;    
-			$ref=$resources[$m];
+            $ref=$resources[$m];
             $previewpath=get_resource_path($ref, true, "col", false, "jpg", -1, 1, false);
             if (file_exists($previewpath)){
-                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false);
+                $previewpath=get_resource_path($ref,false,"col",false,"jpg",-1,1,false,$resources[$m]["file_modified"]);
             }
             else {
-                $resource=get_resource_data($ref);
-                $previewpath="../gfx/".get_nopreview_icon($resource["resource_type"],$resource["file_extension"],"col");$border=false;
+                $previewpath="../gfx/".get_nopreview_icon($resources[$m]["resource_type"],$resources[$m]["file_extension"],"col");$border=false;
             }
             $images++;
             $space=3+($images-1)*9;
