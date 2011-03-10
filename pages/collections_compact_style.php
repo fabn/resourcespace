@@ -12,7 +12,7 @@ if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"
 #CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
 </style>
 <form method="get" name="colactions" id="colactions">
-<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['actions']?>:
+<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['tools']?>:
 <?php if ($pagename!="search"){
     ?><select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}} if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value=''";>
     <?php }
