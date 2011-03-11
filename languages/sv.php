@@ -20,7 +20,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110222 för version 2397.
+# Senast uppdaterad av Henrik Frizén 20110311 för version 2478.
 #
 #
 # User group names (for the default user groups)
@@ -550,10 +550,10 @@ $lang["softwarenotfound"]="Programmet '?' hittades inte."; # ? will be replaced.
 $lang["browseruseragent"]="Webbläsare";
 $lang['serverplatform']="Serverplattform";
 $lang["are_available-0"]="är tillgängliga";
-$lang["are_available-1"]="är tillgänglig";
+$lang["are_available-1"]="är tillgängligt";
 $lang["are_available-2"]="är tillgängliga";
 $lang["were_available-0"]="var tillgängliga";
-$lang["were_available-1"]="var tillgänglig";
+$lang["were_available-1"]="var tillgängligt";
 $lang["were_available-2"]="var tillgängliga";
 $lang["resource-0"]="material";
 $lang["resource-1"]="material";
@@ -1312,4 +1312,13 @@ $lang["purgeusersnousers"]="Det finns inga användare att rensa ut.";
 
 $lang["editallresourcetypewarning"]="Varning: Om du ändrar materialtypen kommer eventuell redan lagrad typspecifik metadata för materialet att raderas.";
 
-?>
+$lang["geodragmode"]="Dragläge";
+$lang["geodragmodearea"]="Områdesval";
+$lang["geodragmodepan"]="Panorering";
+
+$lang["substituted_original"] = "ersattes av original";
+$lang["use_original_if_size"] = "Använd original om vald storlek är otillgänglig?";
+
+$lang["originals-available-0"] = "tillgängliga"; # 0 (originals) available
+$lang["originals-available-1"] = "tillgängligt"; # 1 (original) available
+$lang["originals-available-2"] = "tillgängliga"; # 2+ (originals) available
