@@ -823,8 +823,8 @@ function copy_resource($from,$resource_type=-1)
 	
 	# Set that this resource was created by this user. 
 	# This needs to be done if either:
-	# 1) The user does not have direct 'resource create' permissions and is therefore contributing using My Contributions directly into the live state
-	# 2) The user is contributiting via My Contributions to the standard User Contributed pre-live states.
+	# 1) The user does not have direct 'resource create' permissions and is therefore contributing using My Contributions directly into the active state
+	# 2) The user is contributiting via My Contributions to the standard User Contributed pre-active states.
 	global $userref;
 	global $always_record_resource_creator;
 	if ((!checkperm("c")) || $archive<0 || (isset($always_record_resource_creator) && $always_record_resource_creator))
@@ -1629,7 +1629,7 @@ function get_resource_access($resource)
 		
 	if ($access==0 && !checkperm("g"))
 		{
-		# User does not have the 'g' permission. Always return restricted for live resources.
+		# User does not have the 'g' permission. Always return restricted for active resources.
 		return 1; 
 		}
 	

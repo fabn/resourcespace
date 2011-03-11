@@ -808,7 +808,7 @@ $ip_forwarded_for=false;
 $extracted_text_field=72;
 
 # Should the resources that are in the archive state "User Contributed - Pending Review" (-1) be
-# visible in the main searches (as with resources in the live state)?
+# visible in the main searches (as with resources in the active state)?
 # The resources will not be downloadable, except to the contributer and those with edit capability to the resource.
 $pending_review_visible_to_all=false;
 

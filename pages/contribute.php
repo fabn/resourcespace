@@ -49,7 +49,7 @@ include "../include/header.php";
 			// resources go into submitted first
 			echo '&archive=-2';
 		} elseif (checkperm('e0')&&checkperm('c')){
-			// user can edit/create in live state
+			// user can edit/create in active state
 			// use without archive parameter
 		} else {
 			// default to waiting for review

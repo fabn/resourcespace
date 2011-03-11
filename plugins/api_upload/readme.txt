@@ -7,7 +7,7 @@ Parameters:
 key=[string]            auth key
 userfile=[@file]        set the file path
 resourcetype=[integer]  the Resource Type
-archive=[integer]       archive status (default 0 live)
+archive=[integer]       archive status (default 0 active)
 
 an example of a curl post to upload a file:
 <?php

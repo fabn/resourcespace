@@ -78,7 +78,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		global $pending_review_visible_to_all;
 		if ($archive==0 && $pending_review_visible_to_all)
 			{
-			# If resources pending review are visible to all, when listing only live resources include
+			# If resources pending review are visible to all, when listing only active resources include
 			# pending review (-1) resources too.
 			if ($sql_filter!="") {$sql_filter.=" and ";}
 			$sql_filter.="(archive='0' or archive=-1)";
