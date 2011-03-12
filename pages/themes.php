@@ -320,7 +320,7 @@ if ($header=="" && !isset($themes[0]))
 				<?php echo i18n_get_translated($themes[$m]["name"])?></a>
 				</div></td>
 				<td><div class="ListTools">
-				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["action-view"]?></a>
+				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["viewall"]?></a>
 				<?php if ($themes_category_split_pages) { ?>
 				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
 				<?php }
@@ -422,7 +422,7 @@ function DisplayTheme($themes=array())
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			
-			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
+			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 			
 			<?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 		
