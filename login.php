@@ -76,8 +76,13 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
         	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
 
 			# Store language cookie
-			setcookie("language",getval("language",""),time()+(3600*24*1000));
-			setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
+            if ($global_cookies){
+                setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
+            }
+			else {
+                setcookie("language",getval("language",""),time()+(3600*24*1000));
+                setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
+            }
 
 			# Update the user record. Set the password hash again in case a plain text password was provided.
 			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0,lang='".getval("language","")."' where username='$username' and (password='$password' or password='$password_hash')");
@@ -200,8 +205,13 @@ if (getval("langupdate","")!="")
 	{
 	# Update language while remaining on this page.
 	$language=getval("language","");
-	setcookie("language",$language,time()+(3600*24*1000));
-	setcookie("language",$language,time()+(3600*24*1000),$baseurl_short . "pages/");
+    if ($global_cookies){
+        setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
+    }
+    else {
+        setcookie("language",getval("language",""),time()+(3600*24*1000));
+        setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
+        }
 	redirect("login.php?username=" . urlencode(getval("username","")));
 	}
 

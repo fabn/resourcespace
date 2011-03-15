@@ -4,8 +4,15 @@ include "../include/general.php";
 
 if (getval("save","")!="")
 	{
-	setcookie("language",getval("language",""),time()+(3600*24*1000));
-	setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/"); # Also set with pages path
+    if ($global_cookies){
+        setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
+    }
+    else {
+        // note that this method can't set a cookie for plugin pages without more complicated checks
+        setcookie("language",getval("language",""),time()+(3600*24*1000));
+        setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/"); # Also 
+        }
+
 
 	redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 	}
