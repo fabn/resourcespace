@@ -16,11 +16,12 @@
 # Svenska datatermgruppen: http://www.nada.kth.se/dataterm/ordreg.html
 # Språkrådet: http://www.sprakradet.se/frågelådan
 # Norstedts stora engelsk-svenska ordbok
+# Nationalencyklopedins ordbok
 #
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110311 för version 2478.
+# Senast uppdaterad av Henrik Frizén 20110315 för version 2490.
 #
 #
 # User group names (for the default user groups)
@@ -93,6 +94,7 @@ $lang["home"]="Startsida";
 $lang["searchresults"]="Sökresultat";
 $lang["themes"]="Teman";
 $lang["mycollections"]="Mina samlingar";
+$lang["myrequests"]="Mina begäranden/beställningar";
 $lang["collections"]="Samlingar";
 $lang["mycontributions"]="Mina bidrag";
 $lang["researchrequest"]="Researchförfrågan";
