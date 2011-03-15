@@ -839,15 +839,15 @@ function copy_resource($from,$resource_type=-1)
 	
 	# Now copy all data
 	sql_query("insert into resource_data(resource,resource_type_field,value) select '$to',rd.resource_type_field,rd.value from resource_data rd join resource r on rd.resource=r.ref join resource_type_field rtf on rd.resource_type_field=rtf.ref and (rtf.resource_type=r.resource_type or rtf.resource_type=999 or rtf.resource_type=0) where rd.resource='$from'");
-
-	# Copy keyword mappings
-	sql_query("insert into resource_keyword(resource,keyword,hit_count,position,resource_type_field) select '$to',rk.keyword,rk.hit_count,rk.position,rk.resource_type_field from resource r join resource_keyword rk on r.ref=rk.resource join resource_type_field rtf on rk.resource_type_field=rtf.ref where r.ref='$from' and (rtf.resource_type=r.resource_type or rtf.resource_type=999 or rtf.resource_type=0)");
 	
 	# Copy relationships
 	sql_query("insert into resource_related(resource,related) select '$to',related from resource_related where resource='$from'");
 
 	# Copy access
 	sql_query("insert into resource_custom_access(resource,usergroup,access) select '$to',usergroup,access from resource_custom_access where resource='$from'");
+
+	# Reindex the resource so the resource_keyword entries are created
+	reindex_resource($to);
 	
 	# Log this			
 	daily_stat("Create resource",$to);
@@ -2134,3 +2134,42 @@ function get_resource_files($ref,$includeorphan=false){
     }
     return array_unique($filearray);
 }
+
+function reindex_resource($ref)
+	{
+	# Reindex a resource. Delete all resource_keyword rows and create new ones.
+	
+	# Delete existing keywords
+	sql_query("delete from resource_keyword where resource='$ref'");
+
+	# Index fields
+	$data=get_resource_field_data($ref);
+	for ($m=0;$m<count($data);$m++)
+		{
+		if ($data[$m]["keywords_index"]==1)
+			{
+			#echo $data[$m]["value"];
+			$value=$data[$m]["value"];
+			if ($data[$m]["type"]==3 || $data[$m]["type"]==2)
+				{
+				# Prepend a comma when indexing dropdowns
+				$value="," . $value;
+				}
+			
+			# Date field? These need indexing differently.
+			$is_date=($data[$m]["type"]==4 || $data[$m]["type"]==6);
+			
+			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"],$data[$m]["partial_index"],$is_date);		
+			}
+		}
+	
+	# Also index contributed by field.
+	$resource=get_resource_data($ref);
+	$userinfo=get_user($resource["created_by"]);
+	add_keyword_mappings($ref,$userinfo["username"] . " " . $userinfo["fullname"],-1);		
+	
+	# Always index the resource ID as a keyword
+	remove_keyword_mappings($ref, $ref, -1);
+	add_keyword_mappings($ref, $ref, -1);
+	
+	}

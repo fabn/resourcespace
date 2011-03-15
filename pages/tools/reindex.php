@@ -26,36 +26,7 @@ for ($n=$start;$n<count($resources);$n++)
 	{
 	$ref=$resources[$n]["ref"];
 
-	# Delete existing keywords
-	sql_query("delete from resource_keyword where resource='$ref'");
-
-	# Index fields
-	$data=get_resource_field_data($ref);
-	for ($m=0;$m<count($data);$m++)
-		{
-		if ($data[$m]["keywords_index"]==1)
-			{
-			#echo $data[$m]["value"];
-			$value=$data[$m]["value"];
-			if ($data[$m]["type"]==3 || $data[$m]["type"]==2)
-				{
-				# Prepend a comma when indexing dropdowns
-				$value="," . $value;
-				}
-			
-			# Date field? These need indexing differently.
-			$is_date=($data[$m]["type"]==4 || $data[$m]["type"]==6);
-			
-			add_keyword_mappings($ref,i18n_get_indexable($value),$data[$m]["ref"],$data[$m]["partial_index"],$is_date);		
-			}
-		}
-	
-	# Also index contributed by field.
-	add_keyword_mappings($ref,$resources[$n]["username"] . " " . $resources[$n]["fullname"],-1);		
-	
-	# Always index the resource ID as a keyword
-	remove_keyword_mappings($ref, $ref, -1);
-	add_keyword_mappings($ref, $ref, -1);
+	reindex_resource($ref);
 	
 	$words=sql_value("select count(*) value from resource_keyword where resource='$ref'",0);
 	echo "Done $ref ($n/" . count($resources) . ") - $words words<br />\n";
