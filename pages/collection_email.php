@@ -92,7 +92,7 @@ include "../include/header.php";
 		echo $collection["name"] ;
 	} else { ##  this select copied from collections.php 
 ?>
-		<select name="collection" multiple="multiple" size="5" class="SearchWidthExt" style="width:365px;" 
+		<select name="collection" multiple="multiple" size="10" class="SearchWidthExt" style="width:365px;" 
 			onchange="document.getElementById('refDiv').innerHTML = getSelected(this); " >
 		<?php
 		$list=get_user_collections($userref);
