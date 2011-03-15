@@ -112,14 +112,26 @@ if (!array_key_exists("search",$_GET))
 	}
 	if (substr($search,0,14)=="!contributions") {
 		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-2){$feed_title = $applicationname ." - ".$lang["viewcontributedps"];}
+		if ($cuser==$userref) {
+			switch ($archive) {
+				case -2:
+					$feed_title = $applicationname ." - ".$lang["contributedps"];
+					break;
+				case -1:
+					$feed_title = $applicationname ." - ".$lang["contributedpr"];
+					break;
+				case -0:
+					$feed_title = $applicationname ." - ".$lang["contributedsubittedl"];
+					break;
+			}
+		}		
 	}
 	if (substr($search,0,7)=="!unused") {
 		$feed_title = $applicationname ." - ".$lang["uncollectedresources"];
 	}
 
 
-$r = new RSSFeed($feed_title, $baseurl, "Filtered resource update for tags [".$search."]");
+$r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", $search, $lang["filtered_resource_update_for"]));
 
 // rss fields can include any of thumbs, smallthumbs, list, xlthumbs display fields, or data_joins.
 $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields,$data_joins)));
@@ -145,15 +157,12 @@ foreach ($rss_fields as $display_field)
 $n=0;	
 
 //$r->AddImage($title, $url, $link, $description = '')
-$r->AddImage($feed_title, $baseurl."/rss/mediaset.gif", $baseurl, $description = '');
 
 # loop and display the results
 for ($n=0;$n<count($result);$n++)			
 	{
 	$ref=$result[$n]["ref"];
-	
-	$ref=$result[$n]["ref"];
-	$title=$result[$n]["field".$view_title_field];
+	$title=i18n_get_translated($result[$n]["field".$view_title_field]);
 	$creation_date=$result[$n]["field".$date_field];
 	
 	//echo $time = time();//date("r");
@@ -175,20 +184,24 @@ for ($n=0;$n<count($result);$n++)
 	if ($result[$n]['has_image']!=1){ $imgurl=$baseurl."/gfx/".get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true,false,true);} 
 	else{$imgurl=get_resource_path($result[$n]['ref'],false,"col",false);}
 	$add_desc="";
-	foreach ($rss_fields as $rssfield){
-		if (is_array($result[$n]) && array_key_exists("field".$rssfield,$result[$n]) && $result[$n]['field'.$rssfield]!=""){
-			$value=$result[$n]['field'.$rssfield];
+	foreach ($rss_fields as $rssfield)
+		{
+		if (is_array($result[$n]) && array_key_exists("field".$rssfield,$result[$n]) && $result[$n]['field'.$rssfield]!="")
+			{
+			$value=i18n_get_translated($result[$n]['field'.$rssfield]);
 			
 			// allow for value filters
-			for ($x=0;$x<count($df);$x++){
-				if ($df[$x]['ref']==$rssfield){
+			for ($x=0;$x<count($df);$x++)
+				{
+				if ($df[$x]['ref']==$rssfield)
+					{
 					$plugin="../../value_filter_" . $df[$x]['name'] . ".php";
 					if (file_exists($plugin)) {include $plugin;}
-				}		
-			}
+					}		
+				}
 			$add_desc.=$value."<![CDATA[<br/>]]>";
+			}
 		}
-	}
 	
 	$description = "<![CDATA[<img src='$imgurl' align='left' height='75'  border='0' />]]>". $add_desc;
 	
@@ -197,10 +210,10 @@ for ($n=0;$n<count($result);$n++)
 	$val["guid"] = $ref;
 
 
-//	function AddArticle($title, $link, $description, $author, $optional = '')
-//	$r->AddArticle($category." - ".substr($title,0,20)."...", $url, $title, "", $val);
+	//	function AddArticle($title, $link, $description, $author, $optional = '')
+	//	$r->AddArticle($category." - ".substr($title,0,20)."...", $url, $title, "", $val);
 	$r->AddArticle($title, $url, $description,$val);	
-}
+	}
 
 //Header("content-type: text/xml");
 
