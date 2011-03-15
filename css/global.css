@@ -65,16 +65,20 @@ a:active {text-decoration:underline;}
 
 /*Collection layout*/
 #CollectionMenu{width: 166px;position: absolute;left: 25px;top: 6px;text-align:left;}
-
+#CollectionMenuExp{width: 216px;position: absolute;left: 25px;top: 6px;text-align:left;}
 #CollectionSpace{position: absolute;left: 199px;top: 6px;font-size: 0.95em;text-align:left;}
+#CollectionSpaceExp{position: absolute;left: 249px;top: 6px;font-size: 0.95em;text-align:left;}
 .CollectBack h2 {font-size: 1.3em;}
 #CollectionMenu ul {padding:0.2em 0;margin:0;list-style:none;}
 #CollectionMenu li {padding:0;margin:0px 8px 1px 0px;float:left;white-space:nowrap;}
+#CollectionMenuExp ul {padding:0.2em 0;margin:0;list-style:none;}
+#CollectionMenuExp li {padding:0;margin:0px 8px 1px 0px;float:left;white-space:nowrap;}
 .CollectBack a:link, .CollectBack a:visited {text-decoration:none;}
 .CollectBack a:hover, .CollectBack a:active {text-decoration:underline;}
 
 .CollectBack form {padding:0; margin:0;}
 .CollectBack .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
+.CollectBack .SearchWidthExp {width: 200px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
 .CollectBack .SearchItem {margin: 0 0 10px;padding: 0;}
 .CollectBack .MinSearchItem {margin: 0;padding: 0;}
 
@@ -89,7 +93,8 @@ a:active {text-decoration:underline;}
 #CollectionMinitems{float: left;margin: 8px 10px 0px;padding:0.2em 0em}
 #CollectionMinRightNav{float: right;margin: 6px 25px 0px 0px;}
 
-#CollectionMinDrop .SearchWidth {width: 110px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
+#CollectionMinDrop .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
+#CollectionMinDrop .SearchWidthExp {width: 200px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
 #CollectionMinRightNav ul {padding:0.2em 0;margin:0;list-style:none;}
 #CollectionMinRightNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0px;}
 

@@ -38,6 +38,7 @@ a:active {color:#B5C3D4;}
 .CollectBack a:hover  {color:#FFFFFF;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
+#CollectionMenuExp {border-right: 1px solid #79899C;}
 
 #ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border-top: 1px solid #FFFFFF;border-right: 1px solid #94A7C0;border-bottom: 1px solid #94A7C0;border-left: 1px solid #94A7C0;}
 

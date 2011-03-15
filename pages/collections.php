@@ -28,7 +28,9 @@ else
 	$basket=false;
 	}
 
-
+if ($collection_dropdown_user_access_mode){
+$users=get_users();
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html class="CollectBack">
@@ -397,23 +399,49 @@ elseif ($k!="")
 } else { 
 # -------------------------- Standard display --------------------------------------------
 ?>
+<?php if ($collection_dropdown_user_access_mode){?>
+<div id="CollectionMenuExp">
+<?php } else { ?>
 <div id="CollectionMenu">
+<?php } ?>
+
 <?php if (!hook("thumbsmenu")) { ?>
   <h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
-		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();" class="SearchWidth">
+		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();"<?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?>>
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
 		for ($n=0;$n<count($list);$n++)
 			{
+
+            if ($collection_dropdown_user_access_mode){    
+                foreach ($users as $user){
+                    if ($user['ref']==$list[$n]['user']){$colusername=$user['username'];}
+                }
+                # Work out the correct access mode to display
+                if (!hook('collectionaccessmode')) {
+                    if ($list[$n]["public"]==0){
+                        $accessmode= $lang["private"];
+                    }
+                    else{
+                        if (strlen($list[$n]["theme"])>0){
+                            $accessmode= $lang["theme"];
+                        }
+                    else{
+                            $accessmode= $lang["public"];
+                        }
+                    }
+                }
+            }
+                
 			if (!isset($list[$n]['savedsearch'])||(isset($list[$n]['savedsearch'])&&$list[$n]['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
 		
 			#show only active collections if a start date is set for $active_collections 
 			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
 					{ ?>
-				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo $collection_tag.htmlspecialchars($list[$n]["name"])?></option>
+				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo $collection_tag.htmlspecialchars($list[$n]["name"])?> <?php if ($collection_dropdown_user_access_mode){echo "(". $colusername."/".$accessmode.")"; } ?></option>
 			<?php }
 			}
 		if ($found==false)
@@ -494,7 +522,11 @@ elseif ($k!="")
 <?php } ?>
 
 <!--Resource panels-->
+<?php if ($collection_dropdown_user_access_mode){?>
+<div id="CollectionSpaceExp">
+<?php } else { ?>
 <div id="CollectionSpace">
+<?php } ?>
 
 <?php
 # Loop through saved searches
@@ -743,17 +775,38 @@ elseif ($k!="")
 <div id="CollectionMinDrop">
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
-		<select name="collection" id="collection" class="SearchWidth" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='inline';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();">
+		<select name="collection" id="collection" <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?> onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='inline';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();">
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
 		for ($n=0;$n<count($list);$n++)
 			{
+
+            if ($collection_dropdown_user_access_mode){    
+                foreach ($users as $user){
+                    if ($user['ref']==$list[$n]['user']){$colusername=$user['username'];}
+                }
+                # Work out the correct access mode to display
+                if (!hook('collectionaccessmode')) {
+                    if ($list[$n]["public"]==0){
+                        $accessmode= $lang["private"];
+                    }
+                    else{
+                        if (strlen($list[$n]["theme"])>0){
+                            $accessmode= $lang["theme"];
+                        }
+                    else{
+                            $accessmode= $lang["public"];
+                        }
+                    }
+                }
+            }
+             
 		    if (!isset($list[$n]['savedsearch'])||(isset($list[$n]['savedsearch'])&&$list[$n]['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
 			#show only active collections if a start date is set for $active_collections 
 			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))	
 			{ ?>
-			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo $collection_tag.htmlspecialchars($list[$n]["name"])?></option>
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo $collection_tag.htmlspecialchars($list[$n]["name"])?> <?php if ($collection_dropdown_user_access_mode){echo "(". $colusername."/".$accessmode.")"; } ?></option>
 			<?php }
 			}
 		if ($found==false)

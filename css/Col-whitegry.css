@@ -39,6 +39,7 @@ a:active {color:#737373;}
 .CollectBack a:hover, .CollectBack h2  {color:#FFFFFF;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
+#CollectionMenuExp {border-right: 1px solid #79899C;}
 
 #ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge, .HomePanelIN, .HomePicturePanelIN {border: 1px solid #BBBBBB;}
 

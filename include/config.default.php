@@ -1682,4 +1682,9 @@ $icc_extraction = false;
 $icc_preview_profile = 'sRGB_IEC61966-2-1_black_scaled.icc';
 
 # additional options for profile conversion during preview generation
-$icc_preview_options = '-intent relative -black-point-compensation'; 
+$icc_preview_options = '-intent relative -black-point-compensation';
+
+# add user and access information to collection results in the collections panel dropdown
+# this extends the width of the dropdown and is intended to be used with $collections_compact_style
+# but should also be compatible with the traditional collections tools menu.
+$collection_dropdown_user_access_mode=false;
