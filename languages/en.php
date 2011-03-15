@@ -74,6 +74,7 @@ $lang["home"]="Home";
 $lang["searchresults"]="Search Results";
 $lang["themes"]="Themes";
 $lang["mycollections"]="My Collections";
+$lang["myrequests"]="My Requests";
 $lang["collections"]="Collections";
 $lang["mycontributions"]="My Contributions";
 $lang["researchrequest"]="Research Request";
