@@ -841,7 +841,7 @@ function copy_resource($from,$resource_type=-1)
 	sql_query("insert into resource_data(resource,resource_type_field,value) select '$to',rd.resource_type_field,rd.value from resource_data rd join resource r on rd.resource=r.ref join resource_type_field rtf on rd.resource_type_field=rtf.ref and (rtf.resource_type=r.resource_type or rtf.resource_type=999 or rtf.resource_type=0) where rd.resource='$from'");
 
 	# Copy keyword mappings
-	sql_query("insert into resource_keyword(resource,keyword,hit_count,position,resource_type_field) select '$to',keyword,hit_count,position,resource_type_field from resource_keyword where resource='$from'");
+	sql_query("insert into resource_keyword(resource,keyword,hit_count,position,resource_type_field) select '$to',rk.keyword,rk.hit_count,rk.position,rk.resource_type_field from resource r join resource_keyword rk on r.ref=rk.resource join resource_type_field rtf on rk.resource_type_field=rtf.ref where r.ref='$from' and (rtf.resource_type=r.resource_type or rtf.resource_type=999 or rtf.resource_type=0)");
 	
 	# Copy relationships
 	sql_query("insert into resource_related(resource,related) select '$to',related from resource_related where resource='$from'");
