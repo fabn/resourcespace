@@ -388,7 +388,8 @@ function DisplayTheme($themes=array())
 			<?php	
 			}
 		?>
-		<h1 style="<?php if (!$theme_images_align_right) { ?>margin-top:12px;<?php } ?>float:left;<?php if ($theme_images_align_right) { ?>margin-bottom:50px;<?php } ?>"><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
+        <table><tr><td style="margin:0px;padding:0px;">
+		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
 			{
 			$themeslinks="";
 			for ($x=0;$x<count($themes);$x++){
@@ -399,11 +400,13 @@ function DisplayTheme($themes=array())
 		else
 			{
 			echo stripslashes(str_replace("*","",$themename));
-			}?></h1>
+			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
+            <p style="clear:none;">(<strong><?php echo count($getthemes);?></strong>&nbsp;<?php if (count($getthemes)==1){echo $lang["collection"];} else {echo $lang["collections"];}?>)</p></td></tr></table>
+
 
 		<div class="clearerright"> </div>
 		</div>
-		
+		<br />
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
