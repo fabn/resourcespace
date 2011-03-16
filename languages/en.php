@@ -1304,3 +1304,8 @@ $lang["use_original_if_size"] = "Use original if selected size is unavailable?";
 $lang["originals-available-0"] = "available"; # 0 (originals) available
 $lang["originals-available-1"] = "available"; # 1 (original) available
 $lang["originals-available-2"] = "available"; # 2+ (originals) available
+
+$lang["inch-short"] = "in";
+$lang["centimetre-short"] = "cm";
+$lang["megapixel-short"]="MP";
+$lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI

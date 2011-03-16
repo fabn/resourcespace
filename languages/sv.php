@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110315 för version 2490.
+# Senast uppdaterad av Henrik Frizén 20110316 för version 2494+.
 #
 #
 # User group names (for the default user groups)
@@ -1324,3 +1324,8 @@ $lang["use_original_if_size"] = "Använd original om vald storlek är otillgäng
 $lang["originals-available-0"] = "tillgängliga"; # 0 (originals) available
 $lang["originals-available-1"] = "tillgängligt"; # 1 (original) available
 $lang["originals-available-2"] = "tillgängliga"; # 2+ (originals) available
+
+$lang["inch-short"] = "tum";
+$lang["centimetre-short"] = "cm";
+$lang["megapixel-short"]="MP";
+$lang["at-resolution"] = "i"; # E.g. 5.9 in x 4.4 in @ 144 PPI
