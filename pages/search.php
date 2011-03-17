@@ -430,9 +430,11 @@ if (true) # Always show search header now.
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="random") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=random&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["random"]?></a></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=random&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["random"]?></a><?php } ?>
 		<?php } ?>
-		
+
+        <?php if ($popularity_sort){?>
 		&nbsp;|&nbsp;
 		<?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?>
+        <?php } ?>
 		
 		<?php if ($orderbyrating) { ?>
 		&nbsp;|&nbsp;
