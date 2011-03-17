@@ -602,8 +602,8 @@ h2#dbaseconfig{  min-height: 32px;}
 			$config_output .= "\$enable_remote_apis = true;\r\n";    
 		if (!$allow_password_change = get_post_bool('allow_password_change'))
 			$config_output .= "\$allow_password_change = false;\r\n";
-		if (!$research_request = get_post_bool('research_request'))
-			$config_output .= "\$research_request = false;\r\n";
+		if ($research_request = get_post_bool('research_request'))
+			$config_output .= "\$research_request = true;\r\n";
 		if ($use_theme_as_home = get_post_bool('use_theme_as_home'))
 			$config_output .= "\$use_theme_as_home = true;\r\n";
 		if ($disable_languages = get_post_bool('disable_languages'))
@@ -693,7 +693,7 @@ else{
 						$pass = true;
 						}
 				?>
-				<p class="<?php echo ($pass!=false?'':'failure'); ?>"><?php echo str_replace("?", "PHP", $lang["softwareversion"]) . ": " . $phpversion . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
+				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "PHP", $lang["softwareversion"]) . ": " . $phpversion . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
 					$gdinfo = gd_info();
 					if (is_array($gdinfo))
@@ -782,7 +782,7 @@ else{
 						$pass = true;
 						}
 				?>
-					<p class="<?php echo ($result=='OK'?'':'failure'); ?>"><?php echo $lang["setup-checkstoragewrite"] . ($result!='OK'?'<br>':'') . "(" . $result . ")"; ?></p>
+					<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo $lang["setup-checkstoragewrite"] . ($result!='OK'?'<br>':'') . "(" . $result . ")"; ?></p>
 			</div>
 			<h1><?php echo $lang["setup-welcome"];?></h1>
 			<p><?php echo $lang["setup-introtext"];?><p>
