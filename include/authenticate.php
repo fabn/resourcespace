@@ -32,7 +32,7 @@ if ($api && $enable_remote_apis ){
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array ('Accept: application/json'));
             curl_setopt($ch, CURLOPT_USERAGENT, "API Client"); 
-            //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
             $responseBody = curl_exec($ch);
             $responseInfo	= curl_getinfo($ch);
             curl_close($ch);
