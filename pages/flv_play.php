@@ -21,10 +21,13 @@ if ($theme=="greyblu") {$color="446693";$bgcolor1="6883a8";$bgcolor2="203b5e";$b
 if ($theme=="whitegry") {$color="ffffff";$bgcolor1="ffffff";$bgcolor2="dadada";$buttoncolor="666666";}	
 if ($theme=="black") {$bgcolor1="666666";$bgcolor2="111111";$buttoncolor="999999";}	
 
+$width=$ffmpeg_preview_max_width;
+$height=$ffmpeg_preview_max_height;
+if ($pagename=="search"){$width="355";$height=355/$ffmpeg_preview_max_width*$ffmpeg_preview_max_height;}
 ?>
-<object type="application/x-shockwave-flash" data="../lib/flashplayer/player_flv_maxi.swf" width="<?php echo $ffmpeg_preview_max_width?>" height="<?php echo $ffmpeg_preview_max_height?>" class="Picture">
+<object type="application/x-shockwave-flash" data="../lib/flashplayer/player_flv_maxi.swf" width="<?php echo $width?>" height="<?php echo $height?>" class="Picture">
                     <param name="allowFullScreen" value="true" />
 
      <param name="movie" value="../lib/flashplayer/player_flv_maxi.swf" />
-     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $ffmpeg_preview_max_width?>&amp;height=<?php echo $ffmpeg_preview_max_height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;volume=200&amp;showtime=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;buttoncolor=<?php echo $buttoncolor?>&playercolor=<?php echo $color?>&bgcolor=<?php echo $color?>&bgcolor1=<?php echo $bgcolor1?>&bgcolor2=<?php echo $bgcolor2?>&startimage=<?php echo $thumb?>" />
+     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $width?>&amp;height=<?php echo $height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;volume=200&amp;showtime=1&amp;autoload=0&amp;<?php if ($pagename!=="search"){?>showfullscreen=1<?php } ?>&amp;showstop=1&amp;buttoncolor=<?php echo $buttoncolor?>&playercolor=<?php echo $color?>&bgcolor=<?php echo $color?>&bgcolor1=<?php echo $bgcolor1?>&bgcolor2=<?php echo $bgcolor2?>&startimage=<?php echo $thumb?>" />
 </object>

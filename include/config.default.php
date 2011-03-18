@@ -1692,3 +1692,5 @@ $collection_dropdown_user_access_mode=false;
 
 # show mp3 player in xlarge thumbs view (if $mp3_player=true)
 $mp3_player_xlarge_view=false;
+# show flv player in xlarge thumbs view 
+$flv_player_xlarge_view=false;
