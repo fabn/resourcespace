@@ -1689,3 +1689,6 @@ $icc_preview_options = '-intent relative -black-point-compensation';
 # this extends the width of the dropdown and is intended to be used with $collections_compact_style
 # but should also be compatible with the traditional collections tools menu.
 $collection_dropdown_user_access_mode=false;
+
+# show mp3 player in xlarge thumbs view (if $mp3_player=true)
+$mp3_player_xlarge_view=true;
