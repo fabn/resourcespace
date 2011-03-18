@@ -774,28 +774,33 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	<table border="0" class="ResourceAlignLarge<?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideoLarge<?php } ?>">
 	<tr><td>
     <?php
+    $show_flv=false;
     if ((in_array($result[$n]["file_extension"],$ffmpeg_supported_extensions) || $result[$n]["file_extension"]=="flv") && $flv_player_xlarge_view){
     $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
     if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
-    if (!(isset($result[$n]['is_transcoding']) && $result[$n]['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+    if (!(isset($result[$n]['is_transcoding']) && $result[$n]['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false)) { $show_flv=true;}
+    }
+    if ($show_flv)
+    {
+    # Include the Flash player if an FLV file exists for this resource.
+    if(!hook("customflvplay"))
         {
-        # Include the Flash player if an FLV file exists for this resource.
-        $download_multisize=false;
-        if(!hook("customflvplay"))
-            {
-            include "flv_play.php";
-            }
+        include "flv_play.php";
         }
     }
+    
     else {
     ?>
 	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img src="<?php echo get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
 	 /><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
-	/><?php } ?></a><?php } ?>
-		</td>
-		</tr></table>
+	/><?php } ?></a>
+
+    <?php } ?>
+
+    </td>
+    </tr></table>
 
 <?php if ((in_array($result[$n]["file_extension"],$ffmpeg_audio_extensions)|| $result[$n]["file_extension"]=="mp3")&& $mp3_player && $mp3_player_xlarge_view){
 	//check for mp3 file and allow optional player
