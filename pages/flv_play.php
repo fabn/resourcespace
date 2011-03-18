@@ -15,17 +15,16 @@ $thumb=get_resource_path($ref,false,"pre",false,"jpg");
 $thumb=urlencode($thumb);
 
 # Choose a colour based on the theme.
-# This is quite hacky, and ideally of course this would be CSS based, but the FLV player requires that the colour
-# is passed as a parameter.
-# The default is a neutral grey which should be acceptable for most user generated themes.
 $theme=(isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss","greyblu");
-$colour="505050";
-if ($theme=="greyblu") {$colour="446693";}
+$color="505050";$bgcolor1="666666";$bgcolor2="111111";$buttoncolor="999999";
+if ($theme=="greyblu") {$color="446693";$bgcolor1="6883a8";$bgcolor2="203b5e";$buttoncolor="adb4bb";}	
+if ($theme=="whitegry") {$color="ffffff";$bgcolor1="ffffff";$bgcolor2="dadada";$buttoncolor="666666";}	
+if ($theme=="black") {$bgcolor1="666666";$bgcolor2="111111";$buttoncolor="999999";}	
 
 ?>
 <object type="application/x-shockwave-flash" data="../lib/flashplayer/player_flv_maxi.swf" width="<?php echo $ffmpeg_preview_max_width?>" height="<?php echo $ffmpeg_preview_max_height?>" class="Picture">
                     <param name="allowFullScreen" value="true" />
 
      <param name="movie" value="../lib/flashplayer/player_flv_maxi.swf" />
-     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $ffmpeg_preview_max_width?>&amp;height=<?php echo $ffmpeg_preview_max_height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;volume=200&amp;showtime=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;playercolor=<?php echo $colour?>&startimage=<?php echo $thumb?>" />
+     <param name="FlashVars" value="flv=<?php echo $flashpath?>&amp;width=<?php echo $ffmpeg_preview_max_width?>&amp;height=<?php echo $ffmpeg_preview_max_height?>&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;volume=200&amp;showtime=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;buttoncolor=<?php echo $buttoncolor?>&playercolor=<?php echo $color?>&bgcolor=<?php echo $color?>&bgcolor1=<?php echo $bgcolor1?>&bgcolor2=<?php echo $bgcolor2?>&startimage=<?php echo $thumb?>" />
 </object>
