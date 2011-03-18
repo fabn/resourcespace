@@ -1691,4 +1691,4 @@ $icc_preview_options = '-intent relative -black-point-compensation';
 $collection_dropdown_user_access_mode=false;
 
 # show mp3 player in xlarge thumbs view (if $mp3_player=true)
-$mp3_player_xlarge_view=true;
+$mp3_player_xlarge_view=false;
