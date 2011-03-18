@@ -781,7 +781,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		</td>
 		</tr></table>
 
-<?php if ($mp3_player && $mp3_player_xlarge_view){
+<?php if ((in_array($result[$n]["file_extension"],$ffmpeg_audio_extensions)|| $result[$n]["file_extension"]=="mp3")&& $mp3_player && $mp3_player_xlarge_view){
 	//check for mp3 file and allow optional player
 	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
 	
