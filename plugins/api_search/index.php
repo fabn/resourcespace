@@ -60,7 +60,17 @@ if (getval("previewsize","")!=""){
 for($n=0;$n<count($results);$n++){
     $access=get_resource_access($results[$n]);
 	$use_watermark=check_use_watermark();
-    $results[$n]['preview']=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,$use_watermark,"",-1);
+    $filepath=get_resource_path($results[$n]['ref'],true,getval('previewsize',''),false,'jpg',-1,1,$use_watermark,'',-1);
+    $previewpath=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,$use_watermark,"",-1);
+    if (file_exists($filepath)){
+        $results[$n]['preview']=$previewpath;
+    }
+    else {
+        $previewpath=explode('filestore/',$previewpath);
+        $previewpath=$previewpath[0]."gfx/";
+        $file=$previewpath.get_nopreview_icon($results[$n]["resource_type"],$results[$n]["file_extension"],false,true);
+        $results[$n]['preview']=$file;
+    }
     }
 }
 
