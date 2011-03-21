@@ -91,8 +91,8 @@ function ReorderResources(id1,id2)
 <br/>
 <table id="preview_all_table" style="width:100%;">
 <tr><p style="margin:7px 0 7px 0;padding:0;"><a href="search.php?search=!collection<?php echo $colref?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&offset=<?php echo $offset?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoresults"]?></a>
-&nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=h&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Horizontal </a>
-&nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=v&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; Vertical </a>
+&nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=h&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; <?php echo $lang["horizontal"]; ?> </a>
+&nbsp;&nbsp;<a href="preview_all.php?ref=<?php echo $colref?>&vertical=v&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; <?php echo $lang["vertical"]; ?> </a>
 </tr>
 <tr>
 <?php
@@ -138,11 +138,11 @@ if (!file_exists($path))
 ?>
 
 <?php if ($vertical=="v"){
-if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>">&nbsp;<?php echo $collection[$x]['field'.$view_title_field]?></a><?php } /* end hook replacepreviewalltitle */?></tr><tr><?php }else { ?>
+if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>">&nbsp;<?php echo i18n_get_translated($collection[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?></tr><tr><?php }else { ?>
 <td style="padding:10px;"><?php } ?>
 	
 	<div class="ResourceShel_" id="ResourceShel_<?php echo $ref?>">
-	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo $collection[$x]['field'.$view_title_field]?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
+	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo i18n_get_translated($collection[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
 	<?php $imageinfo = getimageSize( $url ); 
 	$imageheight=$imageinfo[1];?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>

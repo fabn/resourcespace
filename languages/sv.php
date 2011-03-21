@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110321 för version 2511+.
+# Senast uppdaterad av Henrik Frizén 20110321 för version 2512+.
 #
 #
 # User group names (for the default user groups)
@@ -1332,3 +1332,6 @@ $lang["at-resolution"] = "i"; # E.g. 5.9 in x 4.4 in @ 144 PPI
 
 $lang["deletedresource"] = "Raderat material";
 $lang["action-delete_permanently"] = "Radera permanent";
+
+$lang["horizontal"] = "Horisontellt";
+$lang["vertical"] = "Vertikalt";
