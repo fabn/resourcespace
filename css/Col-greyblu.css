@@ -86,6 +86,7 @@ a:active {color:#B5C3D4;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #1A447C url(../gfx/greyblu/interface/DownloadCell.gif) repeat-x;}
 
 .ArchiveResourceTitle {color: #C2E066;}
+.DeletedResourceTitle {color: #FF0000;}
 .RecordStory{color: #000000;background: #FFFFFF url(../gfx/greyblu/interface/StoryShadow.gif) repeat-x;}
 .RecordStory h1{color: #000000;}
 .RecordStory a:hover{color: #000000;}

@@ -88,6 +88,7 @@ a:active {color:#737373;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #FFFFFF;text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #979797 url(../gfx/whitegry/interface/DownloadCell.gif) repeat-x;	border-color: #6D6D6D;}
 .ArchiveResourceTitle {color: #C2E066;}
+.DeletedResourceTitle {color: #FF0000;}
 .RecordStory{color: #000000;background: #FFFFFF url(../gfx/whitegry/interface/StoryShadow.gif) repeat-x;border-top: none;border-right: 1px solid #BBBBBB;border-bottom: 1px solid #BBBBBB;border-left: 1px solid #BBBBBB;}
 .RecordStory h1{color: #000000;}
 .RecordStory a:hover{color: #000000;}

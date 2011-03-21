@@ -1309,3 +1309,6 @@ $lang["inch-short"] = "in";
 $lang["centimetre-short"] = "cm";
 $lang["megapixel-short"]="MP";
 $lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI
+
+$lang["deletedresource"] = "Deleted Resource";
+$lang["action-delete_permanently"] = "Delete permanently";
