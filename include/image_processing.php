@@ -37,7 +37,8 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		$processfile['tmp_name']=$filename; }
 	else{
 		# Work out which file has been posted (switch is necessary for SWFUpload)
-		if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];} else {$processfile=$_FILES['Filedata'];}
+		if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];}
+        else if (isset($_FILES['file'])) {$processfile=$_FILES['file'];} else {$processfile=$_FILES['Filedata'];}
 		$filename=$processfile['name'];
 	}
 
@@ -495,7 +496,8 @@ function iptc_return_utf8($text)
 		}
 	return $text;
 	}
-	
+
+if (!function_exists("create_previews")){    
 function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
 	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
@@ -652,6 +654,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		}
 	return true;
 	}
+}
 
 function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
