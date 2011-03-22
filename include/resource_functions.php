@@ -846,6 +846,9 @@ function copy_resource($from,$resource_type=-1)
 	# Copy access
 	sql_query("insert into resource_custom_access(resource,usergroup,access) select '$to',usergroup,access from resource_custom_access where resource='$from'");
 
+	# Set any resource defaults
+	set_resource_defaults($to);
+
 	# Reindex the resource so the resource_keyword entries are created
 	reindex_resource($to);
 	
@@ -2143,7 +2146,7 @@ function reindex_resource($ref)
 	sql_query("delete from resource_keyword where resource='$ref'");
 
 	# Index fields
-	$data=get_resource_field_data($ref);
+	$data=get_resource_field_data($ref,false,false); # Fetch all fields and do not use permissions.
 	for ($m=0;$m<count($data);$m++)
 		{
 		if ($data[$m]["keywords_index"]==1)
