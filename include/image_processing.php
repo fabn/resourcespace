@@ -311,10 +311,10 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             $dec_long=0;$dec_lat=0;
 
             #Convert latititude to decimal.
-            if (preg_match("/^(?<degrees>\d?[\.\d]?) deg (?<minutes>\d?[\.\d]?)' (?<seconds>\d?[\.\d]+)\"/", $metadata['GPSLATITUDE'], $latitude)){
+            if (preg_match("/^(?<degrees>\d+) deg (?<minutes>\d+)' (?<seconds>\d+\.?\d*)\"/", $metadata['GPSLATITUDE'], $latitude)){
                 $dec_lat = $latitude['degrees'] + $latitude['minutes']/60 + $latitude['seconds']/(60*60);
             }
-            if (preg_match("/^(?<degrees>\d?[\.\d]?) deg (?<minutes>\d?[\.\d]?)' (?<seconds>\d?[\.\d]+)\"/", $metadata['GPSLONGITUDE'], $longitude)){
+            if (preg_match("/^(?<degrees>\d+) deg (?<minutes>\d+)' (?<seconds>\d+\.?\d*)\"/", $metadata['GPSLONGITUDE'], $longitude)){
                 $dec_long = $longitude['degrees'] + $longitude['minutes']/60 + $longitude['seconds']/(60*60);           
             }
            
