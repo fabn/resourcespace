@@ -781,14 +781,18 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
     if (!(isset($result[$n]['is_transcoding']) && $result[$n]['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false)) { $show_flv=true;}
     }
     if ($show_flv)
-    {
-    # Include the Flash player if an FLV file exists for this resource.
-    if(!hook("customflvplay"))
         {
-        include "flv_play.php";
+        # Include the Flash player if an FLV file exists for this resource.
+        if(!hook("customflvplay"))
+            {
+            include "flv_play.php";
+            }
         }
-    }
-    
+    elseif ($result[$n]['file_extension']=="swf" && $display_swf && $display_swf_xlarge_view){
+        $swffile=get_resource_path($ref,true,"",false,"swf");
+        if (file_exists($swffile)) { include "swf_play.php";}	
+	}
+
     else {
     ?>
 	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img src="<?php echo get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
