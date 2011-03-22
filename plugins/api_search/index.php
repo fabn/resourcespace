@@ -57,22 +57,46 @@ $results=do_search($search,$restypes,$order_by,$archive,-1,$sort,false,$starsear
 if (!is_array($results)){$results=array();}
 
 if (getval("previewsize","")!=""){
-for($n=0;$n<count($results);$n++){
-    $access=get_resource_access($results[$n]);
-	$use_watermark=check_use_watermark();
-    $filepath=get_resource_path($results[$n]['ref'],true,getval('previewsize',''),false,'jpg',-1,1,$use_watermark,'',-1);
-    $previewpath=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,$use_watermark,"",-1);
-    if (file_exists($filepath)){
-        $results[$n]['preview']=$previewpath;
-    }
-    else {
-        $previewpath=explode('filestore/',$previewpath);
-        $previewpath=$previewpath[0]."gfx/";
-        $file=$previewpath.get_nopreview_icon($results[$n]["resource_type"],$results[$n]["file_extension"],false,true);
-        $results[$n]['preview']=$file;
-    }
+    for($n=0;$n<count($results);$n++){
+        $access=get_resource_access($results[$n]);
+        $use_watermark=check_use_watermark();
+        $filepath=get_resource_path($results[$n]['ref'],true,getval('previewsize',''),false,'jpg',-1,1,$use_watermark,'',-1);
+        $previewpath=get_resource_path($results[$n]['ref'],false,getval("previewsize",""),false,"jpg",-1,1,$use_watermark,"",-1);
+        if (file_exists($filepath)){
+            $results[$n]['preview']=$previewpath;
+        }
+        else {
+            $previewpath=explode('filestore/',$previewpath);
+            $previewpath=$previewpath[0]."gfx/";
+            $file=$previewpath.get_nopreview_icon($results[$n]["resource_type"],$results[$n]["file_extension"],false,true);
+            $results[$n]['preview']=$file;
+        }
     }
 }
+
+// flv file and thumb if available
+if (getval("flvfile","")!=""){
+    for($n=0;$n<count($results);$n++){
+        // flv previews
+        $flvfile=get_resource_path($results[$n]['ref'],true,"pre",false,$ffmpeg_preview_extension);
+        if (!file_exists($flvfile)) {$flvfile=get_resource_path($results[$n]['ref'],true,"",false,$ffmpeg_preview_extension);}
+        if (!(isset($results[$n]['is_transcoding']) && $results[$n]['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+            {
+            if (file_exists(get_resource_path($results[$n]['ref'],true,"pre",false,$ffmpeg_preview_extension)))
+                {
+                $flashpath=get_resource_path($results[$n]['ref'],false,"pre",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+                }
+            else 
+                {
+                $flashpath=get_resource_path($results[$n]['ref'],false,"",false,$ffmpeg_preview_extension,-1,1,false,"",-1,false);
+                }
+            $results[$n]['flvpath']=$flashpath;
+            $thumb=get_resource_path($results[$n]['ref'],false,"pre",false,"jpg"); 
+            $results[$n]['flvthumb']=$thumb;
+        }
+    }
+}
+
 
 
 if (getval("content","")=="json"){

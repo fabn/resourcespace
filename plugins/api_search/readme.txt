@@ -11,7 +11,8 @@ order_by=[string]        Order by, ex. (colour, popularity, field12) (default= r
 sort=[string]            Sort order ("ASC" or "DESC")
 archive=[integer]        Archive Status (default 0 (active))
 starsearch=[integer]     Minimum # of stars (User Rated)
-previewsize=[string]     return a 'preview' url (ex: "thm")
+previewsize=[string]     return a 'preview' url (ex: "thm","col","pre","scr")
+flvfile=[string]         return a 'flvpath' and 'flvthumb' urls (ex. "true")
 content=[string]         Return results as json or xml (default json without json headers)
 
 If a signature is required, you must md5([yourhashkey].[querystring]) and submit it as a final parameter called skey.
