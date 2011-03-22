@@ -496,8 +496,7 @@ function iptc_return_utf8($text)
 		}
 	return $text;
 	}
-
-if (!function_exists("create_previews")){    
+ 
 function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
 	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
@@ -654,7 +653,6 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		}
 	return true;
 	}
-}
 
 function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
