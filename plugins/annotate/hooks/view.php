@@ -25,13 +25,15 @@ if ($resource["has_image"]==1)
 	$imagepath=get_resource_path($ref,true,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 	if (!file_exists($imagepath))
 		{
+        $imagepath=get_resource_path($ref,true,"thm",false,$resource["preview_extension"],-1,1,$use_watermark);    
 		$imageurl=get_resource_path($ref,false,"thm",false,$resource["preview_extension"],-1,1,$use_watermark);
 		}
 	else
 		{
 		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 		}
-$sizes = getimagesize($imageurl);
+$sizes = getimagesize($imagepath);
+
 $w = $sizes[0];
 $h = $sizes[1];	
 
