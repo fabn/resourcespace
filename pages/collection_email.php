@@ -193,7 +193,7 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 
 <?php if ($cc_me && $useremail!=""){?>
 <div class="Question">
-<label for="ccme">CC <?php echo $useremail; ?></label><input type=checkbox checked id="ccme" name="ccme">
+<label for="ccme"><?php echo str_replace("%emailaddress", $useremail, $lang["cc-emailaddress"]); ?></label><input type=checkbox checked id="ccme" name="ccme">
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>

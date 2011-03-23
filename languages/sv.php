@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110321 för version 2512+.
+# Senast uppdaterad av Henrik Frizén 20110323 för version 2523.
 #
 #
 # User group names (for the default user groups)
@@ -1335,3 +1335,5 @@ $lang["action-delete_permanently"] = "Radera permanent";
 
 $lang["horizontal"] = "Horisontellt";
 $lang["vertical"] = "Vertikalt";
+
+$lang["cc-emailaddress"] = "Kopia till %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]

@@ -1315,3 +1315,5 @@ $lang["action-delete_permanently"] = "Delete permanently";
 
 $lang["horizontal"] = "Horizontal";
 $lang["vertical"] = "Vertical";
+
+$lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
