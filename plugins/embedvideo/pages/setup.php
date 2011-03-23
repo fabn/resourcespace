@@ -23,13 +23,13 @@ include "../../../include/header.php";
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>Embed Video Configuration</h1>
+  <h1><?php echo $lang["embed_video_configuration"] ?></h1>
 
   <div class="VerticalNav">
  <form id="form1" name="form1" method="post" action="">
 
-<p>Please specify which resource type the 'embed' functionality should appear for.</p>
-   <p><label for="resourcetype">Video Resource Type:</label>
+<p><?php echo $lang["specify_resourcetype"] ?></p>
+   <p><label for="resourcetype"><?php echo $lang["video_resourcetype"] . ":" ?></label>
    
    <select name="resourcetype"?
    <?php foreach ($resource_types as $rt) { ?>
