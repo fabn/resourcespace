@@ -103,10 +103,16 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 if (($pagename=="terms") && (getval("url","")=="index.php")) {$loginterms=true;} else {$loginterms=false;}
 if ($pagename!="preview" && $pagename!="preview_all") { ?>
 
+<?php
+$homepage_url=$baseurl."/pages/".$default_home_page;
+if ($use_theme_as_home){$homepage_url=$baseurl."/pages/themes.php";}
+if ($use_recent_as_home){$homepage_url=$baseurl."/pages/search.php?search=".urlencode('!last'.$recent_search_quantity);}
+?>
+
 <div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
-<?php if ($header_link && !$header_text_title){?><a class="headerlink" style="margin:20px 25px; position: absolute; display: block; width: <?php echo $header_link_width?>px; height: 55px;  top: 0px; left: 0px;" href="<?php echo $baseurl?>/pages/home.php"></a><?php } ?>
+<?php if ($header_link && !$header_text_title){?><a class="headerlink" style="margin:20px 25px; position: absolute; display: block; width: <?php echo $header_link_width?>px; height: 55px;  top: 0px; left: 0px;" href="<?php echo $homepage_url?>"></a><?php } ?>
 <?php if ($header_text_title){?>
-    <div id="TextHeader"><a href="<?php echo $baseurl;?>/pages/home.php"><?php echo $applicationname;?></a></div>
+    <div id="TextHeader"><a href="<?php echo $homepage_url?>"><?php echo $applicationname;?></a></div>
     <?php if ($applicationdesc!=""){?>
         <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
     <?php } ?>
