@@ -6,7 +6,7 @@ global $baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download
 $resource=get_resource_data($ref);
 if ($resource['file_extension']=="pdf"){return false;}
 
-$sizes = getimagesize($url);
+$sizes = getimagesize($path);
 $w = $sizes[0];
 $h = $sizes[1];
 
