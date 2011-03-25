@@ -1,7 +1,7 @@
 <?php
 $lang["apiaccess"]="API Access";
 $lang["availableapis"]="Available APIs";
-$lang["remoteapisnotavailable"]="Remote APIs are not available on this system.";
+$lang["remoteapisnotavailable"]="Remote APIs are not available on this system. Please ask your administrator to enable remote APIs with enable_remote_apis and a unique api_scramble_key.";
 $lang["yourauthkey"]="Your Authentication Key";
 $lang["yourhashkey"]="Your hash key (Do not share this or insert it into URLS directly. It is for certain requests that require a 'signature' by hashing the query with this shared secret to prevent modification of intercepted URLs):";
 $lang["api"]="API";

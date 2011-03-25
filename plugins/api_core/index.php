@@ -9,7 +9,7 @@ include "../../include/header.php";
 <h1><?php echo $lang["apiaccess"]?></h1>
 </div>
 
-<?php if (!$enable_remote_apis){echo $lang["remoteapisnotavailable"]; exit();}?>
+<?php if (!$enable_remote_apis || $api_scramble_key=="abcdef123"){echo $lang["remoteapisnotavailable"]; exit();}?>
 
 <?php
 $apikey=make_api_key($username,$userpassword);
@@ -27,7 +27,9 @@ echo $lang['mcryptenabled'];
 } else {echo $lang['mcryptdisabled'];}
 ?>
 
-<?php if ($_SERVER["SERVER_PORT"] !=443) {echo $lang["sslrecommended"];}?>
+
+<?php if ($_SERVER["SERVER_PORT"] !=443) {echo "<br>".$lang["sslrecommended"];}?>
+
 <br/><br/><br/>
 <h1><?php echo $lang["availableapis"]?></h1>
 <div class="Listview">
