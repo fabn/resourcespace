@@ -21,9 +21,7 @@ $search=getvalescaped("search","");
 # create a display_fields array with information needed for detailed field highlighting
 $df=array();
 
-if (isset($metadata_template_resource_type) && isset($metadata_template_title_field)){
-	$thumbs_display_fields[]=$metadata_template_title_field;
-	}
+
 $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields)));
 
 # get display and normalize display specific variables
