@@ -52,7 +52,7 @@ for ($n=0;$n<count($log);$n++)
 			echo $newnotes;
 		}
 		?></td>
-	<td><?php echo $log[$n]["resource"]?></td>
+	<td><a href='view.php?ref=<?php echo $log[$n]["resource"]?>'><?php echo $log[$n]["resource"]?></a></td>
 	<td><?php echo i18n_get_translated($log[$n]["title"])?></td>
 	</tr> 
 <?php } ?>
