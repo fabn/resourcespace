@@ -74,6 +74,7 @@ $lang["home"]="Home";
 $lang["searchresults"]="Search Results";
 $lang["themes"]="Themes";
 $lang["mycollections"]="My Collections";
+$lang["myrequests"]="My Requests";
 $lang["collections"]="Collections";
 $lang["mycontributions"]="My Contributions";
 $lang["researchrequest"]="Research Request";
@@ -179,7 +180,10 @@ $lang["uselocalupload"]="OR: Use local 'upload' folder instead of remote FTP ser
 $lang["contributenewresource"]="Contribute New Resource";
 $lang["viewcontributedps"]="View My Contributions - Pending Submission";
 $lang["viewcontributedpr"]="View My Contributions - Pending Resource Team Review";
-$lang["viewcontributedsubittedl"]="View My Contributions - Live";
+$lang["viewcontributedsubittedl"]="View My Contributions - Active";
+$lang["contributedps"]="My Contributions - Pending Submission";
+$lang["contributedpr"]="My Contributions - Pending Resource Team Review";
+$lang["contributedsubittedl"]="My Contributions - Active";
 
 # Collections
 $lang["editcollection"]="Edit Collection";
@@ -237,6 +241,7 @@ $lang["downloaded"]="Downloaded";
 $lang["contents"]="Contents";
 $lang["forthispackage"]="for this package";
 $lang["didnotinclude"]="Did not include";
+$lang["selectcollection"]="Select Collection";
 $lang["total"]="Total";
 $lang["ownedbyyou"]="owned by you";
 
@@ -538,6 +543,7 @@ $lang["resource-0"]="resources";
 $lang["resource-1"]="resource";
 $lang["resource-2"]="resources";
 $lang["status-note"]="NOTE";
+$lang["action-changelanguage"]="Change Language";
 
 # Pager
 $lang["next"]="Next";
@@ -760,13 +766,14 @@ $lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? U
 $lang["noexternalsharing"]="No external sharing.";
 $lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
 $lang["addresourcebatchlocalfolder"]="Add Resource Batch - Fetch from local upload folder";
+
 # Setup Script
 $lang["setup-alreadyconfigured"]="Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
 $lang["setup-successheader"]="Congratulations!";
 $lang["setup-successdetails"]="Your initial ResourceSpace setup is complete.  Be sure to check out 'include/default.config.php' for more configuration options.";
 $lang["setup-successnextsteps"]="Next steps:";
 $lang["setup-successremovewrite"]="You can now remove write access to 'include/'.";
-$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation';
+$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation.';
 $lang["setup-checkconfigwrite"]="Write access to config directory:";
 $lang["setup-checkstoragewrite"]="Write access to storage directory:";
 $lang["setup-welcome"]="Welcome to ResourceSpace";
@@ -795,6 +802,7 @@ $lang["setup-emailfrom"]="Email From Address:";
 $lang["setup-emailnotify"]="Email Notify:";
 $lang["setup-spiderpassword"]="Spider Password:";
 $lang["setup-scramblekey"]="Scramble Key:";
+$lang["setup-apiscramblekey"]="API Scramble Key:";
 $lang["setup-paths"]="Paths";
 $lang["setup-pathsdetail"]="For each path, enter the path without a trailing slash to each binary.  To disable a binary, leave the path blank.  Any auto-detected paths have already been filled in.";
 $lang["setup-applicationname"]="Application Name:";
@@ -809,14 +817,42 @@ $lang["setup-if_emailfrom"]="The address that emails from RS appear to come from
 $lang["setup-if_emailnotify"]="The email address to which resource/user/research requests are sent.";
 $lang["setup-if_spiderpassword"]="The spider password is a required field.";
 $lang["setup-if_scramblekey"]="To enable scrambling, set the scramble key to be a hard-to-guess string (similar to a password).  If this is a public installation then this is a very wise idea.  Leave this field blank to disable resource path scrambling. This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
+$lang["setup-if_apiscramblekey"]="Set the api scramble key to be a hard-to-guess string (similar to a password).  If you plan to use APIs then this is a very wise idea.";
 $lang["setup-if_applicationname"]="The name of your implementation / installation (e.g. 'MyCompany Resource System').";
 $lang["setup-err_mysqlbinpath"]="Unable to verify path.  Leave blank to disable.";
 $lang["setup-err_baseurl"]="Base URL is a required field.";
 $lang["setup-err_baseurlverify"]="Base URL does not seem to be correct (could not load license.txt).";
 $lang["setup-err_spiderpassword"]="The password required for spider.php.  IMPORTANT: Randomise this for each new installation. Your resources will be readable by anyone that knows this password.  This field has already been randomised for you, but you can change it to match an existing installation, if necessary.";
 $lang["setup-err_scramblekey"]="If this is a public installation, setting the scramble key is recommended.";
+$lang["setup-err_apiscramblekey"]="If this is a public installation, setting the api scramble key is recommended.";
 $lang["setup-err_path"]="Unable to verify location of";
 $lang["setup-emailerr"]="Not a valid email address.";
+$lang["setup-rs_initial_configuration"]="ResourceSpace: Initial Configuration";
+$lang["setup-include_not_writable"]="'/include' not writable. Only required during setup.";
+$lang["setup-override_location_in_advanced"]="Override location in 'Advanced Settings'.";
+$lang["setup-advancedsettings"]="Advanced Settings";
+$lang["setup-binpath"]="%bin Path"; #%bin will be replaced, e.g. "Imagemagick Path"
+$lang["setup-begin_installation"]="Begin Installation!";
+$lang["setup-generaloptions"]="General Options";
+$lang["setup-allow_password_change"]="Allow password change?";
+$lang["setup-enable_remote_apis"]="Enable Remote APIs?";
+$lang["setup-if_allowpasswordchange"]="Allow end users to change their passwords.";
+$lang["setup-if_enableremoteapis"]="Allow remote access to API plugins.";
+$lang["setup-allow_account_requests"]="Allow users to request accounts?";
+$lang["setup-display_research_request"]="Display the Research Request functionality?";
+$lang["setup-if_displayresearchrequest"]="Allows users to request resources via a form, which is e-mailed.";
+$lang["setup-themes_as_home"]="Use the themes page as the home page?";
+$lang["setup-remote_storage_locations"]="Remote Storage Locations";
+$lang["setup-use_remote_storage"]="Use remote storage?";
+$lang["setup-if_useremotestorage"]="Check this box to configure remote storage locations for RS. (To use another server for filestore.)";
+$lang["setup-storage_directory"]="Storage Directory";
+$lang["setup-if_storagedirectory"]="Where to put the media files. Can be absolute (/var/www/blah/blah) or relative to the installation. NOTE: No trailing slash.";
+$lang["setup-storage_url"]="Storage URL";
+$lang["setup-if_storageurl"]="Where the storagedir is available. Can be absolute (http://files.example.com) or relative to the installation. NOTE: No trailing slash.";
+$lang["setup-ftp_settings"]="FTP Settings";
+$lang["setup-if_ftpserver"]="Only necessary if you plan to use the FTP upload feature.";
+$lang["setup-login_to"]="Login to";
+$lang["setup-configuration_file_output"]="Configuration File Ouput";
 
 # Collection log - actions
 $lang["collectionlog"]="Collection Log";
@@ -830,7 +866,7 @@ $lang["collectionlog-m"]="Added resource comment";
 $lang["collectionlog-*"]="Added resource rating";
 $lang["collectionlog-S"]="Shared collection with "; //  + notes field
 $lang["collectionlog-E"]="E-mailed collection to ";//  + notes field
-$lang["collectionlog-s"]="Shared Resource with ";//  + notes field
+$lang["collectionlog-s"]="Shared resource with ";//  + notes field
 $lang["collectionlog-T"]="Stopped sharing collection with ";//  + notes field
 $lang["collectionlog-t"]="Stopped access to resource by ";//  + notes field
 $lang["collectionlog-X"]="Collection deleted";
@@ -1135,6 +1171,8 @@ $lang["shouldbeversion"]="should be ? or greater"; # E.g. "should be 4.4 or grea
 $lang["phpinivalue"]="PHP.INI value for '?'"; # E.g. "PHP.INI value for 'memory_limit'"
 $lang["writeaccesstofilestore"]="Write access to $storagedir";
 $lang["nowriteaccesstofilestore"]="$storagedir not writable";
+$lang["writeaccesstohomeanim"]="Write access to $homeanim_folder";
+$lang["nowriteaccesstohomeanim"]="$homeanim_folder not writable. Open permissions to enable home animation cropping feature in the transform plugin.";
 $lang["blockedbrowsingoffilestore"]="Blocked browsing of 'filestore' directory";
 $lang["noblockedbrowsingoffilestore"]="filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
 $lang["executionofconvertfailed"]="Execution failed; unexpected output when executing convert command. Output was '?'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki."; # ? will be replaced.
@@ -1208,7 +1246,7 @@ $lang["can_edit_field"]="Can edit field";
 $lang["can_see_resource_type"]="Can see resource type";
 $lang["restricted_access_only_to_resource_type"]="Restricted access only to resource type";
 $lang["edit_access_to_workflow_state"]="Edit access to workflow state";
-$lang["can_create_resources_and_upload_files-admins"]="Can create resources / upload files<br>(admin users; resources go to 'Live' state)";
+$lang["can_create_resources_and_upload_files-admins"]="Can create resources / upload files<br>(admin users; resources go to 'Active' state)";
 $lang["can_create_resources_and_upload_files-general_users"]="Can create resources / upload files<br>(normal users; resources go to 'Pending Submission' state via My Contributions)";
 $lang["can_delete_resources"]="Can delete resources<br>(to which the user has write access)";
 $lang["can_manage_archive_resources"]="Can manage archive resources";
@@ -1234,4 +1272,50 @@ $lang["nodownloadcollection"]="You do not have access to download any of the res
 
 $lang["progress"]="Progress";
 $lang["ticktodeletethisresearchrequest"]="Tick to delete this request";
-?>
+
+# SWFUpload
+$lang["queued_too_many_files"]="You have attempted to queue too many files.";
+$lang["creatingthumbnail"]="Creating thumbnail...";
+$lang["uploading"]="Uploading...";
+$lang["thumbnailcreated"]="Thumbnail Created.";
+$lang["done"]="Done.";
+$lang["stopped"]="Stopped."; 
+
+$lang["latlong"]="Lat / Long";
+$lang["geographicsearch"]="Geographic search";
+
+$lang["geographicsearch_help"]="Drag to select a search area.";
+
+$lang["purge"]="Purge";
+$lang["purgeuserstitle"]="Purge Users";
+$lang["purgeusers"]="Purge users";
+$lang["purgeuserscommand"]="Delete users accounts that have not been active in the last % months, but were created before this period.";
+$lang["purgeusersconfirm"]="This will delete % user accounts. Are you sure?";
+$lang["pleaseenteravalidnumber"]="Please enter a valid number";
+$lang["purgeusersnousers"]="There are no users to purge.";
+
+$lang["editallresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for the selected resources.";
+
+$lang["geodragmode"]="Drag mode";
+$lang["geodragmodearea"]="selection";
+$lang["geodragmodepan"]="pan";
+
+$lang["substituted_original"] = "substituted original";
+$lang["use_original_if_size"] = "Use original if selected size is unavailable?";
+
+$lang["originals-available-0"] = "available"; # 0 (originals) available
+$lang["originals-available-1"] = "available"; # 1 (original) available
+$lang["originals-available-2"] = "available"; # 2+ (originals) available
+
+$lang["inch-short"] = "in";
+$lang["centimetre-short"] = "cm";
+$lang["megapixel-short"]="MP";
+$lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI
+
+$lang["deletedresource"] = "Deleted Resource";
+$lang["action-delete_permanently"] = "Delete permanently";
+
+$lang["horizontal"] = "Horizontal";
+$lang["vertical"] = "Vertical";
+
+$lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
