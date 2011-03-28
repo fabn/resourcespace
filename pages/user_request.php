@@ -128,16 +128,6 @@ if (isset($custom_registration_fields))
 	}
 ?>
 
-<?php
-$code=rand(1000,9999);
-?>
-<input type="hidden" name="antispamcode" value="<?php echo md5($code)?>">
-<div class="Question">
-<label for="antispam"><?php echo $lang["enterantispamcode"] . " " . $code ?> <sup>*</sup></label>
-<input type=text name="antispam" id="antispam" class="stdwidth" value="">
-<div class="clearerleft"> </div>
-</div>
-
 <?php if (!hook("replacegroupselect")) { /* BEGIN hook Replacegroupselect */ ?>
 <?php if ($registration_group_select) {
 # Allow users to select their own group
@@ -168,6 +158,19 @@ $groups=get_registration_selectable_usergroups();
 <?php } /* END hook replaceuserrequestcomment */ ?>
 
 <?php hook("userrequestadditional");?>
+
+<br />
+
+<?php
+$code=rand(1000,9999);
+?>
+<input type="hidden" name="antispamcode" value="<?php echo md5($code)?>">
+<div class="Question">
+<label for="antispam"><?php echo $lang["enterantispamcode"] . " " . $code ?></label>
+<input type=text name="antispam" id="antispam" class="stdwidth" value="">
+<div class="clearerleft"> </div>
+</div>
+
 
 <div class="QuestionSubmit">
 <?php if ($error) { ?><div class="FormError">!! <?php echo $error ?> !!<?php echo $error_extra?></div><br /><?php } ?>
