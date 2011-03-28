@@ -16,6 +16,12 @@ if (!(isset($_REQUEST['collection'])&&is_numeric($_REQUEST['collection']))){
 	$collection = $_REQUEST['collection'];
 }
 
+
+# Fetch collection data
+$cinfo=get_collection($collection);if ($cinfo===false) {exit("Collection not found.");}
+if (($userref!=$cinfo["user"]) && ($cinfo["allow_changes"]!=1) && (!checkperm("h"))) {exit("Access denied.");}
+
+
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'doreorder'){
 	// code here to save reordered resources
 	$items = $_POST['resourcelist'];
