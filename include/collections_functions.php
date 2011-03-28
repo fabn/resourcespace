@@ -84,7 +84,7 @@ function get_collection_resources($collection)
 	{
 	# Returns all resources in collection
 	# For many cases (e.g. when displaying a collection for a user) a search is used instead so permissions etc. are honoured.
-	return sql_array("select resource value from collection_resource where collection='$collection' order by date_added desc"); 
+	return sql_array("select resource value from collection_resource where collection='$collection' order by sortorder asc, date_added desc"); 
 	}
 	
 function add_resource_to_collection($resource,$collection,$smartadd=false,$size="")
