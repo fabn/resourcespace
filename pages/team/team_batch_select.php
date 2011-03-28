@@ -80,15 +80,13 @@ for ($n=0;$n<count($list);$n++)
 <!--<div class="tickset">-->
 <select name="uploadfiles[]" multiple size=20>
 <?php 
-for ($n=0;$n<count($files);$n++)
-	{
-	if ($use_local) {$fn=$files[$n];} else
-		{
-		# FTP - split up path
-		$fs=explode("/",$files[$n]);
-		if (count($fs)==1) {$fs=explode("\\",$files[$n]);} # Support backslashes
-		$fn=$fs[count($fs)-1];
-		}
+foreach ($files as $fn){
+       if (!$use_local) {
+               # FTP - split up path
+               $fs=explode("/",$fn);
+               if (count($fs)==1) {$fs=explode("\\",$fn);} # Support backslashes
+               $fn=$fs[count($fs)-1];
+               }
 	$show=true;
 	if (($fn=="..") || ($fn==".")) {$show=false;}
 	if (strpos($fn,".")===false) {$show=false;}
