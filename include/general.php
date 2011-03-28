@@ -537,7 +537,9 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	for ($n=0;$n<count($sizes);$n++)
 		{
 		$path=get_resource_path($ref,true,$sizes[$n]["id"],false,"jpg");
-		if (file_exists($path) || (!$onlyifexists))
+
+		$resource_type=sql_value("select resource_type value from resource where ref='$ref'","");
+		if ((file_exists($path) || (!$onlyifexists)) && !checkperm("T" . $resource_type . "_" . $sizes[$n]["id"]))
 			{
 			if (($sizes[$n]["internal"]==0) || ($internal))
 				{
@@ -546,7 +548,6 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				$returnline["allow_preview"]=$sizes[$n]["allow_preview"];
 
 				# The ability to restrict download size by user group and resource type.
-				$resource_type=sql_value("select resource_type value from resource where ref='$ref'","");
 				if (checkperm("X" . $resource_type . "_" . $sizes[$n]["id"]))
 					{
 					# Permission set. Always restrict this download if this resource is restricted.
