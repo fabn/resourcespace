@@ -23,10 +23,8 @@ function HookVideo_spliceCollectionsCollectiontoolcompact()
 	# Link in collections bar (minimised)
 	global $usercollection;
 	?>
-    <option value="../plugins/video_splice/pages/splice.php?collection=<?php echo $usercollection ?>">Splice</option>
+    <option value="../plugins/video_splice/pages/splice.php?collection=<?php echo $usercollection ?>">&gt;&nbsp;Splice...</option>
 	<?php
 	}
-
-
 
 ?>
