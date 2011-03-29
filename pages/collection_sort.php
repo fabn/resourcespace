@@ -132,9 +132,11 @@ function saveOrder() {
 function afterResort(){
 	// fixme  - need to make sure this works with frameless collections as well
 	curcol = top.collections.document.getElementById('colselect').collection.value;
-	if (curcol == '<?php echo $collection; ?>' && !$frameless_collections){
-		top.collections.location = "collections.php?collection=" + curcol;
-	}
+	<?php  if (!$frameless_collections){	?>
+		if (curcol == '<?php echo $collection; ?>'){
+			top.collections.location = "collections.php?collection=" + curcol;
+		}
+	<?php } // end if not frameless collections ?>
 }
 
 

@@ -490,8 +490,14 @@ $infobox_display_resource_icon=true;
 $infobox_image_mode=false;
 
 
-# Reordering, captioning and ranking of collections
-$collection_reorder_caption=false;
+# Reordering, captioning and ranking of collections (deprecated)
+$collection_reorder_caption=false; 
+
+# Enable new-style collection sorting
+$collection_sorting = false;
+
+# Enable collection commenting and ranking
+$collection_commenting = false;
 
 # Footer text applied to all e-mails (blank by default)
 $email_footer="";

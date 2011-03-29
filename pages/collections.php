@@ -472,6 +472,7 @@ elseif ($k!="")
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_sort.php?collection=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $lang["sort"]?></a></li><?php } ?>
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
 	<?php hook("collectiontool2");?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
@@ -603,11 +604,11 @@ if ($count_result>0)
 		<?php } ?>
 	
 		<?php if ($k=="") { ?><div class="CollectionPanelInfo">
-		<?php if (($feedback) || ($collection_reorder_caption && $allow_reorder)) { ?>
+		<?php if (($feedback) || (($collection_reorder_caption || $collection_commenting) && $allow_reorder)) { ?>
 		<span class="IconComment <?php if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<?php } ?>"><a target="main" href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo $usercollection?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
 		<?php } ?>
 		
-		<?php if ($collection_reorder_caption && $allow_reorder) { ?>
+		<?php if ($collection_reorder_caption  && $allow_reorder) { ?>
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<span class="IconRemove"><a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
 		<?php } else { 
@@ -726,6 +727,7 @@ elseif ($k!="")
 	<?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
     
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_sort.php?collection=<?php echo $usercollection?>">&nbsp;<?php echo $lang["sort"]?></a></li><?php } ?>
 
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["preview_all"]?></a></li><?php } ?>
     <?php hook('collectiontool2min');?>
