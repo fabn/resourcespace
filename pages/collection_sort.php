@@ -74,9 +74,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   <script src="../lib/js/prototype.js" type="text/javascript"></script>
   <script src="../lib/js/scriptaculous.js" type="text/javascript"></script>
 
-<h1>Sort Resources</h1>
+<h1><?php echo $lang['sortcollection']; ?></h1>
 
-<pre id="resourcelist_debug"></pre>
+<!-- FIXME: Add instructions to site content if desired. -->
+<?php echo text("introtext")?>
 
 
 <?php

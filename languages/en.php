@@ -1321,3 +1321,4 @@ $lang["vertical"] = "Vertical";
 $lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
 
 $lang["sort"] = "Sort";
+$lang["sortcollection"] = "Sort Collection";
