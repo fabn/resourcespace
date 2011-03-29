@@ -857,55 +857,39 @@ function swap_collection_order($resource1,$resource2,$collection)
 	{
 	# Inserts $resource1 into the position currently occupied by $resource2 
 
-	$existingorder=sql_query("select resource,date_added  from collection_resource where collection='$collection' order by date_added desc");
-	#find dates for 1 and 2
-	for ($n=0;$n<count($existingorder);$n++){
-		if ($existingorder[$n]['resource']==$resource1){
-			$firstdate=strtotime($existingorder[$n]['date_added']);
-			}
-		if ($existingorder[$n]['resource']==$resource2){
-			$seconddate=strtotime($existingorder[$n]['date_added']);
-			}
+	// sanity check -- we should only be getting IDs here
+	if (!is_numeric($resource1) || !is_numeric($resource2) || !is_numeric($collection)){
+		exit ("Error: invalid input to swap collection function.");
 	}
-	if ($firstdate>$seconddate){$reverse=1;}else{$reverse=0;}		
 	
-	$neworder=array();
-	if ($reverse){
-		for ($n=0;$n<count($existingorder);$n++)
-			{
-			if ($existingorder[$n]['resource']==$resource1){}
-				if ($existingorder[$n]['resource']==$resource2)
-				{
-				$neworder[]=$resource2;	
-				$neworder[]=$resource1;
-				}	
-				if ($existingorder[$n]['resource']!=$resource1&&$existingorder[$n]['resource']!=$resource2)
-				{
-				$neworder[]=$existingorder[$n]['resource'];
-				}	
-			}
+	$query = "select resource,date_added,sortorder  from collection_resource where collection='$collection' and resource in ('$resource1','$resource2')  order by sortorder asc, date_added desc";
+	$existingorder = sql_query($query);
+
+	$counter = 1;
+	foreach ($existingorder as $record){
+		$rec[$counter]['resource']= $record['resource'];		
+		$rec[$counter]['date_added']= $record['date_added'];
+		if (strlen($record['sortorder']) == 0){
+			$rec[$counter]['sortorder'] = "NULL";
+		} else {		
+			$rec[$counter]['sortorder']= "'" . $record['sortorder'] . "'";
 		}
-	else{
+			
+		$counter++;	
+	}
+
 	
-		for ($n=0;$n<count($existingorder);$n++)
-			{
-			if ($existingorder[$n]['resource']==$resource2)
-				{
-				$neworder[]=$resource1;
-				}
-			if ($existingorder[$n]['resource']!=$resource1)
-				{
-				$neworder[]=$existingorder[$n]['resource'];
-				}
-			}
-		}
-	#echo " to " . join(",",$neworder);
-	for ($n=0;$n<count($neworder);$n++)
-		{
-		$newdate=date("Y-m-d H:i:s",(time()-$n));
-		#echo "<br>" . $newdate;
-		sql_query("update collection_resource set date_added='$newdate' where collection='$collection' and resource='" . $neworder[$n] . "'");
-		}	
+	$sql1 = "update collection_resource set date_added = '" . $rec[1]['date_added'] . "', 
+		sortorder = " . $rec[1]['sortorder'] . " where collection = '$collection' 
+		and resource = '" . $rec[2]['resource'] . "'";
+
+	$sql2 = "update collection_resource set date_added = '" . $rec[2]['date_added'] . "', 
+		sortorder = " . $rec[2]['sortorder'] . " where collection = '$collection' 
+		and resource = '" . $rec[1]['resource'] . "'";
+
+	sql_query($sql1);
+	sql_query($sql2);
+
 	}
 
 function get_collection_resource_comment($resource,$collection)
