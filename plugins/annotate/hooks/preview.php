@@ -1,12 +1,15 @@
 <?php
 
 function HookAnnotatePreviewPreviewimage2 (){
-global $baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path;
+global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig;
 
 $resource=get_resource_data($ref);
 if ($resource['file_extension']=="pdf"){return false;}
 
+if (!file_exists($path)){$sizes = getimagesize($path_orig);}
+else{
 $sizes = getimagesize($path);
+}
 $w = $sizes[0];
 $h = $sizes[1];
 
