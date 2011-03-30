@@ -232,7 +232,10 @@ function HideHelp(field)
 <?php 
 if ($multiple) { ?>
 <h1><?php echo $lang["editmultipleresources"]?></h1>
-<p><?php echo count($items)?> <?php echo $lang["resourcesselected"]?>. <?php echo text("multiple")?></p>
+<p><?php $qty = count($items);
+echo ($qty==1 ? $lang["resources_selected-1"] : str_replace("%number", $qty, $lang["resources_selected-2"])) . ". ";
+# The script doesn't allow editing of empty collections, no need to handle that case here.
+echo text("multiple"); ?></p>
 
 <?php } elseif ($ref>0) { ?>
 <p><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p>
@@ -938,7 +941,7 @@ if ($multiple)
 	# Multiple method of changing location.
 	 ?>
 	<br /><h1><?php echo $lang["location-title"] ?></h1>
-	<div><input name="editlocation" id="editlocation" type="checkbox" value="yes" onClick="var q=document.getElementById('editlocation_question');if (this.checked) {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editlocation"><?php echo $lang["location-edit"] ?></label></div>
+	<div><input name="editlocation" id="editlocation" type="checkbox" value="yes" onClick="var q=document.getElementById('editlocation_question');if (this.checked) {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editlocation"><?php echo $lang["location"] ?></label></div>
 	<div class="Question" style="display:none;" id="editlocation_question">
 	<label for="resourcetype"><?php echo $lang["latlong"]?></label>
 	<input type="text" name="location" id="location" class="stdwidth">

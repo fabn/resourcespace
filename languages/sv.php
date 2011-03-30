@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110323 för version 2523.
+# Senast uppdaterad av Henrik Frizén 20110330 för version 2545.
 #
 #
 # User group names (for the default user groups)
@@ -273,7 +273,8 @@ $lang["rightclicktodownload"]="Högerklicka på denna länk och välj 'Spara må
 $lang["downloadinprogress"]="Nedladdning pågår";
 $lang["editmultipleresources"]="Redigera material i grupp";
 $lang["editresource"]="Redigera material";
-$lang["resourcesselected"]="material valt"; # e.g. 17 resources selected.
+$lang["resources_selected-1"]="1 material valt"; # 1 resource selected
+$lang["resources_selected-2"]="%number material valda"; # e.g. 17 resources selected
 $lang["image"]="Bild";
 $lang["previewimage"]="Förhandsgranska bild";
 $lang["file"]="Fil";
@@ -1022,6 +1023,7 @@ $lang['location-add'] = 'Lägg till plats';
 $lang['location-edit'] = 'Redigera plats';
 $lang['location-details'] = 'Dubbelklicka på kartan för att placera nålen. Du kan dra i nålen för att justera placeringen i efterhand.';
 $lang['location-noneselected']="Ingen plats vald";
+$lang['location'] = 'Plats';
 
 $lang["publiccollections"]="Publika samlingar";
 $lang["viewmygroupsonly"]="Visa bara mina grupper";

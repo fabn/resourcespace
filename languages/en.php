@@ -255,7 +255,8 @@ $lang["rightclicktodownload"]="Right click this link and choose 'Save Target As'
 $lang["downloadinprogress"]="Download In Progress";
 $lang["editmultipleresources"]="Edit Multiple Resources";
 $lang["editresource"]="Edit Resource";
-$lang["resourcesselected"]="resources selected"; # e.g. 17 resources selected.
+$lang["resources_selected-1"]="1 resource selected"; # 1 resource selected
+$lang["resources_selected-2"]="%number resources selected"; # e.g. 17 resources selected
 $lang["image"]="Image";
 $lang["previewimage"]="Preview Image";
 $lang["file"]="File";
@@ -1004,6 +1005,7 @@ $lang['location-add'] = 'Add Location';
 $lang['location-edit'] = 'Edit Location';
 $lang['location-details'] = 'Double-click map to place pin.  Once the pin has been placed, you can drag the pin to refine the location.';
 $lang['location-noneselected']="No Location Selected";
+$lang['location'] = 'Location';
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
