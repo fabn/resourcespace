@@ -19,7 +19,7 @@ if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"
 else { ?>
  <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].value!=''){if (colactions.colactionselect.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactions.colactionselect.options[selectedIndex].value;}else {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} } colactions.colactionselect.value='';">
  <?php }?>
-<option id="resetcolaction" value=""><?php echo $lang['select'];?>...</option>
+<option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
 <!-- select collection -->
 <?php if ($pagename=="search"){?><option id="selectcollection" value="collections.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang['selectcollection'];?></option><?php } ?>
 <!-- end select collection -->
@@ -109,7 +109,7 @@ if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_
 <!-- purge -->
 <?php if ($collection_purge){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
-        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
+        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?></option><?php 
     } 
 } ?>
 <!-- end purge -->
