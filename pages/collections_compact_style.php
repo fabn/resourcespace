@@ -109,7 +109,7 @@ if ((count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_
 <!-- purge -->
 <?php if ($collection_purge){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
-        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?></option><?php 
+        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
     } 
 } ?>
 <!-- end purge -->
