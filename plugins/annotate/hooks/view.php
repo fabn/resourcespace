@@ -58,7 +58,7 @@ $h = $sizes[1];
 <div>
 <img id="toAnnotate" src="<?php echo $imageurl?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
 	</div>
-	<br>&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&annotate=true" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo $lang["fullscreenpreview"]?></a>
+	<br>&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo $lang["fullscreenpreview"]?></a>
     
      <?php
      // MAGICTOUCH PLUGIN COMPATIBILITY
