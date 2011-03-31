@@ -1,0 +1,6 @@
+name: magictouch
+author: Dan Huby
+version: 1.0
+desc: Replaces image previews with MagicTouch zoomable previews.
+info_url: http://www.magictoolbox.com/magictouch/
+config_url: /plugins/magictouch/pages/setup.php
