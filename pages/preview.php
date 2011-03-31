@@ -129,8 +129,8 @@ elseif ($nextpage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource
 <td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
 <td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource_type"])) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
-<?php } ?>
-<?php } ?>
+<?php } // end hook previewimage2 ?>
+<?php } // end hook previewimage ?>
 <div id="CollectionFramelessCount" style="display:none;"> </div>
 
 <?php

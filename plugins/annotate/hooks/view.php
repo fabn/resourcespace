@@ -2,9 +2,10 @@
 
 
 function HookAnnotateViewRenderinnerresourcepreview(){
-	global $ref,$ffmpeg_preview_extension,$resource,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl;
-	
-if ($resource['file_extension']=="pdf"){return false;}
+	global $ref,$ffmpeg_preview_extension,$resource,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$annotate_ext_exclude,$annotate_rt_exclude;
+
+if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
+if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
 
 $download_multisize=true;
 
@@ -57,7 +58,14 @@ $h = $sizes[1];
 <div>
 <img id="toAnnotate" src="<?php echo $imageurl?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
 	</div>
-	<br>&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo $lang["fullscreenpreview"]?></a>
+	<br>&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&annotate=true" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo $lang["fullscreenpreview"]?></a>
+    
+     <?php
+     // MAGICTOUCH PLUGIN COMPATIBILITY
+     global $plugins;global $magictouch_rt_exclude;global $magictouch_ext_exclude;if (in_array("magictouch",$plugins)&& !in_array($resource['resource_type'],$magictouch_rt_exclude) && !in_array($resource['file_extension'],$magictouch_ext_exclude) && !defined("MTFAIL")){?>&nbsp;<a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang['zoom']?></a><?php }
+     ///////////////
+     ?>
+     
 <?php /* 
 &nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="../plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["pdfwithnotes"]?>"><?php echo $lang["pdfwithnotes"]?></a>
 */

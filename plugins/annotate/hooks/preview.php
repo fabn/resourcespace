@@ -1,11 +1,13 @@
 <?php
 
 function HookAnnotatePreviewPreviewimage2 (){
-global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig;
+global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude;
 
 $resource=get_resource_data($ref);
-if ($resource['file_extension']=="pdf"){return false;}
+if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
+if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
 
+if (!file_exists($path) && !file_exists($path_orig)){return false;}
 if (!file_exists($path)){$sizes = getimagesize($path_orig);}
 else{
 $sizes = getimagesize($path);
@@ -36,10 +38,14 @@ $h = $sizes[1];
 <div>
 		<img id="toAnnotate" src="<?php echo $url?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
 	</div>
-<br>&nbsp;&nbsp;<a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["backtoresourceview"]?></a>		
-		
-	</div>
-<!--<a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">P</a>-->		<?php
+<br>
+
+     <?php
+     // MAGICTOUCH PLUGIN COMPATIBILITY
+     global $plugins;global $magictouch_rt_exclude;global $magictouch_ext_exclude;if (in_array("magictouch",$plugins)&& !in_array($resource['resource_type'],$magictouch_rt_exclude) && !in_array($resource['file_extension'],$magictouch_ext_exclude) && !defined("MTFAIL")){?>&nbsp;<a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"preview.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang['zoom']?></a><?php }
+     ///////////////
+     ?>		</div>
+     <?php
 	
 
 	
