@@ -67,19 +67,14 @@ if (in_array("annotate",$plugins)){?><a style="display:inline;" href="<?php echo
 ?>
 
 </div>
-    
+
+<?php global $magictouch_account_id,$magictouch_secure;
+?>
+<script src="<?php echo $magictouch_secure ?>://www.magictoolbox.com/mt/<?php echo $magictouch_account_id ?>/magictouch.js" type="text/javascript" defer="defer"></script>
 <?php
     return true;
 }
 
-
-function HookMagictouchViewFooterbottom(){
-
-global $magictouch_account_id,$magictouch_secure;
-?>
-<script src="<?php echo $magictouch_secure ?>://www.magictoolbox.com/mt/<?php echo $magictouch_account_id ?>/magictouch.js" type="text/javascript" defer="defer"></script>
-<?php
-}
 
 
 
