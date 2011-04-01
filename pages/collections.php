@@ -531,8 +531,19 @@ elseif ($k!="")
 
 <?php
 # Loop through saved searches
-if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null){ // don't include saved search item in result if this is a smart collection  
-for ($n=0;$n<count($searches);$n++)			
+if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)
+	{ // don't include saved search item in result if this is a smart collection  
+
+	# Setting the save search icon
+	$folder = "../gfx/images/";
+	$iconpath = $folder . "save-search" . "_" . $language . ".gif";
+	if (!file_exists($iconpath))
+		{
+		# A language specific icon is not found, use the default icon
+		$iconpath = $folder . "save-search.gif";
+		}
+
+	for ($n=0;$n<count($searches);$n++)			
 		{
 		$ref=$searches[$n]["ref"];
 		$url="search.php?search=" . urlencode($searches[$n]["search"]) . "&restypes=" . urlencode($searches[$n]["restypes"]) . "&archive=" . $searches[$n]["archive"];
@@ -540,11 +551,11 @@ for ($n=0;$n<count($searches);$n++)
 		<!--Resource Panel-->
 		<div class="CollectionPanelShell">
 		<table border="0" class="CollectionResourceAlign"><tr><td>
-		<a target="main" href="<?php echo $url?>"><img border=0 width=56 height=75 src="../gfx/images/save-search.gif"/></a></td>
+		<a target="main" href="<?php echo $url?>"><img border=0 width=56 height=75 src="<?php echo $iconpath?>"/></a></td>
 		</tr></table>
 		<div class="CollectionPanelInfo"><a target="main" href="<?php echo $url?>"><?php echo $lang["savedsearch"]?> <?php echo $n+1?></a>&nbsp;</div>
 		<div class="CollectionPanelInfo"><a href="collections.php?removesearch=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?>
-</a></div>				
+		</a></div>				
 		</div>
 		<?php		
 		}
