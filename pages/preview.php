@@ -94,7 +94,7 @@ else
 if (!isset($url))
 	{
 	$info=get_resource_data($ref);
-	$url="<?php echo $baseurl;?>/gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
+	$url=$baseurl."/gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
 	$border=false;
 	}
 
