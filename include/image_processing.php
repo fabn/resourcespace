@@ -278,6 +278,10 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 						{
 						# Extract value
 						$value=trim(substr($metaline,$pos+2));
+
+						# Replace '..' with line feed - either Exiftool itself or Adobe Bridge replaces line feeds with '..'
+						$value=str_replace('...','.\n',$value); # Three dots together is interpreted as a full stop then line feed, not the other way round
+						$value=str_replace('..','\n',$value);
 						
 						# Extract group name and tag name
 						$groupname=strtoupper(substr($s[0],1));
