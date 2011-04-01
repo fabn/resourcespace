@@ -94,7 +94,7 @@ else
 if (!isset($url))
 	{
 	$info=get_resource_data($ref);
-	$url="../gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
+	$url="<?php echo $baseurl;?>/gfx/" . get_nopreview_icon($info["resource_type"],$info["file_extension"],false);
 	$border=false;
 	}
 
@@ -125,10 +125,24 @@ include "../include/header.php";
 
 <td valign="middle"><?php if ($resource['file_extension']!="jpg" && $previouspage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource_type"])) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $previouspage?>" class="PDFnav">&lt;</a><?php } 
 elseif ($nextpage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource_type"]) ) { ?><a href="#" class="PDFnav">&nbsp;&nbsp;&nbsp;</a><?php } ?></td>
-
+<?php $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
+if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
+if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+	{
+	# Include the Flash player if an FLV file exists for this resource.
+	$download_multisize=false;
+    if(!hook("customflvplay"))
+        {
+        include "flv_play.php";
+        }
+    }else{?>
 <td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
+
+<?php } ?>
+
 <td valign="middle"><?php if ($nextpage!=-1 &&resource_download_allowed($ref,"scr",$resource["resource_type"])) { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page=<?php echo $nextpage?>" class="PDFnav">&gt;</a><?php } ?></td>
 </tr></table>
+
 <?php } // end hook previewimage2 ?>
 <?php } // end hook previewimage ?>
 <div id="CollectionFramelessCount" style="display:none;"> </div>
