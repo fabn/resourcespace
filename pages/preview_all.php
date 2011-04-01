@@ -145,7 +145,19 @@ if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collec
 	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo i18n_get_translated($collection[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
 	<?php $imageinfo = getimageSize( $url ); 
 	$imageheight=$imageinfo[1];?>
+    <?php $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
+if (!file_exists($flvfile)) {$flvfile=get_resource_path($ref,true,"",false,$ffmpeg_preview_extension);}
+if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($flvfile) && (strpos(strtolower($flvfile),".".$ffmpeg_preview_extension)!==false))
+	{
+	# Include the Flash player if an FLV file exists for this resource.
+	$download_multisize=false;
+    if(!hook("customflvplay"))
+        {
+        include "flv_play.php";?><br /><br /><?php
+        }
+    } else{?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
+<?php } ?>
 <script type="text/javascript">
 var maxheight=window.innerHeight-110;
 if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-110;}
