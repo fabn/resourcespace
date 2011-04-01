@@ -131,7 +131,7 @@ if ($submitted != "")
 						$pathparts=pathinfo($filename);
 						if (isset($pathparts['extension'])){
 						if (strtolower($pathparts['extension'])==$pextension){$pextension=$pathparts['extension'];}	
-						} else {$pextension="";}	
+						} else {$pextension="jpg";}	
 						if ($usesize!=""&&!$subbed_original){$append="-".$usesize;}else {$append="";}
 						$basename_minus_extension=remove_extension($pathparts['basename']);
 						$filename=$basename_minus_extension.$append.".".$pextension;
