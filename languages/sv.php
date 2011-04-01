@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110330 för version 2545.
+# Senast uppdaterad av Henrik Frizén 20110401 för version 2556.
 #
 #
 # User group names (for the default user groups)
@@ -262,6 +262,8 @@ $lang["contents"]="Innehåll";
 $lang["forthispackage"]="för det här paketet";
 $lang["didnotinclude"]="Utelämnades";
 $lang["selectcollection"]="Välj samlingen";
+$lang["total"]="Totalt";
+$lang["ownedbyyou"]="ägda av dig";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Skapa nytt material";
@@ -269,7 +271,7 @@ $lang["treeobjecttype-resource_type"]=$lang["resourcetype"]="Materialtyp";
 $lang["resourcetypes"]="Materialtyper";
 $lang["deleteresource"]="Radera material";
 $lang["downloadresource"]="Ladda ned material";
-$lang["rightclicktodownload"]="Högerklicka på denna länk och välj 'Spara mål som...' för att ladda ned ditt material..."; # For Opera/IE browsers only
+$lang["rightclicktodownload"]="Högerklicka på denna länk och välj 'Spara mål som...' för att ladda ned materialet..."; # For Opera/IE browsers only
 $lang["downloadinprogress"]="Nedladdning pågår";
 $lang["editmultipleresources"]="Redigera material i grupp";
 $lang["editresource"]="Redigera material";
@@ -289,8 +291,8 @@ $lang["rotateanticlockwise"]="Rotera moturs";
 $lang["increasegamma"]="Öka gamma (ljusare)";
 $lang["decreasegamma"]="Minska gamma (mörkare)";
 $lang["restoreoriginal"]="Återställ original";
-$lang["recreatepreviews"]="Återskapa förhandsbilder";
-$lang["retrypreviews"]="Försök skapa förhandsbilder igen";
+$lang["recreatepreviews"]="Återskapa förhandsgranskningar";
+$lang["retrypreviews"]="Försök skapa förhandsgranskningar igen";
 $lang["specifydefaultcontent"]="Ange standardinnehåll för nytt material";
 $lang["properties"]="- typspecifika egenskaper";
 $lang["relatedresources"]="Relaterat material";
@@ -331,7 +333,7 @@ $lang["fileupload"]="Ladda upp fil";
 $lang["clickbrowsetolocate"]="Klicka på 'Bläddra...' för att leta upp en fil";
 $lang["resourcetools"]="Materialverktyg";
 $lang["fileinformation"]="Filinformation";
-$lang["options"]="Val";
+$lang["options"]="Alternativ";
 $lang["previousresult"]="Föregående resultat";
 $lang["viewallresults"]="Visa alla resultat";
 $lang["nextresult"]="Nästa resultat";
@@ -379,7 +381,7 @@ $lang["log-t"]="Transformerade fil";
 $lang["log-s"]="Ändrade status";
 $lang["log-a"]="Ändrade åtkomst";
 
-$lang["backtoresourceview"]="Tillbaka till 'Visa material'";
+$lang["backtoresourceview"]="Tillbaka till att visa material";
 
 # Resource status
 $lang["status"]="Status"; # Ska kunna inleda med "Materialet är..." följt av statusen.
@@ -405,7 +407,7 @@ $lang["printallforyear"]="Skriv ut all statistik för året";
 # Log in / user account
 $lang["nopassword"]="Klicka här för att ansöka om ett användarkonto";
 $lang["forgottenpassword"]="Klicka här om du har glömt ditt lösenord";
-$lang["keepmeloggedin"]="Håll mig inloggad på den här datorn (bör endast användas på den egna datorn)";
+$lang["keepmeloggedin"]="Håll mig inloggad på den här datorn";
 $lang["columnheader-username"]=$lang["username"]="Användarnamn";
 $lang["password"]="Lösenord";
 $lang["login"]="Logga in";
@@ -479,7 +481,7 @@ $lang["add"]="Lägg till";
 $lang["create"]="Skapa";
 $lang["treeobjecttype-group"]=$lang["group"]="Grupp";
 $lang["confirmaddgroup"]="Är du säker på att du vill lägga till alla medlemmar i denna grupp?";
-$lang["backtoteamhome"]="Tillbaka till 'Administration'";
+$lang["backtoteamhome"]="Tillbaka till huvudsidan för administration";
 $lang["columnheader-resource_id"]=$lang["resourceid"]="Materialnummer";
 $lang["id"]="Nr";
 $lang["todate"]="Till datum";
@@ -529,11 +531,11 @@ $lang["action-revertmetadata"]="Återställ metadata";
 $lang["confirm-revertmetadata"]="Är du säker på att du vill återhämta den ursprungliga metadatan från den här filen? Den här åtgärden simulerar en återuppladdningen av filen, och du kommer att förlora all ändrad metadata.";
 $lang["action-remove"]="Ta bort";
 $lang["complete"]="Slutförd";
-$lang["backtohome"]="Tillbaka till 'Startsida'";
-$lang["backtohelphome"]="Tillbaka till 'Hjälp'";
+$lang["backtohome"]="Tillbaka till startsidan";
+$lang["backtohelphome"]="Tillbaka till huvudsidan för hjälp";
 $lang["backtosearch"]="Tillbaka till sökresultatet";
 $lang["backtoview"]="Visa material";
-$lang["backtoeditresource"]="Tillbaka till 'Redigera material'";
+$lang["backtoeditresource"]="Tillbaka till att redigera material";
 $lang["backtouser"]="Tillbaka till inloggningssidan";
 $lang["termsandconditions"]="Användningsvillkor";
 $lang["iaccept"]="Jag accepterar";
@@ -740,7 +742,7 @@ $lang["editalternativefile"]="Redigera alternativ fil";
 $lang["description"]="Beskrivning";
 $lang["notuploaded"]="Inte uppladdade";
 $lang["uploadreplacementfile"]="Ladda upp ersättningsfil";
-$lang["backtomanagealternativefiles"]="Tillbaka till 'Hantera alternativa filer'";
+$lang["backtomanagealternativefiles"]="Tillbaka till Hantera alternativa filer";
 
 
 $lang["resourceistranscoding"]="Materialet kodas just nu om";
@@ -748,7 +750,7 @@ $lang["cantdeletewhiletranscoding"]="Du kan inte radera material medan det kodas
 
 $lang["maxcollectionthumbsreached"]="Det finns för mycket material i den här samlingen för att kunna visa miniatyrbilder. Miniatyrbilder kommer nu att döljas.";
 
-$lang["ratethisresource"]="Vilket betyg vill du ge det här materialet?";
+$lang["ratethisresource"]="Vilket betyg ger du materialet?";
 $lang["ratingthankyou"]="Tack för ditt betyg!";
 $lang["ratings"]="betyg";
 $lang["rating_lowercase"]="betyg";
@@ -905,7 +907,7 @@ $lang["videoplaylist"]="Videospellista";
 $lang["restrictedsharecollection"]="Du har begränsad tillgång till minst ett material i den här samlingen och därför är utdelning inte tillåten.";
 
 $lang["collection"]="Samling";
-$lang["idecline"]="Jag avböjer"; # For terms and conditions
+$lang["idecline"]="Jag accepterar inte"; # For terms and conditions
 
 $lang["mycollection_notpublic"]="Du kan inte göra samlingen 'Min samling' till en publik samling eller ett tema. Skapa en ny samling för detta ändamål.";
 
@@ -1032,7 +1034,7 @@ $lang["undometadatatemplate"]="(ångra val av metadatamall)";
 
 $lang["accountemailalreadyexists"]="Ett användarkonto med samma e-postadress existerar redan";
 
-$lang["backtothemes"]="Tillbaka till 'Teman'";
+$lang["backtothemes"]="Tillbaka till Teman";
 $lang["downloadreport"]="Ladda ned rapport";
 
 #Bug Report Page
@@ -1041,7 +1043,7 @@ $lang['reportbug-detail']="Följande information har sammanställts till buggrap
 $lang['reportbug-login']="OBS! Klicka här för att logga in till bugghanteringssystemet INNAN du klickar på 'Förbered buggrapport'.";
 $lang['reportbug-preparebutton']="Förbered buggrapport";
 
-$lang["enterantispamcode"]="<strong>Inloggningstest</strong><br/> Var god fyll i koden:";
+$lang["enterantispamcode"]="<strong>Inloggningstest</strong> <sup>*</sup><br /> Var god fyll i koden:";
 
 $lang["groupaccess"]="Gruppåtkomst";
 $lang["plugin-groupsallaccess"]="Det här tillägget är aktiverat för alla grupper";
@@ -1339,3 +1341,6 @@ $lang["horizontal"] = "Horisontellt";
 $lang["vertical"] = "Vertikalt";
 
 $lang["cc-emailaddress"] = "Kopia till %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
+
+$lang["sort"] = "Sortera";
+$lang["sortcollection"] = "Sortera samling";
