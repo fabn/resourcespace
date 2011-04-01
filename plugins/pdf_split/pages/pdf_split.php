@@ -106,7 +106,7 @@ function DrawRanges()
 		var range=rs[n].split(":");
 		
 		// draw some HTML for this range
-		ranges_html += '<?php echo $lang["range"] ?> ' + (n+1) + ': <?php echo $lang["pages"] ?> <input onChange="UpdateRanges();return false;" type="text" size="8" id="range' + n + '_from" value="' + range[0] + '"> to <input onChange="UpdateRanges();return false;" type="text" size="8" id="range' + n + '_to" value="' + range[1] + '">';
+		ranges_html += '<?php echo $lang["range"] ?> ' + (n+1) + ': <?php echo $lang["pages"] ?> <input onChange="UpdateRanges();return false;" type="text" size="8" id="range' + n + '_from" value="' + range[0] + '"> <?php echo $lang["to-page"]?> <input onChange="UpdateRanges();return false;" type="text" size="8" id="range' + n + '_to" value="' + range[1] + '">';
 		// Remove page option for ranges > 1
 		if (n>0) {ranges_html+='&nbsp;&nbsp;<a href="#" onClick="RemoveRange('+n+');return false;">&gt;&nbsp;<?php echo $lang["removerange"] ?></a>';}
 		ranges_html+='<br/>';

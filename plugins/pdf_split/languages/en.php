@@ -1,11 +1,16 @@
 <?php
-
+# English
+# Language File for the PDF Split Plugin
+# -------
+#
+#
 $lang["splitpdf"]="Split PDF";
 $lang["splitpdf_pleaseselectrange"]="Please select the page range(s) you wish to split to new file(s).";
 $lang["addrange"]="Add range";
 $lang["removerange"]="Remove range";
 $lang["range"]="Range";
 $lang["pages"]="pages";
+$lang["to-page"]="to";
 $lang["outofrange"]="Out of range";
 $lang["invalidrange"]="Invalid range";
 
