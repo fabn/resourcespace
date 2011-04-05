@@ -2181,6 +2181,7 @@ function get_page_count($resource,$alternative=-1)
     {
     # gets page count for multipage previews from resource_dimensions table.
     # also handle alternative file multipage previews by switching $resource array if necessary
+    # $alternative specifies an actual alternative file
     $ref=$resource['ref'];
     if ($alternative!=-1){
         $pagecount=sql_value("select page_count value from resource_alt_files where ref=$alternative","");
@@ -2200,13 +2201,16 @@ function get_page_count($resource,$alternative=-1)
         if (!file_exists($command)) {$command=$pdftk_path . "\pdftk.exe";} // please test
         if (!file_exists($command)) {exit("Could not find 'pdftk' utility. $command'");}	
         
-        if ($resource['file_extension']=="pdf"){
-            global $pdftk_path;
-            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
+        if ($resource['file_extension']=="pdf" && $alternative==-1){
+            $file=get_resource_path($ref,true,"",false,"pdf");
             }
+        else if ($alternative==-1){
+            # some unoconv files are not pdfs but this needs to use the auto-alt file
+            $alt_ref=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
+            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);
+        }
         else {
-            $alt=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
-            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt);
+            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
         }
     
         $command=$pdftk_path."/pdftk $file dump_data 2>&1";
