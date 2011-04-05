@@ -63,7 +63,7 @@ if (!file_exists($largeurl_path)) {
     
 <?php
 // annotate plugin compatibility
-if (in_array("annotate",$plugins)){?><a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
+if (in_array("annotate",$plugins)){?><a style="display:inline;clear:left;float:left;" href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
 ?>
 
 </div>
