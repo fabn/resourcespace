@@ -2215,10 +2215,14 @@ function get_page_count($resource,$alternative=-1)
     
         $command=$pdftk_path."/pdftk $file dump_data 2>&1";
         $output=shell_exec($command);
+        if (strstr($output,"OWNER PASSWORD REQUIRED")){$restricted=true;}
         $output=explode("\n",$output);
         foreach ($output as $outputline){
-            if (strstr($outputline,"NumberOfPages:")){
-                $pages=str_replace("NumberOfPages: ","",$outputline);
+            if (strstr($outputline,"NumberOfPages:")||isset($restricted)){
+                if (isset($restricted)){$pages=-2;}
+                else {
+                    $pages=str_replace("NumberOfPages: ","",$outputline);
+                }   
                 if ($alternative!=-1){
                 sql_query("update resource_alt_files set page_count=$pages where ref=$alternative");
                 }
