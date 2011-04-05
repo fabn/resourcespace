@@ -2176,3 +2176,50 @@ function reindex_resource($ref)
 	add_keyword_mappings($ref, $ref, -1);
 	
 	}
+
+function get_page_count($resource,$alternative="")
+    {
+    # gets page count for multipage previews from resource_dimensions table.
+    # also handle alternative file multipage previews by switching $resource array if necessary
+    $ref=$resource['ref'];
+    if ($alternative!=""){
+        $pagecount=sql_value("select page_count value from resource_alt_files where resource=$ref and unoconv=1","");
+        $resource=get_alternative_file($ref,$alternative);
+    }
+    else {
+        $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
+    }  
+    if ($pagecount!=""){return $pagecount;}
+
+    # or, populate this column:
+    # if pdf, use pdftk. If not, try unoconv alt pdf file
+    global $pdftk_path;
+    # locate pdftk
+    if ($pdftk_path!=""){
+        $command=$pdftk_path . "/bin/pdftk";
+        if (!file_exists($command)) {$command=$pdftk_path . "/pdftk";}
+        if (!file_exists($command)) {$command=$pdftk_path . "\pdftk.exe";} // please test
+        if (!file_exists($command)) {exit("Could not find 'pdftk' utility. $command'");}	
+        
+        if ($resource['file_extension']=="pdf"){
+            global $pdftk_path;
+            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
+            }
+        else {
+            $alternative=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
+            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
+        }
+    
+        $command=$pdftk_path."/pdftk $file dump_data 2>&1";
+        $output=shell_exec($command);
+        $output=explode("\n",$output);
+        foreach ($output as $outputline){
+            if (strstr($outputline,"NumberOfPages:")){
+                $pages=str_replace("NumberOfPages: ","",$outputline);
+                sql_query("update resource_dimensions set page_count=$pages where resource=$ref");
+                return $pages;
+                }
+            }
+        }
+        
+    }

@@ -74,6 +74,10 @@ $config_windows=false;
 # Enables extraction of text from PDF files
 # $pdftotext_path="/usr/bin";
 
+# Path to pdftk 
+# Enables pager in preview.php
+# $pdftk_path="/usr/bin";
+
 # Path to blender
 # $blender_path="/usr/bin/";
 

@@ -98,6 +98,7 @@ if (!isset($url))
 	$border=false;
 	}
 
+$resource=get_resource_data($ref);
 
 include "../include/header.php";
 ?>
@@ -107,7 +108,22 @@ include "../include/header.php";
 
 <?php if (!checkperm("b")) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?php echo add_to_collection_link($ref,$search)?><?php echo $lang["action-addtocollection"]?></a><?php } ?>
+<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a><?php } ?>
+
+<?php
+# Page selector for installations with pdftk
+if (isset($pdftk_path)){
+if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
+    $pagecount= get_page_count($resource,$alternative);
+    ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['page'];?>: <select onChange="document.location='preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page='+this.value;"><?php 
+    for ($n=1;$n<$pagecount+1;$n++){
+        ?><option value="<?php echo $n?>" <?php if ($page==$n){?>selected<?php } ?>><?php echo $n?><?php
+        }
+    ?></select><?php    
+}
+}
+?>
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="preview.php?from=<?php echo getval("from","")?>&ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
