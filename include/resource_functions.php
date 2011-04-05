@@ -2177,20 +2177,19 @@ function reindex_resource($ref)
 	
 	}
 
-function get_page_count($resource,$alternative="")
+function get_page_count($resource,$alternative=-1)
     {
     # gets page count for multipage previews from resource_dimensions table.
     # also handle alternative file multipage previews by switching $resource array if necessary
     $ref=$resource['ref'];
-    if ($alternative!=""){
-        $pagecount=sql_value("select page_count value from resource_alt_files where resource=$ref and unoconv=1","");
+    if ($alternative!=-1){
+        $pagecount=sql_value("select page_count value from resource_alt_files where ref=$alternative","");
         $resource=get_alternative_file($ref,$alternative);
     }
     else {
         $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
-    }  
+    }
     if ($pagecount!=""){return $pagecount;}
-
     # or, populate this column:
     # if pdf, use pdftk. If not, try unoconv alt pdf file
     global $pdftk_path;
@@ -2206,8 +2205,8 @@ function get_page_count($resource,$alternative="")
             $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
             }
         else {
-            $alternative=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
-            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
+            $alt=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
+            $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt);
         }
     
         $command=$pdftk_path."/pdftk $file dump_data 2>&1";
@@ -2216,7 +2215,12 @@ function get_page_count($resource,$alternative="")
         foreach ($output as $outputline){
             if (strstr($outputline,"NumberOfPages:")){
                 $pages=str_replace("NumberOfPages: ","",$outputline);
+                if ($alternative!=-1){
+                sql_query("update resource_alt_files set page_count=$pages where ref=$alternative");
+                }
+                else {
                 sql_query("update resource_dimensions set page_count=$pages where resource=$ref");
+                }
                 return $pages;
                 }
             }
