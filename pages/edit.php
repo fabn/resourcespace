@@ -936,7 +936,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php } 
 }
 
-if ($multiple)
+if ($multiple && !$disable_geocoding)
 	{
 	# Multiple method of changing location.
 	 ?>
