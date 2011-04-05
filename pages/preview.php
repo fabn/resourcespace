@@ -117,8 +117,11 @@ if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
     $pagecount= get_page_count($resource,$alternative);
     ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['page'];?>: <select onChange="document.location='preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page='+this.value;"><?php 
     for ($n=1;$n<$pagecount+1;$n++){
-        ?><option value="<?php echo $n?>" <?php if ($page==$n){?>selected<?php } ?>><?php echo $n?><?php
+        if ($n<=$pdf_pages){
+            ?><option value="<?php echo $n?>" <?php if ($page==$n){?>selected<?php } ?>><?php echo $n?><?php
+            }
         }
+    if ($pagecount>$pdf_pages){?><option value="1">...<?php }     
     ?></select><?php    
 }
 }
