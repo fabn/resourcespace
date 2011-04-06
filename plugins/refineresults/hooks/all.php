@@ -28,7 +28,7 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 	global $lang,$search,$k,$archive;
 	if ($k!="") {return false;}
 	?>
-	<div class="clearerleft">
+	<div class="clearerleft"></div>
 	<div class="RecordBox" id="RefineResults" style="display:none;">
 	<div class="RecordPanel">  
 	
