@@ -1910,7 +1910,7 @@ function get_resource_collections($ref)
 	{
 	global $userref;
 	
-	# Returns a list of user collections.
+	# Returns a list of collections that a resource is used in for the $view_resource_collections option
 	$sql="";
    
     # Include themes in my collecions? 
