@@ -336,16 +336,17 @@ if (!hook('collectionaccessmode')) {
 	</td>
 	</tr><?php
 	}
+}
 	?>
 	<input type=hidden name="deleteempty" id="collectiondeleteempty" value="">
 	
 	<?php if ($collections_delete_empty){?>
 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
 	<?php } 
-}
 ?>
 </table>
 </div>
+
 </form>
 <div class="BottomInpageNav"><?php pager(false); ?></div>
 </div>
