@@ -6,7 +6,7 @@ include_once("../include/search_functions.php");
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
     $collection=substr($search,11);
-} else if ($pagename=="collection_manage"){
+} else if ($pagename=="collection_manage" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
     if ($show_edit_all_link){$result=do_search("!collection" . $collection);
         $count_result=count($result);
@@ -22,21 +22,20 @@ else {
 <?php if ($pagename!="collection_manage"){?>
 <form method="get" name="colactions" id="colactions">
 <?php } ?>
-<input type=hidden name="purge" id="collectionpurge" value="">
 <style type="text/css">
 #CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
 </style>
-<?php if ($pagename!="collection_manage"){?>
+<?php if ($pagename!="collection_manage" && $pagename!="view"){?>
 <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show"){?><br><?php } ?>
 <?php } ?>
-<?php if ($pagename!="search" && $pagename!="collection_manage"){
+<?php if ($pagename!="search" && $pagename!="collection_manage" && $pagename!="view"){
     ?><select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?> name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}} if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value=''";>
     <?php }
 else if ($pagename=="search"){ ?>
  <select class="SearchWidth" name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].value!=''){if (colactions.colactionselect.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactions.colactionselect.options[selectedIndex].value;}else {top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} } colactions.colactionselect.value='';">
  <?php }
  else { ?>
- <select class="ListDropdown" name="colactionselect<?php echo $collections[$n]['ref']?>" onchange="if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactionselect<?php echo $collections[$n]['ref']?>.value='';return false;}}if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value!=''){if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value;}else {top.main.location.href=colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value;} } colactionselect<?php echo $collections[$n]['ref']?>.value='';">
+ <select class="ListDropdown" name="colactionselect<?php echo $collections[$n]['ref']?>" onchange="if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactionselect<?php echo $collections[$n]['ref']?>.value='';return false;}}if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='delete'){ if (!confirm('<?php echo $lang["collectiondeleteconfirm"]?>')){colactionselect<?php echo $collections[$n]['ref']?>.value='';return false;}}if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='remove'){ if (!confirm('<?php echo $lang["removecollectionareyousure"]?>')){colactionselect<?php echo $collections[$n]['ref']?>.value='';return false;}}if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value!=''){if (colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].id=='selectcollection'){parent.collections.location.href=colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value;}else {top.main.location.href=colactionselect<?php echo $collections[$n]['ref']?>.options[selectedIndex].value;} } colactionselect<?php echo $collections[$n]['ref']?>.value='';">
  <?php }?>
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
 <!-- select collection -->
@@ -125,6 +124,15 @@ if (($pagename!="collection_manage" || ($show_edit_all_link && $pagename=="colle
 <!-- end request all -->
 
 
+
+<!--collection manage only delete and remove-->
+<?php if ($pagename=="collection_manage" && $userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
+
+<?php if ((($pagename=="collection_manage" && $userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
+<!-- end collection manage only-->
+
+
+
 <!-- purge -->
 <?php if ($collection_purge){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
@@ -141,7 +149,7 @@ if (($pagename!="collection_manage" || ($show_edit_all_link && $pagename=="colle
 <!-- end log -->
 
 
-    </select><?php if ($pagename!="search" && $pagename!="collection_manage"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
+    </select><?php if ($pagename!="search" && $pagename!="collection_manage" && $pagename!="view"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
 <?php if ($pagename!="collection_manage"){?>
 </form>
 <?php } ?>
