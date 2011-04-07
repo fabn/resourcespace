@@ -169,6 +169,9 @@ a:active {text-decoration:underline;}
 .SearchSpace a:link, .SearchSpace a:visited {text-decoration:none;}
 .SearchSpace a:hover, .SearchSpace a:active {text-decoration:underline;}
 
+
+.ListDropdown {width: 156px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: -2px 0px;padding: 0px;}
+
 /*Forms*/
 #CentralSpaceLogin form {margin:0;padding:0;}
 .Question{padding: 0.5em 0em 1em;}

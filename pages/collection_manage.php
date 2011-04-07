@@ -255,6 +255,7 @@ echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
 <?php if (! $hide_access_column){ ?><td><?php if ($order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
+<form method="get" name="colactions" id="colactions">
 <?php
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
@@ -283,9 +284,12 @@ if (!hook('collectionaccessmode')) {
 	}
 }
 ?></td><?php
-}
-?>
-	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+}?>
+	<td>
+        <div class="ListTools">
+            <?php if ($collections_compact_style){
+    include("collections_compact_style.php"); } else {
+?><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 	&nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $collections[$n]["ref"]?>);"
 		<?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
 		href="collections.php?collection=<?php echo $collections[$n]["ref"]?>&amp;thumbs=show" target="collections"
@@ -338,11 +342,10 @@ if (!hook('collectionaccessmode')) {
 	<?php if ($collections_delete_empty){?>
 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
 	<?php } 
-	
+}
 ?>
 </table>
 </div>
-
 </form>
 <div class="BottomInpageNav"><?php pager(false); ?></div>
 </div>
