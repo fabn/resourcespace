@@ -1,5 +1,5 @@
 <?php
-// this page is a little complicated, but it is a single list of tools for max/min collections, Search view on a collection, and Collection Manager, so in that sense it should be easier to maintain consistency.
+// this page is a little complicated, but it is a single list of tools for max/min collections, Search view on a collection, view_resource_collections in View Page, and Collection Manager, so in that sense it should be easier to maintain consistency.
 
 include_once("../include/search_functions.php");
 
