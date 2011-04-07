@@ -109,7 +109,7 @@ if (($pagename!="collection_manage" || ($show_edit_all_link && $pagename=="colle
 
 
 <!-- request all -->    
-<?php if ($pagename=="collection_manage" || $count_result>0 )
+<?php if (($pagename=="collection_manage" || $pagename=="view") || $count_result>0 )
     { 
     # Ability to request a whole collection (only if user has restricted access to any of these resources)
     $min_access=collection_min_access($collection);
