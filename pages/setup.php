@@ -436,6 +436,8 @@ h2#dbaseconfig{  min-height: 32px;}
 					$ghostscript_path = $path;
 				if (file_exists($path.'/ffmpeg'))
 					$ffmpeg_path = $path;
+                if (file_exists($path.'/pdftk'))
+					$pdftk_path = $path;
 				if (file_exists($path.'/exiftool'))
 					$exiftool_path = $path;
 				if (file_exists($path.'/antiword'))
@@ -567,6 +569,7 @@ h2#dbaseconfig{  min-height: 32px;}
 		$imagemagick_path = sslash(get_post('imagemagick_path'));
 		$ghostscript_path = sslash(get_post('ghostscript_path'));
 		$ffmpeg_path = sslash(get_post('ffmpeg_path'));
+        $pdftk_path = sslash(get_post('pdftk_path'));
 		$exiftool_path = sslash(get_post('exiftool_path'));
 		$antiword_path = sslash(get_post('antiword_path'));
 		$pdftotext_path = sslash(get_post('pdftotext_path'));
@@ -582,6 +585,10 @@ h2#dbaseconfig{  min-height: 32px;}
 			if (!file_exists($ffmpeg_path.'/ffmpeg'.$exe_ext))
 				$errors['ffmpeg_path'] = true;
 			else $config_output .= "\$ffmpeg_path = '$ffmpeg_path';\r\n";
+        if ($pdftk_path!='')
+			if (!file_exists($pdftk_path.'/pdftk'.$exe_ext))
+				$errors['pdftk_path'] = true;
+			else $config_output .= "\$pdftk_path = '$pdftk_path';\r\n";
 		if ($exiftool_path!='')
 			if (!file_exists($exiftool_path.'/exiftool'.$exe_ext))
 				$errors['exiftool_path'] = true;
@@ -943,6 +950,12 @@ else{
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'ffmpeg'.</div>
 					<?php } ?>
 					<label for="ffmpegpath"><?php echo str_replace("%bin", "FFMpeg", $lang["setup-binpath"]) . ":"; ?></label><input id="ffmpegpath" type="text" name="ffmpeg_path" value="<?php echo @$ffmpeg_path; ?>"/>
+				</div>
+                <div class="configitem">
+					<?php if(isset($errors['pdftk_path'])){?>
+						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'pdftk'.</div>
+					<?php } ?>
+					<label for="pdftkpath"><?php echo str_replace("%bin", "pdftk", $lang["setup-binpath"]) . ":"; ?></label><input id="pdftkpath" type="text" name="pdftk_path" value="<?php echo @$ffmpeg_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['exiftool_path'])){?>
