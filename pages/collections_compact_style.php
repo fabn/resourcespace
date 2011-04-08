@@ -66,7 +66,7 @@ else if ($pagename=="search"){ ?>
 
 <!-- edit metadata -->    
 <?php # If this collection is (fully) editable, then display an extra edit all link
-if (($pagename!="collection_manage" || ($show_edit_all_link && $pagename=="collection_manage")) && (count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($collection)) { ?>
+if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="view"))) && (count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($collection)) { ?>
     <option value="edit.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-editall"]?>...</option>
 <?php } ?>
 <!-- end edit metadata -->
