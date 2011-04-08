@@ -343,7 +343,7 @@ if ($header=="" && !isset($themes[0]))
 
 function DisplayTheme($themes=array())
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents;
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -425,25 +425,30 @@ function DisplayTheme($themes=array())
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			
-			<td nowrap><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+			<td nowrap><div class="ListTools">
+            <?php if ($collections_compact_style){
+            hook("beforecompactstyle");
+            include("collections_compact_style.php");
+            } else {
+
+                ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 			
-			<?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
+                <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 		
-			<?php if (isset($zipcommand)) { ?>
-			&nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>"
-			>&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+                <?php if (isset($zipcommand)) { ?>
+                &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+                <?php } ?>
+			
+                <?php if ($contact_sheet==true) { ?>
+                &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+                <?php } ?>
+		
+                <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+		
+                <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+		
+                <?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
 			<?php } ?>
-			
-			<?php if ($contact_sheet==true) { ?>
-			&nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
-			<?php } ?>
-		
-			<?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
-		
-			<?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
-		
-			<?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
-			
 			</td>
 			</tr>
 			<?php

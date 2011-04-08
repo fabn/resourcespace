@@ -14,6 +14,16 @@ if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];    
     }
+elseif ($pagename=="themes"){
+    $collection=$getthemes[$m]["ref"];
+    $n=$m;
+    $collections=$getthemes;
+    if ($show_edit_all_link){$result=do_search("!collection" . $collection);
+        $count_result=count($result);
+        }
+    $cinfo=get_collection($collection);
+    $feedback=$cinfo["request_feedback"];
+    }    
 else {
     $collection=$usercollection;
 }
@@ -25,10 +35,12 @@ else {
 <style type="text/css">
 #CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
 </style>
-<?php if ($pagename!="collection_manage" && $pagename!="view"){?>
+
+<?php if ($pagename=="search" || $pagename=="collections"){?>
 <div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show"){?><br><?php } ?>
 <?php } ?>
-<?php if ($pagename!="search" && $pagename!="collection_manage" && $pagename!="view"){
+
+<?php if ($pagename=="collections"){
     ?><select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?> name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}} if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value=''";>
     <?php }
 else if ($pagename=="search"){ ?>
@@ -149,7 +161,7 @@ if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_li
 <!-- end log -->
 
 
-    </select><?php if ($pagename!="search" && $pagename!="collection_manage" && $pagename!="view"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
+    </select><?php if ($pagename=="collections"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
 <?php if ($pagename!="collection_manage"){?>
 </form>
 <?php } ?>
