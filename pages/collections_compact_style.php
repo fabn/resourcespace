@@ -28,16 +28,10 @@ else {
     $collection=$usercollection;
 }
 
-?>
-<?php if ($pagename!="collection_manage"){?>
+if ($pagename!="collection_manage" && $pagename!="themes"){?>
 <form method="get" name="colactions" id="colactions">
-<?php } ?>
-<style type="text/css">
-#CollectionMinRightNav{float: right;margin: 4px 25px 0px 0px;}
-</style>
-
-<?php if ($pagename=="search" || $pagename=="collections"){?>
-<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
+<?php } ?><?php if ($pagename=="search" || $pagename=="collections"){?>
+<?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
 <?php } ?>
 <?php hook("beforecompactstyle");?>
 

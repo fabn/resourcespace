@@ -341,6 +341,7 @@ if ($header=="" && !isset($themes[0]))
 		}
 	}
 
+if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
 	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
@@ -419,7 +420,7 @@ function DisplayTheme($themes=array())
 		for ($m=0;$m<count($getthemes);$m++)
 			{
 			?>
-			<tr>
+			<tr <?php hook("collectionlistrowstyle");?>>
 			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
@@ -462,6 +463,7 @@ function DisplayTheme($themes=array())
 		<?php
 		}
 	}
+}
 ?>
 
 </form>

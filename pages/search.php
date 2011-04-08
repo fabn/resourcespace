@@ -275,7 +275,7 @@ if (substr($search,0,11)=="!collection")
 	if ($display_collection_title)
 		{
         if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $collection_title = '<div align="left"><h1>'.$collection_tag.$collectiondata ["name"].'</h1> ';
+        $collection_title = '<div align="left"><h1><div style="width:350px;" id="title'.$collection.'">'.$collection_tag.$collectiondata ["name"].'</div></h1> ';
         if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
         if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
         $collection_title.='</div>';
@@ -1013,7 +1013,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		?>
 		<?php if (!hook("replacelistitem")) {?>
 		<!--List Item-->
-		<tr>
+		<tr <?php hook("listviewrowstyle");?>>
 		<?php if(!hook("listcheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><td width="30px"><input type="checkbox" style="position:relative;margin-bottom:-4px;top:-3px;height:21px;" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"></td><?php } ?>
 		<?php } #end hook listcheckboxes 
