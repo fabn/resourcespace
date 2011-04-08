@@ -427,7 +427,6 @@ function DisplayTheme($themes=array())
 			
 			<td nowrap><div class="ListTools">
             <?php if ($collections_compact_style){
-            hook("beforecompactstyle");
             include("collections_compact_style.php");
             } else {
 
