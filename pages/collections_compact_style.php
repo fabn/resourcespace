@@ -15,9 +15,9 @@ if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"
     $feedback=$cinfo["request_feedback"];    
     }
 elseif ($pagename=="themes"){
-    $collection=$getthemes[$m]["ref"];
     $n=$m;
     $collections=$getthemes;
+    $collection=$getthemes[$m]["ref"];
     if ($show_edit_all_link){$result=do_search("!collection" . $collection);
         $count_result=count($result);
         }
