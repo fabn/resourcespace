@@ -2,14 +2,15 @@
 // this page is a little complicated, but it is a single list of tools for max/min collections, Search view on a collection, view_resource_collections in View Page, and Collection Manager, so in that sense it should be easier to maintain consistency.
 
 include_once("../include/search_functions.php");
+include_once("../include/resource_functions.php");
 
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
-    $collection=substr($search,11);
+    $collection=substr($search,11);$colresult=do_search("!collection" . $collection);
 } else if ($pagename=="collection_manage" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
-    if ($show_edit_all_link){$result=do_search("!collection" . $collection);
-        $count_result=count($result);
+    if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
+        $count_result=count($colresult);
         }
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];    
@@ -18,14 +19,14 @@ elseif ($pagename=="themes"){
     $n=$m;
     $collections=$getthemes;
     $collection=$getthemes[$m]["ref"];
-    if ($show_edit_all_link){$result=do_search("!collection" . $collection);
-        $count_result=count($result);
+    if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
+        $count_result=count($colresult);
         }
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];
     }    
 else {
-    $collection=$usercollection;
+    $collection=$usercollection;$colresult=do_search("!collection" . $collection);
 }
 
 if ($pagename!="collection_manage" && $pagename!="themes"){?>
@@ -73,7 +74,7 @@ else if ($pagename=="search"){ ?>
 
 <!-- edit metadata -->    
 <?php # If this collection is (fully) editable, then display an extra edit all link
-if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="view"))) && (count($result)>0) && checkperm("e" . $result[0]["archive"]) && allow_multi_edit($collection)) { ?>
+if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="view"))) && ($count_result>0) && checkperm("e" . $colresult[0]["archive"]) && allow_multi_edit($collection)) { ?>
     <option value="edit.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-editall"]?>...</option>
 <?php } ?>
 <!-- end edit metadata -->
