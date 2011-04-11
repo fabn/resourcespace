@@ -47,7 +47,7 @@ else if ($pagename=="search"){ ?>
  <?php }?>
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
 <!-- select collection -->
-<?php if ($pagename=="search"||$pagename=="collection_manage"){?><option id="selectcollection" value="collections.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang['selectcollection'];?></option><?php } ?>
+<?php if ($pagename!="collections"){?><option id="selectcollection" value="collections.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang['selectcollection'];?></option><?php } ?>
 <!-- end select collection -->
 
 
