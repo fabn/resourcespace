@@ -4,6 +4,9 @@
 if (!isset($collections)){
     $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,false);
 }
+
+if (substr($search,0,11)!="!collection") {
+    
 for ($n=0;$n<count($collections);$n++)
 	{
 	$pub_url="search.php?search=" . urlencode("!collection" . $collections[$n]["ref"]);
@@ -209,3 +212,4 @@ for ($n=0;$n<count($collections);$n++)
 	<?php } ?>		
 	
 <?php } ?>
+<?php } /* end if not a collection search */ ?>
