@@ -207,6 +207,7 @@ for ($n=0;$n<count($collections);$n++)
 		<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){ $collection_tag=$lang['collection'];} else {$collection_tag=$lang['smartcollection'];}?>
 		<?php if ($resource_type_column){?><td><?php echo $collection_tag?></td><?php } ?>
 		<?php if ($date_column){?><td><?php echo nicedate($collections[$n]["created"],false,true)?></td><?php } ?>
+        <?php hook("addlistviewcolumnpublic");?>
 		<td><div class="ListTools"><a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>&nbsp;&nbsp;<a href="<?php echo $pub_url?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a></div></td>
 		</tr>
 	<?php } ?>		
