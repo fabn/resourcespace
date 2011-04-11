@@ -337,12 +337,21 @@ if (!hook('collectionaccessmode')) {
 	</tr><?php
 	}
 }
+
 	?>
 	<input type=hidden name="deleteempty" id="collectiondeleteempty" value="">
 	
-	<?php if ($collections_delete_empty){?>
-	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
-	<?php } 
+	<?php if ($collections_delete_empty){
+        $use_delete_empty=false;
+        //check if delete empty is relevant
+        foreach ($collections as $collection){
+            if ($collection['count']==0){$use_delete_empty=true;}
+        }
+        if ($use_delete_empty){
+        ?>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
+        <?php }
+    }
 ?>
 </table>
 </div>
