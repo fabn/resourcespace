@@ -75,7 +75,7 @@ $config_windows=false;
 # $pdftotext_path="/usr/bin";
 
 # Path to pdftk 
-# Enables pager in preview.php
+# Enables pagecount updates for older pdf or pdf-intermediate resources, for the dropdown pager in preview.php
 # $pdftk_path="/usr/bin";
 
 # Path to blender
