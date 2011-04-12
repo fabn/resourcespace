@@ -7,7 +7,7 @@ include_once("../include/resource_functions.php");
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
     $collection=substr($search,11);$colresult=do_search("!collection" . $collection);
-} else if ($pagename=="collection_manage" || $pagename=="view"){
+} else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
     if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
         $count_result=count($colresult);

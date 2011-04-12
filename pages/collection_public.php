@@ -100,6 +100,7 @@ $url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
 	?>
+    <tr <?php hook("collectionlistrowstyle");?>>
 	<td><div class="ListTitle">
 	<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
@@ -108,14 +109,19 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
     <td><?php echo $collections[$n]["count"]?></td>
 	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
-	<td><div class="ListTools"><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+	<td><div class="ListTools">
+    <?php if ($collections_compact_style){
+        include("collections_compact_style.php");
+    } else {
+    ?><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 	<?php if ($contact_sheet==true) { ?>
-   &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+    &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 	<?php } ?>
 	<?php if (!checkperm("b")) { ?>
 	&nbsp;<a href="#" onclick="document.getElementById('collectionadd').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?php echo $lang["addtomycollections"]?></a><?php } ?>
 	</div></td>
-	</tr>
+    <?php } ?>
+    </tr>
 	<?php
 	}
 ?>
