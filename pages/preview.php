@@ -111,10 +111,9 @@ include "../include/header.php";
 <?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a><?php } ?>
 
 <?php
-# Page selector for installations with pdftk
 if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
     $pagecount= get_page_count($resource,$alternative);
-    if ($pagecount!=-2){
+    if ($pagecount!=null && $pagecount!=-2){
     ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['page'];?>: <select onChange="document.location='preview.php?ref=<?php echo $ref?>&alternative=<?php echo $alternative?>&ext=<?php echo $ext?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&page='+this.value;"><?php 
     for ($n=1;$n<$pagecount+1;$n++){
         if ($n<=$pdf_pages){
