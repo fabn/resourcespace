@@ -1706,3 +1706,6 @@ $mp3_player_xlarge_view=false;
 $flv_player_xlarge_view=false;
 # show embedded swfs in xlarge thumbs view 
 $display_swf_xlarge_view=false;
+
+# pager dropdown
+$pager_dropdown=false;
