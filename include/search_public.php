@@ -128,7 +128,7 @@ for ($n=0;$n<count($collections);$n++)
         <?php } ?>
         
 		<div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewall"]?></a></div>		
-
+        <?php hook("xlargesearchiconpublic");?>
 		<div class="clearer"></div>
 		</div>
 		<div class="PanelShadow"></div>

@@ -275,7 +275,7 @@ if (substr($search,0,11)=="!collection")
 	if ($display_collection_title)
 		{
         if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $collection_title = '<div align="left"><h1><span id="title'.$collection.'">'.$collection_tag.$collectiondata ["name"].'</div></h1> ';
+        $collection_title = '<div align="left"><h1><span id="coltitle'.$collection.'">'.$collection_tag.$collectiondata ["name"].'</div></h1> ';
         if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
         if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
         $collection_title.='</div>';
