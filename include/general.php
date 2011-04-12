@@ -1852,8 +1852,9 @@ function pager($break=true)
     ?>     
         <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } ?><?php if ($curpage>1) { ?><a href="<?php echo $url?>&offset=<?php echo $offset-$per_page?>"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
 
-        <?php if ($pager_dropdown){?>
-            <select id="pager" class="ListDropdown" style="width:50px;" onChange="var jumpto=document.getElementById('pager').value;if ((jumpto>0) && (jumpto<=<?php echo $totalpages?>)) {document.location='<?php echo $url?>&offset=' + ((jumpto-1) * <?php echo $per_page?>);}">
+        <?php if ($pager_dropdown){
+            $id=rand();?>
+            <select id="pager<?php echo $id;?>" class="ListDropdown" style="width:50px;" onChange="var jumpto=document.getElementById('pager<?php echo $id?>').value;if ((jumpto>0) && (jumpto<=<?php echo $totalpages?>)) {document.location='<?php echo $url?>&offset=' + ((jumpto-1) * <?php echo $per_page?>);}">
             <?php for ($n=1;$n<$totalpages+1;$n++){?>
                 <option value='<?php echo $n?>' <?php if ($n==$curpage){?>selected<?php } ?>><?php echo $n?></option>
             <?php } ?>
