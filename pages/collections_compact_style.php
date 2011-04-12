@@ -29,7 +29,7 @@ else {
     $collection=$usercollection;$colresult=do_search("!collection" . $collection);
 }
 
-if ($pagename!="collection_manage" && $pagename!="themes"){?>
+if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
 <form method="get" name="colactions" id="colactions">
 <?php } ?><?php if ($pagename=="search" || $pagename=="collections"){?>
 <?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
@@ -74,7 +74,7 @@ else if ($pagename=="search"){ ?>
 
 <!-- edit metadata -->    
 <?php # If this collection is (fully) editable, then display an extra edit all link
-if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="view"))) && ($count_result>0) && checkperm("e" . $colresult[0]["archive"]) && allow_multi_edit($collection)) { ?>
+if ((($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"))) && ($count_result>0) && checkperm("e" . $colresult[0]["archive"]) && allow_multi_edit($collection)) { ?>
     <option value="edit.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-editall"]?>...</option>
 <?php } ?>
 <!-- end edit metadata -->
@@ -117,7 +117,7 @@ if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_li
 
 
 <!-- request all -->    
-<?php if (($pagename=="collection_manage" || $pagename=="view") || $count_result>0 )
+<?php if (($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view") || $count_result>0 )
     { 
     # Ability to request a whole collection (only if user has restricted access to any of these resources)
     $min_access=collection_min_access($collection);
@@ -158,6 +158,6 @@ if ((($pagename!="collection_manage" && $pagename!="view") || ($show_edit_all_li
 
 
     </select><?php if ($pagename=="collections"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
-<?php if ($pagename!="collection_manage"){?>
+<?php if ($pagename!="collection_manage" && $pagename!="collection_public"){?>
 </form>
 <?php } ?>
