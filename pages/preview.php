@@ -112,7 +112,6 @@ include "../include/header.php";
 
 <?php
 # Page selector for installations with pdftk
-if (isset($pdftk_path)){
 if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
     $pagecount= get_page_count($resource,$alternative);
     if ($pagecount!=-2){
@@ -124,7 +123,6 @@ if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
         }
     if ($pagecount>$pdf_pages){?><option value="1">...<?php }     
     ?></select><?php
-}
 }
 }
 ?>

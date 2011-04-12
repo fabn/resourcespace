@@ -700,7 +700,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 		# Set that this is the file to be used.
 		if (file_exists($target) && $n==1)
 			{
-			$newfile=$target;
+			$newfile=$target;$pagecount=$n;
 	    	debug("Page $n generated successfully");
 			}
 			
@@ -708,7 +708,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 		 if (file_exists($target)&& $n!=1)
 			{
 			$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
-			$output=shell_exec($command2); 
+			$output=shell_exec($command2); $pagecount=$n;
 				
 			# Add a watermarked image too?
 			global $watermark;
@@ -746,9 +746,15 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
  			create_previews($copy,false,"pdf");
  			$pdf_split_pages_to_resources=true;
 			}
-		
 			
 		}
+        // set page number
+        if (isset($pagecount) && $alternative!=-1){
+            sql_query("update resource_alt_files set page_count=$pagecount where ref=$alternative");
+            }
+        else if (isset($pagecount)){
+            sql_query("update resource_dimensions set page_count=$pagecount where resource=$ref");
+            }
 	}
     else
     	{

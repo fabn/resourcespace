@@ -2191,6 +2191,7 @@ function get_page_count($resource,$alternative=-1)
         $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
     }
     if ($pagecount!=""){return $pagecount;}
+    /* // problems with password protected files require a different method than pdftk.
     # or, populate this column:
     # if pdf, use pdftk. If not, try unoconv alt pdf file
     global $pdftk_path;
@@ -2233,5 +2234,5 @@ function get_page_count($resource,$alternative=-1)
                 }
             }
         }
-        
+        */
     }
