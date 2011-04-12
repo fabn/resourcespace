@@ -2191,15 +2191,15 @@ function get_page_count($resource,$alternative=-1)
         $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
     }
     if ($pagecount!=""){return $pagecount;}
-    # or, populate this column with pdftk (for installations with many pdfs already previewed and indexed, this allows pagecount updates on the fly when needed):
-    # if pdf, use pdftk. If not, try unoconv alt pdf file
-    global $pdftk_path;
-    # locate pdftk
-    if ($pdftk_path!=""){
-        $command=$pdftk_path . "/bin/pdftk";
-        if (!file_exists($command)) {$command=$pdftk_path . "/pdftk";}
-        if (!file_exists($command)) {$command=$pdftk_path . "\pdftk.exe";} // please test
-        if (!file_exists($command)) {exit("Could not find 'pdftk' utility. $command'");}	
+    # or, populate this column with exiftool (for installations with many pdfs already previewed and indexed, this allows pagecount updates on the fly when needed):
+    # use exiftool. 
+    global $exiftool_path;
+    # locate exiftool
+    if ($exiftool_path!=""){
+        $command=$exiftool_path . "/bin/exiftool";
+        if (!file_exists($command)) {$command=$exiftool_path . "/exiftool";}
+        if (!file_exists($command)) {$command=$exiftool_path . "\exiftool.exe";} // please test
+        if (!file_exists($command)) {exit("Could not find 'exiftool' utility. $command'");}	
         
         if ($resource['file_extension']=="pdf" && $alternative==-1){
             $file=get_resource_path($ref,true,"",false,"pdf");
@@ -2213,24 +2213,18 @@ function get_page_count($resource,$alternative=-1)
             $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
         }
     
-        $command=$pdftk_path."/pdftk $file dump_data 2>&1";
+        $command=$command." -sss -pagecount $file";
         $output=shell_exec($command);
-        if (strstr($output,"OWNER PASSWORD REQUIRED")){$restricted=true;}
-        $output=explode("\n",$output);
-        foreach ($output as $outputline){
-            if (strstr($outputline,"NumberOfPages:")||isset($restricted)){
-                if (isset($restricted)){$pages=-2;}
-                else {
-                    $pages=str_replace("NumberOfPages: ","",$outputline);
-                }   
-                if ($alternative!=-1){
-                sql_query("update resource_alt_files set page_count=$pages where ref=$alternative");
-                }
-                else {
-                sql_query("update resource_dimensions set page_count=$pages where resource=$ref");
-                }
-                return $pages;
-                }
-            }
+        $pages=str_replace("Page Count","",$output);
+        $pages=str_replace(":","",$pages);
+        $pages=trim($pages);
+
+        if ($alternative!=-1){
+            sql_query("update resource_alt_files set page_count=$pages where ref=$alternative");
         }
+        else {
+            sql_query("update resource_dimensions set page_count=$pages where resource=$ref");
+        }
+        return $pages;
     }
+}
