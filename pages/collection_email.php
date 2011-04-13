@@ -98,12 +98,9 @@ include "../include/header.php";
 		$list=get_user_collections($userref);
 		$found=false;
 		for ($n=0;$n<count($list);$n++)
-			{
-			#show only active collections if a start date is set for $active_collections 
-			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
-					{ ?>
-				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
-			<?php }
+			{?>	
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			<?php 
 			}
 		if ($found==false)
 			{
