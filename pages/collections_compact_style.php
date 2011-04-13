@@ -158,6 +158,6 @@ if ((($pagename!="collection_manage" && $pagename!="collection_public" && $pagen
 
 
     </select><?php if ($pagename=="collections"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
-<?php if ($pagename!="collection_manage" && $pagename!="collection_public"){?>
+<?php if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
 </form>
 <?php } ?>
