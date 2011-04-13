@@ -112,7 +112,7 @@ include "../include/header.php";
 			if ($notfound!==false)
 				{
 				?>
-				<option selected><?php echo $notfound["name"]?></option>
+				<option value="<?php echo $ref?>" selected><?php echo $notfound["name"]?></option>
 				<?php
 				}
 			}
