@@ -24,7 +24,7 @@ if (getval("submit","")!="")
 		$rt_exclude=$_POST['rtexclude'];
 	}
 	else {
-		$rt_exclude=array();
+		$rt_exclude=array(3,4,8,13,18,21,24);
 	}
 	
 	$secure=getvalescaped("secure","");
