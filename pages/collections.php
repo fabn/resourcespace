@@ -163,6 +163,8 @@ checkboxes.each(function(box)
 <?php } ?>
 <?php } #end hook clearmaincheckboxesfromcollectionframe?>
 
+<?php hook("headblock");?>
+
 </head>
 
 <body class="CollectBack" id="collectbody"<?php if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<?php } ?>>
