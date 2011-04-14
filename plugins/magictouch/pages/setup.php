@@ -12,7 +12,6 @@ if (!isset($magictouch_rt_exclude)){$rt_exclude=array(3,4,8,13,18,21,24);}
 if (!isset($magictouch_view_page_sizes)){$view_sizes=array("lpr","scr");}
 if (!isset($magictouch_preview_page_sizes)){$magictouch_preview_page_sizes=array("hpr","lpr");}
 
-
 if (getval("submit","")!="")
 	{
 	$accountid=getvalescaped("accountid","");
@@ -48,9 +47,9 @@ include "../../../include/header.php";
   <h2>&nbsp;</h2>
   <h1>MagicTouch Configuration</h1>
   <?php
-if(!is_writable("../config/config.php")){echo("MagicTouch config.php is not writable: chmod 777 plugins/magictouch/config/config.php");die();}
+if(!is_writable("../config/config.php")){echo("MagicTouch config.php is not writable: chmod 777 plugins/magictouch/config/config.php<br/><br/> <a href=''>>Click Here to Refresh.</a>");die();}
 ?>
-
+<?php if ($magictouch_account_id==""){echo "You must set up MagicTouch. To get an account ID <a target='_new' href='http://www.magictoolbox.com/magictouch/signup/'>>Click Here</a>. <br /><br />Configure the account id below, and register your domain with your Magic Touch account.<br /><br />";}?>
   <div class="VerticalNav">
  <form id="form1" name="form1" method="post" action="">
 

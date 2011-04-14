@@ -3,7 +3,8 @@
 function HookMagictouchPreviewPreviewimage()
         {
 global $plugins,$lang,$search,$offset,$archive,$order_by,$sort,$plugins,$download_multisize,$k,$access,$ref,$resource,$watermark;
-
+global $magictouch_account_id;
+if ($magictouch_account_id==""){return false;}
 
 // This hooks runs outside of the renderinnerresourcepreview hook,
 // and if MTFAIL is defined, annotate will know not to include a Zoom link.
@@ -63,7 +64,7 @@ if (!file_exists($largeurl_path)) {
     
 <?php
 // annotate plugin compatibility
-if (in_array("annotate",$plugins)){?><a style="display:inline;" href="<?php echo ((getval("from","")=="search")?"search.php?":"preview.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
+if (in_array("annotate",$plugins)){?><a style="display:inline;" href="preview.php?ref=<?php echo $ref;?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
 ?>
 
 </div>
