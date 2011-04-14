@@ -182,7 +182,12 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     sql_query("update user set logged_in=0,session='' where username='$username'");
         
     #blank cookie
-    setcookie("user","",0);
+    if ($global_cookies){
+        setcookie("user","",0,"/");
+    }
+    else {
+        setcookie("user","",0);
+        }
 
     # Also blank search related cookies
     setcookie("search","");	
