@@ -4,6 +4,131 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
 
+if (!function_exists("DisplayTheme")){
+function DisplayTheme($themes=array())
+	{
+	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
+
+	# Work out theme name
+	$themecount=count($themes);
+	for ($x=0;$x<$themecount;$x++){
+		if (isset($themes[$x])&&!isset($themes[$x+1])) {$themename=$themes[$x];}
+}
+
+	$getthemes=get_themes($themes);
+
+	if (count($getthemes)>0)
+		{
+		?>
+		<div class="RecordBox">
+		<div class="RecordPanel">  
+		
+		<div class="RecordHeader">
+		
+		<?php
+		if ($themes_category_split_pages && $themes_category_split_pages_parents){?><h1><?php
+		echo $lang["collections"];?></h1><?php }
+		
+		if ($theme_images_align_right)
+			{
+			?>
+			<div style="float:right;">
+			<?php	
+			}
+		
+		$images=get_theme_image($themes);
+		if (($images!==false) && ($theme_images))
+			{
+			for ($n=0;$n<count($images);$n++)
+				{
+				?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?php echo get_resource_path($images[$n],false,"col",false) ?>" /></div>
+				<?php
+				}
+			}
+		if ($theme_images_align_right)
+			{
+			?>
+			</div>
+			<?php	
+			}
+		?>
+        <table><tr><td style="margin:0px;padding:0px;">
+		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
+			{
+			$themeslinks="";
+			for ($x=0;$x<count($themes);$x++){
+				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
+				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+				}
+			} 
+		else
+			{
+			echo stripslashes(str_replace("*","",$themename));
+			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
+            <p style="clear:none;">(<strong><?php echo count($getthemes);?></strong>&nbsp;<?php if (count($getthemes)==1){echo $lang["collection"];} else {echo $lang["collections"];}?>)</p></td></tr></table>
+
+
+		<div class="clearerright"> </div>
+		</div>
+		<br />
+		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
+		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+		<tr class="ListviewBoxedTitleStyle">
+		<td><?php echo $lang["name"]?></td>
+		<td width="5%"><?php echo $lang["itemstitle"]?></td>
+		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
+		</tr>
+		
+		<?php
+		for ($m=0;$m<count($getthemes);$m++)
+			{
+			?>
+			<tr <?php hook("collectionlistrowstyle");?>>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
+			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
+			</div></td>
+			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
+			
+			<td nowrap><div class="ListTools">
+            <?php if ($collections_compact_style){
+            include("collections_compact_style.php");
+            } else {
+
+                ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+			
+                <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
+		
+                <?php if (isset($zipcommand)) { ?>
+                &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+                <?php } ?>
+			
+                <?php if ($contact_sheet==true) { ?>
+                &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+                <?php } ?>
+		
+                <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+		
+                <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+		
+                <?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
+			<?php } ?>
+			</td>
+			</tr>
+			<?php
+			}
+		?>
+		</table>
+		</div>
+		
+		</div>
+		<div class="PanelShadow"> </div>
+		</div>
+		<?php
+		}
+	}
+}
+
+
 $themes=array();
 $themecount=0;
 foreach ($_GET as $key => $value) {
@@ -341,129 +466,7 @@ if ($header=="" && !isset($themes[0]))
 		}
 	}
 
-if (!function_exists("DisplayTheme")){
-function DisplayTheme($themes=array())
-	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
 
-	# Work out theme name
-	$themecount=count($themes);
-	for ($x=0;$x<$themecount;$x++){
-		if (isset($themes[$x])&&!isset($themes[$x+1])) {$themename=$themes[$x];}
-}
-
-	$getthemes=get_themes($themes);
-
-	if (count($getthemes)>0)
-		{
-		?>
-		<div class="RecordBox">
-		<div class="RecordPanel">  
-		
-		<div class="RecordHeader">
-		
-		<?php
-		if ($themes_category_split_pages && $themes_category_split_pages_parents){?><h1><?php
-		echo $lang["collections"];?></h1><?php }
-		
-		if ($theme_images_align_right)
-			{
-			?>
-			<div style="float:right;">
-			<?php	
-			}
-		
-		$images=get_theme_image($themes);
-		if (($images!==false) && ($theme_images))
-			{
-			for ($n=0;$n<count($images);$n++)
-				{
-				?><div style="float:left;margin-right:12px;"><img class="CollectImageBorder" src="<?php echo get_resource_path($images[$n],false,"col",false) ?>" /></div>
-				<?php
-				}
-			}
-		if ($theme_images_align_right)
-			{
-			?>
-			</div>
-			<?php	
-			}
-		?>
-        <table><tr><td style="margin:0px;padding:0px;">
-		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
-			{
-			$themeslinks="";
-			for ($x=0;$x<count($themes);$x++){
-				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
-				}
-			} 
-		else
-			{
-			echo stripslashes(str_replace("*","",$themename));
-			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
-            <p style="clear:none;">(<strong><?php echo count($getthemes);?></strong>&nbsp;<?php if (count($getthemes)==1){echo $lang["collection"];} else {echo $lang["collections"];}?>)</p></td></tr></table>
-
-
-		<div class="clearerright"> </div>
-		</div>
-		<br />
-		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
-		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
-		<tr class="ListviewBoxedTitleStyle">
-		<td><?php echo $lang["name"]?></td>
-		<td width="5%"><?php echo $lang["itemstitle"]?></td>
-		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
-		</tr>
-		
-		<?php
-		for ($m=0;$m<count($getthemes);$m++)
-			{
-			?>
-			<tr <?php hook("collectionlistrowstyle");?>>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
-			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
-			</div></td>
-			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
-			
-			<td nowrap><div class="ListTools">
-            <?php if ($collections_compact_style){
-            include("collections_compact_style.php");
-            } else {
-
-                ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
-			
-                <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
-		
-                <?php if (isset($zipcommand)) { ?>
-                &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
-                <?php } ?>
-			
-                <?php if ($contact_sheet==true) { ?>
-                &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
-                <?php } ?>
-		
-                <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
-		
-                <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
-		
-                <?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
-			<?php } ?>
-			</td>
-			</tr>
-			<?php
-			}
-		?>
-		</table>
-		</div>
-		
-		</div>
-		<div class="PanelShadow"> </div>
-		</div>
-		<?php
-		}
-	}
-}
 ?>
 
 </form>
