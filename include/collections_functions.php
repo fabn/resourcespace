@@ -423,6 +423,23 @@ function save_collection($ref)
 		}
 	}
 
+function get_max_theme_levels(){
+	// return the maximum number of theme category levels (columns) present in the collection table
+	$sql = "show columns from collection like 'theme%'";
+	$results = sql_query($sql);
+	foreach($results as $result) {
+		if ($result['Field'] == 'theme'){
+			$level = 1;
+		} else {
+			$thislevel = substr($result['Field'],5);
+			if (is_numeric($thislevel) && $thislevel > $level){
+				$level = $thislevel;
+			}
+		}
+	}
+	return $level;
+}
+
 function get_theme_headers($themes=array())
 	{
 	# Return a list of theme headers, i.e. theme categories
