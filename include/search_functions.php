@@ -720,7 +720,7 @@ function resolve_soundex($keyword)
 	{
 	# returns the most commonly used keyword that sounds like $keyword, or failing a soundex match,
 	# the most commonly used keyword that starts with the same few letters.
-	$soundex=sql_value("select keyword value from keyword where soundex=soundex('$keyword') order by hit_count desc limit 1",false);
+	$soundex=sql_value("select keyword value from keyword where soundex='".soundex($keyword)."' order by hit_count desc limit 1",false);
 	if (($soundex===false) && (strlen($keyword)>=4))
 		{
 		# No soundex match, suggest words that start with the same first few letters.

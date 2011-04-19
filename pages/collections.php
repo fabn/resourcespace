@@ -420,7 +420,7 @@ elseif ($k!="")
 
             if ($collection_dropdown_user_access_mode){    
                 foreach ($users as $user){
-                    if ($user['ref']==$list[$n]['user']){$colusername=$user['username'];}
+                    if ($user['ref']==$list[$n]['user']){$colusername=$user['fullname'];}
                 }
                 # Work out the correct access mode to display
                 if (!hook('collectionaccessmode')) {

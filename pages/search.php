@@ -22,7 +22,7 @@ $search=getvalescaped("search","");
 $df=array();
 
 
-$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields)));
+$all_field_info=get_fields_for_search_display(array_unique(array_merge($sort_fields,$thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields)));
 
 # get display and normalize display specific variables
 $display=getvalescaped("display",$default_display);setcookie("display",$display);
@@ -82,7 +82,7 @@ foreach ($sort_fields as $sort_field)
 	for ($m=0;$m<count($all_field_info);$m++)
 		{
 		if ($all_field_info[$m]["ref"]==$sort_field)
-			{
+			{ 
 			$field_info=$all_field_info[$m];
 			$sf[$n]['ref']=$sort_field;
 			$sf[$n]['title']=$field_info['title'];
@@ -463,7 +463,7 @@ if (true) # Always show search header now.
 				&nbsp;|&nbsp;
 				<?php if ($order_by=="field".$sf[$x]['ref']) {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $sf[$x]['title']?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $sf[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $sf[$x]['title']?></a><?php } ?>
 				<?php } ?>
-				<?php } ?>	
+				<?php } ?>
 			<?php } ?>		
 		
 		<?php hook("sortorder");?>

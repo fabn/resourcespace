@@ -59,6 +59,10 @@ if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower
 	exit();
 	}
 
+if ($collection_dropdown_user_access_mode){
+$users=get_users();
+}
+
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
@@ -98,8 +102,31 @@ include "../include/header.php";
 		$list=get_user_collections($userref);
 		$found=false;
 		for ($n=0;$n<count($list);$n++)
-			{?>	
-			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+			{
+
+            if ($collection_dropdown_user_access_mode){    
+                foreach ($users as $user){
+                    if ($user['ref']==$list[$n]['user']){$colusername=$user['fullname'];}
+                }
+                # Work out the correct access mode to display
+                if (!hook('collectionaccessmode')) {
+                    if ($list[$n]["public"]==0){
+                        $accessmode= $lang["private"];
+                    }
+                    else{
+                        if (strlen($list[$n]["theme"])>0){
+                            $accessmode= $lang["theme"];
+                        }
+                    else{
+                            $accessmode= $lang["public"];
+                        }
+                    }
+                }
+            }
+
+
+                ?>	
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?><?php if ($collection_dropdown_user_access_mode){echo "&nbsp;&nbsp;(". $colusername."/".$accessmode.")"; } ?></option>
 			<?php 
 			}
 		if ($found==false)
