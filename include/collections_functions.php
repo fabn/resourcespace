@@ -226,7 +226,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			}
         global $search_public_collections_ref;
         if ($search_public_collections_ref){$spcr="or c.ref='$search'";} else {$spcr="";}    
-		$sql.="and (c.name rlike '$search' or u.username='$search' or u.fullname='$search' $spcr $keysql)";
+		$sql.="and (c.name rlike '$search' or u.username rlike '$search' or u.fullname rlike '$search' $spcr $keysql)";
 		}
 
 	if ($exclude_themes) # Include only public collections.
