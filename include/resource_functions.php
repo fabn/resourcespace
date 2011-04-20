@@ -562,7 +562,7 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 				# This is a new keyword. Create and discover the new keyword ref.
 				sql_query("insert into keyword(keyword,soundex,hit_count) values ('" . escape_check($kw) . 	"',left('".soundex(escape_check($kw))."',10),0)");
 				$keyword=sql_insert_id();
-				echo "<li>New keyword.";
+				#echo "<li>New keyword.";
 				}
 			# create mapping, increase hit count.
 			sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$n','$resource_type_field')");

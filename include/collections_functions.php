@@ -20,9 +20,9 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
    		}
 	if ($sql!="") {$sql="where " . $sql;}
    
-	$return=sql_query ("select * from (select c.*,u.username,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
+	$return=sql_query ("select * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
 	union
-	select c.*,u.username,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist order by $order_by $sort");
+	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist order by $order_by $sort");
 	
 	// To keep My Collection creation consistent: Check that user has at least one collection of his/her own  (not if collection result is empty, which may include shares), 
 	$hasown=false;
