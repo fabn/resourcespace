@@ -47,6 +47,7 @@ $collections=search_public_collections($find,$order_by,$sort,$public_collections
 
 # pager
 $per_page=15;
+if ($collection_dropdown_user_access_mode){$per_page=10;}
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
