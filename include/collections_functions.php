@@ -196,6 +196,7 @@ function refresh_collection_frame($collection="")
 		}
 	}
 	
+if (!function_exists("search_public_collections")){	
 function search_public_collections($search="", $order_by="name", $sort="ASC", $exclude_themes=true, $exclude_public=false, $include_resources=false, $override_group_restrict=false)
 	{
 	# Performs a search for themes / public collections.
@@ -262,6 +263,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 		    return sql_query("select c.*,u.username,u.fullname from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	}
+}
 
 function add_collection($user,$collection)
 	{
