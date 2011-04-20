@@ -4,6 +4,7 @@ function HookMagictouchPreviewPreviewimage()
         {
 global $plugins,$lang,$search,$offset,$archive,$order_by,$sort,$plugins,$download_multisize,$k,$access,$ref,$resource,$watermark;
 global $magictouch_account_id;
+if (getval("alternative","")!=""){return false;}
 if ($magictouch_account_id==""){return false;}
 
 // This hooks runs outside of the renderinnerresourcepreview hook,

@@ -2,7 +2,7 @@
 
 function HookAnnotatePreviewPreviewimage2 (){
 global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude;
-
+if (getval("alternative","")!=""){return false;}
 $resource=get_resource_data($ref);
 if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
 if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
