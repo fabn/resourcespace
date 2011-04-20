@@ -7,7 +7,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	{
 	# Returns a list of user collections.
 	$sql="";
-	if (strlen($find)>1) {$sql="(name like '%$find%' or u.username like '%$find%' or c.ref like '$find')";}
+	if (strlen($find)>1) {$sql="(name like '%$find%' or u.username like '%$find%' or u.fullname like '%$find%' or c.ref like '$find')";}
 	if (strlen($find)==1) {$sql="(name like '$find%' or c.ref like '$find')";}
    
     # Include themes in my collecions? 
@@ -226,7 +226,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			}
         global $search_public_collections_ref;
         if ($search_public_collections_ref){$spcr="or c.ref='$search'";} else {$spcr="";}    
-		$sql.="and (c.name rlike '$search' or u.username='$search' $spcr $keysql)";
+		$sql.="and (c.name rlike '$search' or u.username='$search' or u.fullname='$search' $spcr $keysql)";
 		}
 
 	if ($exclude_themes) # Include only public collections.
@@ -255,11 +255,11 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Run the query
 	if ($include_resources)
 		{
-            return sql_query("select c.*,u.username, group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources, count( DISTINCT cr.resource ) count from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+            return sql_query("select c.*,u.username,u.fullname, group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources, count( DISTINCT cr.resource ) count from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	else
 		{
-		    return sql_query("select c.*,u.username from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+		    return sql_query("select c.*,u.username,u.fullname from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	}
 

@@ -104,7 +104,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><div class="ListTitle">
 	<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
-	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
+	<td><?php echo highlightkeywords($collections[$n]["fullname"],$find)?></td>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
     <td><?php echo $collections[$n]["count"]?></td>

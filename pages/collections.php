@@ -28,9 +28,6 @@ else
 	$basket=false;
 	}
 
-if ($collection_dropdown_user_access_mode){
-$users=get_users();
-}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html class="CollectBack">
@@ -419,9 +416,8 @@ elseif ($k!="")
 			{
 
             if ($collection_dropdown_user_access_mode){    
-                foreach ($users as $user){
-                    if ($user['ref']==$list[$n]['user']){$colusername=$user['fullname'];}
-                }
+                $colusername=$list[$n]['fullname'];
+                
                 # Work out the correct access mode to display
                 if (!hook('collectionaccessmode')) {
                     if ($list[$n]["public"]==0){
@@ -796,11 +792,8 @@ elseif ($k!="")
 		$list=get_user_collections($userref);
 		for ($n=0;$n<count($list);$n++)
 			{
-
             if ($collection_dropdown_user_access_mode){    
-                foreach ($users as $user){
-                    if ($user['ref']==$list[$n]['user']){$colusername=$user['username'];}
-                }
+                $colusername=$list[$n]['fullname'];
                 # Work out the correct access mode to display
                 if (!hook('collectionaccessmode')) {
                     if ($list[$n]["public"]==0){

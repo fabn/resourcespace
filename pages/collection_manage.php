@@ -175,6 +175,7 @@ if ($deleteempty!="") {
 	refresh_collection_frame($usercollection);
 }
 
+
 include "../include/header.php";
 ?>
   <div class="BasicsBox">
@@ -195,6 +196,7 @@ include "../include/header.php";
 <?php
 
 $collections=get_user_collections($userref,$find,$order_by,$sort);
+
 # pager
 $per_page=15;
 $results=count($collections);
@@ -248,7 +250,7 @@ echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
 <td><?php if ($order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a><?php if ($order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($order_by=="fullname") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=fullname&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($order_by=="fullname") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
@@ -260,11 +262,13 @@ echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	{
+    $colusername=$collections[$n]['fullname'];
+
 	?><tr <?php hook("collectionlistrowstyle");?>>
 	<td><div class="ListTitle">
 	<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){$collection_tag="";} else {$collection_tag=$lang['smartcollection'].": ";}?>
     <a <?php if ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo $collection_tag. highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
-	<td><?php echo highlightkeywords($collections[$n]["username"],$find)?></td>
+	<td><?php echo highlightkeywords($colusername,$find)?></td>
 	<td><?php echo highlightkeywords($collection_prefix . $collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
 	<td><?php echo $collections[$n]["count"]?></td>
