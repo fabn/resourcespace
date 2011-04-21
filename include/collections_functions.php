@@ -816,10 +816,21 @@ function allow_multi_edit($collection)
 	{
 	# Returns true or false, can this collection be edited as a multi-edit?
 	# All the resources must be of the same type and status for this to work.
+
+	if (!is_array($collection)){ // collection is an array of resource data
+		
+		$collection=do_search("!collection" . $collection);
+
+	}
+	for ($n=0;$n<count($collection);$n++){
+		
+		if (!get_edit_access($collection[$n]["ref"],$collection[$n]["archive"],false)){return false;}
+		
+	}
+
+	return true;
 	
 	# Updated: 2008-01-21: Edit all now supports multiple types, so always return true.
-	return (true);
-	
 	/*
 	$types=sql_query("select distinct r.resource_type from collection_resource c left join resource r on c.resource=r.ref where c.collection='$collection'");
 	if (count($types)!=1) {return false;}
@@ -1198,6 +1209,5 @@ function collection_min_access($collection)
 		}
 	return $minaccess;
 	}
-
 	
-?>
+

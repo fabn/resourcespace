@@ -3,6 +3,8 @@ include "../include/db.php";
 include "../include/authenticate.php"; #if (!checkperm("s")) {exit ("Permission denied.");}
 include "../include/general.php";
 include "../include/collections_functions.php";
+include "../include/search_functions.php";
+include "../include/resource_functions.php";
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
@@ -328,11 +330,11 @@ if (!hook('collectionaccessmode')) {
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 
-    	<?php if ((($username==$collections[$n]["username"]) || (checkperm("h"))) && $collection_sorting) {?>&nbsp;<a href="collection_sort.php?collection=<?php echo $collections[$n]['ref'] ?>">&gt;&nbsp;<?php echo $lang["sort"]?></a><?php } ?>
+    <?php if ((($username==$collections[$n]["username"]) || (checkperm("h"))) && $collection_sorting) {?>&nbsp;<a href="collection_sort.php?collection=<?php echo $collections[$n]['ref'] ?>">&gt;&nbsp;<?php echo $lang["sort"]?></a><?php } ?>
 
-    <?php     # If this collection is (fully) editable, then display an edit all link
-    if (($collections[$n]["count"] >0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>
-    &nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["action-editall"]?></a>&nbsp;<?php } ?>
+    <?php     
+    # If this collection is (fully) editable, then display an edit all link
+    if (($collections[$n]["count"] > 0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>&nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["action-editall"]?></a>&nbsp;<?php } ?>
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?><a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
 

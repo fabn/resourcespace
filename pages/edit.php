@@ -60,6 +60,8 @@ if ($collection!="")
 	$multiple=true;
 	$items=get_collection_resources($collection);
 	if (count($items)==0) {exit("You cannot edit an empty collection.");}
+	# check editability
+	if (!allow_multi_edit($collection)){exit("Permission Denied to Edit All Items in this Collection.");}
 	$ref=$items[0];
 	}
 else

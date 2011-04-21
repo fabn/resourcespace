@@ -3,10 +3,11 @@
 
 include_once("../include/search_functions.php");
 include_once("../include/resource_functions.php");
+include_once("../include/collections_functions.php");
 
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
-    $collection=substr($search,11);$colresult=do_search("!collection" . $collection);
+    $collection=substr($search,11);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 } else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
     if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
@@ -26,7 +27,7 @@ elseif ($pagename=="themes"){
     $feedback=$cinfo["request_feedback"];
     }    
 else {
-    $collection=$usercollection;$colresult=do_search("!collection" . $collection);
+    $collection=$usercollection;$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 }
 
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
@@ -74,7 +75,7 @@ else if ($pagename=="search"){ ?>
 
 <!-- edit metadata -->    
 <?php # If this collection is (fully) editable, then display an extra edit all link
-if ((($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="view") || ($show_edit_all_link && ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"))) && ($count_result>0) && checkperm("e" . $colresult[0]["archive"]) && allow_multi_edit($collection)) { ?>
+if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["archive"]) && allow_multi_edit($colresult)) { ?>
     <option value="edit.php?collection=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-editall"]?>...</option>
 <?php } ?>
 <!-- end edit metadata -->
