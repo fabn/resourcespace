@@ -814,8 +814,8 @@ function add_saved_search_items($collection)
 if (!function_exists("allow_multi_edit")){
 function allow_multi_edit($collection)
 	{
-	# Returns true or false, can this collection be edited as a multi-edit?
-	# All the resources must be of the same type and status for this to work.
+	# Returns true or false, can all resources in this collection be edited by the user?
+	# also applies edit filter, since it uses get_resource_access
 
 	if (!is_array($collection)){ // collection is an array of resource data
 		
