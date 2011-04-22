@@ -214,7 +214,7 @@ if ($theme_category_levels>=$i)
 <div class="clearerleft"> </div>
 </div><?php } ?>
 
-<?php if ($colcount!=0){?>
+<?php if ($colcount!=0 && $collection['savedsearch']==''){?>
 <div class="Question">
 <label for="removeall"><?php echo $lang["removeallresourcesfromcollection"]?></label><input type=checkbox id="removeall" name="removeall">
 <div class="clearerleft"> </div>

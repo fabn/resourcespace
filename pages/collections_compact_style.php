@@ -27,7 +27,7 @@ elseif ($pagename=="themes"){
     $feedback=$cinfo["request_feedback"];
     }    
 else {
-    $collection=$usercollection;$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
+    $collection=$usercollection;$cinfo=get_collection($collection);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 }
 
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
@@ -152,7 +152,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 <!-- end purge -->
 
 <!-- empty -->
-<?php if ((($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["emptycollection"];?></a><?php } ?>
+<?php if ($cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["emptycollection"];?></a><?php } ?>
 <!-- end empty-->
 
 <!-- log -->
