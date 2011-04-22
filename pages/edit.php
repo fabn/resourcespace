@@ -59,9 +59,18 @@ if ($collection!="")
 	# If editing multiple items, use the first resource as the template
 	$multiple=true;
 	$items=get_collection_resources($collection);
-	if (count($items)==0) {exit("You cannot edit an empty collection.");}
+	if (count($items)==0) {
+		$error=$lang['error-cannoteditemptycollection'];
+		include "../include/header.php";
+		error_alert($error);
+	}
+	
 	# check editability
-	if (!allow_multi_edit($collection)){exit("Permission Denied to Edit All Items in this Collection.");}
+	if (!allow_multi_edit($collection)){
+		$error=$lang['error-permissiondenied'];
+		include "../include/header.php";
+		error_alert($error);
+	}
 	$ref=$items[0];
 	}
 else
@@ -79,7 +88,10 @@ if (getval("regenexif","")!="")
 $resource=get_resource_data($ref);
 
 # Not allowed to edit this resource?
-if (!get_edit_access($ref,$resource["archive"])) {exit ("Permission denied.");}
+if (!get_edit_access($ref,$resource["archive"])) {
+		$error=$lang['error-permissiondenied'];
+		include "../include/header.php";
+		error_alert($error);}
 
 if (getval("regen","")!="")
 	{

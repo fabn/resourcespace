@@ -2940,3 +2940,10 @@ function run_external($cmd,&$code)
 
     return $output;
 }
+
+function error_alert($error,$back=true){
+	echo "<script type='text/javascript'>
+	alert('$error');";
+	if ($back){echo "history.go(-1);";}
+	echo "</script>";
+}
