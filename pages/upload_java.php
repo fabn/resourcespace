@@ -33,6 +33,13 @@ if ($collection_add==-1)
 	# The user has chosen Create New Collection from the dropdown.
 	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
 	$collection_add=create_collection($userref,$collectionname);
+	if (getval("public",'0') == 1){
+		collection_set_public($collection_add);
+	}
+	if (strlen(getval("themestring",'')) > 0){
+		$themearr = explode('||',getval("themestring",''));
+		collection_set_themes($collection_add,$themearr);
+	}
 	set_user_collection($userref,$collection_add);
 	refresh_collection_frame($collection_add);
 	}

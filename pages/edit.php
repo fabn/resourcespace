@@ -140,12 +140,12 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				if (getval("swf","")!="") // Test if in browser flash upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
 					}
 				elseif (getval("java","")!="") // Test if in browser java upload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
@@ -238,6 +238,7 @@ function HideHelp(field)
 		}
 	}
 </script>
+<script type="text/javascript" src="../lib/js/prototype.js"></script>
 
 <div class="BasicsBox"> 
 
@@ -419,6 +420,7 @@ for ($n=0;$n<count($types);$n++)
 
 
 <?php
+
 if (getval("swf","")!="" || getval("java","")!="") { 
 
 # Batch uploads (SWF/Java) - also ask which collection to add the resource to.
@@ -427,7 +429,7 @@ if ($enable_add_collection_on_upload)
 	?>
 	<div class="Question">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
-	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if($(this).value==-1){$('collectionname').style.display='block';} else {$('collectionname').style.display='none';}">
+	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if($(this).value==-1){$('collectioninfo').style.display='block';} else {$('collectioninfo').style.display='none';}">
 	<?php if ($upload_add_to_new_collection_opt) { ?><option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option><?php } ?>
 	<?php if ($upload_do_not_add_to_new_collection_opt) { ?><option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option><?php } ?>
 	<?php
@@ -454,13 +456,47 @@ if ($enable_add_collection_on_upload)
 	?>
 	</select>
 	<div class="clearerleft"> </div>
+	<div name="collectioninfo" id="collectioninfo">
 	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
 	<label for="collection_add"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
-	<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'>
+	<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
 	</div>
-	</div>
+	
+	<?php if ($enable_public_collection_on_upload && ($enable_public_collections || checkperm('h')) && !checkperm('b')) { ?>
+	<label for="public"><?php echo $lang["access"]?></label>
+	<select id="public" name="public" class="shrtwidth"  <?php
+		if (checkperm('h')){ // if the user can add to a theme, include the code to toggle the theme selector
+		?>
+			onchange="if($(this).value==1){$('themeselect').style.display='block';resetThemeLevels();} else {$('themeselect').style.display='none'; clearThemeLevels();}"
+		<?php 
+		} ?>
+	?>>
+	<option value="0" selected><?php echo $lang["private"]?></option>
+	<option value="1"><?php echo $lang["public"]?></option>
+	</select>
+	<div class="clearerleft"> </div>
+	
 	<?php 
-}
+	if (checkperm('h')){ 
+	// if the user can add to a theme, include the theme selector
+	?>
+		<!-- select theme if collection is public -->
+		<script type="text/javascript" src="../lib/js/update_theme_levels.js"></script>
+		<input type="hidden" name="themestring" id="themestring" value="" />
+		<div id='themeselect' class='themeselect' style="display:none">
+			<?php 
+				include_once("ajax/themelevel_add.php"); 
+			?>
+		</div>
+		<!-- end select theme -->
+		
+		</div>
+		</div>
+		
+<?php 	
+		} // end if checkperm h 
+	} // end if public collections enabled
+} // end enable_add_collection_on_upload
 ?>
 
 

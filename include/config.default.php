@@ -691,6 +691,11 @@ $checkbox_ordered_vertically=true;
 
 # When batch uploading, show the 'add resources to collection' selection box
 $enable_add_collection_on_upload=true;
+
+# When batch uploading, allow users to set collection public as part of upload process
+# also allows assignment to themes for users who have appropriate privileges
+$enable_public_collection_on_upload=false;
+
 # Batch Uploads, default is "Add to New Collection". Turn off to default to "Do not Add to Collection"
 $upload_add_to_new_collection=true;
 # Batch Uploads, enables the "Add to New Collection" option.
