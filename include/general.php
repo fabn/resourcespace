@@ -1848,8 +1848,8 @@ function sorthighlights($a, $b)
 function pager($break=true)
 	{
 	global $curpage,$url,$totalpages,$offset,$per_page,$lang,$jumpcount,$pager_dropdown;
-	$jumpcount++;
-    ?>     
+	$jumpcount++;global $pagename;
+    if ($totalpages!=1){?>     
         <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } ?><?php if ($curpage>1) { ?><a href="<?php echo $url?>&offset=<?php echo $offset-$per_page?>"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
 
         <?php if ($pager_dropdown){
@@ -1868,6 +1868,7 @@ function pager($break=true)
         <?php if (!$pager_dropdown){?>
             <div id="jumppanel<?php echo $jumpcount?>" style="display:none;margin-top:5px;"><?php echo $lang["jumptopage"]?>: <input type="text" size="3" id="jumpto<?php echo $jumpcount?>">&nbsp;<input type="submit" name="jump" value="<?php echo $lang["jump"]?>" onClick="var jumpto=document.getElementById('jumpto<?php echo $jumpcount?>').value;if ((jumpto>0) && (jumpto<=<?php echo $totalpages?>)) {document.location='<?php echo $url?>&offset=' + ((jumpto-1) * <?php echo $per_page?>);}"></div>
         <?php } ?>
+    <?php } else { ?><span class="HorizontalWhiteNav">&nbsp;</span><div <?php if ($pagename=="search"){?>style="display:block;"<?php } else { ?>style="display:inline;"<?php }?>>&nbsp;</div><?php } ?>
    	<?php
 	}
 	
