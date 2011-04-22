@@ -406,8 +406,7 @@ function save_collection($ref)
 	# Remove all resources?
 	if (getval("removeall","")!="")
 		{
-		sql_query("delete from collection_resource where collection='$ref'");
-		collection_log($ref,"R",0);
+		remove_all_resources_from_collection($ref);
 		}
 		
 	# Delete all resources?
@@ -1264,3 +1263,13 @@ function collection_set_themes($collection,$themearr)
 			return false;
 		}	
 	}
+	
+function remove_all_resources_from_collection($ref){
+	// abstracts it out of save_collection() for use in collections_compact_style
+		# Remove all resources?
+	if (getval("removeall","")!="")
+		{
+		sql_query("delete from collection_resource where collection='$ref'");
+		collection_log($ref,"R",0);
+		}
+	}	

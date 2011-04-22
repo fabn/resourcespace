@@ -1324,6 +1324,8 @@ $lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced,
 
 $lang["sort"] = "Sort";
 $lang["sortcollection"] = "Sort Collection";
+$lang["emptycollection"] = "Empty Collection";
+$lang["emptycollectionareyousure"]="Are you sure you want to remove all resources from this collection?";
 
 $lang["error-cannoteditemptycollection"]="You cannot edit an empty collection.";
 $lang["error-permissiondenied"]="Permission denied.";

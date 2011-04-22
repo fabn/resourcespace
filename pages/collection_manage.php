@@ -56,6 +56,12 @@ if ($delete!="")
 	refresh_collection_frame($usercollection);
 	}
 
+$removeall=getvalescaped("removeall","");
+if ($removeall!=""){
+	remove_all_resources_from_collection($removeall);
+	refresh_collection_frame($usercollection);
+}
+
 $remove=getvalescaped("remove","");
 if ($remove!="")
 	{
@@ -174,6 +180,12 @@ if ($deleteempty!="") {
 		set_user_collection($userref,$usercollection);
 	}
 	
+	refresh_collection_frame($usercollection);
+}
+
+$removeall=getvalescaped("removeall","");
+if ($removeall!=""){
+	remove_all_resources_from_collection($removeall);
 	refresh_collection_frame($usercollection);
 }
 
