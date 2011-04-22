@@ -10,9 +10,8 @@ if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"
     $collection=substr($search,11);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 } else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
-    if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
-        $count_result=count($colresult);
-        }
+    $colresult=do_search("!collection" . $collection);
+    $count_result=count($colresult);
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];    
     }
@@ -20,9 +19,8 @@ elseif ($pagename=="themes"){
     $n=$m;
     $collections=$getthemes;
     $collection=$getthemes[$m]["ref"];
-    if ($show_edit_all_link){$colresult=do_search("!collection" . $collection);
-        $count_result=count($colresult);
-        }
+    $colresult=do_search("!collection" . $collection);
+    $count_result=count($colresult);
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];
     }    
