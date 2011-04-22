@@ -98,7 +98,7 @@ if ($thisval == '' && $i > 0) {
 	break;
 }
 $i++;
-} while ( $i <= count($themearr) );
+} while ( $i <= count($themearr) && $i < $theme_category_levels);
 
 
 ?>
