@@ -1,8 +1,14 @@
 <?php
-include_once "../../include/db.php";
-include_once "../../include/authenticate.php"; 
-include_once "../../include/general.php"; 
-include_once "../../include/collections_functions.php"; 
+if (file_exists('../include/collections_functions.php')){
+	$relpath = '..';
+} else {
+	$relpath = '../..';
+}
+
+include_once "$relpath/include/db.php";
+include_once "$relpath/include/authenticate.php"; 
+include_once "$relpath/include/general.php"; 
+include_once "$relpath/include/collections_functions.php"; 
 
 $max_theme_levels = get_max_theme_levels(); // max number of theme columns currently in table
 
@@ -31,7 +37,7 @@ function getThemeList($parents=array()){
 
 
 
-$themestring = $_REQUEST['themestring'];
+$themestring = getval('themestring','');
 if ($themestring <> ''){
 	$themearr = explode("||", $themestring);
 } else {
