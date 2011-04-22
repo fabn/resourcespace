@@ -1327,3 +1327,4 @@ $lang["sortcollection"] = "Sort Collection";
 
 $lang["error-cannoteditemptycollection"]="You cannot edit an empty collection.";
 $lang["error-permissiondenied"]="Permission denied.";
+$lang["error-collectionnotfound"]="Collection not found.";

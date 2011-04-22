@@ -10,8 +10,13 @@ $ref=getvalescaped("ref","",true);
 $copycollectionremoveall=getvalescaped("copycollectionremoveall","");
 
 # Fetch collection data
-$collection=get_collection($ref);if ($collection===false) {exit("Collection not found.");}
-
+$collection=get_collection($ref);if ($collection===false) {
+	$error=$lang['error-collectionnotfound'];
+	include "../include/header.php";
+	error_alert($error);
+	}
+$resources=do_search("!collection".$ref);
+$colcount=count($resources);
 
 # Collection copy functionality
 $copy=getval("copy","");
@@ -203,18 +208,20 @@ if ($theme_category_levels>=$i)
 	?><input type=hidden id="allow_changes" name="allow_changes" value="checked">
 <?php } ?>
 
-<?php if (checkperm("e0") || checkperm("e1") || checkperm("e2")) { ?>
+<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && $colcount>1) { ?>
 <div class="Question">
 <label for="allow_changes"><?php echo $lang["relateallresources"]?></label><input type=checkbox id="relateall" name="relateall">
 <div class="clearerleft"> </div>
 </div><?php } ?>
 
+<?php if ($colcount!=0){?>
 <div class="Question">
 <label for="removeall"><?php echo $lang["removeallresourcesfromcollection"]?></label><input type=checkbox id="removeall" name="removeall">
 <div class="clearerleft"> </div>
 </div>
+<?php } ?>
 
-<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D")) { ?>
+<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D") && $colcount!=0) { ?>
 <div class="Question">
 <label for="deleteall"><?php echo $lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?php echo $lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>

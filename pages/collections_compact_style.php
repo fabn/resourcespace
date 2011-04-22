@@ -53,21 +53,21 @@ else if ($pagename=="search"){ ?>
 
 
 <!-- viewall -->
-<?php if ($pagename!="search"){
+<?php if ($pagename!="search" && $count_result>0){
     ?><option value="search.php?search=<?php echo urlencode("!collection" . $collection)?>">&gt;&nbsp;<?php echo $lang["viewall"]?></option>
 <?php } ?>
 <!-- end viewall -->
 
 
 <!-- preview all -->
-<?php if ($preview_all){?>
+<?php if ($preview_all && $count_result>0){?>
 <option value="preview_all.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["preview_all"]?></option>
 <?php } ?>
 <!-- end preview_all -->
 
 
 <!-- zipall -->
-   	<?php if (isset($zipcommand)) { ?>
+   	<?php if (isset($zipcommand) && $count_result>0) { ?>
     <option value="terms.php?url=<?php echo urlencode("pages/collection_download.php?collection=" .  $collection )?>">&gt;&nbsp;<?php echo $lang["action-download"]?>...</option>
 	<?php } ?>
 <!-- end zipall -->
@@ -94,7 +94,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 
 <!-- contactsheet -->
-<?php if ($contact_sheet==true && $collections_compact_style) { ?>
+<?php if ($contact_sheet==true && $count_result>0) { ?>
 <option value="contactsheet_settings.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?>...</option>
 <?php } ?>
 <!-- end contactsheet -->
@@ -104,7 +104,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 
 <!-- share -->
-<?php if ($allow_share) { ?>
+<?php if ($allow_share && $count_result>0) { ?>
 <option value="collection_share.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["share"]?>...</option>
 <?php } ?>
 <!-- end share -->
@@ -143,7 +143,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 
 <!-- purge -->
-<?php if ($collection_purge){ 
+<?php if ($collection_purge && $count_result>0){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
         ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
     } 
