@@ -1210,4 +1210,57 @@ function collection_min_access($collection)
 	return $minaccess;
 	}
 	
+function collection_set_public($collection)
+	{
+	// set an existing collection to be public
+		if (is_numeric($collection)){
+			$sql = "update collection set public = '1' where ref = '$collection'";
+			sql_query($sql);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+function collection_set_private($collection)
+	{
+	// set an existing collection to be private
+		if (is_numeric($collection)){
+			$sql = "update collection set public = '0' where ref = '$collection'";
+			sql_query($sql);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+function collection_set_themes($collection,$themearr)
+	{
+		// add theme categories to this collection
+		if (is_numeric($collection) && is_array($themearr)){
+			global $theme_category_levels;
+			$clause = '';
+			for ($i = 0; $i < $theme_category_levels; $i++){
+				if ($i == 0) {
+					$column = 'theme';
+				} else {
+					$column = "theme" . ($i + 1);
+				}
+				if (isset($themearr[$i])){
+					if (strlen($clause) > 0) {
+						$clause .= ", ";
+					}
+					$clause .= " $column = '" . escape_check($themearr[$i]) . "' ";
+				}
+			}
+			if (strlen($clause) > 0){
+				$sql = "update collection set $clause where ref = '$collection'";
+				sql_query($sql);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}	
+	}
