@@ -491,13 +491,13 @@ if ($enable_add_collection_on_upload)
 		<!-- end select theme -->
 		
 		</div>
-		</div>
 		
 <?php 	
 		} // end if checkperm h 
 	} // end if public collections enabled
 } // end enable_add_collection_on_upload
 ?>
+	</div> <!-- end collectioninfo -->
 
 
 <?php } ?>
