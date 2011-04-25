@@ -73,7 +73,7 @@ $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"collection_public.php?order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\">" . chr($n) . "</a> ";
+	$atoz.="<a href=\"collection_public.php?order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
@@ -84,6 +84,23 @@ $url="collection_public.php?paging=true&order_by=".$order_by."&sort=".$sort."&fi
 
 <form method=post id="collectionform">
 <input type=hidden name="add" id="collectionadd" value="">
+
+<?php
+
+// count how many collections are owned by the user versus just shared, and show at top
+$mycollcount = 0;
+$othcollcount = 0;
+for($i=0;$i<count($collections);$i++){
+	if ($collections[$i]['user'] == $userref){
+		$mycollcount++;
+	} else {
+		$othcollcount++;
+	}
+}
+
+echo "<strong>" . $lang["total"] . ": " . count($collections) . "</strong> " . strtolower($lang['collections']);
+echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
+?>
 
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
