@@ -57,10 +57,13 @@ if (isset($themearr[$i])){
 } else {
 		$thisval = '';
 }
+
+if ($i==0){$themeindex="";}else{$themeindex=$i+1;}
+
 ?>
 <div class='themelevelinstance' id="themelevel<?php echo $i ?>">
 	<div class="Question">
-		<label for="theme<?php echo $i ?>">Theme Category </label>
+		<label for="theme<?php echo $i ?>"><?php echo $lang["themecategory"] . " ".$themeindex ?></label>
 		<select class="stdwidth" name="theme<?php echo $i ?>" id="theme<?php echo $i ?>" onchange="updateThemeLevels(<?php echo $i ?>);"><option value="">Select...</option>
 			<?php
 				if ($thisval == ''){	
@@ -85,7 +88,7 @@ if (isset($themearr[$i])){
 			?>
 		</select>
 		<div class="clearerleft"> </div>
-		<label>OR: Enter a new theme category name...</label>
+		<label><?php echo $lang["newcategoryname"]?></label>
 		<input type=text class="medwidth" name="newtheme<?php echo $i ?>" id="newtheme<?php echo $i ?>" value="" maxlength="100">
 		<input type=button class="medcomplementwidth" value="Save" style="display:inline;" onclick="updateThemeLevels(<?php echo $i ?>);"/>
 		<div class="clearerleft"> </div>
