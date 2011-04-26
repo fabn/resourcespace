@@ -591,7 +591,7 @@ function populate_smart_theme_tree_node($tree,$node,$return,$indent,$levels)
 	for ($n=0;$n<count($tree);$n++)
 		{
 		$s=explode(",",$tree[$n]);
-		if ($s[1]==$node)
+		if (isset($s[1]) && $s[1]==$node)
 			{
 			# Add this node
 			$c=count($return);
