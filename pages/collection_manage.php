@@ -257,7 +257,7 @@ for($i=0;$i<count($collections);$i++){
 	}
 }
 
-echo "<strong>" . $lang["total"] . ": " . count($collections) . "</strong> " . strtolower($lang['collections']);
+echo "<strong>" . $lang["total"] . ": " . count($collections) . "</strong> " . $lang['collections'];
 echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
 ?>
 
