@@ -813,7 +813,7 @@ function add_saved_search_items($collection)
 if (!function_exists("allow_multi_edit")){
 function allow_multi_edit($collection)
 	{
-	global $ref;
+	global $resource;
 	# Returns true or false, can all resources in this collection be edited by the user?
 	# also applies edit filter, since it uses get_resource_access
 
