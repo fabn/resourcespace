@@ -104,6 +104,8 @@ $is_template=(isset($metadata_template_resource_type) && $resource["resource_typ
 
 if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")=="")
 	{
+	hook("editbeforesave");			
+
 	# save data
 	if (!$multiple)
 		{
@@ -131,7 +133,7 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 			{
 			if ($ref>0 && getval("save","")!="")
 				{
-				# Log this			
+				# Log this
 				daily_stat("Resource edit",$ref);
 				redirect("pages/view.php?ref=" . $ref . "&search=" . urlencode($search) . "&offset=" . $offset . "&order_by=" . $order_by . "&sort=".$sort."&archive=" . $archive . "&refreshcollectionframe=true");
 				}
@@ -928,6 +930,7 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php } ?>
 	<?php } /* end hook replacestatusselector */?>
 
+<?php hook("beforeaccessselector"); ?>
 <?php if (!hook("replaceaccessselector")){ ?>	
 	<!-- Access -->
 	<?php if ($ref<0 && $show_status_and_access_on_upload==false) { 

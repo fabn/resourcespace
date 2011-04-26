@@ -1725,7 +1725,7 @@ function get_edit_access($resource,$status=-999,$metadata=false)
 	$gotmatch=false;
 	if (trim($usereditfilter)=="")
 		{
-		return true;
+		$gotmatch = true;
 		}
 	else
 		{
@@ -1746,6 +1746,10 @@ function get_edit_access($resource,$status=-999,$metadata=false)
 				}
 			}
 		}
+	
+	if ($gotmatch) {
+	  $gotmatch = !hook("denyafterusereditfilter");
+	}
 	
 	# Default after all filter operations, allow edit.
 	return $gotmatch;

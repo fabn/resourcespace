@@ -479,6 +479,8 @@ if (!$basic_simple_search)
 	-->
 	
 	<?php } ?>
+	
+	<?php hook("searchbarbeforebuttons"); ?>
 		
 	<?php if ($searchbar_buttons_at_bottom){ echo $searchbuttons; } ?>
 			
