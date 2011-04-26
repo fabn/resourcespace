@@ -823,7 +823,7 @@ function allow_multi_edit($collection)
 
 	}
 	for ($n=0;$n<count($collection);$n++){
-		$ref = $collection[$n];
+		$resource = $collection[$n];
 		if (!get_edit_access($collection[$n]["ref"],$collection[$n]["archive"],false)){return false;}
 		
 	}
