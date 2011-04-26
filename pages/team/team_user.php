@@ -63,7 +63,7 @@ $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"team_user.php?order_by=u.username&find=" . chr($n) . "\">" . chr($n) . "</a> ";
+	$atoz.="<a href=\"team_user.php?order_by=u.username&find=" . chr($n) . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
@@ -72,6 +72,9 @@ $atoz.="</div>";
 ?>
 
 <div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div>
+
+<strong><?php echo $lang["total"] . ": " . count($users); ?> </strong><?php echo $lang["users"]; ?>
+<br />
 
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
