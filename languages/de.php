@@ -10,6 +10,7 @@
 # Updated by Stefan Wild 20110201 for version 2296, translated the missing $lang keys from the en.php that Henrik added.
 # Updated by Henrik Frizén 20110222 for version 2390+, added missing $lang from the en.php (search for #$lang to find the untranslated strings).
 # Updated by Stefan Wild 20110309 for version 2390+, translated the missing $lang keys from the en.php that Henrik added.
+# Updated by Stefan Wild 20110427 for version 2652, translated the missing $lang keys from the en.php.
 #
 #
 # User group names (for the default user groups)
@@ -82,6 +83,7 @@ $lang["home"]="Startseite";
 $lang["searchresults"]="Suchresultate";
 $lang["themes"]="Themen";
 $lang["mycollections"]="Meine Kollektionen";
+$lang["myrequests"]="Meine Anfragen";
 $lang["collections"]="Kollektionen";
 $lang["mycontributions"]="Meine Beiträge";
 $lang["researchrequest"]="Suchanfrage";
@@ -143,6 +145,7 @@ $lang["resourceidnotfound"]="Die Ressourcen-ID konnte nicht gefunden werden";
 $lang["inclusive"]="(inklusive)";
 $lang["pluginssetup"]="Plugins verwalten";
 $lang["pluginmanager"]="Plugin Manager";
+$lang["users"]="Benutzer";
 
 
 # Team Centre - Bulk E-mails
@@ -205,8 +208,6 @@ $lang["allowothersaddremove"]="Anderen Benutzern das hinzufügen/entfernen von R
 $lang["resetarchivestatus"]="Archivierungsstatus für alle Ressourcen einer Kollektion zurücksetzen";
 $lang["editallresources"]="Alle Ressourcen in der Kollektion bearbeiten";
 $lang["editresources"]="Ressourcen bearbeiten";
-$lang["resources_selected-1"]="1 Ressource ausgewählt"; # 1 resource selected
-$lang["resources_selected-2"]="%number Ressourcen ausgewählt"; # e.g. 17 resources selected
 $lang["multieditnotallowed"]="Mehrfache Bearbeitung nicht erlaubt - die Ressourcen sind nicht vom selben Typ bzw. Status.";
 $lang["emailcollection"]="Kollektion als E-Mail senden";
 $lang["collectionname"]="Name der Kollektion";
@@ -251,6 +252,8 @@ $lang["contents"]="Inhalte";
 $lang["forthispackage"]="für dieses Paket";
 $lang["didnotinclude"]="Enthielt nicht";
 $lang["selectcollection"]="Kollektion auswählen";
+$lang["total"]="Gesamt";
+$lang["ownedbyyou"]="von Ihnen erstellt";
 
 # Resource create / edit / view
 $lang["createnewresource"]="Neue Ressource erstellen";
@@ -262,7 +265,8 @@ $lang["rightclicktodownload"]="Klicken Sie die rechte Maustaste und wählen Sie 
 $lang["downloadinprogress"]="Download in Bearbeitung";
 $lang["editmultipleresources"]="Mehrere Ressourcen bearbeiten";
 $lang["editresource"]="Ressource bearbeiten";
-$lang["resourcesselected"]="Ressourcen ausgewählt"; # e.g. 17 resources selected.
+$lang["resources_selected-1"]="1 Ressource ausgewählt"; # 1 resource selected
+$lang["resources_selected-2"]="%number Ressourcen ausgewählt"; # e.g. 17 resources selected
 $lang["image"]="Bild";
 $lang["previewimage"]="Vorschaubild";
 $lang["file"]="Datei";
@@ -359,14 +363,13 @@ $lang["log-c"]="Erstellte Ressourcen";
 $lang["log-d"]="heruntergeladene Datei(en)";
 $lang["log-e"]="Bearbeitetes Ressourcen-Feld";
 $lang["log-m"]="Bearbeitetes Ressourcen-Feld (Mehrfach-Bearbeitung)";
-$lang["log-e"]="Bearbeitetes Ressourcen-Feld";
+$lang["log-E"]="Ressource via E-Mail weitergegeben an ";//  + notes field
 $lang["log-v"]="Ressource angesehen";
 $lang["log-x"]="Ressource gelöscht";
 $lang["log-l"]="Eingeloggt"; # For user entries only.
 $lang["log-t"]="Datei transformiert";
 $lang["log-s"]="Status geändert";
 $lang["log-a"]="Zugriff geändert";
-$lang["log-E"]="Ressource via E-Mail weitergegeben an ";//  + notes field
 
 $lang["backtoresourceview"]="zurück zur Ressourcen-Ansicht";
 
@@ -1012,6 +1015,7 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang['location-edit'] = 'Geodaten bearbeiten';
  $lang['location-details'] = 'Karte doppelklicken, um einen Pin zu platzieren. Anschließend können Sie dann Pin an die gewünschte Stelle ziehen.';
  $lang['location-noneselected']="Kein Ort ausgewählt";
+ $lang['location'] = 'Ort';
 
  $lang["publiccollections"]="Öffentliche Kollektionen";
  $lang["viewmygroupsonly"]="Nur meine Gruppen anzeigen";
@@ -1179,6 +1183,8 @@ $lang["columnheader-last_seen"]="Zuletzt gesehen";
  $lang["phpinivalue"]="PHP.INI Wert für '?'"; # E.g. "PHP.INI value for 'memory_limit'"
  $lang["writeaccesstofilestore"]="Schreibzugriff auf $storagedir";
  $lang["nowriteaccesstofilestore"]="$storagedir beschreibbar";
+ $lang["writeaccesstohomeanim"]="Schreibzugriff auf $homeanim_folder";
+ $lang["nowriteaccesstohomeanim"]="$homeanim_folder nicht beschreibbar. Ändern Sie die Berechtigungen, um die Beschnitt-Funktion des transform Plugins für die Startseiten-Animation zu ermöglichen.";
  $lang["blockedbrowsingoffilestore"]="Browsen des 'filestore' Verzeichnisses nicht erlaubt";
  $lang["noblockedbrowsingoffilestore"]="filestore scheint durchsuchbar zu sein; entfernen Sie 'Indexes' aus den Apache 'Options'.";
  $lang["executionofconvertfailed"]="Ausführung fehlgeschlagen; unerwartete Ausgabe des convert Befehls. Die Ausgabe war '?'.<br>Wenn Sie Windows und IIS 6 einsetzen, muss der Zugriff auf die Kommandozeile erlaubt werden. Bitte schauen Sie in den Installation Instructions im Wiki nach."; # ? will be replaced.
@@ -1299,4 +1305,39 @@ $lang["purgeuserscommand"]="Benutzer-Accounts löschen, die in den letzten % Mon
 $lang["purgeusersconfirm"]="% Benutzer-Accounts löschen. Sind Sie sicher?";
 $lang["pleaseenteravalidnumber"]="Bitte geben Sie eine gültige Zahl ein";
 $lang["purgeusersnousers"]="Keine Benutzer-Accounts zu bereinigen.";
+
+$lang["editallresourcetypewarning"]="Warnung: Durch das Ändern des Ressourcen-Typs werden sämtliche spezifischen Metadaten für den jetzigen Ressourcen-Typ der Ressource gelöscht.";
+
+$lang["geodragmode"]="Zieh-Modus";
+$lang["geodragmodearea"]="Auswahl";
+$lang["geodragmodepan"]="schwenken";
+
+$lang["substituted_original"] = "ersetztes Original";
+$lang["use_original_if_size"] = "Original benutzen, wenn die ausgewählte Größe nicht verfügbar ist?";
+
+$lang["originals-available-0"] = "verfügbar"; # 0 (originals) available
+$lang["originals-available-1"] = "verfügbar"; # 1 (original) available
+$lang["originals-available-2"] = "verfügbar"; # 2+ (originals) available
+
+$lang["inch-short"] = "in";
+$lang["centimetre-short"] = "cm";
+$lang["megapixel-short"]="MP";
+$lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI
+
+$lang["deletedresource"] = "Gelöschte Ressource";
+$lang["action-delete_permanently"] = "Dauerhaft löschen";
+
+$lang["horizontal"] = "Horizontal";
+$lang["vertical"] = "Vertikal";
+
+$lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
+
+$lang["sort"] = "Sortieren";
+$lang["sortcollection"] = "Kollection sortieren";
+$lang["emptycollection"] = "Leere Kollektion";
+$lang["emptycollectionareyousure"]="Sind Sie sicher, dass Sie alle Ressourcen aus dieser Kollektion entfernen wollen?";
+
+$lang["error-cannoteditemptycollection"]="Sie können eine leere Kollektion nicht bearbeiten.";
+$lang["error-permissiondenied"]="Zugriff verweigert.";
+$lang["error-collectionnotfound"]="Kollektion nicht gefunden.";
 ?>
