@@ -9,28 +9,28 @@ include "../../include/image_processing.php";
 set_time_limit(60*60*4);
 
 $use_local = getvalescaped('use_local', '') !== '';
-
-$collection=getvalescaped("collection","",true);
-$collectionname=getvalescaped("entercolname","");
-
-# Create a new collection?
-if ($collection==-1)
-	{
-	# The user has chosen Create New Collection from the dropdown.
-	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
-	$collection=create_collection($userref,$collectionname);
-	set_user_collection($userref,$collection);
-	refresh_collection_frame();
-	}
-
-if ($collection!="") {set_user_collection($userref,$collection); refresh_collection_frame();}
-
+$collection = getvalescaped("collection","",true);
 
 include "../../include/header.php";
+
+# Define titles.
+if ($use_local)
+	{
+	# Fetch from local upload folder.
+	$titleh1 = $lang["addresourcebatchlocalfolder"];
+	$titleh2 = "";
+	}
+else
+	{
+	# Fetch from FTP server.
+	$titleh1 = $lang["addresourcebatchftp"];
+	$titleh2 = "";
+	}
 ?>
+
 <div class="BasicsBox">
-<h1><?php echo $lang["uploadresourcebatch"]?></h1>
-<p><?php echo text("introtext")?></p>
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
 </div>
 
 <div class="RecordBox">
@@ -147,7 +147,7 @@ for ($n=0;$n<count($uploadfiles);$n++)
 			?><script type="text/javascript">parent.collections.location.href="../collections.php?add=<?php echo $ref?>&nc=<?php echo time()?>&search=<?php echo urlencode($search)?>";</script>
 	<?php
 			}
-			
+
 		# Log this
 		daily_stat("Resource upload",$ref);
 		resource_log($ref,'u',0);

@@ -9,6 +9,8 @@ a:visited {color:#737373;}
 a:hover {color:#000000;}
 a:active {color:#737373;}
 
+input[readonly] {color: #000000;}
+
 #Header {border-bottom: 1px solid #BBBBBB;background: url(../gfx/whitegry/titles/title.gif) no-repeat;}
 #Footer {border-top: 1px solid #BBBBBB;}
 #TextHeader, #TextHeader a {color:#616161;}

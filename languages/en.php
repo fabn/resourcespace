@@ -462,7 +462,7 @@ $lang["add"]="Add";
 $lang["create"]="Create";
 $lang["treeobjecttype-group"]=$lang["group"]="Group";
 $lang["confirmaddgroup"]="Are you sure you want to add all the members in this group?";
-$lang["backtoteamhome"]="back to team centre home";
+$lang["backtoteamhome"]="Back to team centre home";
 $lang["columnheader-resource_id"]=$lang["resourceid"]="Resource ID";
 $lang["id"]="ID";
 $lang["todate"]="To Date";
@@ -667,7 +667,7 @@ $lang["feedbacknocomments"]="You have not left any comments for the resources in
 $lang["collectionfeedback"]="Collection Feedback";
 $lang["collectionfeedbackemail"]="You have received the following feedback:";
 $lang["feedbacksent"]="Your feedback has been sent.";
-$lang["newarchiveresource"]="New Archived Resource";
+$lang["newarchiveresource"]="Add Single Archived Resource";
 $lang["nocategoriesselected"]="No categories selected";
 $lang["showhidetree"]="Show/hide tree";
 $lang["clearall"]="Clear all";
@@ -723,7 +723,7 @@ $lang["editalternativefile"]="Edit Alternative File";
 $lang["description"]="Description";
 $lang["notuploaded"]="Not uploaded";
 $lang["uploadreplacementfile"]="Upload replacement file";
-$lang["backtomanagealternativefiles"]="Back to Manage Alternative Files";
+$lang["backtomanagealternativefiles"]="Back to manage alternative files";
 
 
 $lang["resourceistranscoding"]="Resource is currently being transcoded";
@@ -1015,7 +1015,7 @@ $lang["undometadatatemplate"]="(undo template selection)";
 
 $lang["accountemailalreadyexists"]="An account with that e-mail address already exists";
 
-$lang["backtothemes"]="Back to Themes";
+$lang["backtothemes"]="Back to themes";
 $lang["downloadreport"]="Download Report";
 
 #Bug Report Page
@@ -1229,7 +1229,7 @@ $lang["confirm-deletion"]="Are you sure?";
 
 # Permissions Manager
 $lang["permissionsmanager"]="Permissions Manager";
-$lang["backtogroupmanagement"]="Back to Group Management";
+$lang["backtogroupmanagement"]="Back to group management";
 $lang["searching_and_access"]="Searching / Access";
 $lang["metadatafields"]="Metadata Fields";
 $lang["resource_creation_and_management"]="Resource Creation / Management";
@@ -1331,3 +1331,14 @@ $lang["emptycollectionareyousure"]="Are you sure you want to remove all resource
 $lang["error-cannoteditemptycollection"]="You cannot edit an empty collection.";
 $lang["error-permissiondenied"]="Permission denied.";
 $lang["error-collectionnotfound"]="Collection not found.";
+
+$lang["header-upload-subtitle"] = "Step %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
+$lang["local_upload_path"] = "Local Upload Folder";
+$lang["ftp_upload_path"] = "FTP Folder";
+$lang["foldercontent"] = "Folder Content";
+$lang["intro-local_upload"] = "Select one or more files from the local upload folder and click <b>Upload</b>. Once the files are uploaded they can be deleted from the upload folder.";
+$lang["intro-ftp_upload"] = "Select one or more files from the FTP folder and click <b>Upload</b>.";
+$lang["intro-java_upload"] = "Click <b>Browse</b> to locate one or more files and then click <b>Upload</b>.";
+$lang["intro-swf_upload"] = "Click <b>Upload</b> to locate and upload one or more files. Hold down the Shift key to select multiple files.";
+$lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
+$lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";

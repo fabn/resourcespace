@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110427 för version 2653.
+# Senast uppdaterad av Henrik Frizén 20110427 för version 2654+.
 #
 #
 # User group names (for the default user groups)
@@ -1351,3 +1351,14 @@ $lang["emptycollectionareyousure"]="Är du säker på att du vill ta bort allt m
 $lang["error-cannoteditemptycollection"]="Du kan inte redigera en tom samling.";
 $lang["error-permissiondenied"]="Tillåtelse nekades.";
 $lang["error-collectionnotfound"]="Samlingen hittades inte.";
+
+$lang["header-upload-subtitle"] = "Steg %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
+$lang["local_upload_path"] = "Lokal uppladdningsmapp";
+$lang["ftp_upload_path"] = "FTP-mapp";
+$lang["foldercontent"] = "Mappinnehåll";
+$lang["intro-local_upload"] = "Välj en eller flera filer från den lokala uppladdningsmappen och klicka på <b>Ladda upp</b>. När filerna är uppladdade kan de raderas från uppladdningsmappen.";
+$lang["intro-ftp_upload"] = "Välj en eller flera filer från FTP-mappen och klicka på <b>Ladda upp</b>.";
+$lang["intro-java_upload"] = "Klicka på <b>Bläddra</b> för att välja en eller flera filer och klicka sen på <b>Ladda upp</b>.";
+$lang["intro-swf_upload"] = "Klicka på <b>Ladda upp</b> för att välja en eller flera filer som sen direkt laddas upp. Håll ner skift-tangenten för att välja flera filer samtidigt.";
+$lang["intro-single_upload"] = "Klicka på <b>Bläddra</b> för att välja en fil och klicka sen på <b>Ladda upp</b>.";
+$lang["intro-batch_edit"] = "Ange standardinställningar för uppladdning och standardvärden för metadata för materialet du kommer att ladda upp.";

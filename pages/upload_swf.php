@@ -13,6 +13,7 @@ $collectionname=getvalescaped("entercolname","");
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
+$replace = getvalescaped("replace",""); # Replace Resource Batch
 
 # Create a new collection?
 if ($collection_add==-1)
@@ -20,23 +21,28 @@ if ($collection_add==-1)
 	# The user has chosen Create New Collection from the dropdown.
 	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
 	$collection_add=create_collection($userref,$collectionname);
-	if (getval("public",'0') == 1){
+	if (getval("public",'0') == 1)
+		{
 		collection_set_public($collection_add);
-	}
-	if (strlen(getval("themestring",'')) > 0){
+		}
+	if (strlen(getval("themestring",'')) > 0)
+		{
 		$themearr = explode('||',getval("themestring",''));
 		collection_set_themes($collection_add,$themearr);
+		}
 	}
-	set_user_collection($userref,$collection_add);
-	refresh_collection_frame($collection_add);
-	}
-
+if ($collection_add!="")
+	{
+	# Switch to the selected collection (existing or newly created) and refresh the frame.
+ 	set_user_collection($userref,$collection_add);
+ 	refresh_collection_frame($collection_add);
+ 	}	
 
 #handle posts
 if (array_key_exists("Filedata",$_FILES))
     {
 	
-    if (getval("replace","")=="")
+    if ($replace=="")
     	{
 		# New resource
 	
@@ -213,7 +219,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo getval("replace","")?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo $replace ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 
@@ -236,7 +242,7 @@ window.onload =  function()
 				button_image_url : "<?php echo $baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
 				button_width : 160,
 				button_height : 22,
-				button_text : "<span class=\"button\"><?php echo $lang["selectfiles"]?></span>",
+				button_text : "<span class=\"button\"><?php echo $lang["action-upload"] . "..." ?></span>",
 				button_text_style : ".button { margin: auto; text-align: center; font-weight: bold; font-family: Helvetica, Arial, sans-serif; font-size: 12px; }",
 				button_text_top_padding : 1,
 
@@ -269,9 +275,27 @@ function debug()
 </script>
 
 <div class="BasicsBox" id="uploadbox"> 
-<h2>&nbsp;</h2>
-<h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
-<p><?php echo text("introtext")?></p>
+<?php
+
+# Define the titles:
+if ($replace!="") 
+	{
+	# Replace Resource Batch
+	$titleh1 = $lang["replaceresourcebatch"];
+	$titleh2 = "";
+	}
+else
+	{
+	# Add Resource Batch - In Browser (Flash)
+	$titleh1 = $lang["addresourcebatchbrowser"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	}
+?>
+
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $lang["intro-swf_upload"] ?></p>
+
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);
     $list=explode(",",trim($allowed_extensions));
@@ -286,14 +310,18 @@ function debug()
 	<div style="margin: 0px 10px;">
 		<div>
 			<form>
-				<span id="btnBrowse"></span>
+				<?php if ($replace=="")
+					{ # Only show the back button in the step-by-step guide of Add Resource Batch - In Browser (Flash)
+					?><input name="back" type="button" onclick="window.history.go(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"]?>&nbsp;&nbsp;" /><?php
+					}
+				?><span id="btnBrowse"></span>
 			</form>
 		</div>
 		<div id="divFileProgressContainer" style="height: 75px;"></div>
 		<div id="thumbnails"></div>
 	</div>
 
-<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
 
 <p><a target="_blank" href="http://get.adobe.com/flashplayer/">&gt; <?php echo $lang["getflash"] ?></a></p>
 

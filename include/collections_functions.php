@@ -191,7 +191,7 @@ function refresh_collection_frame($collection="")
 		{
 		global $headerinsert,$baseurl;
 		$headerinsert.="<script  type=\"text/javascript\">
-		parent.collections.location.href=\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection",$collection) . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\";
+		parent.collections.location.replace(\"" . $baseurl . "/pages/collections.php" . ((getval("k","")!="")?"?collection=" . getval("collection",$collection) . "&k=" . getval("k","") . "&":"?") . "nc=" . time() . "\");
 		</script>";
 		}
 	}

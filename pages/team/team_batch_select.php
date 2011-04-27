@@ -5,13 +5,35 @@ include "../../include/general.php";
 include "../../include/collections_functions.php";
 
 $use_local = getvalescaped('use_local', '') !== '';
-$resource_type=getvalescaped('resource_type','');
+$resource_type = getvalescaped('resource_type','');
+$collection_add = getvalescaped("collection_add","");
+$collectionname = getvalescaped("entercolname","");
+
 $allowed_extensions=get_allowed_extensions_by_type($resource_type);
 
+# Create a new collection?
+if ($collection_add==-1)
+	{
+	# The user has chosen Create New Collection from the dropdown.
+	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
+	$collection_add=create_collection($userref,$collectionname);
+	}
+
+if ($collection_add!="")
+	{
+	# Switch to the selected collection (existing or newly created) and refresh the frame.
+ 	set_user_collection($userref,$collection_add);
+ 	refresh_collection_frame($collection_add);
+ 	}
+	
 if ($use_local)
 	{
 	# File list from local upload directory.
 
+	# Define the titles:
+	$titleh1 = $lang["addresourcebatchlocalfolder"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	
 	# We compute the folder name from the upload folder option.
 	$folder = getAbsolutePath($local_ftp_upload_folder, true);
 
@@ -31,6 +53,11 @@ if ($use_local)
 else
 	{
 	# Connect to FTP server for file listing
+
+	# Define the titles:
+	$titleh1 = $lang["addresourcebatchftp"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("3", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	
 	$ftp=@ftp_connect(getval("ftp_server",""));
 	if ($ftp===false) {exit("FTP connection failed.");}
 	ftp_login($ftp,getval("ftp_username",""),getval("ftp_password",""));
@@ -45,8 +72,10 @@ else
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?php echo $lang["selectfiles"]?></h1>
-<p><?php echo text("introtext")?></p>
+
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $use_local ? $lang["intro-local_upload"] : $lang["intro-ftp_upload"] ?></p>
 
 <form method="post" action="team_batch_upload.php">
 <input type="hidden" name="ftp_server" value="<?php echo getval("ftp_server","")?>">
@@ -55,28 +84,13 @@ include "../../include/header.php";
 <input type="hidden" name="ftp_folder" value="<?php echo getval("ftp_folder","")?>">
 <input type="hidden" name="use_local" value="<?php echo getval("use_local","")?>">
 <input type="hidden" name="no_exif" value="<?php echo getval("no_exif","")?>">
+<input type="hidden" name="autorotate" value="<?php echo getval("autorotate","")?>">
+<input type="hidden" name="collection" value="<?php echo $collection_add?>">
 
-<div class="Question">
-<label for="collection"><?php echo $lang["addtocollection"]?></label>
-<select name="collection" id="collection" class="stdwidth"  onchange="if($(this).value==-1){$('collectionname').style.display='block';} else {$('collectionname').style.display='none';}">
-	<option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option>
-	<option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option>
-<?php
-$list=get_user_collections($userref);
-for ($n=0;$n<count($list);$n++)
-	{
-	?>
-	<option value="<?php echo $list[$n]["ref"]?>"><?php echo htmlspecialchars($list[$n]["name"])?></option>
-	<?php
-	}?></select>
-<div class="clearerleft"> </div>
-<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
-	<label for="collection_add"><?php echo $lang["collectionname"]?></label>
-	<input type=text id="entercolname" name="entercolname" class="stdwidth">
-	</div>
-</div>
 
-<div class="Question"><label><?php echo $lang["selectfiles"]?></label>
+<div class="Question"><label><?php echo $use_local ? $lang["local_upload_path"] : $lang["ftp_upload_path"] ?></label><input name="folder" type="text" class="stdwidth" value="<?php echo $use_local ? $folder : getval("ftp_server","") . "/" . $folder?>" readonly="readonly"></div>
+
+<div class="Question"><label><?php echo $lang["foldercontent"] ?></label>
 <!--<div class="tickset">-->
 <select name="uploadfiles[]" multiple size=20>
 <?php 
@@ -114,8 +128,9 @@ foreach ($files as $fn){
 </div>
 
 <div class="QuestionSubmit">
-<label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
+<label for="buttons"> </label>
+<input name="back" type="button" onclick="history.back(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"] ?>&nbsp;&nbsp;" />
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["action-upload"] ?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>

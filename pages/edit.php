@@ -152,17 +152,17 @@ if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfrom
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch_select.php?use_local=yes&collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
-                elseif (getval("single","")!="") // Test if single upload.
+                elseif (getval("single","")!="") // Test if single upload (archived or not).
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect("pages/upload.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&archive=" . $archive);}
 					}    
-				else
+				else // Hence fetching from ftp.
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/team/team_batch.php?resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
+					if (getval("save","")!="") {redirect("pages/team/team_batch.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname","")). "&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate);}
 					}
 				}
 			}
@@ -351,9 +351,32 @@ else
 <?php } ?>
 
 
-<?php } else { # For batch uploads, specify default content (writes to resource with ID [negative user ref]) ?>
-<h1><?php echo $lang["specifydefaultcontent"]?></h1>
-<p><?php echo text("batch")?></p>
+<?php } else { # Add new material(s), specify default content (writes to resource with ID [negative user ref])
+
+# Define the title h1:
+if (getval("java","")!="") {$titleh1 = $lang["addresourcebatchbrowserjava"];} # Add Resource Batch - In Browser (Java)
+elseif (getval("swf","")!="") {$titleh1 = $lang["addresourcebatchbrowser"];} # Add Resource Batch - In Browser (Flash)
+elseif (getval("single","")!="")
+	{
+	if (getval("archive","")=="2")
+		{
+		$titleh1 = $lang["newarchiveresource"]; # Add Single Archived Resource
+		}
+	else
+		{
+		$titleh1 = $lang["addresource"]; # Add Single Resource
+		}
+	}
+elseif (getval("local","")!="") {$titleh1 = $lang["addresourcebatchlocalfolder"];} # Add Resource Batch - Fetch from local upload folder
+else $titleh1 = $lang["addresourcebatchftp"]; # Add Resource Batch - Fetch from FTP server
+
+# Define the subtitle h2:
+$titleh2 = str_replace(array("%number","%subtitle"), array("1", $lang["specifydefaultcontent"]), $lang["header-upload-subtitle"]);
+?>
+
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $lang["intro-batch_edit"] ?></p>
 
 <?php if ($ref<0) { 
 	# User edit template. Show the save / clear buttons at the top too, to avoid unnecessary scrolling.
@@ -422,10 +445,9 @@ for ($n=0;$n<count($types);$n++)
 
 
 <?php
+if ($ref<=0 && getval("single","")=="") { 
 
-if (getval("swf","")!="" || getval("java","")!="") { 
-
-# Batch uploads (SWF/Java) - also ask which collection to add the resource to.
+# Batch uploads (java/swf/ftp/local) - also ask which collection to add the resource to.
 if ($enable_add_collection_on_upload) 
 	{
 	?>

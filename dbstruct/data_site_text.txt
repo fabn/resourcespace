@@ -27,7 +27,7 @@ help,introtext,"Get the most out of ResourceSpace. These guides will help you us
 contribute,introtext,"You can contribute your own resources. When you initially create a resource it is in the ""Pending Submission"" status. When you have uploaded your file and edited the fields, set the status field to ""Pending Review"". It will then be reviewed by the resources team.",17,en,,,
 done,user_password,"An e-mail containing your username and password has been sent.",18,en,,,
 user_password,introtext,"Enter your e-mail address and your username and password will be sent to you.",19,en,,,
-edit,batch,"Please specify the default content and keywords for the resources you are about to upload.",20,en,,,
+edit,batch,"",20,en,,,
 team_copy,introtext,"Enter the ID of the resource you would like to copy. Only the resource data will be copied - any uploaded file will not be copied.",21,en,,,
 delete,introtext,"Please enter your password to confirm that you would like to delete this resource.",22,en,,,
 team_report,introtext,"Please choose a report and a date range. The report can be opened in Microsoft Excel or similar spreadsheet application.",23,en,,,
@@ -51,7 +51,7 @@ done,user_request,"Your request for a user account has been sent. Your login det
 about,about,"Your about text goes here.",39,en,,,
 team_content,introtext,,40,en,,,
 done,deleted,"The resource has been deleted.",41,en,,,
-upload,introtext,"Upload a file using the form below.",42,en,,,
+upload,introtext,"",42,en,,,
 home,restrictedtitle,"<h1>Welcome to ResourceSpace</h1>",43,en,,,
 home,restrictedtext,"Please click on the link that you were e-mailed to access the resources selected for you.",44,en,,,
 resource_email,introtext,"Quickly share this resource with other users by email. A link is automatically sent out. You can also include any message as part of the email.",45,en,,,
@@ -77,9 +77,9 @@ All the collections in your list appear in the ‘My Collections’ panel at the
 You can choose whether you allow other users (public or users you have added to your private collection) to add and remove resources or simply view them for reference.",49,en,,,
 team_stats,introtext,"Charts are generated on demand based on live data. Tick the box to print all charts for your selected year.",50,en,,,
 resource_request,introtext,"The resource you requested is not available online. The resource information is automatically included in the email but you can add additional comments if you wish.",51,en,,,
-team_batch,introtext,"You can upload a batch of resource files by placing the files on a suitable FTP server. Once you have finished the files can be deleted from the FTP server.",52,en,,,
-team_batch_upload,introtext,"You can upload a batch of resource files by placing the files on a suitable FTP server. Once you have finished the files can be deleted from the FTP server.",53,en,,,
-team_batch_select,introtext,"You can upload a batch of resource files by placing the files on a suitable FTP server. Once you have finished the files can be deleted from the FTP server.",54,en,,,
+team_batch,introtext,"",52,en,,,
+team_batch_upload,introtext,"",53,en,,,
+team_batch_select,introtext,"",54,en,,,
 download_click,introtext,"To download the resource file, right click the link below and choose ""Save As..."". You will then be asked where you would like to save the file. To open the file in your browser simply click the link.",55,en,,,
 collection_manage,newcollection,"To create a new collection, enter a short name.",56,en,,,
 collection_email,introtext,"Complete the form below to e-mail this collection. The user(s) will receive a link to the resource rather than file attachments so they can choose and download the appropriate resources.",57,en,,,
@@ -178,7 +178,7 @@ change_language,introtext,"Por favor, selecciona el idioma en el que deseas trab
 team_content,introtext,,133,es,,,
 team_report,introtext,"Por favor, elige un informe y un rango de fecha. El informe podrá abrirse en un documento de Excel o un documento de características similares.",134,es,,,
 change_password,introtext,"Por favor introduzca una nueva contraseña.",135,es,,,
-upload_swf,introtext,"Click the button below to upload files. You can select multiple files when browsing by holding down the 'shift' key.",136,en,,,
+upload_swf,introtext,"",136,en,,,
 tag,introtext,"Help to improve search results by tagging resources. Say what you see, separated by spaces or commas... for example: dog, house, ball, birthday cake. Enter the full name of anyone visible in the photo and the location the photo was taken if known.",137,en,,,
 about,about,★サイトの説明を記述してください★,138,jp,,,
 download_click,introtext,"ファイルをダウンロードするには、リンク上で右クリックし""名前を付けてリンク先を保存""を選択します。 ファイルの保存先を聞かれます。ファイルを開くにはブラウザのファイルを開くのリンクをクリックします。",139,jp,,,
@@ -534,7 +534,7 @@ done,user_password,"Ett e-postmeddelande innehållande ditt användarnamn och l�
 done,user_request,"Din ansökan om ett användarkonto har skickats. Dina inloggningsuppgifter kommer att skickas till dig inom kort.",369,sv,,,0
 download_click,introtext,"Högerklicka på länken nedan och välj 'Spara som...' för att ladda ner materialet. Du kommer att få frågan var du vill spara filen. Klicka på webblänken för att öppna filen i din webbläsare.",370,sv,,,0
 download_progress,introtext,"Din nedladdning kommer att startas inom kort. Använd länkarna nedan för att fortsätta efter att nedladdningen är klar.",371,sv,,,0
-edit,batch,"Var vänlig att ange standardtyp och standardnyckelord för materialet du kommer att ladda upp.",372,sv,,,0
+edit,batch,"",372,sv,,,0
 team_resource,introtext,"Lägg till material ett och ett eller i grupp. För att redigera ett material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet.",373,sv,,,0
 login,welcomelogin,"Välkommen till ResourceSpace",374,sv,,,0
 user_request,introtext,"Ansök om ett användarkonto genom att fylla i formuläret nedan.",375,sv,,,0
@@ -543,8 +543,8 @@ resource_request,introtext,"Materialet du begärde finns inte tillgängligt. Inf
 search_advanced,introtext,"<strong>Söktips</strong><br>Ett avsnitt som du lämnar tomt eller omarkerat kommer att medföra att ALLT inkluderas i sökningen. Om du t.ex. lämnar alla länders kryssrutor omarkerade, kommer sökningen inte att begränsas med avseende på land. Om du däremot enbart markerar kryssrutan  'Sverige' kommer sökningen endast att ge material från just Sverige.",378,sv,,,0
 tag,introtext,"Hjälp till att förbättra framtida sökresultat genom att förse materialet med relevant metadata. Använd nyckelord för att beskriva vad du t.ex. ser på en bild: hund, hus, boll, födelsedagstårta. Separera nyckelorden med kommatecken eller mellanslag. Skriv in fullständigt namn på alla som förekommer på ett fotografi. Ange platsen för ett fotografi om den är känd.",379,sv,,,0
 user_password,introtext,"Fyll i din e-postadress och ditt användarnamn så kommer ett nytt lösenord att skickas till dig.",380,sv,,,0
-upload_swf,introtext,"Klicka på knappen nedan för att ladda upp filer. Du kan markera flera filer tillsammans genom att hålla ner skift-tangenten samtidigt som du klicka på fil efter fil.",381,sv,,,0
-upload,introtext,"Ladda upp en fil med hjälp av formuläret nedan.",382,sv,,,0
+upload_swf,introtext,"",381,sv,,,0
+upload,introtext,"",382,sv,,,0
 themes,manage,"Organisera och redigera tillgängliga teman. Teman är grupper av material som har valts ut av administratörerna för att visa exempel på vilket material som finns i systemet.<br><br> <strong>1 För att skapa ett nytt tema - skapa en samling</strong><br> Gå till <strong>'Mina samlingar'</strong> skapa en ny <strong>publik</strong> samling. Välj ett existerande tema från listan om du vill lägga till samlingen i ett befintligt tema eller skriv ett temanamn om du vill skapa ett nytt tema. Tillåt inte användare att lägga till/ta bort material från teman. <br> <br><strong>2 För att redigera materialet i ett existerande tema. </strong><br> Välj <strong> samling</strong>. Materialet i samlingen blir då åtkomligt i panelen <strong>Mina samlingar</strong> i nederkanten av skärmen. Använd de vanliga verktygen för att redigera, lägga till eller ta bort material.<br> <br><strong>3 För att byta namn på ett tema eller flytta en samling från ett tema till ett annat.</strong><br> Välj <strong>Redigera egenskaper</strong> och byt temanamnet. Välj ett tema från listan för att lägga till samlingen till ett befintlig tema eller skriv ett nytt temanamn om du vill skapa ett nytt tema.<br> <br><strong>4 För att ta bort en samling från ett tema</strong><br> Välj <strong>Redigera egenskaper</strong> och tom fälten tema och temanamn.",383,sv,,,0
 terms,introtext,"Innan du kan fortsätta måste du acceptera reglerna och villkoren.",384,sv,,,0
 team_user,introtext,"Använd den här delen för att lägga till, ta bort eller redigera användare.",385,sv,,,0
@@ -552,15 +552,7 @@ team_stats,introtext,"En statistikrapport kan skapas vid behov, baserad på aktu
 team_research,introtext,"Organisera och hantera researchförfrågningar.<br><br>Välj ‘Redigera researchförfrågan’ för att granska förfrågan och tilldela en medlem i researchteamet uppdraget att besvara förfrågan. I samma vy är det också möjligt att lägga till en befintlig samling till researchen genom att ange samlingsnumret.<br><br>När en medlem har tilldelats researchen blir den tillgänglig i panelen 'Mina samlingar'. Använd de vanliga verktygen för att lägga till material till researchen. <br><br>När researchen är slutförd väljer du ‘Redigera researchförfrågan’ och ändrar status till 'Besvarad'. När du klickar på 'Spara' skickas automatiskt ett e-postmeddelande till användaren som skickade researchförfrågan. Meddelandet innehåller en webblänk som leder till researchen och den läggs också till i användarens lista över samlingar.",387,sv,,,0
 team_report,introtext,"Välj en rapport och en period. Rapporten kan öppnas i t.ex. MS Excel eller OpenOffice Calc.",388,sv,,,0
 team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materialdatan kommer att kopieras - uppladdade filer kommer inte att kopieras.",389,sv,,,0
-team_batch_upload,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",390,sv,,,0
-team_batch_select,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",391,sv,,,0
-team_batch,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",392,sv,,,0
+team_batch_upload,introtext,"",390,sv,,,0
+team_batch_select,introtext,"",391,sv,,,0
+team_batch,introtext,"",392,sv,,,0
 team_archive,introtext,"För att redigera ett arkiverat material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet. Allt material som är redo för arkivering kan enkelt nås från länken nedan. Lägg till eventuell relevant information innan du flyttar materialet till arkivet.",393,sv,,,0
-all,emaillogindetails,"[img_../../gfx/whitegry/titles/title.gif]<br>
-[welcome]<br><br> 
-[lang_newlogindetails]<br><br> 
-[lang_username] : [username] <br><br>
-[lang_password] : [password]<br><br>
-<a href=""[url]"">[url]</a><br><br>
-[text_footer]
-",394,sv,,,1

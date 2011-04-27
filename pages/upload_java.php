@@ -1,5 +1,4 @@
 <?php
-
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
@@ -25,7 +24,8 @@ $sort=getval("sort",$default_sort);
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
-$alternative=getval("alternative",""); # Upload alternative resources
+$alternative = getvalescaped("alternative",""); # Batch upload alternative files (Java)
+$replace = getvalescaped("replace",""); # Replace Resource Batch
 
 # Create a new collection?
 if ($collection_add==-1)
@@ -33,16 +33,22 @@ if ($collection_add==-1)
 	# The user has chosen Create New Collection from the dropdown.
 	if ($collectionname==""){$collectionname=$lang["upload"] . " " . date("ymdHis");}
 	$collection_add=create_collection($userref,$collectionname);
-	if (getval("public",'0') == 1){
+	if (getval("public",'0') == 1)
+		{
 		collection_set_public($collection_add);
-	}
-	if (strlen(getval("themestring",'')) > 0){
+		}
+	if (strlen(getval("themestring",'')) > 0)
+		{
 		$themearr = explode('||',getval("themestring",''));
 		collection_set_themes($collection_add,$themearr);
+		}
 	}
-	set_user_collection($userref,$collection_add);
-	refresh_collection_frame($collection_add);
-	}
+if ($collection_add!="")
+	{
+	# Switch to the selected collection (existing or newly created) and refresh the frame.
+ 	set_user_collection($userref,$collection_add);
+ 	refresh_collection_frame($collection_add);
+ 	}
 
 #handle posts
 if (array_key_exists("File0",$_FILES))
@@ -153,7 +159,7 @@ if (array_key_exists("File0",$_FILES))
 		echo "SUCCESS";
 		exit();
 		}
-    if (getval("replace","")=="")
+    if ($replace=="")
     	{
 		# Standard upload of a new resource
 
@@ -231,7 +237,6 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 <?php if ($alternative!=""){?><p>
 <a href="edit.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
 <a href="view.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p><?php } ?>
-<h2>
 <?php if ($alternative!=""){$resource=get_resource_data($alternative);
 	if ($alternative_file_resource_preview){ 
 		$imgpath=get_resource_path($resource['ref'],true,"col",false);
@@ -241,10 +246,32 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 		echo "<h2>".$resource['field'.$view_title_field]."</h2><br/>";
 	}
 }
-?></h2>
-<?php if ($alternative!=""){$lang["fileupload"]=$lang["alternativefiles"];}?>
-<h1><?php echo (getval("replace","")!="")?$lang["replaceresourcebatch"]:$lang["fileupload"]?></h1>
-<p><?php echo text("introtext")?></p>
+
+# Define the titles:
+if ($replace!="") 
+	{
+	# Replace Resource Batch
+	$titleh1 = $lang["replaceresourcebatch"];
+	$titleh2 = "";
+	}
+elseif ($alternative!="")
+	{
+	# Batch upload alternative files (Java)
+	$titleh1 = $lang["alternativebatchupload"];
+	$titleh2 = "";
+	}
+else
+	{
+	# # Add Resource Batch - In Browser (Java - recommended)
+	$titleh1 = $lang["addresourcebatchbrowserjava"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	}
+?>
+
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $lang["intro-java_upload"] ?></p>
+
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);
     $list=explode(",",trim($allowed_extensions));
@@ -266,7 +293,7 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo getval("replace","")?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
@@ -290,6 +317,17 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
+<?php if ($alternative=="" && $replace=="")
+	{ # Only show the back button in the step-by-step guide of Add Resource Batch - In Browser (Java - recommended)
+	?>
+	<div style="margin: 10px 0px;">
+		<form>
+			<input name="back" type="button" onclick="window.history.go(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"] ?>&nbsp;&nbsp;" />
+		</form>
+	</div>
+	<?php
+	}
+?>
 
 <?php if ($alternative=="") { ?>
 <p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>

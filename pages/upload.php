@@ -97,10 +97,31 @@ include "../include/header.php";
 ?>
 
 <div id="test"></div>
-<div class="BasicsBox"> 
-<h2>&nbsp;</h2>
-<h1><?php echo $lang["fileupload"]?></h1>
-<p><?php echo text("introtext")?></p>
+<div class="BasicsBox">
+<?php
+
+# Define the titles:
+if ($ref!="")
+	{ # Replace file
+	$titleh1 = $lang["replacefile"];
+	$titleh2="";
+	} 
+else if ($archive=="2")
+	{ # Add single archived resource
+	$titleh1 = $lang["newarchiveresource"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	}
+else
+	{ # Add single resource
+	$titleh1 = $lang["addresource"];
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	}
+?>
+
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $lang["intro-single_upload"] ?></p>
+
 <script language="JavaScript">
 // Check allowed extensions:
 function check(filename) {
@@ -119,11 +140,11 @@ function check(filename) {
 <div id="invalid" style="display:none;" class="FormIncorrect"><?php echo $lang['invalidextension_mustbe']." ".strtoupper(str_replace(",",", ",$allowed_extensions))?></div>
 <div class="Question">
 
-<label for="userfile"><?php echo $lang["clickbrowsetolocate"]?></label>
+<label for="userfile"><?php echo $lang["file"] ?></label>
 <?php if ($show_progress){?>
 <input type="hidden" id="uid" name="UPLOAD_IDENTIFIER" value="<?php echo $uid; ?>" >
 <?php }?>
-<input type=file name=userfile id=userfile>
+<input type=file name=userfile id=userfile size="80">
 <div class="clearerleft"> </div>
 </div>
 
@@ -138,25 +159,20 @@ function check(filename) {
 </div>
 <?php } ?>
 
-<div class="Question">
-<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
-<div class="clearerleft"> </div>
-</div>
-
-<?php if($camera_autorotation){ ?>
-<div class="Question">
-<label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php if ($camera_autorotation_checked) {echo ' checked';}?>>
-<div class="clearerleft"> </div>
-</div>
-<?php } // end if camera autorotation ?>
-
 <div class="QuestionSubmit">
-<label for="buttons"> </label>			
-<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php if ($ref!=""){echo $lang['cancel'];}else{echo $lang['noupload'];}?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["fileupload"]?>&nbsp;&nbsp;" />
+	<label for="buttons"> </label>
+	<?php if ($ref!="")  # Replace file -> show a cancel button
+		{ ?>
+		<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php echo $lang['cancel'] ?>&nbsp;&nbsp;" /><?php
+		}
+	else # Add single (archived) resource -> step-by-step guide -> show the back button and a no upload button
+		{ ?>
+		<input name="back" type="button" onclick="history.back(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"] ?>&nbsp;&nbsp;" />
+		<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php echo $lang['noupload'] ?>&nbsp;&nbsp;" /><?php
+		} ?>
+	<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
 </div>
 
-<p><a href="edit.php?ref=<?php echo $ref?>">&gt; <?php echo $lang["backtoeditresource"]?></a></p>
 
 </form>
 </div>

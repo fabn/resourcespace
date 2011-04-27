@@ -92,8 +92,8 @@ include "../include/header.php";
 
 
 <div class="Question">
-<label for="userfile"><?php echo $file["file_extension"]==""?$lang["clickbrowsetolocate"]:$lang["uploadreplacementfile"]?></label>
-<input type=file name=userfile id=userfile>
+<label for="userfile"><?php echo $file["file_extension"]=="" ? $lang["file"] : $lang["uploadreplacementfile"] ?></label>
+<input type=file name=userfile id=userfile size="80">
 <div class="clearerleft"> </div>
 </div>
 
