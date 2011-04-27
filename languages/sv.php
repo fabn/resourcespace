@@ -13,7 +13,7 @@
 # En befintlig svensk maskinöversättning
 # Den norska översättningen (den danska var maskinöversatt)
 # Computer Swedens språkwebb: http://cstjanster.idg.se/sprakwebben/
-# Svenska datatermgruppen: http://www.nada.kth.se/dataterm/ordreg.html
+# Svenska datatermgruppen: http://www.datatermgruppen.se/
 # Språkrådet: http://www.sprakradet.se/frågelådan
 # Norstedts stora engelsk-svenska ordbok
 # Nationalencyklopedins ordbok
@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 # 
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110401 för version 2556.
+# Senast uppdaterad av Henrik Frizén 20110427 för version 2653.
 #
 #
 # User group names (for the default user groups)
@@ -34,7 +34,7 @@ $lang["usergroup-restricted_user_-_requests_managed"]="Begränsade - begäranden
 $lang["usergroup-restricted_user_-_payment_immediate"]="Begränsade - direktbetalning";
 $lang["usergroup-restricted_user_-_payment_invoice"]="Begränsade - fakturabetalning";
 
-# Resource types (default types)
+# Resource type names (for the default resource types)
 $lang["resourcetype-photo"]="Fotografi";
 $lang["resourcetype-document"]="Dokument";
 $lang["resourcetype-video"]="Video";
@@ -156,6 +156,7 @@ $lang["resourceidnotfound"]="Materialnumret hittades inte";
 $lang["inclusive"]="(inklusive)";
 $lang["pluginssetup"]="Hantera tillägg";
 $lang["pluginmanager"]="Tilläggshanterare";
+$lang["users"]="användare";
 
 
 # Team Centre - Bulk E-mails
@@ -327,8 +328,8 @@ $lang["titleandcountry"]="Titel / Land";
 $lang["torefineyourresults"]="För att förfina dina resultat, försök";
 $lang["verybestresources"]="Vårt bästa material";
 $lang["addtocurrentcollection"]="Lägg till i aktiv samling";
-$lang["addresource"]="Lägg till material";
-$lang["addresourcebatch"]="Lägg till en grupp material";
+$lang["addresource"]="Lägg till ett material";
+$lang["addresourcebatch"]="Lägg till material i grupp";
 $lang["fileupload"]="Ladda upp fil";
 $lang["clickbrowsetolocate"]="Klicka på 'Bläddra...' för att leta upp en fil";
 $lang["resourcetools"]="Materialverktyg";
@@ -646,10 +647,10 @@ $lang["warningexpired"]="Materialets utgångsdatum har passerats";
 $lang["warningexpiredtext"]="Varning! Materialets utgångsdatum har passerats. Du måste klicka på länken nedan för att aktivera filnedladdning.";
 $lang["warningexpiredok"]="&gt; Aktivera materialnedladdning";
 $lang["userrequestcomment"]="Meddelande";
-$lang["addresourcebatchbrowser"]="Gruppuppladda material - i webbläsare (Flash)";
-$lang["addresourcebatchbrowserjava"]="Gruppuppladda material - i webbläsare (Java - rekommenderas)";
+$lang["addresourcebatchbrowser"]="Lägg till material i grupp - i webbläsare (Flash)";
+$lang["addresourcebatchbrowserjava"]="Lägg till material i grupp - i webbläsare (Java - rekommenderas)";
 
-$lang["addresourcebatchftp"]="Gruppuppladda material - hämta från FTP-server";
+$lang["addresourcebatchftp"]="Lägg till material i grupp - hämta från FTP-server";
 $lang["replaceresourcebatch"]="Ersätt material i grupp";
 $lang["editmode"]="Redigeringsläge";
 $lang["replacealltext"]="Ersätt befintlig text med texten nedan";
@@ -686,7 +687,7 @@ $lang["feedbacknocomments"]="Du har inte gett någon respons på materialet i sa
 $lang["collectionfeedback"]="Respons på samlingen";
 $lang["collectionfeedbackemail"]="Du har fått följande respons:";
 $lang["feedbacksent"]="Din respons har skickats.";
-$lang["newarchiveresource"]="Nytt arkiverat material";
+$lang["newarchiveresource"]="Lägg till ett arkiverat material";
 $lang["nocategoriesselected"]="Inga kategorier valda";
 $lang["showhidetree"]="Visa/dölj träd";
 $lang["clearall"]="Töm allt";
@@ -742,7 +743,7 @@ $lang["editalternativefile"]="Redigera alternativ fil";
 $lang["description"]="Beskrivning";
 $lang["notuploaded"]="Inte uppladdade";
 $lang["uploadreplacementfile"]="Ladda upp ersättningsfil";
-$lang["backtomanagealternativefiles"]="Tillbaka till Hantera alternativa filer";
+$lang["backtomanagealternativefiles"]="Tillbaka till att hantera alternativa filer";
 
 
 $lang["resourceistranscoding"]="Materialet kodas just nu om";
@@ -786,7 +787,7 @@ $lang["noattachedusers"]="Ingen tillknuten användare.";
 $lang["confirmdeleteaccess"]="Är du säker på att du vill radera denna åtkomstnyckel? Användare som har fått tillgång till denna samling med hjälp av denna nyckel kommer inte längre att kunna komma åt samlingen.";
 $lang["noexternalsharing"]="Ingen extern utdelning.";
 $lang["sharedcollectionaddwarning"]="Varning: Den här samlingen har delats ut till externa användare. Materialet du har lagt till har därmed gjorts tillgängligt för dessa användare. Klicka på 'Dela ut' för att hantera extern åtkomst för denna samling.";
-$lang["addresourcebatchlocalfolder"]="Gruppuppladda material - hämta från lokal mapp";
+$lang["addresourcebatchlocalfolder"]="Lägg till material i grupp - hämta från lokal mapp";
 
 # Setup Script
 $lang["setup-alreadyconfigured"]="Din installation av ResourceSpace är redan konfigurerad. För att göra om konfigurationen kan du radera <pre>include/config.php</pre> och peka webbläsaren till den här sidan igen.";
@@ -961,7 +962,7 @@ $lang["new_resource"]="nytt material";
 $lang["invalidextension_mustbe"]="Ogiltigt filnamnstillägg, måste vara";
 $lang["allowedextensions"]="Giltiga filnamnstillägg";
 
-$lang["alternativebatchupload"]="Gruppuppladda alternativa filer (Java)";
+$lang["alternativebatchupload"]="Ladda upp alternativa filer i grupp (Java)";
 
 $lang["confirmdeletefieldoption"]="Är du säker på att du vill RADERA och TA BORT detta fält?";
 
@@ -1034,7 +1035,7 @@ $lang["undometadatatemplate"]="(ångra val av metadatamall)";
 
 $lang["accountemailalreadyexists"]="Ett användarkonto med samma e-postadress existerar redan";
 
-$lang["backtothemes"]="Tillbaka till Teman";
+$lang["backtothemes"]="Tillbaka till teman";
 $lang["downloadreport"]="Ladda ned rapport";
 
 #Bug Report Page
@@ -1248,7 +1249,7 @@ $lang["confirm-deletion"]="Är du säker?";
 
 # Permissions Manager
 $lang["permissionsmanager"]="Behörighetshanteraren";
-$lang["backtogroupmanagement"]="Tillbaka till Grupphanteraren";
+$lang["backtogroupmanagement"]="Tillbaka till grupphanteraren";
 $lang["searching_and_access"]="Sökning/Åtkomst";
 $lang["metadatafields"]="Metadatafält";
 $lang["resource_creation_and_management"]="Skapande/hantering av material";
@@ -1344,3 +1345,9 @@ $lang["cc-emailaddress"] = "Kopia till %emailaddress"; # %emailaddress will be r
 
 $lang["sort"] = "Sortera";
 $lang["sortcollection"] = "Sortera samling";
+$lang["emptycollection"] = "Töm samling";
+$lang["emptycollectionareyousure"]="Är du säker på att du vill ta bort allt material från den här samlingen?";
+
+$lang["error-cannoteditemptycollection"]="Du kan inte redigera en tom samling.";
+$lang["error-permissiondenied"]="Tillåtelse nekades.";
+$lang["error-collectionnotfound"]="Samlingen hittades inte.";

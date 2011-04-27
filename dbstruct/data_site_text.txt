@@ -535,7 +535,7 @@ done,user_request,"Din ansökan om ett användarkonto har skickats. Dina inloggn
 download_click,introtext,"Högerklicka på länken nedan och välj 'Spara som...' för att ladda ner materialet. Du kommer att få frågan var du vill spara filen. Klicka på webblänken för att öppna filen i din webbläsare.",370,sv,,,0
 download_progress,introtext,"Din nedladdning kommer att startas inom kort. Använd länkarna nedan för att fortsätta efter att nedladdningen är klar.",371,sv,,,0
 edit,batch,"Var vänlig att ange standardtyp och standardnyckelord för materialet du kommer att ladda upp.",372,sv,,,0
-team_resource,introtext,"Lägg till material fil för fil eller massuppladda material. För att redigera material kan du enklast söka efter det och sen klicka på 'Redigera' på materialsidan.",373,sv,,,0
+team_resource,introtext,"Lägg till material ett och ett eller i grupp. För att redigera ett material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet.",373,sv,,,0
 login,welcomelogin,"Välkommen till ResourceSpace",374,sv,,,0
 user_request,introtext,"Ansök om ett användarkonto genom att fylla i formuläret nedan.",375,sv,,,0
 research_request,introtext,"Researchteamet hjälper dig att finna det bästa materialet till dina projekt. Fyll i formuläret nedan så noggrant som möjligt så att vi kan ge dig ett relevant svar. <br><br>En medlem av teamet kommer att få i uppdrag att besvara din researchförfrågan. Vi kommer att hålla kontakt genom e-post under arbetets gång. När vi har slutfört arbetet kommer du att få ett e-postmeddelande med en webblänk till allt material vi rekommenderar.",376,sv,,,0
@@ -555,7 +555,7 @@ team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materia
 team_batch_upload,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",390,sv,,,0
 team_batch_select,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",391,sv,,,0
 team_batch,introtext,"Du kan massuppladda material genom att placera det på en FTP-server. När materialet har laddats upp i ResourceSpace kan det raderas från FTP-servern.",392,sv,,,0
-team_archive,introtext,"För att redigera arkiverat material kan du enklast söka efter det och sen klicka på 'Redigera' på materialsidan. Allt material som är redo för arkivering kan enkelt nås från länken nedan. Lägg till eventuell relevant information innan du flyttar materialet till arkivet.",393,sv,,,0
+team_archive,introtext,"För att redigera ett arkiverat material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet. Allt material som är redo för arkivering kan enkelt nås från länken nedan. Lägg till eventuell relevant information innan du flyttar materialet till arkivet.",393,sv,,,0
 all,emaillogindetails,"[img_../../gfx/whitegry/titles/title.gif]<br>
 [welcome]<br><br> 
 [lang_newlogindetails]<br><br> 
