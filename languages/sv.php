@@ -19,9 +19,9 @@
 # Nationalencyklopedins ordbok
 #
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
-# 
+#
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110427 för version 2654+.
+# Senast uppdaterad av Henrik Frizén 20110427 för version 2656+.
 #
 #
 # User group names (for the default user groups)
@@ -1061,9 +1061,9 @@ $lang["previewpage"]="Förhandsgranska sida";
 $lang["nodownloads"]="Inga nedladdningar";
 $lang["uncollectedresources"]="Material som inte ingår i samlingar";
 $lang["nowritewillbeattempted"]="Exiftool kommer inte att försöka skriva metadata.";
-$lang["notallfileformatsarewritable"]="Exiftool kan dock inte skriva i alla filformat.";
-$lang["notsupported"]="filformatet stöds inte";
-$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool är inaktiverad för filformatet.";
+$lang["notallfileformatsarewritable"]="Exiftool kan dock inte skriva i alla filtyper.";
+$lang["filetypenotsupported"]="Filtypen %filetype stöds inte";
+$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool är inaktiverad för filtypen %filetype"; # %filetype will be replaced, e.g. Exiftool processing disabled for file type JPG
 $lang["nometadatareport"]="Ingen metadatarapport";
 $lang["metadatawritewillbeattempted"]="Exiftool kommer att försöka skriva nedanstående metadata.";
 $lang["embeddedvalue"]="Inbäddat värde";

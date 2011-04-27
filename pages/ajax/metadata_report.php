@@ -22,8 +22,8 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	$command=$exiftool_path."/exiftool -listf";
 	$formats=shell_exec($command);
 	$ext=strtoupper($ext);
-	if (strlen(strstr($formats,$ext))<2){die($ext." ".$lang['notsupported']);}
-	if (in_array(strtolower($ext),$exiftool_no_process)) {die($lang['exiftoolprocessingdisabledforfiletype']." ".$ext);}
+	if (strlen(strstr($formats,$ext))<2){die(str_replace("%filetype", $ext, $lang['filetypenotsupported']));}
+	if (in_array(strtolower($ext),$exiftool_no_process)) {die(str_replace("%filetype", $ext, $lang['exiftoolprocessingdisabledforfiletype']));}
 	
 	#build array of writable tags
 	$command=$exiftool_path."/exiftool -listw";
