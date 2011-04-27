@@ -133,9 +133,9 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 
 <!--delete and remove-->
-<?php if ($userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
+<?php if ($userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
 
-<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-delete"]?></a><?php } ?>
+<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-delete"]?>...</option><?php } ?>
 
 <!-- end delete and remove-->
 
@@ -150,7 +150,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 <!-- end purge -->
 
 <!-- empty -->
-<?php if ($cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["emptycollection"];?></a><?php } ?>
+<?php if ($cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
 <!-- end empty-->
 
 <!-- log -->
