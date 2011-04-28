@@ -49,7 +49,7 @@ include "../include/header.php";
 		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resourcedata['ref'],false,"col",false);?>"/><?php } 
 	} ?>
 	<?php if ($alternative_file_resource_title){ 
-		echo "<h2>".$resourcedata['field'.$view_title_field]."</h2><br/>";
+		echo "<h2>".i18n_get_translated($resourcedata['field'.$view_title_field])."</h2><br/>";
 	}?>
 	
 <h1><?php echo $lang["editalternativefile"]?></h1>
