@@ -38,23 +38,23 @@ include "../../../include/header.php";
 <input type=hidden name="sat" id="sat" value=50>
 
 <div id="StyleOptions" class="Question"  onChange="previewColortheme();">
-<label>Style</label>
+<label><?php echo $lang["style"]?></label>
 <select class="shrtwidth" name="style" id="style" value="greyblu">
-<option value="whitegry">White</option>
-<option value="greyblu" selected>Gradient</option>
+<option value="whitegry"><?php echo $lang["white"]?></option>
+<option value="greyblu" selected><?php echo $lang["gradient"]?></option>
 </select>
 </div>
 
 <div id="StyleOptions2" class="Question"  onChange="previewColortheme();">
-<label>Square/Rounded (no preview)</label>
+<label><?php echo $lang["square-rounded"]?></label>
 <select class="shrtwidth" name="rounded" id="rounded" value="greyblu">
-<option value="true">Rounded</option>
-<option value="false">Square</option>
+<option value="true"><?php echo $lang["rounded"]?></option>
+<option value="false"><?php echo $lang["square"]?></option>
 </select>
 </div>
 
 <div class="Question">
-<label>Hue</label>
+<label><?php echo $lang["hue"]?></label>
 
 <div class="Fixed">
 <div id="track1" class="trackcol" style="width:250px; height:18px;" >
@@ -66,7 +66,7 @@ include "../../../include/header.php";
 </div>
 
 <div class="Question">
-<label>Saturation</label>
+<label><?php echo $lang["saturation"]?></label>
 
 <div class="Fixed">
 <div id="track2" class="track" style="width:250px; height:9px;">
@@ -79,8 +79,8 @@ include "../../../include/header.php";
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>	
-<input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["preview"]?>&nbsp;&nbsp;" onClick="previewColortheme();"/>
-<input name="save" type="submit" value="&nbsp;&nbsp;Save ColorTheme&nbsp;&nbsp;" />
+<input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["action-preview"]?>&nbsp;&nbsp;" onClick="previewColortheme();"/>
+<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["action-save_colortheme"]?>&nbsp;&nbsp;" />
 </div>
 
 </form>
