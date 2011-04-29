@@ -298,54 +298,76 @@ if ($allow_reorder && $display!="list")
 		}
 	}
 
-if ($search_titles){
-	if (substr($search,0,5)=="!last"){
-		$collection_title = '<h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
-	}
-	if (substr($search,0,8)=="!related") {
-		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-		$collection_title = '<h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
-	}
-	if ($archive==-2){
-	$collection_title = '<h1>'.$lang["status-2"].'</h1> ';
-	}
-	if ($archive==-1){
-	$collection_title = '<h1>'.$lang["status-1"].'</h1> ';
-	}
-	if ($archive==2){
-	$collection_title = '<h1>'.$lang["status2"].'</h1> ';
-	}
-	if ($archive==3){
-	$collection_title = '<h1>'.$lang["status3"].'</h1> ';
-	}
-	if (substr($search,0,15)=="!archivepending") {
-		$collection_title = '<h1>'.$lang["status1"].'</h1> ';
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-2){$collection_title = '<h1>'.$lang["contributedps"].'</h1> ';}
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-1){$collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';}
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref && $archive==-0){$collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';}
-	}
-	if (substr($search,0,7)=="!unused") {
-		$collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';
-	}
-}
-	
+# Display a title of the search (if there is a title)
+if ($search_titles)
+    {
+    if (substr($search,0,5)=="!last")
+        {
+        $collection_title = '<h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
+        }
+    elseif (substr($search,0,8)=="!related")
+        {
+        $resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
+        $collection_title = '<h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
+        }
+    elseif (substr($search,0,7)=="!unused")
+        {
+        $collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';
+        }
+    elseif (substr($search,0,11)=="!duplicates")
+        {
+        $collection_title = '<h1>'.$lang["duplicateresources"].'</h1> ';
+        }
+    elseif (substr($search,0,15)=="!archivepending")
+        {
+        $collection_title = '<h1>'.$lang["resourcespendingarchive"].'</h1> ';
+        }
+    elseif (substr($search,0,14)=="!contributions")
+        {
+        $cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+        if ($cuser==$userref)
+            {
+            switch ($archive)
+                {
+                case -2:
+                    $collection_title = '<h1>'.$lang["contributedps"].'</h1> ';
+                    break;
+                case -1:
+                    $collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';
+                    break;
+                case -0:
+                    $collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';
+                    break;
+                }
+            }
+        }
+    else
+        {
+        switch ($archive)
+            {
+            case -2:
+                $collection_title = '<h1>'.$lang["userpendingsubmission"].'</h1> ';
+                break;
+            case -1:
+                $collection_title = '<h1>'.$lang["userpending"].'</h1> ';
+                break;
+            case 2:
+                $collection_title = '<h1>'.$lang["archiveonlysearch"].'</h1> ';
+                break;
+            case 3:
+                $collection_title = '<h1>'.$lang["deletedresources"].'</h1> ';
+                break;
+            }
+        }
+    }
 
 
 # Do the public collection search if configured.
 
 if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
-{
+    {
     $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
-}
+    }
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{
@@ -366,7 +388,7 @@ if ($allow_reorder && $display!="list")
 		document.location='<?php echo $url?>&reorder=' + id1 + '-' + id2;
 		}
 	</script><?php
-}
+	}
 
 # Extra CSS to support more height for titles on thumbnails.
 if (isset($result_title_height))

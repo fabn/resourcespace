@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110427 för version 2656+.
+# Senast uppdaterad av Henrik Frizén 20110429 för version 2660.
 #
 #
 # User group names (for the default user groups)
@@ -173,9 +173,12 @@ $lang["comments"]="Kommentarer";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="Visa material som är redo för granskning";
+$lang["userpending"]="Material som är redo för granskning";
 $lang["viewuserpendingsubmission"]="Visa material som är under registrering";
-$lang["searcharchivedresources"]="Sök arkiverat material";
+$lang["userpendingsubmission"]="Material som är under registrering";
+$lang["searcharchivedresources"]="Sök i arkiverat material";
 $lang["viewresourcespendingarchive"]="Visa material som är redo för arkivering";
+$lang["resourcespendingarchive"]="Material som är redo för arkivering";
 $lang["uploadresourcebatch"]="Ladda upp material";
 $lang["uploadinprogress"]="Uppladdning och skalning pågår";
 $lang["transferringfiles"]="Överför filer, var god vänta.";
@@ -199,9 +202,9 @@ $lang["uselocalupload"]="ELLER: Använd en lokal 'uppladdningsmapp' i stället f
 
 # User contributions
 $lang["contributenewresource"]="Bidra med nytt material";
-$lang["viewcontributedps"]="Visa mina bidrag som är under registrering";
-$lang["viewcontributedpr"]="Visa mina bidrag som är redo för granskning";
-$lang["viewcontributedsubittedl"]="Visa mina bidrag som är aktiva";
+$lang["viewcontributedps"]="Visa mina bidrag - under registrering";
+$lang["viewcontributedpr"]="Visa mina bidrag - redo för granskning";
+$lang["viewcontributedsubittedl"]="Visa mina bidrag - aktiva";
 $lang["contributedps"]="Mina bidrag - under registrering";
 $lang["contributedpr"]="Mina bidrag - redo för granskning";
 $lang["contributedsubittedl"]="Mina bidrag - aktiva";
@@ -309,7 +312,7 @@ $lang["action-viewmatchingresources"]="Visa matchande material";
 $lang["nomatchingresources"]="Inget matchande material";
 $lang["matchingresources"]="matchande material"; # e.g. 17 matching resources
 $lang["advancedsearch"]="Avancerad sökning";
-$lang["archiveonlysearch"]="Arkivsökning (endast arkiverat material)";
+$lang["archiveonlysearch"]="Sökning endast i arkiverat material";
 $lang["allfields"]="Alla fält";
 $lang["typespecific"]="Typspecifika";
 $lang["youfound"]="Du hittade"; # e.g. you found 17 resources
@@ -670,7 +673,8 @@ $lang["size"]="Storlek";
 $lang["orientation"]="Orientering";
 $lang["requiredfield"]="Obligatoriskt fält";
 $lang["requiredfields"]="Alla obligatoriska fält är inte ifyllda. Gå igenom formuläret och försök sen igen.";
-$lang["viewduplicates"]="Visa dubbletter";
+$lang["viewduplicates"]="Visa dubbletter av material";
+$lang["duplicateresources"]="Dubbletter av material";
 $lang["userlog"]="Användarlogg";
 $lang["ipaddressrestriction"]="Begränsa IP-adress (frivilligt)";
 $lang["wildcardpermittedeg"]="Jokertecken tillåtna, t.ex.";
@@ -894,7 +898,7 @@ $lang["collectionlog-t"]="Återtog åtkomst till material för ";//  + notes fie
 $lang["collectionlog-X"]="Raderade samlingen";
 
 
-$lang["viewuncollectedresources"]="Visa material som inte används i samlingar";
+$lang["viewuncollectedresources"]="Visa material som inte ingår i samlingar";
 
 # Collection requesting
 $lang["requestcollection"]="Begär samling";
@@ -1336,6 +1340,7 @@ $lang["megapixel-short"]="MP";
 $lang["at-resolution"] = "i"; # E.g. 5.9 in x 4.4 in @ 144 PPI
 
 $lang["deletedresource"] = "Raderat material";
+$lang["deletedresources"] = "Raderat material";
 $lang["action-delete_permanently"] = "Radera permanent";
 
 $lang["horizontal"] = "Horisontellt";

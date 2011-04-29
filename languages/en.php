@@ -153,9 +153,12 @@ $lang["comments"]="Comments";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="View User Contributed Resources Pending Review";
+$lang["userpending"]="User Contributed Resources Pending Review";
 $lang["viewuserpendingsubmission"]="View User Contributed Resources Pending Submission";
+$lang["userpendingsubmission"]="User Contributed Resources Pending Submission";
 $lang["searcharchivedresources"]="Search Archived Resources";
 $lang["viewresourcespendingarchive"]="View Resources Pending Archive";
+$lang["resourcespendingarchive"]="Resources Pending Archive";
 $lang["uploadresourcebatch"]="Upload Resource Batch";
 $lang["uploadinprogress"]="Upload and Resize in Progress";
 $lang["transferringfiles"]="Transferring files, please wait.";
@@ -651,6 +654,7 @@ $lang["orientation"]="Orientation";
 $lang["requiredfield"]="This is a required field";
 $lang["requiredfields"]="Some required fields were not completed. Please review the form and try again";
 $lang["viewduplicates"]="View Duplicate Resources";
+$lang["duplicateresources"]="Duplicate Resources";
 $lang["userlog"]="User Log";
 $lang["ipaddressrestriction"]="IP address restriction (optional)";
 $lang["wildcardpermittedeg"]="Wildcard permitted e.g.";
@@ -1316,6 +1320,7 @@ $lang["megapixel-short"]="MP";
 $lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI
 
 $lang["deletedresource"] = "Deleted Resource";
+$lang["deletedresources"] = "Deleted Resources";
 $lang["action-delete_permanently"] = "Delete permanently";
 
 $lang["horizontal"] = "Horizontal";
