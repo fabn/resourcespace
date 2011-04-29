@@ -439,7 +439,7 @@ if (true) # Always show search header now.
 	
 	# order by
 	#if (strpos($search,"!")===false)
-	if (true) # Ordering enabled for collections/themes too now at the request of N Ward / Oxfam
+	if ($search!="!duplicates") # Ordering enabled for collections/themes too now at the request of N Ward / Oxfam
 		{
 		$rel=$lang["relevance"];
 		if (strpos($search,"!")!==false) {$rel=$lang["asadded"];}

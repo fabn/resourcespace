@@ -13,7 +13,7 @@ set_time_limit(60*60*40);
 
 echo "Updating EXIF/IPTC...";
 
-$rd=sql_query("select ref,file_extension from resource where has_image=1 and resource_type=1");
+$rd=sql_query("select ref,file_extension from resource where has_image=1 ");
 for ($n=0;$n<count($rd);$n++)
 	{
 	$ref=$rd[$n]['ref'];

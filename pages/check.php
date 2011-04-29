@@ -40,7 +40,7 @@ if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "
 # Check MySQL version
 $mysqlversion=mysql_get_server_info();
 if ($mysqlversion<'5') {$result=$lang["status-fail"] . ": " . str_replace("?", "5", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
-?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion?></td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion?> (client-encoding:<?php echo mysql_client_encoding();?>)</td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
 if (function_exists("gd_info"))
