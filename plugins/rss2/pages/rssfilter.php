@@ -86,50 +86,72 @@ if (!array_key_exists("search",$_GET))
 	$result=do_search($search,$restypes,"relevance",$archive,100);
 	
 	//echo $result[0];
+
+	# Create a title for the feed
 	$feed_title=$applicationname ." - ".$search;
-	
-	if (substr($search,0,5)=="!last"){
-		$feed_title = $applicationname ." - ".$lang["recent"].' '.substr($search,5,strlen($search));
-	}
-	if (substr($search,0,8)=="!related") {
-		$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-		$feed_title = $applicationname ." - ".$lang["relatedresources"].' - '.$lang['id'].$resource;
-	}
-	if ($archive==-2){
-		$feed_title = $applicationname ." - ".$lang["status-2"];
-	}
-	if ($archive==-1){
-		$feed_title = $applicationname ." - ".$lang["status-1"];
-	}
-	if ($archive==2){
-		$feed_title = $applicationname ." - ".$lang["status2"];
-	}
-	if ($archive==3){
-		$feed_title = $applicationname ." - ".$lang["status3"];
-	}
-	if (substr($search,0,15)=="!archivepending") {
-		$feed_title = $applicationname ." - ".$lang["status1"];
-	}
-	if (substr($search,0,14)=="!contributions") {
-		$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-		if ($cuser==$userref) {
-			switch ($archive) {
+
+	# Update the title of the feed to match the search title, if there is a search title
+	if ($search_titles)
+		{
+		if (substr($search,0,5)=="!last")
+			{
+			$feed_title = $applicationname ." - ".$lang["recent"].' '.substr($search,5,strlen($search));
+			}
+		elseif (substr($search,0,8)=="!related")
+			{
+			$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
+			$feed_title = $applicationname ." - ".$lang["relatedresources"].' - '.$lang['id'].$resource;
+			}
+		elseif (substr($search,0,7)=="!unused")
+			{
+			$feed_title = $applicationname ." - ".$lang["uncollectedresources"];
+			}
+		elseif (substr($search,0,11)=="!duplicates")
+			{
+			$feed_title = $applicationname ." - ".$lang["duplicateresources"];
+			}
+		elseif (substr($search,0,15)=="!archivepending")
+			{
+			$feed_title = $applicationname ." - ".$lang["resourcespendingarchive"];
+			}
+		elseif (substr($search,0,14)=="!contributions")
+			{
+			$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+			if ($cuser==$userref)
+				{
+				switch ($archive)
+					{
+					case -2:
+						$feed_title = $applicationname ." - ".$lang["contributedps"];
+						break;
+					case -1:
+						$feed_title = $applicationname ." - ".$lang["contributedpr"];
+						break;
+					case -0:
+						$feed_title = $applicationname ." - ".$lang["contributedsubittedl"];
+						break;
+					}
+				}
+			}
+		else
+			{
+			switch ($archive)
+				{
 				case -2:
-					$feed_title = $applicationname ." - ".$lang["contributedps"];
+					$feed_title = $applicationname ." - ".$lang["userpendingsubmission"];
 					break;
 				case -1:
-					$feed_title = $applicationname ." - ".$lang["contributedpr"];
+					$feed_title = $applicationname ." - ".$lang["userpending"];
 					break;
-				case -0:
-					$feed_title = $applicationname ." - ".$lang["contributedsubittedl"];
+				case 2:
+					$feed_title = $applicationname ." - ".$lang["archiveonlysearch"];
 					break;
+				case 3:
+					$feed_title = $applicationname ." - ".$lang["deletedresources"];
+					break;
+				}
 			}
-		}		
-	}
-	if (substr($search,0,7)=="!unused") {
-		$feed_title = $applicationname ." - ".$lang["uncollectedresources"];
-	}
-
+		}
 
 $r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", $search, $lang["filtered_resource_update_for"]));
 
