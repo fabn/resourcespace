@@ -433,6 +433,7 @@ $lang["noresourcesrequired"]="Number of resources required for final product?";
 $lang["shaperequired"]="Shape of images required";
 $lang["portrait"]="Portrait";
 $lang["landscape"]="Landscape";
+$lang["square"]="Square";
 $lang["either"]="Either";
 $lang["sendrequest"]="Send Request";
 $lang["editresearchrequest"]="Edit Research Request";

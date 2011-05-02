@@ -888,7 +888,15 @@ function extract_mean_colour($image,$ref)
 	if (isset($portrait_landscape_field))
 		{
 		# Write 'Portrait' or 'Landscape' to the appropriate field.
-		if ($width>=$height) {$portland=$lang["landscape"];} else {$portland=$lang["portrait"];}
+		if ($width>$height) {
+			$portland=$lang["landscape"];
+			} 
+		else if ($height>$width){
+			$portland=$lang["portrait"];
+			}
+		else if ($height==$width){
+			$portland=$lang["square"];
+		}	
 		update_field($ref,$portrait_landscape_field,$portland);
 		}
 
