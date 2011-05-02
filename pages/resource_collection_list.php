@@ -25,7 +25,7 @@ for ($n=0;$n<count($collections);$n++)
 	?><tr <?php hook("collectionlistrowstyle");?>>
 	<td><div class="ListTitle">
     <a <?php if ($collections[$n]["public"]==1 && (strlen($collections[$n]["theme"])>0)) { ?>style="font-style:italic;"<?php } ?> href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo $collections[$n]["name"]?></a></div></td>
-	<td><?php echo $collections[$n]["username"]?></td>
+	<td><?php echo $collections[$n]["fullname"]?></td>
 	<td><?php echo $collection_prefix . $collections[$n]["ref"]?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
 	<td><?php echo $collections[$n]["count"]?></td>
