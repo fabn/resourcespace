@@ -64,6 +64,9 @@ option {font-size:11px;}
 .HorizontalNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0px;}
 .HorizontalNav a:link, .HorizontalNav a:visited {text-decoration:none;}
 .HorizontalNav a:hover, .HorizontalNav a:active {text-decoration:underline;}
+.HorizontalWhiteNav li:first-child {border-left:none;}
+.HorizontalNav li:first-child {border-left:none;}
+
 
 /*Collection layout*/
 #CollectionMenu{width: 166px;position: absolute;left: 25px;top: 6px;text-align:left;}
