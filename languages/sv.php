@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110429 för version 2660.
+# Senast uppdaterad av Henrik Frizén 20110503 för version 2669+.
 #
 #
 # User group names (for the default user groups)
@@ -453,6 +453,7 @@ $lang["noresourcesrequired"]="Mängd material som krävs för den färdiga produ
 $lang["shaperequired"]="Önskad bildorientering";
 $lang["portrait"]="Porträtt";
 $lang["landscape"]="Landskap";
+$lang["square"]="Kvadratisk";
 $lang["either"]="Valfri";
 $lang["sendrequest"]="Skicka förfrågan";
 $lang["editresearchrequest"]="Redigera researchförfrågan";
@@ -556,6 +557,7 @@ $lang["status-never"]="Aldrig";
 $lang["softwareversion"]="?-version"; # E.g. "PHP version"
 $lang["softwarebuild"]="?-bygge"; # E.g. "ResourceSpace Build"
 $lang["softwarenotfound"]="Programmet '?' hittades inte."; # ? will be replaced.
+$lang["client-encoding"]="(klientkodning: %encoding)"; # %encoding will be replaced, e.g. client-encoding: utf8
 $lang["browseruseragent"]="Webbläsare";
 $lang['serverplatform']="Serverplattform";
 $lang["are_available-0"]="är tillgängliga";

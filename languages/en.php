@@ -537,6 +537,7 @@ $lang["status-never"]="Never";
 $lang["softwareversion"]="? version"; # E.g. "PHP version"
 $lang["softwarebuild"]="? Build"; # E.g. "ResourceSpace Build"
 $lang["softwarenotfound"]="'?'  not found"; # ? will be replaced.
+$lang["client-encoding"]="(client-encoding: %encoding)"; # %encoding will be replaced, e.g. client-encoding: utf8
 $lang["browseruseragent"]="Browser User-Agent";
 $lang['serverplatform']="Server Platform";
 $lang["are_available-0"]="are available";
