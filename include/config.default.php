@@ -1710,3 +1710,13 @@ $display_swf_xlarge_view=false;
 
 # pager dropdown
 $pager_dropdown=false;
+
+# Use an external SMTP server for outgoing emails (e.g. Gmail).
+# Requires $use_phpmailer.
+$use_smtp=false;
+# SMTP settings:
+$smtp_secure=''; # '', 'tls' or 'ssl'. For Gmail, 'tls' or 'ssl' is required.
+$smtp_host=''; # Hostname, e.g. 'smtp.gmail.com'.
+$smtp_port=25; # Port number, e.g. 465 for Gmail using SSL.
+$smtp_username=''; # Username (full email address).
+$smtp_password=''; # Password.
