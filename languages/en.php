@@ -1358,3 +1358,6 @@ $lang["total-collections-2"] = "<strong>Total: %number</strong> Collections"; # 
 $lang["owned_by_you-0"] = "(<strong>0</strong> owned by you)";
 $lang["owned_by_you-1"] = "(<strong>1</strong> owned by you)";
 $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> owned by you)"; # %mynumber will be replaced, e.g. (2 owned by you)
+
+$lang["resourcependingsubmission"] = "Resource Pending Submission";
+$lang["resourcependingreview"] = "Resource Pending Review";

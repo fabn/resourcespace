@@ -190,6 +190,12 @@ if ($k=="") { ?>
 
 <h1><?php switch ($resource["archive"])
 	{
+	case -2:
+	?><span class="ResourcePendingSubmissionTitle"><?php echo $lang["resourcependingsubmission"]?>:</span>&nbsp;<?php
+	break;
+	case -1:
+	?><span class="ResourcePendingReviewTitle"><?php echo $lang["resourcependingreview"]?>:</span>&nbsp;<?php
+	break;
 	case 2:
 	?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php
 	break;

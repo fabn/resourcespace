@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110504 för version 2671+.
+# Senast uppdaterad av Henrik Frizén 20110504 för version 2672+.
 #
 #
 # User group names (for the default user groups)
@@ -1378,3 +1378,6 @@ $lang["total-collections-2"] = "<strong>Totalt: %number</strong> samlingar"; # %
 $lang["owned_by_you-0"] = "(<strong>0</strong> ägda av dig)";
 $lang["owned_by_you-1"] = "(<strong>1</strong> ägd av dig)";
 $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> ägda av dig)"; # %mynumber will be replaced, e.g. (2 owned by you)
+
+$lang["resourcependingsubmission"] = "Material under registrering";
+$lang["resourcependingreview"] = "Material redo för granskning";

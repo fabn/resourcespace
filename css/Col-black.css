@@ -87,7 +87,7 @@ input[readonly] {color: #FFFFFF;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend a {color: #FFFFFF;text-align: left;}
 .RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #383838 url(../gfx/black/interface/DownloadCell.gif) repeat-x;}
 
-.ArchiveResourceTitle {color: #C2E066;}
+.ArchiveResourceTitle, .ResourcePendingSubmissionTitle, .ResourcePendingReviewTitle {color: #C2E066;}
 .DeletedResourceTitle {color: #FF0000;}
 .RecordStory{color: #000000;background: #FFFFFF url(../gfx/black/interface/StoryShadow.gif) repeat-x;}
 .RecordStory h1{color: #000000;}
