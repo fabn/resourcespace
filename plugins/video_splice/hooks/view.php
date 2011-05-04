@@ -21,7 +21,7 @@ function HookVideo_spliceViewAfterresourceactions()
 		$tm=getvalescaped("video_splice_cut_to_minutes","");
 		$ts=getvalescaped("video_splice_cut_to_seconds","");
 		
-		$preview=getvalescaped("submit","")=="Preview";
+		$preview=getvalescaped("preview","")!="";
 		
 		# Calculate a duration, as needed by FFMPEG
 		$from_seconds=($fh*60*60) + ($fm*60) + $fs;
@@ -29,7 +29,7 @@ function HookVideo_spliceViewAfterresourceactions()
 		$seconds=$to_seconds-$from_seconds;
 		
 		# Any problems?
-		if ($seconds<=0) {$error="Error: 'from' time must be before 'to' time.";}
+		if ($seconds<=0) {$error = $lang["error-from_time_after_to_time"];}
 		
 		# Convert seconds to HH:MM:SS as required by FFmpeg.
 		$dh=floor($seconds/(60*60));
@@ -117,40 +117,40 @@ function HookVideo_spliceViewAfterresourceactions()
 
 ?>
 <li><a href="#" onClick="
-if (document.getElementById('videocut').style.display=='block') {document.getElementById('videocut').style.display='none';} else {document.getElementById('videocut').style.display='block';} return false;">&gt;&nbsp;<?php echo $lang["cut"]?></a></li>
+if (document.getElementById('videocut').style.display=='block') {document.getElementById('videocut').style.display='none';} else {document.getElementById('videocut').style.display='block';} return false;">&gt;&nbsp;<?php echo $lang["action-cut"]?></a></li>
 <form id="videocut" style="<?php if (!(isset($preview) && $preview)) { ?>display:none;<?php } ?>padding:10px 0 3px 0;" method="post">
 
 <table>
 <tr>
-<td>From</td>
-<td>HH<select name="video_splice_cut_from_hours">
-<?php for ($n=0;$n<100;$n++) {?>HH<option <?php if (isset($fh) && $fh==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
+<td><?php echo $lang["from-time"]?></td>
+<td><?php echo $lang["hh"]?><select name="video_splice_cut_from_hours">
+<?php for ($n=0;$n<100;$n++) {?><option <?php if (isset($fh) && $fh==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
-<td>MM<select name="video_splice_cut_from_minutes">
+<td><?php echo $lang["mm"]?><select name="video_splice_cut_from_minutes">
 <?php for ($n=0;$n<60;$n++) {?><option <?php if (isset($fm) && $fm==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
-<td>SS<select name="video_splice_cut_from_seconds">
+<td><?php echo $lang["ss"]?><select name="video_splice_cut_from_seconds">
 <?php for ($n=0;$n<60;$n++) {?><option <?php if (isset($fs) && $fs==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
 </tr>
 
 <tr>
-<td>To</td>
-<td>HH<select name="video_splice_cut_to_hours">
-<?php for ($n=0;$n<100;$n++) {?>HH<option <?php if (isset($th) && $th==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
+<td><?php echo $lang["to-time"]?></td>
+<td><?php echo $lang["hh"]?><select name="video_splice_cut_to_hours">
+<?php for ($n=0;$n<100;$n++) {?><option <?php if (isset($th) && $th==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
-<td>MM<select name="video_splice_cut_to_minutes">
+<td><?php echo $lang["mm"]?><select name="video_splice_cut_to_minutes">
 <?php for ($n=0;$n<60;$n++) {?><option <?php if (isset($tm) && $tm==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
-<td>SS<select name="video_splice_cut_to_seconds">
+<td><?php echo $lang["ss"]?><select name="video_splice_cut_to_seconds">
 <?php for ($n=0;$n<60;$n++) {?><option <?php if (isset($ts) && $ts==$n) { ?>selected<?php } ?>><?php echo str_pad($n, 2, "0", STR_PAD_LEFT) ?></option><?php } ?>
 </select></td>
 </tr>
 
 <tr><td colspan=4 align="center">
-<input type="submit" name="submit" value="Preview" style="width:40%;">
+<input type="submit" name="preview" value="<?php echo $lang["action-preview"]?>" style="width:40%;">
 &nbsp;&nbsp;
-<input type="submit" name="submit" value="Cut" style="width:40%;">
+<input type="submit" name="cut" value="<?php echo $lang["action-cut"]?>" style="width:40%;">
 </td></tr>
 
 </table>

@@ -21,13 +21,13 @@ $resource_types=get_resource_types();
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>Video Splice Configuration</h1>
+  <h1><?php echo $lang["videospliceconfiguration"]?></h1>
 
   <div class="VerticalNav">
  <form id="form1" name="form1" method="post" action="">
 
-<p>Please specify which resource type the cut and splice functionality should appear for.</p>
-   <p><label for="resourcetype">Video Resource Type:</label>
+<p><?php echo $lang["specify_resource_type"]?></p>
+   <p><label for="resourcetype"><?php echo $lang["video_resource_type"]?>:</label>
    
    <select name="resourcetype">
    <?php foreach ($resource_types as $rt) { ?>
@@ -36,12 +36,12 @@ $resource_types=get_resource_types();
    </select>
 	</p>
 
-<p>Please specify which field should be used for the parent resource information when splicing/merging.</p>
-   <p><label for="videosplice_parent_field">Parent Resource Information Field:</label>
+<p><?php echo $lang["specify_parent_field"]?></p>
+   <p><label for="videosplice_parent_field"><?php echo $lang["parent_resource_field"]?>:</label>
    
    <select name="videosplice_parent_field">
    <?php foreach ($fields as $field) { ?>
-   <option value="<?php echo $field["ref"] ?>" <?php if ($field["ref"]==$videosplice_parent_field) {echo "selected"; } ?>><?php echo $field["title"] ?></option>
+   <option value="<?php echo $field["ref"] ?>" <?php if ($field["ref"]==$videosplice_parent_field) {echo "selected"; } ?>><?php echo lang_or_i18n_get_translated($field["title"],"fieldtitle-") ?></option>
    <?php } ?>
    </select>
 	</p>
