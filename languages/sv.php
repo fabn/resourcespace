@@ -21,7 +21,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295.
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110503 för version 2669+.
+# Senast uppdaterad av Henrik Frizén 20110504 för version 2671+.
 #
 #
 # User group names (for the default user groups)
@@ -1369,3 +1369,12 @@ $lang["intro-java_upload"] = "Klicka på <b>Bläddra</b> för att välja en elle
 $lang["intro-swf_upload"] = "Klicka på <b>Ladda upp</b> för att välja en eller flera filer som sen direkt laddas upp. Håll ner skift-tangenten för att välja flera filer samtidigt.";
 $lang["intro-single_upload"] = "Klicka på <b>Bläddra</b> för att välja en fil och klicka sen på <b>Ladda upp</b>.";
 $lang["intro-batch_edit"] = "Ange standardinställningar för uppladdning och standardvärden för metadata för materialet du kommer att ladda upp.";
+
+$lang["collections-1"] = "(<strong>1</strong> samling)";
+$lang["collections-2"] = "(<strong>%number</strong> samlingar)"; # %number will be replaced, e.g. 3 Collections
+$lang["total-collections-0"] = "<strong>Totalt: 0</strong> samlingar";
+$lang["total-collections-1"] = "<strong>Totalt: 1</strong> samling";
+$lang["total-collections-2"] = "<strong>Totalt: %number</strong> samlingar"; # %number will be replaced, e.g. Total: 5 Collections
+$lang["owned_by_you-0"] = "(<strong>0</strong> ägda av dig)";
+$lang["owned_by_you-1"] = "(<strong>1</strong> ägd av dig)";
+$lang["owned_by_you-2"] = "(<strong>%mynumber</strong> ägda av dig)"; # %mynumber will be replaced, e.g. (2 owned by you)

@@ -257,8 +257,10 @@ for($i=0;$i<count($collections);$i++){
 	}
 }
 
-echo "<strong>" . $lang["total"] . ": " . count($collections) . "</strong> " . $lang['collections'];
-echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
+$collcount = count($collections);
+echo $collcount==1 ? $lang["total-collections-1"] : str_replace("%number", $collcount, $lang["total-collections-2"]);
+echo " " . ($mycollcount==1 ? $lang["owned_by_you-1"] : str_replace("%mynumber", $mycollcount, $lang["owned_by_you-2"])) . "<br />";
+# The number of collections should never be equal to zero.
 ?>
 
 <div class="Listview">

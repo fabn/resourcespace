@@ -98,8 +98,31 @@ for($i=0;$i<count($collections);$i++){
 	}
 }
 
-echo "<strong>" . $lang["total"] . ": " . count($collections) . "</strong> " . $lang['collections'];
-echo " (<strong>$mycollcount</strong> " . $lang["ownedbyyou"] . ")<br />\n";
+$collcount = count($collections);
+switch ($collcount)
+    {
+    case 0:
+        echo $lang["total-collections-0"];
+        break;
+    case 1:
+        echo $lang["total-collections-1"];
+        break;
+    default:
+        echo str_replace("%number", $collcount, $lang["total-collections-2"]);
+    }
+echo " ";
+switch ($mycollcount)
+    {
+    case 0:
+        echo $lang["owned_by_you-0"];
+        break;
+    case 1:
+        echo $lang["owned_by_you-1"];
+        break;
+    default:
+        echo str_replace("%mynumber", $mycollcount, $lang["owned_by_you-2"]);
+    }
+echo "<br />";
 ?>
 
 <div class="Listview">
