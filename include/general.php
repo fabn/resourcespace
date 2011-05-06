@@ -448,13 +448,16 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 
 	global $imagemagick_calculate_sizes;
 
+	# Work out resource type
+	$resource_type=sql_value("select resource_type value from resource where ref='$ref'","");
+
 	# add the original image
 	$return=array();
 	$lastname=sql_value("select name value from preview_size where width=(select max(width) from preview_size)",""); # Start with the highest resolution.
 	$lastpreview=0;$lastrestricted=0;
 	$path2=get_resource_path($ref,true,'',false,$extension);
-	if (file_exists($path2))
-	{
+	if (file_exists($path2) && !checkperm("T" . $resource_type . "_"))
+	{ 
 		$returnline=array();
 		$returnline["name"]=lang_or_i18n_get_translated($lastname, "imagesize-");
 		$returnline["allow_preview"]=$lastpreview;
