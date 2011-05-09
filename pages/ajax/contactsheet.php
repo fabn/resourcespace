@@ -300,6 +300,7 @@ for ($n=0;$n<count($result);$n++){
 	if ($preview==true && isset($imagemagick_path)) 
 		{
 		# Since get_temp_dir() method does this check, omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
+		if (file_exists(get_temp_dir() . "/contactsheetrip.jpg")){unlink(get_temp_dir() . "/contactsheetrip.jpg");}
 		if (file_exists(get_temp_dir() . "/contactsheet.jpg")){unlink(get_temp_dir() . "/contactsheet.jpg");}
 		if (file_exists(get_temp_dir() . "/contactsheet.pdf")){unlink(get_temp_dir() . "/contactsheet.pdf");}
 		echo ($pdf->GetPage());
