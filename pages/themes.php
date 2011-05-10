@@ -7,7 +7,7 @@ include "../include/collections_functions.php";
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
+	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -76,6 +76,7 @@ function DisplayTheme($themes=array())
 		<tr class="ListviewBoxedTitleStyle">
 		<td><?php echo $lang["name"]?></td>
 		<td width="5%"><?php echo $lang["itemstitle"]?></td>
+		<?php hook("beforecollectiontoolscolumnheader");?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		
@@ -88,7 +89,7 @@ function DisplayTheme($themes=array())
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
-			
+			<?php hook("beforecollectiontoolscolumn");?>
 			<td nowrap><div class="ListTools">
             <?php if ($collections_compact_style){
             include("collections_compact_style.php");
@@ -410,6 +411,7 @@ if ($header=="" && !isset($themes[0]))
 			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 			<tr class="ListviewBoxedTitleStyle">
 			<td><?php echo $lang["name"]?></td>
+			<?php hook("beforecollectiontoolscolumnheader");?>
 			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 			</tr>
 			
@@ -444,6 +446,7 @@ if ($header=="" && !isset($themes[0]))
 				
 				<?php echo i18n_get_translated($themes[$m]["name"])?></a>
 				</div></td>
+				<?php hook("beforecollectiontoolscolumn");?>
 				<td><div class="ListTools">
 				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["viewall"]?></a>
 				<?php if ($themes_category_split_pages) { ?>

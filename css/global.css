@@ -175,7 +175,7 @@ option {font-size:11px;}
 .SearchSpace a:hover, .SearchSpace a:active {text-decoration:underline;}
 
 
-.ListDropdown {width: 156px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: -2px 0px;padding: 0px;}
+.ListDropdown {width: 156px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: -5px 0px;padding: 0px;}
 
 /*Forms*/
 #CentralSpaceLogin form {margin:0;padding:0;}

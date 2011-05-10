@@ -31,9 +31,9 @@ else {
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
 <form method="get" name="colactions" id="colactions">
 <?php } ?><?php if ($pagename=="search" || $pagename=="collections"){?>
+<?php hook("beforecollectiontoolscolumn");?>
 <?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
 <?php } ?>
-<?php hook("beforecompactstyle");?>
 
 <?php if ($pagename=="collections"){
     ?><select <?php if ($thumbs=="show"){?>style="padding:0;margin:0px;"<?php } ?> <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?> name="colactionselect" onchange="if (colactions.colactionselect.options[selectedIndex].id=='purge'){ if (!confirm('<?php echo $lang["purgecollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].id=='delete'){ if (!confirm('<?php echo $lang["collectiondeleteconfirm"]?>')){colactions.colactionselect.value='';return false;}} if (colactions.colactionselect.options[selectedIndex].id=='removeall'){ if (!confirm('<?php echo $lang["emptycollectionareyousure"]?>')){colactions.colactionselect.value='';return false;}}if (colactions.colactionselect.options[selectedIndex].value!=''){top.main.location.href=colactions.colactionselect.options[selectedIndex].value;} colactions.colactionselect.value=''";>

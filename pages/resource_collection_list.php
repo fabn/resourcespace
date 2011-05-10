@@ -16,6 +16,7 @@ if (count($collections)!=0){
 <td><?php echo $lang["created"]?></td>
 <td><?php echo $lang["itemstitle"]?></td>
 <?php if (! $hide_access_column){ ?><td><?php echo $lang["access"]?></td><?php } ?>
+	<?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 <?php
@@ -49,6 +50,7 @@ else
 ?></td><?php
 }
 ?>
+<?php hook("beforecollectiontoolscolumn");?>
 	<td><div class="ListTools">
     <?php if ($collections_compact_style){
     include("collections_compact_style.php"); } else { ?>

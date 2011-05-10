@@ -272,6 +272,7 @@ echo " " . ($mycollcount==1 ? $lang["owned_by_you-1"] : str_replace("%mynumber",
 <td><?php if ($order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <?php if (! $hide_access_column){ ?><td><?php if ($order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
+<?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 <form method="get" name="colactions" id="colactions">
@@ -306,7 +307,8 @@ if (!hook('collectionaccessmode')) {
 }
 ?></td><?php
 }?>
-	<td>
+<?php hook("beforecollectiontoolscolumn");?>
+	<td>	
         <div class="ListTools">
         <?php if ($collections_compact_style){
         include("collections_compact_style.php"); } else {
@@ -370,7 +372,7 @@ if (!hook('collectionaccessmode')) {
         }
         if ($use_delete_empty){
         ?>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><?php if (!$hide_access_column){?><td>&nbsp;</td><?php } ?><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><?php if (!$hide_access_column){?><td>&nbsp;</td><?php } ?><?php hook("addcollectionmanagespacercolumn");?><td><div class="ListTools">&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["collectionsdeleteemptyareyousure"]?>')) {document.getElementById('collectiondeleteempty').value='yes';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["collectionsdeleteempty"]?></a></div></td></tr>
         <?php }
     }
 ?>

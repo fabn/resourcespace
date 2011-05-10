@@ -134,6 +134,7 @@ echo "<br />";
 <td><?php if ($order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 <?php
@@ -150,6 +151,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
     <td><?php echo $collections[$n]["count"]?></td>
 	<td><?php echo ($collections[$n]["public"]==0)?$lang["private"]:$lang["public"]?></td>
+	<?php hook("beforecollectiontoolscolumn");?>
 	<td><div class="ListTools">
     <?php if ($collections_compact_style){
         include("collections_compact_style.php");
