@@ -143,6 +143,7 @@ $lang["users"]="users";
 $lang["emailrecipients"]="E-mail Recipient(s)";
 $lang["emailsubject"]="E-mail Subject";
 $lang["emailtext"]="E-mail Text";
+$lang["emailhtml"]="Enable HTML support - mail body must use HTML formatting";
 $lang["send"]="Send";
 $lang["emailsent"]="The e-mail has been sent.";
 $lang["mustspecifyoneuser"]="You must specify at least one user";

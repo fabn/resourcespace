@@ -1252,7 +1252,7 @@ function make_password()
 	}
 
 
-function bulk_mail($userlist,$subject,$text)
+function bulk_mail($userlist,$subject,$text,$html=false)
     {
     global $email_from,$lang,$applicationname;
     
@@ -1271,7 +1271,7 @@ function bulk_mail($userlist,$subject,$text)
     for ($n=0;$n<count($emails);$n++)
         {
         if ($emails[$n]!=""){
-            send_mail($emails[$n],$subject,$body,$applicationname,$email_from,"emailbulk",$templatevars,$applicationname);
+            send_mail($emails[$n],$subject,$body,$applicationname,$email_from,"emailbulk",$templatevars,$applicationname,"",$html);
             }
         }
         
@@ -1354,7 +1354,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	# Send a mail - but correctly encode the message/subject in quoted-printable UTF-8.
 	global $use_phpmailer;
 	if ($use_phpmailer){
-		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name,$cc); 
+		send_mail_phpmailer($email,$subject,$message,$from,$reply_to,$html_template,$templatevars,$from_name,$cc,$html); 
 		return true;
 		}
 	
@@ -1440,7 +1440,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 	}
 
 if (!function_exists("send_mail_phpmailer")){
-function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="")
+function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$html_template="",$templatevars=null,$from_name="",$cc="",$html=false)
 	{
 	
 	# if ($use_phpmailer==true) this function is used instead.
@@ -1685,7 +1685,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	}
 	$mail->CharSet = "utf-8"; 
 	
-	if ($html_template!="") {$mail->IsHTML(true);}  	
+	if ($html_template!="" || $html) {$mail->IsHTML(true);}  	
 	else {$mail->IsHTML(false);}
 	
 	$mail->Subject = $subject;

@@ -11,7 +11,7 @@ include "../../include/general.php";
 
 if (getval("send","")!="")
 	{
-	$result=bulk_mail(getvalescaped("users",""),getvalescaped("subject",""),getvalescaped("text",""));
+	$result=bulk_mail(getvalescaped("users",""),getvalescaped("subject",""),getvalescaped("text",""),getval("html","")=="yes");
 	if ($result=="") {$error=$lang["emailsent"];} else {$error="!! " . $result . " !!";}
 	}
 
@@ -26,6 +26,8 @@ include "../../include/header.php";
 
 <div class="Question"><label><?php echo $lang["emailrecipients"]?></label><?php include "../../include/user_select.php"; ?>
 <div class="clearerleft"> </div></div>
+
+<div class="Question"><label><?php echo $lang["emailhtml"]?></label><input name="html" type="checkbox" value="yes" <?php if (getval("html","")=="yes") { ?>checked<?php } ?>><div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["emailsubject"]?></label><input name="subject" type="text" class="stdwidth" value="<?php echo getval("subject",$applicationname)?>"><div class="clearerleft"> </div></div>
 
