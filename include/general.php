@@ -200,8 +200,30 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
     $validtypes[] = 0; $validtypes[] = 999; # Support archive and global.
 
     for ($n = 0;$n<count($fields);$n++) {
-        if ((!$use_permissions ||     ((checkperm("f*") || checkperm("f" . $fields[$n]["fref"])) && !checkperm("f-" . $fields[$n]["fref"])))
-        && in_array($fields[$n]["resource_type"],$validtypes) && !checkperm("T" . $fields[$n]["resource_type"]) && (!($external_access && !$fields[$n]["external_user_access"]))) {
+        if
+	(
+		(
+		!$use_permissions || 
+			(
+			# Upload only edit access to this field?
+			$ref<0 && checkperm("P" . $fields[$n]["fref"])
+			)    
+		||
+			(
+				(
+				checkperm("f*") || checkperm("f" . $fields[$n]["fref"])
+				)
+			&& !checkperm("f-" . $fields[$n]["fref"]) && !checkperm("T" . $fields[$n]["resource_type"])
+			)
+		)
+        && in_array($fields[$n]["resource_type"],$validtypes) &&
+		(
+		!
+			(
+			$external_access && !$fields[$n]["external_user_access"]
+			)
+		)
+	) {
             $fields[$n]["title"] = lang_or_i18n_get_translated($fields[$n]["title"], "fieldtitle-"); 
             $return[] = $fields[$n];
         }

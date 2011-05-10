@@ -607,7 +607,9 @@ for ($n=0;$n<count($fields);$n++)
 			(($resource["archive"]==0) && ($fields[$n]["resource_type"]==999))
 		||
 			# Field has write access denied
-			(checkperm("F*") && !checkperm("F-" . $fields[$n]["ref"]))
+			(checkperm("F*") && !checkperm("F-" . $fields[$n]["ref"])
+			&& !($ref<0 && checkperm("P" . $fields[$n]["ref"])) # Upload only field
+			)
 		||			
 			checkperm("F" . $fields[$n]["ref"])
 		||

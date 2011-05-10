@@ -101,7 +101,7 @@ foreach ($fields as $field)
 	{
 	if (in_array("F*",$permissions))	
 		{
-		DrawOption("F-" . $field["ref"], "&nbsp;&nbsp; - " . $lang["can_edit_field"] . " '" . lang_or_i18n_get_translated($field["title"], "fieldtitle-") . "'", true);
+		DrawOption("F-" . $field["ref"], "&nbsp;&nbsp; - " . $lang["can_edit_field"] . " '" . lang_or_i18n_get_translated($field["title"], "fieldtitle-") . "'", false);
 		}
 	else
 		{
