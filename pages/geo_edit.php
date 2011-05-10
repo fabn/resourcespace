@@ -25,10 +25,15 @@ if (isset($_POST['submit']))
     if (count($s)==2)
     	{
     	sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "' where ref='$ref'");
-    	
-    	#Reload resource data
+       	}
+	elseif (getval('geo-loc','')=='')
+		{
+		# Blank geo-location
+		sql_query("update resource set geo_lat=null,geo_long=null where ref='$ref'");
+		}
+	    	# Reload resource data
 		$resource=get_resource_data($ref,false);
-    	}
+
 	}
 
 
