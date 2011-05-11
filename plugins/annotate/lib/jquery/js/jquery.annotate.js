@@ -1,4 +1,12 @@
 /// <reference path="jquery-1.2.6-vsdoc.js" />
+
+var button_ok = "";
+var button_cancel = "";
+var button_delete = "";
+var button_add = "";
+var error_saving = "";
+var error_deleting = "";
+
 (function($) {
 
     $.fn.annotateImage = function(options) {
@@ -57,7 +65,8 @@
 
         // Add the "Add a note" button
         if (this.editable) {
-            this.button = $('<a class="image-annotate-add" id="image-annotate-add" href="#">Add Note</a>');
+            this.button = $('<a class="image-annotate-add" id="image-annotate-add" href="#">' + button_add + '</a>');
+            this.button.css({width: 'auto', 'padding-right': '5px'});
             this.button.click(function() {
                 $.fn.annotateImage.add(image);
             });
@@ -141,7 +150,7 @@
         ///	<summary>
         ///		Creates a Save button on the editable note.
         ///	</summary>
-        var ok = $('<a class="image-annotate-edit-ok">OK</a>');
+        var ok = $('<a class="image-annotate-edit-ok">' + button_ok + '</a>');
 
         ok.click(function() {
             var form = $('#image-annotate-edit-form form');
@@ -154,7 +163,7 @@
                 $.ajax({
                     url: image.saveUrl,
                     data: form.serialize(),
-                    error: function(e) { alert("An error occured saving that note.") },
+                    error: function(e) { alert(error_saving) },
                     success: function(data) {
 				if (data != undefined) {
 					editable.note.id = data;
@@ -183,7 +192,7 @@
         ///	<summary>
         ///		Creates a Cancel button on the editable note.
         ///	</summary>
-        var cancel = $('<a class="image-annotate-edit-close">Cancel</a>');
+        var cancel = $('<a class="image-annotate-edit-close">' + button_cancel + '</a>');
         cancel.click(function() {
             editable.destroy();
             image.mode = 'view';
@@ -380,7 +389,7 @@
             $.fn.annotateImage.createSaveButton(editable, this.image, annotation);
 
             // Add the delete button
-            var del = $('<a class="image-annotate-edit-delete">Delete</a>');
+            var del = $('<a class="image-annotate-edit-delete">' + button_delete + '</a>');
             del.click(function() {
                 var form = $('#image-annotate-edit-form form');
 
@@ -390,7 +399,7 @@
                     $.ajax({
                         url: annotation.image.deleteUrl,
                         data: form.serialize(),
-                        error: function(e) { alert("An error occured deleting that note.") }
+                        error: function(e) { alert(error_deleting) }
                     });
                 }
 

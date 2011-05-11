@@ -19,6 +19,14 @@ $h = $sizes[1];
 <script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery-1.3.2-min.js"></script>
 <script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery-ui-1.7.2-min.js"></script>
 <script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery.annotate.js"></script>
+<script type="text/javascript">
+    button_ok = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["ok"])) ?>";
+    button_cancel = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["cancel"])) ?>";
+    button_delete = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["action-delete"])) ?>";
+    button_add = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["action-add_note"])) ?>";		
+    error_saving = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["error-saving"])) ?>";
+    error_deleting = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["error-deleting"])) ?>";
+</script>
 <script>
      jQuery.noConflict();
 </script>
