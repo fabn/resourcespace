@@ -251,6 +251,8 @@ $refs=array();
 # Special query? Ignore restypes
 if (strpos($search,"!")!==false) {$restypes="";}
 
+$search=refine_searchstring($search);
+
 # Do the search!
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 

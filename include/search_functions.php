@@ -29,8 +29,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
-	$search=trim($search); # remove any trailing or leading spaces
-	
+	$search=trim($search);
+
 	# -- Build up filter SQL that will be used for all queries
 
 	$sql_filter="";
@@ -1161,3 +1161,25 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 		}
 	return $search;
 	}
+
+function refine_searchstring($search){
+	$keywords=split_keywords($search);
+	$fixedkeywords=array();
+	foreach ($keywords as $keyword){
+		if (strpos($keyword,":")>0){
+			$keyword=explode(":",$keyword);
+			$keyname=$keyword[0];
+			$keyvalues=explode(" ",$keyword[1]);
+			foreach ($keyvalues as $keyvalue){
+				$fixedkeywords[]=$keyname.":".$keyvalue;
+			}
+		}
+		else {
+			$fixedkeywords[]=$keyword;
+		}
+	}
+	$keywords=$fixedkeywords;
+
+	$search=implode(",",$fixedkeywords);
+	return $search;
+}

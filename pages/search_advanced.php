@@ -85,8 +85,10 @@ for ($n=0;$n<count($keywords);$n++)
 		if ($name=="day") {$found_day=$keyword;}
 		if ($name=="month") {$found_month=$keyword;}
 		if ($name=="year") {$found_year=$keyword;}
-		
-		$values[$name]=$keyword;
+		if (isset($values[$name])){$values[$name].=" ".$keyword;}
+		else {
+			$values[$name]=$keyword;
+		}
 		}
 	else
 		{
