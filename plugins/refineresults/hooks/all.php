@@ -19,8 +19,8 @@ function HookRefineresultsSearchBeforesearchresults()
 		$('RefinePlus').innerHTML='+';
 		}
 	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></div>
-	<?php $origsearch=getval("origsearch","");
-	if ($origsearch!=$search && strlen($search)>strlen($origsearch)){?>&gt;&nbsp;<a href="search.php?clearrefine=true&search=<?php echo $origsearch?>"><?php echo $lang["returntooriginalresults"]?></a><?php } ?>
+	<?php $origsearch=getval("origsearch","");//echo "SEARCH:".$search;echo "ORIG:".$origsearch;
+	if ($origsearch!="" && $origsearch!=$search && strlen($search)>strlen($origsearch)){?>&gt;&nbsp;<a href="search.php?clearrefine=true&search=<?php echo $origsearch?>"><?php echo $lang["returntooriginalresults"]?></a><?php } ?>
 	<?php
 	return true;
 	}
