@@ -163,7 +163,7 @@ hook("searchstringprocessing");
 
 
 # Fetch and set the values
-if (strpos($search,"!")===false) {setcookie("search",$search);} # store the search in a cookie if not a special search
+setcookie("search",$search); # store the search in a cookie if not a special search
 $offset=getvalescaped("offset",0);if (strpos($search,"!")===false) {setcookie("saved_offset",$offset);}
 if ((!is_numeric($offset)) || ($offset<0)) {$offset=0;}
 $order_by=getvalescaped("order_by",$default_sort);if (strpos($search,"!")===false) {setcookie("saved_order_by",$order_by);}

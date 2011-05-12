@@ -19,6 +19,8 @@ function HookRefineresultsSearchBeforesearchresults()
 		$('RefinePlus').innerHTML='+';
 		}
 	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></div>
+	<?php $origsearch=getval("origsearch","");
+	if ($origsearch!=$search && strlen($search)>strlen($origsearch)){?>&gt;&nbsp;<a href="search.php?clearrefine=true&search=<?php echo $origsearch?>"><?php echo $lang["returntooriginalresults"]?></a><?php } ?>
 	<?php
 	return true;
 	}
@@ -58,11 +60,55 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 function HookRefineresultsSearchSearchstringprocessing()
 	{
 	global $search;
+
+	$totalrefinementarray=array();
+	// clear refineresults cookie if 'back to original'
+	if (getval("clearrefine",false)){
+		setcookie("refineresults","");
+		setcookie("origsearch","");
+	}
+	else {
+	// create a cookie with any new refine keywords and current refineresults cookie. 
 	$refine=trim(getvalescaped("refine_keywords",""));
+	$refineresults=getvalescaped("refineresults","");
+	$totalrefinement=$refineresults.",".$refine;
+	$totalrefinementarray=explode(",",$totalrefinement);
+	$totalrefinementarray=array_unique($totalrefinementarray);
+	$totalrefinementarray=array_filter($totalrefinementarray);
+	}
+	
+	$totalrefinement=implode(",",$totalrefinementarray);
+	$refine=$totalrefinement;
+
 	if ($refine!="")
 		{
-		$search.="," . $refine;	
+		setcookie("refineresults",$refine);
 		}
+	
+	// to enable 'back to original search', we need to separate the refinements from the search
+	// set a cookie with the original search in it, using the current search minus any refinements.
+	$searcharray=explode(",",$search);
+
+	$origsearch=array();
+	foreach ($searcharray as $searchitem){
+		if (!in_array($searchitem,$totalrefinementarray)){
+			$origsearch[]=trim($searchitem);
+		}
+	}
+
+	$origsearch=trim(implode(",",$origsearch));
+	setcookie("origsearch",$origsearch);
+
+
+	if ($origsearch!="" && $refine!=""){$search=$origsearch.",".$refine;}
+	else if ($refine!=""){$search=$refine;}
+
+	
+	if (getval("clearrefine",false)){
+		setcookie("origsearch",$search);
+		setcookie("search","");
+	}
+
 	}
 
 ?>
