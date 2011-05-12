@@ -12,6 +12,7 @@ include(dirname(__FILE__)."/../../include/authenticate.php");
 if (!in_array("api_search",$plugins)){die("no access");}
 
 $search=getval("search","");
+$search=refine_searchstring($search);
 $restypes=getval("restypes","");
 $order_by=getval("order_by","relevance");
 $sort=getval("sort","desc");
