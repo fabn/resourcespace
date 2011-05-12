@@ -456,7 +456,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		if ($orig_order=="relevance") {$order_by="r2.ref desc";}
 
 		# Extract the number of records to produce
-		$last=explode(" ",$search);
+		$last=explode(",",$search);
 		$last=str_replace("!last","",$last[0]);
 		
 		# Fix the order by for this query (special case due to inner query)
@@ -1163,6 +1163,7 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 	}
 
 function refine_searchstring($search){
+	// splits field-specific searches appropriately, and removes duplicate keywords
 	$keywords=split_keywords($search);
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
@@ -1179,7 +1180,7 @@ function refine_searchstring($search){
 		}
 	}
 	$keywords=$fixedkeywords;
-
-	$search=implode(",",$fixedkeywords);
+	$keywords=array_unique($keywords);
+	$search=implode(",",$keywords);
 	return $search;
 }

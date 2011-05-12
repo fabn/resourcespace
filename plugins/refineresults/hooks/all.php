@@ -58,17 +58,10 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 function HookRefineresultsSearchSearchstringprocessing()
 	{
 	global $search;
-	$refine=getvalescaped("refine_keywords","");
+	$refine=trim(getvalescaped("refine_keywords",""));
 	if ($refine!="")
 		{
-		if (strpos($search,":")===false)
-			{
-			$search.=" " . $refine;
-			}
-		else
-			{
-			$search.=", " . $refine;
-			}
+		$search.="," . $refine;	
 		}
 	}
 
