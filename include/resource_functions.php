@@ -53,7 +53,6 @@ function save_resource_data($ref,$multi)
 
 	# Loop through the field data and save (if necessary)
 	$errors=array();
-	$resource_sql="";
 	$fields=get_resource_field_data($ref,$multi);
 	$expiry_field_edited=false;
 	$resource_data=get_resource_data($ref);
@@ -132,32 +131,29 @@ function save_resource_data($ref,$multi)
 				# Set the value exactly as sent.
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 				} 
-			if ($fields[$n]["value"]!== str_replace("\\","",$val))
+			
+			if (str_replace("\r\n","\n",$fields[$n]["value"])!== str_replace("\r\n","\n",unescape($val)))
 				{
+				//$testvalue=$fields[$n]["value"];var_dump($testvalue);$val=unescape($val);var_dump($val);
+				//echo "FIELD:".$fields[$n]["value"]."!==ORIG:".unescape($val); 
+				
 				# This value is different from the value we have on record.
 
-				# Write this edit to the log (including the diff)
-				resource_log($ref,'e',$fields[$n]["ref"],"",$fields[$n]["value"],$val);
+				# Write this edit to the log (including the diff) (unescaped is safe because the diff is processed later)
+				resource_log($ref,'e',$fields[$n]["ref"],"",$fields[$n]["value"],unescape($val));
 
 				# Expiry field? Set that expiry date(s) have changed so the expiry notification flag will be reset later in this function.
 				if ($fields[$n]["type"]==6) {$expiry_field_edited=true;}
 
 				# If 'resource_column' is set, then we need to add this to a query to back-update
 				# the related columns on the resource table
-				$resource_column=$fields[$n]["resource_column"];
-
-				# If this is a 'joined' field we need to add it to the resource column
-				$joins=get_resource_table_joins();
-				if (in_array($fields[$n]["ref"],$joins)){
-					$val=strip_leading_comma($val);	
-					sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
-				}		
+				$resource_column=$fields[$n]["resource_column"];	
 
 				# Purge existing data and keyword mappings, decrease keyword hitcounts.
 				sql_query("delete from resource_data where resource='$ref' and resource_type_field='" . $fields[$n]["ref"] . "'");
 				
 				# Insert new data and keyword mappings, increase keyword hitcounts.
-				sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','" . str_replace((!(strpos($val,"\'")===false)?"\'":"'"),"''",$val) ."')");
+				sql_query("insert into resource_data(resource,resource_type_field,value) values('$ref','" . $fields[$n]["ref"] . "','" . escape_check($val) ."')");
 	
 				$oldval=$fields[$n]["value"];
 				
@@ -176,8 +172,13 @@ function save_resource_data($ref,$multi)
 					add_keyword_mappings($ref, i18n_get_indexable($val), $fields[$n]["ref"], $fields[$n]["partial_index"],$is_date);
 					}
 				
-				# update resources table if necessary
-				if ($resource_sql!="") sql_query("update resource set $resource_sql where ref='$ref'");
+					# If this is a 'joined' field we need to add it to the resource column
+					$joins=get_resource_table_joins();
+					if (in_array($fields[$n]["ref"],$joins)){
+						$val=strip_leading_comma($val);	
+						sql_query("update resource set field".$fields[$n]["ref"]."='".escape_check($val)."' where ref='$ref'");
+					}	
+				
 				}
 			
 			# Check required fields have been entered.
@@ -188,7 +189,7 @@ function save_resource_data($ref,$multi)
 				}
 			}
 		}
-
+    //die();
 	# Always index the resource ID as a keyword
 	remove_keyword_mappings($ref, $ref, -1);
 	add_keyword_mappings($ref, $ref, -1);

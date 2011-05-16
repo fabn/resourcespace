@@ -574,6 +574,22 @@ function escape_check($text) #only escape a string if we need to, to prevent esc
                       
     return $text;
     }
+
+function unescape($text) 
+    {
+	// for comparing escape_checked strings against mysql content because	
+	// just doing $text=str_replace("\\","",$text);	does not undo escape_check
+
+	# Remove any backslashes that are not being used to escape single quotes.
+    $text=str_replace("\\'","\'",$text);
+    $text=str_replace("\\n","\n",$text);
+    $text=str_replace("\\r","\r",$text);
+    $text=str_replace("\\","",$text);
+    
+
+    return $text;
+    }
+    
     
 function nicedate($date,$time=false,$wordy=true)
 	{
