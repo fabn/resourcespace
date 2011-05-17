@@ -6,5 +6,3 @@ transform_crop_w,int(11),YES,,,
 transform_crop_h,int(11),YES,,,
 transform_crop_x,int(11),YES,,,
 transform_crop_y,int(11),YES,,,
-
-
