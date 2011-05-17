@@ -1,0 +1,10 @@
+transform_scale_w,int(11),YES,,,
+transform_scale_h,int(11),YES,,,
+transform_flop,int(11),YES,,,
+transform_rotation,int(11),YES,,,
+transform_crop_w,int(11),YES,,,
+transform_crop_h,int(11),YES,,,
+transform_crop_x,int(11),YES,,,
+transform_crop_y,int(11),YES,,,
+
+
