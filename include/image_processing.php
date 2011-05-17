@@ -79,6 +79,15 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	// also remove any existing extracted icc profiles
     	$icc_path=get_resource_path($ref,true,"",true,'icc');
     	if (file_exists($icc_path)) {unlink($icc_path);}
+    	global $pdf_pages;
+    	$iccx=0; // if there is a -0.icc page, run through and delete as many as necessary.
+    	$finished=false;
+		$badicc_path=str_replace(".icc","-$iccx.icc",$icc_path);
+		while (!$finished){
+			if (file_exists($badicc_path)){unlink($badicc_path);$iccx++;$badicc_path=str_replace(".icc","-$iccx.icc",$icc_path);}
+			else {$finished=true;}
+		}
+		$iccx=0;
 	}	
 
 	if (!$revert){
@@ -117,7 +126,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
      		chmod($filepath,0777);
 
 		global $icc_extraction;
-		if ($icc_extraction){
+		if ($icc_extraction && $extension!="pdf"){
 			extract_icc_profile($filepath);
 		}
 
@@ -780,7 +789,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				global $icc_extraction, $icc_preview_profile, $icc_preview_options;
 				if ($icc_extraction){
 					$iccpath = get_resource_path($ref,true,'',false,'icc');
-					if (!file_exists($iccpath) && !isset($iccfound)) {
+					if (!file_exists($iccpath) && !isset($iccfound) && $extension!="pdf") {
 						// extracted profile doesn't exist. Try extracting.
 						if (extract_icc_profile($file)){
 							$iccfound = true;
@@ -1464,7 +1473,6 @@ function AutoRotateImage ($src_image){
 
 function extract_icc_profile($infile) {
    global $config_windows, $imagemagick_path;
-
    # Locate imagemagick, or fail this if it isn't installed
    $command=$imagemagick_path . "/bin/convert";
    if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
