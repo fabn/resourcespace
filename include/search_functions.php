@@ -1180,9 +1180,8 @@ function refine_searchstring($search){
 			$keyname=$keywordar[0];
 			if (substr($keyname,0,1)!="!"){
 				$keyvalues=explode(" ",$keywordar[1]);
-				print_r($keyvalues);
 				foreach ($keyvalues as $keyvalue){
-					if (!in_array($keyvalue,$noadd)){ $encoding=mb_detect_encoding($keyvalue);echo $encoding.$keyvalue.'is not in noadd';
+					if (!in_array($keyvalue,$noadd)){ $encoding=mb_detect_encoding($keyvalue);
 					$fixedkeywords[]=$keyname.":".$keyvalue;
 					}
 				}

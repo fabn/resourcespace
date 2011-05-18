@@ -4,6 +4,8 @@
 if (!isset($restypes)) {$restypes=@$_COOKIE["restypes"];}
 if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=(isset($_COOKIE["search"])?$_COOKIE["search"]:"");} else {$quicksearch=$search;}
 
+include_once("search_functions.php");
+
 # Load the basic search fields, so we know which to strip from the search string
 $fields=get_simple_search_fields();
 $simple_fields=array();
