@@ -2,7 +2,7 @@
 
 # pull values from cookies if necessary, for non-search pages where this info hasn't been submitted
 if (!isset($restypes)) {$restypes=@$_COOKIE["restypes"];}
-if (!isset($search) || ((strpos($search,"!")!==false))) {$quicksearch=(isset($_COOKIE["search"])?$_COOKIE["search"]:"");} else {$quicksearch=$search;}
+if (!isset($search)) {$quicksearch=(isset($_COOKIE["search"])?$_COOKIE["search"]:"");} else {$quicksearch=$search;}
 
 include_once("search_functions.php");
 
