@@ -184,7 +184,7 @@ $n=0;
 for ($n=0;$n<count($result);$n++)			
 	{
 	$ref=$result[$n]["ref"];
-	$title=i18n_get_translated($result[$n]["field".$view_title_field]);
+	$title=xml_entities(i18n_get_translated($result[$n]["field".$view_title_field]));
 	$creation_date=$result[$n]["field".$date_field];
 	
 	//echo $time = time();//date("r");
@@ -221,7 +221,7 @@ for ($n=0;$n<count($result);$n++)
 					if (file_exists($plugin)) {include $plugin;}
 					}		
 				}
-			$add_desc.=$value."<![CDATA[<br/>]]>";
+			$add_desc.=xml_entities($value)."<![CDATA[<br/>]]>";
 			}
 		}
 	
