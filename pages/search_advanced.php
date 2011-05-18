@@ -23,7 +23,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 
 	# Build a search query from the search form
 	$search=search_form_to_search_query($fields);
-			
+			$search=refine_searchstring($search);
 	if (getval("countonly","")!="")
 		{
 		# Only show the results (this will appear in an iframe)
@@ -71,7 +71,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 
 # Reconstruct a values array based on the search keyword, so we can pre-populate the form from the current search
 $search=@$_COOKIE["search"];
-$keywords=explode(", ",$search);
+$keywords=explode(",",$search);
 $allwords="";$found_year="";$found_month="";$found_day="";
 $values=array();
 for ($n=0;$n<count($keywords);$n++)

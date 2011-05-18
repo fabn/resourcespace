@@ -516,7 +516,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 		# Extract the collection number
 		$collection=explode(" ",$search);$collection=str_replace("!collection","",$collection[0]);
-		
+		$collection=explode(",",$collection);// just get the number
+		$collection=$collection[0];
 		# smart collections update
 		global $allow_smart_collections;
 		if ($allow_smart_collections){
@@ -635,22 +636,23 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# Search for resources not used in Collections
 	if (substr($search,0,7)=="!unused") 
 		{
-		
-		return sql_query("SELECT $select FROM resource r $sql_join  where r.ref>0 and r.ref not in (select c.resource from collection_resource c) and $sql_filter",false,$fetchrows);
+		return sql_query("SELECT distinct $select FROM resource r $sql_join  where r.ref>0 and r.ref not in (select c.resource from collection_resource c) and $sql_filter",false,$fetchrows);
 		}	
 	
 	# Search for a list of resources
 	if (substr($search,0,5)=="!list") 
-		{
+		{	
 		$resources=explode(" ",$search);
 		$resources=str_replace("!list","",$resources[0]);
-		$resources=str_replace(",","",$resources);
+		$resources=explode(",",$resources);// separate out any additional keywords
+		$resources=$resources[0];
 		if (strlen(trim($resources))==0){
 			$resources="where r.ref IS NULL";
-			}
+		}
 		else {	
 		$resources="where r.ref=".str_replace(":"," OR r.ref=",$resources);
-			}
+		}
+	
 		return sql_query("SELECT distinct r.hit_count score, $select FROM resource r $sql_join $resources and $sql_filter order by $order_by",false,$fetchrows);
 		}		
 
@@ -1163,17 +1165,31 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 	}
 
 function refine_searchstring($search){
+	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
+	
+	if ($encoding="UTF-8"){$search=str_replace ("\xe2\x80\x8b","",$search);}
+	$encoding=mb_detect_encoding($search);// fix for pasting from RS search results where a no width space may be used.
+	
 	$keywords=split_keywords($search);
+
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
-			$keyword=explode(":",$keyword);
-			$keyname=$keyword[0];
-			$keyvalues=explode(" ",$keyword[1]);
-			foreach ($keyvalues as $keyvalue){
-				$fixedkeywords[]=$keyname.":".$keyvalue;
+			$keywordar=explode(":",$keyword);
+			$keyname=$keywordar[0];
+			if (substr($keyname,0,1)!="!"){
+				$keyvalues=explode(" ",$keywordar[1]);
+				print_r($keyvalues);
+				foreach ($keyvalues as $keyvalue){
+					if (!in_array($keyvalue,$noadd)){ $encoding=mb_detect_encoding($keyvalue);echo $encoding.$keyvalue.'is not in noadd';
+					$fixedkeywords[]=$keyname.":".$keyvalue;
+					}
+				}
 			}
+			else {
+				$keywords=explode(" ",$keyword);
+				$fixedkeywords[]=$keywords[0];} // for searches such as !list
 		}
 		else {
 			$fixedkeywords[]=$keyword;
@@ -1181,6 +1197,7 @@ function refine_searchstring($search){
 	}
 	$keywords=$fixedkeywords;
 	$keywords=array_unique($keywords);
+
 	$search=implode(",",$keywords);
 	return $search;
 }

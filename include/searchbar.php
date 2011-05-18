@@ -17,6 +17,7 @@ hook("simplesearch_stripsimplefields");
 
 # Process all keywords, putting set fieldname/value pairs into an associative array ready for setting later.
 # Also build a quicksearch string.
+$quicksearch=refine_searchstring($quicksearch);
 $keywords=split_keywords($quicksearch);
 $set_fields=array();
 $simple=array();
