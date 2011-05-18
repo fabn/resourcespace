@@ -49,7 +49,7 @@ function DrawFromNode(node,inner)
             {
             if (TreeNames[i]=="Search:")
             	{
-            	result+="<table cellpadding=0 cellspacing=0 valign=middle style='margin-bottom:0;padding:0;'><tr><td valign=middle class='" + blclass2 + "' style='padding-left:5px;'><form class='searchform' target='treeloader' method=post action='treeloader.php?node=" + TreeParents[i] + "&id=" + TreeID[TreeParents[i]] + "&reloadnode=true'><span class=treetext><?php echo $lang['permissions'] . ':' ?></span><input type=text name=search value='" + TreeSearch[TreeParents[i]] + "'><input type=submit name=submit value='<?php echo $lang['searchbutton']?>'></form></td></tr></table>";
+            	result+="<table cellpadding=0 cellspacing=0 valign=middle style='margin-bottom:0;padding:0;'><tr><td valign=middle class='" + blclass2 + "' style='padding-left:5px;'><form class='searchform' onSubmit=\"$('#treeloader').load('treeloader.php?node=" + TreeParents[i] + "&id=" + TreeID[TreeParents[i]] + "&reloadnode=true&submit=true&search=' + document.getElementById('search" + i + "').value);return false;\"><span class=treetext><?php echo $lang['permissions'] . ':' ?></span><input type=text id='search" + i + "' value='" + TreeSearch[TreeParents[i]] + "'><input type=submit name=submit value='<?php echo $lang['searchbutton']?>'></form></td></tr></table>";
             	}
             else
             	{
@@ -135,7 +135,7 @@ function SwapNodes(node1,node2)
 	            }
             }
         }
-	document.getElementById("treeloader").src="treeloader.php?node=" + node1 + "&id=" + TreeID[node1] + "&reorder=" + encodeURIComponent(reorder);
+    $('#treeloader').load("treeloader.php?node=" + node1 + "&id=" + TreeID[node1] + "&reorder=" + encodeURIComponent(reorder));
 	}
 
 function ToggleNode(node)
@@ -168,7 +168,9 @@ function ReloadNode(node)
     //load children
     var url="";
     if (TreeSearch[node]!="") {url="&search=" + encodeURIComponent(TreeSearch[node]) + "&submit=true";}
-    document.getElementById("treeloader").src="treeloader.php?nocache=" + nocache + "&node=" + node + "&id=" + TreeID[node] + url;
+
+    $('#treeloader').load("treeloader.php?nocache=" + nocache + "&node=" + node + "&id=" + TreeID[node] + url);
+
     nocache++;
     }
     
@@ -243,11 +245,9 @@ function PreviousInFolder(i)
 
 </script>
 
-<!--<img align=right vspace=40 src="gfx/icons/reload.gif" width=32 height=32 onClick="EmptyNode(lastclick);ReloadNode(lastclick);">-->
-
 <div id="tree"></div>
 
-<iframe src="../blank.html" width="100%" height="100" frameborder=0 border=0 name="treeloader" id="treeloader" xstyle="visibility:hidden;"></iframe>
+<div id="treeloader"></div>
 
 <script type="text/javascript">
 DrawTree();

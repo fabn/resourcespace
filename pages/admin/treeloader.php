@@ -46,7 +46,7 @@ echo "<script type=\"text/javascript\">";
 if (getval("reloadnode","")!="")
 	{
 	?>
-	parent.EmptyNode(<?php echo $node?>);
+	EmptyNode(<?php echo $node?>);
 	<?php
 	}
 	
@@ -146,7 +146,7 @@ for ($n=1;$n<count($tree);$n++)
    						$icon=$s[5];
    						$newid=$id."-". $n . ":" . $file;
 				    	?>
-						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo str_replace(array("\n","\r")," ",($file=="")?'(no name)':$file)?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
+						AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo str_replace(array("\n","\r")," ",($file=="")?'(no name)':$file)?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
 				    	<?php
 				    	}
 					}
@@ -184,7 +184,7 @@ for ($n=1;$n<count($tree);$n++)
 					if (!in_array($result[$m]["name"],$user_restrict))
 						{
 						?>
-						parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?$lang["treenode-no_name"]:$name),array("usergroup-", "resourcetype-", "report-", "imagesize-", "fieldtitle-"))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
+						AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r", "\"")," ",($name=="")?$lang["treenode-no_name"]:$name),array("usergroup-", "resourcetype-", "report-", "imagesize-", "fieldtitle-"))?>",<?php echo $folder?>,<?php echo $s[4]?>,"<?php echo $icon?>",<?php echo $reorder?>);
 						<?php
 						}
 					}
@@ -193,13 +193,14 @@ for ($n=1;$n<count($tree);$n++)
        elseif (($query!="") && (strpos($s[6],"%search")!==false))
 			{
 			?>
-            parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","Search:",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>");			
+            AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","Search:",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>");			
 			<?php
 			if (getval("submit","")!="")
 				{
 				$search=getvalescaped("search","");
+				$debug.="<li>search=" . $search;
 				?>
-				parent.TreeSearch[<?php echo $node?>]="<?php echo $search?>";
+				TreeSearch[<?php echo $node?>]="<?php echo $search?>";
 				<?php
 	            $result=sql_query(str_replace("%search",$search,str_replace($transfrom,$transto,$s[6])));
     	        for ($m=0;$m<count($result);$m++)
@@ -209,7 +210,7 @@ for ($n=1;$n<count($tree);$n++)
              		$newid=$id."-".$n . ":" . $result[$m]["ref"];
             		if (array_key_exists("id",$result[$m])) {$newid=$result[$m]["id"];}
             	    ?>
-                	parent.AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r","\"")," ",((trim($result[$m]["name"])=="")?"???":$result[$m]["name"])),"usergroup-") ?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",0);
+                	AddNode(<?php echo $node?>,"<?php echo $newid?>","<?php echo lang_or_i18n_get_translated(str_replace(array("\n","\r","\"")," ",((trim($result[$m]["name"])=="")?"???":$result[$m]["name"])),"usergroup-") ?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $icon?>",0);
                 	<?php
                 	}
 				}
@@ -225,16 +226,17 @@ for ($n=1;$n<count($tree);$n++)
 			if (!in_array(trim($s[2]),$user_restrict))
 				{
 				$nodename = lang_or_i18n_get_translated($s[2], "treenode-");
-				?>            parent.AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","<?php echo (trim($s[2])=="")?"?":$nodename?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>",0);
+				?>            AddNode(<?php echo $node?>,"<?php echo $id."-".$n?>","<?php echo (trim($s[2])=="")?"?":$nodename?>",<?php echo $s[3]?>,<?php echo $s[4]?>,"<?php echo $s[5]?>",0);
 				<?php
 				}
             }
         }
     }
 ?>
-parent.UpdateNode(<?php echo $node?>);
+UpdateNode(<?php echo $node?>);
 </script>
 <?php
+$debug.="<li>time=" . time();
 #echo $debug;
 
 
