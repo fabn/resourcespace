@@ -75,7 +75,7 @@ else if (getval("content","")=="xml"){
         echo '<resource>';
         foreach ($result as $resultitem=>$value){
             echo '<'.$resultitem.'>';
-            echo $value;
+            echo xml_entities($value);
             echo '</'.$resultitem.'>';
         }
         echo '</resource>';
