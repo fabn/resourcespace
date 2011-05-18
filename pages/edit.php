@@ -212,6 +212,7 @@ if (getval("tweak","")!="")
 if (getval("exif","")!="")
 	{
 	upload_file($ref,$no_exif=false,true);
+	resource_log($ref,"r","");
 	}	
 
 # If requested, refresh the collection frame (for redirects from saves)
