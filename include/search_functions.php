@@ -1167,10 +1167,8 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 function refine_searchstring($search){
 	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
-	
-	if ($encoding="UTF-8"){$search=str_replace ("\xe2\x80\x8b","",$search);}
-	$encoding=mb_detect_encoding($search);// fix for pasting from RS search results where a no width space may be used.
-	
+	$search=str_replace ("\xe2\x80\x8b","",$search);
+
 	$keywords=split_keywords($search);
 
 	$fixedkeywords=array();
