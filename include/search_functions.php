@@ -221,8 +221,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 										{
 										$relatedsql.=" or k" . $c . ".keyword='" . $related[$r] . "'";
 										}
-									
 									# Form join
+									//$sql_join.=" join (SELECT distinct k".$c.".resource,k".$c.".hit_count from resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql) t".$c." ";
 									$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".resource_type_field='" . $field . "' and (k" . $c . ".keyword='$keyref' $relatedsql)";
 	
 	
@@ -299,6 +299,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 								# Form join							
 								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
+								
 								#echo $sql_join;
 							} else {
 								 //begin code for temporary table wildcard expansion
@@ -354,11 +355,23 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 									}
 								
 								# Form join
-								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+								global $use_temp_tables;
+								if (!$use_temp_tables){
+									$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+									if ($score!="") {$score.="+";}
+									$score.="k" . $c . ".hit_count";
+								}
+								else { //use temp tables
+									if (!isset($temptable_counter)){$temptable_counter = 0;}
+                                    $temptable_counter++;
+                                    $thetemptable = 'jtt' . $c . '_' . $temptable_counter;
+									$test=sql_query("create temporary table $thetemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql");
 
-
-								if ($score!="") {$score.="+";}
-								$score.="k" . $c . ".hit_count";
+									$sql_join .= " join $thetemptable on $thetemptable.resource = r.ref ";
+									
+									if ($score!="") {$score.="+";}
+									$score.=$thetemptable . ".hit_count";
+								}
 								
 								# Log this
 								daily_stat("Keyword usage",$keyref);
@@ -697,7 +710,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("\n" . $sql);
 
 	# Execute query
-	$result=sql_query($sql,false,$fetchrows);
+	$result=sql_query($sql,false,$fetchrows);sql_query("drop table $thetemptable",false);
 	debug("Search found $result results");
 	if (count($result)>0) {return $result;}
 	
