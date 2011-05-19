@@ -1186,7 +1186,6 @@ function refine_searchstring($search){
 	$search=str_replace ("\xe2\x80\x8b","",$search);
 
 	$keywords=split_keywords($search);
-
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
@@ -1205,7 +1204,9 @@ function refine_searchstring($search){
 				$fixedkeywords[]=$keywords[0];} // for searches such as !list
 		}
 		else {
-			$fixedkeywords[]=$keyword;
+			if (!in_array($keyword,$noadd)){ 
+				$fixedkeywords[]=$keyword;
+			}
 		}
 	}
 	$keywords=$fixedkeywords;
