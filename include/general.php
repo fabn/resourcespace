@@ -3051,6 +3051,6 @@ function format_display_field($value){
 	}
 	
 	$string=str_replace($ews_replace2,$ews_replace3,$string);
-	$string=str_replace("#zwspace",$wordbreaktag,$string);
+	$string=str_replace("#zwspace",$wordbreaktag." ",$string);
 	return $string;
 }
