@@ -9,7 +9,6 @@ $field=getval("field",""); # get field name if doing a simple search completion 
 $ref=getvalescaped("fieldref","",true); #get field ref if doing simple search completion (for get_suggested_keywords())
 
 $search=getvalescaped("search","");
-$search=refine_searchstring($search);
 
 if ($field!=""){
 	$search=getvalescaped("field_".$field,"");
