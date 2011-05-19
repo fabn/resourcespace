@@ -710,7 +710,10 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("\n" . $sql);
 
 	# Execute query
-	$result=sql_query($sql,false,$fetchrows);sql_query("drop table $thetemptable",false);
+	$result=sql_query($sql,false,$fetchrows);
+	if (isset($thetemptable)){
+		sql_query("drop table $thetemptable",false);
+	}
 	debug("Search found $result results");
 	if (count($result)>0) {return $result;}
 	
