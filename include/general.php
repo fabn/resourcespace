@@ -3024,7 +3024,8 @@ function format_display_field($value){
 	$string=i18n_get_translated($value);
 	$string=TidyList($string);
 	$string=tidy_trim($string,$results_title_trim);
-	
+	$wordbreaktag="<wbr>"; // $wordbreaktag="&#8203;" I'm having slightly better luck with <wbr>, but this pends more testing.
+	// Opera doesn't renders the zero-width space with a small box.
 	$extra_word_separators=array("_"); // only underscore is necessary (regex considers underscores not to separate words, 
 	// but we want them to); I've based these transformations on an array just in case more characters act this way.
 	
@@ -3046,10 +3047,10 @@ function format_display_field($value){
 	}
 	$ews_replace3=array();
 	foreach($extra_word_separators as $extra_word_separator){
-		$ews_replace3[]="&#8203".$extra_word_separator;
+		$ews_replace3[]=$wordbreaktag.$extra_word_separator;
 	}
 	
 	$string=str_replace($ews_replace2,$ews_replace3,$string);
-	$string=str_replace("#zwspace","&#8203;",$string);
+	$string=str_replace("#zwspace",$wordbreaktag,$string);
 	return $string;
 }
