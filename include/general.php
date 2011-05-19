@@ -1779,7 +1779,7 @@ function highlightkeywords($text,$search,$partial_index=false,$field_name="",$ke
 	# Optional - depends on $highlightkeywords being set in config.php.
 	global $highlightkeywords;
 	# Situations where we do not need to do this.
-	if (!isset($highlightkeywords) || ($highlightkeywords==false) || ($search=="") || ($text=="") || (substr($search,0,1)=="!")) {return $text;}
+	if (!isset($highlightkeywords) || ($highlightkeywords==false) || ($search=="") || ($text=="")) {return $text;}
 
 		# Generate the cache of search keywords (no longer global so it can test against particular fields.
 		# a search is a small array so I don't think there is much to lose by processing it.
@@ -1826,7 +1826,10 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
 	# Sourced from http://aidanlister.com/repos/v/function.str_highlight.php on 2007-10-09
 	# License on the website reads: "All code on this website resides in the Public Domain, you are free to use and modify it however you wish."
 	# http://aidanlister.com/repos/license/
-	
+
+	$text=str_replace("_",".{us}.",$text);// underscores are considered part of words, so temporarily replace them for better \b search.
+    $text=str_replace("#zwspace;",".{zw}.",$text);
+    
     // Default highlighting
     if ($highlight === null) {
         $highlight = '<span class="highlight">\1</span>';
@@ -1869,7 +1872,8 @@ function str_highlight($text, $needle, $options = null, $highlight = null)
         $regex = sprintf($pattern, $needle_s);
         $text = preg_replace($regex, $highlight, $text);
     }
-
+	$text=str_replace(".{us}.","_",$text);
+	$text=str_replace(".{zw}.","#zwspace;",$text);
     return $text;
 	}
 
@@ -3010,4 +3014,42 @@ function xml_entities($text, $charset = 'Windows-1252'){
     // Replace the &something_not_xml; with &amp;something_not_xml;
     $replacement = '&amp;${1}';
     return preg_replace($pattern, $replacement, $text);
+}
+
+function format_display_field($value){
+	
+	// applies trim/wordwrap/highlights 
+	
+	global $results_title_trim,$results_title_wordwrap,$df,$x,$search;
+	$string=i18n_get_translated($value);
+	$string=TidyList($string);
+	$string=tidy_trim($string,$results_title_trim);
+	
+	$extra_word_separators=array("_"); // only underscore is necessary (regex considers underscores not to separate words, 
+	// but we want them to); I've based these transformations on an array just in case more characters act this way.
+	
+	$ews_replace=array();
+	foreach($extra_word_separators as $extra_word_separator){
+		$ews_replace[]="{".$extra_word_separator." }";
+	}
+
+	//print_r($config_separators_replace);
+	$string=str_replace($extra_word_separators,$ews_replace,$string);
+	$string=wordwrap($string,$results_title_wordwrap,"#zwspace",false);
+	$string=str_replace($ews_replace,$extra_word_separators,$string);
+	$string=htmlspecialchars($string);
+	$string=highlightkeywords($string,$search,$df[$x]['partial_index'],$df[$x]['name'],$df[$x]['indexed']);
+	
+	$ews_replace2=array();
+	foreach($extra_word_separators as $extra_word_separator){
+		$ews_replace2[]="{".$extra_word_separator."#zwspace}";
+	}
+	$ews_replace3=array();
+	foreach($extra_word_separators as $extra_word_separator){
+		$ews_replace3[]="&#8203".$extra_word_separator;
+	}
+	
+	$string=str_replace($ews_replace2,$ews_replace3,$string);
+	$string=str_replace("#zwspace","&#8203;",$string);
+	return $string;
 }
