@@ -11,7 +11,7 @@ function HookRefineresultsSearchBeforesearchresults()
 	if ($('RefinePlus').innerHTML=='+')
 		{
 		Effect.SlideDown('RefineResults',{duration:0.5});
-		$('RefinePlus').innerHTML='-';
+		$('RefinePlus').innerHTML='&minus;';
 		}
 	else
 		{

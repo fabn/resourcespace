@@ -47,7 +47,7 @@ include "../include/header.php";
 <input type="hidden" name="deleteaccess" id="deleteaccess" value="">
 <input type="hidden" name="generateurl" id="generateurl" value="">
 
-<h1><?php echo $lang["sharecollection"]?> - <?php echo $collection["name"] ?></h1>
+<h1><?php echo str_replace("%collectionname", $collection["name"], $lang["sharecollection-name"]);?></h1>
 
 <div class="VerticalNav">
 <ul>

@@ -682,6 +682,7 @@ $lang["clearall"]="Clear all";
 $lang["clearcategoriesareyousure"]="Are you sure you wish to clear all selected options?";
 $lang["share"]="Share";
 $lang["sharecollection"]="Share Collection";
+$lang["sharecollection-name"]="Share Collection - %collectionname"; # %collectionname will be replaced, e.g. Share Collection - Cars
 $lang["generateurl"]="Generate URL";
 $lang["generateurlinternal"]="The below URL will work for existing users only.";
 $lang["generateurlexternal"]="The below URL will work for everyone and does not require a login.";
@@ -783,7 +784,7 @@ $lang["setup-successheader"]="Congratulations!";
 $lang["setup-successdetails"]="Your initial ResourceSpace setup is complete.  Be sure to check out 'include/default.config.php' for more configuration options.";
 $lang["setup-successnextsteps"]="Next steps:";
 $lang["setup-successremovewrite"]="You can now remove write access to 'include/'.";
-$lang["setup-visitwiki"]='Visit the <a href="http://rswiki.montala.net/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation.';
+$lang["setup-visitwiki"]='Visit the <a href="http://wiki.resourcespace.org/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation.';
 $lang["setup-checkconfigwrite"]="Write access to config directory:";
 $lang["setup-checkstoragewrite"]="Write access to storage directory:";
 $lang["setup-welcome"]="Welcome to ResourceSpace";
@@ -1187,6 +1188,7 @@ $lang["nowriteaccesstohomeanim"]="$homeanim_folder not writable. Open permission
 $lang["blockedbrowsingoffilestore"]="Blocked browsing of 'filestore' directory";
 $lang["noblockedbrowsingoffilestore"]="filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
 $lang["executionofconvertfailed"]="Execution failed; unexpected output when executing convert command. Output was '?'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki."; # ? will be replaced.
+$lang["exif_extension"]="EXIF extension";
 $lang["lastscheduledtaskexection"]="Last scheduled task execution (days)";
 $lang["executecronphp"]="Relevance matching will not be effective and periodic e-mail reports will not be sent. Ensure <a href='../batch/cron.php'>batch/cron.php</a> is executed at least once daily via a cron job or similar.";
 $lang["shouldbeormore"]="should be ? or greater"; # E.g. should be 200M or greater
@@ -1360,8 +1362,5 @@ $lang["total-collections-2"] = "<strong>Total: %number</strong> Collections"; # 
 $lang["owned_by_you-0"] = "(<strong>0</strong> owned by you)";
 $lang["owned_by_you-1"] = "(<strong>1</strong> owned by you)";
 $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> owned by you)"; # %mynumber will be replaced, e.g. (2 owned by you)
-
-$lang["resourcependingsubmission"] = "Resource Pending Submission";
-$lang["resourcependingreview"] = "Resource Pending Review";
 
 $lang["listresources"]= "Resources:";

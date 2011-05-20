@@ -191,16 +191,19 @@ if ($k=="") { ?>
 <h1><?php switch ($resource["archive"])
 	{
 	case -2:
-	?><span class="ResourcePendingSubmissionTitle"><?php echo $lang["resourcependingsubmission"]?>:</span>&nbsp;<?php
+	?><span class="ResourcePendingSubmissionTitle"><?php echo $lang["status-2"]?>:</span>&nbsp;<?php
 	break;
 	case -1:
-	?><span class="ResourcePendingReviewTitle"><?php echo $lang["resourcependingreview"]?>:</span>&nbsp;<?php
+	?><span class="ResourcePendingReviewTitle"><?php echo $lang["status-1"]?>:</span>&nbsp;<?php
+	break;
+	case 1:
+	?><span class="ArchiveResourceTitle"><?php echo $lang["status1"]?>:</span>&nbsp;<?php
 	break;
 	case 2:
-	?><span class="ArchiveResourceTitle"><?php echo $lang["archivedresource"]?>:</span>&nbsp;<?php
+	?><span class="ArchiveResourceTitle"><?php echo $lang["status2"]?>:</span>&nbsp;<?php
 	break;
 	case 3:
-	?><span class="DeletedResourceTitle"><?php echo $lang["deletedresource"]?>:</span>&nbsp;<?php
+	?><span class="DeletedResourceTitle"><?php echo $lang["status3"]?>:</span>&nbsp;<?php
 	break;
 	}
 if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get_translated(get_data_by_field($resource['ref'],$title_field))),$search); } /* end hook replaceviewtitle */  

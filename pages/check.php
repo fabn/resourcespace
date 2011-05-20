@@ -239,7 +239,7 @@ else
 	$version=$lang["status-notinstalled"];
 	$result=$lang["status-fail"];
 	}
-?><tr><td colspan="2">EXIF extension</td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td colspan="2"><?php echo $lang["exif_extension"]?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check Exiftool path
 if (isset($exiftool_path))
