@@ -1363,3 +1363,5 @@ $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> owned by you)"; # %mynumb
 
 $lang["resourcependingsubmission"] = "Resource Pending Submission";
 $lang["resourcependingreview"] = "Resource Pending Review";
+
+$lang["listresources"]= "Resources:";

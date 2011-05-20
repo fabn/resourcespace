@@ -342,6 +342,13 @@ if ($search_titles)
         {
         $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!duplicates'.$parameters_string.'>'.$lang["duplicateresources"].'</a>'.$searchcrumbs.'</h1> ';
         }
+    elseif (substr($search,0,5)=="!list")
+        {
+		$resources=substr($search,5);
+		$resources=explode(",",$resources);
+		$resources=$resources[0];	
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!list'.$resources.$parameters_string.'>'.$lang["listresources"].$resources.'</a>'.$searchcrumbs.'</h1> ';
+        }    
     elseif (substr($search,0,15)=="!archivepending")
         {
         $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!archivepending'.$parameters_string.'>'.$lang["resourcespendingarchive"].'</a>'.$searchcrumbs.'</h1> ';
