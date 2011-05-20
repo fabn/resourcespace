@@ -364,13 +364,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								else { //use temp tables
 									if (!isset($temptable_counter)){$temptable_counter = 0;}
                                     $temptable_counter++;
-                                    $thetemptable = 'jtt' . $c . '_' . $temptable_counter;
-									$test=sql_query("create temporary table $thetemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql");
-
-									$sql_join .= " join $thetemptable on $thetemptable.resource = r.ref ";
+                                    $jtemptable = 'jtt' . $c . '_' . $temptable_counter;
+                                    sql_query("drop table IF EXISTS $jtemptable ",false);
 									
+									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql");
+
+									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref ";
+								
 									if ($score!="") {$score.="+";}
-									$score.=$thetemptable . ".hit_count";
+									$score.=$jtemptable . ".hit_count";
 								}
 								
 								# Log this
@@ -559,7 +561,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					
 				}
 			}		
-		
+
 		return sql_query("select distinct c.date_added,c.comment,c.purchase_size,c.purchase_complete,r.hit_count score,length(c.comment) commentset, $select from resource r  join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by;",false,$fetchrows);
 		}
 	
@@ -708,12 +710,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 	# Debug
 	debug("\n" . $sql);
-
 	# Execute query
 	$result=sql_query($sql,false,$fetchrows);
-	if (isset($thetemptable)){
-		sql_query("drop table $thetemptable",false);
-	}
 	debug("Search found $result results");
 	if (count($result)>0) {return $result;}
 	
