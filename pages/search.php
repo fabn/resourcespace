@@ -317,7 +317,7 @@ if ($search_titles)
 	
 	 if (substr($search,0,11)=="!collection"){
         if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $search_title = '<div align="left"><h1><span class="searchcrumbs" id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.$collection_tag.$collectiondata["name"].'</a>'.$searchcrumbs.'</span></h1> ';
+        $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.$collection_tag.$collectiondata["name"].'</a></span>'.$searchcrumbs.'</div></h1> ';
 		}	
     if (substr($search,0,5)=="!last")
         {
