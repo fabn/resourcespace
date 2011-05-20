@@ -356,6 +356,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								
 								# Form join
 								global $use_temp_tables;
+								if (substr($search,0,8)=="!related") {$use_temp_tables=false;} // temp tables can't be used twice (unions)
 								if (!$use_temp_tables){
 									$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
 									if ($score!="") {$score.="+";}
