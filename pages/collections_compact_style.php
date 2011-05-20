@@ -81,7 +81,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 <!-- edit collection -->
 <?php if ((!collection_is_research_request($collection)) || (!checkperm("r"))) { ?>
-    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_edit.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?>...</option><?php } ?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_edit.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["editcollection"]?>...</option><?php } ?>
     <?php } else {
     $research=sql_value("select ref value from research_request where collection='$collection'",0);	
 	?>
@@ -103,7 +103,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 <!-- share -->
 <?php if ($allow_share && $count_result>0) { ?>
-<option value="collection_share.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["share"]?>...</option>
+<option value="collection_share.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["sharecollection"]?>...</option>
 <?php } ?>
 <!-- end share -->
 
@@ -135,7 +135,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 <!--delete and remove-->
 <?php if ($userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
 
-<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-delete"]?>...</option><?php } ?>
+<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-deletecollection"]?>...</option><?php } ?>
 
 <!-- end delete and remove-->
 
@@ -155,7 +155,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 <!-- log -->
 <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?>
-    <option value="collection_log.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["log"]?></option>
+    <option value="collection_log.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-log"]?></option>
 <?php } ?>
 <!-- end log -->
 
