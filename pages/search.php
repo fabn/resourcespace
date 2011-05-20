@@ -258,12 +258,14 @@ $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,f
 
 
 # display collection title if option set.
-$collection_title = "";
-$collection_title_links = "";
+$search_title = "";
+$search_title_links = "";
 
 if (substr($search,0,11)=="!collection")
 	{
 	$collection=substr($search,11);
+	$collection=explode(",",$collection);
+	$collection=$collection[0];
 	$collectiondata=get_collection($collection);
 	if ($collection_reorder_caption)
 		{
@@ -272,16 +274,6 @@ if (substr($search,0,11)=="!collection")
 			{
 			$allow_reorder=true;
 			}
-		}
-
-	if ($display_collection_title)
-		{
-        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
-        $collection_title = '<div align="left"><h1><span id="coltitle'.$collection.'">'.$collection_tag.$collectiondata ["name"].'</span></h1> ';
-        if ($k==""){$collection_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
-        if ($k==""&&$preview_all){$collection_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
-        $collection_title.='</div>';
-        if ($display!="list"){$collection_title_links.= '<br /><br />';}
 		}
 	}
 
@@ -301,68 +293,113 @@ if ($allow_reorder && $display!="list")
 	}
 
 # Display a title of the search (if there is a title)
+
+$refinements=explode(",",$search);	
+$searchcrumbs="";
+if (substr($search,0,1)=="!"){$startsearchcrumbs=1;} else {$startsearchcrumbs=0;}
+if ($refinements[0]!=""){
+	for ($n=$startsearchcrumbs;$n<count($refinements);$n++){
+		if ($n!=0 || $archive!=0){$searchcrumbs.=" / ";}
+		$searchcrumbs.="<a href=search.php?search=";
+		for ($x=0;$x<=$n;$x++){
+			$searchcrumbs.=$refinements[$x];
+			if ($x!=$n){$searchcrumbs.=",";}
+		}
+		
+		$searchcrumbs.="&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort.">".$refinements[$n]."</a>";
+	}
+}
+
 if ($search_titles)
     {
+		
+	$parameters_string='&order_by=' . $order_by . '&sort='.$sort.'&offset=' . $offset . '&archive=' . $archive.'&sort='.$sort;
+	
+	 if (substr($search,0,11)=="!collection"){
+        if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+        $search_title = '<div align="left"><h1><span class="searchcrumbs" id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.$collection_tag.$collectiondata["name"].'</a>'.$searchcrumbs.'</span></h1> ';
+		}	
     if (substr($search,0,5)=="!last")
         {
-        $collection_title = '<h1>'.$lang["recent"].' '.substr($search,5,strlen($search)).'</h1> ';
+		$searchq=substr($search,5);
+		$searchq=explode(",",$searchq);
+		$searchq=$searchq[0];
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!last'.$searchq.$parameters_string.'>'.$lang["recent"]." ".$searchq.'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,8)=="!related")
         {
-        $resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-        $collection_title = '<h1>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</h1> ';
+        $resource=substr($search,8);
+		$resource=explode(",",$resource);
+		$resource=$resource[0];
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!related'.$resource.$parameters_string.'>'.$lang["relatedresources"].' - '.$lang['id'].$resource.'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,7)=="!unused")
         {
-        $collection_title = '<h1>'.$lang["uncollectedresources"].'</h1> ';
+		$refinements=str_replace(","," / ",substr($search,7,strlen($search)));	
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!unused'.$parameters_string.'>'.$lang["uncollectedresources"].'</a>'.$searchcrumbs.'</h1>';
         }
     elseif (substr($search,0,11)=="!duplicates")
         {
-        $collection_title = '<h1>'.$lang["duplicateresources"].'</h1> ';
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!duplicates'.$parameters_string.'>'.$lang["duplicateresources"].'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,15)=="!archivepending")
         {
-        $collection_title = '<h1>'.$lang["resourcespendingarchive"].'</h1> ';
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!archivepending'.$parameters_string.'>'.$lang["resourcespendingarchive"].'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,14)=="!contributions")
         {
-        $cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
+		$cuser=substr($search,14);
+		$cuser=explode(",",$cuser);
+		$cuser=$cuser[0];	
+
         if ($cuser==$userref)
             {
             switch ($archive)
                 {
                 case -2:
-                    $collection_title = '<h1>'.$lang["contributedps"].'</h1> ';
+                    $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!contributions'.$cuser.$parameters_string.'>'.$lang["contributedps"].'</a>'.$searchcrumbs.'</h1> ';
                     break;
                 case -1:
-                    $collection_title = '<h1>'.$lang["contributedpr"].'</h1> ';
+                    $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!contributions'.$cuser.$parameters_string.'>'.$lang["contributedpr"].'</a>'.$searchcrumbs.'</h1> ';
                     break;
                 case -0:
-                    $collection_title = '<h1>'.$lang["contributedsubittedl"].'</h1> ';
+                    $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!contributions'.$cuser.$parameters_string.'>'.$lang["contributedsubittedl"].'</a>'.$searchcrumbs.'</h1> ';
                     break;
                 }
             }
         }
-    else
+    else if ($archive!=0)
         {
         switch ($archive)
             {
             case -2:
-                $collection_title = '<h1>'.$lang["userpendingsubmission"].'</h1> ';
+                $search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'>'.$lang["userpendingsubmission"].'</a>'.$searchcrumbs.'</h1> ';
                 break;
             case -1:
-                $collection_title = '<h1>'.$lang["userpending"].'</h1> ';
+                $search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'>'.$lang["userpending"].'</a>'.$searchcrumbs.'</h1> ';
                 break;
             case 2:
-                $collection_title = '<h1>'.$lang["archiveonlysearch"].'</h1> ';
+                $search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'>'.$lang["archiveonlysearch"].'</a>'.$searchcrumbs.'</h1> ';
                 break;
             case 3:
-                $collection_title = '<h1>'.$lang["deletedresources"].'</h1> ';
+                $search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'>'.$lang["deletedresources"].'</a>'.$searchcrumbs.'</h1> ';
                 break;
             }
         }
+    else if (substr($search,0,1)!="!")
+		{ 
+		$search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'></a>'.$searchcrumbs.'</h1> '; 
+		}   
     }
 
+// extra collection title links
+if (substr($search,0,11)=="!collection"){
+	if ($k==""){$search_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>';}
+	if ($k==""&&$preview_all){$search_title_links.='&nbsp;&nbsp;<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
+	$search_title.='</div>';
+	if ($display!="list"){$search_title_links.= '<br /><br />';}
+}
+        
 
 # Do the public collection search if configured.
 
@@ -515,10 +552,10 @@ if (true) # Always show search header now.
 	?>
 	</div>
 	<?php if (!$collections_compact_style){
-        echo $collection_title.$collection_title_links;
+        echo $search_title.$search_title_links;
         }
     else {
-    echo $collection_title;
+    echo $search_title;
     ?><?php if (substr($search,0,11)=="!collection" && $k==""){
         $cinfo=get_collection(substr($search,11));
         $feedback=$cinfo["request_feedback"];

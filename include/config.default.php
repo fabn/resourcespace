@@ -1005,9 +1005,6 @@ $hide_access_column = false;
 #collection_manage.php - show 'edit all' link on collections
 $show_edit_all_link = false;
 
-# If displaying a collection in search.php, display collection title at top.
-$display_collection_title = true;
-
 #Bypass share.php and go straight to e-mail
 $bypass_share_screen = false;
 

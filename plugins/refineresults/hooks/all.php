@@ -2,7 +2,7 @@
 
 function HookRefineresultsSearchBeforesearchresults()
 	{
-	global $lang,$search,$k,$archive;
+	global $lang,$search,$k,$archive,$parameters_string;
 	if ($k!="") {return false;}
 	
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
@@ -18,7 +18,7 @@ function HookRefineresultsSearchBeforesearchresults()
 		Effect.SlideUp('RefineResults',{duration:0.5});
 		$('RefinePlus').innerHTML='+';
 		}
-	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a></div>
+	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a><?php if ($search!=""){?>&nbsp;&nbsp;<a href='search.php?search=<?php echo $parameters_string?>'>&gt;&nbsp;<?php echo $lang["clearsearch"]?></a><?php } ?></div>
 	<?php
 	return true;
 	}
@@ -63,6 +63,7 @@ function HookRefineresultsSearchSearchstringprocessing()
 		{
 		$search.="," . $refine;	
 		}
+	$search=refine_searchstring($search);	
 	}
 
 ?>
