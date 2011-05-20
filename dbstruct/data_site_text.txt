@@ -22,7 +22,7 @@ help,introtext,"Get the most out of ResourceSpace. These guides will help you us
 <p><a href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Download the user guide (PDF file)</a>
 
 
-<p><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Online Documentation (Wiki)</a>",15,en,,,
+<p><a target=""_blank"" href=""http://wiki.resourcespace.org/index.php/Main_Page"">Online Documentation (Wiki)</a>",15,en,,,
 "terms and conditions","terms and conditions","Your terms and conditions go here.",16,en,,,
 contribute,introtext,"You can contribute your own resources. When you initially create a resource it is in the ""Pending Submission"" status. When you have uploaded your file and edited the fields, set the status field to ""Pending Review"". It will then be reviewed by the resources team.",17,en,,,
 done,user_password,"An e-mail containing your username and password has been sent.",18,en,,,
@@ -217,7 +217,7 @@ done,user_request,"ユーザアカウントを求めるあなたの要求を送�
 download_progress,introtext,"あなたのダウンロードはまもなく、始まるでしょう。 ダウンロード完了後、継続するには以下のリンクを使用してください。",172,jp,,,
 edit,batch,あなたがアップロードしようとしているリソースのためのデフォルトの説明とキーワードを指定してください。,173,jp,,,
 edit,multiple,"どのフィールドを上書きしたいかを選択してください。 あなたが選択しないフィールドはそのままの状態でおかれるでしょう。",174,jp,,,
-help,introtext,"本サイトを最大限に活用してください。 これらのガイドは、あなたが、より効果的にシステムとリソースを使用するのを助けるでしょう。 </p>    <p>テーマを使用して、テーマでリソースをブラウズするか、または単純検索を使用して、特定のリソースを検索してください。</p>   <p><a href=http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf>Download the user guide (PDF file)</a>   <p><a target=_blank href=http://rswiki.montala.net/index.php/Main_Page>Online Documentation (Wiki)</a>",175,jp,,,
+help,introtext,"本サイトを最大限に活用してください。 これらのガイドは、あなたが、より効果的にシステムとリソースを使用するのを助けるでしょう。 </p>    <p>テーマを使用して、テーマでリソースをブラウズするか、または単純検索を使用して、特定のリソースを検索してください。</p>   <p><a href=http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf>Download the user guide (PDF file)</a>   <p><a target=_blank href=http://wiki.resourcespace.org/index.php/Main_Page>Online Documentation (Wiki)</a>",175,jp,,,
 home,themes,精選され分類された最良のリソース,176,jp,,,
 research_request,introtext,"あなたのプロジェクトに、最も良いリソースを見つけるの手助けするために、私たちのプロの調査者がここにいます。 私たちが正確に評価基準を満たすことができるように、このフォームにできるだけ全てに記入してください。 <br><br>調査チームのメンバーがあなたの要求にアサインされるでしょう。 途中経過をメールで報告します、そして、私たちが調査を完了した後、私たちが推薦するすべてのリソースへのリンクをメールで受け取ってください。",177,jp,,,
 resource_email,introtext,"メールで素早く他のユーザとこのリソースを共有できます。 自動的にリンクを送信します。 また、あなたはメールの一部として任意のメッセージも入れることができます。",178,jp,,,
@@ -265,7 +265,7 @@ help,introtext,"Obtenez le meilleur de ResourceSpace. Ces guides vous aideront �
 <p><a href=""http://www.montala.net/downloads/ResourceSpace-GettingStarted.pdf"">Téléchargez le guide utilisateur (fichier PDF) (anglais)</a>
 
 
-<p><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Documentation en ligne (Wiki) (anglais)</a>",213,fr,,,
+<p><a target=""_blank"" href=""http://wiki.resourcespace.org/index.php/Main_Page"">Documentation en ligne (Wiki) (anglais)</a>",213,fr,,,
 "terms and conditions","terms and conditions","Placez ici vos termes et conditions.",214,fr,,,
 contribute,introtext,"Vous pouvez proposer vos propres documents. Quand vous créez un nouveau document, son statut est ""En attente de soumission"". Quand vous avez déposé votre fichier et modifié les champs, affectez la valeur ""En attente de validation"" au champ statut. Votre document sera alors vérifié par l'équipe ressources.",215,fr,,,
 done,user_password,"Un mél contenant vos identifiant et mot de passe a été envoyé.",216,fr,,,
@@ -431,7 +431,7 @@ edit,batch,"Bitte geben Sie die gemeinsamen Inhalte und Stichworte für die Date
 edit,multiple,"Bitte wählen Sie die Felder aus, die Sie verändern wollen. Felder, die Sie nicht anwählen, werden nicht verändert.",295,de,,,0
 help,introtext,"Diese Anleitungen helfen Ihnen, ResourceSpace und Ihre Medien effektiv zu nutzen.</p>
 <p>Benutzen Sie ""Themen"", um Ressourcen nach Themen zu erkunden oder nutzen Sie die Suche um spezifische Ressourcen zu finden.</p>
-<p><a href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">User Guide</a> (PDF, englisch)<br /><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Online Dokumentation</a> (Wiki)</p>",296,de,,,0
+<p><a href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">User Guide</a> (PDF, englisch)<br /><a target=""_blank"" href=""http://wiki.resourcespace.org/index.php/Main_Page"">Online Dokumentation</a> (Wiki)</p>",296,de,,,0
 home,help,"Hilfe für die Arbeit mit ResourceSpace",297,de,,,0
 home,mycollections,"Hier können Sie Ihre Kollektionen organisieren, verwalten und weitergeben.",298,de,,,0
 home,restrictedtext,"Bitte klicken Sie auf den Link, den Sie per E-Mail erhalten haben, um auf die für Sie ausgesuchten Ressourcen zuzugreifen.",299,de,,,0
@@ -476,7 +476,7 @@ home,welcometitle,"Välkommen till ResourceSpace",332,sv,,,0
 home,welcometext,"Skriv en introduktion här...",333,sv,,,0
 all,footer,"<a target=""_top"" href=""http://www.resourcespace.org/"">ResourceSpace</a>: Digital materialförvaltning (DAM) med öppen källkod",334,sv,,,0
 all,searchpanel,"Sök efter material genom att ange beskrivning, nyckelord eller materialnummer.",335,sv,,,0
-resource_email,introtext,"Dela snabbt och enkelt ut materialet till andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",336,sv,,,0
+resource_email,introtext,"Dela snabbt och enkelt materialet med andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",336,sv,,,0
 home,themes,"Det bästa materialet, speciellt utvalt och sorterat.",337,sv,,,0
 home,restrictedtitle,"<h1>Välkommen till ResourceSpace</h1>",338,sv,,,0
 about,about,"Din egen text för ""Om oss""...",339,sv,,,0
@@ -499,10 +499,10 @@ help,introtext,"Få ut det mesta möjliga av ResourceSpace. Instruktionerna neda
 
 <p>Använd 'Teman' för att bläddra bland material per tema eller använd 'Enkel sökning' för att söka efter specifikt material.</p>
 
-<p><a target=""_blank"" href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Ladda ner den engelska användarhandboken (PDF-fil)</a>
+<p><a target=""_blank"" href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Ladda ner den engelska användarhandboken (pdf-fil)</a>
 
-<p><a target=""_blank"" href=""http://rswiki.montala.net/index.php/Main_Page"">Dokumentation på webben (engelskspråkig Wiki)</a>",355,sv,,,0
-collection_email,introtext,"Dela snabbt och enkelt ut materialet i denna samling till andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",356,sv,,,0
+<p><a target=""_blank"" href=""http://wiki.resourcespace.org/index.php/Main_Page"">Dokumentation på webben (engelskspråkig wiki)</a>",355,sv,,,0
+collection_email,introtext,"Dela snabbt och enkelt materialet i denna samling med andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",356,sv,,,0
 collection_edit,introtext,"Organisera och hantera ditt material genom att dela upp det i samlingar.
 
 <br>
@@ -545,13 +545,13 @@ tag,introtext,"Hjälp till att förbättra framtida sökresultat genom att förs
 user_password,introtext,"Fyll i din e-postadress och ditt användarnamn så kommer ett nytt lösenord att skickas till dig.",380,sv,,,0
 upload_swf,introtext,"",381,sv,,,0
 upload,introtext,"",382,sv,,,0
-themes,manage,"Organisera och redigera tillgängliga teman. Teman är grupper av material som har valts ut av administratörerna för att visa exempel på vilket material som finns i systemet.<br><br> <strong>1 För att skapa ett nytt tema - skapa en samling</strong><br> Gå till <strong>'Mina samlingar'</strong> skapa en ny <strong>publik</strong> samling. Välj ett existerande tema från listan om du vill lägga till samlingen i ett befintligt tema eller skriv ett temanamn om du vill skapa ett nytt tema. Tillåt inte användare att lägga till/ta bort material från teman. <br> <br><strong>2 För att redigera materialet i ett existerande tema. </strong><br> Välj <strong> samling</strong>. Materialet i samlingen blir då åtkomligt i panelen <strong>Mina samlingar</strong> i nederkanten av skärmen. Använd de vanliga verktygen för att redigera, lägga till eller ta bort material.<br> <br><strong>3 För att byta namn på ett tema eller flytta en samling från ett tema till ett annat.</strong><br> Välj <strong>Redigera egenskaper</strong> och byt temanamnet. Välj ett tema från listan för att lägga till samlingen till ett befintlig tema eller skriv ett nytt temanamn om du vill skapa ett nytt tema.<br> <br><strong>4 För att ta bort en samling från ett tema</strong><br> Välj <strong>Redigera egenskaper</strong> och tom fälten tema och temanamn.",383,sv,,,0
+themes,manage,"Organisera och redigera tillgängliga teman. Teman är grupper av material som har valts ut av administratörerna för att visa exempel på vilket material som finns i systemet.<br><br> <strong>1 För att skapa ett nytt tema &ndash; skapa en samling</strong>.<br> Gå till <strong>Mina samlingar</strong> och skapa en ny <strong>publik</strong> samling. Välj ett existerande tema från listan om du vill lägga till samlingen i ett befintligt tema eller skriv ett temakategorinamn om du vill skapa ett nytt tema. Tillåt inte användare att lägga till/ta bort material från teman. <br> <br><strong>2 För att redigera materialet i ett existerande tema. </strong><br> Välj <strong> samling</strong>. Materialet i samlingen blir då åtkomligt i panelen <strong>Mina samlingar</strong> i nederkanten av skärmen. Använd de vanliga verktygen för att redigera, lägga till eller ta bort material.<br> <br><strong>3 För att byta namn på ett tema eller flytta en samling från ett tema till ett annat.</strong><br> Välj <strong>Redigera egenskaper</strong> och byt temakategorinamnet. Välj ett tema från listan för att lägga till samlingen till ett befintlig tema eller skriv ett nytt temakategorinamn om du vill skapa ett nytt tema.<br> <br><strong>4 För att ta bort en samling från ett tema</strong><br> Välj <strong>Redigera egenskaper</strong> och rensa fälten tema och temakategorinamn.",383,sv,,,0
 terms,introtext,"Innan du kan fortsätta måste du acceptera reglerna och villkoren.",384,sv,,,0
 team_user,introtext,"Använd den här delen för att lägga till, ta bort eller redigera användare.",385,sv,,,0
 team_stats,introtext,"En statistikrapport kan skapas vid behov, baserad på aktuell data. Markera kryssrutan för att skriva ut all statistik för det valda året.",386,sv,,,0
 team_research,introtext,"Organisera och hantera researchförfrågningar.<br><br>Välj ‘Redigera researchförfrågan’ för att granska förfrågan och tilldela en medlem i researchteamet uppdraget att besvara förfrågan. I samma vy är det också möjligt att lägga till en befintlig samling till researchen genom att ange samlingsnumret.<br><br>När en medlem har tilldelats researchen blir den tillgänglig i panelen 'Mina samlingar'. Använd de vanliga verktygen för att lägga till material till researchen. <br><br>När researchen är slutförd väljer du ‘Redigera researchförfrågan’ och ändrar status till 'Besvarad'. När du klickar på 'Spara' skickas automatiskt ett e-postmeddelande till användaren som skickade researchförfrågan. Meddelandet innehåller en webblänk som leder till researchen och den läggs också till i användarens lista över samlingar.",387,sv,,,0
-team_report,introtext,"Välj en rapport och en period. Rapporten kan öppnas i t.ex. MS Excel eller OpenOffice Calc.",388,sv,,,0
-team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materialdatan kommer att kopieras - uppladdade filer kommer inte att kopieras.",389,sv,,,0
+team_report,introtext,"Välj en rapport och en period. Rapporten kan öppnas i t.ex. MS Excel eller LibreOffice Calc.",388,sv,,,0
+team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materialdatan kommer att kopieras &ndash; uppladdade filer kommer inte att kopieras.",389,sv,,,0
 team_batch_upload,introtext,"",390,sv,,,0
 team_batch_select,introtext,"",391,sv,,,0
 team_batch,introtext,"",392,sv,,,0

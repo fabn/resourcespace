@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Annotate Plugin
-# Updated by Henrik Frizén 20110511 for svn r2683
+# Updated by Henrik Frizén 20110520 for svn r2717
 # -------
 #
 #
@@ -11,7 +11,7 @@ $lang["annotatepdfconfig"]="Noteringar som PDF";
 $lang["annotatepdfintrotext"]="Välj arkstorlek och orientering för PDF-filen innehållande en sammanställning av noteringarna.";
 
 $lang["error-saving"]="Ett fel uppstod när noteringen sparades.";
-$lang["error-deleting"]="Ett fel uppstod när noteringen raderades.";
+$lang["error-deleting"]="Ett fel uppstod när noteringen togs bort.";
 
 $lang["action-add_note"]="Lägg till notering";
 
