@@ -8,9 +8,12 @@ function HookRefineresultsSearchBeforesearchresults()
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
 	?>
 	<div class="SearchOptionNav"><a href="#" onClick="
+	   function OnFinish(){
+        $('refine_keywords').focus();
+	}
 	if ($('RefinePlus').innerHTML=='+')
 		{
-		Effect.SlideDown('RefineResults',{duration:0.5});
+		Effect.SlideDown('RefineResults',{duration:0.5,afterUpdate:OnFinish});
 		$('RefinePlus').innerHTML='&minus;';
 		}
 	else
@@ -35,7 +38,7 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 	<form method="post">
 	<div class="Question" id="question_related" style="border-top:none;">
 	<label for="related"><?php echo $lang["additionalkeywords"]?></label>
-	<input class="stdwidth" type=text name="refine_keywords" value="">
+	<input class="stdwidth" type=text id="refine_keywords" name="refine_keywords" value="">
 	<input type=hidden name="archive" value="<?php echo $archive?>">
 	<input type=hidden name="search" value="<?php echo htmlspecialchars($search) ?>">
 	<div class="clearerleft"> </div>
