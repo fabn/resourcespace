@@ -22,7 +22,7 @@ function HookResourceofthedayHomeReplaceslideshow ()
 	<div class="HomePicturePanel RecordPanel" style="width:350px;padding-left:4px;">
 	<a href="view.php?ref=<?php echo $rotd ?>"><img class="ImageBorder" style="margin-bottom: 10px;" src="<?php echo $pre ?>" /></a>
 	<br />
-	<h2 ><?php echo htmlspecialchars($title) ?></h2>
+	<h2 ><?php echo i18n_get_translated(htmlspecialchars($title)) ?></h2>
 	<?php echo htmlspecialchars($caption) ?>
 	</div>
 	<?php
