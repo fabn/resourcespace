@@ -102,7 +102,7 @@ if (getval("regen","")!="")
 $is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
 	
 
-if (getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")=="")
+if (getval("tweak","")=="" && getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")=="")
 	{
 	hook("editbeforesave");			
 
