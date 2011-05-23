@@ -91,6 +91,7 @@ function add_resource_to_collection($resource,$collection,$smartadd=false,$size=
 	{
 	if (collection_writeable($collection)||$smartadd)
 		{	
+		hook("Addtocollectionsuccess", "", array( "resourceId" => $resource, "collectionId" => $collection ) );
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("insert into collection_resource(resource,collection,purchase_size) values ('$resource','$collection','$size')");
 		
@@ -121,6 +122,7 @@ function add_resource_to_collection($resource,$collection,$smartadd=false,$size=
 		}
 	else
 		{
+		hook("Addtocollectionfail", "", array( "resourceId" => $resource, "collectionId" => $collection ) );
 		return false;
 		}
 	}
@@ -129,6 +131,7 @@ function remove_resource_from_collection($resource,$collection,$smartadd=false)
 	{
 	if (collection_writeable($collection)||$smartadd)
 		{	
+		hook("Removefromcollectionsuccess", "", array( "resourceId" => $resource, "collectionId" => $collection ) );
 		sql_query("delete from collection_resource where resource='$resource' and collection='$collection'");
 		sql_query("delete from external_access_keys where resource='$resource' and collection='$collection'");
 		
@@ -138,6 +141,7 @@ function remove_resource_from_collection($resource,$collection,$smartadd=false)
 		}
 	else
 		{
+		hook("Removefromcollectionfail", "", array( "resourceId" => $resource, "collectionId" => $collection ) );
 		return false;
 		}
 	}

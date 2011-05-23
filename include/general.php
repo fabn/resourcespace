@@ -1278,7 +1278,7 @@ function bulk_mail($userlist,$subject,$text,$html=false)
     # Return an empty string (all OK).
     return "";
     }
-
+if ( !function_exists( "i18n_get_translated" ) ) {
 function i18n_get_translated($text)
 	{
 	# For field names / values using the i18n syntax, return the version in the current user's language
@@ -1314,6 +1314,7 @@ function i18n_get_translated($text)
 	# No default language entry? Then consider this a broken language string and return the string unprocessed.
 	if ($default!="") {return $default;} else {return $text;}
 	}
+}
 
 function i18n_get_indexable($text)
 	{
@@ -2063,6 +2064,7 @@ function check_password($password)
 	return true;
 	}
 	
+if ( !function_exists( "i18n_get_translations" ) ) {
 function i18n_get_translations($value)
 	{
 	# For a string in the language format, return all translations as an associative array
@@ -2079,6 +2081,7 @@ function i18n_get_translations($value)
 		}
 	return $return;
 	}
+}
 	
 function get_related_keywords($keyref)
 	{
