@@ -333,7 +333,7 @@ if ($search_titles)
                             $colaccessmode= $lang["public"];
                         }
                     }
-                $collectiondata['name']=$collectiondata['name']." <smaller>(". $colusername."/".$colaccessmode.")</smaller>";    
+                $collectiondata['name']=$collectiondata['name']." (". $colusername."/".$colaccessmode.")";    
                 }
             }
                 
@@ -433,7 +433,20 @@ if (substr($search,0,11)=="!collection"){
 if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
     {
     $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
-    }
+    if ($search_includes_user_collections){
+		$collections=array_merge(get_user_collections($userref,$search,"name",$revsort),$collections);
+		$condensedcollectionsresults=array();
+		$colresultsdupecheck=array();
+		foreach($collections as $collection){
+			if (!in_array($collection['ref'],$colresultsdupecheck)){
+				$condensedcollectionsresults[]=$collection;
+				$colresultsdupecheck[]=$collection['ref'];
+			}
+		}
+		$collections=$condensedcollectionsresults;
+	}
+}
+    
 # Special case: numeric searches (resource ID) and one result: redirect immediately to the resource view.
 if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0) && is_array($result) && count($result)==1)
 	{

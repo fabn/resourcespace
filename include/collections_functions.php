@@ -7,23 +7,47 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	{
 	# Returns a list of user collections.
 	$sql="";
-	if (strlen($find)>1) {$sql="(name like '%$find%' or u.username like '%$find%' or u.fullname like '%$find%' or c.ref like '$find')";}
-	if (strlen($find)==1) {$sql="(name like '$find%' or c.ref like '$find')";}
-   
+	$keysql="";
+	if (strlen($find)==1)
+		{
+		# A-Z search
+		$sql="c.name like '$find%'";
+		}
+	elseif (strlen($find)>1)
+		{  
+		$keywords=split_keywords($find);
+		$keyrefs=array();
+		$keysql="";
+		for ($n=0;$n<count($keywords);$n++)
+			{
+			$keyref=resolve_keyword($keywords[$n],false);
+			if ($keyref!==false) {$keyrefs[]=$keyref;}
+
+			$keysql.=" join collection_keyword k" . $n . " on k" . $n . ".collection=ref and (k" . $n . ".keyword='$keyref')";	
+			//$keysql="or keyword in (" . join (",",$keyrefs) . ")";
+			}
+
+ 
+		//$sql.="and (c.name rlike '$search' or u.username rlike '$search' or u.fullname rlike '$search' $spcr )";
+		}
+    
+    if ($sql!="") {$sql="where " . $sql;}
     # Include themes in my collecions? 
     # Only filter out themes if $themes_in_my_collections is set to false in config.php
    	global $themes_in_my_collections;
+   	
    	if (!$themes_in_my_collections)
    		{
    		if ($sql!="") {$sql.=" and ";}
    		$sql.="(length(c.theme)=0 or c.theme is null) ";
    		}
-	if ($sql!="") {$sql="where " . $sql;}
-   
-	$return=sql_query ("select * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
-	union
-	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist order by $order_by $sort");
 	
+   
+	$return="select distinct * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection left outer join collection_keyword k on c.ref=k.collection $sql  group by c.ref
+	union
+	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection  $sql  group by c.ref) clist $keysql order by $order_by $sort";
+
+	$return=sql_query($return);
 	// To keep My Collection creation consistent: Check that user has at least one collection of his/her own  (not if collection result is empty, which may include shares), 
 	$hasown=false;
 	for ($n=0;$n<count($return);$n++){
@@ -32,7 +56,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 		}
 	}
 	if ($find!=""){$hasown=true;} // if doing a search in collections, assume My Collection already exists (to avoid creating new collections due to an empty search result).
-	
+
 	if (!$hasown && $auto_create)
 		{
 		# No collections of one's own? The user must have at least one My Collection
@@ -44,7 +68,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 		# Recurse to send the updated collection list.
 		return get_user_collections($user,$find,$order_by,$sort,$fetchrows,false);
 		}
-	
+
 	return $return;
 	}
 }	
@@ -172,7 +196,12 @@ function create_collection($userid,$name,$allowchanges=0,$cant_delete=0)
 	{
 	# Creates a new collection and returns the reference
 	sql_query("insert into collection (name,user,created,allow_changes,cant_delete) values ('" . escape_check($name) . "','$userid',now(),'$allowchanges','$cant_delete')");
-	return sql_insert_id();
+	$ref=sql_insert_id();
+
+	index_collection($ref);
+	
+	
+	return $ref;
 	}	
 }
 	
@@ -182,6 +211,7 @@ function delete_collection($ref)
 	hook("beforedeletecollection");
 	sql_query("delete from collection where ref='$ref'");
 	sql_query("delete from collection_resource where collection='$ref'");
+	sql_query("delete from collection_keyword where collection='$ref'");
 		#log this
 	collection_log($ref,"X",0, "");
 	}
@@ -206,6 +236,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Performs a search for themes / public collections.
 	# Returns a comma separated list of resource refs in each collection, used for thumbnail previews.
 	$sql="";
+	$keysql="";
 	# Keywords searching?
 	if (strlen($search)==1)
 		{
@@ -220,18 +251,14 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 			{
 			$keyref=resolve_keyword($keywords[$n],false);
 			if ($keyref!==false) {$keyrefs[]=$keyref;}
+
+			$keysql.="join collection_keyword k" . $n . " on k" . $n . ".collection=c.ref and (k" . $n . ".keyword='$keyref')";	
+			//$keysql="or keyword in (" . join (",",$keyrefs) . ")";
 			}
-		if (count($keyrefs)>0)
-			{
-			$keysql="or keyword in (" . join (",",$keyrefs) . ")";
-			}
-		else
-			{
-			$keysql="";
-			}
+
         global $search_public_collections_ref;
         if ($search_public_collections_ref){$spcr="or c.ref='$search'";} else {$spcr="";}    
-		$sql.="and (c.name rlike '$search' or u.username rlike '$search' or u.fullname rlike '$search' $spcr $keysql)";
+		//$sql.="and (c.name rlike '$search' or u.username rlike '$search' or u.fullname rlike '$search' $spcr )";
 		}
 
 	if ($exclude_themes) # Include only public collections.
@@ -260,11 +287,11 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	# Run the query
 	if ($include_resources)
 		{
-            return sql_query("select c.*,u.username,u.fullname, group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources, count( DISTINCT cr.resource ) count from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+            return sql_query("select distinct c.*,u.username,u.fullname, group_concat(distinct cr.resource order by cr.rating desc,cr.date_added) resources, count( DISTINCT cr.resource ) count from collection c left join collection_resource cr on c.ref=cr.collection left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection $keysql where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	else
 		{
-		    return sql_query("select c.*,u.username,u.fullname from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection where c.public=1 $sql group by c.ref order by $order_by $sort");
+		    return sql_query("select distinct c.*,u.username,u.fullname from collection c left outer join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection $keysql where c.public=1 $sql group by c.ref order by $order_by $sort");
 		}
 	}
 }
@@ -300,14 +327,20 @@ function index_collection($ref,$index_string='')
 
 	if ($index_collection_titles)
 		{
-			$indexfields = 'name,keywords';
+			$indexfields = 'c.name,c.keywords';
 		} else {
-			$indexfields = 'keywords';
+			$indexfields = 'c.keywords';
 		}
-
+	global $index_collection_creator;
+	if ($index_collection_creator)
+		{
+			$indexfields .= ',u.fullname';
+		} 
+		
+	
 	// if an index string wasn't supplied, generate one
 	if (!strlen($index_string) > 0){
-		$indexarray = sql_query("select $indexfields from collection where ref = '$ref'");
+		$indexarray = sql_query("select $indexfields from collection c join user u on u.ref=c.user and c.ref = '$ref'");
 		for ($i=0; $i<count($indexarray); $i++){
 			$index_string = implode(' ',$indexarray[$i]);
 		} 
@@ -357,14 +390,7 @@ function save_collection($ref)
 	sql_query($sql);
 	} # end replace hook - modifysavecollection
 	
-    	$index_string=getvalescaped("keywords","");
-	
-	global $index_collection_titles;
-	if ($index_collection_titles){
-		$index_string .= ' '.getvalescaped('name','');
-	}
-
-	index_collection($ref,$index_string);
+	index_collection($ref);
 		
 	# If 'users' is specified (i.e. access is private) then rebuild users list
 	$users=getvalescaped("users",false);

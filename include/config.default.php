@@ -938,9 +938,11 @@ $simple_search_dropdown_filtering=false;
 # When searching, also include themes/public collections at the top?
 $search_includes_themes=false;
 $search_includes_public_collections=false;
+$search_includes_user_collections=false;
 
 # include keywords from collection titles when indexing collections
-$index_collection_titles = false;
+$index_collection_titles = true;
+$index_collection_creator = true; 
 
 # Default home page (when not using themes as the home page).
 # You can set other pages, for example search results, as the home page e.g.
