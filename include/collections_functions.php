@@ -34,7 +34,6 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
     # Include themes in my collecions? 
     # Only filter out themes if $themes_in_my_collections is set to false in config.php
    	global $themes_in_my_collections;
-   	$themes_in_my_collections=true;
    	if (!$themes_in_my_collections)
    		{
 		if ($sql==""){$sql=" where ";} else {$sql.=" and ";}	
