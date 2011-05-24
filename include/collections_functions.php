@@ -52,7 +52,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 function get_collection($ref)
 	{
 	# Returns all data for collection $ref
-	$return=sql_query("select *,theme2,theme3,keywords from collection where ref='$ref'");
+	$return=sql_query("select c.*,c.theme2,c.theme3,c.keywords,u.fullname from collection c,user u where u.ref=c.user and c.ref='$ref'");
 	if (count($return)==0) {return false;} else 
 		{
 		$return=$return[0];

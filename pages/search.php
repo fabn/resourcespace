@@ -317,6 +317,26 @@ if ($search_titles)
 	
 	 if (substr($search,0,11)=="!collection"){
         if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
+           if ($collection_dropdown_user_access_mode){    
+                $colusername=$collectiondata['fullname'];
+                
+                # Work out the correct access mode to display
+                if (!hook('collectionaccessmode')) {
+                    if ($collectiondata["public"]==0){
+                        $colaccessmode= $lang["private"];
+                    }
+                    else{
+                        if (strlen($collectiondata["theme"])>0){
+                            $colaccessmode= $lang["theme"];
+                        }
+                    else{
+                            $colaccessmode= $lang["public"];
+                        }
+                    }
+                $collectiondata['name']=$collectiondata['name']." <smaller>(". $colusername."/".$colaccessmode.")</smaller>";    
+                }
+            }
+                
         $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.$collection_tag.$collectiondata["name"].'</a></span>'.$searchcrumbs.'</div></h1> ';
 		}	
     if (substr($search,0,5)=="!last")
