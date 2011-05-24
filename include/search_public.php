@@ -214,6 +214,7 @@ for ($n=0;$n<count($collections);$n++)
 				
 		?>
 		<td>&nbsp;</td>
+	    <?php if ($display_user_rating_stars && $k==""){ ?><td>&nbsp;&nbsp;</td><?php } ?>
 		<?php if ($id_column){?><td>&nbsp;</td><?php } ?>
 		<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){ $collection_tag=$lang['collection'];} else {$collection_tag=$lang['smartcollection'];}?>
 		<?php if ($resource_type_column){?><td><?php echo $collection_tag?></td><?php } ?>
