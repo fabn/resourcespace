@@ -11,7 +11,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	if (strlen($find)==1)
 		{
 		# A-Z search
-		$sql="c.name like '$find%'";
+		$sql=" where c.name like '$find%'";
 		}
 	elseif (strlen($find)>1)
 		{  
@@ -31,17 +31,15 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 		//$sql.="and (c.name rlike '$search' or u.username rlike '$search' or u.fullname rlike '$search' $spcr )";
 		}
     
-    if ($sql!="") {$sql="where " . $sql;}
     # Include themes in my collecions? 
     # Only filter out themes if $themes_in_my_collections is set to false in config.php
    	global $themes_in_my_collections;
-   	
+   	$themes_in_my_collections=true;
    	if (!$themes_in_my_collections)
    		{
-   		if ($sql!="") {$sql.=" and ";}
-   		$sql.="(length(c.theme)=0 or c.theme is null) ";
+		if ($sql==""){$sql=" where ";} else {$sql.=" and ";}	
+   		$sql.=" (length(c.theme)=0 or c.theme is null) ";
    		}
-	
    
 	$return="select distinct * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection left outer join collection_keyword k on c.ref=k.collection $sql  group by c.ref
 	union
