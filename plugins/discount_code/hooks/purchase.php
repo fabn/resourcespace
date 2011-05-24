@@ -2,9 +2,10 @@
 
 function HookDiscount_codePurchasePurchase_extra_options ()
 	{
+	global $lang;
 	?>
-	<p>If you have been given a discount code, please enter it below.<br>
-	Discount Code:
+	<p><?php echo $lang["enter-code"] ?><br>
+	<?php echo $lang["discount_code"] .": " ?>
 	<input type="text" name="discount_code" size="20">
 	</p>
 	
@@ -18,7 +19,7 @@ function HookDiscount_codePurchasePurchase_extra_options ()
 
 function HookDiscount_codePurchaseAdjust_item_price ($origprice,$resource,$size)
 	{
-	global $discount_error,$discount_applied;
+	global $discount_error,$discount_applied, $lang;
 	
 	# Discount pipeline support, allow multiple hook calls to modify the price multiple times
 	global $purchase_pipeline_price;
@@ -32,7 +33,7 @@ function HookDiscount_codePurchaseAdjust_item_price ($origprice,$resource,$size)
 	$discount_info=sql_query("select * from discount_code where upper(code)='$discount_code'");
 	if (count($discount_info)==0)
 		{
-		$discount_error="<strong>Invalid discount code.</strong> <br> A discount has not been applied.";
+		$discount_error=$lang["error-invalid-discount-code"];
 		return false;
 		}
 	else
@@ -45,7 +46,7 @@ function HookDiscount_codePurchaseAdjust_item_price ($origprice,$resource,$size)
 	$used=sql_value("select count(*) value from discount_code_used where user='$userref' and upper(code)='$discount_code'",0);
 	if ($used>0)		
 		{
-		$discount_error="<strong>Discount code already used.</strong> <br> You can use discount codes only once. A discount has not been applied.";
+		$discount_error=$lang["error-discount-code-already-used"];
 		return false;
 		}
 		
@@ -63,7 +64,7 @@ function HookDiscount_codePurchaseAdjust_item_price ($origprice,$resource,$size)
 
 function HookDiscount_codePurchasePrice_display_extras ()
 	{
-	global $discount_error,$discount_applied;
+	global $discount_error,$discount_applied, $lang;
 	
 	if (isset($discount_error) && $discount_error!="")
 		{
@@ -74,7 +75,7 @@ function HookDiscount_codePurchasePrice_display_extras ()
 	elseif (isset($discount_applied) && $discount_applied!="")
 		{
 		?>
-		<p>Discount applied: <?php echo $discount_applied ?>%</p>
+		<p><?php echo $lang["discount_applied"] . ": " . $discount_applied . "%" ?></p>
 		<?php	
 		}
 	}

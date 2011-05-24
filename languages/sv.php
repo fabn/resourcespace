@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110520 för version 2717
+# Senast uppdaterad av Henrik Frizén 20110524 för version 2726
 #
 #
 # User group names (for the default user groups)
@@ -233,7 +233,7 @@ $lang["emailcollection"]="Dela samling via e-post";
 $lang["collectionname"]="Samlingsnamn";
 $lang["collectionid"]="Samlingsnummer";
 $lang["collectionidprefix"]="Saml_nr";
-$lang["emailtousers"]="Mottagare<br><br><b>För mottagare med användarkonto (intern):</b> Skriv några bokstäver i användarens namn för att söka, klicka sen på det hittade namnet och därefter på plus.<br><br><b>För mottagare  utan användarkonto (extern):</b> Skriv en e-postadress och klicka på plus.";
+$lang["emailtousers"]="Mottagare<br><br><b>För mottagare med användarkonto (intern):</b> Skriv några bokstäver i användarens namn för att söka, klicka sen på det hittade namnet och därefter på plus.<br><br><b>För mottagare utan användarkonto (extern):</b> Skriv en e-postadress och klicka på plus.";
 $lang["removecollectionareyousure"]="Är du säker på att du vill avlägsna den här samlingen från listan?";
 $lang["managemycollections"]="Hantera 'Mina samlingar'";
 $lang["createnewcollection"]="Skapa ny samling";
@@ -539,6 +539,7 @@ $lang["action-download"]="Ladda ned";
 $lang["action-email"]="E-posta";
 $lang["action-edit"]="Redigera";
 $lang["action-delete"]="Ta bort";
+$lang["action-deletecollection"]="Ta bort samling";
 $lang["action-revertmetadata"]="Återställ metadata";
 $lang["confirm-revertmetadata"]="Är du säker på att du vill återhämta den ursprungliga metadatan från den här filen? Den här åtgärden simulerar en återuppladdningen av filen, och du kommer att förlora all ändrad metadata.";
 $lang["action-remove"]="Avlägsna";
@@ -643,7 +644,7 @@ $lang["leaderboard"]="Rankingtabell";
 $lang["confirmeditall"]="Är du säker på att du vill spara? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling.";
 $lang["confirmsubmitall"]="Är du säker på att du vill sända allt material för granskning? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och sända det till granskning.";
 $lang["confirmunsubmitall"]="Är du säker på att du vill dra tillbaka allt material från granskningsprocessen? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och dra tillbaka det från granskningsprocessen.";
-$lang["confirmpublishall"]="Är du säker på att du vill publicera materialet? Detta kommer skriva över existerande värden för de valda fälten för allt material i din aktuella samling och publicera allt för publik visning.";
+$lang["confirmpublishall"]="Är du säker på att du vill publicera materialet? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och publicera allt för publik visning.";
 $lang["confirmunpublishall"]="Är du säker på att du vill dra tillbaka publiceringen? Detta kommer skriva över existerande värden för de valda fälten för allt material i din aktuella samling och dra tillbaka det från publik visning.";
 $lang["collectiondeleteconfirm"]="Är du säker på att du vill ta bort den här samlingen?";
 $lang["hidden"]="(dolt)";
@@ -1054,7 +1055,7 @@ $lang["downloadreport"]="Ladda ned rapport";
 
 #Bug Report Page
 $lang['reportbug']="Förbered buggrapport till utvecklarna av ResourceSpace";
-$lang['reportbug-detail']="Följande information har sammanställts till buggrapporten.  Du kommer att kunna redigera all data innan du skickar iväg rapporten.";
+$lang['reportbug-detail']="Följande information har sammanställts till buggrapporten. Du kommer att kunna redigera all data innan du skickar iväg rapporten.";
 $lang['reportbug-login']="OBS! Klicka här för att logga in till bugghanteringssystemet INNAN du klickar på 'Förbered buggrapport'.";
 $lang['reportbug-preparebutton']="Förbered buggrapport";
 
@@ -1197,7 +1198,7 @@ $lang["purchaseonaccount"]="Debitera konto";
 $lang["areyousurepayaccount"]="Är du säker på att du vill debitera ditt konto för detta köp?";
 $lang["accountholderpayment"]="Kontobetalning";
 $lang["subtotal"]="Delsumma";
-$lang["discountsapplied"]="Totala rabatter";
+$lang["discountsapplied"]="Avdragna rabatter";
 $lang["log-p"]="Inköpt material";
 $lang["viauser"]="via användare";
 $lang["close"]="Stäng";
@@ -1361,7 +1362,7 @@ $lang["cc-emailaddress"] = "Kopia till %emailaddress"; # %emailaddress will be r
 
 $lang["sort"] = "Sortera";
 $lang["sortcollection"] = "Sortera samling";
-$lang["emptycollection"] = "Töm samling";
+$lang["emptycollection"] = "Avlägsna materialet";
 $lang["emptycollectionareyousure"]="Är du säker på att du vill avlägsna allt material ur den här samlingen?";
 
 $lang["error-cannoteditemptycollection"]="Du kan inte redigera en tom samling.";
@@ -1389,3 +1390,4 @@ $lang["owned_by_you-1"] = "(<strong>1</strong> ägd av dig)";
 $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> ägda av dig)"; # %mynumber will be replaced, e.g. (2 owned by you)
 
 $lang["listresources"]= "Material:";
+$lang["action-log"]="Visa logg";
