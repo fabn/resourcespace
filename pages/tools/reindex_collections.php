@@ -16,7 +16,7 @@ include "../../include/image_processing.php";
 set_time_limit(60*60*5);
 echo "<pre>";
 
-$collections=sql_query("select * from collection where public=1 order by ref");
+$collections=sql_query("select * from collection order by ref");
 for ($n=0;$n<count($collections);$n++)
 	{
 		$ref=$collections[$n]["ref"];
