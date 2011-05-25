@@ -9,8 +9,6 @@ a:visited {color:#B5C3D4;}
 a:hover {color:#FFFFFF;}
 a:active {color:#B5C3D4;}
 
-.searchcrumbs a {color:#FFF;}
-
 input[readonly] {color: #FFFFFF;}
 
 #Header {border-bottom: 1px solid #5A7599;background: url(../gfx/greyblu/titles/title.gif) no-repeat;}

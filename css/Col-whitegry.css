@@ -9,8 +9,6 @@ a:visited {color:#737373;}
 a:hover {color:#000000;}
 a:active {color:#737373;}
 
-.searchcrumbs a {color:#3C3C3C;}
-
 input[readonly] {color: #000000;}
 
 #Header {border-bottom: 1px solid #BBBBBB;background: url(../gfx/whitegry/titles/title.gif) no-repeat;}
