@@ -1185,6 +1185,7 @@ function refine_searchstring($search){
 	$search=str_replace ("\xe2\x80\x8b","",$search);
 
 	$keywords=split_keywords($search);
+	print_r($keywords);
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
@@ -1194,7 +1195,15 @@ function refine_searchstring($search){
 				$keyvalues=explode(" ",$keywordar[1]);
 				foreach ($keyvalues as $keyvalue){
 					if (!in_array($keyvalue,$noadd)){ $encoding=mb_detect_encoding($keyvalue);
-					$fixedkeywords[]=$keyname.":".$keyvalue;
+						if (strpos($keyvalue,";")>0){
+							$keyvalues=explode(";",$keyvalue);
+							foreach($keyvalues as $keyvalue){
+								$fixedkeywords[]=$keyname.":".$keyvalue;
+							}
+						}
+						else {
+						$fixedkeywords[]=$keyname.":".$keyvalue;
+						}
 					}
 				}
 			}
