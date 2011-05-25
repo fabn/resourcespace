@@ -253,7 +253,7 @@ if (strpos($search,"!")!==false) {$restypes="";}
 
 # Do the search!
 $search=refine_searchstring($search);
-setcookie("search",$search);
+if (strpos($search,"!")===false) {setcookie("search",$search);}
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
 
@@ -430,7 +430,7 @@ if (substr($search,0,11)=="!collection"){
 
 # Do the public collection search if configured.
 
-if (($search_includes_themes || $search_includes_public_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
+if (($search_includes_themes || $search_includes_public_collections || $search_includes_user_collections) && $search!="" && substr($search,0,1)!="!" && $offset==0)
     {
     $collections=search_public_collections($search,"theme","ASC",!$search_includes_themes,!$search_includes_public_collections,true);
     if ($search_includes_user_collections){
