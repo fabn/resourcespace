@@ -314,6 +314,7 @@ function remove_collection($user,$collection)
 	collection_log($collection,"T",0, sql_value ("select username as value from user where ref = $user",""));
 	}
 
+if (!function_exists("index_collection")){
 function index_collection($ref,$index_string='')
 	{
 	# Update the keywords index for this collection
@@ -352,7 +353,7 @@ function index_collection($ref,$index_string='')
 	// return the number of keywords indexed
 	return $n;
 	}
-
+}
 
 function save_collection($ref)
 	{
