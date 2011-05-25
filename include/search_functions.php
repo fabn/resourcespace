@@ -1185,7 +1185,6 @@ function refine_searchstring($search){
 	$search=str_replace ("\xe2\x80\x8b","",$search);
 
 	$keywords=split_keywords($search);
-	print_r($keywords);
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
