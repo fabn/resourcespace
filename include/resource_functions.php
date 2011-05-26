@@ -535,8 +535,8 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		#echo "<li>removing " . $keywords[$n];
-		sql_query("delete from resource_keyword where resource='$ref' and keyword=(select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' limit 1");
-		sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keywords[$n]) . "' limit 1");
+			sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' limit 1");
+			sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keywords[$n]) . "' limit 1");
 		}	
 	}
 	
