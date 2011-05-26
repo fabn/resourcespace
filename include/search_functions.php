@@ -1193,7 +1193,7 @@ function refine_searchstring($search){
 			if (substr($keyname,0,1)!="!"){
 				$keyvalues=explode(" ",$keywordar[1]);
 				foreach ($keyvalues as $keyvalue){
-					if (!in_array($keyvalue,$noadd)){ $encoding=mb_detect_encoding($keyvalue);
+					if (!in_array($keyvalue,$noadd)){ 
 						if (strpos($keyvalue,";")>0){
 							$keyvalues=explode(";",$keyvalue);
 							foreach($keyvalues as $keyvalue){
