@@ -1547,7 +1547,7 @@ $debug_log=false;
 $view_resource_collections=false;
 
 # enable titles on the search page that help describe the current context
-$search_titles=true;
+$search_titles=false;
 
 # $collections_compact_style switches on some experimental UI changes for collection-level tools.
 # making the in the collections panel into a link to the Collection Manage page, 
