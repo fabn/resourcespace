@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110526 för version 2743
+# Senast uppdaterad av Henrik Frizén 20110526 för version 2746
 #
 #
 # User group names (for the default user groups)
@@ -90,6 +90,88 @@ $lang["fieldtitle-file_size"]=$lang["filesize"]="Filstorlek";
 $lang["fieldtitle-category"]="Kategori";
 $lang["fieldtitle-subject"]="Ämne";
 $lang["fieldtitle-author"]="Författare";
+
+# Field types
+$lang["fieldtype-text_box_single_line"]="Textfält (enradigt)";
+$lang["fieldtype-text_box_multi-line"]="Textfält (flerradigt)";
+$lang["fieldtype-text_box_large_multi-line"]="Textfält (stort flerradigt)";
+$lang["fieldtype-check_box_list"]="Kryssrutor (grupp)";
+$lang["fieldtype-drop_down_list"]="Rullgardinslista";
+$lang["fieldtype-date_and_time"]="Datum/tid";
+$lang["fieldtype-expiry_date"]="Utgångsdatum";
+$lang["fieldtype-category_tree"]="Kategoriträd";
+
+# Property labels (for the default properties)
+$lang["documentation-permissions"]="Se <a href=../../documentation/permissions_sv.txt target=_blank>hjälpfilen för behörigheter</a> om du behöver mer information.";
+$lang["property-reference"]="Referens-nr";
+$lang["property-name"]="Namn";
+$lang["property-permissions"]="Behörigheter";
+$lang["information-permissions"]="OBS! Även eventuella globala behörigheter inställda i config.php gäller.";
+$lang["property-fixed_theme"]="Fast tema";
+$lang["property-parent"]="Förälder";
+$lang["property-search_filter"]="Sökfilter";
+$lang["property-edit_filter"]="Redigeringsfilter";
+$lang["property-resource_defaults"]="Förvald metadata för nytt material";
+$lang["property-override_config_options"]="Åsidosätt inställningar i config.php";
+$lang["property-email_welcome_message"]="Välkomstmeddelande (e-post)";
+$lang["information-ip_address_restriction"]="Jokertecken kan användas i begränsningen av ip-adresser, ex. 128.124.*";
+$lang["property-ip_address_restriction"]="Begränsning av ip-adresser";
+$lang["property-request_mode"]="Läge för begäranden/beställningar";
+$lang["property-allow_registration_selection"]="Tillåt val av denna grupp vid registrering";
+
+$lang["property-resource_type_id"]="Materialtyp-nr";
+$lang["information-allowed_extensions"]="Om fältet är ifyllt tillåts endast uppladdning av filer med angivna filnamnstillägg, ex. jpg, gif";
+$lang["property-allowed_extensions"]="Tillåtna filnamnstillägg";
+
+$lang["property-field_id"]="Fält-nr";
+$lang["property-title"]="Titel";
+$lang["property-resource_type"]="Materialtyp";
+$lang["property-field_type"]="Fälttyp";
+$lang["information-options"]="<br /><b>Observera</b> &ndash; det är bättre att använda Hantera fältalternativ i Hantera material i Administration för att redigera fältalternativen, eftersom lagrad data då överförs automatiskt om du byter namn på ett alternativ.";
+$lang["property-options"]="Alternativ";
+$lang["property-required"]="Obligatoriskt";
+$lang["property-order_by"]="Sorteringsnummer";
+$lang["property-index_this_field"]="Indexera detta fält";
+$lang["information-enable_partial_indexing"]="Nyckelordsindexering av delar av ord (prefix + infix) bör användas sparsamt då det ökar storleken på indexet betydligt. Läs mer om detta i wikin.";
+$lang["property-enable_partial_indexing"]="Aktivera indexering av delar av ord";
+$lang["information-shorthand_name"]="Viktigt: För att fältet ska visas i Avancerad sökning måste det ha ett kortnamn. Det får bara innehålla små bokstäver &ndash; inga mellanslag, siffror eller specialtecken.";
+$lang["property-shorthand_name"]="Kortnamn";
+$lang["property-display_field"]="Visa fält";
+$lang["property-enable_advanced_search"]="Aktivera i avancerad sökning";
+$lang["property-enable_simple_search"]="Aktivera i enkel sökning";
+$lang["property-use_for_find_similar_searching"]="Använd vid sökning efter liknande material";
+$lang["property-iptc_equiv"]="IPTC-motsv.";
+$lang["property-display_template"]="Visningsmall";
+$lang["property-value_filter"]="Värdefilter";
+$lang["property-tab_name"]="Fliknamn";
+$lang["property-smart_theme_name"]="Namn på 'Smart tema'";
+$lang["property-exiftool_field"]="Exiftool-fält (tag name)";
+$lang["property-exiftool_filter"]="Exiftool-filter";
+$lang["property-help_text"]="Hjälptext";
+$lang["information-display_as_dropdown"]="För kryssrutor och rullgardinslistor: Visa som rullgardinslista i Avancerad sökning? (Den förvalda inställningen är att visa båda som en grupp av kryssrutor för att möjliggöra ELLER-funktion vid sökning.)";
+$lang["property-display_as_dropdown"]="Visa som rullgardinslista";
+$lang["property-external_user_access"]="Tillåt åtkomst för externa användare";
+$lang["property-autocomplete_macro"]="Autoförslagsmakro";
+$lang["property-hide_when_uploading"]="Dölj vid uppladdning";
+
+$lang["property-query"]="Fråga";
+
+$lang["information-id"]="OBS! Fältet 'Id' måste innehålla en unik kod bestående av tre bokstäver";
+$lang["property-id"]="Id";
+$lang["property-width"]="Bredd";
+$lang["property-height"]="Höjd";
+$lang["property-pad_to_size"]="Fyll ut till storlek";
+$lang["property-internal"]="Intern";
+$lang["property-allow_preview"]="Tillåt förhandsgranskning";
+$lang["property-allow_restricted_download"]="Tillåt nedladdning även vid begränsad åtkomst";
+
+$lang["property-total_resources"]="Totalt antal material";
+$lang["property-total_keywords"]="Totalt antal nyckelord";
+$lang["property-resource_keyword_relationships"]="Antal relationer material&ndash;nyckelord";
+$lang["property-total_collections"]="Totalt antal samlingar";
+$lang["property-collection_resource_relationships"]="Antal relationer samling&ndash;material";
+$lang["property-total_users"]="Totalt antal användare";
+
 
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Logga ut";
@@ -631,7 +713,7 @@ $lang["deleteallsure"]="Är du säker på att du vill TA BORT detta material? De
 $lang["batchdonotaddcollection"]="(Lägg inte till i en samling)";
 $lang["collectionsthemes"]="Relaterade teman och publika samlingar";
 $lang["recent"]="Nyaste";
-$lang["batchcopyfrom"]="Kopiera metadata från material nr";
+$lang["batchcopyfrom"]="Kopiera metadata från material med nr";
 $lang["copy"]="Kopiera";
 $lang["zipall"]="Zippa alla";
 $lang["downloadzip"]="Ladda ned samlingen som en zip-fil";
@@ -645,7 +727,7 @@ $lang["confirmeditall"]="Är du säker på att du vill spara? Detta kommer att s
 $lang["confirmsubmitall"]="Är du säker på att du vill sända allt material för granskning? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och sända det till granskning.";
 $lang["confirmunsubmitall"]="Är du säker på att du vill dra tillbaka allt material från granskningsprocessen? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och dra tillbaka det från granskningsprocessen.";
 $lang["confirmpublishall"]="Är du säker på att du vill publicera materialet? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och publicera allt för publik visning.";
-$lang["confirmunpublishall"]="Är du säker på att du vill dra tillbaka publiceringen? Detta kommer skriva över existerande värden för de valda fälten för allt material i din aktuella samling och dra tillbaka det från publik visning.";
+$lang["confirmunpublishall"]="Är du säker på att du vill dra tillbaka publiceringen? Detta kommer att skriva över existerande värden för de valda fälten för allt material i din aktuella samling och dra tillbaka det från publik visning.";
 $lang["collectiondeleteconfirm"]="Är du säker på att du vill ta bort den här samlingen?";
 $lang["hidden"]="(dolt)";
 $lang["requestnewpassword"]="Begär nytt lösenord";

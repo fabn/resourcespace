@@ -350,17 +350,32 @@ else
             }
             
         $label=$key;
-        if (strpos($label,"<")===false) {$label=ucfirst(str_replace("_"," ",$label));}
-        else    
+        if (preg_match('/\[lang_[^\]]*\]/',$label))
             {
-            $label=str_replace($transfrom,$transto,$label);
-            $label=str_replace("[" . $key . "]",$value,$label);
+            $label=substr($label,6,-1); # Removes "[lang_" and "]".
+            $langindex=true;
+            }
+        else
+            {
+            $langindex=false;
+            if (strpos($label,"<")===false)
+                {
+                # Formatting of label texts.
+                # (Needed for texts not included in the language files.
+                # The function lang_or_i18n_get_translated will by its design
+                # revert these changes when looking for a $lang index.)
+                $label=ucfirst(str_replace("_"," ",$label));
+                }
+            else    
+                {
+                $label=str_replace($transfrom,$transto,$label);
+                $label=str_replace("[" . $key . "]",$value,$label);
+                }
             }
         if ($key=="newredirect") {?><input type=hidden name="newredirect" value="<?php echo $value?>"><?php } else {
         ?>
         <p>
-        <?php if (!(is_numeric($key))) { ?><?php echo $label?><br><?php } ?>
-        <?php
+        <?php if (!(is_numeric($key))) { echo  ($langindex==true ? $lang[$label] : lang_or_i18n_get_translated($label,"property-")) . "<br>"; }
         # include plugin
         if (file_exists("plugins/" . $curid . "_" . $key . ".php")) {include ("plugins/" . $curid . "_" . $key . ".php");}
         
@@ -432,7 +447,7 @@ else
 	            foreach ($drop as $item)
 	                {
 	                ?>
-	                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo lang_or_i18n_get_translated($item["name"], array("resourcetype-", "requesttype-"))?></option>
+	                <option <?php echo ($value==$item["ref"])?" selected":""?> value="<?php echo $item["ref"]?>"><?php echo lang_or_i18n_get_translated($item["name"], array("resourcetype-", "requesttype-", "fieldtype-"))?></option>
 	                <?php
 	                }
 	               ?>

@@ -66,6 +66,88 @@ $lang["fieldtitle-category"]="Category";
 $lang["fieldtitle-subject"]="Subject";
 $lang["fieldtitle-author"]="Author";
 
+# Field types
+$lang["fieldtype-text_box_single_line"]="Text Box (single line)";
+$lang["fieldtype-text_box_multi-line"]="Text Box (multi-line)";
+$lang["fieldtype-text_box_large_multi-line"]="Text Box (large multi-line)";
+$lang["fieldtype-check_box_list"]="Check box list";
+$lang["fieldtype-drop_down_list"]="Drop down list";
+$lang["fieldtype-date_and_time"]="Date / Time";
+$lang["fieldtype-expiry_date"]="Expiry Date";
+$lang["fieldtype-category_tree"]="Category Tree";
+
+# Property labels (for the default properties)
+$lang["documentation-permissions"]="See <a href=../../documentation/permissions.txt target=_blank>the permissions help text file</a> for further information on permissions.";
+$lang["property-reference"]="Reference";
+$lang["property-name"]="Name";
+$lang["property-permissions"]="Permissions";
+$lang["information-permissions"]="NOTE: Global permissions from config may also be in effect";
+$lang["property-fixed_theme"]="Fixed theme";
+$lang["property-parent"]="Parent";
+$lang["property-search_filter"]="Search filter";
+$lang["property-edit_filter"]="Edit filter";
+$lang["property-resource_defaults"]="Resource defaults";
+$lang["property-override_config_options"]="Override config options";
+$lang["property-email_welcome_message"]="Email welcome message";
+$lang["information-ip_address_restriction"]="Wildcards are supported for IP address restrictions, e.g. 128.124.*";
+$lang["property-ip_address_restriction"]="IP address restriction";
+$lang["property-request_mode"]="Request mode";
+$lang["property-allow_registration_selection"]="Allow registration selection";
+
+$lang["property-resource_type_id"]="Resource type id";
+$lang["information-allowed_extensions"]="If set, only files with the specified extensions are allowed upon upload to this type, e.g. jpg,gif";
+$lang["property-allowed_extensions"]="Allowed extensions";
+
+$lang["property-field_id"]="Field id";
+$lang["property-title"]="Title";
+$lang["property-resource_type"]="Resource Type";
+$lang["property-field_type"]="Field Type";
+$lang["information-options"]="<br /><b>Please note</b> - it is better to use the Manage Field Options function from the Manage Resources section of the Team Home to edit field options as existing data is automatically migrated when options are renamed.";
+$lang["property-options"]="Options";
+$lang["property-required"]="Required";
+$lang["property-order_by"]="Order by";
+$lang["property-index_this_field"]="Index this field";
+$lang["information-enable_partial_indexing"]="Partial keyword indexing (prefix+infix indexing) should be used sparingly as it will significantly increase the index size. See the wiki for details.";
+$lang["property-enable_partial_indexing"]="Enable partial indexing";
+$lang["information-shorthand_name"]="Important: Shorthand name must be set for the field to appear on Advanced Search. It must contain only lowercase alphabetical characters - no spaces, numbers or symbols.";
+$lang["property-shorthand_name"]="Shorthand name";
+$lang["property-display_field"]="Display field";
+$lang["property-enable_advanced_search"]="Enable advanced search";
+$lang["property-enable_simple_search"]="Enable simple search";
+$lang["property-use_for_find_similar_searching"]="Use for find similar searching";
+$lang["property-iptc_equiv"]="Iptc equiv";
+$lang["property-display_template"]="Display template";
+$lang["property-value_filter"]="Value filter";
+$lang["property-tab_name"]="Tab name";
+$lang["property-smart_theme_name"]="Smart theme name";
+$lang["property-exiftool_field"]="Exiftool field";
+$lang["property-exiftool_filter"]="Exiftool filter";
+$lang["property-help_text"]="Help text";
+$lang["information-display_as_dropdown"]="Checkbox lists and dropdown boxes: display as a dropdown box on the advanced search? (the default is to display both as checkbox lists on the advanced search page to enable OR functionality)";
+$lang["property-display_as_dropdown"]="Display as dropdown";
+$lang["property-external_user_access"]="External user access";
+$lang["property-autocomplete_macro"]="Autocomplete macro";
+$lang["property-hide_when_uploading"]="Hide when uploading";
+
+$lang["property-query"]="Query";
+
+$lang["information-id"]="Note: 'Id' below MUST be set to a three character unique code";
+$lang["property-id"]="Id";
+$lang["property-width"]="Width";
+$lang["property-height"]="Height";
+$lang["property-pad_to_size"]="Pad to size";
+$lang["property-internal"]="Internal";
+$lang["property-allow_preview"]="Allow preview";
+$lang["property-allow_restricted_download"]="Allow restricted download";
+
+$lang["property-total_resources"]="Total resources";
+$lang["property-total_keywords"]="Total keywords";
+$lang["property-resource_keyword_relationships"]="Resource keyword relationships";
+$lang["property-total_collections"]="Total collections";
+$lang["property-collection_resource_relationships"]="Collection resource relationships";
+$lang["property-total_users"]="Total users";
+
+
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Log Out";
 $lang["contactus"]="Contact Us";
@@ -232,8 +314,8 @@ $lang["research"]="Research";
 $lang["savedsearch"]="Saved Search";
 $lang["mustspecifyoneusername"]="You must specify at least one username";
 $lang["couldnotmatchallusernames"]="Could not match all the usernames";
-$lang["emailcollectionmessage"]="has e-mailed you a collection of resources from $applicationname which has been added to your 'My Collections' page."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
-$lang["emailcollectionmessageexternal"]="has e-mailed you a collection of resources from $applicationname."; # suffixed to user name e.g. "Fred has e-mailed you a collection.."
+$lang["emailcollectionmessage"]="has e-mailed you a collection of resources from $applicationname which has been added to your 'My Collections' page."; # suffixed to user name e.g. "Fred has e-mailed you a collection..."
+$lang["emailcollectionmessageexternal"]="has e-mailed you a collection of resources from $applicationname."; # suffixed to user name e.g. "Fred has e-mailed you a collection..."
 $lang["clicklinkviewcollection"]="Click the link below to view the collection.";
 $lang["zippedcollectiontextfile"]="Include text file with resource/collection data.";
 $lang["copycollectionremoveall"]="Remove all resources before copying";
@@ -365,7 +447,7 @@ $lang["log-l"]="Logged in"; # For user entries only.
 $lang["log-t"]="Transformed file";
 $lang["log-s"]="Change status";
 $lang["log-a"]="Change access";
-$lang["log-r"]="Reverted Metadata";
+$lang["log-r"]="Reverted metadata";
 
 $lang["backtoresourceview"]="Back to resource view";
 
