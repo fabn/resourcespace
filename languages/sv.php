@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110524 för version 2726
+# Senast uppdaterad av Henrik Frizén 20110526 för version 2743
 #
 #
 # User group names (for the default user groups)
@@ -271,7 +271,7 @@ $lang["downloaded"]="Nedladdad";
 $lang["contents"]="Innehåll";
 $lang["forthispackage"]="för det här paketet";
 $lang["didnotinclude"]="Utelämnades";
-$lang["selectcollection"]="Välj samlingen";
+$lang["selectcollection"]="Välj samling";
 $lang["total"]="Totalt";
 $lang["ownedbyyou"]="ägda av dig";
 
@@ -858,7 +858,7 @@ $lang["setup-if_apiscramblekey"]="Ange en sträng (svår att gissa) som skramlin
 $lang["setup-if_applicationname"]="Namnet på webbplatsen/installationen (ex. 'MittFöretags mediaarkiv').";
 $lang["setup-err_mysqlbinpath"]="Det går inte att verifiera sökvägen. Lämna tomt för att inaktivera.";
 $lang["setup-err_baseurl"]="Baswebbadressen är ett obligatoriskt fält.";
-$lang["setup-err_baseurlverify"]="Baswebbadressen verkar inte vara korrekt (kunde inte ladda license.txt).";
+$lang["setup-err_baseurlverify"]="Baswebbadressen verkar inte vara korrekt (kunde inte läsa in license.txt).";
 $lang["setup-err_spiderpassword"]="Lösenordet som krävs för spider.php. VIKTIGT! Slumpa fram detta för varje ny installation. Ditt material kommer att kunna läsas av den som kan detta lösenord. Innehållet i fältet har redan slumpats fram för dig, men du kan ändra det så att det motsvarar en befintlig installation, om det behövs.";
 $lang["setup-err_scramblekey"]="Om detta är en installation nåbar från Internet rekommenderas skramling.";
 $lang["setup-err_apiscramblekey"]="Om detta är en installation nåbar från Internet rekommenderas skramling.";
@@ -1132,8 +1132,8 @@ $lang["nodownloadsavailable"]="Tyvärr finns det inga nedladdningar tillgänglig
 $lang["proceedtocheckout"]="Gå till kassan";
 $lang["totalprice"]="Totalsumma";
 $lang["price"]="Pris";
-$lang["waitingforpaymentauthorisation"]="Tyvärr har vi inte fått betalningsuppdraget. Vänta en kort stund och klicka sen på 'Ladda om' nedan.";
-$lang["reload"]="Ladda om";
+$lang["waitingforpaymentauthorisation"]="Tyvärr har vi inte fått betalningsuppdraget. Vänta en kort stund och klicka sen på 'Läs om' nedan.";
+$lang["reload"]="Läs om";
 $lang["downloadpurchaseitems"]="Ladda ned köpta artiklar";
 $lang["downloadpurchaseitemsnow"]="Använd länkarna nedan för att ladda ned dina köpta artiklar direkt.<br><br>Lämna inte den här sidan innan du har laddat ned alla artiklar.";
 $lang["alternatetype"]="Alternativ typ";

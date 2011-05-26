@@ -167,14 +167,14 @@ if ($validtoken)
 		<!-- Public/private? -->
 		<p><?php echo $lang["flickr_publish_as"] ?>
 		<select name="private">
-		<option value="0"><?php echo $lang["flickr_public"] ?></option>
-		<option value="1" <?php if (getval("private","")==1) { ?>selected<?php } ?>><?php echo $lang["flickr_private"] ?></option>
+		<option value="0"><?php echo $lang["flickr-publish-public"] . "&nbsp;&nbsp;" ?></option>
+		<option value="1" <?php if (getval("private","")==1) { ?>selected<?php } ?>><?php echo $lang["flickr-publish-private"] . "&nbsp;&nbsp;" ?></option>
 		</select>
 		</p>
 		
 
 		<p><?php echo $lang["publish_new_help"] ?></p>		
-		<input <?php if ($unpublished==0) { ?>disabled<?php } ?> type="submit" name="publish_new" value="<?php echo str_replace("?",$unpublished,$lang["publish_new"]); ?>">
+		<input <?php if ($unpublished==0) { ?>disabled<?php } ?> type="submit" name="publish_new" value="<?php echo ($unpublished==1 ? $lang["publish_new-1"] : str_replace("?",$unpublished,$lang["publish_new-2"])); ?>">
 
 
 
@@ -189,9 +189,9 @@ if ($validtoken)
 			}
 		?>
 
-		<br /><br /><br /><br /><br /><hr /><h2><?php echo $lang["flickr_clear_photoid"] ?></h2>
+		<br /><br /><br /><br /><br /><hr /><h2><?php echo $lang["clear-flickr-photoids"] ?></h2>
 		<p><?php echo $lang["flickr_clear_photoid_help"] ?></p>
-		<input type="submit" name="clear_photoid" value="<?php echo $lang["flickr_clear_photoid"]; ?>">
+		<input type="submit" name="clear_photoid" value="<?php echo $lang["action-clear-flickr-photoids"]; ?>">
 
 		</form>
 		<?php
