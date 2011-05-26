@@ -17,7 +17,7 @@ for ($n=0;$n<count($users) && $n<=20;$n++)
 	if (checkperm("E") && ($users[$n]["groupref"]!=$usergroup) && ($users[$n]["groupparent"]!=$usergroup) && ($users[$n]["groupref"]!=$usergroupparent)) {$show=false;}
 	if ($show)
 		{
-		?><li><?php echo $users[$n]["username"]?><span class="informal"> (<?php echo $users[$n]["fullname"]?>)</span></li>
+		?><li><span class="informal"><?php echo $users[$n]["fullname"]?> (</span><?php echo $users[$n]["username"]?><span class="informal">)</span></li>
 		<?php
 		}
 	}
