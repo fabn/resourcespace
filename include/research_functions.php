@@ -48,7 +48,7 @@ function get_research_requests($find="",$order_by="name",$sort="ASC")
 if (!function_exists("get_research_request")){
 function get_research_request($ref)
 	{
-	$return=sql_query("select *,(select username from user u where u.ref=r.user) username, (select username from user u where u.ref=r.assigned_to) assigned_username from research_request r where ref='$ref'");
+	$return=sql_query("select *,email,(select username from user u where u.ref=r.user) username, (select username from user u where u.ref=r.assigned_to) assigned_username from research_request r where ref='$ref'");
 	return $return[0];
 	}
 }	
