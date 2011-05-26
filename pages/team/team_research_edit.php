@@ -30,14 +30,19 @@ include "../../include/header.php";
 <form method=post>
 <input type=hidden name=ref value="<?php echo $ref?>">
 
-<div class="Question"><label><?php echo $lang["nameofproject"]?></label><div class="Fixed"><?php echo $research["name"]?></div>
+<div class="Question"><label><?php echo $lang["nameofproject"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["name"])?></div>
 <div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["descriptionofproject"]?></label><div class="Fixed"><?php echo $research["description"]?></div>
+<div class="Question"><label><?php echo $lang["descriptionofproject"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["description"]) ?></div>
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $research["username"]?></div>
 <div class="clearerleft"> </div></div>
+
+<?php if (isset($anonymous_login) && $research["username"]==$anonymous_login) { ?>
+<div class="Question"><label><?php echo $lang["email"]?></label><div class="Fixed"><a href="mailto:<?php echo htmlspecialchars($research["email"])?>"><?php echo htmlspecialchars($research["email"])?></a></div>
+<div class="clearerleft"> </div></div>
+<?php } ?>
 
 <div class="Question"><label><?php echo $lang["date"]?></label><div class="Fixed"><?php echo nicedate($research["created"],false,true)?></div>
 <div class="clearerleft"> </div></div>
@@ -45,7 +50,7 @@ include "../../include/header.php";
 <div class="Question"><label><?php echo $lang["deadline"]?></label><div class="Fixed"><?php echo nicedate($research["deadline"],false,true)?></div>
 <div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["contacttelephone"]?></label><div class="Fixed"><?php echo $research["contact"]?></div>
+<div class="Question"><label><?php echo $lang["contacttelephone"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["contact"])?></div>
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["finaluse"]?></label><div class="Fixed"><?php echo $research["finaluse"]?></div>

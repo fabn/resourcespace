@@ -15,10 +15,10 @@ function send_research_request()
 	$as_user=getvalescaped("as_user",$userref,true); # If userref submitted, use that, else use this user
 	
 	# Insert the request
-	sql_query("insert into research_request(created,user,name,description,deadline,contact,finaluse,resource_types,noresources,shape)
+	sql_query("insert into research_request(created,user,name,description,deadline,contact,email,finaluse,resource_types,noresources,shape)
 	values (now(),'$as_user','" . getvalescaped("name","") . "','" . getvalescaped("description","") . "'," .
 	((getvalescaped("deadline","")=="")?"null":"'" . getvalescaped("deadline","") . "'") . 
-	",'" . getvalescaped("contact","") . "','" . getvalescaped("finaluse","") . "','" . $rt . "'," .
+	",'" . getvalescaped("contact","") . "','" . getvalescaped("email","") . "','" . getvalescaped("finaluse","") . "','" . $rt . "'," .
 	((getvalescaped("noresources","")=="")?"null":"'" . getvalescaped("noresources","") . "'") . 
 	",'" . getvalescaped("shape","") . "')");
 	
@@ -29,7 +29,7 @@ function send_research_request()
 	$templatevars['teamresearchurl']=$baseurl."/pages/team/team_research.php";
 	$templatevars['username']=$username;
 	$templatevars['userfullname']=$userfullname;
-	$templatevars['useremail']=$useremail;
+	$templatevars['useremail']=getvalescaped("email",$useremail); # Use provided e-mail (for anonymous access) or drop back to user email.
 	$templatevars['url']=$baseurl."/pages/team/team_research_edit.php?ref=".$templatevars['ref'];
 	
 	$message="'$username' ($userfullname - $useremail) " . $lang["haspostedresearchrequest"] . ".\n\n";

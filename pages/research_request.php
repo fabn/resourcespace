@@ -9,6 +9,7 @@ if (getval("save","")!="")
 	$errors=false;
 	if (getvalescaped("name","")=="") {$errors=true;$error_name=true;}
 	if (getvalescaped("description","")=="") {$errors=true;$error_description=true;}
+	if (isset($anonymous_login) && $anonymous_login==$username && getvalescaped("email","")=="") {$errors=true;$error_email=true;}
 	if ($errors==false) 
 		{
 		# Log this
@@ -72,6 +73,17 @@ for ($n=0;$n<count($users);$n++)
 </select>
 <div class="clearerleft"> </div>
 </div>
+
+<?php if (isset($anonymous_login) && $anonymous_login==$username) { 
+# Anonymous access - we need to collect their e-mail address.
+?>
+<div class="Question" id="email">
+<label><?php echo $lang["email"]?></label>
+<input name="email" class="stdwidth" value="<?php echo getval("email","")?>">
+<div class="clearerleft"> </div>
+<?php if (isset($error_email)) { ?><div class="FormError">!! <?php echo $lang["setup-emailerr"]?> !!</div><?php } ?>
+</div>
+<?php } ?>
 
 <div class="Question" id="contacttelephone">
 <label><?php echo $lang["contacttelephone"]?></label>
