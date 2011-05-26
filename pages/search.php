@@ -293,21 +293,31 @@ if ($allow_reorder && $display!="list")
 	}
 
 # Display a title of the search (if there is a title)
-
-$refinements=explode(",",$search);	
 $searchcrumbs="";
+if ($search_titles_searchcrumbs){
+$refinements=explode(",",$search);	
 if (substr($search,0,1)=="!"){$startsearchcrumbs=1;} else {$startsearchcrumbs=0;}
 if ($refinements[0]!=""){
 	for ($n=$startsearchcrumbs;$n<count($refinements);$n++){
+		$search_title_element=$refinements[$n];
 		if ($n!=0 || $archive!=0){$searchcrumbs.=" / ";}
 		$searchcrumbs.="<a href=search.php?search=";
 		for ($x=0;$x<=$n;$x++){
 			$searchcrumbs.=$refinements[$x];
-			if ($x!=$n){$searchcrumbs.=",";}
+			if ($x!=$n){$searchcrumbs.=",";}		
 		}
-		
-		$searchcrumbs.="&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort.">".$refinements[$n]."</a>";
+		if (!$search_titles_shortnames){
+			$search_title_element=explode(":",$refinements[$n]);
+			if (isset($search_title_element[1])){
+				$search_title_element=$search_title_element[1];
+				}
+			else{
+				$search_title_element=$search_title_element[0];
+				}
+		}
+		$searchcrumbs.="&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort.">".$search_title_element."</a>";
 	}
+}
 }
 
 if ($search_titles)

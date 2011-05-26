@@ -1547,7 +1547,11 @@ $debug_log=false;
 $view_resource_collections=false;
 
 # enable titles on the search page that help describe the current context
-$search_titles=false;
+$search_titles=true;
+# whether all/additional keywords should be displayed in search titles (ex. "Recent 1000 / pdf")
+$search_titles_searchcrumbs=false;
+# whether field-specific keywords should include their shortnames in searchcrumbs (if $search_titles_searchcrumbs=true;) ex. "originalfilename:pdf"
+$search_titles_shortnames=false;
 
 # $collections_compact_style switches on some experimental UI changes for collection-level tools.
 # making the in the collections panel into a link to the Collection Manage page, 
