@@ -225,7 +225,6 @@ concat(u.username,' (',u.fullname,' )') 'Downloaded By User',
 g.name 'User Group',
 r.ref 'Resource ID',
 r.view_title_field 'Resource Title'
-us
 from
 resource_log rl
 join resource r on r.ref=rl.resource
