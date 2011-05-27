@@ -303,13 +303,14 @@ if ($refinements[0]!=""){
 		if ($n!=0 || $archive!=0){$searchcrumbs.=" / ";}
 		$searchcrumbs.="<a href=search.php?search=";
 		for ($x=0;$x<=$n;$x++){
-			$searchcrumbs.=$refinements[$x];
+			$searchcrumbs.=urlencode($refinements[$x]);
 			if ($x!=$n){$searchcrumbs.=",";}		
 		}
 		if (!$search_titles_shortnames){
 			$search_title_element=explode(":",$refinements[$n]);
 			if (isset($search_title_element[1])){
-				$search_title_element=$search_title_element[1];
+				if (in_array($search_title_element[0],$cattreefields)){$search_title_element=$lang['fieldtype-category_tree'];}
+				else {$search_title_element=$search_title_element[1];}
 				}
 			else{
 				$search_title_element=$search_title_element[0];

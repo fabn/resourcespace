@@ -2426,6 +2426,18 @@ function get_fields($field_refs)
 	return $return;
 	}
 	
+function get_category_tree_fields()
+	{
+	# Returns a list of fields with refs matching the supplied field refs.
+
+	$fields=sql_query("select name from resource_type_field where type=7 and length(name)>0 order by order_by");
+	$cattreefields=array();
+	foreach ($fields as $field){
+		$cattreefields[]=$field['name'];
+	}
+	return $cattreefields;
+	}	
+	
 function get_fields_for_search_display($field_refs)
 {
     # Returns a list of fields/properties with refs matching the supplied field refs, for search display setup

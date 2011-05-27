@@ -1179,30 +1179,32 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 	return $search;
 	}
 
+
 function refine_searchstring($search){
 	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
 	$search=str_replace ("\xe2\x80\x8b","",$search);
 
 	$keywords=split_keywords($search);
+
+	global $cattreefields; if (!isset($cattreefields)){
+		$cattreefields=get_category_tree_fields();
+	}
+	
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
 			$keywordar=explode(":",$keyword);
 			$keyname=$keywordar[0];
 			if (substr($keyname,0,1)!="!"){
-				$keyvalues=explode(" ",$keywordar[1]);
+				if (!in_array($keyname,$cattreefields)){
+					$keyvalues=explode(" ",$keywordar[1]);
+				} else {
+					$keyvalues=array($keywordar[1]);
+				}
 				foreach ($keyvalues as $keyvalue){
 					if (!in_array($keyvalue,$noadd)){ 
-						if (strpos($keyvalue,";")>0){
-							$keyvalues=explode(";",$keyvalue);
-							foreach($keyvalues as $keyvalue){
-								$fixedkeywords[]=$keyname.":".$keyvalue;
-							}
-						}
-						else {
 						$fixedkeywords[]=$keyname.":".$keyvalue;
-						}
 					}
 				}
 			}
