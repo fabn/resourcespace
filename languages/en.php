@@ -1448,3 +1448,8 @@ $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> owned by you)"; # %mynumb
 
 $lang["listresources"]= "Resources:";
 $lang["action-log"]="View Log";
+
+$lang["saveuserlist"]="Save this list";
+$lang["deleteuserlist"]="Delete this list";
+$lang["typeauserlistname"]="Type a Userlist name...";
+$lang["loadasaveduserlist"]="Load a Saved Userlist";

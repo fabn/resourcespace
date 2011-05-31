@@ -1723,3 +1723,5 @@ $smtp_host=''; # Hostname, e.g. 'smtp.gmail.com'.
 $smtp_port=25; # Port number, e.g. 465 for Gmail using SSL.
 $smtp_username=''; # Username (full email address).
 $smtp_password=''; # Password.
+
+$sharing_userlists=false; // enable users to save/select predefined lists of users/groups when sharing collections and resources.
