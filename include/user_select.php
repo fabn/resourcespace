@@ -45,6 +45,9 @@ if ($userstring=="") {$userstring=$default_user_select;}
 </table>
 
 <div id="autocomplete_choices" class="autocomplete"></div>
+<?php if ($sharing_userlists){?>
+<div id="autocomplete_userlist_choices" class="autocomplete"></div>
+<?php } ?>
 
 <script type="text/javascript">
 
@@ -55,7 +58,6 @@ new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "<?php echo $base
 );
 
 <?php if ($sharing_userlists){?>
-<div id="autocomplete_userlist_choices" class="autocomplete"></div>
 updateUserSelect();
 new Ajax.Autocompleter("userlist_name_value", "autocomplete_userlist_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_userlist.php");
 <?php } ?>
