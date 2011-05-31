@@ -672,8 +672,12 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 			}
 		
 		# make vars available to template
-global $watermark;       
- $templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,($watermark)?(($access==1)?true:false):false);
+		global $watermark;       
+		$templatevars['thumbnail']=get_resource_path($resource,true,"thm",false,"jpg",$scramble=-1,$page=1,($watermark)?(($access==1)?true:false):false);
+		if (!file_exists($templatevars['thumbnail'])){
+			$resourcedata=get_resource_data($resource);
+			$templatevars['thumbnail']="../gfx/".get_nopreview_icon($resourcedata["resource_type"],$resourcedata["file_extension"],false);
+		}
 		$templatevars['url']=$baseurl . "/?r=" . $resource . $key;
 		$templatevars['fromusername']=$fromusername;
 		$templatevars['message']=$message;
