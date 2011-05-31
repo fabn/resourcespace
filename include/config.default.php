@@ -1725,3 +1725,5 @@ $smtp_username=''; # Username (full email address).
 $smtp_password=''; # Password.
 
 $sharing_userlists=false; // enable users to save/select predefined lists of users/groups when sharing collections and resources.
+
+$public_collections_header_only=false; // show public collections page in header, omit from Themes and Manage Collections
