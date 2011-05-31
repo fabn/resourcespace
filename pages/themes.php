@@ -474,7 +474,7 @@ if ($header=="" && !isset($themes[0]))
 
 </form>
 </div>
-
+<?php if (!$public_collections_header_only){?>
 <?php if (!checkperm("b") && $enable_public_collections) { ?>
 <div class="clearerleft"> </div>
 <div class="BasicsBox">
@@ -483,6 +483,7 @@ if ($header=="" && !isset($themes[0]))
     <p class="tight"><?php echo text("findpublic")?></p>
     <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
+<?php } ?>
 <?php } ?>
 
 <?php

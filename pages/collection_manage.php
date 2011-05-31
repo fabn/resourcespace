@@ -400,6 +400,7 @@ if (!hook('collectionaccessmode')) {
 </div>
 
 <!--Find a collection-->
+<?php if (!$public_collections_header_only){?>
 <?php if($enable_public_collections){?>
 <div class="BasicsBox">
     <h1><?php echo $lang["findpubliccollection"]?></h1>
@@ -407,7 +408,7 @@ if (!hook('collectionaccessmode')) {
     <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
 <?php } ?>
-
+<?php } ?>
 <?php		
 include "../include/footer.php";
 ?>
