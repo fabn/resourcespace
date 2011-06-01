@@ -1574,6 +1574,9 @@ $preview_all=false;
 # Minimize collections frame when visiting preview_all.php
 $preview_all_hide_collections=true;
 
+# Don't display the link to toggle thumbnails in collection frame
+$disable_collection_toggle=false;
+
 # Display User Rating Stars in search views (a popularity column in list view)
 $display_user_rating_stars=false;
 # Allow each user only one rating per resource (can be edited). Note this will remove all accumlated ratings/weighting on newly rated items.
