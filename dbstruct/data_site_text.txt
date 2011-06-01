@@ -384,6 +384,11 @@ all,emailcollection,"[img_../gfx/whitegry/titles/title.gif]<br>
 [lang_message] : [message]<br><br> 
 [lang_clicklinkviewcollection] [list]
 ",269,en,,,1
+all,emailcollectionexternal,"[img_../gfx/whitegry/titles/title.gif]<br>
+[fromusername] [lang_emailcollectionmessageexternal] <br><br> 
+[lang_message] : [message]<br><br> 
+[lang_clicklinkviewcollection] [list]
+",100123,en,,,1
 all,emailbulk,"[img_../../gfx/whitegry/titles/title.gif]<br><br>
 [text]<br><br>
 [text_footer]

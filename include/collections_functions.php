@@ -751,9 +751,14 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		$list.=$htmlbreak;	
 		$templatevars['list']=$list;
 		$templatevars['from_name']=$from_name;
-		
+		if ($emailcollectionmessageexternal){
+			$template="emailcollectionexternal";
+		}
+		else {
+			$template="emailcollection";
+		}
 		$body=$templatevars['fromusername']." " . (($emailcollectionmessageexternal)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
-		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,"emailcollection",$templatevars,$from_name,$cc);
+		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,$template,$templatevars,$from_name,$cc);
 		}
 		
 	# Return an empty string (all OK).
