@@ -40,9 +40,9 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
    		$sql.=" (length(c.theme)=0 or c.theme is null) ";
    		}
    
-	$return="select distinct * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection left outer join collection_keyword k on c.ref=k.collection $sql  group by c.ref
+	$return="select * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
 	union
-	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref left outer join collection_keyword k on c.ref=k.collection  $sql  group by c.ref) clist $keysql order by $order_by $sort";
+	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist $keysql order by $order_by $sort";
 
 	$return=sql_query($return);
 	// To keep My Collection creation consistent: Check that user has at least one collection of his/her own  (not if collection result is empty, which may include shares), 
