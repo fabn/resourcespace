@@ -9,6 +9,7 @@ $find=getvalescaped("find","");
 $col_order_by=getvalescaped("col_order_by","created");
 $override_group_restrict=getvalescaped("override_group_restrict","false");
 $sort=getval("sort","ASC");
+$sort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
 $add=getvalescaped("add","");
