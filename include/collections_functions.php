@@ -729,11 +729,13 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 			{
 			$url="";
 			$key="";
+			$emailcollectionmessageexternal=false;
 			# Do we need to add an external access key for this user (e-mail specified rather than username)?
 			if ($key_required[$nx1])
 				{
 				$k=generate_collection_access_key($reflist[$nx2],$feedback,$emails[$nx1],$access,$expires);
 				$key="&k=". $k;
+				$emailcollectionmessageexternal=true;
 				}
 			$url=$baseurl . 	"/?c=" . $reflist[$nx2] . $key;
 			
@@ -750,7 +752,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		$templatevars['list']=$list;
 		$templatevars['from_name']=$from_name;
 		
-		$body=$templatevars['fromusername']." " . ((count($reflist)>1)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
+		$body=$templatevars['fromusername']." " . ($emailcollectionmessageexternal)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
 		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,"emailcollection",$templatevars,$from_name,$cc);
 		}
 		
