@@ -66,7 +66,7 @@ option {font-size:11px;}
 .HorizontalNav a:hover, .HorizontalNav a:active {text-decoration:underline;}
 .HorizontalWhiteNav li:first-child {border-left:none;}
 .HorizontalNav li:first-child {border-left:none;}
-
+#CollectionMinRightNav li:first-child {border-left:none;}
 
 /*Collection layout*/
 #CollectionMenu{width: 166px;position: absolute;left: 25px;top: 6px;text-align:left;}
