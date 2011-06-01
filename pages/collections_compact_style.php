@@ -7,9 +7,12 @@ include_once("../include/collections_functions.php");
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
+if ($pagename!="search"){ // fix: search uses order_by's which won't work here
 $order_by=getvalescaped("order_by","name");
+} else {$order_by="name";}
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
+
 
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
