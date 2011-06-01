@@ -8,12 +8,12 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 	# Returns a list of user collections.
 	$sql="";
 	$keysql="";
-	if (strlen($find)==1)
+	if (strlen($find)==1 && !is_numeric($find))
 		{
 		# A-Z search
 		$sql=" where c.name like '$find%'";
 		}
-	elseif (strlen($find)>1)
+	elseif (strlen($find)>1 || is_numeric($find))
 		{  
 		$keywords=split_keywords($find);
 		$keyrefs=array();
