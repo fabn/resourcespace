@@ -5,6 +5,12 @@ include_once("../include/search_functions.php");
 include_once("../include/resource_functions.php");
 include_once("../include/collections_functions.php");
 
+$offset=getvalescaped("offset",0);
+$find=getvalescaped("find","");
+$order_by=getvalescaped("order_by","name");
+$sort=getval("sort","ASC");
+$revsort = ($sort=="ASC") ? "DESC" : "ASC";
+
 // create a compact collections actions selector
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
     $collection=substr($search,11);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
@@ -81,7 +87,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 <!-- edit collection -->
 <?php if ((!collection_is_research_request($collection)) || (!checkperm("r"))) { ?>
-    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_edit.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["editcollection"]?>...</option><?php } ?>
+    <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="collection_edit.php?pagename=<?php echo $pagename?>&ref=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["editcollection"]?>...</option><?php } ?>
     <?php } else {
     $research=sql_value("select ref value from research_request where collection='$collection'",0);	
 	?>
@@ -103,14 +109,14 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 <!-- share -->
 <?php if ($allow_share && $count_result>0) { ?>
-<option value="collection_share.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["sharecollection"]?>...</option>
+<option value="collection_share.php?ref=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["sharecollection"]?>...</option>
 <?php } ?>
 <!-- end share -->
 
 
 <!-- feedback -->
 <?php if ($feedback) {?>
-<option value="collection_feedback.php?collection=<?php echo $collection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?>...</option>
+<option value="collection_feedback.php?collection=<?php echo $collection?>&k=<?php echo $k?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?>...</option>
 <?php } ?>
 <!-- end feedback -->
 
@@ -123,7 +129,7 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
     if ($min_access!=0)
         {
         ?>
-        <option value="collection_request.php?ref=<?php echo $collection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo 	$lang["requestall"]?>...</option>
+        <option value="collection_request.php?ref=<?php echo $collection?>&k=<?php echo $k?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo 	$lang["requestall"]?>...</option>
         <?php
         }
     }
@@ -133,9 +139,9 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 
 
 <!--delete and remove-->
-<?php if ($userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
+<?php if ($userref!=$cinfo["user"])	{?>&nbsp;<option id="remove" value="collection_manage.php?remove=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
 
-<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-deletecollection"]?>...</option><?php } ?>
+<?php if ((($userref==$cinfo["user"]) || checkperm("h")) && ($cinfo["cant_delete"]==0)) {?>&nbsp;<option id="delete" value="collection_manage.php?delete=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["action-deletecollection"]?>...</option><?php } ?>
 
 <!-- end delete and remove-->
 
@@ -144,18 +150,18 @@ if ($show_edit_all_link && $count_result>0 && checkperm("e" . $colresult[0]["arc
 <!-- purge -->
 <?php if ($collection_purge && $count_result>0){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
-        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
+        ?><option id="purge" value="collection_manage.php?purge=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
     } 
 } ?>
 <!-- end purge -->
 
 <!-- empty -->
-<?php if ($cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
+<?php if ($cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="collection_manage.php?removeall=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
 <!-- end empty-->
 
 <!-- log -->
 <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?>
-    <option value="collection_log.php?ref=<?php echo $collection?>">&gt;&nbsp;<?php echo $lang["action-log"]?></option>
+    <option value="collection_log.php?ref=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>">&gt;&nbsp;<?php echo $lang["action-log"]?></option>
 <?php } ?>
 <!-- end log -->
 
