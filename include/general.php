@@ -2167,7 +2167,7 @@ function get_simple_search_fields()
     if (isset($country_search) && $country_search) {$sql=" or ref=3";}
 
     # Executes query.
-    $fields = sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by ref");
+    $fields = sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 order by ref");
 
     # Applies field permissions and translates field titles in the newly created array.
     $return = array();
