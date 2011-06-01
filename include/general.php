@@ -2167,7 +2167,7 @@ function get_simple_search_fields()
     if (isset($country_search) && $country_search) {$sql=" or ref=3";}
 
     # Executes query.
-    $fields = sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by resource_type,order_by");
+    $fields = sql_query("select * from resource_type_field where (simple_search=1 $sql) and keywords_index=1 and length(name)>0  order by ref");
 
     # Applies field permissions and translates field titles in the newly created array.
     $return = array();
@@ -2415,7 +2415,7 @@ function get_fields($field_refs)
 	# Returns a list of fields with refs matching the supplied field refs.
 	if (!is_array($field_refs)) {print_r($field_refs);exit(" passed to getfields() is not an array. ");}
 	$return=array();
-	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where  keywords_index=1 and length(name)>0 and ref in ('" . join("','",$field_refs) . "') order by order_by");
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where  keywords_index=1 and length(name)>0 and ref in ('" . join("','",$field_refs) . "') order by ref");
 	# Apply field permissions
 	for ($n=0;$n<count($fields);$n++)
 		{
