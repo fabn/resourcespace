@@ -185,10 +185,10 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		<?php if ($search_results_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
 		<?php if (checkperm("s") && $enable_themes) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/themes.php"><?php echo $lang["themes"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && ($public_collections_top_nav || $public_collections_header_only)) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_public.php"><?php echo $lang["publiccollections"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php"><?php echo $lang["mycollections"]?></a></li><?php } ?>
 		<?php if (!hook("replacerecentlink")) { ?>
 		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>"><?php echo $lang["recent"]?></a></li><?php } ?>
 		<?php } /* end hook replacerecentlink */?>
-		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php"><?php echo $lang["mycollections"]?></a></li><?php } ?>
 		<?php if (checkperm("s") && $myrequests_link && checkperm("q")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/requests.php"><?php echo $lang["myrequests"]?></a></li><?php } ?>
 		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/contribute.php"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
 		<?php if (!hook("replaceresearchrequestlink")) { ?>
