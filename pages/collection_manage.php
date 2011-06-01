@@ -8,9 +8,8 @@ include "../include/resource_functions.php";
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
-$order_by=getvalescaped("order_by","name");
+$col_order_by=getvalescaped("col_order_by","name");
 $sort=getval("sort","ASC");
-$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
 $name=getvalescaped("name","");
@@ -209,7 +208,7 @@ include "../include/header.php";
 </div>
 <?php
 
-$collections=get_user_collections($userref,$find,$order_by,$sort);
+$collections=get_user_collections($userref,$find,$col_order_by,$sort);
 
 # pager
 $per_page=15;
@@ -222,19 +221,19 @@ $jumpcount=1;
 # Create an a-z index
 $atoz="<div class=\"InpageNavLeftBlock\">";
 if ($find=="") {$atoz.="<span class='Selected'>";}
-$atoz.="<a href=\"collection_manage.php?order_by=name&find=\">" . $lang["viewall"] . "</a>";
+$atoz.="<a href=\"collection_manage.php?col_order_by=name&find=\">" . $lang["viewall"] . "</a>";
 if ($find=="") {$atoz.="</span>";}
 $atoz.="&nbsp;&nbsp;&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"collection_manage.php?order_by=name&find=" . chr($n) . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
+	$atoz.="<a href=\"collection_manage.php?col_order_by=name&find=" . chr($n) . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
 $atoz.="</div>";
 
-$url="collection_manage.php?paging=true&order_by=".$order_by."&sort=".$sort."&find=".urlencode($find)."";
+$url="collection_manage.php?paging=true&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."";
 
 	?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div><?php	
 ?>
@@ -266,12 +265,12 @@ echo " " . ($mycollcount==1 ? $lang["owned_by_you-1"] : str_replace("%mynumber",
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><?php if ($order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a><?php if ($order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($order_by=="fullname") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=fullname&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($order_by=="fullname") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<?php if (! $hide_access_column){ ?><td><?php if ($order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
+<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=name&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($col_order_by=="fullname") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=fullname&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($col_order_by=="fullname") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=ref&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=created&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<td><?php if ($col_order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=count&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<?php if (! $hide_access_column){ ?><td><?php if ($col_order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=public&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($col_order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
 <?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>

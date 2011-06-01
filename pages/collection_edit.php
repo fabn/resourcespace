@@ -10,9 +10,8 @@ $ref=getvalescaped("ref","",true);
 $copycollectionremoveall=getvalescaped("copycollectionremoveall","");
 $offset=getval("offset",0);
 $find=getvalescaped("find","");
-$order_by=getvalescaped("order_by","name");
+$col_order_by=getvalescaped("col_order_by","name");
 $sort=getval("sort","ASC");
-$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {
@@ -46,7 +45,7 @@ if (getval("name","")!="")
 			}
 		else
 			{
-			redirect ("pages/collection_manage.php?offset=".$offset."&order_by=".$order_by."&sort=".$revsort."&find=".urlencode($find)."&reload=true");
+			redirect ("pages/collection_manage.php?offset=".$offset."&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&reload=true");
 			}
 		}
 	else
