@@ -235,12 +235,12 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 	$sql="";
 	$keysql="";
 	# Keywords searching?
-	if (strlen($search)==1)
+	if (strlen($search)==1 && !is_numeric($search))
 		{
 		# A-Z search
 		$sql="and c.name like '$search%'";
 		}
-	elseif (strlen($search)>1)
+	elseif (strlen($search)>1 || is_numeric($search))
 		{  
 		$keywords=split_keywords($search);
 		$keyrefs=array();
