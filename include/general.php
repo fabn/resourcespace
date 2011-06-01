@@ -263,7 +263,7 @@ function get_resource_types()
 	{
 	# Returns a list of resource types. The standard resource types are translated using $lang. Custom resource types are i18n translated.
 
-	$r=sql_query("select * from resource_type order by order_by,ref");
+	$r=sql_query("select * from resource_type order by ref");
 	$return=array();
 	# Translate names and check permissions
 	for ($n=0;$n<count($r);$n++)
@@ -2430,7 +2430,7 @@ function get_category_tree_fields()
 	{
 	# Returns a list of fields with refs matching the supplied field refs.
 
-	$fields=sql_query("select name from resource_type_field where type=7 and length(name)>0 order by order_by");
+	$fields=sql_query("select name from resource_type_field where type=7 and length(name)>0 order by ref");
 	$cattreefields=array();
 	foreach ($fields as $field){
 		$cattreefields[]=$field['name'];
