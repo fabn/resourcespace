@@ -13,7 +13,8 @@ var editor = CKEDITOR.replace( '<?php echo $name?>',
 	{
 		// Defines a simpler toolbar to be used in this sample.
 		// Note that we have added out "MyButton" button here.
-		toolbar : [ [ 'Styles', 'Bold', 'Italic', 'Underline', 'RemoveFormat' ] ]
+		toolbar : [ [ 'Styles', 'Bold', 'Italic', 'Underline', 'RemoveFormat' ] ],
+		height: "350"
 	});
 
 </script>
