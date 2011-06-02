@@ -237,6 +237,10 @@ option {font-size:11px;}
 .RecordStory{padding: 6px;}
 .RecordStory h1{font-size:1.25em; padding:0.5em 0 0.5em 0; margin:0;font-weight:bold;}
 
+.RecordPanel h2{font-size:1.25em; padding:0; margin:0.5em 0 0.5em 0;font-weight:bold;}
+.RecordPanel p{padding:0; margin:0.5em 0 0.5em 0;}
+
+
 /* Basic page */
 .BasicsBox {margin: 0px 15px 15px 0px;}
 .BasicsBox h1 {padding: 0px 0px 0.5em;}
