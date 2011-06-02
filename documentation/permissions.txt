@@ -28,6 +28,7 @@ T?  DENY access to resources with the given resource type ID, also hide this res
 T?_$  	DENY access to resources with the given resource type ID AND the given download size ID, for example T1_scr denies access to the screen size download for photo resources. Use "T1_" (i.e. empty download ID) to deny access to the original resource file.
 X?  RESTRICT access to resources with the given resource type ID.
 X?_$	RESTRICT access to resources with the given resource type ID AND the given download size ID, for example X1_scr restricts access to the screen size download for photo resources.
+P?	Allows edit only access to a specific field on the upload form only. Allows a user to provide a field on upload that is otherwise hidden from them (e.g. confidential information such as subject name).
 
 Resource creation
 -----------------

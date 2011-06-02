@@ -1,0 +1,2 @@
+<?php /* -------- Plain text entry ---------------- */ ?>
+<input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>" <?php echo $help_js; ?>>

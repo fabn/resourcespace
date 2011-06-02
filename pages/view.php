@@ -756,7 +756,11 @@ for ($n=0;$n<count($fields);$n++)
 		$value=i18n_get_translated($value);
 		if (($fields[$n]["type"]==2) || ($fields[$n]["type"]==3) || ($fields[$n]["type"]==7)) {$value=TidyList($value);}
 		$value_unformatted=$value; # store unformatted value for replacement also
-		$value=nl2br(htmlspecialchars($value));
+
+		if ($fields[$n]["type"]!=8) # Do not convert HTML formatted fields (that are already HTML) to HTML.
+			{
+			$value=nl2br(htmlspecialchars($value));
+			}
 		
 		# draw new tab panel?
 		if (($tabname!=$fields[$n]["tab_name"]) && ($fieldcount>0))

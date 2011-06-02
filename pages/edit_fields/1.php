@@ -1,0 +1,2 @@
+<?php /* -------- Text area entry ---------------- */ ?>
+<textarea class="stdwidth" rows=6 cols=50 name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php echo htmlspecialchars($value)?></textarea>

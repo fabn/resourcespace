@@ -1,4 +1,6 @@
-<?php
+<?php /* -------- Category tree ---------------- */ 
+
+$options=$fields[$n]["options"];
 
 global $lang,$baseurl,$css_reload_key,$category_tree_show_status_window;
 

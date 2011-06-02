@@ -689,224 +689,43 @@ for ($n=0;$n<count($fields);$n++)
 	$modified_field_type="";
 	$modified_field_type=(hook("modifyfieldtype"));
 	if ($modified_field_type){$fields[$n]["type"]=$modified_field_type-1;}
-	
-	switch ($fields[$n]["type"]) {
-		case 0: # -------- Plain text entry
-		?><input class="stdwidth" type=text name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo htmlspecialchars($value)?>" <?php echo $help_js; ?>><?php
-		break;
-	
-		case 1: # -------- Text area entry
-		?><textarea class="stdwidth" rows=6 cols=50 name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php echo htmlspecialchars($value)?></textarea><?php
-		break;
-		
-		case 5: # -------- Larger text area entry
-		?><textarea class="stdwidth" rows=20 cols=80 name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>><?php echo htmlspecialchars($value)?></textarea><?php
-		break;
-		
-		case 2: # -------- Check box list
 
-		# Translate all options
-		$options=trim_array(explode(",",$fields[$n]["options"]));
-		$option_trans=array();
-		$option_trans_simple=array();
-		for ($m=0;$m<count($options);$m++)
-			{
-			$trans=i18n_get_translated($options[$m]);
-			$option_trans[$options[$m]]=$trans;
-			$option_trans_simple[]=$trans;
-			}
 
-		if ($auto_order_checkbox) {asort($option_trans);}
-		$options=array_keys($option_trans); # Set the options array to the keys, so it is now effectively sorted by translated string	
-			
-		$set=trim_array(explode(",",$value));
-		$wrap=0;
-		$l=average_length($option_trans_simple);
-		$cols=10;
-		if ($l>5)  {$cols=6;}
-		if ($l>10) {$cols=4;}
-		if ($l>15) {$cols=3;}
-		if ($l>25) {$cols=2;}
-		
-		$height=ceil(count($options)/$cols);
-		
-		global $checkbox_ordered_vertically;
-		if ($checkbox_ordered_vertically)
-			{
-			# ---------------- Vertical Ordering (only if configured) -----------
-			?><table cellpadding=2 cellspacing=0><tr><?php
-			for ($y=0;$y<$height;$y++)
-				{
-				for ($x=0;$x<$cols;$x++)
-					{
-					# Work out which option to fetch.
-					$o=($x*$height)+$y;
-					if ($o<count($options))
-						{
-						$option=$options[$o];
-						$trans=$option_trans[$option];
+	# ----------------------------  Show field -----------------------------------
+	$type=$fields[$n]["type"];
+	if ($type=="") {$type=0;} # Default to text type.
+	include "edit_fields/" . $type . ".php";
+	# ----------------------------------------------------------------------------
 
-						$name=$fields[$n]["ref"] . "_" . base64_encode($option);
-						if ($option!="")
-							{
-							?>
-							<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
-							<?php
-							}
-						}
-					}
-				?></tr><tr><?php
-				}
-			?></tr></table><?php
-			}
-		else
-			{				
-			# ---------------- Horizontal Ordering (Standard) ---------------------				
-			?>
-			<table cellpadding=2 cellspacing=0><tr>
-			<?php
-	
-			foreach ($option_trans as $option=>$trans)
-				{
-				$name=$fields[$n]["ref"] . "_" . base64_encode($option);
-				$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
-				?>
-				<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
-				<?php
-				}
-			?></tr></table><?php
-			}
-		break;
 
-		case 3: # -------- Drop down list
-		# Translate all options
-		$options=trim_array(explode(",",$fields[$n]["options"]));
-		
-		$adjusted_dropdownoptions=hook("adjustdropdownoptions");
-		if ($adjusted_dropdownoptions){$options=$adjusted_dropdownoptions;}
-		
-		$option_trans=array();
-		for ($m=0;$m<count($options);$m++)
-			{
-			$option_trans[$options[$m]]=i18n_get_translated($options[$m]);
-			}
-		if ($auto_order_checkbox) {asort($option_trans);}	
-
-		if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
-
-		?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>>
-		<option value=""></option>
-		<?php
-		foreach ($option_trans as $option=>$trans)
-			{
-			if (trim($option)!="")
-				{
-				?>
-				<option value="<?php echo htmlspecialchars(trim($option))?>" <?php if (trim($option)==trim($value)) {?>selected<?php } ?>><?php echo htmlspecialchars(trim($trans))?></option>
-				<?php
-				}
-			}
-		?></select><?php
-		break;
-		
-		
-		case 4: # -------- Date selector
-		case 6: # Also includes expiry date
-
-		# Start with a null date
-		$dy="";$dm="";$dd=""; 
-		$dh="";$di="";
-		
-		if (($ref<0 || $value=="") && $reset_date_upload_template && $reset_date_field==$fields[$n]["ref"])
-			{
-			# Upload template: always reset to today's date (if configured).
-			$dy=date("Y");$dm=date("m");$dd=date("d");
-			$dh=date("H");$di=date("i");
-			}
-		elseif ($value!="")
-        	{
-            #fetch the date parts from the value
-            $sd=explode(" ",$value);
-            if (count($sd)>=2)
-            	{
-            	# Attempt to extract hours and minutes from second part.
-            	$st=explode(":",$sd[1]);
-            	if (count($st)>=2)
-            		{
-            		$dh=$st[0];
-            		$di=$st[1];
-            		}
-            	}
-            $value=$sd[0];
-            $sd=explode("-",$value);
-            if (count($sd)>=3)
-            	{
-	            $dy=intval($sd[0]);$dm=intval($sd[1]);$dd=intval($sd[2]);
-	            }
-            }
-        ?>
-        <select name="<?php echo $name?>-d"><option value=""><?php echo $lang["day"]?></option>
-        <?php for ($m=1;$m<=31;$m++) {?><option <?php if($m==$dd){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
-        </select>
-            
-        <select name="<?php echo $name?>-m"><option value=""><?php echo $lang["month"]?></option>
-        <?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
-        </select>
-           
-        <input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>">
-        
-        <!-- Time (optional) -->
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		
-        <select name="<?php echo $name?>-h"><option value=""><?php echo $lang["hour-abbreviated"]?></option>
-        <?php for ($m=0;$m<=23;$m++) {?><option <?php if($m==$dh && $dh!=""){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
-        </select>
-        
-        <select name="<?php echo $name?>-i"><option value=""><?php echo $lang["minute-abbreviated"]?></option>
-        <?php for ($m=0;$m<=59;$m++) {?><option <?php if($m==$di && $di!=""){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
-        </select>
-        
-        
-        <?php
-		break;
-		
-		
-		case 7: # ----- Category Tree
-		$options=$fields[$n]["options"];
-		include "../include/category_tree.php";
-		break;
-		}
+	# Display any error messages from previous save
+	if (array_key_exists($fields[$n]["ref"],$errors))
+		{
 		?>
-		
-		<?php
-		# Display any error messages from previous save
-		if (array_key_exists($fields[$n]["ref"],$errors))
-			{
-			?>
-			<div class="FormError">!! <?php echo $errors[$fields[$n]["ref"]]?> !!</div>
-			<?php
-			}
-
-		if (trim($fields[$n]["help_text"]!=""))
-			{
-			# Show inline help for this field.
-			# For certain field types that have no obvious focus, the help always appears.
-			?>
-			<div class="FormHelp" style="padding:0;<?php if (!in_array($fields[$n]["type"],array(2,6,7))) { ?> display:none;<?php } else { ?> clear:left;<?php } ?>" id="help_<?php echo $fields[$n]["ref"]?>"><div class="FormHelpInner"><?php echo nl2br(trim(htmlspecialchars(i18n_get_translated($fields[$n]["help_text"]))))?></div></div>
-			<?php
-			}
-
-		# If enabled, include code to produce extra fields to allow multilingual free text to be entered.
-		if ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
-			{
-			include "../include/multilingual_fields.php";
-			}
-		?>			
-		<div class="clearerleft"> </div>
-		</div>
+		<div class="FormError">!! <?php echo $errors[$fields[$n]["ref"]]?> !!</div>
 		<?php
 		}
+
+	if (trim($fields[$n]["help_text"]!=""))
+		{
+		# Show inline help for this field.
+		# For certain field types that have no obvious focus, the help always appears.
+		?>
+		<div class="FormHelp" style="padding:0;<?php if (!in_array($fields[$n]["type"],array(2,6,7))) { ?> display:none;<?php } else { ?> clear:left;<?php } ?>" id="help_<?php echo $fields[$n]["ref"]?>"><div class="FormHelpInner"><?php echo nl2br(trim(htmlspecialchars(i18n_get_translated($fields[$n]["help_text"]))))?></div></div>
+		<?php
+		}
+
+	# If enabled, include code to produce extra fields to allow multilingual free text to be entered.
+	if ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))
+		{
+		include "../include/multilingual_fields.php";
+		}
+	?>			
+	<div class="clearerleft"> </div>
+	</div>
+	<?php
 	}
+}
 
 
 # User upload forms. Work out the correct archive status.
