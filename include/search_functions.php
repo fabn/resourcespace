@@ -1020,7 +1020,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 		else
 			{
 			# For advanced search and elsewhere, include the category tree.
-			include "category_tree.php";
+			include "../pages/edit_fields/7.php";
 			}
 		break;
 		}

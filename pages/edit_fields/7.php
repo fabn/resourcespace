@@ -1,6 +1,8 @@
 <?php /* -------- Category tree ---------------- */ 
 
-$options=$fields[$n]["options"];
+if (isset($n) && isset($fields)){
+	$options=$fields[$n]["options"];
+}
 
 global $lang,$baseurl,$css_reload_key,$category_tree_show_status_window;
 
