@@ -1663,7 +1663,7 @@ function resource_download_allowed($resource,$size,$resource_type)
 	# $resource can be a resource-specific search result array.
 	$access=get_resource_access($resource);
 
-	if (checkperm('X' . $resource_type . "_" . $size))
+	if (checkperm('X' . $resource_type . "_" . $size) || checkperm('T' . $resource_type . "_" . $size))
 		{
 		# Block access to this resource type / size?
 		# Only if no specific user access override (i.e. they have successfully requested this size).
