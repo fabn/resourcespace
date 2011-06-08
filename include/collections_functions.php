@@ -327,7 +327,7 @@ function index_collection($ref,$index_string='')
 		{
 			$indexfields = 'c.ref,c.name,c.keywords';
 		} else {
-			$indexfields = 'c,ref,c.keywords';
+			$indexfields = 'c.ref,c.keywords';
 		}
 	global $index_collection_creator;
 	if ($index_collection_creator)
