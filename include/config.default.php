@@ -405,6 +405,11 @@ $mycollections_link=false;
 # Display a 'My REquests' link in the top navigation
 $myrequests_link=false;
 
+# display an alert icon next to the team centre link 
+# and the relevant team centre item when there are requests that need managing
+# only affects users with permissions to do this.
+$team_centre_alert_icon = false;
+
 # Display a 'My Contributions' link in the top navigation for all users, even if they have team center access
 # (Displays automatically for regular users)
 $mycontributions_link=false;
