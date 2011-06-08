@@ -42,7 +42,7 @@ for ($n=0;$n<count($result);$n++)
 
 	#check availability of original file 
 	$p=get_resource_path($ref,true,"",false,$result[$n]["file_extension"]);
-	if (file_exists($p) && (($access==0) || ($access==1 && $restricted_full_download)))
+	if (file_exists($p) && (($access==0) || ($access==1 && $restricted_full_download)) && resource_download_allowed($ref,'',$result[$n]['resource_type']))
 		{
 		$available_sizes['original'][]=$ref;
 		}
