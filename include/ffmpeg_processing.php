@@ -52,6 +52,34 @@ $height=$snapshotsize[1];
 $sourcewidth=$width;
 $sourceheight=$height;
 
+global $config_windows, $ffmpeg_get_par;
+if ($ffmpeg_get_par) {
+  # Find out the Pixel Aspect Ratio
+  $shell_exec_cmd = $ffmpeg_path_working . " -i " . escapeshellarg($file) . " 2>&1";
+
+  if ($config_windows)
+  	{
+  	# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
+  	file_put_contents(get_temp_dir() . "/ffmpeg.bat",$shell_exec_cmd);
+  	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
+  	}
+
+  $output=shell_exec($shell_exec_cmd);
+  
+  preg_match('/PAR ([0-9]+):([0-9]+)/m', $output, $matches);
+  if (@intval($matches[1]) > 0 && @intval($matches[2]) > 0) {
+    $par = $matches[1] / $matches[2];
+    if($par < 1) {
+      $width = ceil($width * $par);
+    }
+    elseif($par > 1) {
+      $height = ceil($height / $par);
+    }
+  }  
+}
+
+
+
 if($height<$ffmpeg_preview_min_height)
 	{
 	$height=$ffmpeg_preview_min_height;
@@ -73,14 +101,13 @@ if($width>$ffmpeg_preview_max_width)
 	$height=ceil($height*($ffmpeg_preview_max_width/$width));
 	$width=$ffmpeg_preview_max_width;
 	}
-
+	
 # Frame size must be a multiple of two
 if ($width % 2){$width++;}
 if ($height % 2) {$height++;}
 
 $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 
-global $config_windows;
 if ($config_windows)
 	{
 	# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
@@ -90,6 +117,24 @@ if ($config_windows)
 	}
 
 $output=shell_exec($shell_exec_cmd);
+
+if ($ffmpeg_get_par && $par > 0 && $par <> 1) {
+  # recreate snapshot with correct PAR
+  $width=$sourcewidth;
+  $height=$sourceheight;
+  if($par < 1) {
+    $width = ceil($sourcewidth * $par);
+  }
+  elseif($par > 1) {
+    $height = ceil($sourceheight / $par);
+  }
+  # Frame size must be a multiple of two
+  if ($width % 2){$width++;}
+  if ($height % 2) {$height++;}
+  $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
+  $output=shell_exec($shell_exec_cmd);
+}
+
 
 if (!file_exists($targetfile))
     {

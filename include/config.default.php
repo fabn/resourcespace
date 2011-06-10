@@ -278,6 +278,9 @@ $ffmpeg_preview_force=false;
 # Encode preview asynchronous?
 $ffmpeg_preview_async=false;
 
+# Find out and obey the Pixel Aspect Ratio
+$ffmpeg_get_par=false;
+
 # FFMPEG - generation of alternative video file sizes/formats
 # It is possible to automatically generate different file sizes and have them attached as alternative files.
 # See below for examples.
