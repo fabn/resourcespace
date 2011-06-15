@@ -100,7 +100,10 @@ if (!$config_search_for_number || !is_numeric($search)) # Don't do this when the
 
 	foreach ($_GET as $key=>$value)
 		{
-		$value=trim($value);
+		if (is_string($value))
+		  {
+		  $value=trim($value);
+		  }
 		if ($value!="" && substr($key,0,6)=="field_")
 			{
 			if (strpos($key,"_year")!==false)
