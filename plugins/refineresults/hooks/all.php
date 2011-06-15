@@ -2,8 +2,8 @@
 
 function HookRefineresultsSearchBeforesearchresults()
 	{
-	global $lang,$search,$k,$archive,$parameters_string;
-	if ($k!="") {return false;}
+	global $result,$lang,$search,$k,$archive,$parameters_string;
+	if ($k!="" || !is_array($result) || count($result)==0) {return false;}
 	
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
 	?>
