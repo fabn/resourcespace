@@ -130,6 +130,11 @@ for ($n=0;$n<count($uploadfiles);$n++)
 		# get file metadata 
 		global $exiftool_path;
 		if (getval("no_exif","")=="") {extract_exif_comment($ref,$extension);}
+		
+		# extract text from documents (e.g. PDF, DOC).
+		global $extracted_text_field;
+		if (isset($extracted_text_field) && !$no_exif) {extract_text($ref,$extension);}
+		
 
 		$status=$lang["uploaded"] . " " . ($n+1) . " " . $lang["of"] . " " . count($uploadfiles);
 		$status.= " - ".$path;
