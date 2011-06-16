@@ -10,9 +10,12 @@ include "../../include/authenticate.php"; if (!checkperm("o")) {exit ("Permissio
 include "../../include/general.php";
 include "../../include/research_functions.php";
 
+$offset=getvalescaped("offset",0);
 $page=getvalescaped("page","");
 $name=getvalescaped("name","");
-$find=getvalescaped("find","");
+$findpage=getvalescaped("findpage","");
+$findname=getvalescaped("findname","");
+$findtext=getvalescaped("findtext","");
 $newhelp=getvalescaped("newhelp","");
 $editlanguage=getvalescaped("editlanguage",$defaultlanguage);
 $editgroup=getvalescaped("editgroup","");
@@ -20,21 +23,27 @@ $editgroup=getvalescaped("editgroup","");
 # get custom value from database, unless it has been newly passed from team_content.php
 if (getval("custom","")==1){ $custom=1; $newcustom=true; } else {$custom=check_site_text_custom($page,$name); $newcustom=false;}
 
-# Fetch user data
-$text=get_site_text($page,$name,$editlanguage,$editgroup);
-
 if ((getval("save","")!="") && (getval("langswitch","")==""))
 	{
 	# Save data
 	save_site_text($page,$name,$editlanguage,$editgroup);
 	if ($newhelp!=""){
-		redirect("pages/team/team_content_edit.php?page=help&name=".$newhelp);
+		if (getval("returntolist","")==""){
+			redirect("pages/team/team_content_edit.php?page=help&name=".$newhelp."&offset=".$offset."&findpage=".$findpage."&findname=".$findname."&findtext=".$findtext);
+		}
 		}
 	if (getval("custom","")==1){
-		redirect("pages/team/team_content_edit.php?page=$page&name=$name");
+		if (getval("returntolist","")==""){
+			redirect("pages/team/team_content_edit.php?page=$page&name=$name&offset=".$offset."&findpage=".$findpage."&findname=".$findname."&findtext=".$findtext);
+		}
 		}	
-	redirect ("pages/team/team_content.php?nc=" . time()."&find=".$find);
+	if (getval("returntolist","")!=""){
+		redirect ("pages/team/team_content.php?nc=" . time()."&findpage=".$findpage."&findname=".$findname."&findtext=".$findtext."&offset=".$offset);
 	}
+	}
+	
+# Fetch user data
+$text=get_site_text($page,$name,$editlanguage,$editgroup);
 
 include "../../include/header.php";
 ?>
@@ -100,10 +109,11 @@ if ($page=="help") { ?>
 	<div class="Question"><label><?php echo $lang["ticktodeletehelp"]?></label><input name="deletecustom" type="checkbox" value="yes"><div class="clearerleft"> </div></div>
 <?php } ?>
 
-
+<input type=hidden id="returntolist" name="returntolist" value=''/>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="$('returntolist').value=true" value="&nbsp;&nbsp;Save and Return to List&nbsp;&nbsp;" />
 </div>
 </form>
 </div>

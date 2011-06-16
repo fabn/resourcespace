@@ -1016,14 +1016,43 @@ function get_active_users()
 	return sql_query("select username,round((unix_timestamp(now())-unix_timestamp(last_active))/60,0) t from user where logged_in=1 and unix_timestamp(now())-unix_timestamp(last_active)<(3600*2) order by t;");
 	}
 
-function get_all_site_text($find="")
+function get_all_site_text($findpage="",$findname="",$findtext="")
 	{
 	# Returns a list of all available editable site text (content).
 	# If $find is specified a search is performed across page, name and text fields.
-	global $defaultlanguage;
-	$sql="";
-	if ($find!="") {$sql="where (page like '%$find%' or name like '%$find%' or text like '%$find%')";}
-	return sql_query ("select distinct page,name,(select text from site_text where name=s.name and page=s.page order by (language='$defaultlanguage') desc limit 1) text from site_text s $sql order by (page='all') desc,page,name");
+	global $defaultlanguage;	
+	$findname=trim($findname);
+	$findpage=trim($findpage);
+	$findtext=trim($findtext);
+	$sql="site_text s ";
+	
+	if ($findname!="" || $findpage!="" || $findtext!=""){
+		$sql.=" where (";
+	}
+	
+	if ($findname!=""){
+		$sql.=" name like '%".$findname."%' ";
+	}
+	
+	if ($findpage!=""){
+		if ($findname!=""){$sql.=" and ";}
+		$sql.=" page like '%".$findpage."%' ";
+	}
+	
+	if ($findtext!="") {
+		$findtextarray=explode(" ",$findtext);
+		if ($findname!="" || $findpage!=""){$sql.=" and ";}
+		for ($n=0;$n<count($findtextarray);$n++){
+		  $sql.=' text like "%'.$findtextarray[$n].'%"';
+		  if ($n+1!=count($findtextarray)){$sql.=" and ";}
+		}
+		
+	}
+	if ($findname!="" || $findpage!="" || $findtext!=""){
+		$sql.=" ) ";
+	}
+
+	return sql_query ("select distinct s.page,s.name,(select text from site_text st where st.name=s.name and st.page=s.page order by (language='$defaultlanguage') desc limit 1) text from $sql order by (s.page='all') desc,s.page,name");
 	}
 
 function get_site_text($page,$name,$language,$group)
@@ -1061,7 +1090,7 @@ function save_site_text($page,$name,$language,$group)
 		$test=sql_query("select * from site_text where page='$page' and name='$name'");
 		if (count($test)>0){return true;}
 		}
-	
+	if ($custom==""){$custom=0;}
 	if (getval("deletecustom","")!="")
 		{
 		sql_query("delete from site_text where page='$page' and name='$name'");

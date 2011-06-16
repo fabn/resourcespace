@@ -212,7 +212,7 @@ $lang["selectfiles"]="Select Files";
 $lang["searchcontent"]="Search content";
 $lang["ticktodeletehelp"]="Tick to delete this section";
 $lang["createnewhelp"]="Create a new help section";
-$lang["searchcontenteg"]="(page, name or text)";
+$lang["searchcontenteg"]="(page, name, text)";
 $lang["copyresource"]="Copy Resource";
 $lang["resourceidnotfound"]="The resource ID was not found";
 $lang["inclusive"]="(inclusive)";
@@ -1453,3 +1453,7 @@ $lang["saveuserlist"]="Save this list";
 $lang["deleteuserlist"]="Delete this list";
 $lang["typeauserlistname"]="Type a Userlist name...";
 $lang["loadasaveduserlist"]="Load a Saved Userlist";
+
+$lang["searchbypage"]="Search Page";
+$lang["searchbyname"]="Search Name";
+$lang["searchbytext"]="Search Text";
