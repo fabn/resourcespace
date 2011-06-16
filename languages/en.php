@@ -1457,3 +1457,4 @@ $lang["loadasaveduserlist"]="Load a Saved Userlist";
 $lang["searchbypage"]="Search Page";
 $lang["searchbyname"]="Search Name";
 $lang["searchbytext"]="Search Text";
+$lang["saveandreturntolist"]="Save and Return to List";
