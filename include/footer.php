@@ -59,7 +59,7 @@ function SwapCSS(css)
 ?>	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php } ?>
 <?php if ($disable_languages==false){?>
-<?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php"><?php echo $languages[$language]?></a>
+<?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php?currenturl=<?php echo $_SERVER['REQUEST_URI']?>"><?php echo $languages[$language]?></a>
 <?php } ?>
 </div>
 
@@ -162,8 +162,8 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
     
     // place collection titles
     else if (in_array($pagename,$search_title_pages)){
-        if (isset($collection_title)){
-            $title=strip_tags($collection_title);
+        if (isset($search_title)){
+            $title=strip_tags($search_title);
         }
         else if (($pagename=="collection_download") || $pagename=="edit" && getval("collection","")!=""){
             $collectiondata=get_collection($collection);
