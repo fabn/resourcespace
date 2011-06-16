@@ -1030,13 +1030,24 @@ function get_all_site_text($findpage="",$findname="",$findtext="")
 		$sql.=" where (";
 	}
 	
-	if ($findname!=""){
-		$sql.=" name like '%".$findname."%' ";
+	
+	if ($findname!="") {
+		$findnamearray=explode(" ",$findname);
+		for ($n=0;$n<count($findnamearray);$n++){
+		  $sql.=' name like "%'.$findnamearray[$n].'%"';
+		  if ($n+1!=count($findnamearray)){$sql.=" and ";}
+		}
+		
 	}
 	
-	if ($findpage!=""){
+	if ($findpage!="") {
+		$findpagearray=explode(" ",$findpage);
 		if ($findname!=""){$sql.=" and ";}
-		$sql.=" page like '%".$findpage."%' ";
+		for ($n=0;$n<count($findpagearray);$n++){
+		  $sql.=' page like "%'.$findpagearray[$n].'%"';
+		  if ($n+1!=count($findpagearray)){$sql.=" and ";}
+		}
+		
 	}
 	
 	if ($findtext!="") {
