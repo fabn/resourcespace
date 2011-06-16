@@ -208,7 +208,10 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 				} else {
 					$isextlink = false;
 				}
-				
+				if(strpos($custom_top_nav[$n]["title"],"(lang)")!==false){
+					$custom_top_nav_title=str_replace("(lang)","",$custom_top_nav[$n]["title"]);
+					$custom_top_nav[$n]["title"]=$lang[$custom_top_nav_title];
+				}
 				?>
 				<li><a target="<?php if ($isextlink){echo "_top"; } else {  echo $target; } ?>" href="<?php echo $custom_top_nav[$n]["link"] ?>"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
 				<?php

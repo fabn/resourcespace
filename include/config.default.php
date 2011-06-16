@@ -626,7 +626,10 @@ $home_helpadvice=true;
 # Custom top navigation links.
 # You can add as many panels as you like. They must be numbered sequentially starting from zero (0,1,2,3 etc.)
 # URL should be absolute, or include $baseurl as below, because a relative URL will not work from the Team Center.
-# 
+# Since configuration is prior to $lang availability, use a special syntax prefixing the string "(lang)" to access $lang['mytitle']:
+# ex:
+# $custom_top_nav[0]["title"]="(lang)mytitle";
+
 # $custom_top_nav[0]["title"]="Example Link A";
 # $custom_top_nav[0]["link"]="$baseurl/pages/search.php?search=a";
 #
