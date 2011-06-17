@@ -47,8 +47,9 @@ $text=get_site_text($page,$name,$editlanguage,$editgroup);
 
 include "../../include/header.php";
 ?>
+<p><a href="team_content.php?nc=<?php echo time()?>&findpage=<?php echo $findpage?>&findname=<?php echo $findname?>&findtext=<?php echo $findtext?>&offset=<?php echo $offset?>">&lt; <?php echo $lang["backtomanagecontent"]?></a></p>
 <div class="BasicsBox">
-<h1><?php echo $lang["managecontent"]?></h1>
+<h1><?php echo $lang["editcontent"]?></h1>
 
 <form method=post id="mainform">
 <input type=hidden name=page value="<?php echo $page?>">
