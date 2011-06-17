@@ -1458,3 +1458,5 @@ $lang["searchbypage"]="Search Page";
 $lang["searchbyname"]="Search Name";
 $lang["searchbytext"]="Search Text";
 $lang["saveandreturntolist"]="Save and Return to List";
+$lang["backtomanagecontent"]="Back to Manage Content";
+$lang["editcontent"]="Edit Content";
