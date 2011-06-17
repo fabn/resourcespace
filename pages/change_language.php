@@ -13,7 +13,7 @@ if (getval("save","")!="")
         setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/"); # Also 
         }
 
-	redirect(getval("currenturl","pages/" . ($use_theme_as_home?'themes.php':$default_home_page)));
+	 redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 	}
 include "../include/header.php";
 ?>
@@ -29,7 +29,6 @@ include "../include/header.php";
 <option value="<?php echo $key?>" <?php if ($language==$key) { ?>selected<?php } ?>><?php echo $value?></option>
 <?php } ?>
 </select>
-<input name="currenturl" id="currenturl" type="hidden" value="<?php echo getval("currenturl","pages/" . ($use_theme_as_home?'themes.php':$default_home_page))?>"/>
 <div class="clearerleft"> </div>
 </div>
 

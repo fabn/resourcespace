@@ -59,7 +59,7 @@ function SwapCSS(css)
 ?>	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php } ?>
 <?php if ($disable_languages==false){?>
-<?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php?currenturl=<?php echo $_SERVER['REQUEST_URI']?>"><?php echo $languages[$language]?></a>
+<?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php"><?php echo $languages[$language]?></a>
 <?php } ?>
 </div>
 
