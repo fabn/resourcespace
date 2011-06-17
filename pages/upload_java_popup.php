@@ -103,4 +103,6 @@ http://www.resourcespace.org/
 </div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()"><?php echo $lang['closethiswindow']?></A>  
 </div>
 <script type='text/javascript'>window.moveTo(0,0);
-window.resizeTo(690,document.getElementById('height').offsetHeight+100);</script>
+window.resizeTo(690,document.getElementById('height').offsetHeight+100);
+<?php echo "document.title ='".$applicationname." - ".$lang['upload']."'";?>
+</script>

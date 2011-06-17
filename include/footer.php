@@ -140,30 +140,31 @@ function SwapCSS(css)
 //titlebar modifications
 
 if ($show_resource_title_in_titlebar){
+$general_title_pages=array("team_content","team_archive","team_resource","research_request","requests","edit","themes","collection_public","collection_manage","team_home","help","home","tag","upload_java_popup","upload_java","upload_swf","contact","geo_search","search_advanced","about","contribute","change_password");
 $search_title_pages=array("contactsheet_settings","search","preview_all","collection_edit","edit","collection_download","collection_share","collection_request");
 $resource_title_pages=array("view","delete","log","alternative_file","alternative_files","resource_email","edit","preview");
 
     if (!$frameless_collections){$parentword = 'parent.';} else { $parentword = ''; }
     
     // clear resource or search title for pages that don't apply:
-    if (!in_array($pagename,array_merge($search_title_pages,$resource_title_pages))){
+    if (!in_array($pagename,array_merge($general_title_pages,$search_title_pages,$resource_title_pages))){
 		echo "<script language='javascript'>\n";
 		echo $parentword . "document.title = \"$applicationname\";\n";
 		echo "</script>";
     }
-    
     // place resource titles
-    else if (in_array($pagename,$resource_title_pages) && getval("collection","")=="" /* for edit page */){
+    else if (in_array($pagename,$resource_title_pages) && !isset($_GET['collection']) && !isset($_GET['java'])) /* for edit page */{
         $title =  htmlspecialchars(i18n_get_translated(get_data_by_field($ref,$view_title_field)));
         echo "<script language='javascript'>\n";
+        if ($pagename=="edit"){$title=$lang['action-edit']." - ".$title;}
         echo $parentword . "document.title = \"$applicationname - $title\";\n";
         echo "</script>";
     }
-    
+
     // place collection titles
     else if (in_array($pagename,$search_title_pages)){
         if (isset($search_title)){
-            $title=strip_tags($search_title);
+            $title=$lang["searchresults"]." - ".strip_tags($search_title);
         }
         else if (($pagename=="collection_download") || $pagename=="edit" && getval("collection","")!=""){
             $collectiondata=get_collection($collection);
@@ -178,10 +179,94 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
             }
         // add a hyphen if title exists  
         if (strlen($title)!=0){$title="- $title";}    
+        if ($pagename=="edit"){$title=" - ".$lang['action-editall']." ".$title;}
+        if ($pagename=="collection_share"){$title=" - ".$lang['share']." ".$title;}
+        if ($pagename=="collection_edit"){$title=" - ".$lang['action-edit']." ".$title;}
+        if ($pagename=="preview_all"){$title=" - ".$lang['preview_all']." ".$title;}
+        if ($pagename=="collection_download"){$title=" - ".$lang['download']." ".$title;}
         echo "<script language='javascript'>\n";
         echo $parentword . "document.title = \"$applicationname $title\";\n";
         echo "</script>";
     }
+    
+      // place page titles
+    else if (in_array($pagename,$general_title_pages)){ 
+		
+		if ($pagename=="themes"){
+			$pagetitle=$lang['themes'];
+			for ($n=0;$n<$theme_category_levels;$n++){
+				if (getval("theme".$n,"")!=""){
+					$pagetitle.=" / ".getval("theme".$n,"");
+				}
+			}
+		}
+		else if (isset($lang[$pagename])){
+			$pagetitle=$lang[$pagename];
+		} 
+		else if (isset($lang['action-'.$pagename])){
+			$pagetitle=$lang["action-".$pagename];
+			if (getval("java","")!=""){$pagetitle=$lang['upload']." ".$pagetitle;}
+		}
+		else if (isset($lang[str_replace("_","",$pagename)])){
+			$pagetitle=$lang[str_replace("_","",$pagename)];
+		}
+		else if ($pagename=="team_content"){
+			$pagetitle=$lang['managecontent'];
+		}
+		else if ($pagename=="collection_public"){
+			$pagetitle=$lang["publiccollections"];
+		}
+		else if ($pagename=="collection_manage"){
+			$pagetitle=$lang["mycollections"];
+		}
+		else if ($pagename=="team_home"){
+			$pagetitle=$lang["teamcentre"];
+		}
+		else if ($pagename=="help"){
+			$pagetitle=$lang["helpandadvice"];
+		}
+		else if ($pagename=="tag"){
+			$pagetitle=$lang["tagging"];
+		}
+		else if (strpos($pagename,"upload")!==false){
+			$pagetitle=$lang["upload"];
+		}
+		else if ($pagename=="contact"){
+			$pagetitle=$lang["contactus"];
+		}
+		else if ($pagename=="geo_search"){
+			$pagetitle=ucwords($lang["geographicsearch"]);
+		}
+		else if ($pagename=="search_advanced"){
+			$pagetitle=ucwords($lang["advancedsearch"]);
+			if (getval("archive","")==2){$pagetitle.=" - ".$lang['archiveonlysearch'];}
+		}	
+		else if ($pagename=="about"){
+			$pagetitle=ucwords($lang["aboutus"]);
+		}	
+		else if ($pagename=="contribute"){
+			$pagetitle=ucwords($lang["mycontributions"]);
+		}	
+		else if ($pagename=="change_password"){
+			$pagetitle=ucwords($lang["changeyourpassword"]);
+		}	
+		else if ($pagename=="requests"){
+			$pagetitle=$lang["myrequests"];
+		}	
+		else if ($pagename=="team_resource"){
+			$pagetitle=$lang["manageresources"];
+		}	
+		else if ($pagename=="team_archive"){
+			$pagetitle=$lang["managearchiveresources"];
+		}	
+		else {
+			$pagetitle="";
+		}
+		if (strlen($pagetitle)!=0){$pagetitle="- $pagetitle";} 
+        echo "<script language='javascript'>\n";
+        echo $parentword . "document.title = \"$applicationname $pagetitle\";\n";
+        echo "</script>";
+    }  
 }
    
 
