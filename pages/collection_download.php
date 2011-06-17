@@ -1,4 +1,4 @@
-<?php
+<?php 
 include "../include/db.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
@@ -302,7 +302,7 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["downloadzip"]?></h1>
 
-<form method=post>
+<form id='myform' action="collection_download.php?submitted=true" method=post>
 <input type=hidden name="collection" value="<?php echo $collection?>">
 
 <?php 
@@ -400,9 +400,10 @@ if ($zipped_collection_textfile=="true") { ?>
 </select>
 <div class="clearerleft"> </div><br>
 <?php } ?>
-<div class="Inline"><input name="submitted" type="submit" value="&nbsp;&nbsp;<?php echo $lang["download"]?>&nbsp;&nbsp;" /></div>
+<div class="Inline"><input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["download"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>
+<div id="progress"></div>
 </div>
 </form>
 

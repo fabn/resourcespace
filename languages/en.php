@@ -1460,3 +1460,5 @@ $lang["searchbytext"]="Search Text";
 $lang["saveandreturntolist"]="Save and Return to List";
 $lang["backtomanagecontent"]="Back to Manage Content";
 $lang["editcontent"]="Edit Content";
+
+$lang["confirmcollectiondownload"]="Please wait while we create a zip archive. This might take a while, depending on the total size of your Resources.";
