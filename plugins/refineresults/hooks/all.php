@@ -38,6 +38,13 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 	<form method="post">
 	<div class="Question" id="question_related" style="border-top:none;">
 	<label for="related"><?php echo $lang["additionalkeywords"]?></label>
+	<select id="refinefields" name="refinefields" class="shrtwidth" >
+	<option value="">Search All</option>
+	<?php $refineresultsfields=get_advanced_search_fields();
+		foreach($refineresultsfields as $field){
+			?><option value="<?php echo $field['name']?>"><?php echo $field['title']?></option>
+		<?php } ?>
+	</select>
 	<input class="stdwidth" type=text id="refine_keywords" name="refine_keywords" value="">
 	<input type=hidden name="archive" value="<?php echo $archive?>">
 	<input type=hidden name="search" value="<?php echo htmlspecialchars($search) ?>">
@@ -61,9 +68,11 @@ function HookRefineresultsSearchBeforesearchresultsexpandspace()
 function HookRefineresultsSearchSearchstringprocessing()
 	{
 	global $search;
+	$fieldspecific=getvalescaped("refinefields","");
 	$refine=trim(getvalescaped("refine_keywords",""));
 	if ($refine!="")
 		{
+		if ($fieldspecific!=""){$refine=$fieldspecific.":".$refine;}	
 		$search.="," . $refine;	
 		}
 	$search=refine_searchstring($search);	
