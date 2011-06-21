@@ -102,7 +102,8 @@ if ($magictouch_account_id==""){
 <input name="previewsizes" type="text" value="<?php echo implode(',',$magictouch_preview_page_sizes); ?>" size="30" />
 </div><div class="clearerleft"></div>
    
-<div class="Question">   
+<div class="Question">  
+<label for="submit"></label> 
 <input type="submit" name="submit" value="<?php echo $lang["save"]?>">   
 </div><div class="clearerleft"></div>
 
