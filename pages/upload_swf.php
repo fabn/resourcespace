@@ -310,11 +310,12 @@ else
 	<div style="margin: 0px 10px;">
 		<div>
 			<form>
+				<p><span id="btnBrowse"></span></p>
 				<?php if ($replace=="")
 					{ # Only show the back button in the step-by-step guide of Add Resource Batch - In Browser (Flash)
 					?><input name="back" type="button" onclick="window.history.go(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"]?>&nbsp;&nbsp;" /><?php
 					}
-				?><span id="btnBrowse"></span>
+				?>
 			</form>
 		</div>
 		<div id="divFileProgressContainer" style="height: 75px;"></div>
