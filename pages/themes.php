@@ -4,6 +4,8 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
 
+hook("themeheader");
+
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
@@ -428,7 +430,7 @@ if ($header=="" && !isset($themes[0]))
 				?>
 				<tr>
 				<td><div class="ListTitle"><?php echo $indent?>
-				<?php if ($themes[$m]["children"]>0)
+				<?php if ($themes[$m]["children"]>0 && $themes_category_navigate_levels)
 					{
 					# Has children. Default action is to navigate to a deeper level.
 					?>
