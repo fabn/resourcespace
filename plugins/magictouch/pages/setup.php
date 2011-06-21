@@ -46,43 +46,65 @@ include "../../../include/header.php";
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
   <h1>MagicTouch Configuration</h1>
-  <?php
-if(!is_writable("../config/config.php")){echo("MagicTouch config.php is not writable: chmod 777 plugins/magictouch/config/config.php<br/><br/> <a href=''>>Click Here to Refresh.</a>");die();}
-?>
-<?php if ($magictouch_account_id==""){echo "You must set up MagicTouch. To get an account ID <a target='_new' href='http://www.magictoolbox.com/magictouch/signup/'>>Click Here</a>. <br /><br />Configure the account id below, and register your domain with your Magic Touch account.<br /><br />";}?>
-  <div class="VerticalNav">
- <form id="form1" name="form1" method="post" action="">
+  
+<?php 
 
-   <p><label for="accountid">Account ID (from URL):</label><input name="accountid" type="text" value="<?php echo $magictouch_account_id; ?>" size="30" /></p>
-   <p><label for="secure">Is your site HTTP or HTTPS?:</label>
-   <select name="secure">
-   <option <?php if ($magictouch_secure=="http") { ?>selected<?php } ?>>http</option>
-   <option <?php if ($magictouch_secure=="https") { ?>selected<?php } ?>>https</option>
-   </select>
-   </p>
-   <p><label for="extexclude">Extensions to exclude (comma separated):</label>
-   <input name="extexclude" type="text" value="<?php echo implode(',',$magictouch_ext_exclude); ?>" size="30" />
-   </p>
-   <p><label for="rtexclude[]">Resource Types to exclude (highlight to exclude):</label> <br />
-   <?php $rtypes=get_resource_types();?>
-   <select name="rtexclude[]" multiple="multiple" size="7">
-	<?php foreach($rtypes as $rt){?>
-	<option value="<?php echo $rt['ref']?>" <?php if (in_array($rt['ref'],$magictouch_rt_exclude)){?>selected<?php } ?>><?php echo $rt['name']?></option>
-	<?php } ?>
-   </select>
+if(!is_writable("../config/config.php")){
+	  echo("MagicTouch config.php is not writable: chmod 777 plugins/magictouch/config/config.php<br/><br/> <a href=''>>Click Here to Refresh.</a>");
+	  die();
+	}
 
-   <p><label for="viewsizes">View page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
-   <?php $sizes=sql_query("select * from preview_size");?>
-      <input name="viewsizes" type="text" value="<?php echo implode(',',$magictouch_view_page_sizes); ?>" size="30" />
-   </p>
+if ($magictouch_account_id==""){
+	echo "You must set up MagicTouch. 
+	To get an account ID <a target='_new' href='http://www.magictoolbox.com/magictouch/signup/'>>Click Here</a>. 
+	<br /><br />Configure the account id below, and register your domain with your Magic Touch account.<br /><br />";
+}?>
+
+
+<form id="form1" name="form1" method="post" action="">
+
+<div class="Question">
+<label for="accountid">Account ID (from URL):</label><input name="accountid" type="text" value="<?php echo $magictouch_account_id; ?>" size="30" />
+</div><div class="clearerleft"></div>
    
-   <p><label for="previewsizes">Preview page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
-   <?php $sizes=sql_query("select * from preview_size");?>
-      <input name="previewsizes" type="text" value="<?php echo implode(',',$magictouch_preview_page_sizes); ?>" size="30" />
-   </p>
+<div class="Question">
+<label for="secure">Is your site HTTP or HTTPS?:</label>
+<select name="secure">
+<option <?php if ($magictouch_secure=="http") { ?>selected<?php } ?>>http</option>
+<option <?php if ($magictouch_secure=="https") { ?>selected<?php } ?>>https</option>
+</select>
+</div><div class="clearerleft"></div>
    
+<div class="Question">
+<label for="extexclude">Extensions to exclude <br />(comma separated):</label>
+<input name="extexclude" type="text" value="<?php echo implode(',',$magictouch_ext_exclude); ?>" size="30" />
+</div><div class="clearerleft"></div>
+   
+<div class="Question">
+<label for="rtexclude[]">Resource Types to exclude <br />(highlight to exclude):</label> 
+<?php $rtypes=get_resource_types();?>
+<select name="rtexclude[]" multiple="multiple" size="7">
+<?php foreach($rtypes as $rt){?>
+<option value="<?php echo $rt['ref']?>" <?php if (in_array($rt['ref'],$magictouch_rt_exclude)){?>selected<?php } ?>><?php echo $rt['name']?></option>
+<?php } ?>
+</select>
+</div><div class="clearerleft"></div>
+ 
+<div class="Question">
+<label for="viewsizes">View page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
+<?php $sizes=sql_query("select * from preview_size");?>
+<input name="viewsizes" type="text" value="<?php echo implode(',',$magictouch_view_page_sizes); ?>" size="30" />
+</div><div class="clearerleft"></div>
+   
+<div class="Question">
+<label for="previewsizes">Preview page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
+<?php $sizes=sql_query("select * from preview_size");?>
+<input name="previewsizes" type="text" value="<?php echo implode(',',$magictouch_preview_page_sizes); ?>" size="30" />
+</div><div class="clearerleft"></div>
+   
+<div class="Question">   
 <input type="submit" name="submit" value="<?php echo $lang["save"]?>">   
-
+</div><div class="clearerleft"></div>
 
 </form>
 </div>	
