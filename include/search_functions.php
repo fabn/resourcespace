@@ -594,7 +594,22 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		 and $sql_filter group by r.ref order by $order_by";
 		return sql_query($sql,false,$fetchrows);
 		}
-		
+
+
+	# Colour search
+	if (substr($search,0,7)=="!colour")
+		{
+		$colour=explode(" ",$search);$colour=str_replace("!colour","",$colour[0]);
+
+		$sql="select r.hit_count score, $select from resource r $sql_join
+				where 
+					colour_key like '" . escape_check($colour) . "%'
+              	or  colour_key like '_" . escape_check($colour) . "%'
+                          
+		 and $sql_filter group by r.ref order by $order_by";
+		return sql_query($sql,false,$fetchrows);
+		}		
+
 		
 	# Similar to a colour
 	if (substr($search,0,4)=="!rgb")
