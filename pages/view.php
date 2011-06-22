@@ -833,7 +833,10 @@ for ($n=0;$n<count($fields);$n++)
 </div>
 
 <?php 
-if (!$disable_geocoding) { ?>
+if (!$disable_geocoding) { 
+  // only show this section if the resource is geocoded OR they have permission to do it themselves
+  if ($edit_access||($resource["geo_lat"]!="" && $resource["geo_long"]!="")){ 
+?>
     <!-- Begin Geolocation Section -->
     <div class="RecordBox">
     <div class="RecordPanel">
@@ -870,7 +873,8 @@ if (!$disable_geocoding) { ?>
     <div class="PanelShadow"></div>
     </div>
     <!-- End Geolocation Section -->
-<?php } ?>
+<?php    } 
+      }?>
 
 <?php hook("w2pspawn");?>
 
