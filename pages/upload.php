@@ -173,6 +173,8 @@ function check(filename) {
 	<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
 </div>
 
+<br />
+<p>&gt; <a href="upload_java.php?replace_resource=<?php echo $ref ?>"><?php echo $lang["uploadertryjava"]?></a></p>
 
 </form>
 </div>

@@ -27,6 +27,8 @@ if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($res
 $alternative = getvalescaped("alternative",""); # Batch upload alternative files (Java)
 $replace = getvalescaped("replace",""); # Replace Resource Batch
 
+$replace_resource=getvalescaped("replace_resource",""); # Option to replace existing resource file
+
 # Create a new collection?
 if ($collection_add==-1)
 	{
@@ -159,7 +161,7 @@ if (array_key_exists("File0",$_FILES))
 		echo "SUCCESS";
 		exit();
 		}
-    if ($replace=="")
+    if ($replace=="" && $replace_resource=="")
     	{
 		# Standard upload of a new resource
 
@@ -177,6 +179,14 @@ if (array_key_exists("File0",$_FILES))
 	
 		$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
 		
+		echo "SUCCESS";
+		exit();
+		}
+	elseif ($replace=="" && $replace_resource!="")
+		{
+		# Replacing an existing resource file
+		$status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+
 		echo "SUCCESS";
 		exit();
 		}
@@ -252,6 +262,12 @@ if ($replace!="")
 	{
 	# Replace Resource Batch
 	$titleh1 = $lang["replaceresourcebatch"];
+	$titleh2 = "";
+	}
+elseif ($replace_resource!="")
+	{
+	# Replace file
+	$titleh1 = $lang["replacefile"];
 	$titleh2 = "";
 	}
 elseif ($alternative!="")
