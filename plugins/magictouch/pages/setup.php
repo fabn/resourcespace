@@ -109,3 +109,4 @@ if ($magictouch_account_id==""){
 
 </form>
 </div>	
+<?php include "../../../include/footer.php";
