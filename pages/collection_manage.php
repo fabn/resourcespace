@@ -8,7 +8,7 @@ include "../include/resource_functions.php";
 
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
-$col_order_by=getvalescaped("col_order_by","name");
+$col_order_by=getvalescaped("col_order_by","created");
 $sort=getval("sort","ASC");
 $sort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
