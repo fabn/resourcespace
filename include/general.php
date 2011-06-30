@@ -748,7 +748,20 @@ function get_users_with_permission($permission)
     }
 
     return $return;
+}
 
+function get_user_by_email($email)
+{
+	$r = sql_query("select u.*,g.name groupname,g.ref groupref,g.parent groupparent from user u left outer join usergroup g on u.usergroup=g.ref where u.email like '%$email%' order by username",false);
+
+    # Translates group names in the newly created array.
+    $return = array();
+    for ($n = 0;$n<count($r);$n++) {
+        $r[$n]["groupname"] = lang_or_i18n_get_translated($r[$n]["groupname"], "usergroup-");
+        $return[] = $r[$n]; # Adds to return array.
+    }
+
+    return $return;
 }
 
 function get_usergroups($usepermissions=false,$find="")
@@ -1360,6 +1373,7 @@ function i18n_get_indexable($text)
 	{
 	# For field names / values using the i18n syntax, return all language versions, as necessary for indexing.
 	$text=trim($text);
+	$text=strip_tags($text);
 	
 	# For multiple keywords, parse each keyword.
 	if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($n>0) {$out.=",";}; $out.=i18n_get_indexable(trim($s[$n]));};return $out;}
