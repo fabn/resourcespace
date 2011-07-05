@@ -1462,3 +1462,7 @@ $lang["backtomanagecontent"]="Back to Manage Content";
 $lang["editcontent"]="Edit Content";
 
 $lang["confirmcollectiondownload"]="Please wait while we create a zip archive. This might take a while, depending on the total size of your Resources.";
+
+$lang["starttypingkeyword"]="Start typing keyword...";
+$lang["createnewentryfor"]="Create new entry for";
+$lang["confirmcreatenewentryfor"]="Are you sure you wish to create a new keyword list entry for '%%'?";

@@ -241,7 +241,7 @@ function HideHelp(field)
 		}
 	}
 </script>
-<script type="text/javascript" src="../lib/js/prototype.js"></script>
+
 
 <div class="BasicsBox"> 
 

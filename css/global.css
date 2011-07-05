@@ -397,3 +397,5 @@ div.autocomplete ul li {
 .meter-value {height: 10px;}
 
 .SearchOptionNav {padding-bottom:0;margin-bottom:5px;margin-right:20px;float:left;}
+.dynamickeywords {float:left;}
+.keywordsselected {margin-top:10px;}
