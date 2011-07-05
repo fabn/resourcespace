@@ -1586,7 +1586,7 @@ function get_resource_access($resource)
 	$resourcedata=$resource;
 	$passthru="yes";
 	}
-	
+	$ref=$resourcedata['ref'];
 	$access=$resourcedata["access"];
 	$resource_type=$resourcedata['resource_type'];
 	
@@ -1594,7 +1594,7 @@ function get_resource_access($resource)
 	if ($k!="")
 		{
 		# External access - check how this was shared.
-		$extaccess=sql_value("select access value from external_access_keys where access_key='" . escape_check($k) . "'",-1);
+		$extaccess=sql_value("select access value from external_access_keys where resource=".$ref." and access_key='" . escape_check($k) . "'",-1);
 		if ($extaccess!=-1) {return $extaccess;}
 		}
 	
