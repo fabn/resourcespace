@@ -1037,6 +1037,11 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			include "../pages/edit_fields/7.php";
 			}
 		break;
+		
+		case 9: #-- Dynamic keywords list
+		$value=str_replace(";",",",$value); # Different syntax used for keyword separation when searching.
+		include "../pages/edit_fields/9.php";
+		break;		
 		}
 	?>
 	<div class="clearerleft"> </div>
@@ -1168,7 +1173,8 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 
 			break;
 
-			case 7: # -------- Category tree
+			case 7: 
+			case 9: # -------- Category tree and dynamic keywords
 			$name="field_" . $fields[$n]["ref"];
 			$value=getvalescaped($name,"");
 			$selected=trim_array(explode(",",$value));
@@ -1187,7 +1193,6 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 				$search.=$fields[$n]["name"] . ":" . $p;
 				}
 			break;
-
 			}
 		}
 	return $search;

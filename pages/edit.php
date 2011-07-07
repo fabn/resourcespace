@@ -694,6 +694,7 @@ for ($n=0;$n<count($fields);$n++)
 	# ----------------------------  Show field -----------------------------------
 	$type=$fields[$n]["type"];
 	if ($type=="") {$type=0;} # Default to text type.
+	$field=$fields[$n];
 	include "edit_fields/" . $type . ".php";
 	# ----------------------------------------------------------------------------
 

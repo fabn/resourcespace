@@ -14,7 +14,7 @@ global $baseurl;
 
 <script type="text/javascript">
 
-new Ajax.Autocompleter("<?php echo $name?>_selector", "<?php echo $name?>_choices", "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $fields[$n]["ref"] ?>",
+new Ajax.Autocompleter("<?php echo $name?>_selector", "<?php echo $name?>_choices", "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>",
 	{
 	afterUpdateElement : selectKeyword_<?php echo $name ?>
 	}
@@ -32,7 +32,7 @@ function selectKeyword_<?php echo $name ?>()
 		keyword=keyword.substring(<?php echo strlen($lang["createnewentryfor"])+1 ?>);
 
 		// Add the word.
-		new Ajax.Request("<?php echo $baseurl?>/pages/edit_fields/9_ajax/add_keyword.php?field=<?php echo $fields[$n]["ref"] ?>&keyword=" + escape(keyword));
+		new Ajax.Request("<?php echo $baseurl?>/pages/edit_fields/9_ajax/add_keyword.php?field=<?php echo $field["ref"] ?>&keyword=" + encodeURI(keyword));
 		}
 
 	addKeyword_<?php echo $name ?>(keyword);
@@ -71,6 +71,12 @@ function updateSelectedKeywords_<?php echo $name ?>()
 		}
 	document.getElementById('<?php echo $name?>_selected').innerHTML=html;
 	document.getElementById('<?php echo $name?>').value=value;
+	
+	// Update the result counter, if the function is available (e.g. on Advanced Search).
+	if( typeof( UpdateResultCount ) == 'function' )
+		{
+		UpdateResultCount();
+		}
 	}
 	
 function resolveTranslated_<?php echo $name ?>(keyword)
@@ -87,7 +93,7 @@ function resolveTranslated_<?php echo $name ?>(keyword)
 
 <?php 
 # Load translations - store original untranslated strings for each keyword, as this is what is actually set.
-$options=trim_array(explode(",",$fields[$n]["options"]));
+$options=trim_array(explode(",",$field["options"]));
 for ($m=0;$m<count($options);$m++)
 	{
 	$trans=i18n_get_translated($options[$m]);
