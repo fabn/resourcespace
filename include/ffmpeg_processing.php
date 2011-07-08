@@ -54,6 +54,7 @@ $sourceheight=$height;
 
 global $config_windows, $ffmpeg_get_par;
 if ($ffmpeg_get_par) {
+  $par = 1;
   # Find out the Pixel Aspect Ratio
   $shell_exec_cmd = $ffmpeg_path_working . " -i " . escapeshellarg($file) . " 2>&1";
 
@@ -118,23 +119,24 @@ if ($config_windows)
 
 $output=shell_exec($shell_exec_cmd);
 
-if ($ffmpeg_get_par && $par > 0 && $par <> 1) {
-  # recreate snapshot with correct PAR
-  $width=$sourcewidth;
-  $height=$sourceheight;
-  if($par < 1) {
-    $width = ceil($sourcewidth * $par);
+if ($ffmpeg_get_par) {
+  if ($par > 0 && $par <> 1) {
+    # recreate snapshot with correct PAR
+    $width=$sourcewidth;
+    $height=$sourceheight;
+    if($par < 1) {
+      $width = ceil($sourcewidth * $par);
+    }
+    elseif($par > 1) {
+      $height = ceil($sourceheight / $par);
+    }
+    # Frame size must be a multiple of two
+    if ($width % 2){$width++;}
+    if ($height % 2) {$height++;}
+    $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
+    $output=shell_exec($shell_exec_cmd);
   }
-  elseif($par > 1) {
-    $height = ceil($sourceheight / $par);
-  }
-  # Frame size must be a multiple of two
-  if ($width % 2){$width++;}
-  if ($height % 2) {$height++;}
-  $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
-  $output=shell_exec($shell_exec_cmd);
 }
-
 
 if (!file_exists($targetfile))
     {
