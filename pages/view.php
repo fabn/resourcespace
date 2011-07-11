@@ -900,7 +900,7 @@ if ($metadata_report && isset($exiftool_path) && $k==""){?>
 
 <?php
 # -------- Related Resources (must be able to search for this to work)
-if (checkperm("s") && ($k=="")) {
+if ($enable_related_resources && checkperm("s") && ($k=="")) {
 $result=do_search("!related" . $ref);
 if (count($result)>0) 
 	{
