@@ -540,6 +540,7 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 		}	
 	}
 	
+if (!function_exists("add_keyword_mappings")){		
 function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
 	{
 	# For each instance of a keyword in $string, add a keyword->resource mapping.
@@ -574,6 +575,7 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 			}	
 		}	
 	}
+}
 	
 function update_field($resource,$field,$value)
 	{
