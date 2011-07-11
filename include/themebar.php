@@ -2,39 +2,9 @@
 include_once("collections_functions.php");
 ?>
 
-<script type="text/javascript">
-
-function get_cookie ( cookie_name )
-{
-  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-  if ( results )
-    return ( unescape ( results[2] ) );
-  else
-    return null;
-}
-
-</script>
-
-<div id="ThemeBox">
-
-<div id="ThemeBoxPanel">
-
-	<div class="SearchSpace">
-
-<h2><?php echo $lang["themes"] ?></h2>
-<?php
-
-hook("themebartoptoolbar"); 
-
-# Display all themes
-// only works for collections on first level
-$headers=get_theme_headers();
-
-for ($n=0;$n<count($headers);$n++)
-	{
-	DisplayThemeBar($headers[$n]);
-	}
-
+<?php if (!hook("themebarreplace")){  
+	
+// put function first	
 function DisplayThemeBar($theme1)
 	{
 	global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$n,$baseurl;
@@ -67,12 +37,7 @@ return false;">
 			}
 		?><br><br></div><?php
 		}
-	}
 
-?>
-
-
-<?php
 # ------- Smart Themes -------------
     if(!function_exists("get_smart_theme_headers")){include("collections_functions.php");}
 	$headers=get_smart_theme_headers();
@@ -123,7 +88,45 @@ return false;">
 			<?php
 			}
 		}
+	} // end function
+?>
+<script type="text/javascript">
+
+function get_cookie ( cookie_name )
+{
+  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+  if ( results )
+    return ( unescape ( results[2] ) );
+  else
+    return null;
+}
+
+</script>
+
+<div id="ThemeBox">
+
+<div id="ThemeBoxPanel">
+
+	<div class="SearchSpace">
+
+<h2><?php echo $lang["themes"] ?></h2>
+<?php
+
+hook("themebartoptoolbar"); 
+
+# Display all themes
+// only works for collections on first level
+$headers=get_theme_headers();
+
+for ($n=0;$n<count($headers);$n++)
+	{
+	DisplayThemeBar($headers[$n]);
+	}
+
 
 hook("themebarbottomtoolbar"); 
+
+} // end themebarreplace hook
+
 ?>
 
