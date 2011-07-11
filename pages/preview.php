@@ -14,7 +14,6 @@ $ext=getval("ext","");
 
 $resource=get_resource_data($ref);
 
-$border=true;
 if ($ext!="" && $ext!="gif" && $ext!="jpg" && $ext!="png") {$ext="jpg";$border=false;} # Supports types that have been created using ImageMagick
 
 $search=getvalescaped("search","");
@@ -154,7 +153,7 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
         include "flv_play.php";
         }
     }else{?>
-<td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img src="<?php echo $url?>" alt="" <?php if ($border) { ?>style="border:1px solid white;"<?php } ?> /></a></td>
+<td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img class="Picture" src="<?php echo $url?>" alt=""/></a></td>
 
 <?php } ?>
 

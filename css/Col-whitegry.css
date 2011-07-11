@@ -53,7 +53,7 @@ input[readonly] {color: #000000;}
 .IconVideo {background: url(../gfx/whitegry/interface/IcVideo.gif) no-repeat 140px 5px;}
 .IconVideoLarge {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 340px 5px;}
 
-.ImageBorder, .RecordPanel .Picture, .VideoBorder {border: 1px solid #000000;}	
+.ImageBorder, .RecordPanel, .Picture, .VideoBorder {border: 1px solid #000000;}	
 .CollectImageBorder {border: 1px solid #000000;}	
 
 .PanelShadow {background: url(../gfx/whitegry/interface/panelshadow.gif) repeat-x;height: 5px;}

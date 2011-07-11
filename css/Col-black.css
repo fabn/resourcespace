@@ -52,7 +52,7 @@ input[readonly] {color: #FFFFFF;}
 .IconVideo {background: url(../gfx/black/interface/IcVideo.gif) no-repeat 140px 5px;}
 .IconVideoLarge {background: url(../gfx/greyblu/interface/IcVideo.gif) no-repeat 340px 5px;}
 
-.ImageBorder, .RecordPanel .Picture {border: 1px solid #AAA;}
+.ImageBorder, .RecordPanel, .Picture {border: 1px solid #AAA;}
 .VideoBorder {border: 1px solid #000000;}	
 .CollectImageBorder {border: 1px solid #AAA;}	
 
