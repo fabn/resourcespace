@@ -303,7 +303,7 @@ if (substr($search,0,1)=="!"){$startsearchcrumbs=1;} else {$startsearchcrumbs=0;
 if ($refinements[0]!=""){
 	for ($n=$startsearchcrumbs;$n<count($refinements);$n++){
 		$search_title_element=$refinements[$n];
-		if ($n!=0 || $archive!=0){$searchcrumbs.=" / ";}
+		if ($n!=0 || $archive!=0){$searchcrumbs.=" &gt; </count> ";}
 		$searchcrumbs.="<a href=search.php?search=";
 		for ($x=0;$x<=$n;$x++){
 			$searchcrumbs.=urlencode($refinements[$x]);
