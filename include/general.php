@@ -289,7 +289,7 @@ function get_resource_top_keywords($resource,$count)
 function split_keywords($search,$index=false,$partial_index=false,$is_date=false)
 	{
 	# Takes $search and returns an array of individual keywords.
-
+	
 	global $config_trimchars;
 
 	if ($index && $is_date)
@@ -358,7 +358,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 
 	}
 
-
+if (!function_exists("cleanse_string")){
 function cleanse_string($string,$preserve_separators)
         {
         # Removes characters from a string prior to keyword splitting, for example full stops
@@ -377,6 +377,7 @@ function cleanse_string($string,$preserve_separators)
                 return strtolower(trim_spaces(str_replace($s," ",$string)));
                 }
         }
+}
 
 function resolve_keyword($keyword,$create=false)
 	{
