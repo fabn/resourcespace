@@ -756,7 +756,7 @@ if (true) # Always show search header now.
 <!--Resource Panel-->
 	<div class="ResourcePanelShell" id="ResourceShell<?php echo $ref?>">
 	<div class="ResourcePanel">
-	
+	<?php hook ("resourcethumbtop");?>
 <?php if (!hook("renderimagethumb")) { ?>			
 	<?php $access=get_resource_access($result[$n]);
 	$use_watermark=check_use_watermark();?>
