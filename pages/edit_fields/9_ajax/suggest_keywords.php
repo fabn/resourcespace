@@ -7,9 +7,8 @@ $field=getvalescaped("field","");
 $keyword=getvalescaped("field_" . $field . "_selector","");
 
 $fielddata=get_resource_type_field($field);
-
+$readonly=getval("readonly","");
 ?><ul><?php
-
 
 # Return matches
 $exactmatch=false;
@@ -24,7 +23,7 @@ for ($m=0;$m<count($options);$m++)
 		}
 	}
 	
-if (!$exactmatch)
+if (!$exactmatch && !$readonly)
 	{
 	?>
 	<li><?php echo $lang["createnewentryfor"] ?> <?php echo $keyword ?></li>

@@ -1,5 +1,6 @@
 <?php
-global $baseurl;
+global $baseurl,$pagename;
+$readonly=($pagename=="search_advanced");
 ?>
 
 <div class="dynamickeywords">
@@ -14,7 +15,7 @@ global $baseurl;
 
 <script type="text/javascript">
 
-new Ajax.Autocompleter("<?php echo $name?>_selector", "<?php echo $name?>_choices", "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>",
+new Ajax.Autocompleter("<?php echo $name?>_selector", "<?php echo $name?>_choices", "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>&readonly=<?php echo $readonly ?>",
 	{
 	afterUpdateElement : selectKeyword_<?php echo $name ?>
 	}
