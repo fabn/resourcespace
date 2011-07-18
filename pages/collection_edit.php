@@ -18,6 +18,7 @@ $collection=get_collection($ref);if ($collection===false) {
 	$error=$lang['error-collectionnotfound'];
 	include "../include/header.php";
 	error_alert($error);
+	exit();
 	}
 $resources=do_search("!collection".$ref);
 $colcount=count($resources);
