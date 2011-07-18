@@ -1,0 +1,5 @@
+name: remoteimport
+desc: Allows remote updating of resource metadata and insert of new records
+author: Montala Limited
+version: 1.0
+info_url: http://www.montala.com
