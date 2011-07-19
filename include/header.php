@@ -88,7 +88,7 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 
 <?php hook("headblock"); ?>
 
-<?php if ($collections_compact_style){ include ("../lib/js/colactions.js");}?>
+<?php if ($collections_compact_style && $pagename!="login"){ include dirname(__FILE__)."/../lib/js/colactions.js";}?>
 
 </head>
 
