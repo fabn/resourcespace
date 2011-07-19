@@ -3124,3 +3124,59 @@ function format_display_field($value){
 	$string=str_replace("#zwspace",$wordbreaktag." ",$string);
 	return $string;
 }
+
+function draw_performance_footer(){
+	global $config_show_performance_footer,$querycount,$querytime,$querylog,$pagename;
+	if ($config_show_performance_footer){	
+	# --- If configured (for debug/development only) show query statistics
+	?>
+	<?php if ($pagename=="collections"){?><br/><br/><br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><div style="float:left;"><?php } else { ?><div style="float:right; margin-right: 10px;"><?php } ?>
+	<table class="InfoTable" style="float: right;margin-right: 10px;">
+	<tr><td>Query count</td><td><?php echo $querycount?></td></tr>
+	<tr><td>Query time</td><td><?php echo round($querytime,4)?></td></tr>
+	<?php $dupes=0;
+	foreach ($querylog as $query=>$values){
+			if ($values['dupe']>1){$dupes++;}
+		}
+	?>
+	<tr><td>Dupes</td><td><?php echo $dupes?></td></tr>
+	<tr><td colspan=2><a href="#" onClick="document.getElementById('querylog').style.display='block';return false;">&gt;&nbsp;details</a></td></tr>
+	</table>
+	<table class="InfoTable" id="querylog" style="display: none; float: <?php if ($pagename=='collections'){?>left<?php } else {?>right<?php }?>; margin: 10px;">
+	<?php
+
+		foreach($querylog as $query=>$values){
+		?>
+		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
+		<table class="InfoTable">
+		<?php if (strtolower(substr($query,0,6))=="select"){
+			
+			$explain=sql_query("explain ".$query);
+			?><tr><?php
+			foreach ($explain[0] as $explainitem=>$value){?>
+				<td align="left">   
+				<?php echo $explainitem?></td><?php 
+				}
+			?></tr><?php
+			for($n=0;$n<count($explain);$n++){
+				?><tr><?php
+				foreach ($explain[$n] as $explainitem=>$value){?>
+				<td align="left">   
+					<?php echo str_replace(",",", ",$value)?></td><?php 
+					}
+				?></tr><?php	
+				}
+			}	?>
+		</table>
+		</td><td><?php echo round($values['time'],4)?></td>
+		</td><td><?php echo ($values['dupe']>1)?''.$values["dupe"].'X':'1'?></td></tr>
+		<?php	
+		}
+	
+	?>
+	</table>
+	</div>
+	<?php
+	}
+}

@@ -88,50 +88,7 @@ function SwapCSS(css)
 
 <br />
 
-<?php if ($config_show_performance_footer)
-	{
-	# --- If configured (for debug/development only) show query statistics
-	?>
-	<table class="InfoTable" style="float: right;margin-right: 10px;">
-	<tr><td>Query count</td><td><?php echo $querycount?></td></tr>
-	<tr><td>Query time</td><td><?php echo round($querytime,4)?></td></tr>
-	<tr><td colspan=2><a href="#" onClick="document.getElementById('querylog').style.display='block';return false;">&gt;&nbsp;details</a></td></tr>
-	</table>
-	<table class="InfoTable" id="querylog" style="display: none; float: right; margin: 10px;">
-	<?php
-	arsort($querylog);
-	foreach ($querylog as $query=>$time)
-		{
-		?>
-		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
-		<table class="InfoTable">
-		<?php if (strtolower(substr($query,0,6))=="select"){
-			
-			$explain=sql_query("explain ".$query);
-			?><tr><?php
-			foreach ($explain[0] as $explainitem=>$value){?>
-				<td align="left">   
-				<?php echo $explainitem?></td><?php 
-				}
-			?></tr><?php
-			for($n=0;$n<count($explain);$n++){
-				?><tr><?php
-				foreach ($explain[$n] as $explainitem=>$value){?>
-				<td align="left">   
-					<?php echo str_replace(",",", ",$value)?></td><?php 
-					}
-				?></tr><?php	
-				}
-			}	?>
-		</table>
-		</td><td><?php echo round($time,4)?></td></tr>
-		<?php	
-		}
-	?>
-	</table>
-	<?php
-	}
-?>
+<?php draw_performance_footer();?>
 
 <?php echo $extrafooterhtml; ?>
 <?php hook("footerbottom"); ?>

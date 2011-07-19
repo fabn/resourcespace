@@ -236,15 +236,22 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     # Execute query
     $result=mysql_query($sql);
 	
-    if ($config_show_performance_footer)
-    	{
+    if ($config_show_performance_footer){
     	# Stats
    		# Log performance data
 		$time_end = microtime(true);
 		$time_total=($time_end - $time_start);
-		$querylog[$sql]=$time_total;
-		$querytime += $time_total;
+		if (isset($querylog[$sql])){
+			$querylog[$sql]['dupe']=$querylog[$sql]['dupe']+1;
+			$querylog[$sql]['time']=$querylog[$sql]['time']+$time_total;
+		} 
+		else {
+			$querylog[$sql]['dupe']=1;
+			$querylog[$sql]['time']=$time_total;
 		}
+
+		$querytime += $time_total;
+	}
 		
     $error=mysql_error();
     if ($error!="")

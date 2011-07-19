@@ -863,6 +863,8 @@ elseif ($k!="")
 <div id="CollectionMinitems"><strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?></div>		
 <?php } ?>
 
+<?php draw_performance_footer();?>
+
 
 </body>
 </html>
