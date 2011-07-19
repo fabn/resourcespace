@@ -8,6 +8,20 @@ include "../include/research_functions.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
 
+// copied from collection_manage to support compact style collection adds (without redirecting to collection_manage)
+$addcollection=getvalescaped("addcollection","");
+if ($addcollection!="")
+	{
+	# Add someone else's collection to your My Collections
+	add_collection($userref,$addcollection);
+	set_user_collection($userref,$addcollection);
+	refresh_collection_frame();
+	
+   	# Log this
+	daily_stat("Add public collection",$userref);
+	}
+/////
+
 # Disable info box for external access.
 if ($k!="") {$infobox=false;} 
 # Disable checkboxes for external users.
@@ -162,6 +176,7 @@ checkboxes.each(function(box)
 
 <?php hook("headblock");?>
 
+<?php if ($collections_compact_style){ include ("../lib/js/colactions.js");}?>
 </head>
 
 <body class="CollectBack" id="collectbody"<?php if ($infobox) { ?> OnMouseMove="InfoBoxMM(event);"<?php } ?>>

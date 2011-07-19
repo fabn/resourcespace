@@ -77,12 +77,7 @@ function get_collection($ref)
 	if (count($return)==0) {return false;} else 
 		{
 		$return=$return[0];
-		$return["users"]="";
-		if ($return["public"]==0)
-			{
-			# If private, also return a list of users with access to this collection
-			$return["users"]=join(", ",sql_array("select u.username value from user u,user_collection c where u.ref=c.user and c.collection='$ref' order by u.username"));
-			}
+		$return["users"]=join(", ",sql_array("select u.username value from user u,user_collection c where u.ref=c.user and c.collection='$ref' order by u.username"));
 			
 		global $userref,$k;
 		$request_feedback=0;

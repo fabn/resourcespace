@@ -88,6 +88,8 @@ if (!top.collections) {document.location='<?php echo $baseurl?>/index.php?url=' 
 
 <?php hook("headblock"); ?>
 
+<?php if ($collections_compact_style){ include ("../lib/js/colactions.js");}?>
+
 </head>
 
 <body id="<?php echo $pagename; ?>" <?php if (isset($bodyattribs)) { ?><?php echo $bodyattribs?><?php } ?>>

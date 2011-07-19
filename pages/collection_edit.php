@@ -100,7 +100,7 @@ include "../include/header.php";
 <div class="clearerleft"> </div>
 </div>
 
-<?php if ($collection["public"]==0) { ?>
+<?php if ($collection["public"]==0 || ( ($collection['public']==1 && !$themes_in_my_collections && $collection['theme']=='') || ($collection['public']==1 && $themes_in_my_collections) )) { ?>
 <?php if (!hook("replaceuserselect")){?>
 <div class="Question">
 <label for="users"><?php echo $lang["attachedusers"]?></label><?php $userstring=htmlspecialchars($collection["users"]); include "../include/user_select.php"; ?>
@@ -108,7 +108,9 @@ include "../include/header.php";
 </div>
 <?php } /* end hook replaceuserselect */?>
 
-<?php } else { 
+<?php } 
+
+if ($collection['public']==1){ 
 	
 //////////////////////////
 // find current number of themes used
