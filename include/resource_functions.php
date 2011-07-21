@@ -2230,11 +2230,13 @@ function get_page_count($resource,$alternative=-1)
         $pages=str_replace(":","",$pages);
         $pages=trim($pages);
 
+	if (!is_numeric($pages)){ $pages = 1; } // default to 1 page if we didn't get anything back
+
         if ($alternative!=-1){
-            sql_query("update resource_alt_files set page_count=$pages where ref=$alternative");
+            sql_query("update resource_alt_files set page_count='$pages' where ref=$alternative");
         }
         else {
-            sql_query("update resource_dimensions set page_count=$pages where resource=$ref");
+            sql_query("update resource_dimensions set page_count='$pages' where resource=$ref");
         }
         return $pages;
     }
