@@ -42,6 +42,9 @@ for ($n=0;$n<count($log);$n++)
 	<td><?php echo $log[$n]["resourceid"]?></td>
 	<td><?php echo i18n_get_translated($log[$n]["resourcetitle"])?></td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]];
+
+	# For emailed items, append email address from the 'notes' column
+	if ($log[$n]["type"]=="E") { echo " " . $log[$n]["notes"]; }
 	
 	# For purchases, append size and price
 	if ($log[$n]["type"]=="p") {echo " (" . ($log[$n]["purchase_size"]==""?$lang["collection_download_original"]:$log[$n]["purchase_size"]) . ", " . $currency_symbol . number_format($log[$n]["purchase_price"],2) . ")";}
