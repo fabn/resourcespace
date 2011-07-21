@@ -4,6 +4,7 @@ include "../include/general.php";
 include "../include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("collection","",true),$k))) {include "../include/authenticate.php";}
+if (checkperm("b")){exit("Permission denied");}
 include "../include/research_functions.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php";
@@ -287,7 +288,6 @@ $searches=get_saved_searches($usercollection);
 $result=do_search("!collection" . $usercollection);
 $count_result=count($result);
 $hook_count=hook("countresult","",array($usercollection,$count_result));if (is_numeric($hook_count)) {$count_result=$hook_count;} # Allow count display to be overridden by a plugin (e.g. that adds it's own resources from elsewhere e.g. ResourceConnect).
-$cinfo=get_collection($usercollection);
 $feedback=$cinfo["request_feedback"];
 
 
@@ -386,7 +386,7 @@ if ($basket)
 elseif ($k!="")
 	{
 	# ------------- Anonymous access, slightly different display ------------------
-	$tempcol=get_collection($usercollection);
+	$tempcol=$cinfo;
 	?>
 <div id="CollectionMenu">
   <h2><?php echo $tempcol["name"]?></h2>
@@ -464,7 +464,7 @@ elseif ($k!="")
 		if ($found==false)
 			{
 			# Add this one at the end, it can't be found
-			$notfound=get_collection($usercollection);
+			$notfound=$cinfo;
 			if ($notfound!==false)
 				{
 				?>
@@ -713,7 +713,7 @@ if ($basket)
 elseif ($k!="")
 	{
 	# Anonymous access, slightly different display
-	$tempcol=get_collection($usercollection);
+	$tempcol=$cinfo;
 	?>
 <div id="CollectionMinTitle"><h2><?php echo $tempcol["name"]?></h2></div>
 <div id="CollectionMinRightNav">
@@ -842,7 +842,7 @@ elseif ($k!="")
 		if ($found==false)
 			{
 			# Add this one at the end, it can't be found
-			$notfound=get_collection($usercollection);
+			$notfound=$cinfo;
 			if ($notfound!==false)
 				{
 				?>

@@ -1229,7 +1229,10 @@ function collection_min_access($collection)
 	{
 	# Returns the minimum access (the least permissive) that the current user has to the resources in $collection.
 	$minaccess=0;
-	$result=do_search("!collection" . $collection);
+	if (is_array($collection)){$result=$collection;}
+	else {
+		$result=do_search("!collection" . $collection,"","relevance",0,-1,"desc",false,"",false,"");
+	}
 	for ($n=0;$n<count($result);$n++)
 		{
 		$ref=$result[$n]["ref"];
