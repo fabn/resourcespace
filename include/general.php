@@ -3147,6 +3147,7 @@ function draw_performance_footer(){
 	<?php
 
 		foreach($querylog as $query=>$values){
+		if (substr($query,0,7)!="explain"){
 		?>
 		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
 		<table class="InfoTable">
@@ -3173,7 +3174,7 @@ function draw_performance_footer(){
 		</td><td><?php echo ($values['dupe']>1)?''.$values["dupe"].'X':'1'?></td></tr>
 		<?php	
 		}
-	
+		}
 	?>
 	</table>
 	</div>
