@@ -8,6 +8,7 @@ if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.ph
 
 if ($api && $enable_remote_apis ){
 	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
+	if (getval("key","")==""){header("HTTP/1.0 403 Access Denied");exit("Access denied.");}
 	if (getval("key","") || (getval("username","")&& getval("password",""))){ // key is provided within the website when logged in (encrypted username and password)
 
         if (getval("username","")&& getval("password","")){
