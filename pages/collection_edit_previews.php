@@ -106,7 +106,7 @@ else
 <?php } 
 ?>
 
-
+</div>
 <?php		
 if ($done){echo $lang['done'];}
 include "../include/footer.php";
