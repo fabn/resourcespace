@@ -274,6 +274,7 @@ $lang["contributedsubittedl"]="My Contributions - Active";
 
 # Collections
 $lang["editcollection"]="Edit Collection";
+$lang["editcollectionresources"]="Edit Collection Previews...";
 $lang["access"]="Access";
 $lang["private"]="Private";
 $lang["public"]="Public";
@@ -351,12 +352,12 @@ $lang["upload"]="Upload";
 $lang["action-upload"]="Upload";
 $lang["uploadafile"]="Upload a file";
 $lang["replacefile"]="Replace file";
-$lang["imagecorrection"]="Image Correction";
+$lang["imagecorrection"]="Edit Preview Images";
 $lang["previewthumbonly"]="(preview / thumbnail only)";
 $lang["rotateclockwise"]="Rotate clockwise";
 $lang["rotateanticlockwise"]="Rotate anti-clockwise";
-$lang["increasegamma"]="Increase gamma (brighter)";
-$lang["decreasegamma"]="Decrease gamma (darker)";
+$lang["increasegamma"]="Brighten previews";
+$lang["decreasegamma"]="Darken previews";
 $lang["restoreoriginal"]="Restore original";
 $lang["recreatepreviews"]="Recreate previews";
 $lang["retrypreviews"]="Retry preview creation";
@@ -1466,3 +1467,5 @@ $lang["confirmcollectiondownload"]="Please wait while we create a zip archive. T
 $lang["starttypingkeyword"]="Start typing keyword...";
 $lang["createnewentryfor"]="Create new entry for";
 $lang["confirmcreatenewentryfor"]="Are you sure you wish to create a new keyword list entry for '%%'?";
+
+$lang["editresourcepreviews"]="Edit Resource Previews";

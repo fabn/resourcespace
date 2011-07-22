@@ -1,7 +1,7 @@
 <?php 
 // blank starsearch cookie in case $star_search was turned off
 setcookie("starsearch","");
-
+if ($collections_compact_style && $frameless_collections){echo "error. collections_compact_style and frameless_collections are currently incompatible";}
 // cookies have to go above the header output
 if ($display_user_rating_stars && $star_search){
 	# if seardch is not a special search (ie. !recent), use starsearchvalue.
@@ -161,6 +161,7 @@ else
 <?php 
 # Work out target to use for links
 if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target="_top";}
+
 ?>
 
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">

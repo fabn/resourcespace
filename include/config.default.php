@@ -1568,6 +1568,7 @@ $search_titles_shortnames=false;
 
 # $collections_compact_style switches on some experimental UI changes for collection-level tools.
 # making the in the collections panel into a link to the Collection Manage page, 
+# $frameless_collections is not supported here.
 $collections_compact_style=false;
 
 # if using $collections_compact_style, you may want to remove the contact sheet link from the Manage Collections page
