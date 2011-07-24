@@ -25,7 +25,7 @@ $main_pages=array("search","collection_manage","collection_public","themes");
 
 // get collection information (different pages need different treatment) 
 if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
-    $collection=substr($search,11);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
+    $collection=explode(",",substr($search,11));$collection=$collection[0]; $colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 } else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
     $colresult=do_search("!collection" . $collection);
@@ -42,8 +42,8 @@ elseif ($pagename=="themes"){
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];
     }    
-else {
-    $collection=$usercollection;$cinfo=get_collection($collection);$colresult=do_search("!collection" . $collection);$count_result=count($colresult);
+else if ($pagename=="collections"){
+    $collection=$usercollection;$colresult=$result;$count_result=count($colresult);
 }
 
 // check editability
@@ -160,7 +160,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php if (checkperm("q") && $count_result>0 )
     { 
     # Ability to request a whole collection (only if user has restricted access to any of these resources)
-    $min_access=collection_min_access($collection);
+    $min_access=collection_min_access($colresult);
     if ($min_access!=0)
         {
         ?>

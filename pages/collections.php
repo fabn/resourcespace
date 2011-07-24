@@ -400,7 +400,7 @@ elseif ($k!="")
     <?php if ($count_result>0 && checkperm("q"))
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
-		$min_access=collection_min_access($usercollection);
+		$min_access=collection_min_access($result);
 		if ($min_access!=0)
 			{
 		    ?>
@@ -517,7 +517,7 @@ elseif ($k!="")
     <?php if ($count_result>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
-		$min_access=collection_min_access($usercollection);
+		$min_access=collection_min_access($result);
 		if ($min_access!=0)
 			{
 		    ?>
@@ -724,7 +724,7 @@ elseif ($k!="")
    	<?php if ($count_result>0)
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
-		$min_access=collection_min_access($usercollection);
+		$min_access=collection_min_access($result);
 		if ($min_access!=0)
 			{
 		    ?>
@@ -787,7 +787,7 @@ elseif ($k!="")
     <?php if ($count_result>0 && $k=="" && checkperm("q"))
     	{ 
 		# Ability to request a whole collection (only if user has restricted access to any of these resources)
-		$min_access=collection_min_access($usercollection);
+		$min_access=collection_min_access($result);
 		if ($min_access!=0)
 			{
 		    ?>
