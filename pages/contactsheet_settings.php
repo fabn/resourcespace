@@ -77,7 +77,7 @@ $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_d
 ?>
 <div class="Question">
 <label><?php echo $lang["sortorder"]?></label>
-<select class="shrtwidth" name="orderby" id="orderby">
+<select class="shrtwidth" name="orderby" id="orderby" onChange="jQuery().rsContactSheet('preview');">
 <option value="relevance"><?php echo $lang["relevance"]?></option>
 <option value="date"><?php echo $lang["date"]?></option>
 <option value="colour"><?php echo $lang["colour"]?></option>
