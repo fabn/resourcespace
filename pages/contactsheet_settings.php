@@ -111,7 +111,7 @@ foreach ($all_field_info as $sortable_field)
 
 <div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
 <label><?php echo $lang['previewpage']?></label>
-<select class="shrtwidth" name="previewpage" id="previewpage" onChange="jQuery().rsContactSheet('revert');">
+<select class="shrtwidth" name="previewpage" id="previewpage" onChange="jQuery().rsContactSheet('preview');">
 </select>
 </div>
 
