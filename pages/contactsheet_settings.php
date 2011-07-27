@@ -10,19 +10,18 @@ $collectiondata= get_collection($collection);
 
 # Include a couple functions for the Ajax contactsheet update
 $headerinsert.="
+
+<script src=\"../lib/js/jquery-1.6.1.min.js?css_reload_key=<?php echo $css_reload_key?>\" type=\"text/javascript\"></script>
 <script src=\"../lib/js/contactsheet.js\" type=\"text/javascript\"></script>
-<script type=\"text/javascript\">
+<script>jQuery.noConflict();</script>
+<script>
 contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
 </script>
-<script type=\"text/javascript\">
-function revertToPage1(){
-$('previewpage').options.length=0;$('previewpage').options[1]=new Option(1,1,selected,selected);$('previewpage').value=1;$('previewPageOptions').style.display='none';
-}
-</script>
+
 ";
 
 ?><?php
-$bodyattribs="onload=\"previewContactSheet();\"";
+$bodyattribs="onload=\"jQuery().rsContactSheet('preview');\"";
 include "../include/header.php";
 ?>
 <div class="BasicsBox">
@@ -52,13 +51,13 @@ include "../include/header.php";
 <select class="shrtwidth" name="sheetstyle" id="sheetstyle" onChange="
 	if ($('sheetstyle').value=='list')
 		{
-		$('ThumbnailOptions').style.display='none';
+		document.getElementById('ThumbnailOptions').style.display='none';
 		}
 	else
 		{
-		$('ThumbnailOptions').style.display='block';
+		document.getElementById('ThumbnailOptions').style.display='block';
 		}
-	revertToPage1();	
+	jQuery().rsContactSheet('revert');	
 		">
 <option value="thumbnails"><?php echo $lang["thumbnails"]?></option>
 <option value="list"><?php echo $lang["list"]?></option>
@@ -68,7 +67,7 @@ include "../include/header.php";
 
 <div class="Question">
 <label><?php echo $lang["size"]?></label>
-<select class="shrtwidth" name="size" id="size" onChange="revertToPage1();"><?php echo $papersize_select ?>
+<select class="shrtwidth" name="size" id="size" onChange="jQuery().rsContactSheet('revert');"><?php echo $papersize_select ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
@@ -96,14 +95,14 @@ foreach ($all_field_info as $sortable_field)
 
 <div id="ThumbnailOptions" class="Question">
 <label><?php echo $lang["columns"]?></label>
-<select class="shrtwidth" name="columns" id="ThumbnailOptions" onChange="revertToPage1();"> 
+<select class="shrtwidth" name="columns" id="ThumbnailOptions" onChange="jQuery().rsContactSheet('revert');"> 
 <?php echo $columns_select ?>
 </select>
 </div>
 
 <div class="Question">
 <label><?php echo $lang["orientation"]?></label>
-<select class="shrtwidth" name="orientation" id="orientation" onChange="revertToPage1();">
+<select class="shrtwidth" name="orientation" id="orientation" onChange="jQuery().rsContactSheet('revert');">
 <option value="portrait"><?php echo $lang["portrait"]?></option>
 <option value="landscape"><?php echo $lang["landscape"]?></option>
 </select>
@@ -112,13 +111,13 @@ foreach ($all_field_info as $sortable_field)
 
 <div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
 <label><?php echo $lang['previewpage']?></label>
-<select class="shrtwidth" name="previewpage" id="previewpage" onChange="previewContactSheet();">
+<select class="shrtwidth" name="previewpage" id="previewpage" onChange="jQuery().rsContactSheet('revert');">
 </select>
 </div>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>	
-<?php if ($contact_sheet_previews==true){?> <input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["action-preview"]?>&nbsp;&nbsp;" onClick="previewContactSheet();"/><?php } ?>
+<?php if ($contact_sheet_previews==true){?> <input name="preview" type="button" value="&nbsp;&nbsp;<?php echo $lang["action-preview"]?>&nbsp;&nbsp;" onClick="jQuery().rsContactSheet('preview');"/><?php } ?>
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
 </form>
