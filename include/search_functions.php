@@ -299,7 +299,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		
 								# Form join							
 								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
-								
+								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
+                if (!empty($sql_exclude_fields)) {
+                  $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+                }
+                
 								#echo $sql_join;
 							} else {
 								 //begin code for temporary table wildcard expansion
@@ -309,10 +313,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
                                                                 if (!isset($temptable_counter)){$temptable_counter = 0;}
                                                                 $temptable_counter++;
                                                                 $thetemptable = 'wcql' . $c . '_' . $temptable_counter;
+                                                                $sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
+                                                                $temptable_exclude='';
+                                                                if (!empty($sql_exclude_fields)) {
+                                                                  $temptable_exclude="and rk.resource_type_field not in (". $sql_exclude_fields .")";
+                                                                }
 
                                                                 sql_query("create temporary table $thetemptable (resource bigint unsigned)");
                                                                 sql_query("insert into $thetemptable select distinct r.ref from resource r
-                                                                        left join resource_keyword rk on r.ref = rk.resource
+                                                                        left join resource_keyword rk on r.ref = rk.resource $temptable_exclude
                                                                         left join keyword k  on rk.keyword = k.ref
                                                                         where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
 
@@ -357,8 +366,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								# Form join
 								global $use_temp_tables;
 								if (substr($search,0,8)=="!related") {$use_temp_tables=false;} // temp tables can't be used twice (unions)
+								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
 								if (!$use_temp_tables){
-									$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+                  if (!empty($sql_exclude_fields)) {
+                    $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+                  }
+                  $sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
 									if ($score!="") {$score.="+";}
 									$score.="k" . $c . ".hit_count";
 								}
@@ -367,8 +380,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
                                     $temptable_counter++;
                                     $jtemptable = 'jtt' . $c . '_' . $temptable_counter;
                                     sql_query("drop table IF EXISTS $jtemptable ",false);
-									
-									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql");
+                  $exclude_sql='';                  
+									if (!empty($sql_exclude_fields)) {
+									  $exclude_sql="and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+									}
+									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql $exclude_sql");
 
 									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref ";
 								
