@@ -11,7 +11,7 @@
 # Updated by Henrik Frizén 20110222 for version 2390+, added missing $lang from the en.php (search for #$lang to find the untranslated strings).
 # Updated by Stefan Wild 20110309 for version 2390+, translated the missing $lang keys from the en.php that Henrik added.
 # Updated by Stefan Wild 20110427 for version 2652, translated the missing $lang keys from the en.php.
-#
+# Updated by Stefan Wild 20110730 for version 2852, translated the missing $lang keys from the en.php.
 #
 # User group names (for the default user groups)
 $lang["usergroup-administrators"]="Administratoren";
@@ -74,6 +74,88 @@ $lang["fieldtitle-file_size"]=$lang["filesize"]="Dateigröße";
 $lang["fieldtitle-category"]="Kategorie";
 $lang["fieldtitle-subject"]="Betreff";
 $lang["fieldtitle-author"]="Autor";
+
+# Field types
+$lang["fieldtype-text_box_single_line"]="Textfeld (einzeilig)";
+$lang["fieldtype-text_box_multi-line"]="Textfeld (mehrzeilig)";
+$lang["fieldtype-text_box_large_multi-line"]="Textfeld (mehrzeilig, groß)";
+$lang["fieldtype-check_box_list"]="Check box Liste";
+$lang["fieldtype-drop_down_list"]="Dropdown Menü";
+$lang["fieldtype-date_and_time"]="Datum / Uhrzeit";
+$lang["fieldtype-expiry_date"]="Ablaufdatum";
+$lang["fieldtype-category_tree"]="Kategoriebaum";
+
+# Property labels (for the default properties)
+$lang["documentation-permissions"]="Weitere Informationen über die Berechtigungen finden Sie in der <a href=../../documentation/permissions.txt target=_blank>Berechtigungen Hilfe-Datei</a>.";
+$lang["property-reference"]="Referenz";
+$lang["property-name"]="Name";
+$lang["property-permissions"]="Berechtitungen";
+$lang["information-permissions"]="HINWEIS: Globale Berechtigungen aus der config.php könnten außerdem in Kraft sein";
+$lang["property-fixed_theme"]="Festes Theme";
+$lang["property-parent"]="Übergeordneter Eintrag";
+$lang["property-search_filter"]="Suchfilter";
+$lang["property-edit_filter"]="Bearbeitungsfilter";
+$lang["property-resource_defaults"]="Ressourcen Vorgaben";
+$lang["property-override_config_options"]="Konfigurationsoptionen überschreiben";
+$lang["property-email_welcome_message"]="Willkommens-E-Mail";
+$lang["information-ip_address_restriction"]="Wildcards werden für IP-Adress-Einschränkungen unterstützt, z.B. 128.124.*";
+$lang["property-ip_address_restriction"]="IP-Adress-Einschränkungen";
+$lang["property-request_mode"]="Anfragemodus";
+$lang["property-allow_registration_selection"]="In der Registrierungsauswahl anzeigen";
+
+$lang["property-resource_type_id"]="Ressourcen-Typ ID";
+$lang["information-allowed_extensions"]="Wenn gesetzt, können nur die angegebenen Dateierweiterungen hochgeladen werden, z.B. jpg,gif";
+$lang["property-allowed_extensions"]="Erlaubte Dateierweiterungen";
+
+$lang["property-field_id"]="Feld ID";
+$lang["property-title"]="Titel";
+$lang["property-resource_type"]="Ressourcen-Typ";
+$lang["property-field_type"]="Feldtyp";
+$lang["information-options"]="<br /><b>Bitte beachten Sie</b> - es wird empfohlen, die Funktion 'Feldoptionen verwalten' unter 'Ressourcen verwalten' in der Administration zu nutzen, da so bestehende Einträge beim Umbenennen automatisch übernommen werden.";
+$lang["property-options"]="Optionen";
+$lang["property-required"]="Pflichtfeld";
+$lang["property-order_by"]="Sortieren nach";
+$lang["property-index_this_field"]="Feld indizieren";
+$lang["information-enable_partial_indexing"]="Partielle Indizierung der Stichworte (Präfix+Infix Indizierung) sollte sparsam eingesetzt werden, da es die Größe des Index deutlich erhöht. Weitere Details im Wiki.";
+$lang["property-enable_partial_indexing"]="Partielle Indizierung aktivieren";
+$lang["information-shorthand_name"]="Wichtig: Kurzname muss gesetzt sein, damit das Feld in der erweiterten Suche erscheint. Der Kurzname darf nur aus Kleinbuchstaben bestehen - keine Leerzeichen, Ziffern oder Sonderzeichen.";
+$lang["property-shorthand_name"]="Kurzname";
+$lang["property-display_field"]="Feld anzeigen";
+$lang["property-enable_advanced_search"]="In erweiterter Suche aktivieren";
+$lang["property-enable_simple_search"]="In einfacher Suche aktivieren";
+$lang["property-use_for_find_similar_searching"]="Für ähnliche Suche benutzen";
+$lang["property-iptc_equiv"]="IPTC Äquivalent";
+$lang["property-display_template"]="Anzeigetemplate";
+$lang["property-value_filter"]="Eingabefilter";
+$lang["property-tab_name"]="Tab Name";
+$lang["property-smart_theme_name"]="Smart-Theme Name";
+$lang["property-exiftool_field"]="Exiftool Feld";
+$lang["property-exiftool_filter"]="Exiftool Filter";
+$lang["property-help_text"]="Hilfetext";
+$lang["information-display_as_dropdown"]="Checkbox Listen und Dropdown Menüs: in der erweiterten Suche als Dropdown Menü anzeigen? (wird standardmäßig als Checkbox Liste dargestellt, um ODER Abfrage zu ermöglichen)";
+$lang["property-display_as_dropdown"]="Als Dropdown darstellen";
+$lang["property-external_user_access"]="Zugriff für externe Benutzer";
+$lang["property-autocomplete_macro"]="Makro für Autovervollständigen";
+$lang["property-hide_when_uploading"]="Beim Upload verstecken";
+
+$lang["property-query"]="Abfrage";
+
+$lang["information-id"]="Hinweis: 'ID' unten MUSS auf einen eindeutigen, dreistelligen Buchstabencode gesetzt sein";
+$lang["property-id"]="ID";
+$lang["property-width"]="Breite";
+$lang["property-height"]="Höhe";
+$lang["property-pad_to_size"]="Auf Größe auffüllen";
+$lang["property-internal"]="Intern";
+$lang["property-allow_preview"]="Vorschau erlauben";
+$lang["property-allow_restricted_download"]="Download bei eingeschränktem Zugriff erlauben";
+
+$lang["property-total_resources"]="Ressourcen gesamt";
+$lang["property-total_keywords"]="Stichworte gesamt";
+$lang["property-resource_keyword_relationships"]="Ressourcen / Stichworte Verknüpfungen";
+$lang["property-total_collections"]="Kollektionen gesamt";
+$lang["property-collection_resource_relationships"]="Kollektionen / Ressourcen Verknüpfungen";
+$lang["property-total_users"]="Benutzer gesamt";
+
 
 # Top navigation bar (also reused for page titles)
 $lang["logout"]="Abmelden";
@@ -152,6 +234,7 @@ $lang["users"]="Benutzer";
 $lang["emailrecipients"]="E-Mail Empfänger";
 $lang["emailsubject"]="E-Mail Betreff";
 $lang["emailtext"]="E-Mail Text";
+$lang["emailhtml"]="HTML aktiviert - Text der E-Mail muss HTML-Formatierung nutzen";
 $lang["send"]="Senden";
 $lang["emailsent"]="E-Mail wurde gesendet.";
 $lang["mustspecifyoneuser"]="Sie müssen mindestens einen Benutzer auswählen";
@@ -162,9 +245,12 @@ $lang["comments"]="Kommentare";
 
 # Team Centre - Resource management
 $lang["viewuserpending"]="Überprüfung noch nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
+$lang["userpending"]="Eingereichte Ressourcen (Überprüfung noch nicht erledigt)";
 $lang["viewuserpendingsubmission"]="Freischalten noch nicht erledigt: durch Benutzer eingereichte Ressourcen anzeigen";
+$lang["userpendingsubmission"]="Eingereichte Ressourcen (Freischalten noch nicht erledigt)";
 $lang["searcharchivedresources"]="Archivierte Ressourcen durchsuchen";
 $lang["viewresourcespendingarchive"]="Archivierung noch nicht erledigt: Ressourcen anzeigen";
+$lang["resourcespendingarchive"]="Ressourcen (Archivierung noch nicht erledigt)";
 $lang["uploadresourcebatch"]="Ressourcen-Stapel hochladen";
 $lang["uploadinprogress"]="Hochladen und Größenanpassung in Bearbeitung";
 $lang["transferringfiles"]="Daten werden übertragen, bitte warten.";
@@ -197,6 +283,7 @@ $lang["contributedsubittedl"]="Meine Beiträge - Live";
 
 # Collections
 $lang["editcollection"]="Kollektion bearbeiten";
+$lang["editcollectionresources"]="Kollektionsvorschau bearbeiten...";
 $lang["access"]="Zugriff";
 $lang["private"]="privat";
 $lang["public"]="öffentlich";
@@ -370,6 +457,7 @@ $lang["log-l"]="Eingeloggt"; # For user entries only.
 $lang["log-t"]="Datei transformiert";
 $lang["log-s"]="Status geändert";
 $lang["log-a"]="Zugriff geändert";
+$lang["log-r"]="Metadaten zurückgesetzt";
 
 $lang["backtoresourceview"]="zurück zur Ressourcen-Ansicht";
 
@@ -439,6 +527,7 @@ $lang["noresourcesrequired"]="Anzahl der benötigten Ressourcen für das endgül
 $lang["shaperequired"]="Gestaltung/Art der Bilder erforderlich";
 $lang["portrait"]="Portrait";
 $lang["landscape"]="Landschaft";
+$lang["square"]="Quadratisch";
 $lang["either"]="egal";
 $lang["sendrequest"]="Anfrage senden";
 $lang["editresearchrequest"]="Such-Anfrage editieren";
@@ -510,13 +599,14 @@ $lang["passwordnotmatch"]="Die eingebenen Passwörter stimmen nicht überein";
 $lang["wrongpassword"]="Passwort nicht korrekt, bitte versuchen Sie es erneut";
 $lang["action-view"]="Anzeigen";
 $lang["action-preview"]="Vorschau";
-$lang["action-viewmatchingresources"]="Ressourcen anzeigen";
+$lang["action-viewmatchingresources"]="Passende Ressourcen anzeigen";
 $lang["action-expand"]="Ausklappen";
 $lang["action-select"]="Auswählen";
 $lang["action-download"]="Download";
 $lang["action-email"]="E-Mail";
 $lang["action-edit"]="Bearbeiten";
 $lang["action-delete"]="Löschen";
+$lang["action-deletecollection"]="Kollektion löschen";
 $lang["action-revertmetadata"]="Metadaten wiederherstellen";
 $lang["confirm-revertmetadata"]="Sind Sie sicher, dass Sie die ursprünglichen Metadaten aus dieser Datei neu einlesen wollen? Bei dieser Aktion gehen alle Änderungen an den Metadaten verloren.";
 $lang["action-remove"]="Entfernen";
@@ -542,6 +632,7 @@ $lang["status-never"]="Niemals";
 $lang["softwareversion"]="? Version"; # E.g. "PHP version"
 $lang["softwarebuild"]="? Build"; # E.g. "ResourceSpace Build"
 $lang["softwarenotfound"]="'?' nicht gefunden"; # ? will be replaced.
+$lang["client-encoding"]="(Client-encoding: %encoding)"; # %encoding will be replaced, e.g. client-encoding: utf8
 $lang["browseruseragent"]="Browser User-Agent";
 $lang['serverplatform']="Serverplattform";
 $lang["are_available-0"]="sind verfügbar";
@@ -660,6 +751,7 @@ $lang["orientation"]="Ausrichtung";
 $lang["requiredfield"]="Das ist ein Pflichtfeld";
 $lang["requiredfields"]="Einige Felder wurden nicht komplett ausgefüllt. Bitte überprüfen Sie das Formular und versuchen Sie es erneut.";
 $lang["viewduplicates"]="Doppelte Ressourcen anzeigen";
+$lang["duplicateresources"]="Doppelte Ressourcen";
 $lang["userlog"]="Benutzer-Statistik";
 $lang["ipaddressrestriction"]="IP-Adressen Beschränkung (optional)";
 $lang["wildcardpermittedeg"]="Wildcard erlaubt; z.B.";
@@ -683,6 +775,7 @@ $lang["clearall"]="Alles zurücksetzen";
 $lang["clearcategoriesareyousure"]="Sind Sie sicher, dass Sie alle ausgewählten Optionen zurücksetzen wollen?";
 $lang["share"]="Weitergeben";
 $lang["sharecollection"]="Kollektion weitergeben";
+$lang["sharecollection-name"]="Kollektion weitergeben - %collectionname"; # %collectionname will be replaced, e.g. Share Collection - Cars
 $lang["generateurl"]="URL generieren";
 $lang["generateurlinternal"]="Die folgende URL funktioniert nur für eingeloggte Benutzer.";
 $lang["generateurlexternal"]="Die folgende URL funktioniert ohne Login. <strong>Bitte beachten Sie, wenn neue Ressourcen zur Kollektion hinzugefügt werden, funktioniert diese URL aus Sicherheitsgriünden nicht mehr und muss neu generiert werden.</strong>";
@@ -1051,8 +1144,8 @@ $lang["externalselectresourceexpires"]="Wenn Sie die Ressourcen per E-Mail an Nu
  $lang["uncollectedresources"]="Ressourcen, die nicht in Kollektionen enthalten sind";
  $lang["nowritewillbeattempted"]="Es werden keine Daten geschrieben";
  $lang["notallfileformatsarewritable"]="Nicht alle Dateiformate können mit dem exiftool geschrieben werden";
-#$lang["filetypenotsupported"]="Dateiformat nicht unterstützt";  # %filetype will be replaced, e.g. JPG filetype not supported
-#$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool Verarbeitung für dieses Dateiformat deaktiviert"; # %filetype will be replaced, e.g. JPG filetype not supported
+ $lang["filetypenotsupported"]="Dateiformat %filetype nicht unterstützt";  # %filetype will be replaced, e.g. JPG filetype not supported
+ $lang["exiftoolprocessingdisabledforfiletype"]="Exiftool Verarbeitung für dieses Dateiformat (%filetype) deaktiviert"; # %filetype will be replaced, e.g. JPG filetype not supported
  $lang["nometadatareport"]="Kein Metadaten Bericht";
  $lang["metadatawritewillbeattempted"]="Schreiben der Metadaten wird versucht.";
  $lang["embeddedvalue"]="Eingebetteter Wert";
@@ -1188,6 +1281,7 @@ $lang["columnheader-last_seen"]="Zuletzt gesehen";
  $lang["blockedbrowsingoffilestore"]="Browsen des 'filestore' Verzeichnisses nicht erlaubt";
  $lang["noblockedbrowsingoffilestore"]="filestore scheint durchsuchbar zu sein; entfernen Sie 'Indexes' aus den Apache 'Options'.";
  $lang["executionofconvertfailed"]="Ausführung fehlgeschlagen; unerwartete Ausgabe des convert Befehls. Die Ausgabe war '?'.<br>Wenn Sie Windows und IIS 6 einsetzen, muss der Zugriff auf die Kommandozeile erlaubt werden. Bitte schauen Sie in den Installation Instructions im Wiki nach."; # ? will be replaced.
+$lang["exif_extension"]="EXIF Erweiterung";
  $lang["lastscheduledtaskexection"]="Letzte geplante Ausführung der Aufgaben (Tage)";
  $lang["executecronphp"]="Relevanzberechnung wird nicht effektiv sein und regelmäßige E-Mail Berichte nicht versandt werden. Stellen Sie sicher, dass <a href='../batch/cron.php'>batch/cron.php</a> mindestens einmal täglich per cron job oder ähnlich gestartet wird.";
  $lang["shouldbeormore"]="sollte ? oder höher sein"; # E.g. should be 200M or greater
@@ -1325,6 +1419,7 @@ $lang["megapixel-short"]="MP";
 $lang["at-resolution"] = "@"; # E.g. 5.9 in x 4.4 in @ 144 PPI
 
 $lang["deletedresource"] = "Gelöschte Ressource";
+$lang["deletedresources"] = "Gelöschte Ressourcen";
 $lang["action-delete_permanently"] = "Dauerhaft löschen";
 
 $lang["horizontal"] = "Horizontal";
@@ -1340,4 +1435,46 @@ $lang["emptycollectionareyousure"]="Sind Sie sicher, dass Sie alle Ressourcen au
 $lang["error-cannoteditemptycollection"]="Sie können eine leere Kollektion nicht bearbeiten.";
 $lang["error-permissiondenied"]="Zugriff verweigert.";
 $lang["error-collectionnotfound"]="Kollektion nicht gefunden.";
-?>
+
+#$lang["header-upload-subtitle"] = "Step %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
+#$lang["local_upload_path"] = "Local Upload Folder";
+#$lang["ftp_upload_path"] = "FTP Folder";
+#$lang["foldercontent"] = "Folder Content";
+#$lang["intro-local_upload"] = "Select one or more files from the local upload folder and click <b>Upload</b>. Once the files are uploaded they can be deleted from the upload folder.";
+#$lang["intro-ftp_upload"] = "Select one or more files from the FTP folder and click <b>Upload</b>.";
+#$lang["intro-java_upload"] = "Click <b>Browse</b> to locate one or more files and then click <b>Upload</b>.";
+#$lang["intro-swf_upload"] = "Click <b>Upload</b> to locate and upload one or more files. Hold down the Shift key to select multiple files.";
+#$lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
+#$lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";
+
+$lang["collections-1"] = "(<strong>1</strong> Kollektion)";
+$lang["collections-2"] = "(<strong>%number</strong> Kollektionen)"; # %number will be replaced, e.g. 3 Collections
+$lang["total-collections-0"] = "<strong>Gesamt: 0</strong> Kollektionen";
+$lang["total-collections-1"] = "<strong>Gesamt: 1</strong> Kollektion";
+$lang["total-collections-2"] = "<strong>Gesamt: %number</strong> Kollektionen"; # %number will be replaced, e.g. Total: 5 Collections
+$lang["owned_by_you-0"] = "(<strong>0</strong> eigene)";
+$lang["owned_by_you-1"] = "(<strong>1</strong> eigene)";
+$lang["owned_by_you-2"] = "(<strong>%mynumber</strong> eigene)"; # %mynumber will be replaced, e.g. (2 owned by you)
+
+$lang["listresources"]= "Ressourcen:";
+$lang["action-log"]="Log anzeigen";
+
+$lang["saveuserlist"]="Diese Liste speichern";
+$lang["deleteuserlist"]="Diese Liste löschen";
+$lang["typeauserlistname"]="Geben Sie einen Namen ein...";
+$lang["loadasaveduserlist"]="Gespeicherte Benutzerliste laden";
+
+$lang["searchbypage"]="Seite suchen";
+$lang["searchbyname"]="Namen suchen";
+$lang["searchbytext"]="Text suchen";
+$lang["saveandreturntolist"]="Speichern und zurück zur Liste";
+$lang["backtomanagecontent"]="Zurück zu Inhalte verwalten";
+$lang["editcontent"]="Inhalt bearbeiten";
+
+$lang["confirmcollectiondownload"]="Bitte warten Sie, bis das ZIP-Archiv erstellt wird. Dieser Vorgang kann abhängig von der Gesamtgröße der Ressourcen eine Weile dauern.";
+
+$lang["starttypingkeyword"]="Geben Sie den Anfang eines Stichworts ein...";
+$lang["createnewentryfor"]="Neuen Eintrag erstellen für";
+$lang["confirmcreatenewentryfor"]="Sind Sie sicher, dass Sie einen neuen Eintrag für '%%' in der Stichwortliste erstellen wollen?";
+
+$lang["editresourcepreviews"]="Ressourcenvorschau bearbeiten";
