@@ -1,6 +1,6 @@
 <?php
 include "../include/db.php";
-$k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";} if (!checkperm("q")){exit("Permission denied");}
+$k=getvalescaped("k","");if ($k=="") {include "../include/authenticate.php";} 
 include "../include/general.php";
 include "../include/collections_functions.php";
 include "../include/request_functions.php";
