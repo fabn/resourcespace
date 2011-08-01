@@ -77,7 +77,7 @@ if ($submitted != "")
 		# Load access level
 		$access=get_resource_access($result[$n]);
 		$use_watermark=check_use_watermark();
-		
+
 		# Only download resources with proper access level
 		if ($access==0 || $access=1)
 			{
@@ -251,6 +251,7 @@ if ($submitted != "")
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
+
 		
 	# Execute the zip command.
 	if ($config_windows)
@@ -304,6 +305,7 @@ include "../include/header.php";
 
 <form id='myform' action="collection_download.php?submitted=true" method=post>
 <input type=hidden name="collection" value="<?php echo $collection?>">
+<input type=hidden name="k" value="<?php echo $k?>">
 
 <?php 
 hook("collectiondownloadmessage");
