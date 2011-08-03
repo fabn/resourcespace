@@ -286,6 +286,7 @@ function get_resource_top_keywords($resource,$count)
 	return sql_array("select distinct k.ref,k.keyword value from keyword k,resource_keyword r,resource_type_field f where k.ref=r.keyword and r.resource='$resource' and f.ref=r.resource_type_field and f.use_for_similar=1 and length(k.keyword)>=3 and length(k.keyword)<=15 and k.keyword not like '%0%' and k.keyword not like '%1%' and k.keyword not like '%2%' and k.keyword not like '%3%' and k.keyword not like '%4%' and k.keyword not like '%5%' and k.keyword not like '%6%' and k.keyword not like '%7%' and k.keyword not like '%8%' and k.keyword not like '%9%' order by k.hit_count desc limit $count");
 	}
 
+if (!function_exists("split_keywords")){
 function split_keywords($search,$index=false,$partial_index=false,$is_date=false)
 	{
 	# Takes $search and returns an array of individual keywords.
@@ -357,6 +358,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 		}
 
 	}
+}
 
 if (!function_exists("cleanse_string")){
 function cleanse_string($string,$preserve_separators)
@@ -1827,6 +1829,7 @@ function rs_quoted_printable_encode_subject($string, $encoding='UTF-8')
        return '=?'.$encoding.'?q?'.$result.'?=';
 	}
 
+if (!function_exists("highlightkeywords")){
 function highlightkeywords($text,$search,$partial_index=false,$field_name="",$keywords_index=1)
 	{
 	# do not hightlight if the field is not indexed, so it is clearer where results came from.	
@@ -1857,7 +1860,7 @@ function highlightkeywords($text,$search,$partial_index=false,$field_name="",$ke
 			}	
 
 		}
-
+		
 	# Parse and replace.
 	if ($partial_index)
 		{
@@ -1868,8 +1871,7 @@ function highlightkeywords($text,$search,$partial_index=false,$field_name="",$ke
 		return str_highlight ($text,$hlkeycache,STR_HIGHLIGHT_WHOLEWD);
 		}
 	}
-
-
+}
 # These lines go with str_highlight (next).
 define('STR_HIGHLIGHT_SIMPLE', 1);
 define('STR_HIGHLIGHT_WHOLEWD', 2);
