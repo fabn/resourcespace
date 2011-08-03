@@ -1250,6 +1250,7 @@ function save_alternative_file($resource,$ref)
 	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "',alt_type='" . getvalescaped("alt_type","") . "' $sql where resource='$resource' and ref='$ref'");
 	}
 	
+if (!function_exists("user_rating_save")){	
 function user_rating_save($userref,$ref,$rating)
 	{
 	# Save a user rating for a given resource
@@ -1309,7 +1310,9 @@ function user_rating_save($userref,$ref,$rating)
 	sql_query("update resource set user_rating='$average',user_rating_total='$total',user_rating_count='$count' where ref='$ref'");
 		
 	}
-		
+}
+
+				
 function notify_user_contributed_submitted($refs)
 	{
 	// Send a notification mail to the administrators when resources are moved from "User Contributed - Pending Submission" to "User Contributed - Pending Review"
@@ -2149,6 +2152,7 @@ function get_resource_files($ref,$includeorphan=false){
     return array_unique($filearray);
 }
 
+if (!function_exists("reindex_resource")){
 function reindex_resource($ref)
 	{
 	# Reindex a resource. Delete all resource_keyword rows and create new ones.
@@ -2187,6 +2191,7 @@ function reindex_resource($ref)
 	add_keyword_mappings($ref, $ref, -1);
 	
 	}
+}
 
 function get_page_count($resource,$alternative=-1)
     {
