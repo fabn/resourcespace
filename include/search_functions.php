@@ -1214,7 +1214,7 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 	return $search;
 	}
 
-
+if (!function_exists("refine_searchstring")){
 function refine_searchstring($search){
 	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
@@ -1255,7 +1255,7 @@ function refine_searchstring($search){
 	}
 	$keywords=$fixedkeywords;
 	$keywords=array_unique($keywords);
-
 	$search=implode(",",$keywords);
 	return $search;
+}
 }
