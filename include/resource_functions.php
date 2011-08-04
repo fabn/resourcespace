@@ -507,11 +507,35 @@ function save_resource_data_multi($collection)
 	if (getval("editlocation","")!="")
 		{
 		$location=explode(",",getvalescaped("location",""));
-		if (count($list)>0 && count($location)==2)
+		if (count($list)>0) 
 			{
-			$geo_lat=(float)$location[0];
-			$geo_long=(float)$location[1];
-			sql_query("update resource set geo_lat=$geo_lat,geo_long=$geo_long where ref in (" . join(",",$list) . ")");
+			if (count($location)==2)
+				{
+				$geo_lat=(float)$location[0];
+				$geo_long=(float)$location[1];
+				sql_query("update resource set geo_lat=$geo_lat,geo_long=$geo_long where ref in (" . join(",",$list) . ")");
+				}
+			elseif (getvalescaped("location","")=="")
+				{
+				sql_query("update resource set geo_lat=null,geo_long=null where ref in (" . join(",",$list) . ")");
+				}
+			}
+		}
+
+	# Update mapzoom?
+	if (getval("editmapzoom","")!="")
+		{
+		$mapzoom=getvalescaped("mapzoom","");
+		if (count($list)>0)
+			{
+			if ($mapzoom!="")
+				{
+				sql_query("update resource set mapzoom=$mapzoom where ref in (" . join(",",$list) . ")");
+				}
+			else
+				{
+				sql_query("update resource set mapzoom=null where ref in (" . join(",",$list) . ")");
+				}
 			}
 		}
 		

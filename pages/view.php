@@ -848,23 +848,36 @@ if (!$disable_geocoding) {
         <?php if ($edit_access) { ?>
         <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
         
-		<?php $mapheight=200;include "../include/geo_map.php"; ?>
+		<?php include "../include/geo_map.php";
+		$zoom = $resource["mapzoom"];
+		if (!($zoom>=2 && $zoom<=18)) {
+			// set $zoom based on precision of specified position
+			$zoom = 18;
+			$siglon = round(100000*abs($resource["geo_long"]))%100000;
+			$siglat = round(100000*abs($resource["geo_lat"]))%100000;
+			if ($siglon%100000==0 && $siglat%100000==0) {
+				$zoom = 3;
+			} elseif ($siglon%10000==0 && $siglat%10000==0) {
+				$zoom = 6;
+			} elseif ($siglon%1000==0 && $siglat%1000==0) {
+				$zoom = 10;
+			} elseif ($siglon%100==0 && $siglat%100==0) {
+				$zoom = 15;
+			}
+		}
+		?>
 		<script>
- 
-	    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
+		var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?>, <?php echo $resource["geo_lat"] ?> )
 	          .transform(
 	            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 	            map.getProjectionObject() // to Spherical Mercator Projection
 	          );
-	 
-	    var zoom=13;
-	 
 	    var markers = new OpenLayers.Layer.Markers( "Markers" );
 	    map.addLayer(markers);
-	 
+
 	    markers.addMarker(new OpenLayers.Marker(lonLat));
-	 
-	    map.setCenter (lonLat, zoom);
+
+	    map.setCenter (lonLat, <?php echo $zoom ?>);
 	  </script>
     <?php } else {?>
     <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>

@@ -19,22 +19,30 @@ if (!get_edit_access($ref,$resource["archive"])) {exit ("Permission denied.");}
 ?>
 <?php
 
-if (isset($_POST['submit']))
-	{
+if (isset($_POST['submit'])) 
+    {
     $s=explode(",",getvalescaped('geo-loc',''));
-    if (count($s)==2)
-    	{
-    	sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "' where ref='$ref'");
-       	}
-	elseif (getval('geo-loc','')=='')
+    if (count($s)==2) 
+		{    
+        $mapzoom=getvalescaped('map-zoom','');        
+		if ($mapzoom>=2 && $mapzoom<=18)
+			{
+    			sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "',mapzoom='" . escape_check($mapzoom) . "' where ref='$ref'");    
+			}
+		else
+			{
+    			sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "',mapzoom=null where ref='$ref'");    
+			}
+		} 
+	elseif (getval('geo-loc','')=='') 
 		{
 		# Blank geo-location
-		sql_query("update resource set geo_lat=null,geo_long=null where ref='$ref'");
+		sql_query("update resource set geo_lat=null,geo_long=null,mapzoom=null where ref='$ref'");
 		}
-	    	# Reload resource data
-		$resource=get_resource_data($ref,false);
+	# Reload resource data
+	$resource=get_resource_data($ref,false);
 
-	}
+    }
 
 
  ?>
@@ -52,19 +60,43 @@ if (isset($_POST['submit']))
 <input type="radio" name="dragmode" id="dragmodepan" onClick="control.point.deactivate();" /><label for="dragmodepan"><?php echo $lang["geodragmodepan"] ?></label>
 </div>
 
-<?php include "../include/geo_map.php"; ?>
+<?php include "../include/geo_map.php";
+if ($resource["geo_long"]!="") {
+	$zoom = $resource["mapzoom"];
+	if (!($zoom>=2 && $zoom<=18)) {
+		// set $zoom based on precision of specified position
+		$zoom = 18;
+		$siglon = round(100000*abs($resource["geo_long"]))%100000;
+		$siglat = round(100000*abs($resource["geo_lat"]))%100000;
+		if ($siglon%100000==0 && $siglat%100000==0) {
+			$zoom = 3;
+		} elseif ($siglon%10000==0 && $siglat%10000==0) {
+			$zoom = 6;
+		} elseif ($siglon%1000==0 && $siglat%1000==0) {
+			$zoom = 10;
+		} elseif ($siglon%100==0 && $siglat%100==0) {
+			$zoom = 15;
+		}
+	}
+} else {
+	$zoom = 2;
+}
+?>
 <script>
- 	
+	var zoom = <?php echo $zoom ?>;
     <?php if ($resource["geo_long"]!=="") {?>
-    var lonLat = new OpenLayers.LonLat( <?php echo $resource["geo_long"] ?> , <?php echo $resource["geo_lat"] ?> )
+    var lonLat = new OpenLayers.LonLat(<?php echo $resource["geo_long"] ?>, <?php echo $resource["geo_lat"] ?>)
           .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             map.getProjectionObject() // to Spherical Mercator Projection
           );
-	<?php } else { ?>			 
+	<?php } else { ?>
 	var lonLat = new OpenLayers.LonLat(0,0);
 	<?php } ?>
-	var zoom=13;
+	function zoomListener (theEvent) {
+		document.getElementById('map-zoom').value=map.getZoom();
+	}
+	map.events.on({"zoomend": zoomListener});
  
     var markers = new OpenLayers.Layer.Markers( "Markers" );
     map.addLayer(markers);
@@ -104,9 +136,9 @@ if (isset($_POST['submit']))
         });map.addControl(control);
 
     <?php if ($resource["geo_long"]!=="") {?>			 
-    map.setCenter (lonLat, zoom);
+    map.setCenter (lonLat, zoom);    
     <?php } else { ?>
-				    
+
 		<?php if (isset($_COOKIE["geobound"]))
 			{
 			$bounds=$_COOKIE["geobound"];
@@ -121,12 +153,12 @@ if (isset($_POST['submit']))
 
     <?php } ?>
 
-
   </script>
 
 <p><?php echo $lang['location-details']; ?></p>
 <form id="map-form" method="post">
 <input name="ref" type="hidden" value="<?php echo $ref; ?>" />
+<input name="map-zoom" type="hidden" value="<?php echo $zoom ?>" id="map-zoom" />
 <?php echo $lang['latlong']; ?>: <input name="geo-loc" type="text" size="50" value="<?php echo $resource["geo_long"]==""?"":($resource["geo_lat"] . "," . $resource["geo_long"]) ?>" id="map-input" />
 <input name="submit" type="submit" value="<?php echo $lang['save']; ?>" />
 </form>

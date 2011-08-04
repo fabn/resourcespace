@@ -1100,6 +1100,7 @@ $lang['location-edit'] = 'Edit Location';
 $lang['location-details'] = 'Double-click map to place pin.  Once the pin has been placed, you can drag the pin to refine the location.';
 $lang['location-noneselected']="No Location Selected";
 $lang['location'] = 'Location';
+$lang['mapzoom'] = 'Map Zoom';
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
