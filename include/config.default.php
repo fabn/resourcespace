@@ -1526,6 +1526,9 @@ $geolocation_default_bounds="-3.058839178216e-9,2690583.3951564,2";
 # The layers to make available. The first is the default.
 $geo_layers="osm, gmap, gsat, gphy";
 
+# Height of map in pixels on resource view page
+$view_mapheight=200;
+
 
 
 # Use the new 'frameless collections' mode that uses an AJAX driven 'collection summary' box on the right hand side instead of the collection frame. May be more suitable for intranets etc. that might work better without frames.

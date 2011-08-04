@@ -848,7 +848,7 @@ if (!$disable_geocoding) {
         <?php if ($edit_access) { ?>
         <p>&gt;&nbsp;<a href="geo_edit.php?ref=<?php echo $ref; ?>"><?php echo $lang['location-edit']; ?></a></p><?php } ?>
         
-		<?php include "../include/geo_map.php";
+		<?php $mapheight=$view_mapheight; include "../include/geo_map.php";
 		$zoom = $resource["mapzoom"];
 		if (!($zoom>=2 && $zoom<=18)) {
 			// set $zoom based on precision of specified position
