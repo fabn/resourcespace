@@ -11,6 +11,12 @@ $ref=getvalescaped("ref","",true);
 $higher=getvalescaped("higher","");
 $lower=getvalescaped("lower","");
 
+# Log in as '$spider_usergroup' so only specific fields are shown.
+$usergroup=$spider_usergroup;
+$usergroup_data=get_usergroup($usergroup);
+$usersearchfilter=$usergroup_data["search_filter"];
+$userpermissions=array_merge(explode(",",trim($global_permissions)),explode(",",trim($usergroup_data["permissions"]))); 
+
 
 if (($ref=="") && ($lower==""))
 	{
@@ -35,9 +41,13 @@ if ($lower!="")
 	$list=get_resource_ref_range($lower,$higher);
 	for ($n=1;$n<count($list);$n++)
 		{
-		?>
-		<a href="spider.php?password=<?php echo $password?>&ref=<?php echo $list[$n]?>"><?php echo $list[$n]?></a>
-		<?php
+		$access=get_resource_access($list[$n]);
+		if (in_array($access,$spider_access))
+			{
+			?>
+			<a href="spider.php?password=<?php echo $password?>&ref=<?php echo $list[$n]?>"><?php echo $list[$n]?></a>
+			<?php
+			}
 		}
 	?></p></body></html><?php
 	}
@@ -45,9 +55,10 @@ if ($lower!="")
 if ($ref!="")
 	{
 	# Resource view
-	$userpermissions[]="f*"; # Set access to all fields.
 	$resource=get_resource_data($ref);$resourcedata=get_resource_field_data($ref);
-
+	$access=get_resource_access($ref);	
+	if (!in_array($access,$spider_access)) {exit("Access denied");}
+	
 	if ($resource["has_image"]==1)
 		{
 		$thumbnail=get_resource_path($ref,false,"col",false,$resource["preview_extension"]);
@@ -69,7 +80,10 @@ if ($ref!="")
 			{
 			$value=trim($resourcedata[$n]["value"]);
 			if (substr($value,0,1)==",") {$value=TidyList($value);}
-			if ($value!="") {$textblock.="<p>$value</p>\n";}
+			if ($value!="") 
+				{
+				$textblock.="<p rs_fieldid=\"" . $resourcedata[$n]["ref"] . "\" rs_fieldname=\"" . $resourcedata[$n]["name"] . "\">" . htmlspecialchars($value) . "</p>\n";
+				}
 			}
 		if (($resourcedata[$n]["name"]=="caption") || ($resourcedata[$n]["name"]=="extract"))
 			{
