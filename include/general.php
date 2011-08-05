@@ -1377,9 +1377,18 @@ function i18n_get_indexable($text)
 	# For field names / values using the i18n syntax, return all language versions, as necessary for indexing.
 	$text=trim($text);
 	$text=strip_tags($text);
-	
+	$text=preg_replace('/~(.*?):/',',',$text);// remove i18n strings, which shouldn't be in the keywords
+	//echo $text;die();
 	# For multiple keywords, parse each keyword.
-	if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($n>0) {$out.=",";}; $out.=i18n_get_indexable(trim($s[$n]));};return $out;}
+	if (substr($text,0,1)!="," && (strpos($text,",")!==false) && (strpos($text,"~")!==false)) {
+		$s=explode(",",$text);
+		$out="";
+		for ($n=0;$n<count($s);$n++) {
+		if ($n>0) {$out.=",";} 
+		$out.=i18n_get_indexable(trim($s[$n]));
+		}
+		return $out;
+	}
 
 	# Split
 	$s=explode("~",$text);
