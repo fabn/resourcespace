@@ -163,7 +163,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$field=0;#echo "<li>$keyword<br/>";
 				if (strpos($keyword,":")!==false && !$ignore_filters)
 					{	
-					$kw=explode(":",$keyword);
+					$kw=explode(":",$keyword,2);
 					if ($kw[0]=="day")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
@@ -1229,7 +1229,7 @@ function refine_searchstring($search){
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
 		if (strpos($keyword,":")>0){
-			$keywordar=explode(":",$keyword);
+			$keywordar=explode(":",$keyword,2);
 			$keyname=$keywordar[0];
 			if (substr($keyname,0,1)!="!"){
 				if (!in_array($keyname,$cattreefields)){
