@@ -4,7 +4,7 @@
 include_once "../../../include/db.php";
 include_once "../../../include/authenticate.php";
 include_once "../../../include/general.php";
-
+include_once "../../../include/resource_functions.php";
 $ref=getval("ref","");
 if ($ref==""){die("no");}
 
@@ -28,3 +28,5 @@ echo mysql_insert_id();
 
 $notes=sql_query("select * from annotate_notes where ref='$ref'");
 sql_query("update resource set annotation_count=".count($notes)." where ref=$ref");
+
+add_keyword_mappings($ref,$text,-1);
