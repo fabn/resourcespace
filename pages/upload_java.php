@@ -309,7 +309,7 @@ else
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&replace_resource=<?php echo $replace_resource ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
