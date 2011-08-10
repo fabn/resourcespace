@@ -204,7 +204,7 @@ else
 DrawOption("p", $lang["can_change_own_password"], true);
 DrawOption("U", $lang["can_manage_users_in_children_groups"]);
 DrawOption("E", $lang["can_email_resources_to_own_and_children_and_parent_groups"]);
-
+hook("additionalperms");
 ?>
 </table>
 

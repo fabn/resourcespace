@@ -147,6 +147,7 @@ $research=sql_value("select ref value from research_request where collection='$u
 <li><a href="<?php echo $baseurl_short?>pages/collection_download.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["action-download"]?></a></li>
 <?php } ?>
 <li><a href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"]?></a></li>
+<?php hook("addcollectionsmenu"); ?>
 </ul>
 </div>
 </div>

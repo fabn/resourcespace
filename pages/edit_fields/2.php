@@ -28,6 +28,7 @@ $height=ceil(count($options)/$cols);
 global $checkbox_ordered_vertically;
 if ($checkbox_ordered_vertically)
 	{
+	if(!hook('rendereditchkboxes')):
 	# ---------------- Vertical Ordering (only if configured) -----------
 	?><table cellpadding=2 cellspacing=0><tr><?php
 	for ($y=0;$y<$height;$y++)
@@ -53,6 +54,7 @@ if ($checkbox_ordered_vertically)
 		?></tr><tr><?php
 		}
 	?></tr></table><?php
+	endif;
 	}
 else
 	{				

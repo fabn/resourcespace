@@ -912,6 +912,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 			global $checkbox_ordered_vertically;
 			if ($checkbox_ordered_vertically)
 				{
+				if(!hook('rendersearchchkboxes')):
 				# ---------------- Vertical Ordering (only if configured) -----------
 				?><table cellpadding=2 cellspacing=0><tr><?php
 				for ($y=0;$y<$height;$y++)
@@ -941,6 +942,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 					?></tr><tr><?php
 					}
 				?></tr></table><?php
+				endif;
 				}
 			else
 				{
