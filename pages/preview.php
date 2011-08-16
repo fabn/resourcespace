@@ -110,6 +110,7 @@ include "../include/header.php";
 <?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a><?php } ?>
 
 <?php
+if (!hook("replacepreviewpager")){
 if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
     $pagecount= get_page_count($resource,$alternative);
     if ($pagecount!=null && $pagecount!=-2){
@@ -121,6 +122,7 @@ if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
         }
     if ($pagecount>$pdf_pages){?><option value="1">...<?php }     
     ?></select><?php
+}
 }
 }
 ?>
