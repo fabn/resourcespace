@@ -157,8 +157,8 @@ if (!$config_search_for_number || !is_numeric($search)) # Don't do this when the
 	}
 
 $searchresourceid = "";
-if (is_numeric(getval("searchresourceid",""))){
-	$searchresourceid = getval("searchresourceid","");
+if (is_numeric(trim(getval("searchresourceid","")))){
+	$searchresourceid = trim(getval("searchresourceid",""));
 	$search = "!resource$searchresourceid";
 }
 	
