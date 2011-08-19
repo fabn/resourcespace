@@ -148,7 +148,14 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 
 	# extract text from documents (e.g. PDF, DOC).
 	global $extracted_text_field;
-	if (isset($extracted_text_field) && !$no_exif) {extract_text($ref,$extension);}
+	if (isset($extracted_text_field) && !$no_exif) {
+		if (isset($unoconv_path) && in_array($extension,$unoconv_extensions)){
+			// omit, since the unoconv process will do it during preview creation below
+			}
+		else {
+		extract_text($ref,$extension);
+		}
+	}
 
 	# Store original filename in field, if set
 	global $filename_field;
@@ -1303,12 +1310,13 @@ function upload_preview($ref)
     return true;
     }}
  
-function extract_text($ref,$extension)
+function extract_text($ref,$extension,$path="")
 	{
+	# path can be set to use an alternate file, for example, in the case of unoconv	
 	# Extract text from the resource and save to the configured field.
 	global $extracted_text_field,$antiword_path,$pdftotext_path,$zip_contents_field;
 	$text="";
-	$path=get_resource_path($ref,true,"",false,$extension);
+	if ($path==""){$path=get_resource_path($ref,true,"",false,$extension);}
 	
 	# Microsoft Word extraction using AntiWord.
 	if ($extension=="doc" && isset($antiword_path))
@@ -1365,6 +1373,7 @@ function extract_text($ref,$extension)
 		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
 		if (!file_exists($command)) {exit("pdftotext executable not found at '$pdftotext_path'");}
 		$text=shell_exec($command . " -enc UTF-8 \"" . $path . "\" -");
+		
 		}
 	
 	# HTML extraction

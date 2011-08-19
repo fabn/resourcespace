@@ -314,7 +314,9 @@ if (in_array($extension,$unoconv_extensions) && isset($unoconv_path) && !isset($
 		# Set vars so we continue generating thumbs/previews as if this is a PDF file
 	    $extension="pdf";
 	    $file=$alt_path;
+
 		}
+	    extract_text($ref,$extension,$alt_path);
 	}
     
 /* ----------------------------------------
