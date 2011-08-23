@@ -37,7 +37,7 @@ function save_request($request)
 	
 	# --------------------- User Assignment ------------------------
 	# Has the assigned_to value changed?
-	if ($currentrequest["assigned_to"]!=$assigned_to)
+	if ($currentrequest["assigned_to"]!=$assigned_to && checkperm("Ra"))
 		{
 		if ($assigned_to==0)
 			{
