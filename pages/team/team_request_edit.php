@@ -26,9 +26,20 @@ if ($request===false) {exit("Request $ref not found.");}
 	
 include "../../include/header.php";
 ?>
+<p><a href="team_request.php">&lt; <?php echo $lang["back"] ?></a></p>
 <div class="BasicsBox">
 <h1><?php echo $lang["editrequestorder"]?></h1>
 
+<?php
+# Check access
+if (checkperm("Rb") && $request["assigned_to"]!=$userref)
+	{
+	?><p><?php echo str_replace("%","<b>" . ($request["assigned_to_username"]==""?"(unassigned)":$request["assigned_to_username"]) . "</b>",$lang["requestnotassignedtoyou"]) ?></p><?php
+	}
+else
+	{
+	?>
+	
 <form method=post>
 <input type=hidden name=ref value="<?php echo $ref?>">
 
@@ -45,17 +56,40 @@ include "../../include/header.php";
 <?php } else {?>href="../collections.php?collection=<?php echo $request["collection"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a></div>
 <div class="clearerleft"> </div></div>
 
+<?php if (checkperm("Ra"))
+	{
+	?>
+	<div class="Question"><label><?php echo $lang["assignedtoteammember"]?></label>
+	<select class="shrtwidth" name="assigned_to"><option value="0"><?php echo $lang["requeststatus0"]?></option>
+	<?php $users=get_users_with_permission("Rb");
+	for ($n=0;$n<count($users);$n++)
+		{
+		?>
+		<option value="<?php echo $users[$n]["ref"]?>" <?php if ($request["assigned_to"]==$users[$n]["ref"]) {?>selected<?php } ?>><?php echo $users[$n]["username"]?></option>	
+		<?php
+		}
+	?>
+	</select>
+	<div class="clearerleft"> </div></div>
+	<?php
+	}
+?>
+
 
 <div class="Question"><label><?php echo $lang["status"]?></label>
 <div class="tickset">
 <?php for ($n=0;$n<=2;$n++) { ?>
 <div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>
-<?php if ($n==1) { ?> onClick="Effect.Appear('Expires',{duration:1});"<?php } else { ?>onClick="Effect.DropOut('Expires',{duration:1});"<?php } ?>
+
+onClick="
+<?php if ($n==1) { ?>Effect.Appear('Expires',{duration:1});<?php } else { ?>Effect.DropOut('Expires',{duration:1});<?php } ?>
+<?php if ($n==2) { ?>Effect.Appear('Reason',{duration:1});<?php } else { ?>Effect.DropOut('Reason',{duration:1});<?php } ?>
+"
 
 /><?php echo $lang["resourcerequeststatus" . $n]?></div>
 <?php } ?>
 </div>
-<div class="clearerleft"> </div></div>
+<div class="clearerleft"> </div>
 </div>
 
 <div class="Question" id="Expires" <?php if ($request["status"]!=1) { ?>style="display:none;"<?php } ?>>
@@ -83,6 +117,12 @@ if ($request["expires"]!="" && $sel==false)
 <div class="clearerleft"> </div>
 </div>
 
+<div class="Question" id="Reason" <?php if ($request["status"]!=2) { ?>style="display:none;"<?php } ?>>
+<label><?php echo $lang["declinereason"]?></label>
+<textarea name="reason" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($request["reason"])?></textarea>
+<div class="clearerleft"> </div></div>
+
+
 <div class="Question"><label><?php echo $lang["deletethisrequest"]?></label>
 <input name="delete" type="checkbox" value="yes">
 <div class="clearerleft"> </div></div>
@@ -95,5 +135,6 @@ if ($request["expires"]!="" && $sel==false)
 </div>
 
 <?php		
+}
 include "../../include/footer.php";
 ?>

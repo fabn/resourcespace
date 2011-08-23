@@ -1470,3 +1470,12 @@ $lang["createnewentryfor"]="Create new entry for";
 $lang["confirmcreatenewentryfor"]="Are you sure you wish to create a new keyword list entry for '%%'?";
 
 $lang["editresourcepreviews"]="Edit Resource Previews";
+
+$lang["can_assign_resource_requests"]="Can assign resource requests to others";
+$lang["can_be_assigned_resource_requests"]="Can be assigned resource requests (also; can only see resource requests assigned to them in the Manage Resource Requests area)";
+
+$lang["declinereason"]="Reason for declining";
+$lang["requestnotassignedtoyou"]="Sorry, this request is no longer assigned to you. It is now assigned to user %.";
+$lang["requestassignedtoyou"]="Resource request assigned to you";
+$lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please user the link below to approve or deny the resource request.";
+

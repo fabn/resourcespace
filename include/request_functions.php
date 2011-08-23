@@ -4,7 +4,7 @@
 
 function get_request($request)
 	{
-	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments,r.expires from request r left outer join user u  on r.user=u.ref where r.ref='$request'");
+	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments,r.expires,r.assigned_to,r.reason,u2.username assigned_to_username from request r left outer join user u  on r.user=u.ref left outer join user u2 on r.assigned_to=u2.ref where r.ref='$request'");
 	if (count($result)==0)
 		{
 		return false;
@@ -25,19 +25,42 @@ function get_user_requests()
 function save_request($request)
 	{
 	# Use the posted form to update the request
-
+	global $applicationname,$baseurl,$lang;
+		
 	$status=getvalescaped("status","",true);
 	$expires=getvalescaped("expires","");
 	$currentrequest=get_request($request);
 	$oldstatus=$currentrequest["status"];
+	$assigned_to=getvalescaped("assigned_to","");
+	$reason=getvalescaped("reason","");
+	
+	
+	# --------------------- User Assignment ------------------------
+	# Has the assigned_to value changed?
+	if ($currentrequest["assigned_to"]!=$assigned_to)
+		{
+		if ($assigned_to==0)
+			{
+			# Cancel assignment
+			sql_query("update request set assigned_to=null where ref='$request'");
+			}
+		else
+			{
+			# Update and notify user
+			sql_query("update request set assigned_to='$assigned_to' where ref='$request'");
+
+			$message=$lang["requestassignedtoyoumail"] . "\n\n$baseurl/?q=" . $request . "\n";
+			$assigned_to_user=get_user($assigned_to);
+			send_mail($assigned_to_user["email"],$applicationname . ": " . $lang["requestassignedtoyou"],$message);
+			}
+		}
+	
 	
 	# Has either the status or the expiry date changed?
 	if (($oldstatus!=$status || $expires!=$currentrequest["expires"]) && $status==1)
 		{
 		# --------------- APPROVED -------------
 		# Send approval e-mail
-
-		global $applicationname,$baseurl,$lang;
 		$message=$lang["requestapprovedmail"] . "\n\n";
 		$message.="$baseurl/?c=" . $currentrequest["collection"] . "\n";
 		if ($expires!="")
@@ -58,9 +81,9 @@ function save_request($request)
 		{
 		# --------------- DECLINED -------------
 		# Send declined e-mail
-		
-		global $applicationname,$baseurl,$lang;
-		$message=$lang["requestdeclinedmail"] . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
+
+		$reason=str_replace(array("\\r","\\n"),"\n",$reason);$reason=str_replace("\n\n","\n",$reason); # Fix line breaks.
+		$message=$lang["requestdeclinedmail"] . "\n\n" . $reason . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
 		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus2"],$message);
 
 		# Remove access that my have been granted by an inadvertant 'approved' command.
@@ -82,11 +105,11 @@ function save_request($request)
 		}
 
 	# Save status
-	sql_query("update request set status='$status',expires=" . ($expires==""?"null":"'$expires'") . " where ref='$request'");
+	sql_query("update request set status='$status',expires=" . ($expires==""?"null":"'$expires'") . ",reason='$reason' where ref='$request'");
 
 	if (getval("delete","")!="")
 		{
-		# Delete the request - this is done AFTER any e-mails have been sent out so this can be used.
+		# Delete the request - this is done AFTER any e-mails have been sent out so this can be used on approval.
 		sql_query("delete from request where ref='$request'");
 		return true;		
 		}
@@ -96,7 +119,11 @@ function save_request($request)
 	
 function get_requests()
 	{
-	return sql_query("select u.username,u.fullname,r.*,(select count(*) from collection_resource cr where cr.collection=r.collection) c from request r left outer join user u on r.user=u.ref order by ref desc");
+	# If permission Rb (accept resource request assignments) is set then limit the list to only those assigned to this user.
+	$condition="";global $userref;
+	if (checkperm("Rb")) {$condition="where r.assigned_to='" . $userref . "'";}
+	
+	return sql_query("select u.username,u.fullname,r.*,(select count(*) from collection_resource cr where cr.collection=r.collection) c,r.assigned_to,u2.username assigned_to_username from request r left outer join user u on r.user=u.ref left outer join user u2 on r.assigned_to=u2.ref $condition order by status,ref desc");
 	}
 
 function email_collection_request($ref,$details)

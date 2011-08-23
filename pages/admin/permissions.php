@@ -180,7 +180,12 @@ if (in_array("t",$permissions))
 	{
 	# Team Centre options	
 	DrawOption("r", $lang["can_manage_research_requests"]);
-	DrawOption("R", $lang["can_manage_resource_requests"]);
+	DrawOption("R", $lang["can_manage_resource_requests"], false, true);
+	if (in_array("R",$permissions))	
+		{
+		DrawOption("Ra", $lang["can_assign_resource_requests"]);
+		DrawOption("Rb", $lang["can_be_assigned_resource_requests"]);
+		}
 	DrawOption("o", $lang["can_manage_content"]);
 	DrawOption("m", $lang["can_bulk-mail_users"]);
 	DrawOption("u", $lang["can_manage_users"]);

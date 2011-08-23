@@ -26,7 +26,7 @@ include "../../include/header.php";
 $requests=get_requests();
 
 # pager
-$per_page=10;
+$per_page=20;
 $results=count($requests);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
@@ -44,6 +44,7 @@ $jumpcount=1;
 <td><?php echo $lang["date"]?></td>
 <td><?php echo $lang["itemstitle"]?></td>
 <td><?php echo $lang["type"]?></td>
+<td><?php echo $lang["assignedto"]?></td>
 <td><?php echo $lang["status"]?></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
@@ -62,6 +63,7 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo nicedate($requests[$n]["created"],true)?></td>
 	<td><?php echo $requests[$n]["c"] ?></td>
 	<td><?php echo $lang["resourcerequesttype" . $requests[$n]["request_mode"]] ?></td>
+	<td><?php echo $requests[$n]["assigned_to_username"] ?></td>
 	<td><?php echo $lang["resourcerequeststatus" . $requests[$n]["status"]] ?></td>
 	<td><div class="ListTools"><a href="team_request_edit.php?ref=<?php echo $requests[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a></a></div></td>
 	</tr>

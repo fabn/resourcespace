@@ -65,6 +65,8 @@ a	Can access administration tree
 t	Can see the team centre home
 r	Can manage research requests
 R	Can manage resource requests / orders
+Ra	Can assign resource requests to others
+Rd  Can be assigned resource requests (also; can only see resource requests assigned to them in the Manage Resource Requests area)
 o	Can manage content
 m	Can bulk-mail users
 u	Can manage users
