@@ -670,7 +670,8 @@ $extra="";
 $tabname="";
 $tabcount=0;
 if (count($fields)>0 && $fields[0]["tab_name"]!="")
-	{ ?>
+	{ 
+	?>
 	<div class="TabBar">
 	<?php
 	$extra="";
@@ -746,8 +747,7 @@ for ($n=0;$n<count($fields);$n++)
 		$extra.="<div class=\"RecordStory\"> <h1>" . $lang["warningexpired"] . "</h1><p>" . $lang["warningexpiredtext"] . "</p><p id=\"WarningOK\"><a href=\"#\" onClick=\"document.getElementById('RecordDownload').style.display='block';document.getElementById('WarningOK').style.display='none';\">" . $lang["warningexpiredok"] . "</a></p></div><style>#RecordDownload {display:none;}</style>";
 		}
 	
-	
-	if (($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1))
+	if (($value!="") && ($value!=",") && ($fields[$n]["display_field"]==1) && ($access==0 || ($access==1 && !$fields[$n]["hide_when_restricted"])))
 		{
 		$title=htmlspecialchars(str_replace("Keywords - ","",$fields[$n]["title"]));
 		//if ($fields[$n]["type"]==4 || $fields[$n]["type"]==6) {$value=NiceDate($value,false,true);}
