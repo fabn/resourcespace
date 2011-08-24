@@ -127,7 +127,7 @@ function add_resource_to_collection($resource,$collection,$smartadd=false,$size=
 				{
 				# Insert a new access key entry for this resource/collection.
 				global $userref;
-				sql_query("insert into external_access_keys(resource,access_key,user,collection,date) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now())");
+				sql_query("insert into external_access_keys(resource,access_key,user,collection,date,expires,access) values ('$resource','" . escape_check($keys[$n]["access_key"]) . "','$userref','$collection',now(),'" . escape_check($keys[$n]["expires"]) . "','" . escape_check($keys[$n]["access"]) . "')");
 				#log this
 				collection_log($collection,"s",$resource, $keys[$n]["access_key"]);
 				}
@@ -1176,7 +1176,7 @@ function delete_collection_access_key($collection,$access_key)
 function collection_log($collection,$type,$resource,$notes = "")
 	{
 	global $userref;
-	sql_query("insert into collection_log(date,user,collection,type,resource, notes) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$collection','$type','$resource', '$notes')");
+	sql_query("insert into collection_log(date,user,collection,type,resource, notes) values (now()," . (($userref!="")?"'$userref'":"null") . ",'$collection','$type'," . (($resource!="")?"'$resource'":"null") . ", '$notes')");
 	}
 /*  Log entry types  
 $lang["collectionlog-r"]="Removed resource";
