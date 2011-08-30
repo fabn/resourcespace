@@ -1480,3 +1480,5 @@ $lang["requestassignedtoyou"]="Resource request assigned to you";
 $lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please user the link below to approve or deny the resource request.";
 
 $lang["manageresources-overquota"]="Resource management disabled - you have exceeded your disk usage quota";
+$lang["searchitemsdiskusage"]="Calculate disk space used by results";
+$lang["matchingresourceslabel"]="Matching resources";

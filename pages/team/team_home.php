@@ -30,7 +30,8 @@ else
 	$free=disk_free_space($storagedir);
 	$used=$avail-$free;
 	}
-	
+if ($free<0) {$free=0;}
+		
 include "../../include/header.php";
 ?>
 

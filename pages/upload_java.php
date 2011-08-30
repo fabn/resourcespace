@@ -156,6 +156,7 @@ if (array_key_exists("File0",$_FILES))
 		if ($alternative_file_previews_batch)
 			{
 			create_previews($alternative,false,$extension,false,false,$aref);
+			update_disk_usage($ref);
 			}
 		
 		echo "SUCCESS";
