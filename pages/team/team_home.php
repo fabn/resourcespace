@@ -14,23 +14,21 @@ if ($send_statistics) {send_statistics();}
 
 $overquota=overquota();
 
-if (getval("showdisk","")!="")
-	{
-	# Some disk size allocation
-	if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
 
-	if (isset($disksize)) # Use disk quota rather than real disk size
-		{
-		$avail=$disksize*(1024*1024*1024);
-		$used=get_total_disk_usage();
-		$free=$avail-$used;
-		}
-	else
-		{		
-		$avail=disk_total_space($storagedir);
-		$free=disk_free_space($storagedir);
-		$used=$avail-$free;
-		}
+# Work out free space / usage for display
+if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
+
+if (isset($disksize)) # Use disk quota rather than real disk size
+	{
+	$avail=$disksize*(1024*1024*1024);
+	$used=get_total_disk_usage();
+	$free=$avail-$used;
+	}
+else
+	{		
+	$avail=disk_total_space($storagedir);
+	$free=disk_free_space($storagedir);
+	$used=$avail-$free;
 	}
 	
 include "../../include/header.php";
