@@ -1479,3 +1479,4 @@ $lang["requestnotassignedtoyou"]="Sorry, this request is no longer assigned to y
 $lang["requestassignedtoyou"]="Resource request assigned to you";
 $lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please user the link below to approve or deny the resource request.";
 
+$lang["manageresources-overquota"]="Resource management disabled - you have exceeded your disk usage quota";

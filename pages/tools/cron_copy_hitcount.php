@@ -19,4 +19,10 @@ sql_query("insert into sysvars(name,value) values ('last_cron',now())");
 ?>
 Relevance matching hitcount: copy done - <?php echo date("d M Y")?>
 
-<?php include "geo_setcoords_from_country.php"; ?>
+<?php include "geo_setcoords_from_country.php";
+
+# Update disk quota column on resource table.
+update_disk_usage_cron();
+
+
+ ?>

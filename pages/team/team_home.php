@@ -8,30 +8,21 @@
 include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("t")) {exit ("Permission denied.");}
 include "../../include/general.php";
+include "../../include/resource_functions.php";
 
 if ($send_statistics) {send_statistics();}
+
+$overquota=overquota();
 
 if (getval("showdisk","")!="")
 	{
 	# Some disk size allocation
 	if (!file_exists($storagedir)) {mkdir($storagedir,0777);}
 	$avail=disk_total_space($storagedir);
+	if (isset($disksize)) {$avail=$disksize*(1024*1024*1024);} # Disk quota used instead
+		
 	$free=disk_free_space($storagedir);
 	$used=$avail-$free;
-	
-	# Quota?
-	$overquota=false;
-	if (isset($disksize))
-		{
-		# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
-		# Unix only due to reliance on 'du' command
-		$avail=$disksize*(1024*1024*1024);
-		$used=explode("\n",shell_exec("du -Lc --summarize ".escapeshellarg($storagedir)));$used=explode("\t",$used[count($used)-2]);$used=$used[0];
-		$used=$used*1024;
-		
-		$free=$avail-$used;
-		if ($free<=0) {$free=0;$used=$avail;$overquota=true;}
-		}
 	}
 	
 include "../../include/header.php";
@@ -46,7 +37,18 @@ include "../../include/header.php";
 	<div class="VerticalNav">
 	<ul>
 	
-	<?php if (checkperm("c")) { ?><li><a href="team_resource.php"><?php echo $lang["manageresources"]?></a></li><?php } ?>
+	<?php if (checkperm("c")) { 
+		if ($overquota)
+			{
+			?><li><?php echo $lang["manageresources"]?> : <strong><?php echo $lang["manageresources-overquota"]?></strong></li><?php
+			}
+		else
+			{
+			?><li><a href="team_resource.php"><?php echo $lang["manageresources"]?></a></li><?php
+			}
+ 		}
+ 	?>
+			
 
 	<?php if (checkperm("i")) { ?><li><a href="team_archive.php"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
 	

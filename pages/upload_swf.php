@@ -294,7 +294,21 @@ else
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
+
+<?php
+# --------- Quota check -------------
+if (overquota())
+	{
+	?>
+	<p><strong><?php echo $lang["manageresources-overquota"] ?></strong></p>
+	</div>
+	<?php
+	include "../include/footer.php";
+	exit();
+	}
+?>
 <p><?php echo $lang["intro-swf_upload"] ?></p>
+
 
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);

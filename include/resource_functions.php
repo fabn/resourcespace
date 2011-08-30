@@ -1217,6 +1217,9 @@ function delete_alternative_file($resource,$ref)
         
 	# Delete the database row
 	sql_query("delete from resource_alt_files where resource='$resource' and ref='$ref'");
+	
+	# Update disk usage
+	update_disk_usage($resource);
 	}
 	
 function get_alternative_file($resource,$ref)
@@ -1272,6 +1275,9 @@ function save_alternative_file($resource,$ref)
 		}
 	# Save data back to the database.
 	sql_query("update resource_alt_files set name='" . getvalescaped("name","") . "',description='" . getvalescaped("description","") . "',alt_type='" . getvalescaped("alt_type","") . "' $sql where resource='$resource' and ref='$ref'");
+	
+	# Update disk usage
+	update_disk_usage($resource);
 	}
 	
 if (!function_exists("user_rating_save")){	
@@ -2270,3 +2276,59 @@ function get_page_count($resource,$alternative=-1)
         return $pages;
     }
 }
+
+
+function update_disk_usage($resource)
+	{
+	# Scan the appropriate filestore folder and update the disk usage fields on the resource table.
+	$dir=dirname(get_resource_path($resource,true,"",false));
+	if (!file_exists($dir)) {return false;} # Folder does not yet exist.
+	$d = dir($dir); 
+	$total=0;
+	while ($f = $d->read())
+		{
+		if ($f!=".." && $f!=".")
+			{
+			$s=filesize_unlimited($dir . "/" .$f);
+			#echo "<br/>-". $f . " : " . $s;
+			$total+=$s;
+			}
+		}
+	#echo "<br/>total=" . $total;
+	sql_query("update resource set disk_usage='$total',disk_usage_last_updated=now() where ref='$resource'");
+	return true;
+	}
+
+function update_disk_usage_cron()
+	{
+	# Update disk usage for all resources that have not yet been updated or have not been updated in the past 30 days.
+	# Limit to a reasonable amount so that this process is spread over several cron intervals for large data sets.
+	$resources=sql_array("select ref value from resource where ref>0 and disk_usage_last_updated is null or datediff(now(),disk_usage_last_updated)>30 limit 5000");
+	foreach ($resources as $resource)
+		{
+		update_disk_usage($resource);
+		}
+	}
+
+function get_total_disk_usage()
+	{
+	# Returns sum of all resource disk usage
+	return sql_value("select sum(disk_usage) value from resource",0);
+	}
+
+function overquota()
+	{
+	# Return true if the system is over quota
+	global $disksize;
+	if (isset($disksize))
+		{
+		# Disk quota functionality. Calculate the usage by the $storagedir folder only rather than the whole disk.
+		# Unix only due to reliance on 'du' command
+		$avail=$disksize*(1024*1024*1024);
+		$used=get_total_disk_usage();
+		
+		$free=$avail-$used;
+		if ($free<=0) {return true;}
+		}
+	return false;
+	}

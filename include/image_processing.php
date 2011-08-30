@@ -216,6 +216,9 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		
 	hook("Uploadfilesuccess", "", array( "resourceId" => $ref ) );
 	
+	# Update disk usage
+	update_disk_usage($ref);
+	
     return $status;
     }}
 	
