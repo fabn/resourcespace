@@ -15,7 +15,7 @@ include ("../include/header.php");
 <p><a href="search.php?search=<?php echo urlencode(getval("search","")) ?>">&lt; <?php echo $lang["back"] ?></a></p>
 
 <h1><?php echo $lang["searchitemsdiskusage"] ?></h1>
-<p><?php echo $lang["matchingresourceslabel"] . ": " . $count?>
+<p><?php echo $lang["matchingresourceslabel"] . ": " . number_format($count)?>
 <br />
 <?php echo $lang["diskusage"] . ": " . formatfilesize($disk_usage) ?></p>
 
