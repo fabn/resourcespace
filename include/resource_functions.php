@@ -538,6 +538,8 @@ function save_resource_data_multi($collection)
 				}
 			}
 		}
+
+	hook("saveextraresourcedata","",array($list));
 		
 	# Update XML metadata dump file for all edited resources.
 	for ($m=0;$m<count($list);$m++)

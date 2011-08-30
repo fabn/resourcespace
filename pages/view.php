@@ -875,11 +875,14 @@ if (!$disable_geocoding) {
 	    var markers = new OpenLayers.Layer.Markers( "Markers" );
 	    map.addLayer(markers);
 
-	    markers.addMarker(new OpenLayers.Marker(lonLat));
+	    <?php if (!hook("addmapicon")) { ?>
+			markers.addMarker(new OpenLayers.Marker(lonLat));
+		<?php } ?>
 
 	    map.setCenter (lonLat, <?php echo $zoom ?>);
 	  </script>
-    <?php } else {?>
+    <?php     
+		} else {?>
     <a href="geo_edit.php?ref=<?php echo $ref; ?>">&gt; <?php echo $lang['location-add'];?></a>
     <?php }?>
     </div>

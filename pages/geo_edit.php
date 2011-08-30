@@ -33,11 +33,13 @@ if (isset($_POST['submit']))
 			{
     			sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "',mapzoom=null where ref='$ref'");    
 			}
-		} 
+		hook("savelocationextras");
+		}
 	elseif (getval('geo-loc','')=='') 
 		{
 		# Blank geo-location
 		sql_query("update resource set geo_lat=null,geo_long=null,mapzoom=null where ref='$ref'");
+		hook("removelocationextras");
 		}
 	# Reload resource data
 	$resource=get_resource_data($ref,false);
@@ -100,8 +102,13 @@ if ($resource["geo_long"]!="") {
  
     var markers = new OpenLayers.Layer.Markers( "Markers" );
     map.addLayer(markers);
- 
- 	var marker = new OpenLayers.Marker(lonLat);
+<?php  
+if (!hook("makemarker")) {
+?>
+ 	var marker = new OpenLayers.Marker(lonLat); 
+<?php
+}
+?>
     markers.addMarker(marker);
 
 	//dragfeature = new OpenLayers.Control.DragFeature(markers,{'onComplete': onCompleteMove});
@@ -153,13 +160,16 @@ if ($resource["geo_long"]!="") {
 
     <?php } ?>
 
-  </script>
-
+  </script>  
+<?php
+hook("rendermapfooter");
+?>
 <p><?php echo $lang['location-details']; ?></p>
 <form id="map-form" method="post">
 <input name="ref" type="hidden" value="<?php echo $ref; ?>" />
 <input name="map-zoom" type="hidden" value="<?php echo $zoom ?>" id="map-zoom" />
 <?php echo $lang['latlong']; ?>: <input name="geo-loc" type="text" size="50" value="<?php echo $resource["geo_long"]==""?"":($resource["geo_lat"] . "," . $resource["geo_long"]) ?>" id="map-input" />
+<?php hook("renderlocationextras"); ?>
 <input name="submit" type="submit" value="<?php echo $lang['save']; ?>" />
 </form>
 

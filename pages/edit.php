@@ -871,6 +871,7 @@ if ($multiple && !$disable_geocoding)
 	<div class="clearerleft"> </div>
 	</div>
 	<?php
+	hook("locationextras");
 	} 
 ?>
 	
