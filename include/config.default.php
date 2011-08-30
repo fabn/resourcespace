@@ -178,7 +178,7 @@ $noadd=array_merge($noadd, array("", "a","the","this","then","another","is","wit
 $suggest_threshold=-1; 
 
 
-$max_results=50000;
+$max_results=200000;
 $minyear=1980; # The year of the earliest resource record, used for the date selector on the search form. Unless you are adding existing resources to the system, probably best to set this to the current year at the time of installation.
 
 # Set folder for home images. Ex: "gfx/homeanim/mine/" 
