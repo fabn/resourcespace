@@ -2303,7 +2303,7 @@ function update_disk_usage_cron()
 	{
 	# Update disk usage for all resources that have not yet been updated or have not been updated in the past 30 days.
 	# Limit to a reasonable amount so that this process is spread over several cron intervals for large data sets.
-	$resources=sql_array("select ref value from resource where ref>0 and disk_usage_last_updated is null or datediff(now(),disk_usage_last_updated)>30 limit 5000");
+	$resources=sql_array("select ref value from resource where ref>0 and disk_usage_last_updated is null or datediff(now(),disk_usage_last_updated)>30 limit 20000");
 	foreach ($resources as $resource)
 		{
 		update_disk_usage($resource);
