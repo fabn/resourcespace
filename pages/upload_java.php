@@ -284,6 +284,7 @@ else
 	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
 	}
 ?>
+<?php hook("upload_page_top"); ?>
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
