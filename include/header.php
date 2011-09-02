@@ -193,7 +193,9 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>"><?php echo $lang["recent"]?></a></li><?php } ?>
 		<?php } /* end hook replacerecentlink */?>
 		<?php if (checkperm("s") && $myrequests_link && checkperm("q")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/requests.php"><?php echo $lang["myrequests"]?></a></li><?php } ?>
+		<?php if (!hook("replacemycontributionslink")) { ?>
 		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/contribute.php"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
+		<?php } /* end hook replacemycontributionslink */?>
 		<?php if (!hook("replaceresearchrequestlink")) { ?>
 		<?php if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/research_request.php"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
 		<?php } ?>
