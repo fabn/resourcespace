@@ -1436,16 +1436,16 @@ $lang["error-cannoteditemptycollection"]="Sie können eine leere Kollektion nich
 $lang["error-permissiondenied"]="Zugriff verweigert.";
 $lang["error-collectionnotfound"]="Kollektion nicht gefunden.";
 
-#$lang["header-upload-subtitle"] = "Step %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
-#$lang["local_upload_path"] = "Local Upload Folder";
-#$lang["ftp_upload_path"] = "FTP Folder";
-#$lang["foldercontent"] = "Folder Content";
-#$lang["intro-local_upload"] = "Select one or more files from the local upload folder and click <b>Upload</b>. Once the files are uploaded they can be deleted from the upload folder.";
-#$lang["intro-ftp_upload"] = "Select one or more files from the FTP folder and click <b>Upload</b>.";
-#$lang["intro-java_upload"] = "Click <b>Browse</b> to locate one or more files and then click <b>Upload</b>.";
-#$lang["intro-swf_upload"] = "Click <b>Upload</b> to locate and upload one or more files. Hold down the Shift key to select multiple files.";
-#$lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
-#$lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";
+$lang["header-upload-subtitle"] = "Schritt %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
+$lang["local_upload_path"] = "Lokaler Upload Ordner";
+$lang["ftp_upload_path"] = "FTP Ordner";
+$lang["foldercontent"] = "Ordnerinhalt";
+$lang["intro-local_upload"] = "Wählen Sie eine oder mehrere Dateien vom lokalen Upload Ordner aus und klicken Sie auf <b>Upload</b>. Nachdem die Dateien hochgeladen sind, können Sie aus dem Upload Ordner gelöscht werden."
+$lang["intro-ftp_upload"] = "Wählen Sie eine oder mehrere Dateien vom FTP Ordner aus und klicken Sie <b>Upload</b> an.";
+$lang["intro-java_upload"] = "Klicken Sie auf <b>Durchsuchen</b>, um eine oder mehrere Dateien auszuwählen, und klicken Sie dann <b>Upload</b> an.";
+$lang["intro-swf_upload"] = "Klicken Sie auf <b>Upload</b>, um eine oder mehrere Dateien auszuwählen. Halten Sie die Shift-Taste gedrückt, um mehrere Dateien auszuwählen.";
+$lang["intro-single_upload"] = "Klicken Sie auf <b>Durchsuchen</b>, um eine Datei auszuwählen, und klicken Sie dann <b>Upload</b> an.";
+$lang["intro-batch_edit"] = "Bitte wählen Sie die Standard-Uploadeinstellungen und die Standardwerte für die Metadaten der Ressourcen, die Sie hochladen wollen.";
 
 $lang["collections-1"] = "(<strong>1</strong> Kollektion)";
 $lang["collections-2"] = "(<strong>%number</strong> Kollektionen)"; # %number will be replaced, e.g. 3 Collections
