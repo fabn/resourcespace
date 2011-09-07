@@ -432,16 +432,16 @@ if ($search_titles)
 		{ 
 		$search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'></a>'.$searchcrumbs.'</h1> '; 
 		}   
-    }
+    
 
-// extra collection title links
-if (substr($search,0,11)=="!collection"){
-	if ($k=="" && !checkperm("b")){$search_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>&nbsp;&nbsp;';}
-	if (count($result)!=0 && $k==""&&$preview_all){$search_title_links.='<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
-	$search_title.='</div>';
-	if ($display!="list"){$search_title_links.= '<br /><br />';}
-}
-        
+	// extra collection title links
+	if (substr($search,0,11)=="!collection"){
+		if ($k=="" && !checkperm("b")){$search_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>&nbsp;&nbsp;';}
+		if (count($result)!=0 && $k==""&&$preview_all){$search_title_links.='<a href="preview_all.php?ref='.$collectiondata["ref"].'&order_by='.$order_by.'&sort='.$sort.'&archive='.$archive.'&k='.$k.'">&gt;&nbsp;'.$lang['preview_all'].'</a>';}
+		$search_title.='</div>';
+		if ($display!="list"){$search_title_links.= '<br /><br />';}
+	}
+}  
 
 # Do the public collection search if configured.
 
