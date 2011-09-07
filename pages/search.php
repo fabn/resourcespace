@@ -328,7 +328,7 @@ if ($refinements[0]!=""){
 if ($search_titles)
     {
 		
-	$parameters_string='&order_by=' . $order_by . '&sort='.$sort.'&offset=' . $offset . '&archive=' . $archive.'&sort='.$sort;
+	$parameters_string='&order_by=' . $order_by . '&sort='.$sort.'&offset=' . $offset . '&archive=' . $archive.'&sort='.$sort . '&k=' . $k;
 	
 	 if (substr($search,0,11)=="!collection"){
         if (!isset($collectiondata['savedsearch'])||(isset($collectiondata['savedsearch'])&&$collectiondata['savedsearch']==null)){ $collection_tag='';} else {$collection_tag=$lang['smartcollection'].": ";}
