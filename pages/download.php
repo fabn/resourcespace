@@ -71,6 +71,8 @@ if ($noattach=="")
 	daily_stat("Resource download",$ref);
 	resource_log($ref,'d',0,$usagecomment,"","",$usage);
 	
+        hook('moredlactions');
+
 	# update hit count if tracking downloads only
 	if ($resource_hit_count_on_downloads) { 
 		# greatest() is used so the value is taken from the hit_count column in the event that new_hit_count is zero to support installations that did not previously have a new_hit_count column (i.e. upgrade compatability).

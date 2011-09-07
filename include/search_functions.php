@@ -438,7 +438,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	#echo("keywordjoin=" . $sql_join);
 	#echo("<br>Filter=" . $sql_filter);
 	#echo("<br>Search=" . $search);
-
+        hook("additionalsqlfilter");
 	
 	# ------ Search filtering: If search_filter is specified on the user group, then we must always apply this filter.
 	global $usersearchfilter;

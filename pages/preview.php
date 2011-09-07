@@ -102,6 +102,7 @@ $resource=get_resource_data($ref);
 include "../include/header.php";
 ?>
 
+<? if(!hook("fullpreviewresultnav")): ?>
 <p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
 <?php if ($k=="") { ?>
 
@@ -141,6 +142,8 @@ if (($nextpage!=-1 || $previouspage!=-1) && $nextpage!=-0){
 
 
 </p>
+<? endif; ?>
+
 <?php if (!hook("previewimage")) { ?>
 <?php if (!hook("previewimage2")) { ?>
 <table cellpadding="0" cellspacing="0">

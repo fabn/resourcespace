@@ -343,6 +343,8 @@ if (overquota())
             <param name="afterUploadURL" value="collections.php">
             <?php } ?>
 
+            <?php hook("addjuploadparams"); ?>
+
             Java 1.5 or higher plugin required. 
         </applet>
 <!-- --------------------------------------------------------------------------------------------------------
