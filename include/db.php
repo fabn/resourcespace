@@ -644,7 +644,7 @@ function pagename()
 	{
 	$urlparts=explode("/",$_SERVER["PHP_SELF"]);
     $url=$urlparts[count($urlparts)-1];
-    return $url;
+    return escape_check($url);
     }
     
 function text($name)
