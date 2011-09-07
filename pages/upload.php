@@ -134,7 +134,7 @@ function check(filename) {
 }
 </script>
 
-<form method="post" class="form" enctype="multipart/form-data" onsubmit="showprogress();">
+<form method="post" class="form" enctype="multipart/form-data" <?php if ($show_progress){?>onsubmit="showprogress();"<?php } ?>>
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>

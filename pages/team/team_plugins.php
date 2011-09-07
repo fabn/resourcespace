@@ -185,6 +185,9 @@ ksort ($plugins_avail);
 ?><?php include "../../include/header.php"; ?>
 <script src="../../lib/js/jquery-1.6.1.min.js" type="text/javascript"> </script>
 <script type="text/javascript">
+jQuery.noConflict();
+(function($) { 
+  $(function() {
         function actionPost(action, value){
                 $('input#anc-input').attr({
                     name: action,
@@ -210,6 +213,9 @@ ksort ($plugins_avail);
     		    return false;
     		});
     	});
+  });
+})(jQuery);
+
     </script>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
