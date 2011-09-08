@@ -179,12 +179,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					elseif ($kw[0]=="month")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
-						$sql_filter.="r.field$date_field like '____-" . $kw[1] . "-%' ";
+						$sql_filter.="r.field$date_field like '____-" . $kw[1] . "%' ";
 						}
 					elseif ($kw[0]=="year")
 						{
 						if ($sql_filter!="") {$sql_filter.=" and ";}
-						$sql_filter.="r.field$date_field like '" . $kw[1] . "-%' ";
+						$sql_filter.="r.field$date_field like '" . $kw[1] . "%' ";
 						}
 					else
 						{

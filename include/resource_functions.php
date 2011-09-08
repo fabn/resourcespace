@@ -86,21 +86,31 @@ function save_resource_data($ref,$multi)
 				}
 			elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
 				{
-				# date type, construct the value from the date dropdowns
-				$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
-				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-m","");
-				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
-				
-				# Add time?
-				if (getval("field_" . $fields[$n]["ref"] . "-h","")!="")
+				# date type, construct the value from the date/time dropdowns
+				$val=sprintf("%04d", getvalescaped("field_" . $fields[$n]["ref"] . "-y",""));
+				if ((int)$val<=0) 
 					{
-					$val.=" " . getvalescaped("field_" . $fields[$n]["ref"] . "-h","");
-					$val.=":" . getvalescaped("field_" . $fields[$n]["ref"] . "-i","");
+					$val="";
 					}
-				else
+				elseif (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-m",""))!="") 
 					{
-					# Blank date/time for invalid values.
-					if (strlen($val)!=10) {$val="";}
+					$val.="-" . $field;
+					if (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-d",""))!="") 
+						{
+						$val.="-" . $field;
+						if (($field=getval("field_" . $fields[$n]["ref"] . "-h",""))!="")
+							{
+							$val.=" " . $field . ":";
+							if (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-i",""))!="") 
+								{
+									$val.=$field;
+								} 
+							else 
+								{
+									$val.="00";
+								}
+							}
+						}
 					}
 				}
 			elseif ($multilingual_text_fields && ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5))

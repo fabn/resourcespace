@@ -742,7 +742,7 @@ for ($n=0;$n<count($fields);$n++)
 	$value=$fields[$n]["value"];
 	
 	# Handle expiry fields
-	if ($fields[$n]["type"]==6 && $value!="" && $value<=date("Y-m-d") && $show_expiry_warning) 
+	if ($fields[$n]["type"]==6 && $value!="" && $value<=date("Y-m-d H:i") && $show_expiry_warning) 
 		{
 		$extra.="<div class=\"RecordStory\"> <h1>" . $lang["warningexpired"] . "</h1><p>" . $lang["warningexpiredtext"] . "</p><p id=\"WarningOK\"><a href=\"#\" onClick=\"document.getElementById('RecordDownload').style.display='block';document.getElementById('WarningOK').style.display='none';\">" . $lang["warningexpiredok"] . "</a></p></div><style>#RecordDownload {display:none;}</style>";
 		}

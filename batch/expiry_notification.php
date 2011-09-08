@@ -8,8 +8,8 @@ include(dirname(__FILE__) . "/../include/resource_functions.php");
 if (!isset($expiry_notification_mail)) {exit("Please set expiry_notification_mail in config.php to enable this feature.");}
 
 # Fetch expired resources
-$expired=sql_query("select r.ref,r.title from resource r join resource_data rd on r.ref=rd.resource join resource_type_field rtf on rd.resource_type_field=rtf.ref and rtf.type=6 where 
-r.expiry_notification_sent<>1 and rd.value<=now()");
+$expired=sql_query('select r.ref,r.field8 as title from resource r join resource_data rd on r.ref=rd.resource join resource_type_field rtf on rd.resource_type_field=rtf.ref and rtf.type=6 where 
+r.expiry_notification_sent<>1 and rd.value<>"" and rd.value<=now()');
 
 if (count($expired)>0)
 	{

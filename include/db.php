@@ -605,15 +605,15 @@ function nicedate($date,$time=false,$wordy=true)
 	{
 	# format a MySQL ISO date
 	# Always use the 'wordy' style from now on as this works better internationally.
-	
-	if ((strlen($date)==0) || (substr($date,0,4)=="0000")) {return "-";}
-	$t="";
-	if ($time)
-		{
-		$t= " @ "  . substr($date,11,5);
-		}
-	
-	global $lang;return substr($date,8,2) . " " . @$lang["months"][substr($date,5,2)-1] . " " . substr($date,2,2) . $t;
+	global $lang;
+	$y = substr($date,0,4);
+	if (($y=="") || ($y=="0000")) return "-";
+	$m = @$lang["months"][substr($date,5,2)-1];
+	if ($m=="") return $y;
+	$d = substr($date,8, 2);
+	if ($d=="" || $d=="00") return $m . " " . $y;
+	$t = $time ? (" @ "  . substr($date,11,5)) : "";
+	return $d . " " . $m . " " . substr($y, 2, 2) . $t;
 	}	
 
 function redirect($url)
