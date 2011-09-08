@@ -173,7 +173,7 @@ if ($k!="") {$edit_access=0;}
 <?php if (!hook("renderinnerresourceheader")) { ?>
 
 
-<?php if ($usearch!="") { ?>
+<?php if ($usearch!="" || $archive==-1 || $archive==-2) { ?>
 <div class="backtoresults">
 <a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k ?>&go=previous&<?php echo hook("nextpreviousextraurl") ?>">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
 <?php 
