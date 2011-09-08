@@ -121,11 +121,6 @@ function UpdateResultCount()
 	}
 </script>
 
-<div class="QuestionSubmit">
-<label for="buttons"> </label>
-<input name="resetform" id="resetform2" type="submit" value="&nbsp;&nbsp;<?php echo $lang["clearbutton"]?>&nbsp;&nbsp;" />&nbsp;
-
-</div>
 
 <!-- Search across all fields -->
 <div class="Question">
