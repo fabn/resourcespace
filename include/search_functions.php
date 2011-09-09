@@ -1225,6 +1225,14 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 
 if (!function_exists("refine_searchstring")){
 function refine_searchstring($search){
+	#
+	# DISABLED TEMPORARILY
+	#
+	# This causes an issue when using advanced search with check boxes.
+	# A keyword containing spaces will break the search when used with another keyword. 
+	#
+	return $search;
+
 	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
 	$search=str_replace ("\xe2\x80\x8b","",$search);
