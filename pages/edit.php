@@ -279,7 +279,7 @@ echo text("multiple"); ?></p>
 </div>
 
 <?php if (!$is_template && !checkperm("F*")) { ?>
-<div class="Question">
+<div class="Question" id="question_file">
 <label><?php echo $lang["file"]?></label>
 <div class="Fixed">
 <?php
@@ -318,7 +318,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace("?",strt
 <?php } ?>
 
 <?php if (!checkperm("F*")) { ?>
-<div class="Question">
+<div class="Question" id="question_imagecorrection">
 <label><?php echo $lang["imagecorrection"]?><br/><?php echo $lang["previewthumbonly"]?></label><select class="stdwidth" name="tweak" id="tweak" onChange="document.getElementById('mainform').submit();">
 <option value=""><?php echo $lang["select"]?></option>
 <?php if ($resource["has_image"]==1) { ?>
@@ -393,7 +393,7 @@ $titleh2 = str_replace(array("%number","%subtitle"), array("1", $lang["specifyde
 ?>
 
 <?php if ($metadata_read){?>
-<div class="Question">
+<div class="Question" id="question_noexif">
 <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox id="no_exif" name="no_exif" value="yes" <?php if (getval("no_exif","")!="") { ?>checked<?php } ?>>
 <div class="clearerleft"> </div>
 </div>
@@ -402,7 +402,7 @@ $titleh2 = str_replace(array("%number","%subtitle"), array("1", $lang["specifyde
 <?php } ?>
 
 <?php if($camera_autorotation){ ?>
-<div class="Question">
+<div class="Question" id="question_autorotate">
 <label for="autorotate"><?php echo $lang["autorotate"]?></label><input type=checkbox id="autorotate" name="autorotate" value="yes" <?php
 if ($camera_autorotation_checked) {echo ' checked';}?>>
 <div class="clearerleft"> </div>
@@ -413,7 +413,7 @@ if ($camera_autorotation_checked) {echo ' checked';}?>>
 <?php } ?>
 
 <?php if (!$multiple){?>
-<div class="Question">
+<div class="Question" id="question_resourcetype">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" onChange="document.getElementById('mainform').submit();">
 <?php
@@ -452,7 +452,7 @@ if ($ref<=0 && getval("single","")=="") {
 if ($enable_add_collection_on_upload) 
 	{
 	?>
-	<div class="Question">
+	<div class="Question" id="question_collectionadd">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
 	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if($(this).value==-1){$('collectioninfo').style.display='block';} else {$('collectioninfo').style.display='none';}">
 	<?php if ($upload_add_to_new_collection_opt) { ?><option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option><?php } ?>
@@ -535,7 +535,7 @@ $lastrt=-1;
 if ($enable_copy_data_from && !$multiple && !checkperm("F*"))
 	{ 
 	?>
-	<div class="Question">
+	<div class="Question" id="question_copyfrom">
 	<label for="copyfrom"><?php echo $lang["batchcopyfrom"]?></label>
 	<input class="stdwidth" type="text" name="copyfrom" id="copyfrom" value="" style="width:80px;">
 	<input type="submit" name="copyfromsubmit" value="<?php echo $lang["copy"]?>">
@@ -547,7 +547,7 @@ if (isset($metadata_template_resource_type) && !$multiple && !checkperm("F*"))
 	{
 	# Show metadata templates here
 	?>
-	<div class="Question">
+	<div class="Question" id="question_metadatatemplate">
 	<label for="metadatatemplate"><?php echo $lang["usemetadatatemplate"]?></label>
 	<select name="metadatatemplate" class="stdwidth" style="width:310px;">
 	<option value=""><?php echo (getval("metadatatemplate","")=="")?$lang["select"]:$lang["undometadatatemplate"] ?></option>
