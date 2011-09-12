@@ -149,6 +149,12 @@ function check(filename) {
 <div class="clearerleft"> </div>
 </div>
 
+<div class="Question">
+<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
+<div class="clearerleft"> </div>
+</div>
+
+
 <?php if ($show_progress){?>
 <div class="Question" id="meter" style="display:none;">
 <label><?php echo $lang["progress"] ?></label>
