@@ -249,7 +249,7 @@ function HideHelp(field)
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>
-<h1><?php echo $lang["editmultipleresources"]?></h1>
+<h1 id="editmultipleresources"><?php echo $lang["editmultipleresources"]?></h1>
 <p><?php $qty = count($items);
 echo ($qty==1 ? $lang["resources_selected-1"] : str_replace("%number", $qty, $lang["resources_selected-2"])) . ". ";
 # The script doesn't allow editing of empty collections, no need to handle that case here.
@@ -258,7 +258,7 @@ echo text("multiple"); ?></p>
 <?php } elseif ($ref>0) { ?>
 <p><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p>
 
-<h1><?php echo $lang["editresource"]?></h1>
+<h1 id="editresource"><?php echo $lang["editresource"]?></h1>
 <?php if (!$multiple) { 
 # Resource next / back browsing.
 ?>
@@ -632,7 +632,7 @@ for ($n=0;$n<count($fields);$n++)
 	
 	if (($fields[$n]["resource_type"]!=$lastrt)&& ($lastrt!=-1))
 		{
-		?><br><h1><?php echo get_resource_type_name($fields[$n]["resource_type"])?> <?php echo $lang["properties"]?></h1><?php
+		?><br><h1 id="resource_type_properties"><?php echo get_resource_type_name($fields[$n]["resource_type"])?> <?php echo $lang["properties"]?></h1><?php
 		}
 	$lastrt=$fields[$n]["resource_type"];
 	
@@ -838,7 +838,7 @@ if ($multiple && !$disable_geocoding)
 	{
 	# Multiple method of changing location.
 	 ?>
-	<br /><h1><?php echo $lang["location-title"] ?></h1>
+	<br /><h1 id="location_title"><?php echo $lang["location-title"] ?></h1>
 	<div><input name="editlocation" id="editlocation" type="checkbox" value="yes" onClick="var q=document.getElementById('editlocation_question');if (this.checked) {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editlocation"><?php echo $lang["location"] ?></label></div>
 	<div class="Question" style="display:none;" id="editlocation_question">
 	<label for="location"><?php echo $lang["latlong"]?></label>
