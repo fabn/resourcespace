@@ -2154,7 +2154,13 @@ function get_related_keywords($keyref)
 	# For a given keyword reference returns the related keywords
 	# Also reverses the process, returning keywords for matching related words
 	# and for matching related words, also returns other words related to the same keyword.
-	return sql_array(" select keyword value from keyword_related where related='$keyref' union select related value from keyword_related where (keyword='$keyref' or keyword in (select keyword value from keyword_related where related='$keyref')) and related<>'$keyref'");
+	global $keyword_relationships_one_way;
+	if ($keyword_relationships_one_way){
+		return sql_array(" select keyword value from keyword_related where related='$keyref'");
+		}
+	else {
+		return sql_array(" select keyword value from keyword_related where related='$keyref' union select related value from keyword_related where (keyword='$keyref' or keyword in (select keyword value from keyword_related where related='$keyref')) and related<>'$keyref'");
+		}
 	}
 	
 	
