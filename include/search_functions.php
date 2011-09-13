@@ -1231,7 +1231,8 @@ function refine_searchstring($search){
 	# This causes an issue when using advanced search with check boxes.
 	# A keyword containing spaces will break the search when used with another keyword. 
 	#
-	return $search;
+	global $use_refine_searchstring;
+	if (!$use_refine_searchstring){return $search;}
 
 	global $noadd;
 	// splits field-specific searches appropriately, and removes duplicate keywords
