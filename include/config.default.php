@@ -1442,6 +1442,9 @@ $upload_methods = array(
 # web visible path. Relative and abolute paths are allowed.
 $local_ftp_upload_folder = 'upload/';
 
+# Hide links to other uploader
+$hide_uploadertryother = false;
+
 # Set path to Unoconv (a python-based bridge to OpenOffice) to allow document conversion to PDF.
 ## $unoconv_path="/usr/bin";
 # Files with these extensions will be passed to unoconv (if enabled above) for conversion to PDF and auto thumb-preview generation.

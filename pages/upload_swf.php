@@ -295,21 +295,7 @@ else
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
-
-<?php
-# --------- Quota check -------------
-if (overquota())
-	{
-	?>
-	<p><strong><?php echo $lang["manageresources-overquota"] ?></strong></p>
-	</div>
-	<?php
-	include "../include/footer.php";
-	exit();
-	}
-?>
 <p><?php echo $lang["intro-swf_upload"] ?></p>
-
 
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);
@@ -337,7 +323,9 @@ if (overquota())
 		<div id="thumbnails"></div>
 	</div>
 
+<?php if (!$hide_uploadertryother) { ?>
 <p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+<?php } ?>
 
 <p><a target="_blank" href="http://get.adobe.com/flashplayer/">&gt; <?php echo $lang["getflash"] ?></a></p>
 

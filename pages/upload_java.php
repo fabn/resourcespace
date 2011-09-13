@@ -156,7 +156,6 @@ if (array_key_exists("File0",$_FILES))
 		if ($alternative_file_previews_batch)
 			{
 			create_previews($alternative,false,$extension,false,false,$aref);
-			update_disk_usage($ref);
 			}
 		
 		echo "SUCCESS";
@@ -288,19 +287,6 @@ else
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
-<?php
-# --------- Quota check -------------
-if (overquota())
-	{
-	?>
-	<p><strong><?php echo $lang["manageresources-overquota"] ?></strong></p>
-	</div>
-	<?php
-	include "../include/footer.php";
-	exit();
-	}
-?>
-
 <p><?php echo $lang["intro-java_upload"] ?></p>
 
 <?php if ($allowed_extensions!=""){
@@ -324,7 +310,7 @@ if (overquota())
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&replace_resource=<?php echo $replace_resource ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
@@ -362,7 +348,7 @@ if (overquota())
 	}
 ?>
 
-<?php if ($alternative=="") { ?>
+<?php if ($alternative=="" && !$hide_uploadertryother) { ?>
 <p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
 &no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
 <?php } ?>
