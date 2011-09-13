@@ -123,7 +123,7 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 
 
 # Include function for reordering / infobox
-if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection)
+if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
 	{
 	?>
 	<script src="../lib/js/prototype.js" type="text/javascript"></script>
