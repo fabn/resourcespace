@@ -1478,3 +1478,15 @@ $lang["createnewentryfor"]="Neuen Eintrag erstellen für";
 $lang["confirmcreatenewentryfor"]="Sind Sie sicher, dass Sie einen neuen Eintrag für '%%' in der Stichwortliste erstellen wollen?";
 
 $lang["editresourcepreviews"]="Ressourcenvorschau bearbeiten";
+
+$lang["can_assign_resource_requests"]="Kann Ressourcenanfragen zuweisen";
+$lang["can_be_assigned_resource_requests"]="Kann Ressourcenanfragen zugewiesen bekommen (und nur die zugewiesenen Ressourcenanfragen sehen)";
+
+$lang["declinereason"]="Grund für Ablehnung";
+$lang["requestnotassignedtoyou"]="Diese Anfrage ist Ihnen nicht länger zugewiesen. Sie ist nun Benutzer % zugewiesen.";
+$lang["requestassignedtoyou"]="Ressourcenanfrage zugewiesen";
+$lang["requestassignedtoyoumail"]="Eine Ressourcenanfrage wurde Ihnen zur Freigabe zugewiesen. Bitte nutzen Sie den untenstehenden Link, um die Ressourcenanfrage zu erlauben oder abzulehnen.";
+
+$lang["manageresources-overquota"]="Ressourcenverwaltung deaktiviert – Sie haben Ihr Datenvolumen überschritten";
+$lang["searchitemsdiskusage"]="Verbrauchten Speicherplatz dieser Ergebnisse berechnen";
+$lang["matchingresourceslabel"]="Passende Ressourcen";

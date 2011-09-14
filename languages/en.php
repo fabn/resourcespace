@@ -1477,7 +1477,7 @@ $lang["can_be_assigned_resource_requests"]="Can be assigned resource requests (a
 $lang["declinereason"]="Reason for declining";
 $lang["requestnotassignedtoyou"]="Sorry, this request is no longer assigned to you. It is now assigned to user %.";
 $lang["requestassignedtoyou"]="Resource request assigned to you";
-$lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please user the link below to approve or deny the resource request.";
+$lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please use the link below to approve or deny the resource request.";
 
 $lang["manageresources-overquota"]="Resource management disabled - you have exceeded your disk usage quota";
 $lang["searchitemsdiskusage"]="Calculate disk space used by results";
