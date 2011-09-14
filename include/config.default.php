@@ -1764,3 +1764,5 @@ $use_refine_searchstring=false;
 # $keyword_relationships_one_way=true means that if "tiger" has a related keyword "cat",
 # then a search for "tiger" includes "tiger", but does not include "cat" matches.
 $keyword_relationships_one_way=false;
+
+$show_searchitemsdiskusage=true;
