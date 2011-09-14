@@ -246,3 +246,4 @@ g.name 'Group name'
 from user u join usergroup g on u.usergroup=g.ref
 
 order by username;"
+13,"Expired Resources","select distinct resource.ref 'Resource ID',resource.field8 'Resource Title',resource_data.value 'Expires' from resource join resource_data on resource.ref=resource_data.resource join resource_type_field on resource_data.resource_type_field=resource_type_field.ref where resource_type_field.type=6 and value>=date('[from-y]-[from-m]-[from-d]') and value<=adddate(date('[to-y]-[to-m]-[to-d]'),1) and length(value)>0 and resource.ref>0 order by resource.ref;"
