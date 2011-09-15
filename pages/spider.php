@@ -101,6 +101,18 @@ if ($ref!="")
 			<?php
 			}
 		}
+
+	# Add resourcetype
+	$resourcetypes=get_resource_types();
+	foreach ($resourcetypes as $rt)
+		{
+		if ($rt["ref"]==$resource["resource_type"])
+			{
+			?>
+			<meta name="resourcetype" content="<?php echo $rt["name"] ?>">
+			<?php
+			}
+		}
 	?>
 	<title><?php echo trim($resource["field".$view_title_field])?></title></head>
 	<body><h1><?php echo trim($resource["field".$view_title_field])?></h1>
