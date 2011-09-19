@@ -1756,6 +1756,9 @@ $public_collections_header_only=false; // show public collections page in header
 
 $ckeditor_toolbars="'Styles', 'Bold', 'Italic', 'Underline', 'RemoveFormat', 'PasteFromWord', 'TextColor','BGColor'";
 
+# Automatically save the edit form after making changes?
+$edit_autosave=false;
+
 # use_refine_searchstring can improve search string parsing. disabled by Dan due to an issue I was unable to replicate. (tom)  
 $use_refine_searchstring=false;
 

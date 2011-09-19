@@ -15,7 +15,9 @@ if ($auto_order_checkbox) {asort($option_trans);}
 
 if (substr($value,0,1) == ',') { $value = substr($value,1); }	// strip the leading comma if it exists	
 
-?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>>
+?><select class="stdwidth" name="<?php echo $name?>" id="<?php echo $name?>" <?php echo $help_js; ?>
+<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"] ?>');"<?php } ?>
+>
 <option value=""></option>
 <?php
 foreach ($option_trans as $option=>$trans)

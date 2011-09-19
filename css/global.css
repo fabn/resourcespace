@@ -197,6 +197,8 @@ option {font-size:11px;}
 .FormError{font-weight: bold;font-size: 1.1em;margin: 0px 0px 10px 150px;padding: 10px 0px 0px;}
 .FormIncorrect {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
 .PageInformal {font-weight: bold;font-size: 1.1em;margin: 0px 0px 25px;text-align: center;padding: 3px 3px 6px;}
+.xAutoSaveStatus {font-weight: bold;margin: 0px 0px 10px 150px;padding-top: 4px;}
+.AutoSaveStatus {font-weight: bold;float:right;padding:6px 0 0;}
 
 /*Record Panel layout*/
 .RecordBox {margin: 0px 15px 15px 0px;}

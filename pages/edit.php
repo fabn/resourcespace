@@ -23,6 +23,9 @@ $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
+# Disable auto save for upload forms - it's not appropriate.
+if ($ref<0) { $edit_autosave=false; }
+
 # next / previous resource browsing
 $go=getval("go","");
 if ($go!="")
@@ -58,6 +61,7 @@ if ($collection!="")
 	{
 	# If editing multiple items, use the first resource as the template
 	$multiple=true;
+	$edit_autosave=false; # Do not allow auto saving for batch editing.
 	$items=get_collection_resources($collection);
 	if (count($items)==0) {
 		$error=$lang['error-cannoteditemptycollection'];
@@ -100,9 +104,13 @@ if (getval("regen","")!="")
 	
 # Establish if this is a metadata template resource, so we can switch off certain unnecessary features
 $is_template=(isset($metadata_template_resource_type) && $resource["resource_type"]==$metadata_template_resource_type);
-	
 
-if (getval("tweak","")=="" && getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")=="")
+
+	
+# -----------------------------------
+# 			PERFORM SAVE
+# -----------------------------------
+if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted","")!="" && getval("resetform","")=="" && getval("copyfromsubmit","")==""))
 	{
 	hook("editbeforesave");			
 
@@ -240,12 +248,31 @@ function HideHelp(field)
 		document.getElementById('help_' + field).style.display='none';
 		}
 	}
+	
+<?php
+# Function to automatically save the form on field changes, if configured.
+ if ($edit_autosave) { ?>
+function AutoSave(field)
+	{
+	$('AutoSaveStatus' + field).innerHTML='Saving...';
+	$('AutoSaveStatus' + field).show();
+
+	$('mainform').request({
+	  onSuccess: function()
+	  	{
+		$('AutoSaveStatus' + field).innerHTML='Saved';
+		Effect.Fade('AutoSaveStatus' + field);
+	  	},
+	  parameters: 'autosave=true'
+	});
+	}
+<?php } ?>
 </script>
 
 
 <div class="BasicsBox"> 
 
-<form method="post" id="mainform">
+<form method="post" action="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" id="mainform">
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>
@@ -680,8 +707,15 @@ for ($n=0;$n<count($fields);$n++)
 
 	<div class="Question" id="question_<?php echo $n?>" <?php if ($multiple) {?>style="display:none;border-top:none;"<?php } ?>>
 	<label for="<?php echo $name?>"><?php if (!$multiple) {?><?php echo htmlspecialchars($fields[$n]["title"])?> <?php if (!$is_template && $fields[$n]["required"]==1) { ?><sup>*</sup><?php } ?><?php } ?></label>
-	<?php
 
+	<?php
+	# Autosave display
+	if ($edit_autosave) { ?>
+	<div class="AutoSaveStatus" id="AutoSaveStatus<?php echo $fields[$n]["ref"] ?>" style="display:none;"></div>
+	<?php } ?>
+
+
+	<?php
 	# Define some Javascript for help actions (applies to all fields)
 	$help_js="onBlur=\"HideHelp(" . $fields[$n]["ref"] . ");return false;\" onFocus=\"ShowHelp(" . $fields[$n]["ref"] . ");return false;\"";
 	
@@ -697,7 +731,6 @@ for ($n=0;$n<count($fields);$n++)
 	$field=$fields[$n];
 	include "edit_fields/" . $type . ".php";
 	# ----------------------------------------------------------------------------
-
 
 	# Display any error messages from previous save
 	if (array_key_exists($fields[$n]["ref"],$errors))
@@ -765,7 +798,13 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php if ($multiple) { ?><div id="editmultiple_status"><input name="editthis_status" id="editthis_status" value="yes" type="checkbox" onClick="var q=document.getElementById('question_status');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label id="editthis_status_label" for="editthis<?php echo $n?>"><?php echo $lang["status"]?></label></div><?php } ?>
 	<div class="Question" id="question_status" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="archive"><?php echo $lang["status"]?></label>
-	<select class="stdwidth" name="archive" id="archive">
+	<?php
+	# Autosave display
+	if ($edit_autosave) { ?>
+	<div class="AutoSaveStatus" id="AutoSaveStatusStatus" style="display:none;"></div>
+	<?php } ?>
+	
+	<select class="stdwidth" name="archive" id="archive" <?php if ($edit_autosave) {?>onChange="AutoSave('Status');"<?php } ?>>
 	<?php for ($n=-2;$n<=3;$n++) { ?>
 	<?php if (checkperm("e" . $n)) { ?><option value="<?php echo $n?>" <?php if ($resource["archive"]==$n  || $archive==$n) { ?>selected<?php } ?>><?php echo $lang["status" . $n]?></option><?php } ?>
 	<?php } ?>
@@ -788,7 +827,13 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php if ($multiple) { ?><div><input name="editthis_access" id="editthis_access" value="yes" type="checkbox" onClick="var q=document.getElementById('question_access');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["access"]?></label></div><?php } ?>
 	<div class="Question" id="question_access" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="archive"><?php echo $lang["access"]?></label>
-	<select class="stdwidth" name="access" id="access" onChange="var c=document.getElementById('custom_access');if (this.value==3) {c.style.display='block';} else {c.style.display='none';}">
+	<?php
+	# Autosave display
+	if ($edit_autosave) { ?>
+	<div class="AutoSaveStatus" id="AutoSaveStatusAccess" style="display:none;"></div>
+	<?php } ?>
+
+	<select class="stdwidth" name="access" id="access" onChange="var c=document.getElementById('custom_access');if (this.value==3) {c.style.display='block';} else {c.style.display='none';}<?php if ($edit_autosave) {?>AutoSave('Access');<?php } ?>">
 	
 	<?php for ($n=0;$n<=($custom_access?3:2);$n++) { ?>
 	<?php if ($n==2 && checkperm("v")){?><option value="<?php echo $n?>" <?php if ($resource["access"]==$n) { ?>selected<?php } ?>><?php echo $lang["access" . $n]?></option><?php } 
@@ -808,11 +853,14 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 		?>
 		<tr>
 		<td valign=middle nowrap><?php echo htmlspecialchars($groups[$n]["name"])?>&nbsp;&nbsp;</td>
-		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked<?php } ?>></td>
+		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="0" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==0) { ?>checked<?php } ?>
+		<?php if ($edit_autosave) {?>onChange="AutoSave('Access');"<?php } ?>></td>
 		<td align=left valign=middle><?php echo $lang["access0"]?></td>
-		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked<?php } ?>></td>
+		<td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="1" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==1) { ?>checked<?php } ?>
+		<?php if ($edit_autosave) {?>onChange="AutoSave('Access');"<?php } ?>></td>
 		<td align=left valign=middle><?php echo $lang["access1"]?></td>
-		<?php if (checkperm("v")){?><td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked<?php } ?>></td>
+		<?php if (checkperm("v")){?><td width=10 valign=middle><input type=radio name="custom_<?php echo $groups[$n]["ref"]?>" value="2" <?php if (!$editable) { ?>disabled<?php } ?> <?php if ($access==2) { ?>checked<?php } ?>
+		<?php if ($edit_autosave) {?>onChange="AutoSave('Access');"<?php } ?>></td>
 		<td align=left valign=middle><?php echo $lang["access2"]?></td><?php } ?>
 		</tr>
 		<?php
@@ -828,7 +876,14 @@ if (!checkperm("F*")) # Only display status/relationships if full write access f
 	<?php if ($multiple) { ?><div><input name="editthis_related" id="editthis_related" value="yes" type="checkbox" onClick="var q=document.getElementById('question_related');if (q.style.display!='block') {q.style.display='block';} else {q.style.display='none';}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo $lang["relatedresources"]?></label></div><?php } ?>
 	<div class="Question" id="question_related" <?php if ($multiple) {?>style="display:none;"<?php } ?>>
 	<label for="related"><?php echo $lang["relatedresources"]?></label>
-	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"><?php echo ((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
+	<?php
+	# Autosave display
+	if ($edit_autosave) { ?>
+	<div class="AutoSaveStatus" id="AutoSaveStatusRelated" style="display:none;"></div>
+	<?php } ?>
+	<textarea class="stdwidth" rows=3 cols=50 name="related" id="related"
+	<?php if ($edit_autosave) {?>onChange="AutoSave('Related');"<?php } ?>
+	><?php echo ((getval("resetform","")!="")?"":join(", ",get_related_resources($ref)))?></textarea>
 	<div class="clearerleft"> </div>
 	</div>
 	<?php } 
@@ -875,13 +930,14 @@ if ($multiple && !$disable_geocoding)
 	} 
 ?>
 	
-	
+	<?php if (!$edit_autosave) { ?>
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
 	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;
 	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" /><br><br>
 	<div class="clearerleft"> </div>
 	</div>
+	<?php } ?>
 	
 </form>
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>

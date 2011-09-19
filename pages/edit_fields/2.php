@@ -46,7 +46,9 @@ if ($checkbox_ordered_vertically)
 				if ($option!="")
 					{
 					?>
-					<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
+					<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> 
+					<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"] ?>');"<?php } ?>
+					/></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
 					<?php
 					}
 				}
@@ -68,7 +70,9 @@ else
 		$name=$fields[$n]["ref"] . "_" . base64_encode($option);
 		$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 		?>
-		<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?> /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
+		<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?>
+		<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"] ?>');"<?php } ?>
+		 /></td><td><?php echo htmlspecialchars($trans)?>&nbsp;</td>
 		<?php
 		}
 	?></tr></table><?php

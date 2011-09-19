@@ -31,23 +31,31 @@ elseif ($value!="")
     if (count($sd)>=3) $dd=intval($sd[2]);
     }    
 ?>
-<select name="<?php echo $name?>-d"><option value=""><?php echo $lang["day"]?></option>
+<select name="<?php echo $name?>-d"
+<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>
+><option value=""><?php echo $lang["day"]?></option>
 <?php for ($m=1;$m<=31;$m++) {?><option <?php if($m==$dd){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>
     
-<select name="<?php echo $name?>-m"><option value=""><?php echo $lang["month"]?></option>
+<select name="<?php echo $name?>-m"
+<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>
+><option value=""><?php echo $lang["month"]?></option>
 <?php for ($m=1;$m<=12;$m++) {?><option <?php if($m==$dm){echo " selected";}?> value="<?php echo sprintf("%02d",$m)?>"><?php echo $lang["months"][$m-1]?></option><?php } ?>
 </select>
    
-<input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>">
+<input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>" <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>>
 
 <!-- Time (optional) -->
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<select name="<?php echo $name?>-h"><option value=""><?php echo $lang["hour-abbreviated"]?></option>
+<select name="<?php echo $name?>-h"
+<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>
+><option value=""><?php echo $lang["hour-abbreviated"]?></option>
 <?php for ($m=0;$m<=23;$m++) {?><option <?php if($m==$dh){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>
 
-<select name="<?php echo $name?>-i"><option value=""><?php echo $lang["minute-abbreviated"]?></option>
+<select name="<?php echo $name?>-i"
+<?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>
+><option value=""><?php echo $lang["minute-abbreviated"]?></option>
 <?php for ($m=0;$m<=59;$m++) {?><option <?php if($m==$di){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>

@@ -37,18 +37,18 @@ function selectKeyword_<?php echo $name ?>()
 		}
 
 	addKeyword_<?php echo $name ?>(keyword);
-	updateSelectedKeywords_<?php echo $name ?>();
+	updateSelectedKeywords_<?php echo $name ?>(true);
 	document.getElementById('<?php echo $name ?>_selector').value='';
 	}
 
 function addKeyword_<?php echo $name ?>(keyword)
 	{
-	removeKeyword_<?php echo $name ?>(keyword); // remove any existing match in the list.
+	removeKeyword_<?php echo $name ?>(keyword,false); // remove any existing match in the list.
 	Keywords_<?php echo $name ?>[KeywordCounter_<?php echo $name ?>]=keyword;
 	KeywordCounter_<?php echo $name ?>++;
 	}
 
-function removeKeyword_<?php echo $name ?>(keyword)
+function removeKeyword_<?php echo $name ?>(keyword,user_action)
 	{
 	var replacement=Keywords_<?php echo $name ?>;
 	counter=0;
@@ -58,16 +58,16 @@ function removeKeyword_<?php echo $name ?>(keyword)
 		}
 	Keywords_<?php echo $name ?> = replacement;
 	KeywordCounter_<?php echo $name ?> =counter;
-	updateSelectedKeywords_<?php echo $name ?>();
+	updateSelectedKeywords_<?php echo $name ?>(user_action);
 	}
 
-function updateSelectedKeywords_<?php echo $name ?>()
+function updateSelectedKeywords_<?php echo $name ?>(user_action)
 	{
 	var html="";
 	var value="";
 	for (var n=0;n<KeywordCounter_<?php echo $name ?>;n++)
 		{
-		html+='<a href="#" onClick="removeKeyword_<?php echo $name ?>(\'' + Keywords_<?php echo $name ?>[n] +'\');return false;">[ x ]</a> &nbsp;' + Keywords_<?php echo $name ?>[n] + '<br/>';
+		html+='<a href="#" onClick="removeKeyword_<?php echo $name ?>(\'' + Keywords_<?php echo $name ?>[n] +'\',true);return false;">[ x ]</a> &nbsp;' + Keywords_<?php echo $name ?>[n] + '<br/>';
 		value+="," + resolveTranslated_<?php echo $name ?>(Keywords_<?php echo $name ?>[n]);
 		}
 	document.getElementById('<?php echo $name?>_selected').innerHTML=html;
@@ -78,6 +78,7 @@ function updateSelectedKeywords_<?php echo $name ?>()
 		{
 		UpdateResultCount();
 		}
+	<?php if ($edit_autosave) {?>if (user_action) {AutoSave('<?php echo $fields[$n]["ref"] ?>');}<?php } ?>
 	}
 	
 function resolveTranslated_<?php echo $name ?>(keyword)
@@ -120,7 +121,7 @@ for ($m=0;$m<count($options);$m++)
 		}
 	}
 ?>
-updateSelectedKeywords_<?php echo $name ?>();
+updateSelectedKeywords_<?php echo $name ?>(false);
 
 
 </script>
