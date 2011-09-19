@@ -80,7 +80,7 @@ if ($ref!="")
 			{
 			$value=trim($resourcedata[$n]["value"]);
 			if (substr($value,0,1)==",") {$value=TidyList($value);}
-			if ($value!="") 
+			if ($value!="" && ($resourcedata[$n]["hide_when_restricted"]!=1 || $access==0)) 
 				{
 				$textblock.="<p rs_fieldid=\"" . $resourcedata[$n]["ref"] . "\" rs_fieldname=\"" . $resourcedata[$n]["name"] . "\">" . htmlspecialchars($value) . "</p>\n";
 				}
