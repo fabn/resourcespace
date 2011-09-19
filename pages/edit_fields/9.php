@@ -1,5 +1,5 @@
 <?php
-global $baseurl,$pagename;
+global $baseurl,$pagename,$edit_autosave,$n,$fields;
 $readonly=($pagename=="search_advanced");
 ?>
 

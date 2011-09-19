@@ -8,6 +8,8 @@ $archive=getvalescaped("archive",0);
 $starsearch=getvalescaped("starsearch","");	
 setcookie("starsearch",$starsearch);
 
+# Disable auto-save function, only applicable to edit form. Some fields pick up on this value when rendering then fail to work.
+$edit_autosave=false;
 
 if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 	{
