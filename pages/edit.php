@@ -254,13 +254,13 @@ function HideHelp(field)
  if ($edit_autosave) { ?>
 function AutoSave(field)
 	{
-	$('AutoSaveStatus' + field).innerHTML='Saving...';
+	$('AutoSaveStatus' + field).innerHTML='<?php echo $lang["saving"] ?>';
 	$('AutoSaveStatus' + field).show();
 
 	$('mainform').request({
 	  onSuccess: function()
 	  	{
-		$('AutoSaveStatus' + field).innerHTML='Saved';
+		$('AutoSaveStatus' + field).innerHTML='<?php echo $lang["saved"] ?>';
 		Effect.Fade('AutoSaveStatus' + field);
 	  	},
 	  parameters: 'autosave=true'
