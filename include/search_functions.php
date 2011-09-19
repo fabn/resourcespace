@@ -698,12 +698,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$resources=explode(" ",$search);
 		$resources=str_replace("!list","",$resources[0]);
 		$resources=explode(",",$resources);// separate out any additional keywords
-		$resources=$resources[0];
+		$resources=escape_check($resources[0]);
 		if (strlen(trim($resources))==0){
 			$resources="where r.ref IS NULL";
 		}
 		else {	
-		$resources="where r.ref=".str_replace(":"," OR r.ref=",$resources);
+		$resources="where (r.ref='".str_replace(":","' OR r.ref='",$resources) . "')";
 		}
 	
 		return sql_query($sql_prefix . "SELECT distinct r.hit_count score, $select FROM resource r $sql_join $resources and $sql_filter order by $order_by" . $sql_suffix,false,$fetchrows);
@@ -1103,6 +1103,12 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 		if ($search!="") {$search.=", ";}
 		$search.=join(", ",explode(" ",getvalescaped("allfields",""))); # prepend 'all fields' option
 		}
+	if (getval("resourceids","")!="")
+		{
+		$listsql="!list" . join(":",trim_array(split_keywords(getvalescaped("resourceids",""))));
+		$search=$listsql . " " . $search;
+		}
+		
 	for ($n=0;$n<count($fields);$n++)
 		{
 		switch ($fields[$n]["type"])

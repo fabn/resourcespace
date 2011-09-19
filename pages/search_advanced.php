@@ -16,7 +16,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 	$restypes="";
 	reset($_POST);foreach ($_POST as $key=>$value)
 		{
-		if (substr($key,0,8)=="resource") {if ($restypes!="") {$restypes.=",";} $restypes.=substr($key,8);}
+		if (substr($key,0,12)=="resourcetype") {if ($restypes!="") {$restypes.=",";} $restypes.=substr($key,12);}
 		}
 	setcookie("restypes",$restypes);
 		
@@ -52,7 +52,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		parent.document.getElementById("dosearch").disabled=true;
 		parent.document.getElementById("dosearch").value="<?php echo $lang["nomatchingresources"]?>";
 		<?php } else { ?>
-		parent.document.getElementById("dosearch").value="<?php echo $lang["view"]?> <?php echo number_format($count)?> <?php echo $lang["matchingresources"]?>";
+		parent.document.getElementById("dosearch").value="<?php echo $lang["view"] . " " . number_format($count) . " " . $lang["matchingresources"] ?>";
 		parent.document.getElementById("dosearch").disabled=false;
 		<?php } ?>
 		</script>
@@ -139,12 +139,20 @@ $wrap=0;
 for ($n=0;$n<count($types);$n++)
 	{
 	$wrap++;if ($wrap>4) {$wrap=1;?></tr><tr><?php }
-	?><td valign=middle><input type=checkbox name="resource<?php echo $types[$n]["ref"]?>" value="yes" <?php if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?php } ?> onChange="UpdateResultCount();"></td><td valign=middle><?php echo $types[$n]["name"]?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><?php	
+	?><td valign=middle><input type=checkbox name="resourcetype<?php echo $types[$n]["ref"]?>" value="yes" <?php if ((((count($rt)==1) && ($rt[0]=="")) || (in_array($types[$n]["ref"],$rt))) && (getval("resetform","")=="")) {?>checked<?php } ?> onChange="UpdateResultCount();"></td><td valign=middle><?php echo $types[$n]["name"]?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><?php	
 	}
 ?>
 </tr></table>
 <div class="clearerleft"> </div>
 </div>
+
+
+<!-- Search for resource ID(s) -->
+<div class="Question">
+<label for="resourceids"><?php echo $lang["resourceids"]?></label><input class="stdwidth" type=text name="resourceids" id="resourceids" value="<?php echo htmlspecialchars(getval("resourceids","")) ?>" onChange="UpdateResultCount();">
+<div class="clearerleft"> </div>
+</div>
+
 
 <div class="Question"><label><?php echo $lang["bydate"]?></label>
 <select name="year" class="SearchWidth" style="width:100px;" onChange="UpdateResultCount();">

@@ -286,17 +286,24 @@ echo text("multiple"); ?></p>
 <p><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p>
 
 <h1 id="editresource"><?php echo $lang["editresource"]?></h1>
-<?php if (!$multiple) { 
+
+<?php
 # Resource next / back browsing.
+function EditNav() # Create a function so this can be repeated at the end of the form also.
+	{
+	global $ref,$search,$offset,$order_by,$sort,$archive,$lang;
+	?>
+	<div class="TopInpageNav">
+	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+	|
+	<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
+	|
+	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=next"><?php echo 		$lang["nextresult"]?>&nbsp;&gt;</a>
+	</div>
+	<?php
+	}
+if (!$multiple) { EditNav(); }
 ?>
-<div class="TopInpageNav">
-<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
-|
-<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
-|
-<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=next"><?php echo $lang["nextresult"]?>&nbsp;&gt;</a>
-</div>
-<?php } ?>
 
 
 <div class="Question" id="resource_ref_div" style="border-top:none;">
@@ -930,15 +937,20 @@ if ($multiple && !$disable_geocoding)
 	} 
 ?>
 	
-	<?php if (!$edit_autosave) { ?>
+
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
 	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;
 	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" /><br><br>
 	<div class="clearerleft"> </div>
 	</div>
-	<?php } ?>
+
 	
+<?php 
+# Duplicate navigation
+EditNav();
+?>
+
 </form>
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
 </div>

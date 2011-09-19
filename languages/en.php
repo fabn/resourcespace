@@ -1486,3 +1486,5 @@ $lang["matchingresourceslabel"]="Matching resources";
 $lang["saving"]="Saving...";
 $lang["saved"]="Saved";
 
+$lang["resourceids"]="Resource ID(s)";
+
