@@ -272,7 +272,7 @@ function AutoSave(field)
 
 <div class="BasicsBox"> 
 
-<form method="post" action="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" id="mainform">
+<form method="post" action="edit.php?ref=<?php echo $ref?>&swf=<?php echo getval("swf","") ?>&java=<?php echo getval("java","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" id="mainform">
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>
