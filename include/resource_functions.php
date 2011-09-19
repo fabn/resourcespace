@@ -1693,6 +1693,11 @@ function get_resource_access($resource)
 		return 1;
 	}
 
+	if (checkperm('T'.$resource_type)){
+		// this resource type is always confidential/hidden for this user group
+		return 2;
+	}
+
 	return $access;	
 	}
 }
