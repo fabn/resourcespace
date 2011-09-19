@@ -605,10 +605,21 @@ $use=$ref;
 # Resource aliasing.
 # 'Copy from' or 'Metadata template' been supplied? Load data from this resource instead.
 $originalref=$use;
-if (getval("copyfrom","")!="") {$use=getvalescaped("copyfrom","");}
-if (getval("metadatatemplate","")!="") {$use=getvalescaped("metadatatemplate","");}
 
+if (getval("copyfrom","")!="")
+	{
+	$use=getvalescaped("copyfrom","");
+	$original_fields=get_resource_field_data($ref,$multiple,true);
+	}
+if (getval("metadatatemplate","")!="")
+	{
+	$use=getvalescaped("metadatatemplate","");
+	}
+
+# Load resource data
 $fields=get_resource_field_data($use,$multiple,true,$originalref);
+
+
 
 # if this is a metadata template, set the metadata template title field at the top
 if (isset($metadata_template_resource_type)&&(isset($metadata_template_title_field)) && $resource["resource_type"]==$metadata_template_resource_type){
@@ -654,6 +665,16 @@ for ($n=0;$n<count($fields);$n++)
 
 	$name="field_" . $fields[$n]["ref"];
 	$value=$fields[$n]["value"];
+	
+	if ($fields[$n]["omit_when_copying"] && $use!=$ref)
+		{
+		# Omit when copying - return this field back to the value it was originally, instead of using the current value which has been fetched from the new resource.
+		reset($original_fields);
+		foreach ($original_fields as $original_field)
+			{
+			if ($original_field["ref"]==$fields[$n]["ref"]) {$value=$original_field["value"];}
+			}
+		}
 	
 	if ($multilingual_text_fields)
 		{
