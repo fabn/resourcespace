@@ -826,7 +826,7 @@ if (true) # Always show search header now.
 			}
 		?>
 		
-		<div class="ResourcePanelIcons">&nbsp;</div>	
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 				
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -991,7 +991,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			}
 		?>
 		
-		<div class="ResourcePanelIcons">&nbsp;</div>	
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 				
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>

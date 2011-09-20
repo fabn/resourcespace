@@ -1296,6 +1296,14 @@ $reporting_periods_default=array(7,30,100,365);
 # For checkbox list searching, perform logical AND instead of OR when ticking multiple boxes.
 $checkbox_and=false;
 
+# Option to show resource ID in the thumbnail, next to the action icons.
+$display_resource_id_in_thumbnail=false;
+
+
+
+
+
+
 
 
 
