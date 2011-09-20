@@ -60,12 +60,12 @@ else
 # Show any warnings
 if (isset($warn_field_request_approval))
 	{
-	$warnings=sql_query("select resource,value from resource_data where resource_type_field='$warn_field_request_approval' and resource in (select resource from collection_resource where collection='" . $request["collection"] . "') order by resource");
+	$warnings=sql_query("select resource,value from resource_data where resource_type_field='$warn_field_request_approval' and length(value)>0 and resource in (select resource from collection_resource where collection='" . $request["collection"] . "') order by resource");
 	foreach ($warnings as $warning)
 		{
 		?>
 		<div class="Question">
-		<div class="FormError"><?php echo str_replace("%",$warning["resource"],$lang["warningrequestapprovalfield"]) ?><br/><?php echo $warning["value"] ?></div>
+		<div class="FormError"><?php echo str_replace("%","<a href='../view.php?ref=" . $warning["resource"] . "'>" . $warning["resource"] . "</a>",$lang["warningrequestapprovalfield"]) ?><br/><?php echo $warning["value"] ?></div>
 		<div class="clearerleft"> </div></div>
 		<?php
 		}
