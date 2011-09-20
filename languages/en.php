@@ -1488,3 +1488,4 @@ $lang["saved"]="Saved";
 
 $lang["resourceids"]="Resource ID(s)";
 
+$lang["warningrequestapprovalfield"]="!!! Warning - resource ID % - please take note of the following before approving !!!";
