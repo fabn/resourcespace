@@ -138,10 +138,11 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?php echo $lang["ticktodelete"]?></label><input name="deleteme" type="checkbox"  value="yes"><div class="clearerleft"> </div></div>
 
+<?php if ($user["approved"]==1) { ?>
 <div class="Question"><label><?php echo $lang["login"]?></label>
 <div class="Fixed"><a href="team_user_edit.php?ref=<?php echo $ref?>&loginas=true">&gt;&nbsp;<?php echo $lang["clicktologinasthisuser"]?></a></div>
 <div class="clearerleft"> </div></div>
-
+<?php } ?>
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			

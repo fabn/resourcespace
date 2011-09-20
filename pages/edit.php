@@ -266,7 +266,24 @@ function AutoSave(field)
 	  parameters: 'autosave=true'
 	});
 	}
-<?php } ?>
+<?php } 
+
+# Resource next / back browsing.
+function EditNav() # Create a function so this can be repeated at the end of the form also.
+	{
+	global $ref,$search,$offset,$order_by,$sort,$archive,$lang;
+	?>
+	<div class="TopInpageNav">
+	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
+	|
+	<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
+	|
+	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=next"><?php echo 		$lang["nextresult"]?>&nbsp;&gt;</a>
+	</div>
+	<?php
+	}
+
+?>
 </script>
 
 
@@ -288,20 +305,7 @@ echo text("multiple"); ?></p>
 <h1 id="editresource"><?php echo $lang["editresource"]?></h1>
 
 <?php
-# Resource next / back browsing.
-function EditNav() # Create a function so this can be repeated at the end of the form also.
-	{
-	global $ref,$search,$offset,$order_by,$sort,$archive,$lang;
-	?>
-	<div class="TopInpageNav">
-	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=previous">&lt;&nbsp;<?php echo $lang["previousresult"]?></a>
-	|
-	<a href="search.php<?php if (strpos($search,"!")!==false) {?>?search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?><?php } ?>"><?php echo $lang["viewallresults"]?></a>
-	|
-	<a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&go=next"><?php echo 		$lang["nextresult"]?>&nbsp;&gt;</a>
-	</div>
-	<?php
-	}
+# Draw nav
 if (!$multiple) { EditNav(); }
 ?>
 
@@ -969,7 +973,7 @@ if ($multiple && !$disable_geocoding)
 	
 <?php 
 # Duplicate navigation
-EditNav();
+if (!$multiple && $ref>0) {EditNav();}
 ?>
 
 </form>
