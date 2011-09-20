@@ -56,6 +56,22 @@ else
 <?php } else {?>href="../collections.php?collection=<?php echo $request["collection"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a></div>
 <div class="clearerleft"> </div></div>
 
+<?php
+# Show any warnings
+if (isset($warn_field_request_approval))
+	{
+	$warnings=sql_query("select resource,value from resource_data where resource_type_field='$warn_field_request_approval' and resource in (select resource from collection_resource where collection='" . $request["collection"] . "') order by resource");
+	foreach ($warnings as $warning)
+		{
+		?>
+		<div class="Question">
+		<div class="FormError"><?php echo str_replace("%",$warning["resource"],$lang["warningrequestapprovalfield"]) ?><br/><?php echo $warning["value"] ?></div>
+		<div class="clearerleft"> </div></div>
+		<?php
+		}
+	}
+?>
+
 <?php if (checkperm("Ra"))
 	{
 	?>

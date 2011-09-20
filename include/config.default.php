@@ -1777,3 +1777,6 @@ $use_refine_searchstring=false;
 $keyword_relationships_one_way=false;
 
 $show_searchitemsdiskusage=true;
+
+# If set, which field will cause warnings to appear when approving requests containing these resources?
+#$warn_field_request_approval=115;
