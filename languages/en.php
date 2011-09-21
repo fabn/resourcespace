@@ -102,7 +102,7 @@ $lang["property-field_id"]="Field id";
 $lang["property-title"]="Title";
 $lang["property-resource_type"]="Resource Type";
 $lang["property-field_type"]="Field Type";
-$lang["information-options"]="<br /><b>Please note</b> - it is better to use the Manage Field Options function from the Manage Resources section of the Team Home to edit field options as existing data is automatically migrated when options are renamed.";
+
 $lang["property-options"]="Options";
 $lang["property-required"]="Required";
 $lang["property-order_by"]="Order by";
