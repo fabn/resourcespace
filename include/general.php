@@ -3082,7 +3082,7 @@ function xml_entities($text, $charset = 'Windows-1252'){
     // $text = "test &amp; &trade; &amp;trade; abc &reg; &amp;reg; &#45;";
    
     // First we encode html characters that are also invalid in xml
-    $text = htmlentities($text, ENT_COMPAT, $charset, false);
+    $text = htmlentities($text, ENT_COMPAT, $charset);
    
     // XML character entity array from Wiki
     // Note: &apos; is useless in UTF-8 or in UTF-16
