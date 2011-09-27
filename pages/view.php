@@ -850,7 +850,7 @@ if (!$disable_geocoding) {
         
 		<?php $mapheight=$view_mapheight; include "../include/geo_map.php";
 		$zoom = $resource["mapzoom"];
-		if (!($zoom>=2 && $zoom<=18)) {
+		if (!($zoom>=2 && $zoom<=21)) {
 			// set $zoom based on precision of specified position
 			$zoom = 18;
 			$siglon = round(100000*abs($resource["geo_long"]))%100000;
@@ -879,7 +879,7 @@ if (!$disable_geocoding) {
 			markers.addMarker(new OpenLayers.Marker(lonLat));
 		<?php } ?>
 
-	    map.setCenter (lonLat, <?php echo $zoom ?>);
+	    map.setCenter (lonLat, Math.min(<?php echo $zoom ?>, map.getNumZoomLevels() - 1));
 	  </script>
     <?php     
 		} else {?>

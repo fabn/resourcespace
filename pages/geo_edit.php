@@ -25,7 +25,7 @@ if (isset($_POST['submit']))
     if (count($s)==2) 
 		{    
         $mapzoom=getvalescaped('map-zoom','');        
-		if ($mapzoom>=2 && $mapzoom<=18)
+		if ($mapzoom>=2 && $mapzoom<=21)
 			{
     			sql_query("update resource set geo_lat='" . escape_check($s[0]) . "',geo_long='" . escape_check($s[1]) . "',mapzoom='" . escape_check($mapzoom) . "' where ref='$ref'");    
 			}
@@ -65,7 +65,7 @@ if (isset($_POST['submit']))
 <?php include "../include/geo_map.php";
 if ($resource["geo_long"]!="") {
 	$zoom = $resource["mapzoom"];
-	if (!($zoom>=2 && $zoom<=18)) {
+	if (!($zoom>=2 && $zoom<=21)) {
 		// set $zoom based on precision of specified position
 		$zoom = 18;
 		$siglon = round(100000*abs($resource["geo_long"]))%100000;
@@ -143,7 +143,7 @@ if (!hook("makemarker")) {
         });map.addControl(control);
 
     <?php if ($resource["geo_long"]!=="") {?>			 
-    map.setCenter (lonLat, zoom);    
+    map.setCenter (lonLat, Math.min(zoom, map.getNumZoomLevels() - 1));
     <?php } else { ?>
 
 		<?php if (isset($_COOKIE["geobound"]))
