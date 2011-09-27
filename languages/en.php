@@ -1097,7 +1097,7 @@ $lang['plugins-uploadbutton'] = 'Upload Plugin';
 $lang['location-title'] = 'Location Data';
 $lang['location-add'] = 'Add Location';
 $lang['location-edit'] = 'Edit Location';
-$lang['location-details'] = 'Double-click map to place pin.  Once the pin has been placed, you can drag the pin to refine the location.';
+$lang['location-details'] = 'Use "Drag mode" to switch between pin positioning and panning. Use zoom controls to zoom in and out. Click Save to save pin position and zoom level.';
 $lang['location-noneselected']="No Location Selected";
 $lang['location'] = 'Location';
 $lang['mapzoom'] = 'Map Zoom';
@@ -1395,7 +1395,7 @@ $lang["purgeusersnousers"]="There are no users to purge.";
 $lang["editallresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for the selected resources.";
 
 $lang["geodragmode"]="Drag mode";
-$lang["geodragmodearea"]="selection";
+$lang["geodragmodearea"]="position pin";
 $lang["geodragmodepan"]="pan";
 
 $lang["substituted_original"] = "substituted original";
