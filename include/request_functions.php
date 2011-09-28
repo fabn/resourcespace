@@ -119,9 +119,9 @@ function save_request($request)
 	
 function get_requests()
 	{
-	# If permission Rb (accept resource request assignments) is set then limit the list to only those assigned to this user.
+	# If permission Rb (accept resource request assignments) is set then limit the list to only those assigned to this user - EXCEPT for those that can assign requests, who can always see everything.
 	$condition="";global $userref;
-	if (checkperm("Rb")) {$condition="where r.assigned_to='" . $userref . "'";}
+	if (checkperm("Rb") && !checkperm("Ra")) {$condition="where r.assigned_to='" . $userref . "'";}
 	
 	return sql_query("select u.username,u.fullname,r.*,(select count(*) from collection_resource cr where cr.collection=r.collection) c,r.assigned_to,u2.username assigned_to_username from request r left outer join user u on r.user=u.ref left outer join user u2 on r.assigned_to=u2.ref $condition order by status,ref desc");
 	}
