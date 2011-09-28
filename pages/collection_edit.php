@@ -130,7 +130,7 @@ foreach($collection as $key=>$value){
 		}
 	}
 }
-//echo "<br/>Current theme level:".$themecount;
+#echo "<br/>Current theme level:".$themecount;
 
 // find number of theme columns
 foreach($collection as $key=>$value){
@@ -154,6 +154,7 @@ for ($i=1;$i<=$themecount;$i++){
 if ($theme_category_levels>=$i)
 	{
 	if ($i==1){$themeindex="";}else{$themeindex=$i;}	
+
 	$themearray=array();
 	for($y=0;$y<$i-1;$y++){
 		if ($y==0){
@@ -169,9 +170,10 @@ if ($theme_category_levels>=$i)
 	<label for="theme<?php echo $themeindex?>"><?php echo $lang["themecategory"] . " ".$themeindex ?></label>
 	<?php if (count($themes)>0){?><select class="stdwidth" name="theme<?php echo $themeindex?>" id="theme<?php echo $themeindex?>" <?php if ($theme_category_levels>=$themeindex) { ?>onchange="if (document.getElementById('theme<?php echo $themeindex?>').value!=='') {document.getElementById('addlevel').value='yes'; document.getElementById('collectionform').submit();} else {document.getElementById('redirect').value='';document.getElementById('collectionform').submit();}"<?php } ?>><option value=""><?php echo $lang["select"]?></option>
 	<?php 
+	$lastselected=false;
 	for ($n=0;$n<count($themes);$n++) { ?>
-	<option <?php if ($collection["theme".$themeindex]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n]?></option>
-	<?php if ($collection["theme".$themeindex]==$themes[$n] && $i==$orig_themecount){$lastselected=true;} else {$lastselected=false;}?>
+	<option <?php if ($collection["theme".$themeindex]==$themes[$n]) { ?>selected<?php } ?>><?php echo $themes[$n] ?></option>
+	<?php if ($collection["theme".$themeindex]==$themes[$n] && $i==$orig_themecount){$lastselected=true;} ?>
 	<?php } ?>
 	</select>
 	<?php if (getval("addlevel","")!="yes" && $lastselected){$themecount++;}?>
