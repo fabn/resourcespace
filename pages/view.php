@@ -482,7 +482,7 @@ else
 	$nodownloads=true;
 	}
 	
-if ($nodownloads || $counter==0)
+if (($nodownloads || $counter==0) && !checkperm("T" . $resource["resource_type"] . "_"))
 	{
 	# No file. Link to request form.
 	?>
