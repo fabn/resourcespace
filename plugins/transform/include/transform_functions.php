@@ -18,7 +18,7 @@ function generate_transform_preview($ref){
 	# Since this check is in get_temp_dir() omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 	if(!is_dir(get_temp_dir() . "/transform_plugin")){mkdir(get_temp_dir() . "/transform_plugin",0777);}
 
-        $command .= " \"$originalpath\" +matte -flatten -colorspace RGB -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
+        $command .= " \"$originalpath\" +matte -delete 1--1 -flatten -colorspace RGB -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         shell_exec($command);
 	
 

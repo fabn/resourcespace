@@ -180,7 +180,10 @@ $command .= " \"$originalpath\" ";
 
 // below is a hack to make this work with multilayer images
 // the result will always be a flattened single-layer image
-$command .= " -flatten ";
+// update: add -delete 1--1 to only use the first layer. This 
+// is important because in some cases an embedded preview gets treated
+// as a second layer and messes up the image if you just flatten.
+$command .= "-delete 1--1 -flatten ";
 
 if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
 	$command .= " -colorspace RGB ";
