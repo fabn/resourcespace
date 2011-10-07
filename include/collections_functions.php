@@ -1193,6 +1193,7 @@ $lang["collectionlog-s"]="Shared Resource with ";//  + notes field
 $lang["collectionlog-T"]="Stopped sharing collection with ";//  + notes field
 $lang["collectionlog-t"]="Stopped access to resource by ";//  + notes field
 $lang["collectionlog-X"]="Collection deleted";
+$lang["collectionlog-b"]="Batch transformed";
 */
 function get_collection_log($collection)
 	{
