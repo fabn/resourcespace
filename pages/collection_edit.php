@@ -274,6 +274,8 @@ if ($enable_collection_copy)
 <div class="clearerleft"> </div>
 </div>
 
+<?php hook('colleditformbottom');?>
+
 <?php if (file_exists("plugins/collection_edit.php")) { include "plugins/collection_edit.php"; } ?>
 
 <div class="QuestionSubmit">
