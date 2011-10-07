@@ -111,8 +111,19 @@ if (count($resources) == 0){
 					echo "   Error: unable to rename transformed file for resource $resource. <br />\n";
 					$failcount++;
 				} else {
-					// FIXME - check if we need to update dimensions or other metadata
 					create_previews($resource,false,$new_ext);
+
+
+					// get final pixel dimensions of resulting file
+					$newfilesize = filesize($path);
+					$newfiledimensions = getimagesize($path);
+					$newfilewidth = $newfiledimensions[0];
+					$newfileheight = $newfiledimensions[1];
+					
+					# delete existing resource_dimensions
+    					sql_query("delete from resource_dimensions where resource='$resource'");
+    					sql_query("insert into resource_dimensions (resource, width, height, file_size) values ('$resource', '$newfilewidth', '$newfileheight', '$newfilesize')");
+
 					resource_log($resource,'t','','batch transform');
 					echo "<img src='" . get_resource_path($resource,false,"thm",false,'jpg',-1,1) . "' /><br />\n";
 					echo "   SUCCESS!<br />\n";
@@ -141,147 +152,5 @@ if ($failcount > 0){
 }
 
 include "../../../include/footer.php";
-
-
-
-
-
-
-
-
-
-/*
-
-
-# Load download access level
-//$access=get_resource_access($ref);
-
-// are they requesting to change the original?
-//if (isset($_REQUEST['mode']) && strtolower($_REQUEST['mode']) == 'original'){
-//    $original = true;
-//} else {
-//    $original = false;
-//}
-
-
-
-// if they can't download this resource, they shouldn't be doing this
-// also, if they are trying to modify the original but don't have edit access
-// they should never get these errors, because the links shouldn't show up if no perms
-//if ($access!=0 || ($original && !$edit_access)){
-//	include "../../../include/header.php";
-//	echo "Permission denied.";
-//	include "../../../include/footer.php";
-//	exit;
-/}
-
-
-
-
-
-if (isset($_REQUEST['rotation']) && is_numeric($_REQUEST['rotation']) && $_REQUEST['rotation'] > 0 && $_REQUEST['rotation'] < 360){
-    $rotation = $_REQUEST['rotation'];
-}else{
-    $rotation = 0;
-}
-
-
-if ($rotation > 0){
-    $command .= " -rotate $rotation ";
-}
-
-
-if ($rotation > 0){
-    // assume we should reset exif orientation flag since they have rotated to another orientation
-    $command .= " -orient undefined ";
-}
-
-$command .= " \"xxxx\"";
-
-//$shell_result = shell_exec($command);
-echo $command;
-
-// generate previews if needed
-global $alternative_file_previews;
-if ($alternative_file_previews && !$download && !$original && getval("slideshow","")=="")
-	{
-	create_previews($ref,false,$new_ext,false,false,$newfile);
-	}
-
-// strip of any extensions from the filename, since we'll provide that
-if(preg_match("/(.*)\.\w\w\w\\$/",$filename,$matches)){
-	$filename = $matches[1];
-}
-
-// avoid bad characters in filenames
-$filename = preg_replace("/[^A-Za-z0-9_\- ]/",'',$filename);
-//$filename = str_replace(' ','_',trim($filename));
-
-// if there is not a filename, create one
-if ( $cropper_custom_filename && strlen($filename) > 0){
-	$filename = "$filename";
-} else {
-	if ($download || getval("slideshow","")!="")
-		{
-		$filename=$ref . "_" . strtolower($lang['transformed']);
-		}
-	elseif ($original)
-		{
-                // fixme
-                }
-        else
-                {
-		$filename = "alt_$newfile";
-		}
-}
-
-$filename = mysql_real_escape_string($filename);
-
-$lcext = strtolower($new_ext);
-
-$mpcalc = round(($newfilewidth*$newfileheight)/1000000,1);
-
-// don't show  a megapixel count if it rounded down to 0
-if ($mpcalc > 0){
-	$mptext = " ($mpcalc MP)";
-} else {
-	$mptext = '';
-}
-
-if (strlen($mydesc) > 0){ $deschyphen = ' - '; } else { $deschyphen = ''; }
-	
-
-    $origalttitle = $lang['priorversion'];
-    $origaltdesc = $lang['replaced'] . " " . strftime("%Y-%m-%d, %H:%M");
-    $origfilename = sql_value("select value from resource_data left join resource_type_field on resource_data.resource_type_field = resource_type_field.ref where resource = '$ref' and name = 'original_filename'",$ref . "_original.$orig_ext");
-    $origalt  = add_alternative_file($ref,$origalttitle,$origaltdesc);
-    $origaltpath = get_resource_path($ref, true, "", true, $orig_ext, -1, 1, false, "", $origalt);
-    $mporig =  round(($origwidth*$origheight)/1000000,2);
-    $filesizeorig = filesize($originalpath);
-    rename($originalpath,$origaltpath);
-    $result = sql_query("update resource_alt_files set file_name='{$origfilename}',file_extension='$orig_ext',file_size = '$filesizeorig' where ref='$origalt'");
-    $neworigpath = get_resource_path($ref,true,'',false,$new_ext);
-    rename($newpath,$neworigpath);
-    $result = sql_query("update resource set file_extension = '$new_ext' where ref = '$ref' limit 1"); // update extension
-    resource_log($ref,'t','','original transformed');
-    create_previews($ref, false, $orig_ext, false, false, $origalt);
-    create_previews($ref,false,$new_ext);
-
-    # delete existing resource_dimensions
-    sql_query("delete from resource_dimensions where resource='$ref'");
-    sql_query("insert into resource_dimensions (resource, width, height, file_size) values ('$ref', '$newfilewidth', '$newfileheight', '$newfilesize')");
-
-    # call remove annotations, since they will not apply to transformed
-    hook("removeannotations");
-
-    // remove the cached transform preview, since it will no longer be accurate
-    if (file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
-	unlink(get_temp_dir() . "/transform_plugin/pre_$ref.jpg");
-    }
-
-//    header("Location:../../../pages/view.php?ref=$ref\n\n");
-    exit;
-
-*/
 
 ?>
