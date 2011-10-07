@@ -29,7 +29,7 @@ if ($doit == 0){
 ?>
 
 
-	<form name='batchtransform' action='collection_rotate.php'>
+	<form name='batchtransform' action='collection_transform.php'>
 	<input type='hidden' name='doit' value='1' />
 	<input type='hidden' name='collection' value='<?php echo $collection ?>' />
 	
