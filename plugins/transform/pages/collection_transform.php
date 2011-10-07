@@ -82,8 +82,10 @@ if (count($resources) == 0){
 	echo "no resources found";
 } else {
 	echo "<h2>Batch transforming collection $collection</h2>\n";
+	flush();
 	foreach($resources as $resource){
 		echo "<hr /><h4>$resource</h4>";
+		flush();
 		$edit_access=get_edit_access($resource);
 		if (!$edit_access){
 			echo " was not transformed: Access Denied.";
@@ -137,6 +139,7 @@ if (count($resources) == 0){
 				$failcount++;
 			}
 		}
+	flush();
 
 	}
 }
