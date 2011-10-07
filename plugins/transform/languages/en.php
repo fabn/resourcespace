@@ -35,4 +35,6 @@ $lang['replaceslideshowimage']="Replace slideshow image";
 $lang['slideshowsequencenumber']="Sequence number (1, 2, 3 etc.)";
 $lang['transformcrophelp']="Click and drag on the image to the left to select a crop area.";
 $lang['originalsize']="Original Size";
+
+$lang['batchtransform'] = "Batch transform";
 ?>

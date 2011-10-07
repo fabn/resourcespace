@@ -24,7 +24,8 @@ $doit = getvalescaped('doit',0);
 if ($doit == 0){
 	// user has not confirmed operation. So make them do that first
 
-	echo "Please select your batch transform operation. </p><p><strong>WARNING: executing this command will permanently change resources. Use caution!</strong></p>";
+	echo "<h1>" . $lang['batchtransform'] . "</h1>";
+	echo "<p><strong>WARNING: executing this command will permanently change resources. Use caution!</strong></p>";
 ?>
 
 
@@ -32,13 +33,14 @@ if ($doit == 0){
 	<input type='hidden' name='doit' value='1' />
 	<input type='hidden' name='collection' value='<?php echo $collection ?>' />
 	
-	Rotation:
+	<?php echo $lang['rotation']; ?>:<br />
 	<select name='rotation'>
-		<option value='90'>90</option>
-		<option value='180'>180</option>
-		<option value='270'>270</option>
+		<option value='90'><?php echo $lang['rotation90']; ?></option>
+		<option value='180'><?php echo $lang['rotation180']; ?></option>
+		<option value='270'><?php echo $lang['rotation270']; ?></option>
 	</select>
-	<input type='submit' value='Transform' />
+	<br /><br />
+	<input type="submit" value="<?php echo htmlspecialchars($lang['transform']) ?>" />
 	</form>
 
 
