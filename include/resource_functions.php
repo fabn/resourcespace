@@ -742,15 +742,16 @@ function delete_resource($ref)
 	
 	if ($ref<0) {return false;} # Can't delete the template
 
-	$current_state=sql_value("select archive value from resource where ref='$ref'",0);
-
+	$resource=get_resource_data($ref);
+	if (!$resource) {return false;} # Resource not found in database
+	
+	$current_state=$resource['archive'];
+	
 	global $resource_deletion_state;
 	if (isset($resource_deletion_state) && $current_state!=3) # Really delete if already in the 'deleted' state.
 		{
 		# $resource_deletion_state is set. Do not delete this resource, instead move it to the specified state.
-		
 		sql_query("update resource set archive='" . $resource_deletion_state . "' where ref='" . $ref . "'");
-
 
         # log this so that administrator can tell who requested deletion
         resource_log($ref,'x','');
@@ -762,9 +763,6 @@ function delete_resource($ref)
 		}
 	
 	# Get info
-	$resource=sql_query("select is_transcoding, file_extension, preview_extension from resource where ref='$ref'","jpg");
-	if (!$resource) {return false;} # Resource not found in database
-	$resource=$resource[0];
 	
 	# Is transcoding
 	if ($resource['is_transcoding']==1) {return false;} # Can't delete when transcoding
@@ -776,7 +774,7 @@ function delete_resource($ref)
 	$extensions[]=$GLOBALS['ffmpeg_preview_extension'];
 	$extensions[]='icc'; // also remove any extracted icc profiles
 	$extensions=array_unique($extensions);
-
+	
 	foreach ($extensions as $extension)
 		{
 		$sizes=get_image_sizes($ref,true,$extension);
