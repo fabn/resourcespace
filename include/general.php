@@ -30,7 +30,8 @@ function get_resource_path($ref,$getfilepath,$size,$generate,$extension="jpg",$s
 				
 			if ($getfilepath)
 				{
-				global $syncdir;  
+				global $syncdir; 
+            	$syncdirmodified=hook("modifysyncdir","all",array($ref)); if ($syncdirmodified!=""){return $syncdirmodified;}	
             	return $syncdir . "/" . $fp;
 				}
 			else 
@@ -481,6 +482,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 	$lastname=sql_value("select name value from preview_size where width=(select max(width) from preview_size)",""); # Start with the highest resolution.
 	$lastpreview=0;$lastrestricted=0;
 	$path2=get_resource_path($ref,true,'',false,$extension);
+
 	if (file_exists($path2) && !checkperm("T" . $resource_type . "_"))
 	{ 
 		$returnline=array();
