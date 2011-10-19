@@ -129,7 +129,7 @@ echo "<br />";
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
 <td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($col_order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($col_order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+<?php if (!$collection_public_hide_owner) { ?><td><?php if ($col_order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($col_order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php } ?>
 <td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($col_order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
@@ -146,7 +146,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	<td><div class="ListTitle">
 	<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
 
-	<td><?php echo highlightkeywords($collections[$n]["fullname"],$find)?></td>
+	<?php if (!$collection_public_hide_owner) { ?><td><?php echo highlightkeywords($collections[$n]["fullname"],$find)?></td><?php } ?>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
 	<td><?php echo nicedate($collections[$n]["created"],true)?></td>
     <td><?php echo $collections[$n]["count"]?></td>

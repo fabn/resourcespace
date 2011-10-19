@@ -852,6 +852,9 @@ $user_rating=false;
 # as public as this is how themes are published.
 $enable_public_collections=true;
 
+# Hide owner in list of public collections
+$collection_public_hide_owner=false;
+
 # Custom User Registration Fields
 # -------------------------------
 # Additional custom fields that are collected and e-mailed when new users apply for an account
