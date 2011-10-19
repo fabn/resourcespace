@@ -36,7 +36,7 @@ echo "Preloading data...";
 $max=10000;
 $count=0;
 
-$done=sql_array("select file_path value from resource where archive=0 and length(file_path)>0 and file_path like '%/%'");
+$done=sql_array("select file_path value from resource where length(file_path)>0 and file_path like '%/%'");
 
 # Load all modification times into an array for speed
 $modtimes=array();
