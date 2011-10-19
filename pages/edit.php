@@ -517,7 +517,7 @@ if ($enable_add_collection_on_upload)
 			}
 		}
 	?>
-	</select>
+	</select></div>
 	<div class="clearerleft"> </div>
 	<div name="collectioninfo" id="collectioninfo">
 	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
