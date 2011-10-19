@@ -328,9 +328,19 @@ if (!$staticsync_ingest)
 	echo "\nLooking for deleted files...";
 	# For all resources with filepaths, check they still exist and archive if not.
 	$rf=sql_query("select ref,file_path from resource where archive=0 and length(file_path)>0 and file_path like '%/%'");
+	
+	// ***for modified syncdir directories:
+	$syncdonemodified=hook("modifysyncdonerf"); if (!empty($syncdonemodified)){$rf=$syncdonemodified;}	
+	
 	for ($n=0;$n<count($rf);$n++)
 		{
 		$fp=$syncdir . "/" . $rf[$n]["file_path"];
+			
+		// ***for modified syncdir directories:
+		if (isset($rf[$n]['syncdir']) && $rf[$n]['syncdir']!=''){
+			$fp=$rf[$n]['syncdir'].$rf[$n]["file_path"];
+			}
+
 		if (!file_exists($fp))
 			{
 			echo "File no longer exists: " . $rf[$n]["ref"] . " (" . $fp . ")\n";
