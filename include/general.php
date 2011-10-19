@@ -369,7 +369,7 @@ function cleanse_string($string,$preserve_separators)
         global $config_separators;
         if ($preserve_separators)
                 {
-                return strtolower(trim_spaces(str_replace($config_separators," ",$string)));
+                return mb_strtolower(trim_spaces(str_replace($config_separators," ",$string)),'UTF-8');
                 }
         else
                 {
@@ -377,7 +377,7 @@ function cleanse_string($string,$preserve_separators)
                 $s=$config_separators;
                 $s[]=",";
                 $s[]=":";
-                return strtolower(trim_spaces(str_replace($s," ",$string)));
+                return mb_strtolower(trim_spaces(str_replace($s," ",$string)),'UTF-8');
                 }
         }
 }
