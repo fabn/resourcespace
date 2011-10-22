@@ -683,6 +683,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 	{
 	global $imagemagick_path,$imagemagick_preserve_profiles,$imagemagick_quality;
 
+	$icc_transform_complete=false;
 	debug("create_previews_using_im(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
 
 	if (isset($imagemagick_path))
@@ -750,6 +751,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			{
 			# If we've already made the LPR or SCR then use those for the remaining previews.
 			# As we start with the large and move to the small, this will speed things up.
+			if(file_exists($hpr_path)){$file=$hpr_path;}
 			if(file_exists($lpr_path)){$file=$lpr_path;}
 			if(file_exists($scr_path)){$file=$scr_path;}
 			
@@ -764,7 +766,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			} else {
 			    $flatten = "-flatten";
 			}
-
+			
 			$command .= ' '. escapeshellarg($file) .'[0] +matte ' . $flatten . ' -quality ' . $imagemagick_quality;
 			
 			# fetch target width and height
@@ -811,10 +813,11 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					}
 				}
 
-				if($icc_extraction && file_exists($iccpath)){
+				if($icc_extraction && file_exists($iccpath) && !$icc_transform_complete){
 					// we have an extracted ICC profile, so use it as source
 					$targetprofile = dirname(__FILE__) . '/../iccprofiles/' . $icc_preview_profile;
 					$profile  = " +profile \"*\" -profile $iccpath $icc_preview_options -profile $targetprofile +profile \"*\" ";
+					$icc_transform_complete=true;
 				} else {
 					// use existing strategy for color profiles
 					# Preserve colour profiles? (omit for smaller sizes)   
@@ -825,6 +828,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 				$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
 				$output=shell_exec($runcommand);  
+				//echo $runcommand."<br /><br/>";
 				# echo $runcommand."<br>\n";
 				# Add a watermarked image too?
 				global $watermark;
@@ -839,7 +843,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					
 					#die($runcommand);
 					$output=shell_exec($runcommand); 
-					# echo $runcommand;
+					
 					}
 				}
 			}
