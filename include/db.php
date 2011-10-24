@@ -610,8 +610,9 @@ function unescape($text)
 
     return $text;
     }
-    
-    
+
+
+if (!function_exists("nicedate")) {
 function nicedate($date,$time=false,$wordy=true)
 	{
 	# format a MySQL ISO date
@@ -626,6 +627,7 @@ function nicedate($date,$time=false,$wordy=true)
 	$t = $time ? (" @ "  . substr($date,11,5)) : "";
 	return $d . " " . $m . " " . substr($y, 2, 2) . $t;
 	}	
+}
 
 function redirect($url)
 	{
