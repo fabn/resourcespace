@@ -673,7 +673,11 @@ function text($name)
 		{
 		if (array_key_exists($key . "-" . $name,$site_text)) {return $site_text[$key . "-" . $name];} 		
 		}
-	
+	if (!array_key_exists('en', $languages))
+		{
+		if (array_key_exists("en-" . $name,$site_text)) {return $site_text["en-" . $name];}
+		}
+
 	return "";
 	}
     
