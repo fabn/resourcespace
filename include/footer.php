@@ -64,6 +64,7 @@ function SwapCSS(css)
 </div>
 
 
+<?php if (!hook("replacefooternavright")){?>
 <?php if ($about_link || $contact_link) { ?>
 <div id="FooterNavRight" class="HorizontalNav HorizontalWhiteNav">
 		<ul>
@@ -77,6 +78,7 @@ function SwapCSS(css)
 		</ul>
 </div>
 <?php } ?>
+<?php } /* end hook replacefooternavright */ ?>
 
 <?php } ?>
 
