@@ -62,10 +62,10 @@ $infobox=true;
 
 # *** LOAD CONFIG ***
 # Load the default config first, if it exists, so any new settings are present even if missing from config.php
-if (file_exists(dirname(__FILE__)."/config.default.php")) {include_once dirname(__FILE__) . "/config.default.php";}
+if (file_exists(dirname(__FILE__)."/config.default.php")) {include dirname(__FILE__) . "/config.default.php";}
 # Load the real config
 if (!file_exists(dirname(__FILE__)."/config.php")) {header ("Location: pages/setup.php" );die(0);}
-include_once (dirname(__FILE__)."/config.php");
+include (dirname(__FILE__)."/config.php");
 
 # Set time limit
 set_time_limit($php_time_limit);
