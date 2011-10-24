@@ -105,7 +105,12 @@ $querylog=array();
 # -----------LANGUAGES AND PLUGINS-------------------------------
 # Include the appropriate language file
 $pagename=str_replace(".php","",pagename());
-if (isset($defaultlanguage)) {$language=$defaultlanguage;} else {$language="en";}
+
+if (isset($defaultlanguage))
+	$language=$defaultlanguage;
+else
+	$language=http_get_preferred_language();
+
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
 if (isset($_GET["language_set"])) {$language=$_GET["language_set"];setcookie("language",$_GET["language_set"]);}
 
@@ -113,7 +118,13 @@ if (isset($_GET["language_set"])) {$language=$_GET["language_set"];setcookie("la
 if ($language=="us") {$language="en-US";}
 
 # Make sure the provided language is a valid language
-if (!array_key_exists($language,$languages)) {$language=$defaultlanguage;}
+if (!array_key_exists($language,$languages))
+	{
+		if (isset($defaultlanguage))
+			$language=$defaultlanguage;
+		else
+			$language='en';
+	}
 
 # Always include the english pack (in case items have not yet been translated)
 include dirname(__FILE__)."/../languages/en.php";

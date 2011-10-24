@@ -122,6 +122,7 @@ $header_link_width=400; // you may like to adjust the width for you own logo.
 $include_rs_header_info=true;
 
 # Available languages
+# If $defaultlanguage is not set, the brower's default language will be used instead
 $defaultlanguage="en"; # default language, uses ISO 639-1 language codes ( en, es etc.)
 $languages["en"]="British English";
 $languages["en-US"]="American English";
