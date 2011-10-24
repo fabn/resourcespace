@@ -13,8 +13,10 @@ function DisplayTheme($themes=array())
 
 	# Work out theme name
 	$themecount=count($themes);
-	for ($x=0;$x<$themecount;$x++){
-		if (isset($themes[$x])&&!isset($themes[$x+1])) {$themename=$themes[$x];}
+	for ($x=0;$x<$themecount;$x++)
+		{
+		if (isset($themes[$x])&&!isset($themes[$x+1]))
+			$themename=i18n_get_translated($themes[$x]);
 }
 
 	$getthemes=get_themes($themes);
@@ -60,7 +62,7 @@ function DisplayTheme($themes=array())
 			$themeslinks="";
 			for ($x=0;$x<count($themes);$x++){
 				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 				}
 			} 
 		else
@@ -87,7 +89,7 @@ function DisplayTheme($themes=array())
 			{
 			?>
 			<tr <?php hook("collectionlistrowstyle");?>>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($getthemes[$m]["name"])?></a>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars(i18n_get_translated($getthemes[$m]["name"]))?></a>
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
@@ -219,7 +221,7 @@ elseif ($themes_category_split_pages)
 				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php
 				for ($x=0;$x<count($themes);$x++){
 					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo $themes[$x]?></a> / <?php
+					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 					}
 			}
 			else { 
@@ -246,7 +248,7 @@ elseif ($themes_category_split_pages)
 				}
 			}?>
 			<tr>
-			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo str_replace("*","",$headers[$n])?></a></div></td>
+			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo htmlspecialchars(i18n_get_translated(str_replace("*","",$headers[$n])))?></a></div></td>
 			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a></div></td>
 			</tr>
 			<?php
@@ -302,7 +304,7 @@ else
 			{
 			?><option value="<?php echo htmlspecialchars($headers[$n])?>" <?php if (isset($themes[0])&&
 			stripslashes($themes[0])==
-			stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",$headers[$n])?></option><?php
+			stripslashes($headers[$n]))  { ?>selected<?php } ?>><?php echo str_replace("*","",i18n_get_translated($headers[$n]))?></option><?php
 			}
 		?>
 		</select>

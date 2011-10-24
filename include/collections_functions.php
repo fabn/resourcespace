@@ -494,6 +494,11 @@ function get_theme_headers($themes=array())
 	return $return;
 	}
 
+function collections_comparator($a, $b)
+	{
+	return strnatcasecmp(i18n_get_translated($a['name']), i18n_get_translated($b['name']));
+	}
+
 function get_themes($themes=array(""))
 	{	
 	# Return a list of themes under a given header (theme category).
@@ -510,10 +515,11 @@ function get_themes($themes=array(""))
 			}
 		}
 	}
-	$sql.=" and c.public=1 order by c.name;";
-	
-	return sql_query($sql);
+	$sql.=" and c.public=1;";
 
+	$collections=sql_query($sql);
+	usort($collections, 'collections_comparator');
+	return $collections;
 	}
 
 function get_smart_theme_headers()

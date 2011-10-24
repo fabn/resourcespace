@@ -22,13 +22,13 @@ SetCookie('theme_<?php echo $n?>',toggle_theme_display,1000);
 Effect.toggle($('<?php echo str_replace("\"","",$themename)?>'),'blind',{ duration: 0.2 });
 return false;">                
                
-                <a href='#'><b><?php echo stripslashes(str_replace("*","",$themename))?></b></a></div>
+	<a href='#'><b><?php echo stripslashes(i18n_get_translated(str_replace("*","",$themename)))?></b></a></div>
                
 <div id="<?php echo str_replace("\"","",$themename)?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" >
                 <?php
                 for ($m=0;$m<count($themes);$m++)
                         { ?><br>
-                        &nbsp;&nbsp;&nbsp;<a href="<?php echo $baseurl?>/pages/search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars($themes[$m]["name"])?></a>
+                        &nbsp;&nbsp;&nbsp;<a href="<?php echo $baseurl?>/pages/search.php?search=!collection<?php echo $themes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$m]["name"]))?></a>
                         <?php
                         }
                 ?><br><br></div><?php

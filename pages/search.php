@@ -352,7 +352,7 @@ if ($search_titles)
                 }
             }
                 
-        $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.$collection_tag.$collectiondata["name"].'</a></span>'.$searchcrumbs.'</div></h1> ';
+        $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.i18n_get_translated($collection_tag.$collectiondata["name"]).'</a></span>'.$searchcrumbs.'</div></h1> ';
 		}	
     if (substr($search,0,5)=="!last")
         {

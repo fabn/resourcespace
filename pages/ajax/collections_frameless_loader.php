@@ -99,7 +99,7 @@ $list=get_user_collections($userref);
 for ($n=0;$n<count($list);$n++)
 	{
 	?>
-	<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
+	<option value="<?php echo $list[$n]["ref"]?>" <?php if ($usercollection==$list[$n]["ref"]) {?> selected<?php $found=true;}?>><?php echo htmlspecialchars(i18n_get_translated($list[$n]["name"]))?></option>
 	<?php
 	}
 if ($found==false)
@@ -107,7 +107,7 @@ if ($found==false)
 	# Add this one at the end, it can't be found
 	$notfound=get_collection($usercollection);
 	?>
-	<option selected><?php echo $notfound["name"]?></option>
+	<option selected><?php echo i18n_get_translated($notfound["name"])?></option>
 	<?php
 	}
 ?>
