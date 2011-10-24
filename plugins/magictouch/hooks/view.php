@@ -9,7 +9,6 @@ if ($magictouch_account_id==""){return false;}
 // This hooks runs outside of the renderinnerresourcepreview hook,
 // and if MTFAIL is defined, annotate will know not to include a Zoom link.
 // annotate plugin compatibility
-
 global $plugins;
 if (in_array("annotate",$plugins)){
     global $annotate_ext_exclude;
@@ -64,7 +63,7 @@ if (!file_exists($largeurl_path)) {
     
 <?php
 // annotate plugin compatibility
-if (in_array("annotate",$plugins)){?><a style="display:inline;clear:left;float:left;" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
+if (in_array("annotate",$plugins)&&$k==""){?><a style="display:inline;clear:left;float:left;" href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&annotate=true">&gt;&nbsp;<?php echo $lang['annotations']?></a><br /><br /><?php }
 ?>
 
 </div>

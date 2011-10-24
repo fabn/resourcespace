@@ -3,7 +3,7 @@
 
 function HookAnnotateViewRenderinnerresourcepreview(){
 	global $ref,$ffmpeg_preview_extension,$resource,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$annotate_ext_exclude,$annotate_rt_exclude;
-
+if ($k!=""){return false;}
 if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
 if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
 
