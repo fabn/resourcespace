@@ -428,7 +428,6 @@ elseif ($k!="")
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
 		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();"<?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?>>
-		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		<?php
 		$list=get_user_collections($userref);
 		$found=false;
@@ -474,6 +473,7 @@ elseif ($k!="")
 				}
 			}
 		?>
+		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
 		<input type=text id="entername" name="entername" style="display:none;" class="SearchWidth" onUnfocus="document.getElementById('colselect').submit();">
 		</div>			
@@ -809,7 +809,6 @@ elseif ($k!="")
 <form id="colselect" method="get">
 		<div class="MinSearchItem">
 		<select name="collection" id="collection" <?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?> onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='inline';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();">
-		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		<?php
 		$found=false;
 		$list=get_user_collections($userref);
@@ -852,6 +851,7 @@ elseif ($k!="")
 				}
 			}
 		?>
+		<option value="-1">(<?php echo $lang["createnewcollection"]?>)</option>
 		</select>
 		<input type=text id="entername" name="entername" style="display:inline;display:none;" class="SearchWidth" onUnfocus="document.getElementById('colselect').submit();">
 		</div>				
