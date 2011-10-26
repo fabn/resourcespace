@@ -1133,6 +1133,7 @@ function add_to_collection_link($resource,$search="",$extracode="",$size="")
 	}
 }	
 	
+if (!function_exists("remove_from_collection_link")){		
 function remove_from_collection_link($resource,$search="")
 	{
 	# Generates a HTML link for removing a resource to a collection
@@ -1146,6 +1147,7 @@ function remove_from_collection_link($resource,$search="")
 		return "<a href=\"collections.php?remove=" . $resource . "&nc=" . time() . "&search=" . urlencode($search) . "\" target=\"collections\" title=\"" . $lang["removefromcurrentcollection"] . "\">";
 		}
 	}
+}
 
 function change_collection_link($collection)
 	{
