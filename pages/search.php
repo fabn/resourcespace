@@ -229,6 +229,8 @@ if (!array_key_exists("search",$_GET))
 	$archive=getvalescaped("saved_archive",0);setcookie("saved_archive",$archive);
 	}
 	
+hook("searchparameterhandler");	
+	
 # If requested, refresh the collection frame (for redirects from saves)
 if (getval("refreshcollectionframe","")!="")
 	{
@@ -827,7 +829,8 @@ if (true) # Always show search header now.
 		?>
 		
 		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
-				
+
+		<?php if (!hook("replaceresourcetools")){?>
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		<?php } /* end hook replacefullscreenpreviewicon */?>
@@ -854,6 +857,8 @@ if (true) # Always show search header now.
 		<?php if(!hook("thumbscheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
 		<?php } # end hook thumbscheckboxes?>
+		<?php } // end hook replaceresourcetools ?>
+
 	</div>
 <div class="PanelShadow"></div>
 </div>
@@ -992,7 +997,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		?>
 		
 		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
-				
+	    <?php if (!hook("replaceresourcetoolsxl")){?>
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		<?php } /* end hook replacefullscreenpreviewicon */?>
@@ -1018,6 +1023,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		<?php if(!hook("thumbscheckboxes")){?>
 		<?php if ($use_checkboxes_for_selection){?><input type="checkbox" id="check<?php echo $ref?>" class="checkselect" <?php if (in_array($ref,$collectionresources)){ ?>checked<?php } ?> onclick="if ($('check<?php echo $ref?>').checked){ <?php if ($frameless_collections){?>AddResourceToCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?add=<?php echo $ref?>';<?php }?> } else if ($('check<?php echo $ref?>').checked==false){<?php if ($frameless_collections){?>RemoveResourceFromCollection(<?php echo $ref?>);<?php }else {?>parent.collections.location.href='collections.php?remove=<?php echo $ref?>';<?php }?> <?php if ($frameless_collections && isset($collection)){?>document.location.href='?search=<?php echo urlencode($search)?>&order_by=<?php echo urlencode($order_by)?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&offset=<?php echo $offset?>';<?php } ?> }"><?php } ?>
 		<?php } # end hook thumbscheckboxes?>
+		<?php } // end hook replaceresourcetoolsxl ?>
 	</div>
 <div class="PanelShadow"></div>
 </div>
@@ -1105,6 +1111,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php hook("smallsearchfreeicon");?>
 		<div class="ResourcePanelSmallIcons">
 		<?php hook("smallsearchicon");?>
+		<?php if (!hook("replaceresourcetoolssmall")){?>
 		<span class="IconPreview">
 		<a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
 		
@@ -1118,7 +1125,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<span class="IconCollectOut"><?php echo remove_from_collection_link($ref,$search)?><img src="../gfx/interface/sp.gif" alt="" width="22" height="12" /></a></span>
 		<?php } ?>
 		<?php } ?>
-	
+		<?php } // end hook replaceresourcetoolssmall ?>
 		</div>
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
@@ -1180,8 +1187,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php hook("addlistviewcolumn");?>
 		<td><div class="ListTools"><a <?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);"onmouseout="InfoBoxSetResource(0);"<?php } ?> href="<?php echo $url?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a> &nbsp;<?php
 
+		if (!hook("replacelistviewaddtocollectionlink")){
 		if (!checkperm("b")&& $k=="") { ?>
 		<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a> &nbsp;
+		<?php } ?>
 		<?php } ?>
 
 		<?php if ($allow_share && $k=="") { ?><a href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
