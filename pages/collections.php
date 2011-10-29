@@ -640,11 +640,15 @@ if ($count_result>0)
 		
 		<?php if ($collection_reorder_caption  && $allow_reorder) { ?>
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
+		<?php if (!hook("replaceremovelink")){?>
 		<span class="IconRemove"><a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
+		<?php } //end hook replaceremovelink ?>
 		<?php } else { 
 			if (!isset($cinfo['savedsearch'])||(isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)){ // add 'remove' link only if this is not a smart collection 
 			?>
+		<?php if (!hook("replaceremovelink")){?>
 		<a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?></a>
+		<?php } //end hook replaceremovelink ?>
 			<?php } ?>
 		<?php } ?>
 		</div><?php } ?>			
