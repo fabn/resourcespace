@@ -20,7 +20,14 @@ if (getval("save","")!="")
 	if ($k!="" || $user_is_anon || $userrequestmode==0)
 		{
 		# Request mode 0 : Simply e-mail the request.
-		$result=email_resource_request($ref,getvalescaped("request",""));
+		if (($k!="" || $user_is_anon) && (getval("fullname","")=="" || getval("email","")==""))
+			{
+			$result=false; # Required fields not completed.
+			}
+		else
+			{
+			$result=email_resource_request($ref,getvalescaped("request",""));
+			}
 		}
 	else
 		{
@@ -56,14 +63,14 @@ include "../include/header.php";
 	
 	<?php if ($k!="" || $user_is_anon) { ?>
 	<div class="Question">
-	<label><?php echo $lang["fullname"]?></label>
+	<label><?php echo $lang["fullname"]?> <sup>*</sup></label>
 	<input type="hidden" name="fullname_label" value="<?php echo $lang["fullname"]?>">
 	<input name="fullname" class="stdwidth" value="<?php echo getval("fullname","") ?>">
 	<div class="clearerleft"> </div>
 	</div>
 	
 	<div class="Question">
-	<label><?php echo $lang["emailaddress"]?></label>
+	<label><?php echo $lang["emailaddress"]?> <sup>*</sup></label>
 	<input type="hidden" name="email_label" value="<?php echo $lang["emailaddress"]?>">
 	<input name="email" class="stdwidth" value="<?php echo getval("email","") ?>">
 	<div class="clearerleft"> </div>
