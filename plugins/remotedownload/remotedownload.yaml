@@ -1,0 +1,2 @@
+name: remotedownload
+desc: Allows an alternative URL/server to be used for downloads. WARNING - do not enable unless you are specifically using this functionality, as download behaviour will be altered.
