@@ -1071,7 +1071,7 @@ function write_metadata($path,$ref)
 							}
 						}
 					$command.=" '$tmpfile'";
-					$output=shell_exec($command) or die("Problem writing metadata: $output <br />Command was: $command");
+					$output=shell_exec($command);
 					
 			return $tmpfile;
 			}
