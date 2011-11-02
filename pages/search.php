@@ -735,7 +735,7 @@ if (true) # Always show search header now.
 		}
 		
 	$rtypes=array();
-	$types=get_resource_types();
+	if (!isset($types)){$types=get_resource_types();}
 	for ($n=0;$n<count($types);$n++) {$rtypes[$types[$n]["ref"]]=$types[$n]["name"];}
 	if (is_array($result)){
 	# loop and display the results
