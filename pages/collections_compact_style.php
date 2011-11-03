@@ -204,13 +204,9 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php if (!checkperm("b") && $cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="<?php echo $collection?>|<?php echo $lang["emptycollectionareyousure"]?>|collection_manage.php?removeall=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|true';}else {echo 'collections.php|collections|false';}?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
 <!-- end empty-->
 
-
-
-
-
-
-
-
+<!-- upload *-->
+<?php global $top_nav_upload_type;if (checkperm("c")) {?>&nbsp;<option id="uploadtocollection" value="<?php echo $collection?>|0|0|edit.php?ref=-<?php echo $userref?>&<?php echo $top_nav_upload_type ?>=true&collection_add=<?php echo $collection?>|main|true">&gt;&nbsp;<?php echo $lang["upload"]?>...</option><?php } ?>
+<!-- end upload-->
 
 <!-- log -->
 <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?>

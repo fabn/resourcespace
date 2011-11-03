@@ -87,6 +87,7 @@ if (getval("regenexif","")!="")
 	extract_exif_comment($ref);
 	}
 
+$collection_add=getvalescaped("collection_add","");
 
 # Fetch resource data.
 $resource=get_resource_data($ref);
@@ -502,7 +503,7 @@ if ($enable_add_collection_on_upload)
 		{
 		if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
 		?>
-		<option value="<?php echo $list[$n]["ref"]?>"><?php echo htmlspecialchars($list[$n]["name"])?></option>
+		<option value="<?php echo $list[$n]['ref']?>" <?php if ($list[$n]['ref']==$collection_add){ ?>selected <?php }?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
 		<?php
 		}
 	if (!$currentfound)
@@ -517,7 +518,7 @@ if ($enable_add_collection_on_upload)
 			}
 		}
 	?>
-	</select></div>
+	</select>
 	<div class="clearerleft"> </div>
 	<div name="collectioninfo" id="collectioninfo">
 	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
