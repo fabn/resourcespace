@@ -184,7 +184,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 
 
 <!--remove -->
-<?php if (!checkperm("b") && $userref!=$cinfo["user"] && ($pagename=="collection_manage" || $pagename=="collections" || $pagename=="search"))	{?>&nbsp;<option id="remove" value="<?php echo $collection?>|0|collection_manage.php?remove=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php?offset='.$offset.'&col_order_by='.$col_order_by.'&sort=.'.$sort.'&find='.urlencode($find);} else { echo 'collections.php';}?>|<?php if (in_array($pagename,$main_pages)){echo 'main';} else { echo 'collections';}?>|collections">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
+<?php if (!checkperm("b") && $userref!=$cinfo["user"] && ($pagename=="collection_manage" || $pagename=="collections" || $pagename=="search"))	{?>&nbsp;<option id="remove" value="<?php echo $collection?>|0|collection_manage.php?remove=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php?offset='.$offset.'&col_order_by='.$col_order_by.'&sort='.$sort.'&find='.urlencode($find);} else { echo 'collections.php';}?>|<?php if (in_array($pagename,$main_pages)){echo 'main';} else { echo 'collections';}?>|collections">&gt;&nbsp;<?php echo $lang["action-remove"]?></option><?php } ?>
 <!-- end remove -->
 
 <!-- delete -->
@@ -200,7 +200,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <!-- end purge -->
 
 <!-- empty *-->
-<?php if (!checkperm("b") && $cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="<?php echo $collection?>|<?php echo $lang["emptycollectionareyousure"]?>|collection_manage.php?removeall=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|true';}else {echo 'collections.php|collections|false';}?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
+<?php if (!checkperm("b") && $cinfo['savedsearch']=='' && (($userref==$cinfo["user"]) || checkperm("h"))  && $count_result>0) {?>&nbsp;<option id="removeall" value="<?php echo $collection?>|<?php echo $lang["emptycollectionareyousure"]?>|collection_manage.php?removeall=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|both';}else {echo 'collections.php|collections|both';}?>">&gt;&nbsp;<?php echo $lang["emptycollection"]?>...</option><?php } ?>
 <!-- end empty-->
 
 <!-- delete resources *-->
