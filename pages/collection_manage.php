@@ -103,7 +103,11 @@ if ($reload!="")
 	}
 
 $purge=getvalescaped("purge","");
-if ($purge!="") {
+$deleteall=getvalescaped("deleteall","");
+if ($purge!="" || $deleteall!="") {
+	
+	if ($purge!=""){$deletecollection=$purge;}
+	if ($deleteall!=""){$deletecollection=$deleteall;}
 	
 	if (!function_exists("do_search")) {
 		include "../include/search_functions.php";
@@ -115,35 +119,36 @@ if ($purge!="") {
 	
 	# Delete all resources in collection
 	if (!checkperm("D")) {
-		$resources=do_search("!collection" . $purge);
+		$resources=do_search("!collection" . $deletecollection);
 		for ($n=0;$n<count($resources);$n++) {
 			if (checkperm("e" . $resources[$n]["archive"])) {
 				delete_resource($resources[$n]["ref"]);	
-				collection_log($purge,"D",$resources[$n]["ref"]);
+				collection_log($deletecollection,"D",$resources[$n]["ref"]);
 			}
 		}
 	}
-		
-	# Delete collection
-	delete_collection($purge);
-	# Get count of collections
-	$c=get_user_collections($userref);
-		
-	# If the user has just deleted the collection they were using, select a new collection
-	if ($usercollection==$purge && count($c)>0) {
-		# Select the first collection in the dropdown box.
-		$usercollection=$c[0]["ref"];
-		set_user_collection($userref,$usercollection);
-	}
 	
-	# User has deleted their last collection? add a new one.
-	if (count($c)==0) {
-		# No collections to select. Create them a new collection.
-		$name=get_mycollection_name($userref);
-		$usercollection=create_collection ($userref,$name);
-		set_user_collection($userref,$usercollection);
-	}
+	if ($purge!=""){
+		# Delete collection
+		delete_collection($purge);
+		# Get count of collections
+		$c=get_user_collections($userref);
+		
+		# If the user has just deleted the collection they were using, select a new collection
+		if ($usercollection==$purge && count($c)>0) {
+			# Select the first collection in the dropdown box.
+			$usercollection=$c[0]["ref"];
+			set_user_collection($userref,$usercollection);
+		}
 	
+		# User has deleted their last collection? add a new one.
+		if (count($c)==0) {
+			# No collections to select. Create them a new collection.
+			$name=get_mycollection_name($userref);
+			$usercollection=create_collection ($userref,$name);
+			set_user_collection($userref,$usercollection);
+		}
+	}
 	refresh_collection_frame($usercollection);
 }
 

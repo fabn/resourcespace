@@ -223,14 +223,14 @@ if ($theme_category_levels>=$i)
 <div class="clearerleft"> </div>
 </div><?php } ?>
 
-<?php if ($colcount!=0 && $collection['savedsearch']==''){?>
+<?php if (!$collections_compact_style && $colcount!=0 && $collection['savedsearch']==''){?>
 <div class="Question">
 <label for="removeall"><?php echo $lang["removeallresourcesfromcollection"]?></label><input type=checkbox id="removeall" name="removeall">
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
 
-<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D") && $colcount!=0) { ?>
+<?php if (!$collections_compact_style && (checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D") && $colcount!=0) { ?>
 <div class="Question">
 <label for="deleteall"><?php echo $lang["deleteallresourcesfromcollection"]?></label><input type=checkbox id="deleteall" name="deleteall" onClick="if (this.checked) {return confirm('<?php echo $lang["deleteallsure"]?>');}">
 <div class="clearerleft"> </div>
