@@ -89,7 +89,7 @@ $lang["fieldtype-category_tree"]="Kategoriebaum";
 $lang["documentation-permissions"]="Weitere Informationen über die Berechtigungen finden Sie in der <a href=../../documentation/permissions.txt target=_blank>Berechtigungen Hilfe-Datei</a>.";
 $lang["property-reference"]="Referenz";
 $lang["property-name"]="Name";
-$lang["property-permissions"]="Berechtitungen";
+$lang["property-permissions"]="Berechtigungen";
 $lang["information-permissions"]="HINWEIS: Globale Berechtigungen aus der config.php könnten außerdem in Kraft sein";
 $lang["property-fixed_theme"]="Festes Theme";
 $lang["property-parent"]="Übergeordneter Eintrag";
