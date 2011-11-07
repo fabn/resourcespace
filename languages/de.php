@@ -306,7 +306,7 @@ $lang["managemycollections"]="'Meine Kollektionen' verwalten";
 $lang["createnewcollection"]="Neue Kollektion erstellen";
 $lang["findpubliccollection"]="Öffentliche Kollektionen finden";
 $lang["searchpubliccollections"]="Öffentliche Kollektionen suchen";
-$lang["addtomycollections"]="zu meiner Kollektion hinzufügen";
+$lang["addtomycollections"]="zu 'Meine Kollektionen' hinzufügen";
 $lang["action-addtocollection"]="Zur Kollektion hinzufügen";
 $lang["action-removefromcollection"]="Aus Kollektion entfernen";
 $lang["addtocollection"]="Zur Kollektion hinzufügen";
@@ -437,7 +437,7 @@ $lang["match"]="passend";
 $lang["matches"]="passende";
 $lang["inthearchive"]="im Archiv";
 $lang["nomatchesinthearchive"]="Keine passenden Archiv-Einträge";
-$lang["savethissearchtocollection"]="Suchanfrage in der Kollektion speichern";
+$lang["savethissearchtocollection"]="Suchanfrage in der aktuellen Kollektion speichern";
 $lang["mustspecifyonekeyword"]="Sie müssen mindestens einen Suchbegriff angeben.";
 $lang["hasemailedyouaresource"]="hat Ihnen eine Ressource gesendet"; # Suffixed to user name, e.g. Fred has e-mailed you a resource
 $lang["clicktoviewresource"]="Klicken Sie untestehenden Link um die Ressource anzuzeigen.";
@@ -691,7 +691,7 @@ $lang["statusandrelationships"]="Status und Beziehungen";
 $lang["months"]=array("Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
 
 # New for 1.3
-$lang["savesearchitemstocollection"]="Gefundene Objekte in der Kollektion speichern";
+$lang["savesearchitemstocollection"]="Gefundene Objekte in der aktuellen Kollektion speichern";
 $lang["removeallresourcesfromcollection"]="Alle Ressourcen aus dieser Kollektion entfernen";
 $lang["deleteallresourcesfromcollection"]="Alle Ressourcen dieser Kollektion löschen";
 $lang["deleteallsure"]="Sind Sie sicher, dass Sie diese Ressourcen LÖSCHEN möchten? Die Ressourcen werden gelöscht und nicht (nur) aus dieser Kollektion entfernt.";
