@@ -272,6 +272,9 @@ if (substr($search,0,11)=="!collection")
 	$collection=explode(",",$collection);
 	$collection=$collection[0];
 	$collectiondata=get_collection($collection);
+	if (!$collectiondata){?>
+		<script>alert('<?php echo $lang["error-collectionnotfound"];?>');document.location='home.php'</script>
+	<?php } 
 	if ($collection_reorder_caption)
 		{
 	# Check to see if this user can edit (and therefore reorder) this resource
