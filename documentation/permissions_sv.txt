@@ -14,7 +14,7 @@ s	Kan söka efter material.
 v	Kan granska material med ”konfidentiell” åtkomst, kan även ladda ner material med ”begränsad” åtkomst.
 g	Har utan denna behörighet ”begränsad” åtkomst till allt material med ”begränsad/öppen” åtkomst.
 q	Kan begära/beställa material.
-w	Visa vattenstämplade förhandsgranskningar/miniatyrbilder ($watermark måste ställas in i config.php innan uppladdningen av materialet om en vattenstämpel ska läggas till.)
+w	Visa vattenstämplade förhandsgranskningar/miniatyrbilder. ($watermark måste ställas in i config.php innan uppladdningen av materialet om en vattenstämpel ska läggas till.)
 
 Metadatafält/materialtyper
 --------------------------
@@ -28,11 +28,13 @@ T?  NEKAS åtkomst till material med materialtypnr ?. (Material av denna typ dö
 T?_$ NEKAS åtkomst till material med materialtypnr ? OCH nedladdnings-/förhandsgranskningsstorlek $, t.ex. T1_scr nekar åtkomst till nedladdning av fotografier i bildskärmsstorlek. Använd ”T1_” (det vill säga utan nedladdnings-/förhandsgranskningsstorlek) för att neka åtkomst till materialets originalfil.
 X?  TILLÅTS ENDAST åtkomst till material med materialtypnr ?.
 X?_$	TILLÅTS ENDAST åtkomst till material med materialtypnr ? OCH nedladdnings-/förhandsgranskningsstorlek $, t.ex. X1_scr tillåter endast åtkomst till fotografier i bildskärmsstorlek.
+P?	TILLÅTS åtkomst till att redigera ett specifikt fält endast i uppladdningsformuläret. Tillåter användare att vid uppladdning förse materialet med information i ett fält som annars är dolt för dem.
 
 Skapa material
 --------------
 c	Kan skapa material / ladda upp filer - materialet får direkt statusen ”Aktivt”. (För administratörer.)
 d	Kan skapa material / ladda upp filer - materialet får statusen ”Redo för granskning”. (För vanliga användare.)
+
 e?	Kan redigera material med statusen ?. Exempel: e0, e1, e2. (Även ta bort.) 
 		e0: ”Aktivt” (synligt i en sökning)
 		e1: ”Redo för arkivering” (ej synligt i en sökning)
@@ -45,7 +47,7 @@ i	Kan hantera arkivmaterial.
 n	Kan tagga material i Snabbtaggning (måste vara aktiverat i config.php).
 
 Teman/samlingar
------------------
+---------------
 b	Kan inte se panelen Mina samlingar i nederkant av skärmen och kan inte använda tillhörande funktioner. (Rekommenderas inte för administratörsgrupper eftersom samlingar underlättar materialhanteringen.)
 h	Kan publicera teman, och redigera alla samlingar.
 j*	Kan se alla temakategorier.
@@ -63,6 +65,8 @@ a	Har åtkomst till trädet i Systemkonfiguration.
 t	Har åtkomst till sidan Administration.
 r	Kan hantera researchförfrågningar.
 R	Kan hantera begäranden/beställningar av material.
+Ra	Kan tilldela andra användare begäranden/beställningar av material.
+Rd	Kan bli tilldelad begäranden/beställningar av material (kan även se tilldelade begäranden/beställningar på sidan Hantera begäranden/beställningar).
 o	Kan hantera webbplatsens innehåll.
 m	Kan göra massutskick.
 u	Kan hantera användare.

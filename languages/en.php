@@ -70,11 +70,13 @@ $lang["fieldtitle-author"]="Author";
 $lang["fieldtype-text_box_single_line"]="Text Box (single line)";
 $lang["fieldtype-text_box_multi-line"]="Text Box (multi-line)";
 $lang["fieldtype-text_box_large_multi-line"]="Text Box (large multi-line)";
+$lang["fieldtype-text_box_formatted_and_ckeditor"]="Text Box (formatted / CKeditor)";
 $lang["fieldtype-check_box_list"]="Check box list";
 $lang["fieldtype-drop_down_list"]="Drop down list";
 $lang["fieldtype-date_and_time"]="Date / Time";
 $lang["fieldtype-expiry_date"]="Expiry Date";
 $lang["fieldtype-category_tree"]="Category Tree";
+$lang["fieldtype-dynamic_keywords_list"]="Dynamic Keywords List";
 
 # Property labels (for the default properties)
 $lang["documentation-permissions"]="See <a href=../../documentation/permissions.txt target=_blank>the permissions help text file</a> for further information on permissions.";
@@ -128,6 +130,8 @@ $lang["property-display_as_dropdown"]="Display as dropdown";
 $lang["property-external_user_access"]="External user access";
 $lang["property-autocomplete_macro"]="Autocomplete macro";
 $lang["property-hide_when_uploading"]="Hide when uploading";
+$lang["property-hide_when_restricted"]="Hide when restricted";
+$lang["property-omit_when_copying"]="Omit when copying";
 
 $lang["property-query"]="Query";
 

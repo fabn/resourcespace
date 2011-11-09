@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20110526 för version 2746
+# Senast uppdaterad av Henrik Frizén 20111109 för version 3004
 #
 #
 # User group names (for the default user groups)
@@ -95,11 +95,13 @@ $lang["fieldtitle-author"]="Författare";
 $lang["fieldtype-text_box_single_line"]="Textfält (enradigt)";
 $lang["fieldtype-text_box_multi-line"]="Textfält (flerradigt)";
 $lang["fieldtype-text_box_large_multi-line"]="Textfält (stort flerradigt)";
+$lang["fieldtype-text_box_formatted_and_ckeditor"]="Textfält (formaterat / CKeditor)";
 $lang["fieldtype-check_box_list"]="Kryssrutor (grupp)";
 $lang["fieldtype-drop_down_list"]="Rullgardinslista";
 $lang["fieldtype-date_and_time"]="Datum/tid";
 $lang["fieldtype-expiry_date"]="Utgångsdatum";
 $lang["fieldtype-category_tree"]="Kategoriträd";
+$lang["fieldtype-dynamic_keywords_list"]="Dynamisk nyckelordslista";
 
 # Property labels (for the default properties)
 $lang["documentation-permissions"]="Se <a href=../../documentation/permissions_sv.txt target=_blank>hjälpfilen för behörigheter</a> om du behöver mer information.";
@@ -127,7 +129,7 @@ $lang["property-field_id"]="Fält-nr";
 $lang["property-title"]="Titel";
 $lang["property-resource_type"]="Materialtyp";
 $lang["property-field_type"]="Fälttyp";
-$lang["information-options"]="<br /><b>Observera</b> &ndash; det är bättre att använda Hantera fältalternativ i Hantera material i Administration för att redigera fältalternativen, eftersom lagrad data då överförs automatiskt om du byter namn på ett alternativ.";
+
 $lang["property-options"]="Alternativ";
 $lang["property-required"]="Obligatoriskt";
 $lang["property-order_by"]="Sorteringsnummer";
@@ -153,6 +155,8 @@ $lang["property-display_as_dropdown"]="Visa som rullgardinslista";
 $lang["property-external_user_access"]="Tillåt åtkomst för externa användare";
 $lang["property-autocomplete_macro"]="Autoförslagsmakro";
 $lang["property-hide_when_uploading"]="Dölj vid uppladdning";
+$lang["property-hide_when_restricted"]="Dölj vid begränsad åtkomst";
+$lang["property-omit_when_copying"]="Utelämna vid kopiering";
 
 $lang["property-query"]="Fråga";
 
@@ -237,7 +241,7 @@ $lang["selectfiles"]="Välj filer";
 $lang["searchcontent"]="Sök innehåll";
 $lang["ticktodeletehelp"]="Markera kryssrutan och klicka på 'Spara' för att ta bort textavsnittet (på alla språk)";
 $lang["createnewhelp"]="Skapa ett nytt hjälpavsnitt";
-$lang["searchcontenteg"]="(sida, namn eller text)";
+$lang["searchcontenteg"]="(sida, namn, text)";
 $lang["copyresource"]="Kopiera material";
 $lang["resourceidnotfound"]="Materialnumret hittades inte";
 $lang["inclusive"]="(inklusive)";
@@ -299,6 +303,7 @@ $lang["contributedsubittedl"]="Mina bidrag &ndash; aktiva";
 
 # Collections
 $lang["editcollection"]="Redigera samling";
+$lang["editcollectionresources"]="Redigera samlingens förhandsgranskningar...";
 $lang["access"]="Åtkomst";
 $lang["private"]="Privat";
 $lang["public"]="Publik";
@@ -319,7 +324,7 @@ $lang["emailtousers"]="Mottagare<br><br><b>För mottagare med användarkonto (in
 $lang["removecollectionareyousure"]="Är du säker på att du vill avlägsna den här samlingen från listan?";
 $lang["managemycollections"]="Hantera 'Mina samlingar'";
 $lang["createnewcollection"]="Skapa ny samling";
-$lang["findpubliccollection"]="Hitta en publik samling";
+$lang["findpubliccollection"]="Publika samlingar";
 $lang["searchpubliccollections"]="Sök publika samlingar";
 $lang["addtomycollections"]="Lägg till i mina samlingar";
 $lang["action-addtocollection"]="Lägg till i samling";
@@ -376,12 +381,12 @@ $lang["upload"]="Uppladdning";
 $lang["action-upload"]="Ladda upp";
 $lang["uploadafile"]="Ladda upp fil";
 $lang["replacefile"]="Ersätt fil";
-$lang["imagecorrection"]="Bildkorrigering";
+$lang["imagecorrection"]="Redigera förhandsgranskningar";
 $lang["previewthumbonly"]="(endast förhandsgranskning/miniatyrbild)";
 $lang["rotateclockwise"]="Rotera medurs";
 $lang["rotateanticlockwise"]="Rotera moturs";
-$lang["increasegamma"]="Öka gamma (ljusare)";
-$lang["decreasegamma"]="Minska gamma (mörkare)";
+$lang["increasegamma"]="Ljusa upp förhandsgranskningar";
+$lang["decreasegamma"]="Mörka ner förhandsgranskningar";
 $lang["restoreoriginal"]="Återställ original";
 $lang["recreatepreviews"]="Återskapa förhandsgranskningar";
 $lang["retrypreviews"]="Försök skapa förhandsgranskningar igen";
@@ -893,8 +898,8 @@ $lang["setup-successdetails"]="Den grundläggande delen av installationen av Res
 $lang["setup-successnextsteps"]="Nästa steg:";
 $lang["setup-successremovewrite"]="Du bör nu avlägsna skrivrättigheten till mappen 'include/'.";
 $lang["setup-visitwiki"]='Besök <a href="http://wiki.resourcespace.org/index.php/Main_Page">ResourceSpace Documentation Wiki</a> (engelskspråkig wiki) för att hitta mer information om hur du anpassar din installation.';
-$lang["setup-checkconfigwrite"]="Skrivrättighet till konfigurationsmapp:";
-$lang["setup-checkstoragewrite"]="Skrivrättighet till lagringsmapp:";
+$lang["setup-checkconfigwrite"]="Skrivrättighet till konfigurationskatalog:";
+$lang["setup-checkstoragewrite"]="Skrivrättighet till lagringskatalog:";
 $lang["setup-welcome"]="Välkommen till ResourceSpace";
 $lang["setup-introtext"]="Tack för att du väljer ResourceSpace. Detta konfigurationsskript hjälper dig att installera ResourceSpace. Detta behöver endast göras en gång.";
 $lang["setup-checkerrors"]="Fel upptäcktes i din systemkonfiguration.<br/> Var vänlig åtgärda dessa fel och peka sen webbläsaren till den här sidan igen för att fortsätta.";
@@ -964,7 +969,7 @@ $lang["setup-themes_as_home"]="Använd sidan Teman som startsida?";
 $lang["setup-remote_storage_locations"]="Platser för fjärrlagring";
 $lang["setup-use_remote_storage"]="Använd fjärrlagring?";
 $lang["setup-if_useremotestorage"]="Markera den här kryssrutan för att konfigurera fjärrlagring för ResourceSpace. (För att placera lagringsmappen på en annan server.)";
-$lang["setup-storage_directory"]="Lagringsmapp";
+$lang["setup-storage_directory"]="Lagringskatalog";
 $lang["setup-if_storagedirectory"]="Var materialfilerna lagras. Kan vara en absolut sökväg (/var/www/blah/blah) eller relativ till installationen. OBS! Inget efterföljande snedstreck.";
 $lang["setup-storage_url"]="Lagringsmappens webbadress";
 $lang["setup-if_storageurl"]="Var lagringsmappen finns tillgänglig. Kan vara absolut (http://filer.exempel.se) eller relativ till installationen. OBS! Inget efterföljande snedstreck.";
@@ -989,7 +994,7 @@ $lang["collectionlog-s"]="Delade material med ";//  + notes field
 $lang["collectionlog-T"]="Slutade dela samlingen med ";//  + notes field
 $lang["collectionlog-t"]="Återtog åtkomst till material för ";//  + notes field
 $lang["collectionlog-X"]="Tog bort samlingen";
-
+$lang["collectionlog-b"]="Transformerade som grupp";
 
 $lang["viewuncollectedresources"]="Visa material som inte ingår i samlingar";
 
@@ -1111,7 +1116,7 @@ $lang['plugins-rejparentpath'] = 'Arkivet innehåller överliggande sökvägar (
 $lang['plugins-rejmetadata'] = 'Arkivets dokumentationsfil hittades inte.';
 $lang['plugins-rejarchprob'] = 'Det uppstod ett problem under uppackningen:';
 $lang['plugins-rejfileprob'] = 'Tillägget måste vara en rsp-fil.';
-$lang['plugins-rejremedy'] = "Om du litar på detta tillägg kan du installera det manuellt genom att packa upp arkivet direkt i mappen 'plugins'.";
+$lang['plugins-rejremedy'] = "Om du litar på detta tillägg kan du installera det manuellt genom att packa upp arkivet direkt i katalogen 'plugins'.";
 $lang['plugins-uploadsuccess'] = 'Uppladdningen av tillägget slutfördes korrekt';
 $lang['plugins-headertext'] = 'Tillägg utvidgar funktionerna för ResourceSpace.';
 $lang['plugins-legacyinst'] = 'Aktiverat via config.php';
@@ -1121,9 +1126,10 @@ $lang['plugins-uploadbutton'] = 'Ladda upp tillägg';
 $lang['location-title'] = 'Platsinformation';
 $lang['location-add'] = 'Lägg till plats';
 $lang['location-edit'] = 'Redigera plats';
-$lang['location-details'] = 'Dubbelklicka på kartan för att placera nålen. Du kan dra i nålen för att justera placeringen i efterhand.';
+$lang['location-details'] = 'Använd "Dragläge" för att växla mellan att placera nålen och att panorera. Använd zoomkontrollerna för att zooma in och ut. Klicka på Spara för att spara nålposition och zoomnivå.';
 $lang['location-noneselected']="Ingen plats vald";
 $lang['location'] = 'Plats';
+$lang['mapzoom'] = 'Kartzoomning';
 
 $lang["publiccollections"]="Publika samlingar";
 $lang["viewmygroupsonly"]="Visa bara mina grupper";
@@ -1293,7 +1299,7 @@ $lang["writeaccesstofilestore"]="Skrivrättighet till mappen $storagedir finns?"
 $lang["nowriteaccesstofilestore"]="Skrivrättighet till mappen $storagedir saknas.";
 $lang["writeaccesstohomeanim"]="Skrivrättighet till mappen $homeanim_folder finns?";
 $lang["nowriteaccesstohomeanim"]="Skrivrättighet till mappen $homeanim_folder saknas. Skrivrättighet måste finnas för att tillägget 'transform' ska kunna infoga bilder i startsidans bildspel.";
-$lang["blockedbrowsingoffilestore"]="Åtkomsten till mappen 'filestore' är blockerad för webbläsare?";
+$lang["blockedbrowsingoffilestore"]="Åtkomsten till katalogen 'filestore' är blockerad för webbläsare?";
 $lang["noblockedbrowsingoffilestore"]="Mappen 'filestore' är inte blockerad för webbläsare. Avlägsna 'Indexes' från 'Options' i Apache.";
 $lang["executionofconvertfailed"]="Exekveringen misslyckades. Oväntat svar när kommandot exekverades. Svaret var '?'.<br>I Windows och IIS&nbsp;6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
 $lang["exif_extension"]="Exif-utökning";
@@ -1418,8 +1424,8 @@ $lang["purgeusersnousers"]="Det finns inga användare att rensa ut.";
 $lang["editallresourcetypewarning"]="Varning: Om du ändrar materialtypen kommer eventuell redan lagrad typspecifik metadata för materialet att tas bort.";
 
 $lang["geodragmode"]="Dragläge";
-$lang["geodragmodearea"]="Områdesval";
-$lang["geodragmodepan"]="Panorering";
+$lang["geodragmodearea"]="placera nål";
+$lang["geodragmodepan"]="panorera";
 
 $lang["substituted_original"] = "ersattes av original";
 $lang["use_original_if_size"] = "Använd original om vald storlek är otillgänglig?";
@@ -1444,7 +1450,8 @@ $lang["cc-emailaddress"] = "Kopia till %emailaddress"; # %emailaddress will be r
 
 $lang["sort"] = "Sortera";
 $lang["sortcollection"] = "Sortera samling";
-$lang["emptycollection"] = "Avlägsna materialet";
+$lang["emptycollection"] = "Avlägsna materialen";
+$lang["deleteresources"] = "Ta bort materialen";
 $lang["emptycollectionareyousure"]="Är du säker på att du vill avlägsna allt material ur den här samlingen?";
 
 $lang["error-cannoteditemptycollection"]="Du kan inte redigera en tom samling.";
@@ -1473,3 +1480,41 @@ $lang["owned_by_you-2"] = "(<strong>%mynumber</strong> ägda av dig)"; # %mynumb
 
 $lang["listresources"]= "Material:";
 $lang["action-log"]="Visa logg";
+ 
+$lang["saveuserlist"]="Spara den här listan";
+$lang["deleteuserlist"]="Ta bort den här listan";
+$lang["typeauserlistname"]="Ange ett användarlistenamn...";
+$lang["loadasaveduserlist"]="Läs in en sparad användarlista";
+ 
+$lang["searchbypage"]="Sök sida";
+$lang["searchbyname"]="Sök namn";
+$lang["searchbytext"]="Sök text";
+$lang["saveandreturntolist"]="Spara och återvänd till lista";
+$lang["backtomanagecontent"]="Tillbaka till Hantera webbplatsens innehåll";
+$lang["editcontent"]="Redigera innehåll";
+ 
+$lang["confirmcollectiondownload"]="Var vänlig och vänta medan ett zip-arkiv skapas. Detta kan ta en stund och tiden är beroende av den totala storleken av dina material.";
+ 
+$lang["starttypingkeyword"]="Ange nyckelord...";
+$lang["createnewentryfor"]="Skapa nytt nyckelord: ";
+$lang["confirmcreatenewentryfor"]="Är du säker på att du vill skapa en ny post i nyckelordslistan för '%%'?";
+ 
+$lang["editresourcepreviews"]="Redigera materialens förhandsgranskningar";
+ 
+$lang["can_assign_resource_requests"]="Kan tilldela andra användare begäranden/beställningar av material";
+$lang["can_be_assigned_resource_requests"]="Kan bli tilldelad begäranden/beställningar av material (kan även se tilldelade begäranden/beställningar på sidan Hantera begäranden/beställningar)";
+ 
+$lang["declinereason"]="Skäl för avslag";
+$lang["requestnotassignedtoyou"]="Tyvärr, denna begäran/beställning är inte längre tilldelad dig. Den är nu tilldelad användare %.";
+$lang["requestassignedtoyou"]="Materialbegäran/beställning tilldelad dig";
+$lang["requestassignedtoyoumail"]="En materialbegäran/beställning har tilldelats dig. Var vänlig och bifall eller avslå den genom att använda länken nedan.";
+ 
+$lang["manageresources-overquota"]="Materialhantering inaktiverad - du har överskridit din diskutrymmestilldelning";$lang["searchitemsdiskusage"]="Beräkna diskutrymme använt av resultatet";
+$lang["matchingresourceslabel"]="Matchande material";
+ 
+$lang["saving"]="Sparar...";
+$lang["saved"]="Sparat";
+ 
+$lang["resourceids"]="Materialnummer";
+ 
+$lang["warningrequestapprovalfield"]="!!! Varning - materialnummer % - notera följande innan ett eventuellt godkännande !!!";
