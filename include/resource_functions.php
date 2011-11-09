@@ -896,6 +896,8 @@ function copy_resource($from,$resource_type=-1)
 	# Log this			
 	daily_stat("Create resource",$to);
 	resource_log($to,'c',0);
+
+	hook("afternewresource", "", array($to));
 	
 	return $to;
 	}
