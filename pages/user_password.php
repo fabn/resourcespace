@@ -25,7 +25,7 @@ include "../include/header.php";
 	<div class="Question">
 	<label for="email"><?php echo $lang["youremailaddress"]?></label>
 	<input type=text name="email" id="email" class="stdwidth" value="<?php echo htmlspecialchars(getval("email",""))?>">
-	<?php if (isset($error)) { ?><div class="FormError">!! <?php echo $lang["emailnotfound"]?> !!</div><?php } ?>
+	<?php if (isset($error)) { ?><div class="FormError">!! <?php echo $lang["emailnotfound"]?> !!</div><?php hook("userpasswdextramsg"); ?><?php } ?>
 	<div class="clearerleft"> </div>
 	</div>
 	

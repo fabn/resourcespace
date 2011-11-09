@@ -26,6 +26,9 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 	# Build a search query from the search form
 	$search=search_form_to_search_query($fields);
 			$search=refine_searchstring($search);
+
+	hook("moresearchcriteria");
+
 	if (getval("countonly","")!="")
 		{
 		# Only show the results (this will appear in an iframe)
@@ -198,6 +201,8 @@ for ($n=0;$n<count($types);$n++)
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+
+<?php hook('advsearchaddfields'); ?>
 
 <iframe src="blank.html" name="resultcount" id="resultcount" style="visibility:hidden;" width=1 height=1></iframe>
 <?php

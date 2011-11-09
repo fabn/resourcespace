@@ -18,6 +18,8 @@ if ($k!="") {$use_checkboxes_for_selection=false;}
 
 $search=getvalescaped("search","");
 
+hook("moresearchcriteria");
+
 # create a display_fields array with information needed for detailed field highlighting
 $df=array();
 
