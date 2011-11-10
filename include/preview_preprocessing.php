@@ -49,11 +49,26 @@ debug ("Starting preview preprocessing. File extension is $extension.");
 hook("metadata");
 
 /* ----------------------------------------
+	Plugin-added preview support
+   ----------------------------------------
+*/
+
+$preview_preprocessing_results=hook("previewsupport","", array( "extension" => $extension ,"file"=>$file,"target"=>$target));
+if (is_array($preview_preprocessing_results)){
+	if (isset($preview_preprocessing_results['file'])){
+		$file=$preview_preprocessing_results['file'];
+	}
+	if (isset($preview_preprocessing_results['extension'])){
+		$extension=$preview_preprocessing_results['extension'];
+	}
+}
+
+/* ----------------------------------------
 	QuickLook Previews (Mac only)
 	For everything except Audio/Video files, attempt to generate a QuickLook preview first.
    ----------------------------------------
 */
-if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extensions) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions))
+if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extensions) && !in_array($extension, $ffmpeg_supported_extensions) && !in_array($extension, $ffmpeg_audio_extensions) && !isset($newfile))
 	{
 	$qlpreview_command=$qlpreview_path."/qlpreview -generatePreviewOnly yes -imageType jpg -maxWidth 800 -maxHeight 800 -asIcon no -preferFileIcon no -inPath " . escapeshellarg($file) . " -outPath " . escapeshellarg($target);
 	debug("qlpreview command: " . $qlpreview_command);
@@ -61,7 +76,6 @@ if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extension
 	#sleep(4); # Delay to allow processing
 	if (file_exists($target)){$newfile = $target;debug("qlpreview success!");}	
 	}
-
 
 /* ----------------------------------------
 	Try InDesign - for non-exiftool - CS4 not supported
