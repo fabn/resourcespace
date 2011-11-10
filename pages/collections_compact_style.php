@@ -73,7 +73,7 @@ if ($pagename=="search" || $pagename=="collections"){?>
 			?> class="SearchWidth"<?php 
 		} 
 	}
-if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes'){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes'){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
+if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view"){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view"){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
 
  
  <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
