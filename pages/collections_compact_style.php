@@ -194,7 +194,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <!-- purge -->
 <?php if (!checkperm("b") && $collection_purge && $count_result>0){ 
     if (checkperm("e0") && $cinfo["cant_delete"] == 0) {
-        ?><option id="purge" value="<?php echo $collection?>|<?php echo $lang["purgecollectionareyousure"]?>|collection_manage.php?purge=<?php echo $collection?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|collections';}else {echo 'collections.php|collections|false';}?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
+        ?><option id="purge" value="<?php echo $collection?>|<?php echo $lang["purgecollectionareyousure"]?>|collection_manage.php?purge=<?php echo $collection?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|collections';}else {echo 'collections.php|collections|main';}?>">&gt;&nbsp;<?php echo $lang["purgeanddelete"]?>...</option><?php 
     } 
 } ?>
 <!-- end purge -->
