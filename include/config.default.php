@@ -1784,3 +1784,9 @@ $show_searchitemsdiskusage=true;
 
 # If set, which field will cause warnings to appear when approving requests containing these resources?
 #$warn_field_request_approval=115;
+
+# Normally, image tweaks are only applied to scr size and lower. 
+# If using Magictouch, you may want tweaks like rotation to be applied to the larger images as well.
+# This could require recreating previews to sync up the various image rotations.
+$tweak_all_images=false;
+$tweak_allow_gamma=true;

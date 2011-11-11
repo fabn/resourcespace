@@ -95,8 +95,10 @@ else
 	<?php
 	}
 ?>
+<?php if ($tweak_allow_gamma){?>
 <option value="gammaplus"><?php echo $lang["increasegamma"]?></option>
 <option value="gammaminus"><?php echo $lang["decreasegamma"]?></option>
+<?php } ?>
 <option value="restore"><?php echo $lang["recreatepreviews"]?></option>
 
 ?>

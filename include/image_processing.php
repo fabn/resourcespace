@@ -1001,14 +1001,30 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	# On the edit screen, preview images can be either rotated or gamma adjusted. We keep the high(original) and low resolution print versions intact as these would be adjusted professionally when in use in the target application.
 
 	# Use the screen resolution version for processing
-	$file=get_resource_path($ref,true,"scr",false,$extension);
-	if (!file_exists($file)) {
-	# Some images may be too small to have a scr.  Try pre:
-	$file=get_resource_path($ref,true,"pre",false,$extension);}
-	if (!file_exists($file)) {return false;}
+	global $tweak_all_images;
+	if ($tweak_all_images){
+		$file=get_resource_path($ref,true,"hpr",false,$extension);$top="hpr";
+		if (!file_exists($file)) {
+			$file=get_resource_path($ref,true,"lpr",false,$extension);$top="lpr";
+			if (!file_exists($file)) {
+				$file=get_resource_path($ref,true,"scr",false,$extension);$top="scr";
+				if (!file_exists($file)) {
+					$file=get_resource_path($ref,true,"pre",false,$extension);$top="pre";
+				}
+			}
+		}
+	}
+	else {
+		$file=get_resource_path($ref,true,"scr",false,$extension);$top="scr";
+		if (!file_exists($file)) {
+			# Some images may be too small to have a scr.  Try pre:
+			$file=get_resource_path($ref,true,"pre",false,$extension);$top="pre";
+		}
+	}
 	
+	if (!file_exists($file)) {return false;}
     $source = imagecreatefromjpeg($file);
-		
+		print_r($source);
 	# Apply tweaks
 	if ($rotateangle!=0)
 		{
@@ -1033,29 +1049,36 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
     list($tw,$th) = @getimagesize($file);	
     
 	# Save all images
-	$ps=sql_query("select * from preview_size where (internal=1 or allow_preview=1) and id<>'scr'");
+	if ($tweak_all_images){
+		$ps=sql_query("select * from preview_size where id<>'$top'");
+	}
+	else {
+		$ps=sql_query("select * from preview_size where (internal=1 or allow_preview=1) and id<>'$top'");
+	}
 	for ($n=0;$n<count($ps);$n++)
 		{
 		# fetch target width and height
 	    $file=get_resource_path($ref,true,$ps[$n]["id"],false,$extension);		
-	    list($sw,$sh) = @getimagesize($file);
+	    if (file_exists($file)){
+			list($sw,$sh) = @getimagesize($file);
 	    
-		if ($rotateangle!=0) {$temp=$sw;$sw=$sh;$sh=$temp;}
+			if ($rotateangle!=0) {$temp=$sw;$sw=$sh;$sh=$temp;}
 		
-		# Rescale image
-		$target = imagecreatetruecolor($sw,$sh);
-		imagecopyresampled($target,$source,0,0,0,0,$sw,$sh,$tw,$th);
-		if ($extension=="png")
-			{
-			imagepng($target,$file);
-			}
-		elseif ($extension=="gif")
-			{
-			imagegif($target,$file);
-			}
-		else
-			{
-			imagejpeg($target,$file,95);
+			# Rescale image
+			$target = imagecreatetruecolor($sw,$sh);
+			imagecopyresampled($target,$source,0,0,0,0,$sw,$sh,$tw,$th);
+			if ($extension=="png")
+				{
+				imagepng($target,$file);
+				}
+			elseif ($extension=="gif")
+				{
+				imagegif($target,$file);
+				}
+			else
+				{
+				imagejpeg($target,$file,95);
+				}
 			}
 		}
 
