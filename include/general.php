@@ -3144,9 +3144,41 @@ function format_display_field($value){
 	return $string;
 }
 
+// found multidimensional array sort function to support the performance footer
+// http://www.php.net/manual/en/function.sort.php#104464
+ function sortmulti ($array, $index, $order, $natsort=FALSE, $case_sensitive=FALSE) {
+        if(is_array($array) && count($array)>0) {
+            foreach(array_keys($array) as $key)
+            $temp[$key]=$array[$key][$index];
+            if(!$natsort) {
+                if ($order=='asc')
+                    asort($temp);
+                else   
+                    arsort($temp);
+            }
+            else
+            {
+                if ($case_sensitive===true)
+                    natsort($temp);
+                else
+                    natcasesort($temp);
+            if($order!='asc')
+                $temp=array_reverse($temp,TRUE);
+            }
+            foreach(array_keys($temp) as $key)
+                if (is_numeric($key))
+                    $sorted[]=$array[$key];
+                else   
+                    $sorted[$key]=$array[$key];
+            return $sorted;
+        }
+    return $sorted;
+}
+
 function draw_performance_footer(){
 	global $config_show_performance_footer,$querycount,$querytime,$querylog,$pagename;
 	if ($config_show_performance_footer){	
+	$querylog=sortmulti ($querylog, "time", "desc", FALSE, FALSE);
 	# --- If configured (for debug/development only) show query statistics
 	?>
 	<?php if ($pagename=="collections"){?><br/><br/><br/><br/><br/><br/><br/>
