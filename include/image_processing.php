@@ -1024,7 +1024,6 @@ function tweak_preview_images($ref,$rotateangle,$gamma,$extension="jpg")
 	
 	if (!file_exists($file)) {return false;}
     $source = imagecreatefromjpeg($file);
-		print_r($source);
 	# Apply tweaks
 	if ($rotateangle!=0)
 		{
