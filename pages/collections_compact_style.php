@@ -204,7 +204,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <!-- end empty-->
 
 <!-- delete resources *-->
-<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D") && $count_result>0) {?>&nbsp;<option id="removeall" value="<?php echo $collection?>|<?php echo $lang["deleteallsure"]?>|collection_manage.php?deleteall=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|collections';}else {echo 'collections.php|collections|both';}?>">&gt;&nbsp;<?php echo $lang["deleteresources"]?>...</option><?php } ?>
+<?php if ((checkperm("e0") || checkperm("e1") || checkperm("e2")) && !checkperm("D") && $count_result>0) {?>&nbsp;<option id="removeall" value="<?php echo $collection?>|<?php echo $lang["deleteallsure"]?>|collection_manage.php?deleteall=<?php echo $collection?>|<?php if (in_array($pagename,$main_pages)){echo $pagename.'.php|main|collections';}else {echo 'collections.php|collections|main';}?>">&gt;&nbsp;<?php echo $lang["deleteresources"]?>...</option><?php } ?>
 <!-- end delete resources-->
 
 <!-- upload *-->
