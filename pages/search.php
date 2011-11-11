@@ -1077,7 +1077,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		?>
 		</div>
 		<?php } ?>
-		
+		<?php if (!hook("replaceicons")) { ?>
+		<?php hook("icons");?>
+		<?php } //end hook replaceicons ?>
+
 		<?php
 		# smallthumbs_display_fields
 		for ($x=0;$x<count($df);$x++)
