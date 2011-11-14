@@ -2996,6 +2996,7 @@ function get_temp_dir($asUrl = false)
     if($asUrl==true)
     {
         $result = convert_path_to_url($result);
+	$result = str_replace('\\','/',$result);
     }
     return $result;
 }
