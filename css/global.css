@@ -202,7 +202,7 @@ option {font-size:11px;}
 .AutoSaveStatus {font-weight: bold;float:right;padding:6px 0 0;}
 
 /*Record Panel layout*/
-.RecordBox {margin: 0px 15px 15px 0px;}
+.RecordBox {margin: 15px 15px 15px 0px;}
 .RecordPanel {padding: 6px 6px 16px;}
 .RecordPanel .RecordHeader {}
 .RecordPanel h1 {}
