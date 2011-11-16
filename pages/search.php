@@ -1121,7 +1121,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		
 		
 		<?php hook("smallsearchfreeicon");?>
-		<div class="ResourcePanelSmallIcons">
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 		<?php hook("smallsearchicon");?>
 		<?php if (!hook("replaceresourcetoolssmall")){?>
 		<span class="IconPreview">
@@ -1138,7 +1138,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php } ?>
 		<?php } ?>
 		<?php } // end hook replaceresourcetoolssmall ?>
-		</div>
+		
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
 		 

@@ -1,4 +1,5 @@
 /*Create Base font for relative sizing*/
+
 body {width:100%;margin:0;padding:0;font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;text-align: center;}
 td, textarea {font-family:Tahoma, Arial, Helvetica, sans-serif;font-size:11px;}
 
@@ -49,7 +50,7 @@ option {font-size:11px;}
 #CentralSpaceLogin {margin: 2em auto 4em;padding:0;width: 560px;text-align:left;}
 #CentralSpace {text-align:left;}
 
-.TopInpageNav {margin-bottom: 10px;margin-right: 15px;clear: left;text-align: right;padding-bottom: 5px;}
+.TopInpageNav {margin-top:20px;margin-bottom: 10px;margin-right: 15px;clear: left;text-align: right;padding-bottom: 5px;}
 .BottomInpageNav {clear: left;text-align: right;padding-top: 5px;margin: 5px 15px 0px 0px;}
 .BottomInpageKey {margin-right: 15px;clear: left;text-align: left;}
 .InpageNavLeftBlock {float:left;text-align:left;margin-right: 20px;margin-bottom: 10px;}
@@ -111,25 +112,25 @@ option {font-size:11px;}
 
 /*Resource Panel layout*/
 .ResourcePanelShell {padding:0;float: left;margin: 0px 15px 10px 0px;width: 164px;}
-.ResourcePanel {padding:0;margin:0;width: 162px;}
+.ResourcePanel {padding:0;margin:0;width: 162px;padding-bottom:5px;}
 .ResourcePanelPreview {height: 156px;width: 156px;margin: 3px;}
-.ResourcePanelInfo {margin-right: 5px;margin-left: 5px;margin-bottom: 2px;overflow:hidden;white-space:nowrap;}	
+.ResourcePanelInfo {margin-right: 5px;margin-left: 5px;margin-bottom: 8px;overflow:hidden;}	
 .ResourcePanelCountry {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
-.ResourcePanelIcons {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
-.ResourcePanelSmallIcons {margin-top:3px;margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: right;clear: left;display:inline;}	
-.ResourcePanelIcon {margin-right: 3px;margin-left: 5px;float: right;}
-.ResourcePanelIcon img {margin-left: 2px;border-style: none;}
+.ResourcePanelIcons {padding-left: 5px;display:inline;}	
+.ResourcePanelSmallIcons {padding-left: 5px;display:inline;}	
+/*.ResourcePanelIcon {margin-right: 3px;margin-left: 5px;display: block;float: right;}
+.ResourcePanelIcon img {margin-left: 2px;border-style: none;}*/
 .ResourceAlign {width:162px;height:167px;text-align: center;vertical-align: middle;}
 .ResourcePanelShell a:link, .ResourcePanelShell a:visited {text-decoration:none;}
 .ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
 
 
-.ResourcePanelShellSmall {padding:0 0 10px; float: left;margin: 0px 15px 0px 0px;width: 95px;}
-.ResourcePanelSmall {padding:0;margin:0;width: 95px;}
+.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 95px;}
+.ResourcePanelSmall {padding:0;margin:0;width: 95px;padding-bottom:5px;}
 .ResourceAlignSmall {width:95px;height:90px;text-align: center;vertical-align: middle;}
 
 .ResourcePanelShellLarge {padding:0 0 10px; float: left;margin: 0px 15px 0px 0px;width: 365px;}
-.ResourcePanelLarge {padding:0;margin:0;width: 365px;}
+.ResourcePanelLarge {padding:0;margin:0;width: 365px;padding-bottom:5px;}
 .ResourceAlignLarge {width:365px;height:365px;text-align: center;vertical-align: middle;}
 
 .IconCollect	{width: 22px;height:12px;padding: 0;display: block;float: right;margin-right: 5px;}
@@ -244,9 +245,9 @@ option {font-size:11px;}
 
 
 /* Basic page */
-.BasicsBox {margin: 0px 15px 15px 0px;}
+.BasicsBox {margin:20px 15px 15px 0px;}
 .BasicsBox h1 {padding: 0px 0px 0.5em;}
-.BasicsBox h2 {font-size: 1.2em;margin-bottom: 4px;}
+.BasicsBox h2 {height:5px;font-size: 1.2em;margin-bottom: 4px;}
 .BasicsBox .HorizontalNav ul {padding:0.2em 0;margin:0 0 1.5em;list-style:none;}
 .BasicsBox .HorizontalNav li {display:inline;padding:0em 1em 0em 0em;margin:0em 0.5em 0em 0em;}
 .BasicsBox .VerticalNav ul {padding:0.2em 0;margin:0 0 1.5em;list-style:none;}
