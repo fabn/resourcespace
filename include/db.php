@@ -31,7 +31,7 @@ if (!function_exists('mysql_set_charset'))
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
 	{
-	global $baseurl,$pagename, $show_report_bug_link;
+	global $baseurl,$pagename, $show_report_bug_link,$email_errors;
 	if (!error_reporting()) {return true;}
 	if (!isset($pagename) || $pagename!="upload_java")
 		{
@@ -46,6 +46,10 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 		<?php } ?>
 		</div>
 		<?php
+		if ($email_errors){
+			global $email_notify,$email_from;
+			send_mail($email_notify,"Error",$errfile." line ".$errline.": ".$errstr,$email_from,$email_from,"",null,"Error Reporting",false);
+			}
 		exit();
 		}
 	else

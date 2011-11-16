@@ -1790,3 +1790,6 @@ $show_searchitemsdiskusage=true;
 # This could require recreating previews to sync up the various image rotations.
 $tweak_all_images=false;
 $tweak_allow_gamma=true;
+
+# experimental email notification of php errors to $email_notify
+$email_errors=false;
