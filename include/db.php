@@ -868,7 +868,7 @@ function register_plugin($plugin,$config="")
 	$configpath=dirname(__FILE__)."/../plugins/" . $plugin . "/config/config.php";
 	if (file_exists($configpath)) {include $configpath;}
 	
-	eval ($config);
+	//eval ($config);
 	
 	# Copy config variables to global scope.
 	$vars=get_defined_vars();
