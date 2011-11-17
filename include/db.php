@@ -848,7 +848,7 @@ function daily_stat($activity_type,$object_ref)
 		}
 	}    
 	
-function register_plugin($plugin,$config)
+function register_plugin($plugin,$config="")
 	{
 	global $plugins,$language,$pagename,$lang,$applicationname;
 
