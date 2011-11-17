@@ -156,13 +156,13 @@ if ($use_plugins_manager){
 			}
 		}
 	}
-	$active_plugins = (sql_query("SELECT name,enabled_groups FROM plugins WHERE inst_version>=0"));
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0"));
 	foreach($active_plugins as $plugin){
 	
 		# Check group access, only enable for global access at this point
 		if ($plugin['enabled_groups']=='')
 			{
-			register_plugin($plugin['name']);
+			register_plugin($plugin['name'],$plugin['config']);
 			}
 	}
 }
@@ -848,7 +848,7 @@ function daily_stat($activity_type,$object_ref)
 		}
 	}    
 	
-function register_plugin($plugin)
+function register_plugin($plugin,$config)
 	{
 	global $plugins,$language,$pagename,$lang,$applicationname;
 
@@ -867,6 +867,9 @@ function register_plugin($plugin)
 	# Also include plugin configuration.
 	$configpath=dirname(__FILE__)."/../plugins/" . $plugin . "/config/config.php";
 	if (file_exists($configpath)) {include $configpath;}
+	
+	eval ($config);
+	
 	# Copy config variables to global scope.
 	$vars=get_defined_vars();
 	foreach ($vars as $name=>$value)
