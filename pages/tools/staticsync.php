@@ -308,6 +308,7 @@ function ProcessFolder($folder)
 						
 						echo "Resource $rref has changed, regenerating previews: $fullpath\n";
 						create_previews($rref,false,$rd["file_extension"]);
+						extract_exif_comment($rref,$rd["file_extension"]);
 						sql_query("update resource set file_modified=now() where ref='$rref'");
 						}
 					}
