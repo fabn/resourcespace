@@ -146,7 +146,7 @@ function get_plugin_config($name){
     if ($config=='')
         return null;
     else
-    	return unserialize($config);
+    	return $config;
 }
 /**
  * Store a plugin's configuration in the database.
@@ -166,7 +166,7 @@ function get_plugin_config($name){
  * @see get_plugin_config
  */
 function set_plugin_config($plugin_name, $config){
-	$config_ser = serialize($config);
+	$config_ser =  base64_encode(serialize($config));
 	sql_query("UPDATE plugins SET config='$config_ser' WHERE name='$plugin_name'");
 	return true;
 }
@@ -186,4 +186,74 @@ function is_plugin_activated($name){
     else {
         return false;
     }
+}
+
+function config_text_field($name,$label,$value){
+	?><div class="Question">
+	<label for="<?php echo $name?>"><?php echo $label?>:</label>
+	<input name="<?php echo $name?>" type="text" value='<?php echo htmlspecialchars($value,ENT_QUOTES);?>' size="30" />
+	</div><div class="clearerleft"></div>
+	<?php 
+}
+
+function config_userselect_field($name,$label,$values=array()){
+	?><div class="Question">
+	<label for="<?php echo $name?>[]"><?php echo $label?>:</label> 
+	<select name="<?php echo $name?>[]" multiple="multiple" size="7">
+	<?php $users=get_users(); 
+	foreach ($users as $user){?>
+	<option value="<?php echo $user['ref'];?>" <?php if (in_array($user['ref'],$values)){?>selected<?php } ?>><?php echo $user['fullname'];?> (<?php echo $user['email']?>)</option>
+	<?php } ?>
+	</select>
+	</div><div class="clearerleft"></div>
+<?php 
+}
+
+function config_field_select($name,$label,$value){
+	$fields=sql_query("select * from resource_type_field");?>
+	<div class="Question">
+	<label for="<?php echo $name?>"><?php echo $label?>:</label> 
+	<select name="<?php echo $name?>">
+	<?php foreach($fields as $field){?>
+	<option value="<?php echo $field['ref']?>"  <?php if ($value==$field['ref']){?>selected<?php } ?>><?php echo $field['title']?></option>
+	<?php } ?>
+	</select>
+	</div><div class="clearerleft"></div>
+	<?php 
+}
+
+function config_boolean_field($name,$label,$value){
+	?><div class="Question">
+	<label for="<?php echo $name?>"><?php echo $label?></label>
+	<select name="<?php echo $name?>">
+	<option value="true" <?php if ($value=="true") { ?>selected<?php } ?>>True</option>
+	<option value="false" <?php if ($value=="false") { ?>selected<?php } ?>>False</option>
+	</select>
+	</div><div class="clearerleft"></div>
+	<?php 
+}
+
+function config_custom_select_multi($name,$label,$available,$values,$index="ref",$nameindex="name",$additional=""){
+	?><div class="Question">
+	<label for="<?php echo $name?>[]"><?php echo $label?>:</label> 
+
+	<select name="<?php echo $name?>[]" multiple="multiple" size="7">
+	<?php foreach($available as $item){?>
+	<option value="<?php echo $item[$index]?>" <?php if (in_array($item[$index],$values)){?>selected<?php } ?>><?php echo $item[$nameindex]; if ($additional!=""){echo " (".$item[$additional].")";}?></option>
+	<?php } ?>
+	</select>
+	</div><div class="clearerleft"></div>
+	<?php
+}
+
+function config_custom_select($name,$label,$available,$value){
+	?><div class="Question">
+	<label for="<?php echo $name?>"><?php echo $label?></label>
+	<select name="<?php echo $name?>">
+	<?php foreach($available as $avail){?>
+	<option value="<?php echo $avail?>" <?php if ($value==$avail) { ?>selected<?php } ?>><?php echo $avail?></option>
+	<?php } ?>
+	</select>
+	</div><div class="clearerleft"></div>
+	<?php 
 }

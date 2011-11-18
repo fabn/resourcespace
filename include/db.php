@@ -869,7 +869,7 @@ function register_plugin($plugin,$config="")
 	if (file_exists($configpath)) {include $configpath;}
 
 	if ($config!=""){
-		$config=unserialize(trim($config));
+		$config=unserialize(base64_decode($config));
 		foreach($config as $key=>$value){
 			$$key=$value;
 		}

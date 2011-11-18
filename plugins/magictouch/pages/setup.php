@@ -5,38 +5,30 @@ include "../../../include/general.php";
 
 
 if (defined("PHP_EOL")) {$eol=PHP_EOL;} else {$eol="\r\n";}
-if (!isset($magictouch_account_id)) {$magictouch_account_id="";}
-if (!isset($magictouch_secure)) {$magictouch_secure="http";}
-if (!isset($magictouch_ext_exclude)){$ext_exclude=array("pdf","odt");}
-if (!isset($magictouch_rt_exclude)){$rt_exclude=array(3,4,8,13,18,21,24);}
-if (!isset($magictouch_view_page_sizes)){$view_sizes=array("lpr","scr");}
-if (!isset($magictouch_preview_page_sizes)){$magictouch_preview_page_sizes=array("hpr","lpr");}
 
 if (getval("submit","")!="")
 	{
-	$accountid=getvalescaped("accountid","");
-	$secure=getvalescaped("secure","");
-	$ext_exclude="\"".str_replace(",","\",\"",getvalescaped("extexclude",""))."\"";
-	$view_sizes="\"".str_replace(",","\",\"",getvalescaped("viewsizes",""))."\"";
-	$preview_sizes="\"".str_replace(",","\",\"",getvalescaped("previewsizes",""))."\"";
-	if (isset($_POST['rtexclude'])){
-		$rt_exclude=$_POST['rtexclude'];
+	$magictouch_account_id=getvalescaped("magictouch_account_id","");
+	$magictouch_secure=getvalescaped("magictouch_secure","");
+	$magictouch_ext_exclude=explode(",",getvalescaped("magictouch_ext_exclude",""));
+	$magictouch_view_page_sizes=explode(",",getvalescaped("magictouch_view_page_sizes",""));
+	$magictouch_preview_page_sizes=explode(",",getvalescaped("magictouch_preview_page_sizes",""));
+	if (isset($_POST['magictouch_rt_exclude'])){
+		$magictouch_rt_exclude=$_POST['magictouch_rt_exclude'];
 	}
 	else {
-		$rt_exclude=array(3,4,8,13,18,21,24);
+		$magictouch_rt_exclude=array();
 	}
+
+	$config=array();
+	$config['magictouch_account_id']=$magictouch_account_id;
+	$config['magictouch_secure']=$magictouch_secure;
+	$config['magictouch_rt_exclude']=$magictouch_rt_exclude;
+	$config['magictouch_ext_exclude']=$magictouch_ext_exclude;
+	$config['magictouch_view_page_sizes']=$magictouch_view_page_sizes;
+	$config['magictouch_preview_page_sizes']=$magictouch_preview_page_sizes;
+	set_plugin_config("magictouch",$config);
 	
-	$secure=getvalescaped("secure","");
-	$f=fopen("../config/config.php","w");
-	fwrite($f,"<?php \$magictouch_account_id='$accountid';$eol\$magictouch_secure='$secure';$eol");
-	if (count($rt_exclude)!=0){
-		$rt_exclude=implode(",",$rt_exclude);
-	}
-	fwrite($f,"\$magictouch_rt_exclude=array(".$rt_exclude.");$eol");
-	fwrite($f,"\$magictouch_ext_exclude=array(".$ext_exclude.");$eol");
-	fwrite($f,"\$magictouch_view_page_sizes=array(".$view_sizes.");$eol");
-	fwrite($f,"\$magictouch_preview_page_sizes=array(".$preview_sizes.");$eol");
-	fclose($f);
 	redirect("pages/team/team_home.php");
 	}
 
@@ -49,10 +41,7 @@ include "../../../include/header.php";
   
 <?php 
 
-if(!is_writable("../config/config.php")){
-	  echo("MagicTouch config.php is not writable: chmod 777 plugins/magictouch/config/config.php<br/><br/> <a href=''>>Click Here to Refresh.</a>");
-	  die();
-	}
+
 
 if ($magictouch_account_id==""){
 	echo "You must set up MagicTouch. 
@@ -63,44 +52,14 @@ if ($magictouch_account_id==""){
 
 <form id="form1" name="form1" method="post" action="">
 
-<div class="Question">
-<label for="accountid">Account ID (from URL):</label><input name="accountid" type="text" value="<?php echo $magictouch_account_id; ?>" size="30" />
-</div><div class="clearerleft"></div>
-   
-<div class="Question">
-<label for="secure">Is your site HTTP or HTTPS?:</label>
-<select name="secure">
-<option <?php if ($magictouch_secure=="http") { ?>selected<?php } ?>>http</option>
-<option <?php if ($magictouch_secure=="https") { ?>selected<?php } ?>>https</option>
-</select>
-</div><div class="clearerleft"></div>
-   
-<div class="Question">
-<label for="extexclude">Extensions to exclude <br />(comma separated):</label>
-<input name="extexclude" type="text" value="<?php echo implode(',',$magictouch_ext_exclude); ?>" size="30" />
-</div><div class="clearerleft"></div>
-   
-<div class="Question">
-<label for="rtexclude[]">Resource Types to exclude <br />(highlight to exclude):</label> 
-<?php $rtypes=get_resource_types();?>
-<select name="rtexclude[]" multiple="multiple" size="7">
-<?php foreach($rtypes as $rt){?>
-<option value="<?php echo $rt['ref']?>" <?php if (in_array($rt['ref'],$magictouch_rt_exclude)){?>selected<?php } ?>><?php echo $rt['name']?></option>
-<?php } ?>
-</select>
-</div><div class="clearerleft"></div>
- 
-<div class="Question">
-<label for="viewsizes">View page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
-<?php $sizes=sql_query("select * from preview_size");?>
-<input name="viewsizes" type="text" value="<?php echo implode(',',$magictouch_view_page_sizes); ?>" size="30" />
-</div><div class="clearerleft"></div>
-   
-<div class="Question">
-<label for="previewsizes">Preview page sizes (in order, which sizes to check for the magictouch larger preview):</label> <br />
-<?php $sizes=sql_query("select * from preview_size");?>
-<input name="previewsizes" type="text" value="<?php echo implode(',',$magictouch_preview_page_sizes); ?>" size="30" />
-</div><div class="clearerleft"></div>
+<?php echo config_text_field("magictouch_account_id","Account ID (from URL)",$magictouch_account_id);?>
+<?php echo config_custom_select("magictouch_secure","HTTPS?",array("https","http"),$magictouch_secure);?>
+<?php echo config_text_field("magictouch_ext_exclude","Extensions to exclude <br />(comma separated)",implode(',',$magictouch_ext_exclude));?>   
+<?php $rtypes=get_resource_types();
+echo config_custom_select_multi("magictouch_rt_exclude","Resource Types to exclude <br />(highlight to exclude)",$rtypes,$magictouch_rt_exclude);?>
+<?php echo config_text_field("magictouch_view_page_sizes","View page sizes (in order, which sizes to check for the magictouch larger preview)",implode(',',$magictouch_view_page_sizes));?>
+<?php echo config_text_field("magictouch_preview_page_sizes","Preview page sizes (in order, which sizes to check for the magictouch larger preview)",implode(',',$magictouch_preview_page_sizes));?>
+
    
 <div class="Question">  
 <label for="submit"></label> 
