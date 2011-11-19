@@ -31,8 +31,6 @@ $collection_add = getvalescaped("collection_add","");
 
 		<div class="Question"><label><?php echo $lang["ftpfolder"]?></label><input name="ftp_folder" type="text" class="stdwidth" value="<?php echo $ftp_defaultfolder?>"><div class="clearerleft"> </div></div>
 
-		<!--div class="Question"><label><?php echo $lang["uselocalupload"]?></label><input name="use_local" type="checkbox" value="yes"><div class="clearerleft"> </div></div-->
-
 		<div class="QuestionSubmit">
 			<label for="buttons"> </label>
 			<input name="back" type="button" onclick="history.back(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"] ?>&nbsp;&nbsp;" />
