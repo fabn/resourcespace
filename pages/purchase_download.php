@@ -57,7 +57,7 @@ else
 		$title=get_data_by_field($resource["ref"],$view_title_field);
 		?><td><h2><?php echo i18n_get_translated($title) ?></h2></td>
 		<td class="DownloadButton">
-		<a href="download.php?ref=<?php echo $resource["ref"] ?>&size=<?php echo $size ?>"><?php echo $lang["download"]?></a>
+		<a href="download.php?ref=<?php echo $resource["ref"] ?>&size=<?php echo $size ?>"><?php echo $lang["action-download"]?></a>
 		</td>
 		</tr><?php	
 		}

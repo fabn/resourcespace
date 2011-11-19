@@ -402,7 +402,7 @@ if ($zipped_collection_textfile=="true") { ?>
 </select>
 <div class="clearerleft"> </div><br>
 <?php } ?>
-<div class="Inline"><input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["download"]?>&nbsp;&nbsp;" /></div>
+<div class="Inline"><input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" /></div>
 </div>
 <div class="clearerleft"> </div>
 <div id="progress"></div>
