@@ -795,7 +795,7 @@ elseif ($k!="")
 		if ($min_access!=0)
 			{
 		    ?>
-		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>"><?php echo 	$lang["request"]?></a></li>
+		    <li><a target="main" href="collection_request.php?ref=<?php echo $usercollection?>"><?php echo 	$lang["action-request"]?></a></li>
 		    <?php
 		    }
 	    }

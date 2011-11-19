@@ -418,6 +418,7 @@ $lang["fileoftype"]="? File"; # ? will be replaced, e.g. "MP4 File"
 $lang["log"]="Log";
 $lang["resourcedetails"]="Resource Details";
 $lang["offlineresource"]="Offline Resource";
+$lang["action-request"]="Request";
 $lang["request"]="Request";
 $lang["searchforsimilarresources"]="Search for similar resources";
 $lang["clicktoviewasresultset"]="Click to view these resources as a result set";

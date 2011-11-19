@@ -424,7 +424,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 			<?php } else { ?>
 				<a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo getval("k","")?>">
 			<?php } ?>
-			<?php echo $lang["request"]?></a></td>
+			<?php echo $lang["action-request"]?></a></td>
 			<?php } ?>
 			<?php
 			}
@@ -494,7 +494,7 @@ if (($nodownloads || $counter==0) && !checkperm("T" . $resource["resource_type"]
 		{
 		?>
 		<?php if(!hook("resourcerequest")){?>
-		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo $k ?>"><?php echo $lang["request"]?></a></td>
+		<td class="DownloadButton"><a href="resource_request.php?ref=<?php echo $ref?>&k=<?php echo $k ?>"><?php echo $lang["action-request"]?></a></td>
 		<?php } ?>
 		<?php
 		}
