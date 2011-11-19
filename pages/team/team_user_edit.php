@@ -94,7 +94,7 @@ for ($n=0;$n<count($groups);$n++)
 
 <div class="Question"><label><?php echo $lang["emailaddress"]?></label><input name="email" type="text" class="stdwidth" value="<?php echo $user["email"]?>"><div class="clearerleft"> </div></div>
 
-<div class="Question"><label><?php echo $lang["accountexpiresoptional"]?><br/><?php echo $lang["format"]?>: YYYY-MM-DD</label><input name="account_expires" type="text" class="stdwidth" value="<?php echo $user["account_expires"]?>"><div class="clearerleft"> </div></div>
+<div class="Question"><label><?php echo $lang["accountexpiresoptional"]?><br/><?php echo $lang["format"] . ": " . $lang["yyyy-mm-dd"]?></label><input name="account_expires" type="text" class="stdwidth" value="<?php echo $user["account_expires"]?>"><div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["ipaddressrestriction"]?><br/><?php echo $lang["wildcardpermittedeg"]?> 194.128.*</label><input name="ip_restrict" type="text" class="stdwidth" value="<?php echo $user["ip_restrict"]?>"><div class="clearerleft"> </div></div>
 
