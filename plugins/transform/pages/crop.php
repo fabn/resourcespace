@@ -330,7 +330,7 @@ $mpcalc = round(($newfilewidth*$newfileheight)/1000000,1);
 
 // don't show  a megapixel count if it rounded down to 0
 if ($mpcalc > 0){
-	$mptext = " ($mpcalc MP)";
+	$mptext = " ($mpcalc " . $lang["megapixel-short"] . ")";
 } else {
 	$mptext = '';
 }
@@ -726,7 +726,7 @@ if ($cropper_debug){
 		# MP calculation
 		$mp=round(($origwidth*$origheight)/1000000,1);
 		if ($mp > 0){
-			$orig_mptext = "($mp MP)";
+			$orig_mptext = "($mp  " . $lang["megapixel-short"] . ")";
 		} else {
 			$orig_mptext = '';
 		}
