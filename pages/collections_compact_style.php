@@ -134,7 +134,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 
 <!-- edit previews -->
 <?php if ($count_result>0 && $col_editable) { ?>
-<option value="<?php echo $collection?>|0|0|collection_edit_previews.php?ref=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>&backto=<?php if (in_array($pagename,$main_pages)){echo $pagename;}?>|main|false">&gt;&nbsp;<?php echo $lang['editcollectionresources']?></option>
+<option value="<?php echo $collection?>|0|0|collection_edit_previews.php?ref=<?php echo $collection?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>&backto=<?php if (in_array($pagename,$main_pages)){echo $pagename;}?>|main|false">&gt;&nbsp;<?php echo $lang['editcollectionresources']?>...</option>
 <?php } ?>
 <!-- end contactsheet -->
 

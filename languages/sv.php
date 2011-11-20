@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20111109 för version 3005
+# Senast uppdaterad av Henrik Frizén 20111120 för version 3041
 #
 #
 # User group names (for the default user groups)
@@ -303,7 +303,7 @@ $lang["contributedsubittedl"]="Mina bidrag &ndash; aktiva";
 
 # Collections
 $lang["editcollection"]="Redigera samling";
-$lang["editcollectionresources"]="Redigera samlingens förhandsgranskningar...";
+$lang["editcollectionresources"]="Redigera samlingens förhandsgranskningar";
 $lang["access"]="Åtkomst";
 $lang["private"]="Privat";
 $lang["public"]="Publik";
@@ -443,7 +443,8 @@ $lang["fileoftype"]="?-fil"; # ? will be replaced, e.g. "MP4 File"
 $lang["log"]="Logg";
 $lang["resourcedetails"]="Egenskaper för material";
 $lang["offlineresource"]="Nedkopplat material";
-$lang["request"]="Begär";
+$lang["action-request"]="Begär";
+$lang["request"]="Begäran";
 $lang["searchforsimilarresources"]="Sök efter liknande material";
 $lang["clicktoviewasresultset"]="Klicka för att se detta material som ett resultatsätt";
 $lang["searchnomatches"]="Din sökning matchade inget material.";
@@ -1518,3 +1519,5 @@ $lang["saved"]="Sparat";
 $lang["resourceids"]="Materialnummer";
  
 $lang["warningrequestapprovalfield"]="!!! Varning - materialnummer % - notera följande innan ett eventuellt godkännande !!!";
+
+$lang["yyyy-mm-dd"]="ÅÅÅÅ-MM-DD";

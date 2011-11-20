@@ -278,7 +278,7 @@ $lang["contributedsubittedl"]="My Contributions - Active";
 
 # Collections
 $lang["editcollection"]="Edit Collection";
-$lang["editcollectionresources"]="Edit Collection Previews...";
+$lang["editcollectionresources"]="Edit Collection Previews";
 $lang["access"]="Access";
 $lang["private"]="Private";
 $lang["public"]="Public";

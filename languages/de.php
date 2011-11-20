@@ -283,7 +283,7 @@ $lang["contributedsubittedl"]="Meine Beiträge - Live";
 
 # Collections
 $lang["editcollection"]="Kollektion bearbeiten";
-$lang["editcollectionresources"]="Kollektionsvorschau bearbeiten...";
+$lang["editcollectionresources"]="Kollektionsvorschau bearbeiten";
 $lang["access"]="Zugriff";
 $lang["private"]="privat";
 $lang["public"]="öffentlich";
