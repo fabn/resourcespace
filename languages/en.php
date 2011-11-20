@@ -1066,7 +1066,7 @@ $lang["removethisfilter"]="(remove this filter)";
 $lang["no_exif"]="Do not import embedded EXIF/IPTC/XMP metadata for this upload";
 $lang["difference"]="Difference";
 $lang["viewdeletedresources"]="View Deleted Resources";
-$lang["finaldeletion"]="This resources is already in the 'deleted' state. This action will completely remove the resource from the system.";
+$lang["finaldeletion"]="This resource is already in the 'deleted' state. This action will completely remove the resource from the system.";
 
 $lang["nocookies"]="A cookie could not be set correctly. Please make sure you have cookies enabled in your browser settings.";
 
