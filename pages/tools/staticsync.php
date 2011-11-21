@@ -29,7 +29,7 @@ if ($argc == 2)
 
 
 # Check for a process lock
-if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
+//if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
 set_process_lock("staticsync");
 
 echo "Preloading data...";
@@ -121,6 +121,8 @@ function ProcessFolder($folder)
 		$filetype=filetype($folder . "/" . $file);
 		$fullpath=$folder . "/" . $file;
 		$shortpath=str_replace($syncdir . "/","",$fullpath);
+		# Work out extension
+		$extension=explode(".",$file);$extension=trim(strtolower($extension[count($extension)-1]));
 		
 		if ($staticsync_mapped_category_tree)
 			{
@@ -182,10 +184,6 @@ function ProcessFolder($folder)
 						$collection=sql_insert_id();
 					}
 				}
-						
-
-				# Work out extension
-				$extension=explode(".",$file);$extension=trim(strtolower($extension[count($extension)-1]));
 
 				# Work out a resource type based on the extension.
 				$type=$staticsync_extension_mapping_default;
@@ -307,8 +305,27 @@ function ProcessFolder($folder)
 						$rref=$rd["ref"];
 						
 						echo "Resource $rref has changed, regenerating previews: $fullpath\n";
-						create_previews($rref,false,$rd["file_extension"]);
 						extract_exif_comment($rref,$rd["file_extension"]);
+						
+						# extract text from documents (e.g. PDF, DOC).
+						global $extracted_text_field;
+						if (isset($extracted_text_field)) {
+							if (isset($unoconv_path) && in_array($extension,$unoconv_extensions)){
+								// omit, since the unoconv process will do it during preview creation below
+								}
+							else {
+							extract_text($rref,$extension);
+							}
+						}
+
+						# Store original filename in field, if set
+						global $filename_field;
+						if (isset($filename_field))
+							{
+							update_field($rref,$filename_field,$file);	
+							}
+						
+						create_previews($rref,false,$rd["file_extension"]);
 						sql_query("update resource set file_modified=now() where ref='$rref'");
 						}
 					}
