@@ -93,7 +93,7 @@ Copyright Oxfam GB, Montala, WWF International, Tom Gleason, Colorhythm LLC, Wor
 http://www.resourcespace.org/
 -->
 <title><?php echo htmlspecialchars($applicationname)?></title>
-<link rel="icon" type="image/png" href="<?php echo $baseurl?>/gfx/interface/favicon.png" />
+<link rel="icon" type="image/png" href="<?php echo $baseurl."/".$header_favicon?>" />
 
 <frameset rows="*<?php if ($bottomurl!="") { ?><?php if ($collection_resize!=true){?>,<?php echo $collection_frame_divider_height ?><?php } ?>,<?php echo $collection_frame_height ?><?php } ?>" id="topframe" framespacing="0" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
 <frame name="main" id="main" src="<?php echo $topurl?>" <?php if ($collection_resize!=true){?>frameborder="no"<?php } ?>>
