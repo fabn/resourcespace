@@ -154,9 +154,9 @@ function CheckFfmpeg()
 }
 function CheckGhostscript()
 {
- 	global $ghostscript_path;
-	if (file_exists($ghostscript_path . "/gs")) return true;
-	if (file_exists($ghostscript_path . "/gs.exe")) return true;	
+ 	global $ghostscript_path, $ghostscript_executable;
+	if (file_exists($ghostscript_path . "/" . $ghostscript_executable)) return true;
+	if (file_exists($ghostscript_path . "/" . $ghostscript_executable . ".exe")) return true;
 	return false;
 }
 function CheckExiftool()

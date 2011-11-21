@@ -50,10 +50,7 @@ if (getval("method","")!="")
 			}		
 			
 		# Extract this one page to a new resource.
-		$gscommand= $ghostscript_path. "/gs";
-	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
-        if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
-
+		$gscommand = get_ghostscript_command();
 		$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $from . " -dLastPage=" . $to . " " . escapeshellarg($file);
 		$output=shell_exec($gscommand2); 
 

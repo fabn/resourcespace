@@ -1546,5 +1546,17 @@ function extract_icc_profile($infile) {
 
 }
 
+function get_ghostscript_command()
+	{
+	global $ghostscript_path, $ghostscript_executable;
+
+	$command=$ghostscript_path . '/' . $ghostscript_executable;
+	if (!file_exists($command))
+		$command=$ghostscript_path. '\\' . $ghostscript_executable . '.exe';
+	if (!file_exists($command))
+		exit("Could not find GhostScript '" . $ghostscript_executable . "' utility.'");
+
+	return $command;
+	}
 
 ?>

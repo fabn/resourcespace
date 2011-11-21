@@ -327,6 +327,7 @@ default_module_config_key('general', 'frameless_collections', isset($frameless_c
 default_module_config_key('general', 'debug_log', isset($debug_log)?$debug_log:''); 
 default_module_config_key('general', 'imagemagick_path', isset($imagemagick_path)?$imagemagick_path:'');
 default_module_config_key('general', 'ghostscript_path', isset($ghostscript_path)?$ghostscript_path:'');
+default_module_config_key('general', 'ghostscript_executable', isset($ghostscript_executable)?$ghostscript_executable:'');
 default_module_config_key('general', 'ffmpeg_path', isset($ffmpeg_path)?$ffmpeg_path:'');
 default_module_config_key('general', 'exiftool_path', isset($exiftool_path)?$exiftool_path:'');
 default_module_config_key('general', 'antiword_path', isset($antiword_path)?$antiword_path:'');

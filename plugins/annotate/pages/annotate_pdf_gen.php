@@ -70,8 +70,7 @@ $pdf->AddPage();
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
 		
-		$command= $ghostscript_path. "/gs";
-		if (!file_exists($command)) {$command= $ghostscript_path. "\gs.exe";}
+		$command= get_ghostscript_command();
 		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".$storagedir."/tmp/annotaterip.jpg\" \"".$storagedir."/tmp/annotate.pdf\"";
 		shell_exec($command);
 		

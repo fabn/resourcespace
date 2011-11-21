@@ -311,8 +311,7 @@ for ($n=0;$n<count($result);$n++){
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
 		
-		$command= $ghostscript_path. "/gs";
-		if (!file_exists($command)) {$command= $ghostscript_path. "\gs.exe";}
+		$command=get_ghostscript_command();
 		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.pdf\"";
 		shell_exec($command);
 		

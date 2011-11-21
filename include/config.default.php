@@ -63,6 +63,7 @@ $config_windows=false;
 # If using ImageMagick, uncomment and set next 2 lines
 # $imagemagick_path="/sw/bin";
 # $ghostscript_path="/sw/bin";
+$ghostscript_executable='gs';
 
 # If using FFMpeg to generate video thumbs and previews, uncomment and set next line.
 # $ffmpeg_path="/usr/bin";

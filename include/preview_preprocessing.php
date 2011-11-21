@@ -438,10 +438,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 		# Postscript file exists
 		
 		# Locate ghostscript command
-		$gscommand= $ghostscript_path. "/gs";
-	    if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
-        if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
-		
+		$gscommand=get_ghostscript_command();
 		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dEPSCrop " . escapeshellarg($target . ".ps");
 		$output=shell_exec($gscommand); 
 
@@ -655,10 +652,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 	if ($extension=="ai") {$pdf_pages=1;}
 	if ($extension=="ps") {$pdf_pages=1;}
 	# Locate ghostscript command
-	$gscommand= $ghostscript_path. "/gs";
-	if (!file_exists($gscommand)) {$gscommand= $ghostscript_path. "\gs.exe";}
-        if (!file_exists($gscommand)) {exit("Could not find GhostScript 'gs' utility.'");}	
-		
+	$gscommand=get_ghostscript_command();
 	$resolution=150;
 
         if ($pdf_dynamic_rip) {
