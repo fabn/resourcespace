@@ -74,7 +74,7 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 <?php } ?>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' width=517 height=350 style="display:none;"></div>
+<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;"></div>
 <div class="PanelShadow"></div>
 </div>
 <?php } # End of hook replaceslideshow
