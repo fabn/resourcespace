@@ -1926,7 +1926,8 @@ function update_xml_metadump($resource)
 	if (!$xml_metadump || $resource < 0) {return true;} # Only execute when configured and when not a template
 	
 	$path=dirname(get_resource_path($resource,true,"pre",true)) . "/metadump.xml";
-	$f=fopen($path,"w");
+	if (file_exists($path)){$wait=unlink($path);}
+	$f=fopen($path,"w+");
 	fwrite($f,"<?xml version=\"1.0\"?>\n");
 	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" resourcespace:resourceid=\"$resource\">\n\n");
   
@@ -1956,7 +1957,7 @@ function update_xml_metadump($resource)
 
 	fwrite($f,"</record>\n");
 	fclose($f);
-	chmod($path,0777); // fixme - temporarily make world readable/writable until we have better solution for file permissions
+	//chmod($path,0777); // fixme - temporarily make world readable/writable until we have better solution for file permissions
 
 	}
 
