@@ -1466,7 +1466,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 			$headers.=$rtparts[0]." <".$rtparts[1];
 		}
 		else {
-			$headers.=mb_encode_mimeheader($from_name, "UTF-8", "Q") . " <".$reply_tos[$n].">";
+			$headers.=mb_encode_mimeheader($from_name, "UTF-7", "Q") . " <".$reply_tos[$n].">";
 		}
  	}
  	$headers.=$eol;
@@ -1484,7 +1484,7 @@ function send_mail($email,$subject,$message,$from="",$reply_to="",$html_template
 				$headers.=$ccparts[0]." <".$ccparts[1];
 			}
 			else {
-				$headers.=mb_encode_mimeheader($userfullname, "UTF-8", "Q"). " <".$ccs[$n].">";
+				$headers.=mb_encode_mimeheader($userfullname, "UTF-7", "Q"). " <".$ccs[$n].">";
 			}
 		}
 		$headers.=$eol;
