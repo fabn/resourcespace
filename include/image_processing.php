@@ -77,7 +77,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
     	}
 
 	// also remove any existing extracted icc profiles
-    	$icc_path=get_resource_path($ref,true,"",true,'icc');
+    	$icc_path=get_resource_path($ref,true,"",true,$extension.'.icc');
     	if (file_exists($icc_path)) {unlink($icc_path);}
     	global $pdf_pages;
     	$iccx=0; // if there is a -0.icc page, run through and delete as many as necessary.
@@ -127,7 +127,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 
 		global $icc_extraction;
 		if ($icc_extraction && $extension!="pdf"){
-			extract_icc_profile($filepath);
+			extract_icc_profile($ref,$extension);
 		}
 
 
@@ -802,10 +802,10 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				# EXPERIMENTAL CODE TO USE EXISTING ICC PROFILE IF PRESENT
 				global $icc_extraction, $icc_preview_profile, $icc_preview_options;
 				if ($icc_extraction){
-					$iccpath = get_resource_path($ref,true,'',false,'icc');
+					$iccpath = get_resource_path($ref,true,'',false,$extension.'.icc');
 					if (!file_exists($iccpath) && !isset($iccfound) && $extension!="pdf") {
 						// extracted profile doesn't exist. Try extracting.
-						if (extract_icc_profile($file)){
+						if (extract_icc_profile($ref,$extension)){
 							$iccfound = true;
 						} else {
 							$iccfound = false;
@@ -1511,7 +1511,7 @@ function AutoRotateImage ($src_image){
 }
 	
 
-function extract_icc_profile($infile) {
+function extract_icc_profile($ref,$extension) {
    global $config_windows, $imagemagick_path;
    # Locate imagemagick, or fail this if it isn't installed
    $command=$imagemagick_path . "/bin/convert";
@@ -1521,14 +1521,9 @@ function extract_icc_profile($infile) {
 
    if ($config_windows){ $stderrclause = ''; } else { $stderrclause = '2>&1'; }
 
-   // outfile will be same name as infile, except with icc ext
-   $ext = strrchr($infile,'.');
-   if ($ext !== false){
-      $outfile = substr($infile,0,-strlen($ext)) . '.icc';
-   } else {
-      $outfile = $infile . '.icc';
-   }
-
+   $infile=get_resource_path($ref,true,"",true,$extension);	
+   $outfile=get_resource_path($ref,true,"",false,$extension.".icc");
+   
    if (file_exists($outfile)){
       // extracted profile already existed. We'll remove it and start over
       unlink($outfile);
