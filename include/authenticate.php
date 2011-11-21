@@ -40,8 +40,9 @@ if ($api && $enable_remote_apis ){
 
             //fix for installs that don't json_decode curl response properly
             $data['cookie']='no';
-            if (substr($responseBody,0,9)=='{"cookie"'){
-                $data=explode(":",$responseBody);
+            $pos=strpos($responseBody,'{"cookie"');
+            if ($pos!==false) {
+                $data=explode(":",  substr($responseBody, $pos));
                 $data['cookie']=$data[1];
                 $data['cookie']=explode(",",$data['cookie']);
                 $data['cookie']=$data['cookie'][0];
