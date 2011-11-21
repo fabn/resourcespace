@@ -1113,6 +1113,9 @@ function import_resource($path,$type,$title,$ingest=false)
 	# Store extension/data in the database
 	sql_query("update resource set archive=0,file_path='".$file_path."',file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
 			
+	# get file metadata 
+	extract_exif_comment($r,$extension);			
+			
 	# Store original filename in field, if set
 	if (!$ingest)
 		{
@@ -1156,9 +1159,6 @@ function import_resource($path,$type,$title,$ingest=false)
 
 	# Add title
 	update_field($r,8,$title);
-	
-	# get file metadata 
-	extract_exif_comment($r,$extension);
 	
 	# Ensure folder is created, then create previews.
 	get_resource_path($r,false,"pre",true,$extension);	
