@@ -828,7 +828,7 @@ function lang_or_i18n_get_translated($text, $mixedprefix)
     if (is_array($mixedprefix)) {$prefix = $mixedprefix;}
     else {$prefix = array($mixedprefix);}
     for ($n = 0;$n<count($prefix);$n++) {
-        $langindex = $prefix[$n] . strip_tags(strtolower(str_replace(array(" ", "\t", "/", "(", ")"), array("_", "_", "and", "", ""), $text)));
+        $langindex = $prefix[$n] . strip_tags(strtolower(str_replace(array(", ", " ", "\t", "/", "(", ")"), array("-", "_", "_", "and", "", ""), $text)));
 
         # Checks if there is a $lang (should be defined for all standard field names / values).
         if (isset($lang[$langindex])) {

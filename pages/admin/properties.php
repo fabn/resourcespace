@@ -458,7 +458,7 @@ else
 	            case "lbl":
 	            # label
 	            ?>
-	            <?php echo $value?>
+	            <?php echo str_replace("%ref", $ref, lang_or_i18n_get_translated($value, "information-"))?>
 	            <?php
 	            break;
 	            }
