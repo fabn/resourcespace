@@ -108,6 +108,7 @@ $lang["property-field_type"]="Field Type";
 $lang["property-options"]="Options";
 $lang["property-required"]="Required";
 $lang["property-order_by"]="Order by";
+$lang["property-indexing"]="<b>Indexing</b>";
 $lang["property-index_this_field"]="Index this field";
 $lang["information-enable_partial_indexing"]="Partial keyword indexing (prefix+infix indexing) should be used sparingly as it will significantly increase the index size. See the wiki for details.";
 $lang["property-enable_partial_indexing"]="Enable partial indexing";

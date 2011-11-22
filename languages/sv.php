@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20111120 för version 3041
+# Senast uppdaterad av Henrik Frizén 20111122 för version 3059
 #
 #
 # User group names (for the default user groups)
@@ -133,6 +133,7 @@ $lang["property-field_type"]="Fälttyp";
 $lang["property-options"]="Alternativ";
 $lang["property-required"]="Obligatoriskt";
 $lang["property-order_by"]="Sorteringsnummer";
+$lang["property-indexing"]="<b>Indexering</b>";
 $lang["property-index_this_field"]="Indexera detta fält";
 $lang["information-enable_partial_indexing"]="Nyckelordsindexering av delar av ord (prefix + infix) bör användas sparsamt då det ökar storleken på indexet betydligt. Läs mer om detta i wikin.";
 $lang["property-enable_partial_indexing"]="Aktivera indexering av delar av ord";
