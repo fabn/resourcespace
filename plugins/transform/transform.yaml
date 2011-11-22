@@ -2,3 +2,4 @@ name    : transform
 author  : David Dwiggins
 version : 1.3
 desc    : Enables creation of cropped and scaled alternative images.
+config_url: /plugins/transform/pages/setup.php

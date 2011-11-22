@@ -1,8 +1,5 @@
 <?php
-include_once "../include/config.default.php";
-if (file_exists("../include/config.php")){
-	include_once("../include/config.php");
-}
+
 include_once "../../../include/db.php";
 include_once "../../../include/authenticate.php";
 include_once "../../../include/general.php";
@@ -10,7 +7,6 @@ include_once "../../../include/resource_functions.php";
 include_once "../../../include/image_processing.php";
 
 include_once "../include/transform_functions.php";
-
 
 // verify that the requested ResourceID is numeric.
 $ref = $_REQUEST['ref'];
@@ -66,7 +62,7 @@ $preview_ext = sql_value("select preview_extension value from resource where ref
 
 // retrieve image paths for preview image and original file
 //$previewpath = get_resource_path($ref,true,$cropper_cropsize,false,$preview_ext);
-$previewpath = get_temp_dir() . "/transform_plugin/pre_$ref.jpg";
+$previewpath = get_temp_dir() . "/transform_plugin/".$cropper_cropsize."_$ref.jpg";
 $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
 
 
@@ -158,7 +154,6 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 }
 
 if (strlen($alt_type)>0){ $mytitle .= " - $alt_type"; }
-
 
 $mydesc = mysql_real_escape_string($description);
 
@@ -684,8 +679,7 @@ include "../../../include/header.php";
        <tr>
         <td style='text-align:right'><?php echo $lang['type']; ?>: </td>
         <td colspan='3'><?php
-			
-			if ($cropper_force_original_format){
+			if ($cropper_force_original_format==true){
 				echo "<input type='hidden' name='new_ext' value='";
 				echo strtoupper($orig_ext) . "' />" . strtoupper($orig_ext);
 			} else {

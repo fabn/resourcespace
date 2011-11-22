@@ -2,13 +2,7 @@
 function HookTransformCollection_editColleditformbottom (){
 	global $ref;
 	global $lang;
-
-
-        include_once "../plugins/transform/include/config.default.php";
-        if (file_exists("../plugins/transform/include/config.php")){
-                include_once("../plugins/transform/include/config.php");
-        }
-
+	global $cropper_enable_batch;
 
 	if ($cropper_enable_batch){
 	?>

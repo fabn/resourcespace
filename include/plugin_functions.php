@@ -226,8 +226,8 @@ function config_boolean_field($name,$label,$value){
 	?><div class="Question">
 	<label for="<?php echo $name?>"><?php echo $label?></label>
 	<select name="<?php echo $name?>">
-	<option value="true" <?php if ($value=="true") { ?>selected<?php } ?>>True</option>
-	<option value="false" <?php if ($value=="false") { ?>selected<?php } ?>>False</option>
+	<option value="1" <?php if ($value=="1") { ?>selected<?php } ?>>True</option>
+	<option value="0" <?php if ($value=="0") { ?>selected<?php } ?>>False</option>
 	</select>
 	</div><div class="clearerleft"></div>
 	<?php 

@@ -7,11 +7,6 @@ function HookTransformEditAfterreplacefile (){
 	global $cropper_transform_original;
 	global $resource;
 
-	include_once "../plugins/transform/include/config.default.php";
-	if (file_exists("../plugins/transform/include/config.php")){
-        	include_once("../plugins/transform/include/config.php");
-	}
-
 	// fixme - for some reason this isn't pulling from config default for plugin even when set as global
 	// hack below makes it work, but need to figure this out at some point
 	if (!isset($cropper_allowed_extensions)){
