@@ -135,7 +135,7 @@ if ($use_plugins_manager){
 			# Add to the plugins array if not already present which is what we are working with
 			# later on.
 			if (!in_array($plugin['name'],$plugins)) {$plugins[]=$plugin['name'];}
-			include_plugin_config($plugin['name'], $config);
+			include_plugin_config($plugin['name'], $plugin['config']);
 			}
 	}
 } else {
