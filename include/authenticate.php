@@ -282,8 +282,7 @@ foreach($active_plugins as $plugin)
 	$s=explode(",",$plugin['enabled_groups']);
 	if (in_array($usergroup,$s))
 		{
+		include_plugin_config($plugin['name']);
 		register_plugin($plugin['name']);
 		}
 	}
-
-

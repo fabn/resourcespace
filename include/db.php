@@ -105,8 +105,44 @@ $querycount=0;
 $querytime=0;
 $querylog=array();
 
-
 # -----------LANGUAGES AND PLUGINS-------------------------------
+
+# Setup plugin configurations
+if ($use_plugins_manager){
+	include "plugin_functions.php";
+	$legacy_plugins = $plugins; # Make a copy of plugins activated via config.php
+	#Check that manually (via config.php) activated plugins are included in the plugins table.
+	foreach($plugins as $plugin_name){
+		if ($plugin_name!=''){
+			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='$plugin_name'",'')==''){
+				#Installed plugin isn't marked as installed in the DB.  Update it now.
+				#Check if there's a plugin.yaml file to get version and author info.
+				$plugin_yaml_path = dirname(__FILE__)."/../plugins/{$plugin_name}/{$plugin_name}.yaml";
+				$p_y = get_plugin_yaml($plugin_yaml_path, false);
+				#Write what information we have to the plugin DB.
+				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url, config_url) ".
+						  "VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$plugin_name}'," .
+						  "'{$p_y['info_url']}','{$p_y['update_url']}','{$p_y['config_url']}')");
+			}
+		}
+	}
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0"));
+	foreach($active_plugins as $plugin){
+
+		# Check group access, only enable for global access at this point
+		if ($plugin['enabled_groups']=='')
+			{
+			# Add to the plugins array if not already present which is what we are working with
+			# later on.
+			if (!in_array($plugin['name'],$plugins)) {$plugins[]=$plugin['name'];}
+			include_plugin_config($plugin['name'], $config);
+			}
+	}
+} else {
+	for ($n=0;$n<count($plugins);$n++)
+		include_plugin_config($plugins[$n]);
+}
+
 # Include the appropriate language file
 $pagename=str_replace(".php","",pagename());
 
@@ -138,40 +174,10 @@ if ($language!="en")
 	}
 
 # Register all plugins
-if ($use_plugins_manager){
-	include "plugin_functions.php";
-	$legacy_plugins = $plugins; # Make a copy of plugins activated via config.php
-	#Check that manually (via config.php) activated plugins are included in the plugins table.
-	foreach($plugins as $plugin_name){
-		if ($plugin_name!=''){
-			if(sql_value("SELECT inst_version AS value FROM plugins WHERE name='$plugin_name'",'')==''){
-				#Installed plugin isn't marked as installed in the DB.  Update it now.
-				#Check if there's a plugin.yaml file to get version and author info.
-				$plugin_yaml_path = dirname(__FILE__)."/../plugins/{$plugin_name}/{$plugin_name}.yaml"; 
-				$p_y = get_plugin_yaml($plugin_yaml_path, false);
-				#Write what information we have to the plugin DB.
-				sql_query("REPLACE plugins(inst_version, author, descrip, name, info_url, update_url, config_url) ".
-						  "VALUES ('{$p_y['version']}','{$p_y['author']}','{$p_y['desc']}','{$plugin_name}'," .
-						  "'{$p_y['info_url']}','{$p_y['update_url']}','{$p_y['config_url']}')");
-			}
-		}
-	}
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0"));
-	foreach($active_plugins as $plugin){
-	
-		# Check group access, only enable for global access at this point
-		if ($plugin['enabled_groups']=='')
-			{
-			register_plugin($plugin['name'],$plugin['config']);
-			}
-	}
-}
-else {
 for ($n=0;$n<count($plugins);$n++)
 	{
 	register_plugin($plugins[$n]);
 	}
-}
 
 # Set character set.
 if (($pagename!="download") && ($pagename!="graph")) {header("Content-Type: text/html; charset=UTF-8");} // Make sure we're using UTF-8.
@@ -847,34 +853,19 @@ function daily_stat($activity_type,$object_ref)
 		sql_query("update daily_stat set count=count+1 where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'");
 		}
 	}    
-	
-function register_plugin($plugin,$config="")
-	{
-	global $plugins,$language,$pagename,$lang,$applicationname;
 
-	# Add to the plugins array if not already present, to support this function being called
-	# later on (i.e. in config_override()).
-	if (!in_array($plugin,$plugins)) {$plugins[]=$plugin;}
-	
-	# Include language file
-	$langpath=dirname(__FILE__)."/../plugins/" . $plugin . "/languages/";
-	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
-	if ($language!="en")
-		{
-		if (file_exists($langpath . $language . ".php")) {include $langpath . $language . ".php";}
-		}
-		
-	# Also include plugin configuration.
+function include_plugin_config($plugin,$config="")
+	{
 	$configpath=dirname(__FILE__)."/../plugins/" . $plugin . "/config/config.php";
 	if (file_exists($configpath)) {include $configpath;}
 
-	if ($config!=""){
+	if ($config!="")
+		{
 		$config=unserialize(base64_decode($config));
-		foreach($config as $key=>$value){
+		foreach($config as $key=>$value)
 			$$key=$value;
 		}
-	}
-	
+
 	# Copy config variables to global scope.
 	$vars=get_defined_vars();
 	foreach ($vars as $name=>$value)
@@ -882,7 +873,20 @@ function register_plugin($plugin,$config="")
 		global $$name;
 		$$name=$value;
 		}
-	
+	}
+
+function register_plugin($plugin)
+	{
+	global $plugins,$language,$pagename,$lang,$applicationname;
+
+	# Include language file
+	$langpath=dirname(__FILE__)."/../plugins/" . $plugin . "/languages/";
+	if (file_exists($langpath . "en.php")) {include $langpath . "en.php";}
+	if ($language!="en")
+		{
+		if (file_exists($langpath . $language . ".php")) {include $langpath . $language . ".php";}
+		}
+
 	# Also include plugin hook file for this page.
 	$hookpath=dirname(__FILE__)."/../plugins/" . $plugin . "/hooks/" . $pagename . ".php";
 	if (file_exists($hookpath)) {include $hookpath;}
