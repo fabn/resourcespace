@@ -20,8 +20,13 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	if ($revert==true){
 		global $filename_field;
 		$original_filename=get_data_by_field($ref,$filename_field);
-		sql_query("delete from resource_data where resource=$ref");
-		sql_query("delete from resource_keyword where resource=$ref");
+		
+		# Field 8 is used in a special way for staticsync, don't overwrite.
+		$test_for_staticsync=get_resource_data($ref);
+		if ($test_for_staticsync['file_path']!=""){$staticsync_mod=" and resource_type_field != 8";} else {$staticsync_mod="";}
+		
+		sql_query("delete from resource_data where resource=$ref $staticsync_mod");
+		sql_query("delete from resource_keyword where resource=$ref $staticsync_mod");
 		#clear 'joined' display fields which are based on metadata that is being deleted in a revert (original filename is reinserted later)
 		$display_fields=get_resource_table_joins();
 		$clear_fields="";
@@ -239,6 +244,9 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			{	
 			$resource=get_resource_data($ref);
 			
+			# Field 8 is used in a special way for staticsync; don't overwrite.
+			if ($resource['file_path']!=""){$omit_title_for_staticsync=true;} else {$omit_title_for_staticsync=false;}
+			
 			hook("beforeexiftoolextraction");
 			
 			if ($exiftool_resolution_calc)
@@ -399,7 +407,14 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 							eval($read_from[$i]['exiftool_filter']);
 						}
 						if (file_exists($plugin)) {include $plugin;}
-						update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($value));}
+						
+						# Field 8 is used in a special way for staticsync; don't overwrite field 8 in this case
+						if ($omit_title_for_staticsync && $read_from[$i]['ref']==8){
+							} 
+						else {
+							update_field($ref,$read_from[$i]['ref'],iptc_return_utf8($value));
+							}
+						}
 					}
 				}
 			}
