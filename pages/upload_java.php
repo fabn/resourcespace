@@ -302,7 +302,7 @@ else
         <applet
 	            code="wjhk.jupload2.JUploadApplet"
 	            name="JUpload"
-	            archive="../lib/jupload/wjhk.jupload.jar?up=1"
+	            archive="../lib/jupload/wjhk.jupload.jar?1"
 	            width="640"
 	            height="300"
 	            mayscript
