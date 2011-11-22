@@ -29,6 +29,13 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		sql_query("delete from resource_keyword where resource=$ref $staticsync_mod");
 		#clear 'joined' display fields which are based on metadata that is being deleted in a revert (original filename is reinserted later)
 		$display_fields=get_resource_table_joins();
+		if ($staticsync_mod!=""){
+			$display_fields_new=array();
+			for($n=0;$n<count($display_fields);$n++){
+				if ($display_fields[$n]!=8){$display_fields_new[]=$display_fields[$n];}
+			}
+			$display_fields=$display_fields_new;
+		}
 		$clear_fields="";
 		for ($x=0;$x<count($display_fields);$x++){ 
 			$clear_fields.="field".$display_fields[$x]."=''";
