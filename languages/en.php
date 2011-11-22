@@ -1385,7 +1385,7 @@ $lang["done"]="Done.";
 $lang["stopped"]="Stopped."; 
 
 $lang["latlong"]="Lat / Long";
-$lang["geographicsearch"]="Geographic search";
+$lang["geographicsearch"]="Geographic Search";
 
 $lang["geographicsearch_help"]="Drag to select a search area.";
 

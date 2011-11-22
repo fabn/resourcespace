@@ -194,20 +194,20 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
 			$pagetitle=$lang["contactus"];
 		}
 		else if ($pagename=="geo_search"){
-			$pagetitle=ucwords($lang["geographicsearch"]);
+			$pagetitle=$lang["geographicsearch"];
 		}
 		else if ($pagename=="search_advanced"){
-			$pagetitle=ucwords($lang["advancedsearch"]);
+			$pagetitle=$lang["advancedsearch"];
 			if (getval("archive","")==2){$pagetitle.=" - ".$lang['archiveonlysearch'];}
 		}	
 		else if ($pagename=="about"){
-			$pagetitle=ucwords($lang["aboutus"]);
+			$pagetitle=$lang["aboutus"];
 		}	
 		else if ($pagename=="contribute"){
-			$pagetitle=ucwords($lang["mycontributions"]);
+			$pagetitle=$lang["mycontributions"];
 		}	
 		else if ($pagename=="change_password"){
-			$pagetitle=ucwords($lang["changeyourpassword"]);
+			$pagetitle=$lang["changeyourpassword"];
 		}	
 		else if ($pagename=="requests"){
 			$pagetitle=$lang["myrequests"];
