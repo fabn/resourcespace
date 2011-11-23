@@ -364,7 +364,7 @@ if ($basket)
 	<?php if ($count_result==0) { ?>
 	<p><br /><?php echo $lang["yourbasketisempty"] ?></p><br /><br /><br />
 	<?php } else { ?>
-	<p><br /><?php echo str_replace("?",$count_result,$lang["yourbasketcontains"]) ?>
+	<p><br /><?php if ($count_result==1) {echo $lang["yourbasketcontains-1"];} else {echo str_replace("%qty",$count_result,$lang["yourbasketcontains-2"]);} ?>
 
 	<?php if ($basket_stores_size) {
 	# If they have already selected the size, we can show a total price here.

@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20111122 för version 3065
+# Senast uppdaterad av Henrik Frizén 20111123 för version 3072
 #
 #
 # User group names (for the default user groups)
@@ -1214,8 +1214,9 @@ $lang["requestaddedtocollection"]="Det här materialet har lagts till i din akti
 $lang["buynow"]="Köp nu";
 $lang["yourbasket"]="Din varukorg";
 $lang["addtobasket"]="Lägg i varukorg";
-$lang["yourbasketcontains"]="Din varukorg innehåller ? artiklar.";
 $lang["yourbasketisempty"]="Din varukorg är tom.";
+$lang["yourbasketcontains-1"]="Din varukorg innehåller 1 artikel.";
+$lang["yourbasketcontains-2"]="Din varukorg innehåller %qty artiklar."; # %qty will be replaced, e.g. Your basket contains 3 items.
 $lang["buy"]="Köp";
 $lang["buyitemaddedtocollection"]="Det här materialet har lagts i din varukorg. Du kan köpa alla artiklar i din varukorg genom att klicka på \'Köp nu\' nedan.";
 $lang["buynowintro"]="Välj de storlekar du önskar.";
