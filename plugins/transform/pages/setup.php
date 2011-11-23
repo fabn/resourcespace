@@ -48,7 +48,7 @@ include "../../../include/header.php";
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>MagicTouch Configuration</h1>
+  <h1>Transform Configuration</h1>
 
 <form id="form1" name="form1" method="post" action="">
 
