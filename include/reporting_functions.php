@@ -34,7 +34,9 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 		header("Content-type: application/octet-stream");
 		header("Content-disposition: attachment; filename=" . $filename . "");
 		}
-	
+
+	if($results = hook("customreport", "", array($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download,$add_border))); else {	
+
 	$sql=$report["query"];
 	$sql=str_replace("[from-y]",$from_y,$sql);
 	$sql=str_replace("[from-m]",$from_m,$sql);
@@ -55,7 +57,8 @@ function do_report($ref,$from_y,$from_m,$from_d,$to_y,$to_m,$to_d,$download=true
 	
 	$results=sql_query($sql);
 	#echo "\"Number of results: " . count($results) . "\"\n";
-	
+	}
+
 	if ($download)
 		{
 		for ($n=0;$n<count($results);$n++)
