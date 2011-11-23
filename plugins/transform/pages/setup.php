@@ -16,7 +16,7 @@ if (getval("submit","")!="")
 	//$cropper_use_filename_as_title = getvalescaped("cropper_use_filename_as_title","");
 	//$cropper_allow_scale_up = getvalescaped("cropper_allow_scale_up","");
 	$cropper_rotation = getvalescaped("cropper_rotation","");
-	//$cropper_transform_original = getvalescaped("cropper_transform_original","");
+	$cropper_transform_original = getvalescaped("cropper_transform_original","");
 	$cropper_use_repage = getvalescaped("cropper_use_repage","");
 	//$cropper_jpeg_rgb = getvalescaped("cropper_jpeg_rgb","");
 	$cropper_enable_batch = getvalescaped("cropper_enable_batch","");
@@ -31,7 +31,7 @@ if (getval("submit","")!="")
 	//$config['cropper_use_filename_as_title']=$cropper_use_filename_as_title;
 	//$config['cropper_allow_scale_up']=$cropper_allow_scale_up;
 	$config['cropper_rotation']=$cropper_rotation;
-	//$config['cropper_transform_original']=$cropper_transform_original;
+	$config['cropper_transform_original']=$cropper_transform_original;
 	$config['cropper_use_repage']=$cropper_use_repage;
 	//$config['cropper_jpeg_rgb']=$cropper_jpeg_rgb;
 	$config['cropper_enable_batch']=$cropper_enable_batch;
@@ -58,11 +58,11 @@ include "../../../include/header.php";
 <?php echo config_boolean_field("cropper_custom_filename","Custom Filename",$cropper_custom_filename);?>
 <?php //echo config_boolean_field("cropper_use_filename_as_title","Use Filename as Title",$cropper_use_filename_as_title);?>
 <?php //echo config_boolean_field("cropper_allow_scale_up","cropper_allow_scale_up",$cropper_allow_scale_up);?>
-<?php echo config_boolean_field("cropper_rotation","cropper_rotation",$cropper_rotation);?>
-<?php //echo config_boolean_field("cropper_transform_original","cropper_transform_original",$cropper_transform_original);?>
-<?php echo config_boolean_field("cropper_use_repage","cropper_use_repage",$cropper_use_repage);?>
+<?php echo config_boolean_field("cropper_rotation","Allow Rotation",$cropper_rotation);?>
+<?php echo config_boolean_field("cropper_transform_original","Allow Transform Original",$cropper_transform_original);?>
+<?php echo config_boolean_field("cropper_use_repage","Use 'repage'",$cropper_use_repage);?>
 <?php //echo config_boolean_field("cropper_jpeg_rgb","cropper_jpeg_rgb",$cropper_jpeg_rgb);?>
-<?php echo config_boolean_field("cropper_enable_batch","cropper_enable_batch",$cropper_enable_batch);?> 
+<?php echo config_boolean_field("cropper_enable_batch","Enable Batch Transform",$cropper_enable_batch);?> 
 
 <div class="Question">  
 <label for="submit"></label> 
