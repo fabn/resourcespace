@@ -1523,3 +1523,10 @@ $lang["resourceids"]="Materialnummer";
 $lang["warningrequestapprovalfield"]="!!! Varning - materialnummer % - notera följande innan ett eventuellt godkännande !!!";
 
 $lang["yyyy-mm-dd"]="ÅÅÅÅ-MM-DD";
+
+$lang["resources-with-requeststatus0-0"]="(ingen oavgjord)"; # 0 Pending
+$lang["resources-with-requeststatus0-1"]="(1 oavgjord)"; # 1 Pending
+$lang["resources-with-requeststatus0-2"]="(%number oavgjorda)"; # %number will be replaced, e.g. 3 Pending
+$lang["researches-with-requeststatus0-0"]="(alla tilldelade)"; # 0 Unassigned
+$lang["researches-with-requeststatus0-1"]="(1 ej tilldelad)"; # 1 Unassigned
+$lang["researches-with-requeststatus0-2"]="(%number ej tilldelade)"; # %number will be replaced, e.g. 3 Unassigned

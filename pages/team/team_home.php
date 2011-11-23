@@ -60,14 +60,40 @@ include "../../include/header.php";
 	<?php if (checkperm("i")) { ?><li><a href="team_archive.php"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
 	
 	<?php if (checkperm("R")) { ?><li><a href="team_request.php"><?php echo $lang["managerequestsorders"]?></a>
-		&nbsp;&nbsp;(<?php
-     	$condition="";if (checkperm("Rb")) {$condition="and assigned_to='" . $userref . "'";} # Only show pending for this user?
-		 echo sql_value("select count(*) value from request where status = 0 $condition",0) . ' ' .  $lang["resourcerequeststatus0"] ?>)
-	</li><?php } ?>
-	
+        &nbsp;&nbsp;<?php
+        $condition = "";
+        if (checkperm("Rb")) {$condition = "and assigned_to='" . $userref . "'";} # Only show pending for this user?
+        $pending = sql_value("select count(*) value from request where status = 0 $condition",0);
+        switch ($pending)
+            {
+            case 0:
+                echo $lang["resources-with-requeststatus0-0"];
+                break;
+            case 1:
+                echo $lang["resources-with-requeststatus0-1"];
+                break;
+            default:
+                echo str_replace("%number",$pending,$lang["resources-with-requeststatus0-2"]);
+                break;
+            } ?>
+    </li><?php } ?>
+
     <?php if (checkperm("r")) { ?><li><a href="team_research.php"><?php echo $lang["manageresearchrequests"]?></a>
-		&nbsp;&nbsp;(<?php echo sql_value("select count(*) value from research_request where status = 0",0) . ' ' .  $lang["requeststatus0"] ?>)
-	</li><?php } ?>
+        &nbsp;&nbsp;<?php
+        $unassigned = sql_value("select count(*) value from research_request where status = 0",0);
+        switch ($unassigned)
+            {
+            case 0:
+                echo $lang["researches-with-requeststatus0-0"];
+                break;
+            case 1:
+                echo $lang["researches-with-requeststatus0-1"];
+                break;
+            default:
+                echo str_replace("%number",$pending,$lang["researches-with-requeststatus0-2"]);
+                break;
+            } ?> 
+        </li><?php } ?>
 
     <?php if (checkperm("u")) { ?><li><a href="team_user.php"><?php echo $lang["manageusers"]?></a></li><?php } ?>
 

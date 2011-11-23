@@ -1499,3 +1499,10 @@ $lang["resourceids"]="Resource ID(s)";
 $lang["warningrequestapprovalfield"]="!!! Warning - resource ID % - please take note of the following before approving !!!";
 
 $lang["yyyy-mm-dd"]="YYYY-MM-DD";
+
+$lang["resources-with-requeststatus0-0"]="(0 Pending)"; # 0 Pending
+$lang["resources-with-requeststatus0-1"]="(1 Pending)"; # 1 Pending
+$lang["resources-with-requeststatus0-2"]="(%number Pending)"; # %number will be replaced, e.g. 3 Pending
+$lang["researches-with-requeststatus0-0"]="(0 Unassigned)"; # 0 Unassigned
+$lang["researches-with-requeststatus0-1"]="(1 Unassigned)"; # 1 Unassigned
+$lang["researches-with-requeststatus0-2"]="(%number Unassigned)"; # %number will be replaced, e.g. 3 Unassigned
