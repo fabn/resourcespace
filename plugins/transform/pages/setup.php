@@ -10,6 +10,7 @@ if (getval("submit","")!="")
 	//$cropper_default_target_format = getvalescaped("cropper_default_target_format","");
 	$cropper_debug = getvalescaped("cropper_debug","");
 	$cropper_formatarray=explode(",",getvalescaped("cropper_formatarray",""));
+	$cropper_allowed_extensions=explode(",",getvalescaped("cropper_allowed_extensions",""));
 	//$cropper_force_original_format = getvalescaped("cropper_force_original_format","");
 	//$cropper_cropsize = getvalescaped("cropper_cropsize","");
 	$cropper_custom_filename = getvalescaped("cropper_custom_filename","");
@@ -25,6 +26,7 @@ if (getval("submit","")!="")
 	//$config['cropper_default_target_format']=$cropper_default_target_format;
 	$config['cropper_debug']=$cropper_debug;
 	$config['cropper_formatarray']=$cropper_formatarray;
+	$config['cropper_allowed_extensions']=$cropper_allowed_extensions;
 	//$config['cropper_force_original_format']=$cropper_force_original_format;
 	//$config['cropper_cropsize']=$cropper_cropsize;
 	$config['cropper_custom_filename']=$cropper_custom_filename;
@@ -52,7 +54,8 @@ include "../../../include/header.php";
 
 <?php // echo config_text_field("cropper_default_target_format","Default Target Format",$cropper_default_target_format);?>
 <?php echo config_boolean_field("cropper_debug","Cropper Debug",$cropper_debug);?>
-<?php echo config_text_field("cropper_formatarray","File Formats (comma delimited)",implode(',',$cropper_formatarray));?>
+<?php echo config_text_field("cropper_formatarray","Output Formats",implode(',',$cropper_formatarray));?>
+<?php echo config_text_field("cropper_allowed_extensions","Input Formats",implode(',',$cropper_allowed_extensions));?>
 <?php //echo config_boolean_field("cropper_force_original_format","cropper_force_original_format",$cropper_force_original_format);?>
 <?php //echo config_text_field("cropper_cropsize","cropper_cropsize","pre");?>
 <?php echo config_boolean_field("cropper_custom_filename","Custom Filename",$cropper_custom_filename);?>

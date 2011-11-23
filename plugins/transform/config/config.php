@@ -1,6 +1,7 @@
 <?php
 $cropper_default_target_format = 'JPG';
 $cropper_debug=false;
+$cropper_allowed_extensions = array('TIF','TIFF','JPG','JPEG','PNG','GIF','BMP','PSD'); // file formats that can be transformed
 $cropper_formatarray = array('TIF','JPG','PNG'); // output formats allowed for transform operations
 $cropper_force_original_format = false;
 $cropper_cropsize='pre';
