@@ -478,86 +478,86 @@ themes,manage,"Organisieren und bearbeiten Sie Ihre Themen. Themen sind besonder
 upload,introtext,"Nutzen Sie das untenstehende Formular, um eine Datei hochzuladen.",330,de,,,0
 upload_swf,introtext,"Klicken Sie auf die Schaltfläche unten, um Dateien hochzuladen. Sie können mehrere Dateien hochladen, wenn Sie beim Markieren die 'Shift'-Taste gedrückt halten.",331,de,,,0
 home,welcometitle,"Välkommen till ResourceSpace",332,sv,,,0
-home,welcometext,"Skriv en introduktion här...",333,sv,,,0
-all,footer,"<a target=""_top"" href=""http://www.resourcespace.org/"">ResourceSpace</a>: Digital materialförvaltning (DAM) med öppen källkod",334,sv,,,0
-all,searchpanel,"Sök efter material genom att ange beskrivning, nyckelord eller materialnummer.",335,sv,,,0
-resource_email,introtext,"Dela snabbt och enkelt materialet med andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",336,sv,,,0
-home,themes,"Det bästa materialet, speciellt utvalt och sorterat.",337,sv,,,0
+home,welcometext,"Skriv en introduktion här …",333,sv,,,0
+all,footer,"<a target=""_top"" href=""http://www.resourcespace.org/"">ResourceSpace</a>: Digital materialförvaltning (dam) med öppen källkod",334,sv,,,0
+all,searchpanel,"Sök efter material genom att ange beskrivning, nyckelord eller materialnr.",335,sv,,,0
+resource_email,introtext,"Dela snabbt och enkelt material med andra. Ett e-postmeddelande innehållande en webblänk till materialen skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",336,sv,,,0
+home,themes,"De bästa materialen, speciellt utvalda och sorterade.",337,sv,,,0
 home,restrictedtitle,"<h1>Välkommen till ResourceSpace</h1>",338,sv,,,0
-about,about,"Din egen text för ""Om oss""...",339,sv,,,0
-home,help,"Hjälp och tips för att få ut det mesta möjliga av ResourceSpace.",340,sv,,,0
-home,mycollections,"Organisera ditt material och samarbeta med andra. Använd de här verktygen för att arbeta mer effektivt.",341,sv,,,0
-terms,terms,"Dina regler...",342,sv,,,0
-"terms and conditions","terms and conditions","Dina regler och villkor...",343,sv,,,0
-home,restrictedtext,"Klicka på webblänken som skickades till dig för att komma åt materialet som är utvalt för dig.",344,sv,,,0
+about,about,"Din egen text för ’Om oss’ …",339,sv,,,0
+home,help,"Hjälp och tips som ser till att du får ut det mesta möjliga av ResourceSpace.",340,sv,,,0
+home,mycollections,"Organisera dina material och samarbeta med andra. De här verktygen hjälper dig att arbeta mer effektivt.",341,sv,,,0
+terms,terms,"Dina regler …",342,sv,,,0
+"terms and conditions","terms and conditions","Dina regler och villkor …",343,sv,,,0
+home,restrictedtext,"Klicka på webblänken som skickades till dig om du vill komma åt materialen som är utvalda för dig.",344,sv,,,0
 change_language,introtext,"Välj ditt önskade språk nedan.",345,sv,,,0
-all,researchrequest,"Låt vårt team hitta materialet du är ute efter.",346,sv,,,0
-change_password,introtext,"Skriv in ett nytt lösenord nedan för att byta lösenord.",347,sv,,,0
-contact,contact,"Dina kontaktuppgifter...",348,sv,,,0
+all,researchrequest,"Låt vårt team hitta materialen du är ute efter.",346,sv,,,0
+change_password,introtext,"Skriv in ett nytt lösenord nedan om du vill byta lösenord.",347,sv,,,0
+contact,contact,"Dina kontaktuppgifter …",348,sv,,,0
 view,storyextract,Textutdrag:,349,sv,,,0
-team_home,introtext,"Välkommen till administrationssidan. Använd länkarna nedan för att administrera material, svara på förfrågningar, hantera teman och ändra systeminställningar.",350,sv,,,0
-themes,introtext,"Teman är grupper av material som har valts ut av administratörerna för att visa exempel på vilket material som finns i systemet.",351,sv,,,0
-collection_manage,findpublic,"Publika samlingar är grupper av material som har gjorts allmänt tillgängliga av användare i systemet. Skriv in ett samlingsnummer, hela eller delar av samlingsnamnet, eller ett användarnamn för att hitta publika samlingar. Lägg till dem till din lista över samlingar för att nå materialet.",352,sv,,,0
-collection_public,introtext,"Publika samlingar är skapade av andra användare.",353,sv,,,0
-themes,findpublic,"Publika samlingar är samlingar med material som har delats ut av andra användare.",354,sv,,,0
-help,introtext,"Få ut det mesta möjliga av ResourceSpace. Instruktionerna nedan hjälper dig att använda systemet och materialet effektivare.</p>
+team_home,introtext,"Välkommen till sidan Administration. Använd länkarna nedan om du vill administrera material, svara på förfrågningar, hantera teman och ändra systeminställningar.",350,sv,,,0
+themes,introtext,"Teman är grupper av material som har valts ut av administratörerna som exempel på vilka material som finns i systemet.",351,sv,,,0
+collection_manage,findpublic,"Gemensamma samlingar är grupper av material som har gjorts allmänt tillgängliga av användare i systemet. Skriv in ett samlingsnr, hela eller delar av samlingsnamnet, eller ett användarnamn när du vill söka efter en gemensam samling. Lägg till den hittade samlingen till din lista över samlingar om du vill kunna nå materialen enkelt.",352,sv,,,0
+collection_public,introtext,"Gemensamma samlingar är skapade av andra användare.",353,sv,,,0
+themes,findpublic,"Gemensamma samlingar är samlingar med material som har delats ut av andra användare.",354,sv,,,0
+help,introtext,"Få ut det mesta möjliga av ResourceSpace. Instruktionerna nedan hjälper dig att använda systemet och materialen effektivare.</p>
 
-<p>Använd 'Teman' för att bläddra bland material per tema eller använd 'Enkel sökning' för att söka efter specifikt material.</p>
+<p>Använd Teman om du vill bläddra bland material per tema eller använd Enkel sökning om du vill söka efter specifikt material.</p>
 
-<p><a target=""_blank"" href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Ladda ner den engelska användarhandboken (pdf-fil)</a>
+<p><a target=""_blank"" href=""http://www.montala.net/downloads/resourcespace-GettingStarted.pdf"">Hämta den engelska användarhandboken (pdf-fil)</a>
 
 <p><a target=""_blank"" href=""http://wiki.resourcespace.org/index.php/Main_Page"">Dokumentation på webben (engelskspråkig wiki)</a>",355,sv,,,0
 collection_email,introtext,"Dela snabbt och enkelt materialet i denna samling med andra. Ett e-postmeddelande innehållande en webblänk till materialet skapas och skickas automatiskt. Du kan även lägga till ett eget meddelande.",356,sv,,,0
-collection_edit,introtext,"Organisera och hantera ditt material genom att dela upp det i samlingar.
+collection_edit,introtext,"Organisera och hantera dina material genom att dela upp dem i samlingar.
 
 <br>
 
-Du når alla dina samlingar från panelen ‘Mina samlingar’ i nederkant av skärmen
+Du når alla dina samlingar från panelen <b>Mina samlingar</b> i nederkant av skärmen.
 
 <br><br>
 
-<strong>Privat åtkomst</strong> tillåter endast dig och dina utvalda användare att se samlingen. Idealiskt för att samla material i projekt som du jobbar med enskilt eller i en grupp.
+<strong>Privat åtkomst</strong> tillåter endast dig och dina utvalda användare att se samlingen. Idealiskt om du vill samla material i projekt som du jobbar med enskilt eller i en grupp.
 
 <br><br>
 
-<strong>Publik åtkomst</strong> tillåter alla interna användare att söka efter och se samlingen. Användbart om du vill dela materialet med andra som skulle kunna ha nytta av det. 
+<strong>Gemensam åtkomst</strong> tillåter alla interna användare att söka efter och se samlingen. Användbart om du vill dela materialet med andra som skulle kunna ha nytta av det. 
 
 <br><br>
 
-Du kan välja om du vill att de andra användarna (publika eller användare du har delat ut en privat samling till) ska kunna lägga till och ta bort material eller bara kunna titta på materialet.",357,sv,,,0
+Du kan välja om du vill att de andra användarna ska kunna lägga till och ta bort material eller bara kunna visa materialen.",357,sv,,,0
 edit,multiple,"Markera de fält du vill uppdatera med ny information. Omarkerade fält lämnas oförändrade.",358,sv,,,0
-collection_manage,introtext,"Organisera och hantera ditt material genom att dela upp det i samlingar. Skapa samlingar för ett eget projekt, eller för att underlätta samarbetet i en projektgrupp eller bara för att samla dina favoriter på ett ställe. Du når alla dina samlingar från panelen ‘Mina samlingar’ i nederkant av skärmen.",359,sv,,,0
-collection_manage,newcollection,"Fyll i ett samlingsnamn för att skapa en ny samling.",362,sv,,,0
-contribute,introtext,"Du kan bidra med eget material. När du först skapar materialet får det statusen 'Under registrering'. Ladda upp en eller flera filer och fyll i fälten med relevant metadata. Sätt statusen till 'Redo för granskning' när du är klar.",363,sv,,,0
-delete,introtext,"Var vänlig ange ditt lösenord för att bekräfta att du vill radera det här materialet.",360,sv,,,0
-done,deleted,"Materialet har raderats.",361,sv,,,0
-done,collection_email,"Ett e-postmeddelande innehållande en webblänk har skickats till användarna du specificerade. Samlingen har lagts till deras samlingslista.",364,sv,,,0
-done,research_request,"En medlem av researchteamet kommer att få i uppdrag att besvara din researchförfrågan. Vi kommer att hålla kontakt genom e-post under arbetets gång. När vi har slutfört arbetet kommer du att få ett e-postmeddelande med en webblänk till allt material vi rekommenderar.",365,sv,,,0
-done,resource_email,"Ett e-postmeddelande innehållande en webblänk till materialet har skickats till användarna du specificerade.",366,sv,,,0
+collection_manage,introtext,"Organisera och hantera ditt material genom att dela upp det i samlingar. Skapa samlingar för ett eget projekt, om du vill underlätta samarbetet i en projektgrupp eller om du vill samla dina favoriter på ett ställe. Du når alla dina samlingar från panelen <b>Mina samlingar</b> i nederkant av skärmen.",359,sv,,,0
+collection_manage,newcollection,"Fyll i ett samlingsnamn om du vill skapa en ny samling.",362,sv,,,0
+contribute,introtext,"Du kan bidra med eget material. När du först skapar materialet får det statusen ’Under registrering’. Överför en eller flera filer och fyll i fälten med relevant metadata. Sätt statusen till ’Väntande på granskning’ när du är klar.",363,sv,,,0
+delete,introtext,"Du måste ange ditt lösenord för att bekräfta att du vill ta bort det här materialet.",360,sv,,,0
+done,deleted,"Materialet har tagits bort.",361,sv,,,0
+done,collection_email,"Ett e-postmeddelande innehållande en webblänk har skickats till användarna du specificerade. Samlingen har lagts till i respektive användares panel <b>Mina samlingar</b>.",364,sv,,,0
+done,research_request,"En medlem av researchteamet kommer att få i uppdrag att besvara din researchförfrågan. Vi kommer att hålla kontakt genom e-post under arbetets gång. När vi har slutfört arbetet kommer du att få ett e-postmeddelande med en webblänk till alla material vi rekommenderar.",365,sv,,,0
+done,resource_email,"Ett e-postmeddelande innehållande en webblänk till materialen har skickats till användarna du specificerade.",366,sv,,,0
 done,resource_request,"Din begäran har mottagits och vi kommer att höra av oss inom kort.",367,sv,,,0
 done,user_password,"Ett e-postmeddelande innehållande ditt användarnamn och lösenord har skickats.",368,sv,,,0
 done,user_request,"Din ansökan om ett användarkonto har skickats. Dina inloggningsuppgifter kommer att skickas till dig inom kort.",369,sv,,,0
-download_click,introtext,"Högerklicka på länken nedan och välj 'Spara som...' för att ladda ner materialet. Du kommer att få frågan var du vill spara filen. Klicka på webblänken för att öppna filen i din webbläsare.",370,sv,,,0
-download_progress,introtext,"Din nedladdning kommer att startas inom kort. Använd länkarna nedan för att fortsätta efter att nedladdningen är klar.",371,sv,,,0
+download_click,introtext,"Högerklicka på länken nedan och välj <b>Spara som</b> om du vill hämta materialet. Du kommer att få frågan var du vill spara filen. Öppna filen i din webbläsare genom att klicka på webblänken.",370,sv,,,0
+download_progress,introtext,"Din hämtning startas inom kort. När hämtningen är klar kan du fortsätta genom att klicka på länkarna nedan.",371,sv,,,0
 edit,batch,"",372,sv,,,0
-team_resource,introtext,"Lägg till material ett och ett eller i grupp. För att redigera ett material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet.",373,sv,,,0
+team_resource,introtext,"Lägg till material ett och ett eller i grupp. Om du vill redigera ett material kan du enklast söka efter det och sedan klicka på <b>Redigera</b> på sidan som visar materialet.",373,sv,,,0
 login,welcomelogin,"Välkommen till ResourceSpace",374,sv,,,0
-user_request,introtext,"Ansök om ett användarkonto genom att fylla i formuläret nedan.",375,sv,,,0
-research_request,introtext,"Researchteamet hjälper dig att finna det bästa materialet till dina projekt. Fyll i formuläret nedan så noggrant som möjligt så att vi kan ge dig ett relevant svar. <br><br>En medlem av teamet kommer att få i uppdrag att besvara din researchförfrågan. Vi kommer att hålla kontakt genom e-post under arbetets gång. När vi har slutfört arbetet kommer du att få ett e-postmeddelande med en webblänk till allt material vi rekommenderar.",376,sv,,,0
+user_request,introtext,"Fyll i formuläret nedan om du vill ansöka om ett användarkonto.",375,sv,,,0
+research_request,introtext,"Researchteamet hjälper dig att finna de bästa materialen till dina projekt. Fyll i formuläret nedan så noggrant som möjligt så att vi kan ge dig ett relevant svar. <br><br>En medlem av teamet kommer att få i uppdrag att besvara din researchförfrågan. Vi kommer att hålla kontakt genom e-post under arbetets gång. När vi har slutfört arbetet kommer du att få ett e-postmeddelande med en webblänk till alla material vi rekommenderar.",376,sv,,,0
 resource_request,introtext,"Materialet du begärde finns inte tillgängligt. Information om materialet infogas automatiskt i e-postmeddelandet, och du kan även lägga till en egen kommentar om du vill.",377,sv,,,0
-search_advanced,introtext,"<strong>Söktips</strong><br>Ett avsnitt som du lämnar tomt eller omarkerat kommer att medföra att ALLT inkluderas i sökningen. Om du t.ex. lämnar alla länders kryssrutor omarkerade, kommer sökningen inte att begränsas med avseende på land. Om du däremot enbart markerar kryssrutan  'Sverige' kommer sökningen endast att ge material från just Sverige.",378,sv,,,0
-tag,introtext,"Hjälp till att förbättra framtida sökresultat genom att förse materialet med relevant metadata. Använd nyckelord för att beskriva vad du t.ex. ser på en bild: hund, hus, boll, födelsedagstårta. Separera nyckelorden med kommatecken eller mellanslag. Skriv in fullständigt namn på alla som förekommer på ett fotografi. Ange platsen för ett fotografi om den är känd.",379,sv,,,0
+search_advanced,introtext,"<strong>Söktips</strong><br>Ett avsnitt som du lämnar tomt eller omarkerat medför att <i>allt</i> inkluderas i sökningen. Om du till exempel lämnar alla länders kryssrutor omarkerade, begränsas sökningen inte med avseende på land. Om du däremot sedan markerar kryssrutan ’Sverige’ ger sökningen endast material från just Sverige.",378,sv,,,0
+tag,introtext,"Hjälp till att förbättra framtida sökresultat genom att förse materialen med relevant metadata. Ange till exempel nyckelord som beskrivning av vad du ser på en bild: kanin, hus, boll, födelsedagstårta. Separera nyckelorden med kommatecken eller mellanslag. Ange fullständiga namn på alla personer som förekommer på ett fotografi. Ange platsen för ett fotografi om den är känd.",379,sv,,,0
 user_password,introtext,"Fyll i din e-postadress och ditt användarnamn så kommer ett nytt lösenord att skickas till dig.",380,sv,,,0
 upload_swf,introtext,"",381,sv,,,0
 upload,introtext,"",382,sv,,,0
-themes,manage,"Organisera och redigera tillgängliga teman. Teman är grupper av material som har valts ut av administratörerna för att visa exempel på vilket material som finns i systemet.<br><br> <strong>1 För att skapa ett nytt tema &ndash; skapa en samling</strong>.<br> Gå till <strong>Mina samlingar</strong> och skapa en ny <strong>publik</strong> samling. Välj ett existerande tema från listan om du vill lägga till samlingen i ett befintligt tema eller skriv ett temakategorinamn om du vill skapa ett nytt tema. Tillåt inte användare att lägga till/ta bort material från teman. <br> <br><strong>2 För att redigera materialet i ett existerande tema. </strong><br> Välj <strong> samling</strong>. Materialet i samlingen blir då åtkomligt i panelen <strong>Mina samlingar</strong> i nederkanten av skärmen. Använd de vanliga verktygen för att redigera, lägga till eller ta bort material.<br> <br><strong>3 För att byta namn på ett tema eller flytta en samling från ett tema till ett annat.</strong><br> Välj <strong>Redigera egenskaper</strong> och byt temakategorinamnet. Välj ett tema från listan för att lägga till samlingen till ett befintlig tema eller skriv ett nytt temakategorinamn om du vill skapa ett nytt tema.<br> <br><strong>4 För att ta bort en samling från ett tema</strong><br> Välj <strong>Redigera egenskaper</strong> och rensa fälten tema och temakategorinamn.",383,sv,,,0
+themes,manage,"Organisera och redigera tillgängliga teman. Teman är grupper av material som har valts ut av administratörerna som exempel på vilka material som finns i systemet.<br><br><strong>Skapa teman</strong><br><Om du vill skapa ett nytt tema måste du först skapa en samling.<br>Gå till <b>Mina samlingar</b> och skapa en ny <strong>gemensam samling</strong>. Välj en temakategori från listan om du vill lägga till samlingen i en existerande temakategori eller ange ett nytt namn om du vill skapa en ny temakategori. Tillåt inte användare att lägga till/ta bort material från teman.<br><br><strong>Redigera teman</strong><br>Om du vill redigera materialen i ett existerande tema väljer du verktyget <strong>Välj samling</strong>. Materialen i samlingen blir då åtkomliga i panelen <b>Mina samlingar</b> i nederkanten av skärmen. Använd de vanliga verktygen om du vill redigera, lägga till eller ta bort material.<br><br><strong>Byta namn på teman och flytta samlingar</strong><br>Välj verktyget <strong>Redigera samling</strong>. Ange ett nytt namn i fältet Namn om du vill byta namn på temat. Välj en temakategori från listan om du vill flytta samlingen till en existerande temakategori eller ange ett nytt namn om du vill skapa en ny temakategori och flytta samlingen dit.<br><br><strong>Ta bort en samling från ett tema</strong><br>Välj verktyget <strong>Redigera samling</strong> och rensa fältet Temakategori och fältet där nya temakategorinamn anges.",383,sv,,,0
 terms,introtext,"Innan du kan fortsätta måste du acceptera reglerna och villkoren.",384,sv,,,0
-team_user,introtext,"Använd den här delen för att lägga till, ta bort eller redigera användare.",385,sv,,,0
-team_stats,introtext,"En statistikrapport kan skapas vid behov, baserad på aktuell data. Markera kryssrutan för att skriva ut all statistik för det valda året.",386,sv,,,0
-team_research,introtext,"Organisera och hantera researchförfrågningar.<br><br>Välj ‘Redigera researchförfrågan’ för att granska förfrågan och tilldela en medlem i researchteamet uppdraget att besvara förfrågan. I samma vy är det också möjligt att lägga till en befintlig samling till researchen genom att ange samlingsnumret.<br><br>När en medlem har tilldelats researchen blir den tillgänglig i panelen 'Mina samlingar'. Använd de vanliga verktygen för att lägga till material till researchen. <br><br>När researchen är slutförd väljer du ‘Redigera researchförfrågan’ och ändrar status till 'Besvarad'. När du klickar på 'Spara' skickas automatiskt ett e-postmeddelande till användaren som skickade researchförfrågan. Meddelandet innehåller en webblänk som leder till researchen och den läggs också till i användarens lista över samlingar.",387,sv,,,0
-team_report,introtext,"Välj en rapport och en period. Rapporten kan öppnas i t.ex. MS Excel eller LibreOffice Calc.",388,sv,,,0
-team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materialdatan kommer att kopieras &ndash; uppladdade filer kommer inte att kopieras.",389,sv,,,0
+team_user,introtext,"Använd den här delen om du vill lägga till, ta bort eller redigera användare.",385,sv,,,0
+team_stats,introtext,"En statistikrapport kan skapas vid behov, baserad på aktuell data. Markera kryssrutan om du vill skriva ut all statistik för det valda året.",386,sv,,,0
+team_research,introtext,"Organisera och hantera researchförfrågningar.<br><br>Välj verktyget <b>Redigera researchförfrågan</b> om du vill granska förfrågan och tilldela en medlem i researchteamet uppdraget att besvara förfrågan. Med samma verktyg kan du lägga till en befintlig samling till researchen genom att ange samlingens nummer.<br><br>När en medlem har tilldelats researchen blir den tillgänglig för medlemmen i panelen <b>Mina samlingar</b>. Använd de vanliga verktygen om du vill lägga till material till researchen.<br><br>När researchen är slutförd väljer du återigen verktyget <b>Redigera researchförfrågan</b> och ändrar status till ’Besvarad’. När du klickar på <b>Spara</b> skickas automatiskt ett e-postmeddelande till användaren som skickade researchförfrågan. Meddelandet innehåller en webblänk som leder till researchen och den läggs också till i användarens panel<b>Mina samlingar</b>.",387,sv,,,0
+team_report,introtext,"Välj en rapport och en period. Rapporten kan öppnas i till exempel MS Excel eller LibreOffice Calc.",388,sv,,,0
+team_copy,introtext,"Ange numret för materialet du vill kopiera. Endast materialets metadata kommer att kopieras &ndash; eventuella filer kommer inte att kopieras.",389,sv,,,0
 team_batch_upload,introtext,"",390,sv,,,0
 team_batch_select,introtext,"",391,sv,,,0
 team_batch,introtext,"",392,sv,,,0
-team_archive,introtext,"För att redigera ett arkiverat material kan du enklast söka efter det och sen klicka på Redigera på sidan som visar materialet. Allt material som är redo för arkivering kan enkelt nås från länken nedan. Lägg till eventuell relevant information innan du flyttar materialet till arkivet.",393,sv,,,0
+team_archive,introtext,"Om du vill redigera ett arkiverat material gör du det enklast genom att söka efter det här och sedan klicka på <b>Redigera</b> på sidan som visar materialet. Alla material som väntar på arkivering kan enkelt nås från länken nedan. Lägg till eventuell relevant information innan du flyttar materialet till arkivet.",393,sv,,,0

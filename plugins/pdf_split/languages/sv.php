@@ -1,12 +1,12 @@
 <?php
 # Swedish
 # Language File for the PDF Split Plugin
-# Updated by Henrik Frizén 20110401 for svn r2562
+# Updated by Henrik Frizén 20111127 for svn r3074
 # -------
 #
 #
-$lang["splitpdf"]="Dela PDF";
-$lang["splitpdf_pleaseselectrange"]="Välj ett eller flera sidintervall som du vill använda för att dela upp filen till en eller flera nya filer.";
+$lang["splitpdf"]="Dela pdf";
+$lang["splitpdf_pleaseselectrange"]="Välj de sidintervall som du vill använda för att dela upp filen till en eller flera nya filer.";
 $lang["addrange"]="Lägg till sidintervall";
 $lang["removerange"]="Ta bort sidintervall";
 $lang["range"]="Sidintervall";

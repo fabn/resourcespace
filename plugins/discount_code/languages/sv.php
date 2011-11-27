@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Discount Code Plugin
-# Updated by Henrik Frizén 20110524 for svn r2726
+# Updated by Henrik Frizén 20111127 for svn r3074
 # -------
 #
 #
@@ -10,10 +10,10 @@ $lang["code"]="Kod";
 $lang["discount-percentage"]="Rabatt (%)";
 $lang["discount"]="Rabatt";
 $lang["code-expires"]="Utgår";
-$lang["confirm-delete-code"]="Är du säker på att du vill ta bort denna rabattkod?";
+$lang["confirm-delete-code"]="Vill du ta bort denna rabattkod?";
 $lang["add_code"]="Lägg till kod";
 $lang["newcode"]="NYKOD";
-$lang["code-expires-yyyymmdd"]="Utgår: (åååå-mm-dd)";
+$lang["code-expires-yyyymmdd"]="Utgår: (ÅÅÅÅ-MM-DD)";
 $lang["add_discount_code"]="Lägg till rabattkod";
 
 $lang["enter-code"]="Om du har fått en rabattkod anger du den nedan.";

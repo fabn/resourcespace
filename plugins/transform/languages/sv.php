@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Transform Plugin
-# Updated by Henrik Frizén 20110213 for svn r2342
+# Updated by Henrik Frizén 20111127 for svn r3074
 # -------
 #
 #
@@ -11,7 +11,7 @@ $lang["log-a"]="Skapade alternativ fil";
 $lang['transform']="Transformera";
 $lang['transformimage']="Transformera bild";
 $lang['transformed']="Transformerad";
-$lang['transformblurb']="Ange eventuell beskärning genom att rita en rektangulär markering direkt på bilden. Du kan sen flytta och ändra storlek på markeringen. När du är klar anger du ett filnamn för den nya beskurna bilden och klickar på 'Spara som alternativ fil' eller 'Ladda ned'. Du kan även ange en bredd och/eller höjd för att skala om den beskurna bilden.<br/><br/><strong>Formuläret nedan kan lämnas tomt.</strong> Om du inte anger en bredd och höjd kommer markeringens bredd och höjd att användas.";
+$lang['transformblurb']="Ange eventuell beskärning genom att rita en rektangulär markering direkt på bilden. Du kan sedan flytta och ändra storlek på markeringen. När du är klar anger du ett filnamn för den nya beskurna bilden och klickar på <b>Spara som alternativ fil</b> eller <b>Hämta</b>. Du kan även ange en bredd och/eller höjd för att skala om den beskurna bilden.<br/><br/><strong>Formuläret nedan kan lämnas tomt.</strong> Om du inte anger en bredd och höjd kommer markeringens bredd och höjd att användas.";
 $lang['width']="Bredd";
 $lang['height']="Höjd";
 $lang['px']="px";

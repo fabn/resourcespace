@@ -10,71 +10,71 @@ Kod Behörighet
 
 Sökning
 -------
-s	Kan söka efter material.
-v	Kan granska material med ”konfidentiell” åtkomst, kan även ladda ner material med ”begränsad” åtkomst.
-g	Har utan denna behörighet ”begränsad” åtkomst till allt material med ”begränsad/öppen” åtkomst.
-q	Kan begära/beställa material.
-w	Visa vattenstämplade förhandsgranskningar/miniatyrbilder. ($watermark måste ställas in i config.php innan uppladdningen av materialet om en vattenstämpel ska läggas till.)
+s    Kan söka efter material.
+v    Kan granska material med ’konfidentiell’ åtkomst, kan även hämta material med ’begränsad’ åtkomst.
+g    Har utan denna behörighet ’begränsad’ åtkomst till alla material med ’begränsad’ eller ’öppen’ åtkomst.
+q    Kan begära/beställa material.
+w    Visa vattenstämplade förhandsgranskningar/miniatyrbilder. ($watermark måste ställas in i ’config.php’ innan överföringen av materialet om en vattenstämpel ska läggas till.)
 
 Metadatafält/materialtyper
 --------------------------
-f*	Kan se alla fält.
-f?	Kan se fältet med referensen ?. Exempel: f1, f2, f3. (Tillämpas för redigering, avancerad sökning och visning av material.) 
-f-? Kan inte se fältet med referensen ?. Exempel: f*,f-3 innebär att användarna i gruppen kan se alla fält utom fält 3.
-F?	NEKAS skrivåtkomst till fältet med referensen ?. Fältet kommer inte att synas i redigera eller redigera alla.
-F*  NEKAS skrivåtkomst till alla fält.
-F-? TILLÅTS skrivåtkomst till fältet med referensen ?. Används tillsammans med F* för att tillåta skrivåtkomst till enbart utvalda fält.
-T?  NEKAS åtkomst till material med materialtypnr ?. (Material av denna typ döljs också vid redigering och sökning.)
-T?_$ NEKAS åtkomst till material med materialtypnr ? OCH nedladdnings-/förhandsgranskningsstorlek $, t.ex. T1_scr nekar åtkomst till nedladdning av fotografier i bildskärmsstorlek. Använd ”T1_” (det vill säga utan nedladdnings-/förhandsgranskningsstorlek) för att neka åtkomst till materialets originalfil.
-X?  TILLÅTS ENDAST åtkomst till material med materialtypnr ?.
-X?_$	TILLÅTS ENDAST åtkomst till material med materialtypnr ? OCH nedladdnings-/förhandsgranskningsstorlek $, t.ex. X1_scr tillåter endast åtkomst till fotografier i bildskärmsstorlek.
-P?	TILLÅTS åtkomst till att redigera ett specifikt fält endast i uppladdningsformuläret. Tillåter användare att vid uppladdning förse materialet med information i ett fält som annars är dolt för dem.
+f*   Kan se alla fält.
+f?   Kan se fältet med referensen ?. Exempel: f1, f2, f3. (Tillämpas för redigering, avancerad sökning och visning av material.) 
+f-?  Kan inte se fältet med referensen ?. Exempel: f*,f-3 innebär att användarna i gruppen kan se alla fält utom fält 3.
+F?   NEKAS skrivåtkomst till fältet med referensen ?. Fältet kommer inte att synas i redigera eller redigera alla.
+F*   NEKAS skrivåtkomst till alla fält.
+F-?  TILLÅTS skrivåtkomst till fältet med referensen ?. Används tillsammans med F* för att tillåta skrivåtkomst till enbart utvalda fält.
+T?   NEKAS åtkomst till material med materialtypnr ?. (Material av denna typ döljs också vid redigering och sökning.)
+T?_$ NEKAS åtkomst till material med materialtypnr ? OCH hämtnings-/förhandsgranskningsstorlek $, t.ex. T1_scr nekar åtkomst till hämtning av fotografier i skärmbildsstorlek. Använd ’T1_’ (det vill säga utan hämtnings-/förhandsgranskningsstorlek) för att neka åtkomst till materialens originalfiler.
+X?   TILLÅTS ENDAST åtkomst till material med materialtypnr ?.
+X?_$ TILLÅTS ENDAST åtkomst till material med materialtypnr ? OCH hämtnings-/förhandsgranskningsstorlek $, t.ex. X1_scr tillåter endast åtkomst till fotografier i skärmbildsstorlek.
+P?   TILLÅTS åtkomst till att redigera ett specifikt fält endast i överföringsformuläret. Tillåter användare att vid överföring förse materialet med information i ett fält som annars är dolt för dem.
 
 Skapa material
 --------------
-c	Kan skapa material / ladda upp filer - materialet får direkt statusen ”Aktivt”. (För administratörer.)
-d	Kan skapa material / ladda upp filer - materialet får statusen ”Redo för granskning”. (För vanliga användare.)
+c    Kan skapa material / överföra filer - materialen får direkt statusen ’Aktivt’. (För administratörer.)
+d    Kan skapa material / överföra filer - materialet får statusen ’Väntande på granskning’. (För vanliga användare.)
 
-e?	Kan redigera material med statusen ?. Exempel: e0, e1, e2. (Även ta bort.) 
-		e0: ”Aktivt” (synligt i en sökning)
-		e1: ”Redo för arkivering” (ej synligt i en sökning)
-		e2: ”Arkiverat” (endast synligt i en arkivsökning)
-	Normalt för materialhanteringsteamet är e0 och e1, och för arkivteamet e1 och e2.
-	Fler behörigheter ger åtkomst till ännu ej aktiva användarbidrag:
-		e-2: ”Under registrering” (användarbidrag)
-		e-1: ”Redo för granskning” (användarbidrag)
-i	Kan hantera arkivmaterial.
-n	Kan tagga material i Snabbtaggning (måste vara aktiverat i config.php).
+e?   Kan redigera material med statusen ?. Exempel: e0, e1, e2. (Även ta bort.) 
+          e0: ’Aktivt’ (synligt i en sökning)
+          e1: ’Väntande på arkivering’ (ej synligt i en sökning)
+          e2: ’Arkiverat’ (endast synligt i en arkivsökning)
+     Normalt för materialhanteringsteamet är e0 och e1, och för arkivteamet e1 och e2.
+     Fler behörigheter ger åtkomst till ännu ej aktiva användarbidrag:
+          e-2: ’Under registrering’ (användarbidrag)
+          e-1: ’Väntande på granskning’ (användarbidrag)
+i    Kan hantera arkivmaterial.
+n    Kan tagga material i Snabbtaggning (måste vara aktiverat i ’config.php’).
 
 Teman/samlingar
 ---------------
-b	Kan inte se panelen Mina samlingar i nederkant av skärmen och kan inte använda tillhörande funktioner. (Rekommenderas inte för administratörsgrupper eftersom samlingar underlättar materialhanteringen.)
-h	Kan publicera teman, och redigera alla samlingar.
-j*	Kan se alla temakategorier.
-j?	Kan se tema av kategorin ?. (Ex. jBilar,jDjur.)
-J	Kan endast söka efter material som hör till ett tema. (Rekommenderas ej!)
+b    Kan inte se panelen Mina samlingar i nederkant av skärmen och kan inte använda tillhörande funktioner. (Rekommenderas inte för administratörsgrupper eftersom samlingar underlättar materialhanteringen.)
+h    Kan publicera teman, och redigera alla samlingar.
+j*   Kan se alla temakategorier.
+j?   Kan se tema av kategorin ?. (Ex. jBilar,jDjur.)
+J    Kan endast söka efter material som hör till ett tema. (Rekommenderas ej!)
 
 Begränsade behörigheter
 -----------------------
-p	Kan inte ändra lösenordet. (Användbart för delade användarkonton.)
-D	Kan inte ta bort material.
+p    Kan inte ändra lösenordet. (Användbart för delade användarkonton.)
+D    Kan inte ta bort material.
 
 Administration
 --------------
-a	Har åtkomst till trädet i Systemkonfiguration.
-t	Har åtkomst till sidan Administration.
-r	Kan hantera researchförfrågningar.
-R	Kan hantera begäranden/beställningar av material.
-Ra	Kan tilldela andra användare begäranden/beställningar av material.
-Rd	Kan bli tilldelad begäranden/beställningar av material (kan även se tilldelade begäranden/beställningar på sidan Hantera begäranden/beställningar).
-o	Kan hantera webbplatsens innehåll.
-m	Kan göra massutskick.
-u	Kan hantera användare.
-k	Kan hantera nyckelord (lägga till/ta bort nyckelordsrelationer och lägga till/ta bort/döpa om kryssrute-/rullgardinsalternativ).
+a    Har åtkomst till trädet i Systemkonfiguration.
+t    Har åtkomst till sidan Administration.
+r    Kan hantera researchförfrågningar.
+R    Kan hantera begäranden/beställningar av material.
+Ra   Kan tilldela andra användare begäranden/beställningar av material.
+Rd   Kan bli tilldelad begäranden/beställningar av material (kan även se tilldelade begäranden/beställningar på sidan Hantera begäranden/beställningar).
+o    Kan hantera webbplatsens innehåll.
+m    Kan göra massutskick.
+u    Kan hantera användare.
+k    Kan hantera nyckelord (lägga till/ta bort nyckelordsrelationer och lägga till/ta bort/döpa om kryssrute-/rullgardinsalternativ).
 
 Begränsade gruppbehörigheter (tillåter skapande av isolerade grupper)
 ----------------------------
-U	(VERSAL) Kan hantera användare endast i grupper som är barn till användarens egen grupp.
-E	(VERSAL) Kan skicka material per e-post endast till användare i användarens egen grupp och till användare i grupper som är barn eller förälder till användarens grupp.
-Kan endast välja användarens egen grupp eller grupper som är barn eller förälder till användarens grupp för anpassad åtkomst.
-Får endast autoförslag (t.ex. i samband med utskick av material per e-post) med användare från användarens egen grupp eller användare i grupper som är barn eller förälder till användarens grupp.
+U    Kan hantera användare endast i grupper som är underordnade användarens egen grupp.
+E    Kan skicka material per e-post endast till användare i användarens egen grupp och till användare i grupper som är underordnade eller direkt överordnad användarens grupp.
+          Kan för anpassad åtkomst endast välja användarens egen grupp eller grupper som är underordnade eller direkt överordnad användarens grupp.
+          Får endast autoförslag (t.ex. i samband med utskick av material per e-post) med användare från användarens egen grupp eller användare i grupper som är underordnade eller direkt överordnad användarens grupp.

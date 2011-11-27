@@ -1,12 +1,12 @@
 <?php
 # Swedish
 # Language File for the Colorthemer Plugin
-# Updated by Henrik Frizén 20110428 for svn r2659
+# Updated by Henrik Frizén 20111127 for svn r3074
 # -------
 #
 #
 $lang['customthemecreation']="Skapa anpassat färgtema";
-$lang['customthemeintrotext']="Skapar ett färgtema med namnet 'colorthemer_1'";
+$lang['customthemeintrotext']="Skapar ett färgtema med namnet ’colorthemer_1’";
 $lang['style']="Stil";
 $lang['white']="Vit";
 $lang['gradient']="Tonad";
