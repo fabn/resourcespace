@@ -40,7 +40,7 @@ if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "
 
 # Check MySQL version
 if ($use_mysqli){
-	$mysqlversion=mysqli_get_server_info($mysql);
+	$mysqlversion=mysqli_get_server_info($db);
 	}
 else {
 	$mysqlversion=mysql_get_server_info();
