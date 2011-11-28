@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20111127 för version 3074
+# Senast uppdaterad av Henrik Frizén 20111128 för version 3078
 #
 #
 # User group names (for the default user groups)
@@ -1027,7 +1027,7 @@ $lang["externalselectresourceexpires"]="Om du delar material med en användare u
 
 $lang["externalshareexpired"]="Delningens utgångsdatum har passerats och därför är delningen inte längre tillgänglig.";
 
-$lang["expires"]="Utgår";
+$lang["columnheader-expires"]=$lang["expires"]="Utgår";
 $lang["never"]="Aldrig";
 
 $lang["approved"]="Godkänd";
@@ -1252,6 +1252,7 @@ $lang["report-resources_with_zero_views"]="Material utan visningar";
 $lang["report-resource_downloads_by_group"]="Materialhämtningar per grupp";
 $lang["report-resource_download_detail"]="Materialhämtningar &ndash; detaljerad lista";
 $lang["report-user_details_including_group_allocation"]="Användaruppgifter inklusive grupptillhörighet";
+$lang["report-expired_resources"]="Utgångna material";
 
 #Column headers (for the default reports)
 $lang["columnheader-keyword"]="Nyckelord";

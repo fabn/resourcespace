@@ -1002,7 +1002,7 @@ $lang["externalselectresourceexpires"]="If you are e-mailing external users, ple
 
 $lang["externalshareexpired"]="Sorry, this share has expired and is no longer available.";
 
-$lang["expires"]="Expires";
+$lang["columnheader-expires"]=$lang["expires"]="Expires";
 $lang["never"]="Never";
 
 $lang["approved"]="Approved";
@@ -1227,6 +1227,7 @@ $lang["report-resources_with_zero_views"]="Resources with zero views";
 $lang["report-resource_downloads_by_group"]="Resource downloads by group";
 $lang["report-resource_download_detail"]="Resource download detail";
 $lang["report-user_details_including_group_allocation"]="User details including group allocation";
+$lang["report-expired_resources"]="Expired resources";
 
 #Column headers (for the default reports)
 $lang["columnheader-keyword"]="Keyword";
