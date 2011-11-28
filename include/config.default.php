@@ -1022,6 +1022,8 @@ $email_url_remind_user = ""; //emailreminder
 $disable_upload_preview = false;
 $disable_alternative_files = false;
 
+#collection_public.php - hide 'access' column
+$hide_access_column_public = false;
 #collection_manage.php - hide 'access' column
 $hide_access_column = false;
 #collection_manage.php - show 'edit all' link on collections
