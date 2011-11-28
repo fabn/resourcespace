@@ -150,19 +150,19 @@ else if (isset($_REQUEST['new_ext']) && strlen($_REQUEST['new_ext']) == 3){
 if ( $cropper_custom_filename && strlen($filename) > 0){
 	$mytitle = $filename;
 } else{
-	$mytitle = mysql_real_escape_string("$verb " . str_replace("?",strtoupper($new_ext),$lang["fileoftype"]));
+	$mytitle = escape_check("$verb " . str_replace("?",strtoupper($new_ext),$lang["fileoftype"]));
 }
 
 if (strlen($alt_type)>0){ $mytitle .= " - $alt_type"; }
 
-$mydesc = mysql_real_escape_string($description);
+$mydesc = escape_check($description);
 
 # Is this a download only?
 $download=(getval("download","")!="");
 
 if (!$download && !$original && getval("slideshow","")=="")
 	{
-	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','',0,mysql_real_escape_string($alt_type));
+	$newfile=add_alternative_file($ref,$mytitle,$mydesc,'','',0,escape_check($alt_type));
 	$newpath = get_resource_path($ref, true, "", true, $new_ext, -1, 1, false, "", $newfile);
 	}
 else
@@ -317,7 +317,7 @@ if ( $cropper_custom_filename && strlen($filename) > 0){
 		}
 }
 
-$filename = mysql_real_escape_string($filename);
+$filename = escape_check($filename);
 
 $lcext = strtolower($new_ext);
 
