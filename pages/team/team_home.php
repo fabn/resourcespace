@@ -80,9 +80,6 @@ include "../../include/header.php";
 
     <?php if (checkperm("r")) { ?><li><a href="team_research.php"><?php echo $lang["manageresearchrequests"]?></a>
         &nbsp;&nbsp;<?php
-        $condition = "";
-        if (checkperm("Rb")) {$condition = "and assigned_to='" . $userref . "'";} # Only show pending for this user?
-        $pending = sql_value("select count(*) value from request where status = 0 $condition",0);
         $unassigned = sql_value("select count(*) value from research_request where status = 0",0);
         switch ($unassigned)
             {
@@ -93,7 +90,7 @@ include "../../include/header.php";
                 echo $lang["researches-with-requeststatus0-1"];
                 break;
             default:
-                echo str_replace("%number",$pending,$lang["researches-with-requeststatus0-2"]);
+                echo str_replace("%number", $unassigned,$lang["researches-with-requeststatus0-2"]);
                 break;
             } ?> 
         </li><?php } ?>
