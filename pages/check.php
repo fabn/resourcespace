@@ -34,8 +34,9 @@ function ResolveKB($value)
 <?php
 # Check PHP version
 $phpversion=phpversion();
+$phpinifile=php_ini_loaded_file();
 if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "4.4", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
-?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion?></td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion.'  config:'.$phpinifile;?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check MySQL version
 if ($use_mysqli){
