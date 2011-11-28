@@ -20,14 +20,6 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");  // always modifi
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 
-if (!function_exists('mysql_set_charset'))
-	{
-	function mysql_set_charset($charset)
-		{
-		return sql_query(sprintf("SET NAMES '%s'", $charset));
-		}
-	}
-
 # Error handling
 function errorhandler($errno, $errstr, $errfile, $errline)
 	{
@@ -79,8 +71,12 @@ if (!isset($storagedir)) {$storagedir=dirname(__FILE__)."/../filestore";}
 if (!isset($storageurl)) {$storageurl=$baseurl."/filestore";}
 
 # *** CONNECT TO DATABASE ***
+if ($use_mysqli){
+$db=mysqli_connect($mysql_server,$mysql_username,$mysql_password,$mysql_db);
+} else {
 mysql_connect($mysql_server,$mysql_username,$mysql_password);
 mysql_select_db($mysql_db);
+}
 
 // If $mysql_charset is defined, we use it
 // else, we use the default charset for mysql connection.
@@ -88,7 +84,13 @@ if(isset($mysql_charset))
 	{
 	if($mysql_charset)
 		{
-		mysql_set_charset($mysql_charset);
+		if ($use_mysqli){
+			global $db;
+			mysqli_set_charset($db,$mysql_charset);
+			}
+		else {
+			mysql_set_charset($mysql_charset);
+			}
 		}
 	}
 
@@ -255,7 +257,13 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     if ($debug_log) {debug("SQL: " . $sql);}
     
     # Execute query
-    $result=mysql_query($sql);
+    global $use_mysqli;
+    if ($use_mysqli){
+		$result=mysqli_query($db,$sql);
+	}
+	else {
+		$result=mysql_query($sql);
+	}
 	
     if ($config_show_performance_footer){
     	# Stats
@@ -274,7 +282,13 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
 		$querytime += $time_total;
 	}
 		
-    $error=mysql_error();
+	if ($use_mysqli){	
+		$error=mysqli_error($db);
+	}
+	else {
+		$error=mysql_error();
+	}
+		
     if ($error!="")
         {
         if ($error=="Server shutdown in progress")
@@ -313,7 +327,8 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
     else
         {
         $row=array();
-        while (($rs=mysql_fetch_array($result)) && (($counter<$fetchrows) || ($fetchrows==-1)))
+        if ($use_mysqli){
+        while (($rs=mysqli_fetch_array($result)) && (($counter<$fetchrows) || ($fetchrows==-1)))
             {
             while (list($name,$value)=each($rs))
                 {
@@ -324,11 +339,25 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
                 }
             $counter++;
             }
+		}
+		else {
+        while (($rs=mysql_fetch_array($result)) && (($counter<$fetchrows) || ($fetchrows==-1)))
+            {
+            while (list($name,$value)=each($rs))
+                {
+                if (!is_integer($name)) # do not run for integer values (MSSQL returns two keys for each returned column, a numeric and a text)
+                    {
+                    $row[$counter][$name]=str_replace("\\","",stripslashes($value));
+                    }
+                }
+            $counter++;
+            }		
+		}	
 
 		# If we haven't returned all the rows ($fetchrows isn't -1) then we need to fill the array so the count
 		# is still correct (even though these rows won't be shown).
 		$rows=count($row);
-		$totalrows=mysql_num_rows($result);#echo "-- $rows out of $totalrows --";
+		if ($use_mysqli){$totalrows=mysqli_num_rows($result);} else {$totalrows=mysql_num_rows($result);}#echo "-- $rows out of $totalrows --";
 		if (($fetchrows!=-1) && ($rows<$totalrows)) {$row=array_pad($row,$totalrows,0);}
         return $row;
         }
@@ -359,7 +388,14 @@ function sql_array($query)
 function sql_insert_id()
 	{
 	# Return last inserted ID (abstraction)
-	return mysql_insert_id();
+	global $use_mysqli;
+	if ($use_mysqli){
+		global $db;
+		return mysqli_insert_id($db);
+	}
+	else { 
+		return mysql_insert_id();
+	}
 	}
 
 function CheckDBStruct($path)
@@ -581,12 +617,18 @@ function getvalescaped($val,$default,$force_numeric=false)
 function getuid()
     {
     # generate a unique ID
-    return strtr(mysql_escape_string(microtime() . " " . $_SERVER["REMOTE_ADDR"]),". ","--");
+	return strtr(escape_check(microtime() . " " . $_SERVER["REMOTE_ADDR"]),". ","--");
     }
 
 function escape_check($text) #only escape a string if we need to, to prevent escaping an already escaped string
     {
-    $text=mysql_escape_string($text);
+	global $db,$use_mysqli;
+	if ($use_mysqli){
+		$text=mysqli_real_escape_string($db,$text);
+    }
+    else {
+		$text=mysql_real_escape_string($text);
+	}
     # turn all \\' into \'
     while (!(strpos($text,"\\\\'")===false))
         {

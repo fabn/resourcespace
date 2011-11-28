@@ -1797,3 +1797,6 @@ $tweak_allow_gamma=true;
 
 # experimental email notification of php errors to $email_notify
 $email_errors=false;
+
+# Use php-mysqli extension for interfacing with the mysql database
+$use_mysqli=false;

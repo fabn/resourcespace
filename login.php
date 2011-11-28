@@ -178,7 +178,7 @@ if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     {
     #fetch username and update logged in status
     $s=explode("|",$_COOKIE["user"]);
-    $username=mysql_escape_string($s[0]);
+    $username=escape_check($s[0]);
     sql_query("update user set logged_in=0,session='' where username='$username'");
         
     #blank cookie

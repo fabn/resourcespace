@@ -26,7 +26,7 @@ function getThemeList($parents=array()){
 				$searchfield = "theme$i";
 			}
 			
-			$whereclause = "$searchfield = '" . mysql_real_escape_string($parents[$i-1]) . "' ";
+			$whereclause = "$searchfield = '" . escape_check($parents[$i-1]) . "' ";
 		}
 		$sql = "select distinct theme$i as value from collection where $whereclause and theme$i is not null and theme$i <> '' order by theme$i";
 		//echo $sql;

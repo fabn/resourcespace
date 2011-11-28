@@ -38,9 +38,15 @@ if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "
 ?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check MySQL version
-$mysqlversion=mysql_get_server_info();
+if ($use_mysqli){
+	$mysqlversion=mysqli_get_server_info($mysql);
+	}
+else {
+	$mysqlversion=mysql_get_server_info();
+	}
 if ($mysqlversion<'5') {$result=$lang["status-fail"] . ": " . str_replace("?", "5", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
-?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion . " " . str_replace("%encoding", mysql_client_encoding(), $lang["client-encoding"]); ?></td><td><b><?php echo $result?></b></td></tr><?php
+if ($use_mysqli){$encoding=mysqli_client_encoding($mysql);} else {$encoding=mysql_client_encoding();}
+?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion . " " . str_replace("%encoding", $encoding, $lang["client-encoding"]); ?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
 if (function_exists("gd_info"))

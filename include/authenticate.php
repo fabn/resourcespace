@@ -63,14 +63,14 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
     if (array_key_exists("user",$_COOKIE))
     	{
 	    $s=explode("|",$_COOKIE["user"]);
-        $username=mysql_escape_string($s[0]);
-	    $session_hash=mysql_escape_string($s[1]);
+        $username=escape_check($s[0]);
+	    $session_hash=escape_check($s[1]);
 	    }
 	elseif (array_key_exists("user",$_GET))
 		{
 	    $s=explode("|",$_GET["user"]);
-        $username=mysql_escape_string($s[0]);
-	    $session_hash=mysql_escape_string($s[1]);
+        $username=escape_check($s[0]);
+	    $session_hash=escape_check($s[1]);
 		}
 	else
 		{
@@ -255,7 +255,7 @@ if ($ip_restrict!="")
 #update activity table
 global $pagename;
 $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_terms=1";} # Accepted terms
-if (!$api){$last_browser=mysql_escape_string(substr($_SERVER["HTTP_USER_AGENT"],0,250));}
+if (!$api){$last_browser=escape_check(substr($_SERVER["HTTP_USER_AGENT"],0,250));}
 else {$last_browser="API Client";}
 sql_query("update user set last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . $last_browser . "'$terms where ref='$userref'");
 

@@ -801,7 +801,7 @@ function add_smart_collection($collection)
 	global $userref;
 	$newcollection=create_collection($userref,getvalescaped("addsmartcollection",""),1);	
 	sql_query("insert into collection_savedsearch(collection,search,restypes,archive) values ('$newcollection','" . getvalescaped("addsmartcollection","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "')");
-	$savedsearch=mysql_insert_id();
+	$savedsearch=sql_insert_id();
 	sql_query("update collection set savedsearch=$savedsearch where ref=$newcollection"); 
 	set_user_collection($userref,$newcollection);
 	}

@@ -16,7 +16,7 @@ include '../include/general.php';
 $query = explode('&', $_SERVER['QUERY_STRING']);
 $plugin_query = explode('/', $query[0]);
 
-if (!is_plugin_activated(mysql_real_escape_string($plugin_query[0]))){
+if (!is_plugin_activated(escape_check($plugin_query[0]))){
     die ('Plugin does not exist or is not enabled');
 }
 if (isset($plugin_query[1])){

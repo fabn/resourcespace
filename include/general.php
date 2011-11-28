@@ -3288,3 +3288,14 @@ function http_get_preferred_language($strict_mode=false)
 
         return $current_lang;
 	}
+
+function sql_affected_rows(){
+	global $use_mysqli;
+	if ($use_mysqli){
+		global $db;
+		return mysqli_affected_rows($db);
+	}
+	else {
+		return mysql_affected_rows();
+	}
+}

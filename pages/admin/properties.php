@@ -184,7 +184,7 @@ elseif (array_key_exists("submit",$_POST))
     
     if (array_key_exists("newredirect",$_POST))
         {
-           header ("Location: properties.php?id=" . getval("newredirect","") . mysql_insert_id() . "&name=Enter+New+Data&parent=" . $parent);
+           header ("Location: properties.php?id=" . getval("newredirect","") . sql_insert_id() . "&name=Enter+New+Data&parent=" . $parent);
            exit();
         }
     
