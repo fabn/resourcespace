@@ -142,18 +142,28 @@ foreach($resources as $resource) // For each resources
       $start_time = microtime(true);
 
       // For each fork, we need a new connection to database.
-      mysql_connect($mysql_server,$mysql_username,$mysql_password, true);
-      mysql_select_db($mysql_db);
+		if ($use_mysqli){
+			$db=mysqli_connect($mysql_server,$mysql_username,$mysql_password,$mysql_db);
+		} else {
+			mysql_connect($mysql_server,$mysql_username,$mysql_password);
+			mysql_select_db($mysql_db);
+		}
 
       // If $mysql_charset is defined, we use it
       // else, we use the default charset for mysql connection.
-      if(isset($mysql_charset))
-        {
-        if($mysql_charset)
-          {
-          mysql_set_charset($mysql_charset);
-          }
-        }
+		if(isset($mysql_charset))
+			{
+			if($mysql_charset)
+				{
+				if ($use_mysqli){
+					global $db;
+					mysqli_set_charset($db,$mysql_charset);
+					}
+				else {
+					mysql_set_charset($mysql_charset);
+					}
+				}
+			}
       create_previews($resource['ref'], false, $resource['file_extension']);
 
       echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
