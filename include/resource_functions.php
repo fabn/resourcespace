@@ -57,6 +57,10 @@ function save_resource_data($ref,$multi)
 	$expiry_field_edited=false;
 	$resource_data=get_resource_data($ref);
 	
+	# save resource defaults
+	# (do this here so that user can override them if the fields are visible.)
+	set_resource_defaults($ref);	 
+	
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (!(
@@ -203,9 +207,6 @@ function save_resource_data($ref,$multi)
 	# Always index the resource ID as a keyword
 	remove_keyword_mappings($ref, $ref, -1);
 	add_keyword_mappings($ref, $ref, -1);
-
-	# save resource defaults
-	set_resource_defaults($ref);	 
 	
 	# Autocomplete any blank fields.
 	autocomplete_blank_fields($ref);
