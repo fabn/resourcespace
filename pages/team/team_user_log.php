@@ -39,7 +39,7 @@ for ($n=0;$n<count($log);$n++)
 	<!--List Item-->
 	<tr>
 	<td><?php echo $log[$n]["date"]?></td>
-	<td><?php echo $log[$n]["resourceid"]?></td>
+	<td><a href='../view.php?ref=<?php echo $log[$n]["resourceid"]?>'><?php echo $log[$n]["resourceid"]?></a></td>
 	<td><?php echo i18n_get_translated($log[$n]["resourcetitle"])?></td>
 	<td><?php echo $lang["log-" . $log[$n]["type"]];
 
