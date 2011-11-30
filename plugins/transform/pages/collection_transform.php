@@ -108,7 +108,7 @@ if (count($resources) == 0){
 			}
 			$command .= " $newpath";
 			//echo "   $command<br>";
-			$shell_result = shell_exec($command);
+			$shell_result = run_command($command);
 			if (file_exists($newpath) && filesize($newpath) > 0){
 				// success!
 				if (!rename($newpath,$path)){

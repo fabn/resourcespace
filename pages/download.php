@@ -136,7 +136,7 @@ if ($noattach=="")
 		if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
 			{	
 			$command=$exiftool_path."/exiftool -s -s -s -t -mimetype " . escapeshellarg($path);
-			$mime=shell_exec($command);
+			$mime=run_command($command);
 			}	
 	}	
 	# Override or correct for lack of exiftool with config mappings	

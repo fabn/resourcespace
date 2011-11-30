@@ -524,7 +524,7 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
 				# Get image's dimensions.
 				$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
-				$identoutput=shell_exec($identcommand);
+				$identoutput=run_command($identcommand);
 				preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				@list(,$sw,$sh) = $smatches;
 				if (($sw!='') && ($sh!=''))
@@ -3017,6 +3017,18 @@ function convert_path_to_url($abs_path)
     // Replace the $rootDir with $baseurl in the path given:
     return str_ireplace($rootDir, $baseurl, $abs_path);
 }
+
+function run_command($command)
+	{
+	# Works like system(), but returns the complete output string rather than just the
+	# last line of it.
+	$process = @proc_open($command, array(1 => array('pipe', 'w')), $pipe, NULL, NULL,
+			array('bypass_shell' => true));
+	if (is_resource($process))
+		return stream_get_contents($pipe[1]);
+
+	return '';
+	}
 
 function run_external($cmd,&$code)
 {

@@ -52,7 +52,7 @@ if (getval("method","")!="")
 		# Extract this one page to a new resource.
 		$gscommand = get_ghostscript_command();
 		$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $from . " -dLastPage=" . $to . " " . escapeshellarg($file);
-		$output=shell_exec($gscommand2); 
+		$output=run_command($gscommand2);
 
 
 		if (getval("method","")=="alternativefile")
@@ -206,7 +206,7 @@ DrawRanges();
 
 		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
 		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
- 		$output=shell_exec($gscommand2); 
+ 		$output=run_command($gscommand2);
 
     	debug("PDF multi page preview: page $n, executing " . $gscommand2);
 
@@ -222,7 +222,7 @@ DrawRanges();
 		 if (file_exists($target)&& $n!=1)
 			{
 			$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
-			$output=shell_exec($command2); 
+			$output=run_command($command2);
 				
 			# Add a watermarked image too?
 			global $watermark;
@@ -233,7 +233,7 @@ DrawRanges();
     				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
 				$command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
-					$output=shell_exec($command2); 
+					$output=run_command($command2);
 				}
 				
 			}
@@ -250,7 +250,7 @@ DrawRanges();
 			
 			# Extract this one page to a new resource.
 			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
-	 		$output=shell_exec($gscommand2); 
+	 		$output=run_command($gscommand2);
  		
  			# Update the file extension
  			sql_query("update resource set file_extension='pdf' where ref='$copy'");

@@ -34,7 +34,8 @@ if(!is_dir($storagedir."/colorthemes/$ref")){
 
 if ($generate){ 
 	# create all the files
-	include ('colortheme_generate.php');}
+	include ('colortheme_generate.php');
+}
 else { 
 	#create preview only
 
@@ -52,22 +53,23 @@ else {
 
 		# convert title colors
 		$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$path." ".$storagedir."/tmp/title.gif";
-		shell_exec($command);
+		run_command($command);
 
 		# convert theme preview colors
 		$command = $imagemagick_path."/convert -modulate 100,$sat,$hue  ".$storagedir."/../plugins/colorthemer/gfx/$style.png ".$storagedir."/tmp/colortheme.png";
-		shell_exec($command);
+		run_command($command);
 		
 		# add title onto preview
 		$command = $imagemagick_path."/composite -geometry +25+17  ".$storagedir."/tmp/title.gif ".$storagedir."/tmp/colortheme.png ".$storagedir."/tmp/composite.png";
-		shell_exec($command);
+		run_command($command);
 		
 		# add home image onto preview
 		$command= $imagemagick_path."/composite -geometry +26+108 ".$storagedir."/../".$homeanim_folder."/1.jpg ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/composite.png";
-		shell_exec($command);
+		run_command($command);
 		
 		# resize
 		$command=$imagemagick_path."/convert -resize x400 ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/compositepreview.jpg";
-		shell_exec($command);
+		run_command($command);
 }
-?> 
+
+?> 

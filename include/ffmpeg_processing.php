@@ -65,7 +65,7 @@ if ($ffmpeg_get_par) {
   	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
   	}
 
-  $output=shell_exec($shell_exec_cmd);
+  $output=run_command($shell_exec_cmd);
   
   preg_match('/PAR ([0-9]+):([0-9]+)/m', $output, $matches);
   if (@intval($matches[1]) > 0 && @intval($matches[2]) > 0) {
@@ -120,7 +120,7 @@ if ($config_windows)
 	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
 	}
 
-$output=shell_exec($shell_exec_cmd);
+$output=run_command($shell_exec_cmd);
 
 if ($ffmpeg_get_par) {
   if ($par > 0 && $par <> 1) {
@@ -137,7 +137,7 @@ if ($ffmpeg_get_par) {
     if ($width % 2){$width++;}
     if ($height % 2) {$height++;}
     $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
-    $output=shell_exec($shell_exec_cmd);
+    $output=run_command($shell_exec_cmd);
   }
 }
 
@@ -150,7 +150,7 @@ if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_a
     {
 	$targetfiletmp=$targetfile.".tmp";
 	rename($targetfile, $targetfiletmp);
-    $output=shell_exec($qtfaststart_path . "/qt-faststart " . escapeshellarg($targetfiletmp) . " " . escapeshellarg($targetfile));
+    $output=run_command($qtfaststart_path . "/qt-faststart " . escapeshellarg($targetfiletmp) . " " . escapeshellarg($targetfile));
     unlink($targetfiletmp);
     }
 
@@ -186,7 +186,7 @@ if (isset($ffmpeg_alternatives))
 			
 			# Process the video 
 			$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
-			$output=shell_exec($shell_exec_cmd);
+			$output=run_command($shell_exec_cmd);
 	
 			if (file_exists($apath))
 				{

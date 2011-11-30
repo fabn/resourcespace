@@ -1073,7 +1073,7 @@ function write_metadata($path,$ref)
 							}
 						}
 					$command.=" '$tmpfile'";
-					$output=shell_exec($command);
+					$output=run_command($command);
 					
 			return $tmpfile;
 			}
@@ -2278,7 +2278,7 @@ function get_page_count($resource,$alternative=-1)
         }
     
         $command=$command." -sss -pagecount $file";
-        $output=shell_exec($command);
+        $output=run_command($command);
         $pages=str_replace("Page Count","",$output);
         $pages=str_replace(":","",$pages);
         $pages=trim($pages);

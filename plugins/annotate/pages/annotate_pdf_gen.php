@@ -72,7 +72,7 @@ $pdf->AddPage();
 		
 		$command= get_ghostscript_command();
 		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".$storagedir."/tmp/annotaterip.jpg\" \"".$storagedir."/tmp/annotate.pdf\"";
-		shell_exec($command);
+		run_command($command);
 		
 		$command=$imagemagick_path . "/bin/convert";
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
@@ -80,7 +80,7 @@ $pdf->AddPage();
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
 		$command.= " -resize 300x300 -quality 90 -colorspace RGB \"".$storagedir."/tmp/annotaterip.jpg\" \"".$storagedir."/tmp/annotate.jpg\"";
-		shell_exec($command);
+		run_command($command);
 		exit();
 		}
 

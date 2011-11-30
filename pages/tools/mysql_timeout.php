@@ -19,7 +19,7 @@ for ($s=0;$s<60;$s+=10) # Do this once every 10 seconds for a minute, then this 
 	
 	
 	# Fetch process list
-	$list=explode("\n",shell_exec($mysql_command . " processlist"));
+	$list=explode("\n",run_command($mysql_command . " processlist"));
 	
 	#echo "<pre>";
 	#print_r($list);
@@ -37,7 +37,7 @@ for ($s=0;$s<60;$s+=10) # Do this once every 10 seconds for a minute, then this 
 			{
 			# Kill this process.
 			echo "killing $id... $info\n";
-			shell_exec($mysql_command . " kill " . $id);
+			run_command($mysql_command . " kill " . $id);
 			}
 		}
 

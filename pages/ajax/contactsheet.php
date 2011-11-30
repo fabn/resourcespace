@@ -313,7 +313,7 @@ for ($n=0;$n<count($result);$n++){
 		
 		$command=get_ghostscript_command();
 		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.pdf\"";
-		shell_exec($command);
+		run_command($command);
 		
 		$command=$imagemagick_path . "/bin/convert";
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
@@ -321,7 +321,7 @@ for ($n=0;$n<count($result);$n++){
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
 		$command.= " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace RGB \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"";
-		shell_exec($command);
+		run_command($command);
 		exit();
 		}
 

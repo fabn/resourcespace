@@ -31,7 +31,7 @@ foreach ($files as $file){
 		
 	$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$path."/".$file." ".$storagedir."/colorthemes/$ref/$file";
 	#echo $command;
-	shell_exec($command);
+	run_command($command);
 }
 
 
@@ -40,37 +40,37 @@ closedir($dir_handle);
 // a few special cases:
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcReorder.gif ".$storagedir."/colorthemes/$ref/ColIcReorder.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcRemove.gif ".$storagedir."/colorthemes/$ref/ColIcRemove.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment_anim.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarRed.gif ".$storagedir."/colorthemes/$ref/RatingStarRed.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarBlank.gif ".$storagedir."/colorthemes/$ref/RatingStarBlank.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarLightGrey.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarGrey.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert ../../../../gfx/interface/RatingStarYellow.gif ".$storagedir."/colorthemes/$ref/RatingStarYellow.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightBlue.gif ".$storagedir."/colorthemes/$ref/RatingStarLightBlue.gif";
-shell_exec($command);
+run_command($command);
 
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarWhite.gif ".$storagedir."/colorthemes/$ref/RatingStarWhite.gif";
-shell_exec($command);
+run_command($command);
 
 
 	# also do title.gif
@@ -86,7 +86,7 @@ shell_exec($command);
 	}
 # convert title colors
 $command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$titlepath." ".$storagedir."/colorthemes/$ref/title.gif";
-shell_exec($command);
+run_command($command);
 
 
 

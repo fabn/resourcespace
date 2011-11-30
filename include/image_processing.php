@@ -65,7 +65,7 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		# if not, try exiftool	
 		else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
 			{
-			$file_type_by_exiftool=shell_exec($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
+			$file_type_by_exiftool=run_command($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
 			if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}else{return false;}
 			}
 		# if no clue of extension by now, return false		
@@ -263,7 +263,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 				# and exiftool can provide more data. 
 			
 				$command=$exiftool_path."/exiftool -s -s -s -t -composite:imagesize -xresolution -resolutionunit " . escapeshellarg($image);
-				$dimensions_resolution_unit=explode("\t",shell_exec($command));
+				$dimensions_resolution_unit=explode("\t",run_command($command));
 				# if dimensions resolution and unit could be extracted, add them to the database.
 				# they can be used in view.php to give more accurate data.
 				if (count($dimensions_resolution_unit)==3)
@@ -285,7 +285,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 			# the command result isn't printed in columns, which will help in parsing
 			# We then split the lines in the result into an array
 			$command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" -G " . escapeshellarg($image);
-			$metalines = explode("\n", shell_exec($command));
+			$metalines = explode("\n", run_command($command));
 
 			$metadata = array(); # an associative array to hold metadata field/value pairs
 			
@@ -760,7 +760,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		# Get image's dimensions.
 		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 
-		$identoutput=shell_exec($identcommand);
+		$identoutput=run_command($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
 
@@ -849,7 +849,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 
 				$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
-				$output=shell_exec($runcommand);  
+				$output=run_command($runcommand);
 				//echo $runcommand."<br /><br/>";
 				# echo $runcommand."<br>\n";
 				# Add a watermarked image too?
@@ -864,7 +864,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 					$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" -tile ".escapeshellarg($watermarkreal)." -draw \"rectangle 0,0 $tw,$th\" ".escapeshellarg($path); 
 					
 					#die($runcommand);
-					$output=shell_exec($runcommand); 
+					$output=run_command($runcommand);
 					
 					}
 				}
@@ -1263,7 +1263,7 @@ function extract_indd_thumb ($filename) {
      
 function extract_indd_pages ($filename) {
 	global $exiftool_path;
-	shell_exec($exiftool_path.'/exiftool -b '.$filename.' > '.$filename.'metadata');
+	run_command($exiftool_path.'/exiftool -b '.$filename.' > '.$filename.'metadata');
     $source = file_get_contents($filename.'metadata');
     $xmpdata = $source;
     $regexp     = "/<xmpGImg:image>.+<\/xmpGImg:image>/";
@@ -1375,7 +1375,7 @@ function extract_text($ref,$extension,$path="")
 		$command=$antiword_path . "/antiword";
 		if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
 		if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
-		$text=shell_exec($command . " -m UTF-8 \"" . $path . "\"");
+		$text=run_command($command . " -m UTF-8 \"" . $path . "\"");
 		}
 	
        # Microsoft OfficeOpen (docx,xlsx) extraction
@@ -1388,11 +1388,11 @@ function extract_text($ref,$extension,$path="")
                # We extract this then remove tags.
                switch($extension){
                case "xlsx":
-               $text=shell_exec("unzip -p $path \"xl/sharedStrings.xml\"");
+               $text=run_command("unzip -p $path \"xl/sharedStrings.xml\"");
                break;
 
                case "docx":
-               $text=shell_exec("unzip -p $path \"word/document.xml\"");
+               $text=run_command("unzip -p $path \"word/document.xml\"");
                break;
                }
                
@@ -1409,7 +1409,7 @@ function extract_text($ref,$extension,$path="")
 		
 		# ODT files are zip files and the content is in content.xml.
 		# We extract this then remove tags.
-		$text=shell_exec("unzip -p $path \"content.xml\"");
+		$text=run_command("unzip -p $path \"content.xml\"");
 
 		# Remove tags, but add newlines as appropriate (without this, separate text blocks are joined together with no spaces).
 		$text=str_replace("<","\n<",$text);
@@ -1423,7 +1423,7 @@ function extract_text($ref,$extension,$path="")
 		$command=$pdftotext_path . "/pdftotext";
 		if (!file_exists($command)) {$command=$pdftotext_path . "\pdftotext.exe";}
 		if (!file_exists($command)) {exit("pdftotext executable not found at '$pdftotext_path'");}
-		$text=shell_exec($command . " -enc UTF-8 \"" . $path . "\" -");
+		$text=run_command($command . " -enc UTF-8 \"" . $path . "\" -");
 		
 		}
 	
@@ -1443,7 +1443,7 @@ function extract_text($ref,$extension,$path="")
 		{
 		# Zip files - map the field
 		$path=escapeshellarg($path);
-		$text=shell_exec("unzip -l $path");
+		$text=run_command("unzip -l $path");
 		
 		global $zip_contents_field_crop;
 		if ($zip_contents_field_crop>0)
@@ -1479,7 +1479,7 @@ function get_image_orientation($file){
 	global $exiftool_path;
 	if (isset($exiftool_path))
 		{
-		$orientation=shell_exec($exiftool_path.'/exiftool -s -s -s -orientation '.$file);
+		$orientation=run_command($exiftool_path.'/exiftool -s -s -s -orientation '.$file);
 		$orientation=str_replace("Rotate","",$orientation);
 		//only handles CW rotation, haven't seen CCW yet
 		if (strpos($orientation,"CCW")){$rotation="CCW";} else {$rotation="CW";}
@@ -1522,7 +1522,7 @@ function AutoRotateImage ($src_image){
 	$src_image = $src_image;
 
 	$command .= ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
-	shell_exec($command);
+	run_command($command);
 	if (file_exists($new_image)){
 		unlink($src_image);
 		rename($new_image,$src_image);
@@ -1551,7 +1551,7 @@ function extract_icc_profile($ref,$extension) {
       unlink($outfile);
    }
 
-   $cmdout= shell_exec("$command $infile $outfile $stderrclause ");
+   $cmdout= run_command("$command $infile $outfile $stderrclause ");
    
    if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize($outfile) == 0){
    // the icc profile extraction failed. So delete file.

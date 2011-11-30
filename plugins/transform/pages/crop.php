@@ -271,7 +271,7 @@ if ($cropper_debug && !$download && getval("slideshow","")==""){
 }
 
 // fixme -- do we need to trap for errors from imagemagick?
-$shell_result = shell_exec($command);
+$shell_result = run_command($command);
 if ($cropper_debug){
 	error_log("SHELL RESULT: $shell_result");
 }

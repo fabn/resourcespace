@@ -51,7 +51,7 @@ foreach ($fieldrefs as $fieldref){
 			
 		$command=$exiftool_path."/exiftool -s -s -s -".$exiftool_tag." ". escapeshellarg($image);
 	
-		$value = iptc_return_utf8(trim(shell_exec($command)));	
+		$value = iptc_return_utf8(trim(run_command($command)));
 	
 		$plugin="../../plugins/exiftool_filter_" . $name . ".php";
 		if ($exiftool_filter!=""){

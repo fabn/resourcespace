@@ -122,7 +122,7 @@ function CheckImagemagick()
 	if (!file_exists($path)) {return false;}
 	
 	# Check execution and return version
-	$version=@shell_exec(escapeshellcmd($path) . " -version");
+	$version=run_command($path . " -version");
 	if (strpos($version,"ImageMagick")===false && strpos($version,"GraphicsMagick")===false)
 		{
 		return str_replace("?", "$version", $lang["executionofconvertfailed"]);

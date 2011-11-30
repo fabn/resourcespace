@@ -19,7 +19,7 @@ function generate_transform_preview($ref){
 	if(!is_dir(get_temp_dir() . "/transform_plugin")){mkdir(get_temp_dir() . "/transform_plugin",0777);}
 
         $command .= " \"$originalpath\" +matte -delete 1--1 -flatten -colorspace RGB -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
-        shell_exec($command);
+        run_command($command);
 	
 
 	// while we're here, clean up any old files still hanging around

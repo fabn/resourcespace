@@ -33,7 +33,7 @@ if (count($resourceinfo)>0)
 		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
 		# Get image's dimensions.
 		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
-		$identoutput=shell_exec($identcommand);
+		$identoutput=run_command($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 		@list(,$sw,$sh) = $smatches;
 		if (($sw!='') && ($sh!=''))

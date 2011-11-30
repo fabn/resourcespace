@@ -20,31 +20,31 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 
 	#test if filetype is supported by exiftool
 	$command=$exiftool_path."/exiftool -listf";
-	$formats=shell_exec($command);
+	$formats=run_command($command);
 	$ext=strtoupper($ext);
 	if (strlen(strstr($formats,$ext))<2){die(str_replace("%filetype", $ext, $lang['filetypenotsupported']));}
 	if (in_array(strtolower($ext),$exiftool_no_process)) {die(str_replace("%filetype", $ext, $lang['exiftoolprocessingdisabledforfiletype']));}
 	
 	#build array of writable tags
 	$command=$exiftool_path."/exiftool -listw";
-	$writable_tags=shell_exec($command);
+	$writable_tags=run_command($command);
 	$writable_tags=strtolower(str_replace("\n","",$writable_tags));
 	$writable_tags_array=explode(" ",$writable_tags);
 	
 	$command=$exiftool_path."/exiftool -ver";
-	$exiftool_version=shell_exec($command);
+	$exiftool_version=run_command($command);
 	
 	if($exiftool_version>=7.4){
 	#build array of writable formats
 	$command=$exiftool_path."/exiftool -listwf";
-	$writable_formats=shell_exec($command);
+	$writable_formats=run_command($command);
 	$writable_formats=str_replace("\n","",$writable_formats);
 	$writable_formats_array=explode(" ",$writable_formats);
 	$file_writability=in_array($ext,$writable_formats_array); 
 	}
 	
 	$command=$exiftool_path."/exiftool -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
-	$report= shell_exec($command);
+	$report= run_command($command);
 		          
 	# get commands that would be run on download:      
 

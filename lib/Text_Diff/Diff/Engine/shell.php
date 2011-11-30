@@ -49,7 +49,7 @@ class Text_Diff_Engine_shell {
         $fp = fopen($to_file, 'w');
         fwrite($fp, implode("\n", $to_lines));
         fclose($fp);
-        $diff = shell_exec($this->_diffCommand . ' ' . $from_file . ' ' . $to_file);
+        $diff = run_command($this->_diffCommand . ' ' . $from_file . ' ' . $to_file);
         unlink($from_file);
         unlink($to_file);
 
