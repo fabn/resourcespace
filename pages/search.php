@@ -244,7 +244,7 @@ $headerinsert.="
 <script src=\"../lib/js/infobox" . ($infobox_image_mode?"_image":"") . ".js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
 ";
 
-if ($display_user_rating_stars){
+if ($display_user_rating_stars && $k==""){
 	$headerinsert.="
 	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js\" type=\"text/javascript\"></script>";
 }
@@ -701,7 +701,7 @@ if (true) # Always show search header now.
 			<?php if ($order_by=="field".$df[$x]['ref']) {?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=field<?php echo $df[$x]['ref']?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $df[$x]['title']?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&order_by=field<?php echo $df[$x]['ref']?>&sort=<?php echo $revsort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $df[$x]['title']?></a></td><?php } ?>
 			<?php }
 		
-		if ($display_user_rating_stars && $k=="" ){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>
+		if ($display_user_rating_stars && $k==""){?><td><?php if ($order_by=="popularity") {?><span class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $revsort?>"><?php echo $lang["popularity"]?></a><div class="<?php echo $sort?>">&nbsp;</div></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=popularity&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["popularity"]?></a><?php } ?></td><?php } ?>
 		<td>&nbsp;</td><!-- contains admin ratings -->
 		<?php if ($id_column){?><?php if ($order_by=="resourceid"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourceid&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["id"]?></a></td><?php } ?><?php } ?>
 		<?php if ($resource_type_column){?><?php if ($order_by=="resourcetype"){?><td class="Selected"><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a><div class="<?php echo $sort?>">&nbsp;</div></td><?php } else { ?><td><a href="search.php?search=<?php echo urlencode($search)?>&sort=<?php echo $revsort?>&order_by=resourcetype&archive=<?php echo $archive?>&k=<?php echo $k?>"><?php echo $lang["type"]?></a></td><?php } ?><?php } ?>
@@ -1050,7 +1050,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		} elseif ($display == "smallthumbs") { # ---------------- Small Thumbs view ---------------------
 		?>
 
-<div class="ResourcePanelShellSmall" <?php if ($display_user_rating_stars){?> <?php } ?>id="ResourceShell<?php echo $ref?>">
+<div class="ResourcePanelShellSmall" <?php if ($display_user_rating_stars && $k==""){?> <?php } ?>id="ResourceShell<?php echo $ref?>">
 	<div class="ResourcePanelSmall">	
 		<?php if (!hook("renderimagesmallthumb")){;?>
 		<?php $access=get_resource_access($result[$n]);

@@ -1622,6 +1622,8 @@ $display_user_rating_stars=false;
 $user_rating_only_once=false;
 # if user_rating_only_once, allow a log view of user's ratings (link is in the rating count on the View page):
 $user_rating_stats=false;
+# Allow user to remove their rating.
+$user_rating_remove=true;
 
 # Try to open the java uploader in a popup window for basic uploads (doesn't apply to batch or alternative uploads)
 $upload_java_popup=false;

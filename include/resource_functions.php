@@ -1324,15 +1324,23 @@ function user_rating_save($userref,$ref,$rating)
 		# if user has a current rating, subtract the old rating and add the new one.
 		if ($current!=""){
 			$total=$total-$current+$rating;
-			sql_query("update user_rating set rating='$rating' where user='$userref' and ref='$ref'");
+			if ($rating == 0) {  //rating remove feature
+				sql_query("delete from user_rating where user='$userref' and ref='$ref'");
+				$count--;
+			} else {
+				sql_query("update user_rating set rating='$rating' where user='$userref' and ref='$ref'");
+			}
 		}
 		
 		# if user does not have a current rating, add it 
 		else {
-			$total=$total+$rating;
-			$count++;
-			sql_query("insert into user_rating (user,ref,rating) values ('$userref','$ref','$rating')");
+			if ($rating != 0) {  //rating remove feature
+				$total=$total+$rating;
+				$count++;
+				sql_query("insert into user_rating (user,ref,rating) values ('$userref','$ref','$rating')");
+			}
 		}
+
 	}	
 	else {
 		# If not using $user_rating_only_once, Increment the total and count 
