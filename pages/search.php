@@ -246,7 +246,7 @@ $headerinsert.="
 
 if ($display_user_rating_stars && $k==""){
 	$headerinsert.="
-	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js\" type=\"text/javascript\"></script>";
+	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js?1\" type=\"text/javascript\"></script>";
 }
 
 if ($infobox)
