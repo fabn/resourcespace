@@ -159,13 +159,25 @@ function CheckFfmpeg()
 	
 	return true;
 }
+
+$ghostscript_tested="";
 function CheckGhostscript()
-{
- 	global $ghostscript_path, $ghostscript_executable;
-	if (file_exists($ghostscript_path . "/" . $ghostscript_executable)) return true;
-	if (file_exists($ghostscript_path . "/" . $ghostscript_executable . ".exe")) return true;
-	return false;
-}
+	{
+ 	global $ghostscript_path, $ghostscript_executable, $ghostscript_tested;
+ 	$ghostscript_tested = $ghostscript_path . '/' . $ghostscript_executable;
+	if (!file_exists($ghostscript_tested))
+		{
+		$ghostscript_tested=$ghostscript_path. '\\' . $ghostscript_executable . '.exe';
+		if (!file_exists($ghostscript_tested))
+			return false;
+		}
+
+	$version=run_command('"'.$ghostscript_tested.'"' . " -version");
+	if (strpos($version, "Ghostscript")===false)
+		return false;
+
+	return true;
+	}
 function CheckExiftool()
 {
  	global $exiftool_path;
@@ -226,7 +238,7 @@ if (isset($ghostscript_path))
 		}
 	else
 		{
-		$result= $lang["status-fail"] . ": " . str_replace("?", "$ghostscript_path/gs", $lang["softwarenotfound"]);
+		$result= $lang["status-fail"] . ": " . str_replace("?", $ghostscript_tested, $lang["softwarenotfound"]);
 		}
 	}
 else
