@@ -24,7 +24,7 @@ $main_pages=array("search","collection_manage","collection_public","themes");
 
 
 // get collection information (different pages need different treatment) 
-if ($pagename=="search" && isset($search) && substr($search,0,11)=="!collection"){
+if (($pagename=="search" || $pagename=="preview_all") && isset($search) && substr($search,0,11)=="!collection"){
     $collection=explode(",",substr($search,11));$collection=$collection[0]; $colresult=do_search("!collection" . $collection);$count_result=count($colresult);
 } else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];

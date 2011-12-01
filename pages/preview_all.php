@@ -77,13 +77,40 @@ $headerinsert="
 ";
 
 if ($collection_reorder_caption){
-$collection=do_search("!collection".$colref);
+$result=do_search("!collection".$colref);
 }
 else{
-$collection=do_search("!collection" . $colref,'',$order_by,$archive,-1,$sort);
+$result=do_search("!collection" . $colref,'',$order_by,$archive,-1,$sort);
 }
 
-include "../include/header.php";?>
+include "../include/header.php";
+
+if (substr($search,0,11)=="!collection")
+	{
+	$collection=substr($search,11);
+	$collection=explode(",",$collection);
+	$collection=$collection[0];
+	$collectiondata=get_collection($collection);
+	if (!$collectiondata){?>
+		<script>alert('<?php echo $lang["error-collectionnotfound"];?>');document.location='home.php'</script>
+	<?php } 
+	if ($collection_reorder_caption)
+		{
+	# Check to see if this user can edit (and therefore reorder) this resource
+		if (($userref==$collectiondata["user"]) || ($collectiondata["allow_changes"]==1) || (checkperm("h")))
+			{
+			$allow_reorder=true;
+			}
+		}
+	}
+
+
+
+$display="";
+include ("../include/search_title_processing.php");
+
+
+?>
 <script type="text/javascript">
 function ReorderResources(id1,id2)
     {
@@ -97,15 +124,29 @@ function ReorderResources(id1,id2)
 &nbsp;&nbsp;<a href="preview_all.php?backto=<?php echo $backto?>&ref=<?php echo $colref?>&vertical=h&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; <?php echo $lang["horizontal"]; ?> </a>
 &nbsp;&nbsp;<a href="preview_all.php?backto=<?php echo $backto?>&ref=<?php echo $colref?>&vertical=v&offset=<?php echo $offset?>&search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt; <?php echo $lang["vertical"]; ?> </a>
 </tr>
-<tr>
+
+<?php if (!$collections_compact_style){
+        echo $search_title.$search_title_links;
+        }
+    else {
+    echo $search_title;
+    ?><?php if (substr($search,0,11)=="!collection" && $k==""){
+        $cinfo=get_collection(substr($search,11));
+        $feedback=$cinfo["request_feedback"];
+        $count_result=count($result);
+        if (!$search_titles){?><?php }
+        include("collections_compact_style.php");
+        ?><?php if ($vertical=="v"){?><br/><br/><?php } ?>
+    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
+    <?php } ?>
 <?php
 $n=0;
-for ($x=0;$x<count($collection);$x++){
+for ($x=0;$x<count($result);$x++){
 # Load access level
-$ref=$collection[$x]['ref'];
+$ref=$result[$x]['ref'];
 $resource_data=get_resource_data($ref);
 
-$access=get_resource_access($collection[$x]);
+$access=get_resource_access($result[$x]);
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
 if ($access==2) 
@@ -117,18 +158,18 @@ if ($access==2)
 $path="";
 $url="";
 	if ($access==1&&(checkperm('w')|| ($k!="" && isset($watermark)))){$watermark=true;} else {$watermark=false;}
-$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
+$path=get_resource_path($ref,true,"scr",false,$ext,-1,$page,$watermark,$result[$x]["file_modified"],$alternative,-1,false);
 
-if (file_exists($path) && resource_download_allowed($collection[$x],"scr",$resource_data["resource_type"]))
+if (file_exists($path) && resource_download_allowed($result[$x],"scr",$resource_data["resource_type"]))
 	{
-	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
+	$url=get_resource_path($ref,false,"scr",false,$ext,-1,$page,$watermark,$result[$x]["file_modified"],$alternative,-1,false);
 	}
 else
 	{
-	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
+	$path=get_resource_path($ref,true,"pre",false,$ext,-1,$page,$watermark,$result[$x]["file_modified"],$alternative,-1,false);
 	if (file_exists($path))
 		{
-		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,$watermark,$collection[$x]["file_modified"],$alternative,-1,false);
+		$url=get_resource_path($ref,false,"pre",false,$ext,-1,$page,$watermark,$result[$x]["file_modified"],$alternative,-1,false);
 		}
 	 }	
 if (!file_exists($path))
@@ -139,13 +180,13 @@ if (!file_exists($path))
 	}
 
 ?>
-
+    
 <?php if ($vertical=="v"){
-if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>">&nbsp;<?php echo i18n_get_translated($collection[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?></tr><tr><?php }else { ?>
+if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>">&nbsp;<?php echo i18n_get_translated($result[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?></tr><tr><?php }else { ?>
 <td style="padding:10px;"><?php } ?>
 	
 	<div class="ResourceShel_" id="ResourceShel_<?php echo $ref?>">
-	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo i18n_get_translated($collection[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
+	<?php if ($vertical=="h"){?>&nbsp;<?php if (!hook("replacepreviewalltitle")){ ?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php echo i18n_get_translated($result[$x]['field'.$view_title_field])?></a><?php } /* end hook replacepreviewalltitle */?><br/><?php } ?>
 	<?php $imageinfo = getimageSize( $url ); 
 	$imageheight=$imageinfo[1];?>
     <?php $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
@@ -159,7 +200,7 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
         include "flv_play.php";?><br /><br /><?php
         }
     } else{?>
-<?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $collection[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
+<?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <?php } ?>
 <script type="text/javascript">
 var maxheight=window.innerHeight-110;
