@@ -134,7 +134,7 @@ function ReorderResources(id1,id2)
         $cinfo=get_collection(substr($search,11));
         $feedback=$cinfo["request_feedback"];
         $count_result=count($result);
-        if (!$search_titles){?><?php }
+        if (!$search_titles){?><br/><?php }
         include("collections_compact_style.php");
         ?><?php if ($vertical=="v"){?><br/><br/><?php } ?>
     <?php } /*end if a collection search and compact_style - action selector*/ ?>    
@@ -202,9 +202,10 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
     } else{?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <?php } ?>
+<?php if ($search_titles){$heightmod=150;} else {$heightmod=120;}?>
 <script type="text/javascript">
-var maxheight=window.innerHeight-110;
-if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-110;}
+var maxheight=window.innerHeight-<?php echo $heightmod?>;
+if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-<?php echo $heightmod?>;}
 if (maxheight><?php echo $imageheight?>){
 	
 	document.getElementById('image<?php echo $ref?>').style.height='<?php echo $imageheight?>px';}
@@ -233,8 +234,8 @@ if (maxheight><?php echo $imageheight?>){
 	top.collections.location.href="<?php echo $baseurl ?>/pages/collections.php?ref=<?php echo $ref ?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>&thumbs=hide";<?php } ?>
 
 	window.onresize=function(event){
-	var maxheight=window.innerHeight-110;
-    if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-110;}
+	var maxheight=window.innerHeight-<?php echo $heightmod?>;
+    if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-<?php echo $heightmod?>;}
 	$$('.image').each(function (elem) {
 
 		if (maxheight> elem.getAttribute("imageheight").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("imageheight")+'px'; }
