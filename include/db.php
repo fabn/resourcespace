@@ -335,7 +335,8 @@ function sql_query($sql,$cache=false,$fetchrows=-1,$dbstruct=true)
                 {
                 if (!is_integer($name)) # do not run for integer values (MSSQL returns two keys for each returned column, a numeric and a text)
                     {
-                    $row[$counter][$name]=str_replace("\\","",stripslashes($value));
+					$row[$counter][$name]=$mysql_verbatim_queries
+							? $value : str_replace("\\","",stripslashes($value));
                     }
                 }
             $counter++;

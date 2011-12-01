@@ -32,6 +32,10 @@ $mysql_bin_path="/usr/bin"; # Note: no trailing slash
 # Force MySQL Strict Mode? (regardless of existing setting) - This is useful for developers so that errors that might only occur when Strict Mode is enabled are caught. Strict Mode is enabled by default with some versions of MySQL. The typical error caused is when the empty string ('') is inserted into a numeric column when NULL should be inserted instead. With Strict Mode turned off, MySQL inserts NULL without complaining. With Strict Mode turned on, a warning/error is generated.
 $mysql_force_strict_mode=false;
 
+# If true, it does not remove the backslash from DB queries, and doesn't do any special processing.
+# to them. Unless you need to store '\' in your fields, you can safely keep the default.
+$mysql_verbatim_queries=false;
+
 $baseurl="http://my.site/resourcespace"; # The 'base' web address for this installation. Note: no trailing slash
 $email_from="resourcespace@my.site"; # Where system e-mails appear to come from
 $email_notify="resourcespace@my.site"; # Where resource/research/user requests are sent
