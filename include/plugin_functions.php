@@ -146,7 +146,7 @@ function get_plugin_config($name){
     if ($config=='')
         return null;
     else
-    	return $config;
+    	return unserialize(base64_decode($config));
 }
 /**
  * Store a plugin's configuration in the database.
