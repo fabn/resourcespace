@@ -284,7 +284,7 @@ jQuery.noConflict();
         if ($p['info_url']!='')
             echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
-        // echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
+            echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
         echo '</td></tr>';        
     }
     ?>
