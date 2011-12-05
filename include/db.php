@@ -696,7 +696,7 @@ function redirect($url)
 	if (substr($url,0,1)=="/")
 		{
 		# redirect to an absolute URL
-		header ("Location: " . $url);
+		header ("Location: " . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $url);
 		}
 	else
 		{
