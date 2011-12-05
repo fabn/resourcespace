@@ -2,7 +2,7 @@
 
 function perform_login($username, $password)
 	{
-	global $scramble_key, $enable_remote_apis, $lang, $max_login_attempts_wait_minutes, $max_login_attempts_per_ip, $max_login_attempts_per_username, $global_cookies;
+	global $scramble_key, $enable_remote_apis, $lang, $max_login_attempts_wait_minutes, $max_login_attempts_per_ip, $max_login_attempts_per_username, $global_cookies, $password_hash, $username;
 
     if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key))
 		{
