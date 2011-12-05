@@ -188,11 +188,11 @@ function is_plugin_activated($name){
     }
 }
 
-function config_text_field($name,$label,$value,$size='20'){
-	if (!is_numeric($size)){ $size = 20; }
+function config_text_field($name,$label,$value,$size='30'){
+	if (!is_numeric($size)){ $size = 30; }
 	?><div class="Question">
 	<label for="<?php echo $name?>"><?php echo $label?>:</label>
-	<input name="<?php echo $name?>" type="text" size="<?php echo $size ?>" value='<?php echo htmlspecialchars($value,ENT_QUOTES);?>' size="30" />
+	<input name="<?php echo $name?>" type="text" size="<?php echo $size ?>" value='<?php echo htmlspecialchars($value,ENT_QUOTES);?>' />
 	</div><div class="clearerleft"></div>
 	<?php 
 }
