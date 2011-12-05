@@ -3,9 +3,9 @@ include "include/db.php";
 include "include/general.php";
 include "include/resource_functions.php";
 include "include/collections_functions.php";
+include "include/login_functions.php";
 
 $url=getval("url","index.php");
-$text=getvalescaped("text","");
 $api=getval("api","");
 
 # process log in
@@ -42,135 +42,43 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
     {
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
-    
-    if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key)) {exit("Invalid password.");} # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added). If a special key is sent, which is the md5 hash of the username and the secret scramble key, then allow a login using the MD5 password hash as the password. This is for the 'log in as this user' feature.
-    
-    if (strlen($password)!=32)
-    	{
-    	# Provided password is not a hash, so generate a hash.
-    	$password_hash=md5("RS" . $username . $password);
-    	}
-    else
-    	{
-    	$password_hash=$password;
-    	}
-    	
-    hook("externalauth","",array( $username, $password)); #Attempt external auth if configured
 
-    $session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
-    if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // session hashes need to match if using api key, so password cannot be included here to avoid auto-logouts after a remote api call.
-    
-    $valid=sql_query("select ref,usergroup from user where username='$username' and (password='$password' or password='$password_hash')");
-    
-    if (count($valid)>=1)
-        {
-   	    # Account expiry
-        $expires=sql_value("select account_expires value from user where username='$username' and password='$password'","");
-        if ($expires!="" && $expires!="0000-00-00 00:00:00" && strtotime($expires)<=time())
-       		{
-       		$valid=0;$error=$lang["accountexpired"];
-       		}
-       else
-       		{
-		 	$expires=0;
-        	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
+	$result=perform_login($username, $password);
+	if ($result['valid'])
+		{
+	 	$expires=0;
+       	if (getval("remember","")!="") {$expires=time()+(3600*24*100);} # remember login for 100 days
 
-			# Store language cookie
-            if ($global_cookies){
-                setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
+		# Store language cookie
+		if ($global_cookies)
+			{
+			setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
             }
-			else {
-                setcookie("language",getval("language",""),time()+(3600*24*1000));
-                setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
+		else
+			{
+			setcookie("language",getval("language",""),time()+(3600*24*1000));
+			setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/");
             }
 
-			# Update the user record. Set the password hash again in case a plain text password was provided.
-			sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0,lang='".getval("language","")."' where username='$username' and (password='$password' or password='$password_hash')");
-
-			# Log this
-			$userref=$valid[0]["ref"];
-			$usergroup=$valid[0]["usergroup"];
-			daily_stat("User session",$userref);
-			resource_log(0,'l',0);
+		# Set the session cookie.
+		if ($global_cookies){$cookie_path="/";setcookie("user","",1);} 
+		else {$cookie_path="";setcookie("user","",1,"/");}
 			
-			# Blank the IP address lockout counter for this IP
-			sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
+		setcookie("user",$username . "|" . $result['session_hash'],$expires,$cookie_path);
 
-			# Set the session cookie.
-			if ($global_cookies){$cookie_path="/";setcookie("user","",1);} 
-			else {$cookie_path="";setcookie("user","",1,"/");}
-			
-			setcookie("user",$username . "|" . $session_hash,$expires,$cookie_path);
-	       
-	        # Set default resource types
-	        setcookie("restypes",$default_res_types);
+        # Set default resource types
+        setcookie("restypes",$default_res_types);
 
-			# If the redirect URL is the collection frame, do not redirect to this as this will cause
-			# the collection frame to appear full screen.
-			if (strpos($url,"pages/collections.php")!==false) {$url="index.php";}
+		# If the redirect URL is the collection frame, do not redirect to this as this will cause
+		# the collection frame to appear full screen.
+		if (strpos($url,"pages/collections.php")!==false) {$url="index.php";}
 
-	        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='$password_hash')",0);
-	        if ($api && $enable_remote_apis ){
-				# send the cookie back to authenticate.php
-				$status_header = 'HTTP/1.1 200 ';
-                header($status_header);
-                header('Content-type: application/json');
-                echo json_encode(array("cookie"=>$username . "|" . $session_hash,"expires"=>$expires));
-				}
-				
-			if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
-	        }
+        $accepted=sql_value("select accepted_terms value from user where username='$username' and (password='$password' or password='".$result['password_hash']."')",0);
+		if (($accepted==0) && ($terms_login) && !checkperm("p")) {redirect ("pages/terms.php?noredir=true&url=" . urlencode("pages/change_password.php"));} else {redirect($url);}
         }
     else
-        {		
-		if ($api && $enable_remote_apis ){
-                $status_header = 'HTTP/1.1 200 ';
-                header($status_header);
-                header('Content-type: application/json');
-                echo json_encode(array("cookie"=>"no"));
-		}
-        $error=$lang["loginincorrect"];
-        
-        # Add / increment a lockout value for this IP
-        $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries<'" . $max_login_attempts_per_ip . "'","");
-        
-        if ($lockouts>0)
-        	{
-        	# Existing row with room to move
-			$tries=sql_value("select tries value from ip_lockout where ip='" . escape_check($ip) . "'",0);
-			$tries++;
-			if ($tries==$max_login_attempts_per_ip)
-				{
-				# Show locked out message.
-				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
-				}
-				
-			# Increment
-        	sql_query("update ip_lockout set last_try=now(),tries=tries+1 where ip='" . escape_check($ip) . "'");
-        	}
-        else
-        	{
-        	# New row
-        	sql_query("delete from ip_lockout where ip='" . escape_check($ip) . "'");
-        	sql_query("insert into ip_lockout (ip,tries,last_try) values ('" . escape_check($ip) . "',1,now())");
-        	}
-        	
-        # Increment a lockout value for any matching username.
-        $ulocks=sql_query("select ref,login_tries,login_last_try from user where username='$username'");
-        if (count($ulocks)>0)
-        	{
-			$tries=$ulocks[0]["login_tries"];
-			if ($tries=="") {$tries=1;} else {$tries++;}
-			if ($tries>$max_login_attempts_per_username) {$tries=1;}
-			if ($tries==$max_login_attempts_per_username)
-				{
-				# Show locked out message.
-				$error=str_replace("?",$max_login_attempts_wait_minutes,$lang["max_login_attempts_exceeded"]);
-				}
-			sql_query("update user set login_tries='$tries',login_last_try=now() where username='$username'");
-        	}
-        	
-        
+        {
+		$error=$result['error'];
         }
     }
 

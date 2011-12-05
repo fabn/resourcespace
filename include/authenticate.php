@@ -1,5 +1,6 @@
 <?php
 # authenticate user based on cookie
+
 $valid=true;
 $autologgedout=false;
 $nocookies=false;
@@ -7,6 +8,8 @@ $nocookies=false;
 if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.php in remotely accessible scripts.
 
 if ($api && $enable_remote_apis ){
+	include "login_functions.php";
+
 	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
 	if (getval("key","")==""){header("HTTP/1.0 403 Access Denied");exit("Access denied.");}
 	if (getval("key","") || (getval("username","")&& getval("password",""))){ // key is provided within the website when logged in (encrypted username and password)
@@ -18,43 +21,21 @@ if ($api && $enable_remote_apis ){
             $u_p_array=decrypt_api_key(getval("key",""));
         }
 
-        if (count($u_p_array)!=2){
-			$data['cookie']="no";
+        if (count($u_p_array)!=2)
+			{
+			unset($_COOKIE['user']);
 			} 
-		else{
+		else
+			{
 			$username=$u_p_array[0];
 			$password=$u_p_array[1];
-            
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array("api"=>true,"username"=>$username,"password"=>$password,"userkey"=>md5($username . $scramble_key)),'','&'));
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-            curl_setopt($ch, CURLOPT_URL, $baseurl.'/login.php');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array ('Accept: application/json'));
-            curl_setopt($ch, CURLOPT_USERAGENT, "API Client"); 
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-            $responseBody = curl_exec($ch);
-            $responseInfo	= curl_getinfo($ch);
-            curl_close($ch);
 
-            //fix for installs that don't json_decode curl response properly
-            $data['cookie']='no';
-            $pos=strpos($responseBody,'{"cookie"');
-            if ($pos!==false) {
-                $data=explode(":",  substr($responseBody, $pos));
-                $data['cookie']=$data[1];
-                $data['cookie']=explode(",",$data['cookie']);
-                $data['cookie']=$data['cookie'][0];
-                $data['cookie']=str_replace('"',"",$data['cookie']);
-                $data['cookie']=trim(str_replace("}",'',$data['cookie']));
-            }
-        }
-		if (substr($data['cookie'],0,2)!="no" && $data['cookie']!=''){
-		$_COOKIE['user']=$data['cookie'];
-		}
-        else {unset($_COOKIE['user']);}
-
+			$result=perform_login($username, $password);
+			if ($result['valid'])
+				$_COOKIE['user']=build_user_cookie($username, $result['session_hash']);
+	        else
+				unset($_COOKIE['user']);
+			}
 	}
 }
 
