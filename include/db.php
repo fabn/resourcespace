@@ -150,12 +150,19 @@ if ($use_plugins_manager){
 $pagename=str_replace(".php","",pagename());
 
 if (isset($defaultlanguage))
+	{
 	$language=$defaultlanguage;
+	}
 else
+	{
 	$language=http_get_preferred_language();
+	}
 
 if (isset($_COOKIE["language"])) {$language=$_COOKIE["language"];}
 if (isset($_GET["language_set"])) {$language=$_GET["language_set"];setcookie("language",$_GET["language_set"]);}
+
+# Languages disabled - always use the default.
+if ($disable_languages) {$language=$defaultlanguage;}
 
 # Fix due to rename of US English language file
 if ($language=="us") {$language="en-US";}
