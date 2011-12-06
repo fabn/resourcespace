@@ -9,7 +9,7 @@
 function perform_login()
 	{
 	global $api, $scramble_key, $enable_remote_apis, $lang, $max_login_attempts_wait_minutes, $max_login_attempts_per_ip, $max_login_attempts_per_username, $global_cookies, $username, $password, $password_hash;
-
+	
     if (!$api && strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key))
 		{
 		exit("Invalid password."); # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added). If a special key is sent, which is the md5 hash of the username and the secret scramble key, then allow a login using the MD5 password hash as the password. This is for the 'log in as this user' feature.
@@ -31,9 +31,9 @@ function perform_login()
     hook("externalauth","",array($username, $password)); #Attempt external auth if configured
 
 	$session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
-	if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // session hashes need to match if using api key, so password cannot be included here to avoid auto-logouts after a remote api call.
+	//if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // no longer necessary to omit password in this hash for api support
 
-	$valid=sql_query("select ref,usergroup from user where username='$username' and (password='$password' or password='$password_hash')");
+	$valid=sql_query("select ref,usergroup from user where username='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
 
 	# Prepare result array
 	$result=array();
@@ -42,7 +42,7 @@ function perform_login()
 	if (count($valid)>=1)
 		{
 		# Account expiry
-		$expires=sql_value("select account_expires value from user where username='$username' and password='$password'","");
+		$expires=sql_value("select account_expires value from user where username='".escape_check($username)."' and password='".escape_check($password)."'","");
 		if ($expires!="" && $expires!="0000-00-00 00:00:00" && strtotime($expires)<=time())
 			{
 			$result['error']=$lang["accountexpired"];
@@ -54,7 +54,7 @@ function perform_login()
 		$result['password_hash']=$password_hash;
 
 		# Update the user record. Set the password hash again in case a plain text password was provided.
-		sql_query("update user set password='$password_hash',session='$session_hash',last_active=now(),login_tries=0,lang='".getval("language","")."' where username='$username' and (password='$password' or password='$password_hash')");
+		sql_query("update user set password='".escape_check($password_hash)."',session='".escape_check($session_hash)."',last_active=now(),login_tries=0,lang='".getvalescaped("language","")."' where username='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
 
 		# Log this
 		$userref=$valid[0]["ref"];
@@ -95,7 +95,7 @@ function perform_login()
 		}
 
 	# Increment a lockout value for any matching username.
-	$ulocks=sql_query("select ref,login_tries,login_last_try from user where username='$username'");
+	$ulocks=sql_query("select ref,login_tries,login_last_try from user where username='".escape_check($username)."'");
 	if (count($ulocks)>0)
 		{
 		$tries=$ulocks[0]["login_tries"];
