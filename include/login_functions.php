@@ -1,10 +1,16 @@
 <?php
 
-function perform_login($username, $password)
+/**
+ * Performs the login using the global $username, and $password. Since the "externalauth" hook
+ * is allowed to change the credentials later on, the $password_hash needs to be global as well.
+ *
+ * @return array Containing the login details ('valid' determines whether or not the login succeeded).
+ */
+function perform_login()
 	{
-	global $scramble_key, $enable_remote_apis, $lang, $max_login_attempts_wait_minutes, $max_login_attempts_per_ip, $max_login_attempts_per_username, $global_cookies, $password_hash, $username;
+	global $api, $scramble_key, $enable_remote_apis, $lang, $max_login_attempts_wait_minutes, $max_login_attempts_per_ip, $max_login_attempts_per_username, $global_cookies, $username, $password, $password_hash;
 
-    if (strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key))
+    if (!$api && strlen($password)==32 && getval("userkey","")!=md5($username . $scramble_key))
 		{
 		exit("Invalid password."); # Prevent MD5s being entered directly while still supporting direct entry of plain text passwords (for systems that were set up prior to MD5 password encryption was added). If a special key is sent, which is the md5 hash of the username and the secret scramble key, then allow a login using the MD5 password hash as the password. This is for the 'log in as this user' feature.
 		}
@@ -21,7 +27,8 @@ function perform_login($username, $password)
 
 	$ip=get_ip();
 
-    hook("externalauth","",array( $username, $password)); #Attempt external auth if configured
+	# This may change the $username, $password, and $password_hash
+    hook("externalauth","",array($username, $password)); #Attempt external auth if configured
 
 	$session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
 	if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // session hashes need to match if using api key, so password cannot be included here to avoid auto-logouts after a remote api call.

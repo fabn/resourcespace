@@ -43,7 +43,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
     $username=getvalescaped("username","");
     $password=getvalescaped("password","");
 
-	$result=perform_login($username, $password);
+	$result=perform_login();
 	if ($result['valid'])
 		{
 	 	$expires=0;

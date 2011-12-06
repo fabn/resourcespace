@@ -30,7 +30,7 @@ if ($api && $enable_remote_apis ){
 			$username=$u_p_array[0];
 			$password=$u_p_array[1];
 
-			$result=perform_login($username, $password);
+			$result=perform_login();
 			if ($result['valid'])
 				$_COOKIE['user']=build_user_cookie($username, $result['session_hash']);
 	        else
