@@ -695,7 +695,8 @@ else{
 				?>
 				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "PHP", $lang["softwareversion"]) . ": " . $phpversion . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 				<?php
-					$gdinfo = gd_info();
+					if (function_exists('gd_info'))
+						$gdinfo = gd_info();
 					if (is_array($gdinfo))
 						{
 						$version = $gdinfo["GD Version"];
