@@ -31,7 +31,7 @@ function perform_login()
     hook("externalauth","",array($username, $password)); #Attempt external auth if configured
 
 	$session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
-	//if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // no longer necessary to omit password in this hash for api support
+	if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // no longer necessary to omit password in this hash for api support
 
 	$valid=sql_query("select ref,usergroup from user where username='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
 

@@ -906,9 +906,9 @@ function daily_stat($activity_type,$object_ref)
 		}
 	}    
 
-function include_plugin_config($plugin,$config="")
+function include_plugin_config($plugin_name,$config="")
 	{
-	$configpath=dirname(__FILE__)."/../plugins/" . $plugin . "/config/config.php";
+	$configpath=dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.php";
 	if (file_exists($configpath)) {include $configpath;}
 
 	if ($config!="")
@@ -946,7 +946,7 @@ function register_plugin($plugin)
 	# Support an 'all' hook
 	$hookpath=dirname(__FILE__)."/../plugins/" . $plugin . "/hooks/all.php";
 	if (file_exists($hookpath)) {include $hookpath;}
-
+	
 	return true;	
 	}
 	

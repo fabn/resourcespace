@@ -265,5 +265,6 @@ foreach($active_plugins as $plugin)
 		{
 		include_plugin_config($plugin['name']);
 		register_plugin($plugin['name']);
+		$plugins[]=$plugin['name'];
 		}
 	}
