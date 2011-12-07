@@ -488,7 +488,7 @@ $lang["forgottenpassword"]="Klicken Sie hier, wenn Sie Ihr Passwort vergessen ha
 $lang["keepmeloggedin"]="Auf diesem Computer angemeldet bleiben";
 $lang["columnheader-username"]=$lang["username"]="Benutzername";
 $lang["password"]="Passwort";
-$lang["login"]="anmelden";
+$lang["login"]="Anmelden";
 $lang["loginincorrect"]="Fehler beim Benutzernamen bzw. Passwort. Bitte versuchen Sie es erneut.";
 $lang["accountexpired"]="Ihr Benutzer-Account ist abgelaufen. Bitte kontaktieren Sie das Ressourcen-Team.";
 $lang["useralreadyexists"]="Es existiert bereits ein Benutzer-Account mit diesem Benutzernamen bzw. dieser E-Mail Adresse. Änderungen wurden nicht gespeichert.";
