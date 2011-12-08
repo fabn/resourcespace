@@ -1114,6 +1114,21 @@ function import_resource($path,$type,$title,$ingest=false)
 	# Store extension/data in the database
 	sql_query("update resource set archive=0,file_path='".$file_path."',file_extension='$extension',preview_extension='$extension',file_modified=now() where ref='$r'");
 			
+	if ($ingest){
+		# Move the file
+		global $syncdir;
+		$destination=get_resource_path($r,true,"",true,$extension);	
+		$result=rename($syncdir . "/" . $path,$destination);
+		if ($result===false)
+			{
+			# The rename failed. The file is possibly still being copied or uploaded and must be ignored on this pass.
+			# Delete the resouce just created and return false.
+			delete_resource($r);
+			return false;
+			}
+		chmod($destination,0777);
+	}		
+			
 	# get file metadata 
 	extract_exif_comment($r,$extension);			
 			
@@ -1142,20 +1157,6 @@ function import_resource($path,$type,$title,$ingest=false)
 			{
 			update_field($r,$filename_field,$filename);
 			}
-			
-		
-		# Move the file
-		global $syncdir;
-		$destination=get_resource_path($r,true,"",true,$extension);	
-		$result=rename($syncdir . "/" . $path,$destination);
-		if ($result===false)
-			{
-			# The rename failed. The file is possibly still being copied or uploaded and must be ignored on this pass.
-			# Delete the resouce just created and return false.
-			delete_resource($r);
-			return false;
-			}
-		chmod($destination,0777);
 		}
 
 	# Add title
