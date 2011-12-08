@@ -1100,7 +1100,7 @@ function import_resource($path,$type,$title,$ingest=false)
 	# This is used by staticsync.php and Camillo's SOAP API
 	# Note that the file will be used at it's present location and will not be copied.
 
-	global $syncdir;
+	global $syncdir,$staticsync_prefer_embedded_title;
 
 	# Create resource
 	$r=create_resource($type);
@@ -1154,11 +1154,17 @@ function import_resource($path,$type,$title,$ingest=false)
 		chmod($destination,0777);	
 		}
 
-	# get file metadata 
-	extract_exif_comment($r,$extension);	
+	# generate title and extract embedded metadata
+	# order depends on which title should be the default (embedded or generated)
+	if ($staticsync_prefer_embedded_title)
+		{
+		update_field($r,8,$title);
+		extract_exif_comment($r,$extension);
+	} else {
+		extract_exif_comment($r,$extension);	
+		update_field($r,8,$title);
+	}
 
-	# Add title
-	update_field($r,8,$title);
 	
 	# Ensure folder is created, then create previews.
 	get_resource_path($r,false,"pre",true,$extension);	

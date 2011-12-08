@@ -1414,6 +1414,10 @@ $staticsync_ingest=false;
 # NOTE: Alternative file processing only works when $staticsync_ingest is set to 'true'.
 $staticsync_alternatives_suffix="_alternatives";
 
+# if false, the system will always synthesize a title from the filename and path, even
+# if an embedded title is found in the file. If true, the embedded title will be used.
+$staticsync_prefer_embedded_title = true;
+
 # End of StaticSync settings
 # ------------------------------------------------------------------------------------------------------------------
 
