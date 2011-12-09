@@ -71,6 +71,20 @@ if ($go!="")
 $resource=get_resource_data($ref);
 if ($resource===false) {exit("Resource not found.");}
 
+// get mp3 paths if necessary and set $use_mp3_player switch
+if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && (in_array($resource["file_extension"],$ffmpeg_audio_extensions) || $resource["file_extension"]=="mp3") && $mp3_player){
+		$use_mp3_player=true;
+	} 
+	else {
+		$use_mp3_player=false;
+	}
+if ($use_mp3_player){
+	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+	if (file_exists($mp3realpath)){
+		$mp3path=get_resource_path($ref,false,"",false,"mp3");
+	}
+}	
+
 # Dev feature - regenerate exif data.
 if (getval("regenexif","")!="")
 	{
@@ -213,12 +227,7 @@ if (!hook("replaceviewtitle")){ echo highlightkeywords(htmlspecialchars(i18n_get
 
 <?php if (isset($resource['is_transcoding']) && $resource['is_transcoding']==1) { ?><div class="PageInformal"><?php echo $lang['resourceistranscoding']?></div><?php } ?>
 
-<?php hook("renderbeforeresourceview"); 
-if ($mp3_player){
-	$mp3path=get_resource_path($ref,false,"",false,"mp3");
-	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
-}
-?>
+<?php hook("renderbeforeresourceview"); ?>
 
 <div class="RecordResource">
 <?php if (!hook("renderinnerresourceview")) { ?>
@@ -245,7 +254,7 @@ elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) 
 	# If configured, and if the resource itself is not an FLV file (in which case the FLV can already be downloaded), then allow the FLV file to be downloaded.
 	if ($flv_preview_downloadable && $resource["file_extension"]!="flv") {$flv_download=true;}
 	}
-elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($mp3realpath) && hook("custommp3player")){}	
+elseif ($use_mp3_player && file_exists($mp3realpath) && hook("custommp3player")){}	
 elseif ($resource['file_extension']=="swf" && $display_swf){
 	$swffile=get_resource_path($ref,true,"",false,"swf");
 	if (file_exists($swffile)) { include "swf_play.php";}	
@@ -590,10 +599,8 @@ if ($access==0) # open access only (not restricted)
 	}
 # --- end of alternative files listing
 
-if ($mp3_player){
-	if (file_exists($mp3realpath)){
+if ($use_mp3_player && file_exists($mp3realpath)){
 		include "mp3_play.php";
-	}
 }
 
 ?>

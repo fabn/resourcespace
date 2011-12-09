@@ -148,9 +148,18 @@ $resource_data=get_resource_data($ref);
 
 $access=get_resource_access($result[$x]);
 
-if ($mp3_player){
-	$mp3path=get_resource_path($ref,false,"",false,"mp3");
+// get mp3 paths if necessary and set $use_mp3_player switch
+if (!(isset($result[$x]['is_transcoding']) && $result[$x]['is_transcoding']==1) && (in_array($result[$x]["file_extension"],$ffmpeg_audio_extensions) || $result[$x]["file_extension"]=="mp3") && $mp3_player){
+		$use_mp3_player=true;
+	}
+	else {
+		$use_mp3_player=false;
+	}
+if ($use_mp3_player){	
 	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+	if (file_exists($mp3realpath)){
+		$mp3path=get_resource_path($ref,false,"",false,"mp3");
+	}
 }
 
 # check permissions (error message is not pretty but they shouldn't ever arrive at this page unless entering a URL manually)
@@ -205,9 +214,9 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
         include "flv_play.php";?><br /><br /><?php
         }
     } 
-    elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($mp3realpath) && hook("custommp3player")){
+	elseif ($use_mp3_player && file_exists($mp3realpath) && hook("custommp3player")){
 		// leave preview to the custom mp3 player
-	}	
+		}	
     else{?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <?php } ?>
