@@ -99,6 +99,11 @@ if (!isset($url))
 
 $resource=get_resource_data($ref);
 
+if ($mp3_player){
+	$mp3path=get_resource_path($ref,false,"",false,"mp3");
+	$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+}
+$pagename="preview";
 include "../include/header.php";
 ?>
 
@@ -161,7 +166,11 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
         {
         include "flv_play.php";
         }
-    }else{?>
+    }
+    elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($mp3realpath) && hook("custommp3player")){
+		// leave preview to the custom mp3 player
+	}	
+    else{?>
 <td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>"><img class="Picture" src="<?php echo $url?>" alt=""/></a></td>
 
 <?php } ?>

@@ -752,6 +752,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	<?php hook("resourcetop")?>
 	<tr><td>
     <?php
+    if ($mp3_player){
+		$mp3path=get_resource_path($ref,false,"",false,"mp3");
+		$mp3realpath=get_resource_path($ref,true,"",false,"mp3");
+	}
     $show_flv=false;
     if ((in_array($result[$n]["file_extension"],$ffmpeg_supported_extensions) || $result[$n]["file_extension"]=="flv") && $flv_player_xlarge_view){
     $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
@@ -766,6 +770,9 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
             include "flv_play.php";
             }
         }
+    elseif (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && file_exists($mp3realpath) && hook("custommp3player")){
+		// leave preview to the custom mp3 player
+	}	    
     elseif ($result[$n]['file_extension']=="swf" && $display_swf && $display_swf_xlarge_view){
         $swffile=get_resource_path($ref,true,"",false,"swf");
         if (file_exists($swffile)) { include "swf_play.php";}	
