@@ -109,6 +109,8 @@ include "../../include/header.php";
     <li><a href="team_export.php"><?php echo $lang["exportdata"]?></a></li>
     <li><a href="../check.php"><?php echo $lang["installationcheck"]?></a></li>
 	<?php } ?>
+
+	<?php hook("customteamfunction")?>
 	
 	<?php if (checkperm("a")) { ?>
 	<?php if ($use_plugins_manager == true){ ?>
