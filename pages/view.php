@@ -172,7 +172,7 @@ if ($direct_download && !$save_as){
 
 <?php }
 # Load resource field data
-$fields=get_resource_field_data($ref,false,true,-1,$k!="");
+$fields=get_resource_field_data($ref,false,true,-1,$k!="",true);
 
 # Load edit access level (checking edit permissions - e0,e-1 etc. and also the group 'edit filter')
 $edit_access=get_edit_access($ref,$resource["archive"],$fields);

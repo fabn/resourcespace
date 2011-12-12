@@ -175,7 +175,7 @@ function get_resource_type_field($field)
 		return $return[0];
 		}
 	}
-function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false)
+function get_resource_field_data($ref,$multi=false,$use_permissions=true,$originalref=-1,$external_access=false,$ord_by=false)
 {
     # Returns field data and field properties (resource_type_field and resource_data tables)
     # for this resource, for display in an edit / view form.
@@ -194,8 +194,12 @@ function get_resource_field_data($ref,$multi=false,$use_permissions=true,$origin
     }
 
     $return = array();
+    if ($ord_by)
+    {
+    	 $fields = sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index,f.external_user_access,f.hide_when_uploading,f.hide_when_restricted,f.omit_when_copying from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.order_by,f.resource_type,f.ref");
+    } else {
     $fields = sql_query("select *,f.required frequired,f.ref fref,f.help_text,f.partial_index,f.external_user_access,f.hide_when_uploading,f.hide_when_restricted,f.omit_when_copying from resource_type_field f left join resource_data d on d.resource_type_field=f.ref and d.resource='$ref' where ( " . (($multi)?"1=1":"f.resource_type=0 or f.resource_type=999 or f.resource_type='$rtype'") . ") order by f.resource_type,f.order_by,f.ref");
-
+    }
     # Build an array of valid types and only return fields of this type. Translate field titles. 
     $validtypes = sql_array("select ref value from resource_type");
     $validtypes[] = 0; $validtypes[] = 999; # Support archive and global.
