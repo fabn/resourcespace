@@ -39,7 +39,7 @@ if ($api && $enable_remote_apis ){
 	}
 }
 
-if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login))
+if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login) && !$api)
     {
     if (array_key_exists("user",$_COOKIE))
     	{
