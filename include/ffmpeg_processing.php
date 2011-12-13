@@ -108,7 +108,7 @@ if ($width % 2){$width++;}
 if ($height % 2) {$height++;}
 
 /* Plugin hook to modify the output W & H before running ffmpeg. Better way to return both W and H at the same is appreciated.  */
-#list($width, $height) = hook("ffmpegbeforeexec", "", array($ffmpeg_path_working, $file));
+$tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_path_working, $file)); if(is_array($tmp) and $tmp) list($width, $height) = $tmp;
 
 $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 
