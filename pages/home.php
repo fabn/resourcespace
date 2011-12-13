@@ -80,7 +80,9 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 <?php } # End of hook replaceslideshow
 ?>
 
-<?php if (checkperm("s")) { ?>
+<?php if (checkperm("s")) {
+	hook("homebeforepanels");
+?>
 
 <?php if ($home_themeheaders && $enable_themes) { ?>
 	<div class="HomePanel"><div class="HomePanelIN">
