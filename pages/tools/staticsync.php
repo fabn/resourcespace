@@ -29,7 +29,7 @@ if ($argc == 2)
 
 
 # Check for a process lock
-//if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
+if (is_process_lock("staticsync")) {exit("Process lock is in place. Deferring.");}
 set_process_lock("staticsync");
 
 echo "Preloading data...";
