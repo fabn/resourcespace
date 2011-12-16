@@ -174,6 +174,13 @@ checkboxes.each(function(box)
 </script>
 <?php } ?>
 <?php } #end hook clearmaincheckboxesfromcollectionframe?>
+	
+<style>
+#CollectionMenuExp
+	{
+	height:<?php echo $collection_frame_height-15?>px;
+	}
+</style>
 
 <?php hook("headblock");?>
 
