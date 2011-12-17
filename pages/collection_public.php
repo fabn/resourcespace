@@ -11,6 +11,9 @@ $override_group_restrict=getvalescaped("override_group_restrict","false");
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
+# pager
+$per_page=getvalescaped("per_page_list",$default_perpage_list);setcookie("per_page_list",$per_page);
+
 
 $add=getvalescaped("add","");
 if ($add!="")
@@ -45,8 +48,6 @@ include "../include/header.php";
 <?php
 $collections=search_public_collections($find,$col_order_by,$sort,$public_collections_exclude_themes,false,true,$override_group_restrict=="true");
 
-# pager
-$per_page=15;
 if ($collection_dropdown_user_access_mode){$per_page=10;}
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
@@ -80,7 +81,13 @@ for ($n=ord("A");$n<=ord("Z");$n++)
 $atoz.="</div>";
 
 $url="collection_public.php?paging=true&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&override_group_restrict=" . $override_group_restrict;
-?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div>
+?><div class="TopInpageNav"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
+	<?php 
+	for($n=0;$n<count($list_display_array);$n++){?>
+	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>"><?php echo $list_display_array[$n]?></a><?php } ?>&nbsp;|
+	<?php } ?>
+	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999"><?php echo $lang["all"]?></a><?php } ?>
+	</div> <?php pager(false); ?></div>
 
 <form method=post id="collectionform">
 <input type=hidden name="add" id="collectionadd" value="">

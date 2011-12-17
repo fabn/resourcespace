@@ -12,6 +12,8 @@ $find=getvalescaped("find","");
 $col_order_by=getvalescaped("col_order_by","created");
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
+# pager
+$per_page=getvalescaped("per_page_list",$default_perpage_list);setcookie("per_page_list",$per_page);
 
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
@@ -218,8 +220,6 @@ include "../include/header.php";
 
 $collections=get_user_collections($userref,$find,$col_order_by,$sort);
 
-# pager
-$per_page=15;
 if ($collection_dropdown_user_access_mode){$per_page=10;}
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
@@ -243,7 +243,13 @@ $atoz.="</div>";
 
 $url="collection_manage.php?paging=true&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."";
 
-	?><div class="TopInpageNav"><?php echo $atoz?><?php pager(false); ?></div><?php	
+	?><div class="TopInpageNav"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
+  	<?php 
+  	for($n=0;$n<count($list_display_array);$n++){?>
+  	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>"><?php echo $list_display_array[$n]?></a><?php } ?>&nbsp;|
+  	<?php } ?>
+  	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999"><?php echo $lang["all"]?></a><?php } ?>
+  	</div> <?php pager(false); ?></div><?php	
 ?>
 
 <form method=post id="collectionform">
@@ -278,7 +284,7 @@ echo " " . ($mycollcount==1 ? $lang["owned_by_you-1"] : str_replace("%mynumber",
 <td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 <td><?php if ($col_order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<?php if (! $hide_access_column){ ?><td><?php if ($col_order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($col_order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
+<?php if (!$hide_access_column){ ?><td><?php if ($col_order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_manage.php?offset=0&col_order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($col_order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php }?>
 <?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>

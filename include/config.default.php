@@ -447,6 +447,11 @@ $max_collection_thumbs=150;
 $results_display_array=array(24,48,72,120,240);
 # How many results per page? (default)
 $default_perpage=48;
+# Options for number of results to display for lists (user admin, public collections, manage collections)
+$list_display_array=array(15,30,60);
+# How many results per page? (default)
+$default_perpage_list=15;
+
 
 # Group based upload folders? (separate local upload folders for each group)
 $groupuploadfolders=false;
