@@ -25,6 +25,7 @@ if ((getval("save","")!="") || (getval("suggest","")!=""))
 		}
 	else
 		{
+		hook('aftersaveuser');
 		if (getval("save","")!="") {$backurl=getval("backurl","team_user.php?nc=" . time());redirect ("pages/team/" . $backurl);}
 		}
 	}
@@ -126,7 +127,7 @@ for ($n=0;$n<count($groups);$n++)
 <input name="emailme" type="checkbox" value="yes" <?php if ($user["approved"]==0) { ?>checked<?php } ?>>
 <?php } else { ?>
 <div class="Fixed"><?php echo $lang["cannotemailpassword"]?></div>
-<?php } ?>
+<?php } ?><?php hook('emailpassword'); ?>
 <div class="clearerleft"> </div></div>
 
 <div class="Question"><label><?php echo $lang["approved"]?></label><input name="approved" type="checkbox"  value="yes" <?php if ($user["approved"]==1) { ?>checked<?php } ?>>
