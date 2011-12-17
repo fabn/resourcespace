@@ -1812,3 +1812,7 @@ $email_errors_address="";
 
 # Use php-mysqli extension for interfacing with the mysql database
 $use_mysqli=false;
+
+# Use the new tab ordering system. This will sort the tabs by the order by value set in System Setup
+$use_order_by_tab_view=false;
+
