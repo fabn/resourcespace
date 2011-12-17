@@ -13,6 +13,7 @@ include "../../include/collections_functions.php";
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
 $order_by=getvalescaped("order_by","u.username");
+$group=getval("group",0,true);
 
 # pager
 $per_page=getvalescaped("per_page_list",$default_perpage_list);setcookie("per_page_list",$per_page);
@@ -47,25 +48,26 @@ include "../../include/header.php";
 <?php 
 
 # Fetch rows
-$users=get_users(0,$find,$order_by,true,$offset+$per_page);
+$users=get_users($group,$find,$order_by,true,$offset+$per_page);
+$groups=get_usergroups(true);
 
 $results=count($users);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
 
-$url="team_user.php?order_by=" . $order_by . "&find=" . urlencode($find);
+$url="team_user.php?group=" . $group . "&order_by=" . $order_by . "&find=" . urlencode($find);
 $jumpcount=1;
 
 # Create an a-z index
 $atoz="<div class=\"InpageNavLeftBlock\">";
 if ($find=="") {$atoz.="<span class='Selected'>";}
-$atoz.="<a href=\"team_user.php?order_by=u.username&find=\">" . $lang["viewall"] . "</a>";
+$atoz.="<a href=\"team_user.php?order_by=u.username&group=" . $group . "&find=\">" . $lang["viewall"] . "</a>";
 if ($find=="") {$atoz.="</span>";}
 $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"team_user.php?order_by=u.username&find=" . chr($n) . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
+	$atoz.="<a href=\"team_user.php?order_by=u.username&group=" . $group . "&find=" . chr($n) . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
@@ -137,6 +139,27 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 <div class="BottomInpageNav"><?php pager(false); ?></div>
 </div>
 
+<div class="BasicsBox">
+  <form method="post">
+  <div class="Question">  
+    <label for="group"><?php echo $lang["group"]; ?></label>
+    <div class="tickset">
+      <div class="Inline"><select name="group" id="group" onChange="this.form.submit();">
+        <option value="0"<?php if ($group == 0) { echo " selected"; } ?>><?php echo $lang["all"]; ?></option>
+<?php
+  for($n=0;$n<count($groups);$n++){
+?>
+        <option value="<?php echo $groups[$n]["ref"]; ?>"<?php if ($group == $groups[$n]["ref"]) { echo " selected"; } ?>><?php echo $groups[$n]["name"]; ?></option>
+<?php
+  }
+?>
+        </select>
+      </div>
+    </div>
+		<div class="clearerleft"> </div>
+  </div>
+  </form>
+</div>
 
 <div class="BasicsBox">
     <form method="post">

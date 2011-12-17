@@ -711,8 +711,16 @@ function get_users($group=0,$find="",$order_by="u.username",$usepermissions=fals
 
     $sql = "";
     if ($group>0) {$sql = "where usergroup='$group'";}
-    if (strlen($find)>1) {$sql = "where (username like '%$find%' or fullname like '%$find%' or email like '%$find%')";}
-    if (strlen($find)==1) {$sql = "where username like '$find%'";}
+    if (strlen($find)>1)
+      {
+      if ($sql=="") {$sql = "where ";} else {$sql.= " and ";}
+      $sql .= "(username like '%$find%' or fullname like '%$find%' or email like '%$find%')";
+      }
+    if (strlen($find)==1)
+      {
+      if ($sql=="") {$sql = "where ";} else {$sql.= " and ";}
+      $sql .= "username like '$find%'";
+      }
     if ($usepermissions && checkperm("U")) {
         # Only return users in children groups to the user's group
         global $usergroup;
