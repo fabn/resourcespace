@@ -138,7 +138,8 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
      		chmod($filepath,0777);
 
 		global $icc_extraction;
-		if ($icc_extraction && $extension!="pdf"){
+		global $ffmpeg_supported_extensions;
+		if ($icc_extraction && $extension!="pdf" && !in_array($extension, $ffmpeg_supported_extensions)){
 			extract_icc_profile($ref,$extension);
 		}
 
@@ -820,12 +821,11 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
 				if (file_exists($wpath)){unlink($wpath);}
 	
-
 				# EXPERIMENTAL CODE TO USE EXISTING ICC PROFILE IF PRESENT
-				global $icc_extraction, $icc_preview_profile, $icc_preview_options;
+				global $icc_extraction, $icc_preview_profile, $icc_preview_options,$ffmpeg_supported_extensions;
 				if ($icc_extraction){
 					$iccpath = get_resource_path($ref,true,'',false,$extension.'.icc');
-					if (!file_exists($iccpath) && !isset($iccfound) && $extension!="pdf") {
+					if (!file_exists($iccpath) && !isset($iccfound) && $extension!="pdf" && !in_array($extension,$ffmpeg_supported_extensions)) {
 						// extracted profile doesn't exist. Try extracting.
 						if (extract_icc_profile($ref,$extension)){
 							$iccfound = true;

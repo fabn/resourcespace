@@ -2,14 +2,14 @@
 
 if (!defined("RUNNING_ASYNC")) {define("RUNNING_ASYNC", !isset($ffmpeg_preview));}
 
-$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
-if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
-$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
-
 if (RUNNING_ASYNC)
 	{
 	require dirname(__FILE__)."/db.php";
 	require dirname(__FILE__)."/general.php";
+	
+	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
+	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
+	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
 	
 	if (empty($_SERVER['argv'][1]) || $scramble_key!==$_SERVER['argv'][1]) {exit("Incorrect scramble_key");}
 	
@@ -38,6 +38,9 @@ if (RUNNING_ASYNC)
 else 
 	{
 	global $qtfaststart_path, $qtfaststart_extensions;
+	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
+	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
+	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
 	}
 	
 # Increase timelimit
@@ -178,7 +181,7 @@ if (isset($ffmpeg_alternatives))
 				{
 				delete_alternative_file($ref,$existing[$m]["ref"]);
 				}
-				
+			
 			# Create the alternative file.
 			$aref=add_alternative_file($ref,$ffmpeg_alternatives[$n]["name"]);
 			$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
@@ -186,6 +189,13 @@ if (isset($ffmpeg_alternatives))
 			# Process the video 
 			$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
 			$output=run_command($shell_exec_cmd);
+			
+			if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_alternatives[$n]["extension"], $qtfaststart_extensions) ){
+				$apathtmp=$apath.".tmp";
+				rename($apath, $apathtmp);
+				$output=run_command($qtfaststart_path . "/qt-faststart " . escapeshellarg($apathtmp) . " " . escapeshellarg($apath)." 2>&1");
+				unlink($apathtmp);
+			}
 	
 			if (file_exists($apath))
 				{
