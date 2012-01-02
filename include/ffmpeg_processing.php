@@ -160,6 +160,7 @@ if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_a
 global $ffmpeg_alternatives;
 if (isset($ffmpeg_alternatives))
 	{
+	$ffmpeg_alt_previews=array();
 	for($n=0;$n<count($ffmpeg_alternatives);$n++)
 		{
 		$generate=true;
@@ -202,10 +203,19 @@ if (isset($ffmpeg_alternatives))
 				# Update the database with the new file details.
 				$file_size=filesize($apath);
 				sql_query("update resource_alt_files set file_name='" . escape_check($ffmpeg_alternatives[$n]["filename"] . "." . $ffmpeg_alternatives[$n]["extension"]) . "',file_extension='" . escape_check($ffmpeg_alternatives[$n]["extension"]) . "',file_size='" . $file_size . "',creation_date=now() where ref='$aref'");
+				// add this filename to be added to resource.ffmpeg_alt_previews
+				if (isset($ffmpeg_alternatives[$n]['alt_preview']) && $ffmpeg_alternatives[$n]['alt_preview']==true){
+					$ffmpeg_alt_previews[]=basename($apath);
+					}
 				}
 			}
+		// update the resource table with any ffmpeg_alt_previews	
+		if (count($ffmpeg_alt_previews)>0){
+			$ffmpeg_alternative_previews=implode(",",$ffmpeg_alt_previews);
+			sql_query("update resource set ffmpeg_alt_previews='".escape_check($ffmpeg_alternative_previews)."' where ref='$ref'");
 		}
 	}
+}
 
 global $use_mysqli,$db;
 if ($use_mysqli){$ping_test=mysqli_ping($db);}else {$ping_test=mysql_ping();}

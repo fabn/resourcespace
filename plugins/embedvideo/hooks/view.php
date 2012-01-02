@@ -37,9 +37,9 @@ if (document.getElementById('embedvideo').style.display=='block') {document.getE
 if (document.getElementById('embedvideo2').style.display=='block') {document.getElementById('embedvideo2').style.display='none';} else {document.getElementById('embedvideo2').style.display='block';}
  return false;">&gt;&nbsp;<?php echo $lang["embed"]?></a></li>
 <p id="embedvideo2" style="display:none;float:left;padding:10px 0 3px 0;"><?php echo $lang["embed_help"] ?></p>
-<textarea id="embedvideo" style="width:335px;height:200px;display:none;"><?php echo htmlspecialchars('
+<textarea id="embedvideo" style="width:335px;height:200px;display:none;"><?php if (!hook("replaceembedcode")){?><?php echo htmlspecialchars('
 <object type="application/x-shockwave-flash" data="' . $baseurl . '/lib/flashplayer/player_flv_maxi.swf" width="' . $ffmpeg_preview_max_width . '" height="' . $ffmpeg_preview_max_height . '" class="Picture"><param name="allowFullScreen" value="true" /><param name="movie" value="' . $baseurl . '/lib/flashplayer/player_flv_maxi.swf" /><param name="FlashVars" value="flv=' . $flashpath . '&amp;width=' . $ffmpeg_preview_max_width . '&amp;height=' . $ffmpeg_preview_max_height . '&amp;margin=0&amp;buffer=10&amp;showvolume=1&amp;volume=200&amp;showtime=1&amp;autoplay=1&amp;autoload=0&amp;showfullscreen=1&amp;showstop=1&amp;playercolor=' . $colour . '&startimage=' . $thumb . '" /></object>
-'); ?></textarea>
+'); ?><?php } // end hook replaceembedcode ?></textarea>
 
 	<?php
 		
