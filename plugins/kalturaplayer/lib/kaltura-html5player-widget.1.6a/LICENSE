@@ -1,0 +1,44 @@
+Kaltura HTML5 Video Player Library
+
+Copyright (C) 2007 - 2010 Kaltura
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+For information and updates about the project see: 
+http://www.kaltura.org/project/HTML5_Video_Player
+
+The Kaltura HTML5 Video Player Library is licensed under MIT license: 
+http://www.opensource.org/licenses/mit-license.php
+
+The Kaltura HTML5 Video Player Library uses KDP 3 (Kaltura Dynamic Player v3)
+Located under modules\EmbedPlayer\binPlayers\kaltura-player 
+KDP is a Media Player Widget based on Adobe® Flash® Player and OSMF software.
+The KDP is licensed under AGPL. For more details see: 
+http://www.kaltura.org/project/kdp
+
+The Kaltura HTML5 Video Player Library is a distribution package forked from the 
+Kaltura HTML5 Video Library that is a part of MediaWiki project. 
+The Kaltura HTML5 Video Library is packaged with GPL2 modules and components. 
+For more information on the complete GPL2 distribution visit:
+http://kaltura.org/project/HTML5_Media_JavaScript_Library
+
+For Contacts and Support - Kaltura inc.
+http://www.kaltura.com
+Career Opportunities: jobs@kaltura.com
+Sales: 1-800-871-5224
