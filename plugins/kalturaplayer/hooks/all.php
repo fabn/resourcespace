@@ -60,3 +60,15 @@ function HookKalturaplayerViewReplaceembedcode(){
 	echo htmlspecialchars('</video>');
 return true;
 }
+
+function HookKalturaPlayerAllMp3player(){ return true;}
+
+function HookKalturaplayerAllCustomMp3player(){
+
+	global $lang,$ref,$baseurl,$mp3path,$pagename,$resource,$result,$n,$x;?>
+<div class="Picture">
+		<audio  src="<?php echo $mp3path?>" durationHint="164" style="width:358px; height:34px;"></audio>
+</div>
+<?php
+	return true;
+}
