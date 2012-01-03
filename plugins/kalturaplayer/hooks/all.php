@@ -59,5 +59,4 @@ function HookKalturaplayerViewReplaceembedcode(){
 	}
 	echo htmlspecialchars('</video>');
 return true;
-}?>
-
+}
