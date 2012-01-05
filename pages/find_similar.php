@@ -23,7 +23,7 @@ if (getval("countonly","")!="")
 	else
 		{
 		$search=join(",",$search);
-		$result=do_search($search,$resource_type,"relevance",0,0);
+		$result=do_search($search,$resource_type,"relevance",0,1);
 		if (is_array($result))
 			{
 			$count=count($result);
