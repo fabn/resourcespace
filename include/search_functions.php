@@ -9,7 +9,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	debug("search=$search restypes=$restypes archive=$archive");
 	
 	# globals needed for hooks	 
-	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and,$collections_omit_archived;
+	global $sql,$order,$select,$sql_join,$sql_filter,$orig_order,$checkbox_and,$collections_omit_archived,$search_sql_double_pass_mode;
 	
 	# Takes a search string $search, as provided by the user, and returns a results set
 	# of matching resources.
@@ -744,12 +744,26 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if (($t2!="") && ($sql!="")) {$sql=" and " . $sql;}
 	
 	# Compile final SQL
-	$sql=$sql_prefix . "select distinct $score score, $select from resource r" . $t . "  where $t2 $sql group by r.ref order by $order_by limit $max_results" . $sql_suffix;
+
+	# Performance enhancement - set return limit to number of rows required
+	if ($search_sql_double_pass_mode && $fetchrows!=-1) {$max_results=$fetchrows;}
+
+	$results_sql=$sql_prefix . "select distinct $score score, $select from resource r" . $t . "  where $t2 $sql group by r.ref order by $order_by limit $max_results" . $sql_suffix;
 
 	# Debug
-	debug("\n" . $sql);
+	debug("\n" . $results_sql);
+
 	# Execute query
-	$result=sql_query($sql,false,$fetchrows);
+	$result=sql_query($results_sql,false,$fetchrows);
+
+	# Performance improvement - perform a second count-only query and pad the result array as necessary
+	if ($search_sql_double_pass_mode && count($result)>0 && count($result)>=$max_results)
+		{
+		$count_sql="select count(distinct r.ref) value from resource r" . $t . "  where $t2 $sql";
+		$count=sql_value($count_sql,0);
+		$result=array_pad($result,$count,0);
+		}
+
 	debug("Search found $result results");
 	if (count($result)>0) {return $result;}
 	
