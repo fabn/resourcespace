@@ -38,7 +38,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 			}
 		else
 			{
-			$result=do_search($search,$restypes,"relevance",$archive,0,"",false,$starsearch);
+			$result=do_search($search,$restypes,"relevance",$archive,1,"",false,$starsearch);
 			if (is_array($result))
 				{
 				$count=count($result);
