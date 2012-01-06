@@ -1,8 +1,8 @@
 <?php
-include "../../include/db.php";
-include "../../include/general.php";
-include "../../include/resource_functions.php";
-include "../../include/image_processing.php";
+include dirname(__FILE__) . "/../../include/db.php";
+include dirname(__FILE__) . "/../../include/general.php";
+include dirname(__FILE__) . "/../../include/resource_functions.php";
+include dirname(__FILE__) . "/../../include/image_processing.php";
 
 set_time_limit(60*60*40);
 
