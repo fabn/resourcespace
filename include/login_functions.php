@@ -71,6 +71,8 @@ function perform_login()
 	# Invalid login
 	$result['error']=$lang["loginincorrect"];
 
+  hook("loginincorrect");
+
 	# Add / increment a lockout value for this IP
 	$lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries<'" . $max_login_attempts_per_ip . "'","");
 
