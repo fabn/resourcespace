@@ -62,7 +62,7 @@ if (is_array($preview_preprocessing_results)){
 		$extension=$preview_preprocessing_results['extension'];
 	}
 }
-
+	
 /* ----------------------------------------
 	QuickLook Previews (Mac only)
 	For everything except Audio/Video files, attempt to generate a QuickLook preview first.
@@ -161,7 +161,7 @@ if (isset($exiftool_path))
 	Try PhotoshopThumbnail
    ----------------------------------------
 */
-# Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
+# Note: for good results, Photoshop Preferences must be set to save Preview image at Extra Large size.
 if ($extension=="psd" && !isset($newfile))
 	{
 	global $photoshop_thumb_extract;
