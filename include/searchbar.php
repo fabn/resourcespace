@@ -492,6 +492,7 @@ if (!$basic_simple_search)
   <?php if (! $disable_geocoding) { ?><p><a href="<?php echo $baseurl?>/pages/geo_search.php">&gt; <?php echo $lang["geographicsearch"]?></a></p><?php } ?>
   <?php if (! $advancedsearch_disabled) { ?><p><a href="<?php echo $baseurl?>/pages/search_advanced.php">&gt; <?php echo $lang["gotoadvancedsearch"]?></a></p><?php } ?>
 
+  <?php hook("searchbarafterbuttons"); ?>
 
   <?php if ($view_new_material) { ?><p><a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>">&gt; <?php echo $lang["viewnewmaterial"]?></a></p><?php } ?>
 	</div>
