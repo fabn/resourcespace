@@ -1460,8 +1460,7 @@ function extract_text($ref,$extension,$path="")
 			}
 		}
 	
-	
-	
+	hook("textextraction", "all", array($extension,$path));
 		
 	# Save the extracted text.
 	if ($text!="")
