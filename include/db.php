@@ -129,7 +129,7 @@ if ($use_plugins_manager){
 			}
 		}
 	}
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0 order by priority"));
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0 order by priority DESC"));
 	foreach($active_plugins as $plugin){
 
 		# Check group access, only enable for global access at this point
