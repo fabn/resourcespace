@@ -222,7 +222,7 @@ foreach ($extensions as $allowed_extension){
 	}	
 } 
 
-
+if (preg_match("/Chrome/",$_SERVER['HTTP_USER_AGENT'])){$upload_java_popup=false;}
 ?>
 
 <?php if ($upload_java_popup && getval("replace","")=="" && getval("alternative","")==""){?>
