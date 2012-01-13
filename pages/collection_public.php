@@ -48,7 +48,6 @@ include "../include/header.php";
 <?php
 $collections=search_public_collections($find,$col_order_by,$sort,$public_collections_exclude_themes,false,true,$override_group_restrict=="true");
 
-if ($collection_dropdown_user_access_mode){$per_page=10;}
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
