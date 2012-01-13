@@ -4,16 +4,18 @@ include "../include/general.php";
 
 if (getval("save","")!="")
 	{
-    if ($global_cookies){
+    if ($global_cookies)
         setcookie("language",getval("language",""),time()+(3600*24*1000),"/");
-    }
-    else {
-        // note that this method can't set a cookie for plugin pages without more complicated checks
-        setcookie("language",getval("language",""),time()+(3600*24*1000));
-        setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short . "pages/"); # Also 
-        }
+    else
+		{
+        setcookie("language",getval("language",""),time()+(3600*24*1000),$baseurl_short);
 
-	 redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
+		// Remove previously set cookies to avoid clashes - this can be removed after some time
+		setcookie("language","",1,$baseurl_short . "pages/");
+		setcookie("language","");
+		}
+
+	redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
 	}
 include "../include/header.php";
 ?>
