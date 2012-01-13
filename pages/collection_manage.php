@@ -220,7 +220,6 @@ include "../include/header.php";
 
 $collections=get_user_collections($userref,$find,$col_order_by,$sort);
 
-if ($collection_dropdown_user_access_mode){$per_page=10;}
 $results=count($collections);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
