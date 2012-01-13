@@ -42,7 +42,7 @@ include "../include/header.php";
 <!--<div name="error" id="error"></div>-->
 
 <div class="Question">
-<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo $collectiondata['name']?></div>
+	<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo i18n_get_translated($collectiondata['name'])?></div>
 <div class="clearerleft"> </div>
 </div>
 

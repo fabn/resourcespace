@@ -151,7 +151,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	?>
     <tr <?php hook("collectionlistrowstyle");?>>
 	<td><div class="ListTitle">
-	<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords($collections[$n]["name"],$find)?></a></div></td>
+			<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords(i18n_get_translated($collections[$n]["name"]),$find)?></a></div></td>
 
 	<?php if (!$collection_public_hide_owner) { ?><td><?php echo highlightkeywords($collections[$n]["fullname"],$find)?></td><?php } ?>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>

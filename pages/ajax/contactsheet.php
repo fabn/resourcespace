@@ -111,7 +111,7 @@ class MYPDF extends TCPDF {
     public function Header() {
         global $contact_sheet_font,$titlefontsize,$applicationname,$collectiondata,$date,$subsetting,$lang;
         $this->SetFont($contact_sheet_font,'',$titlefontsize,'',$subsetting);
-		$title = $applicationname.' - '. $collectiondata['name'].' - '.nicedate($date,true,true);
+		$title = $applicationname.' - '. i18n_get_translated($collectiondata['name']).' - '.nicedate($date,true,true);
 		$pagenumber=$this->getAliasNumPage(). " " . $lang["of"] . " " .$this->getAliasNbPages();
 		$this->Text(1,.8,$title.'   '.$pagenumber);
     }
@@ -125,7 +125,7 @@ class MYPDF extends TCPDF {
 
 
 $pdf = new MYPDF($orientation , 'in', $pagesize, true, 'UTF-8', false); 
-$pdf->SetTitle($collectiondata['name'].' - '.nicedate($date, true, true));
+$pdf->SetTitle(i18n_get_translated($collectiondata['name']).' - '.nicedate($date, true, true));
 $pdf->SetAuthor($user['fullname'].' '.$user['email']);
 $pdf->SetSubject($applicationname . " - " . $lang["contactsheet"]);
 $pdf->SetMargins(1,1.2,.7);
@@ -329,7 +329,7 @@ for ($n=0;$n<count($result);$n++){
 if ($contact_sheet_resource==true){
 	$newresource=create_resource(1,0);
 
-	update_field($newresource,8,$collectiondata['name']." ".$date);
+	update_field($newresource,8,i18n_get_translated($collectiondata['name'])." ".$date);
 	update_field($newresource,$filename_field,$newresource.".pdf");
 
 #Relate all resources in collection to the new contact sheet resource
@@ -353,5 +353,5 @@ else{
 	if ($out1!=""){
 	ob_end_clean();
 	}
-$pdf->Output($collectiondata['name'].".pdf","D");
+$pdf->Output(i18n_get_translated($collectiondata['name']).".pdf","D");
 }

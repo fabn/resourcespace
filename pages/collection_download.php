@@ -16,7 +16,7 @@ $collectiondata=get_collection($collection);
 
 # initiate text file
 if (($zipped_collection_textfile==true)&&($includetext=="true")) { 
-    $text = $collectiondata['name'] . "\r\n" . 
+    $text = i18n_get_translated($collectiondata['name']) . "\r\n" .
     $lang["downloaded"] . " " . nicedate(date("Y-m-d H:i:s"), true, true) . "\r\n\r\n" .
     $lang["contents"] . ":\r\n\r\n";
 }
@@ -165,7 +165,7 @@ if ($submitted != "")
 						for ($i=0;$i<count($fields);$i++){
 							$value=$fields[$i]["value"];
 							$title=str_replace("Keywords - ","",$fields[$i]["title"]);
-							if ((trim($value)!="")&&(trim($value)!=",")){$text.= wordwrap("* " . $title . ": " . $value . "\r\n", 65);}
+							if ((trim($value)!="")&&(trim($value)!=",")){$text.= wordwrap("* " . $title . ": " . i18n_get_translated($value) . "\r\n", 65);}
 						}
 					if(trim($commentdata['comment'])!=""){$text.= wordwrap($lang["comment"] . ": " . $commentdata['comment'] . "\r\n", 65);}	
 					if(trim($commentdata['rating'])!=""){$text.= wordwrap($lang["rating"] . ": " . $commentdata['rating'] . "\r\n", 65);}	
@@ -234,7 +234,7 @@ if ($submitted != "")
             }
         }
 
-        $textfile = get_temp_dir() . "/". $collection . "-" . safe_file_name($collectiondata['name']) . $sizetext . ".txt";
+        $textfile = get_temp_dir() . "/". $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . $sizetext . ".txt";
         $fh = fopen($textfile, 'w') or die("can't open file");
         fwrite($fh, $text);
         fclose($fh);
@@ -278,7 +278,7 @@ if ($submitted != "")
 	if ($use_collection_name_in_zip_name)
 		{
 		# Use collection name (if configured)
-		$filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name($collectiondata['name']) . "-" . $size . ".zip";
+		$filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . "-" . $size . ".zip";
 		}
 	else
 		{

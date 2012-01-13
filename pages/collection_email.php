@@ -35,7 +35,7 @@ if (getval("save","")!="")
 	
 	if (getval("ccme",false)){ $cc=$useremail;} else {$cc="";}
 	
-	$errors=email_collection($ref,$collection["name"],$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc);
+	$errors=email_collection($ref,i18n_get_translated($collection["name"]),$userfullname,$users,$message,$feedback,$access,$expires,$user_email,$from_name,$cc);
 
 	if ($errors=="")
 		{
@@ -93,7 +93,7 @@ include "../include/header.php";
 <div class="Question">
 <label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php 
 	if (! $email_multi_collections) { 
-		echo $collection["name"] ;
+		echo htmlspecialchars(i18n_get_translated($collection["name"]));
 	} else { ##  this select copied from collections.php 
 ?>
 		<select name="collection" multiple="multiple" size="10" class="SearchWidthExt" style="width:365px;" 
@@ -126,7 +126,7 @@ include "../include/header.php";
 
 
                 ?>	
-			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars($list[$n]["name"])?><?php if ($collection_dropdown_user_access_mode){echo "&nbsp;&nbsp;(". $colusername."/".$accessmode.")"; } ?></option>
+			<option value="<?php echo $list[$n]["ref"]?>" <?php if ($ref==$list[$n]["ref"]) {?> 	selected<?php $found=true;} ?>><?php echo htmlspecialchars(i18n_get_translated($list[$n]["name"]))?><?php if ($collection_dropdown_user_access_mode){echo "&nbsp;&nbsp;(". $colusername."/".$accessmode.")"; } ?></option>
 			<?php 
 			}
 		if ($found==false)
