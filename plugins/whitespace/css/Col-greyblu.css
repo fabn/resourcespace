@@ -1,0 +1,67 @@
+
+.PanelShadow
+	{
+	background: none;
+	}
+
+.TabSelected a 
+	{	
+	border-top-right-radius:5px;border-top-left-radius:5px;	
+	-moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+	-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+	}
+	
+.Tab a 
+	{	
+	border-top-right-radius:5px;border-top-left-radius:5px;	
+	-moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+	-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+	}
+	
+.StyledTabbedPanel 
+	{	
+	border-bottom-right-radius:10px;border-bottom-left-radius:10px;	border-top-right-radius:10px;
+	-moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
+	-webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
+	}
+		
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+	
+.ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+.RecordPanel
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+	
+.RecordDownloadSpace	
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+.RecordStory{border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;}
+
+
+
+.checkedimage{border:5px solid red;-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;}
+.uncheckedimage{border:5px solid lightgrey;-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;; }
+#Header {border-bottom: 1px solid #5A7599;background: url(../../../plugins/airotek/gfx/logo.png) no-repeat;}
+
+.HomePicturePanelIN, #image1
+	{
+	border: none;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+	}
+.HomePicturePanel
+	{
+	border: none;
+	width: 517px;
+	}
