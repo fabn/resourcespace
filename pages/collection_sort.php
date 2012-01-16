@@ -82,7 +82,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 <?php
 
-$sql = "select collection, resource, date_added, comment, collection_resource.rating, sortorder,preview_extension from collection_resource left join resource on
+$sql = "select collection, resource, date_added, comment, collection_resource.rating, sortorder, preview_extension, has_image, resource_type, file_extension from collection_resource left join resource on
 	collection_resource.resource = resource.ref
 	where collection_resource.collection = '$collection'
 	order by sortorder asc, date_added desc";
@@ -92,7 +92,12 @@ $results=sql_query($sql);
 
 echo "<ul id='resourcelist' style='display:inline;'>\n";
 for ($i=0; $i<count($results); $i++){
-	$thumburl = get_resource_path($results[$i]['resource'],false,'col',false,$results[$i]['preview_extension']);
+  if ($results[$i]["has_image"]==1) { 
+	  $thumburl = get_resource_path($results[$i]['resource'],false,'col',false,$results[$i]['preview_extension']);
+	}
+	else {
+	  $thumburl = '../gfx/'. get_nopreview_icon($results[$i]["resource_type"],$results[$i]["file_extension"],true);
+	}
 	echo "<li id=\"resourcelist_" . $results[$i]['resource'] . "\" class='ResourcePanelInfo' style='float:left;width:100px;height:100px;list-style-type:none;border-width:1px;border-style:solid;margin:5px 5px 5px 5px;padding:5px 5px 5px 5px;text-align:center;'>";
 	echo "<img src='$thumburl' /><br />";
 	echo $results[$i]['resource'];
