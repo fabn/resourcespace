@@ -445,7 +445,7 @@ $lang["statuscode"]="Statuscode";
 
 # Resource log - actions
 $lang["resourcelog"]="Ressourcen-Protokoll";
-$lang["log-u"]="hochgeladene Datei(en)";
+$lang["log-u"]="Hochgeladene Datei(en)";
 $lang["log-c"]="Erstellte Ressourcen";
 $lang["log-d"]="heruntergeladene Datei(en)";
 $lang["log-e"]="Bearbeitetes Ressourcen-Feld";
@@ -1428,7 +1428,7 @@ $lang["vertical"] = "Vertikal";
 $lang["cc-emailaddress"] = "CC %emailaddress"; # %emailaddress will be replaced, e.g. CC [your email address]
 
 $lang["sort"] = "Sortieren";
-$lang["sortcollection"] = "Kollection sortieren";
+$lang["sortcollection"] = "Kollektion sortieren";
 $lang["emptycollection"] = "Leere Kollektion";
 $lang["emptycollectionareyousure"]="Sind Sie sicher, dass Sie alle Ressourcen aus dieser Kollektion entfernen wollen?";
 
