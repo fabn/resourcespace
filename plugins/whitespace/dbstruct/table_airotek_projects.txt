@@ -1,9 +1,0 @@
-ref,int(11),NO,PRI,,auto_increment
-project,varchar(100),YES,,,
-name,varchar(100),YES,,,
-user,int(11),YES,,,
-created,datetime,YES,,,
-due,datetime,YES,,,
-description,text,YES,,,
-notes,text,YES,,,
-field,int(11),YES,,,
