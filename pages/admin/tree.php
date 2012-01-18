@@ -4,7 +4,7 @@ include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission
 include "include/header.php";
 ?>
 <body style="background-image: none;background-color: white;color: black;padding-top:10px;margin:0;">
-<style>
+<style>html,body { height:100%; }
 .backline
 	{
 	background-image:url(gfx/line.gif);
@@ -14,6 +14,12 @@ include "include/header.php";
 .treetext
 	{
 	font-size:11px;
+	}
+	
+	body, html 
+	{
+    background: url() repeat-x fixed white;
+    color: #fff;
 	}
 </style>
 <script type="text/javascript">

@@ -260,7 +260,7 @@ document.onkeypress = stopRKey;
 <?php 
 include "include/header.php";
 ?>
-<body style="background-position:0px -85px;margin:0;padding:10px;">
+<body style="background-position:0px -85px;margin:0;padding:10px;padding-top:0px;padding-right:0px;">
 <div class="proptitle"><?php echo (($t[2]==$name)?$name:lang_or_i18n_get_translated($t[2],array("treenode-","treeobjecttype-"))) . (($ref==0)?"":" #" . $ref) . (($t[2]==$name)?"":" :: " . $name)?></div>
 
 <div class="propbox" id="propbox">

@@ -171,7 +171,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <?php } ?>
 		<?php if (!hook("replaceheadernav2")) { ?>
 		<ul>
-		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/home.php" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
+		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/<?php echo $default_home_page?>" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
 		hook("topnavlinksafterhome");
 		?>
 		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php" target="<?php echo $target?>"><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
@@ -251,7 +251,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <div class="clearer"></div>
 <?php
 # Include simple search sidebar?
-$omit_searchbar_pages=array("preview_all","search_advanced","preview","admin_header");
+$omit_searchbar_pages=array("index","preview_all","search_advanced","preview","admin_header");
 $modified_omit_searchbar_pages=hook("modifyomitsearchbarpages");
 if ($modified_omit_searchbar_pages){$omit_searchbar_pages=$modified_omit_searchbar_pages;}
 

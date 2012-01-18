@@ -54,7 +54,7 @@ p
     {
     border:1px solid black;
     border-bottom-width:0px;
-    width:95%;
+    width:100%;
     font-size:12px;
     color:white;
     background-color:#777777;
@@ -66,7 +66,7 @@ p
     background-color:white;
     border:1px solid black;
     padding:10px;
-    width:95%;
+    width:100%;
     }
 .treetext a
     {
