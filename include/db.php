@@ -39,9 +39,9 @@ function errorhandler($errno, $errstr, $errfile, $errline)
 		</div>
 		<?php
 		if ($email_errors){
-			global $email_notify,$email_from,$email_errors_address;
+			global $email_notify,$email_from,$email_errors_address,$applicationname;
 			if ($email_errors_address==""){$email_errors_address=$email_notify;}
-			send_mail($email_errors_address,"Error",$errfile." line ".$errline.": ".$errstr,$email_from,$email_from,"",null,"Error Reporting",false);
+			send_mail($email_errors_address,$applicationname." Error",$errfile." line ".$errline.": ".$errstr,$email_from,$email_from,"",null,"Error Reporting",false);
 			}
 		exit();
 		}
