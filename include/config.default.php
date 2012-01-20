@@ -1827,3 +1827,5 @@ $search_sql_double_pass_mode=false;
 # Use the new tab ordering system. This will sort the tabs by the order by value set in System Setup
 $use_order_by_tab_view=false;
 
+# Allows for themes with a taller header than standard to still be fully visible in System Setup. 
+$admin_header_height=110;
