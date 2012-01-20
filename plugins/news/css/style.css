@@ -1,0 +1,26 @@
+	
+
+#NewsBox {
+	width: 160px;
+	height: 200px;
+	float: right;
+    margin-left: 0px; 
+	margin-top: 20px;
+	padding: 25px 8px 0px 5px;
+	background-color: #B42529;
+	color: #FFFFFF;
+	background-image: none;
+}
+
+.NewsHeader {
+	font-size: 14px;
+	color: #FFFFFF;	
+}
+
+#NewsDisplayBox {
+	font-size: 14px;
+}
+#NewsBodyDisplay, #NewsBodyDisplay a:link, #NewsBodyDisplay a:visited{
+	font-size: 14px;
+	color: #FFFFFF;	
+}
