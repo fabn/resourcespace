@@ -95,9 +95,13 @@ for ($n=0;$n<count($infobox_fields);$n++)
 	&& !checkperm("f-" . $field))
 		{
 		$value=trim(get_data_by_field($ref,$field));
+		$type = sql_value("select type value from resource_type_field where ref = $field",0);
 		if ($value!="")
 			{
-			$value=nl2br(htmlspecialchars(TidyList(i18n_get_translated($value))));
+			if ($type <> 8)
+				{
+				$value=nl2br(htmlspecialchars(TidyList(i18n_get_translated($value))));
+				}
 			?>
 			<p><?php echo $value?></p>
 			<?php	
