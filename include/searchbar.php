@@ -93,9 +93,9 @@ if ($display_user_rating_stars && $star_search){?>
 	<p><?php echo text("searchpanel")?></p>
 	
 	<form id="form1" method="get" action="<?php echo $baseurl?>/pages/search.php">
-
+	<?php if (!hook("replacesearchbox")){?>
         <input id="ssearchbox" <?php if ($hide_main_simple_search){?>type="hidden"<?php } ?> name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
-
+	<?php } ?>
 <?php if ($autocomplete_search) { 
 # Auto-complete search functionality
 ?>
@@ -118,6 +118,7 @@ if (!$basic_simple_search)
 	
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
+	<div id="searchbarrt">
 	<?php if ($searchbar_selectall){?>
 	<script type="text/javascript">
 	function resetTickAll(){
@@ -145,7 +146,7 @@ if (!$basic_simple_search)
 	}
 	?>	
 	<?php if ($searchbar_selectall){?><script type="text/javascript">resetTickAll();</script><?php }?>
-
+	</div>
 	
 	<?php $searchbuttons="<div class=\"SearchItem\">";
 	if (!$basic_simple_search) { $searchbuttons.="<input name=\"Clear\" type=\"button\" value=\"&nbsp;&nbsp;".$lang['clearbutton']."&nbsp;&nbsp;\" onClick=\"document.getElementById('ssearchbox').value=''; document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';";
