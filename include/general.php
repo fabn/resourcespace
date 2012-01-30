@@ -867,7 +867,7 @@ function get_usergroup($ref)
 function get_user($ref)
 	{
 	# Return a user's credentials.
-	$return=sql_query("select *,created from user where ref='$ref'");
+	$return=sql_query("select * from user where ref='$ref'");
 	if (count($return)>0) {return $return[0];} else {return false;}
 	}
 	
