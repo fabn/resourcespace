@@ -39,7 +39,36 @@ if ($api && $enable_remote_apis ){
 	}
 }
 
-if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login) && !$api)
+function ip_matches($ip, $ip_restrict)
+	{
+	# Allow multiple IP addresses to be entered, comma separated.
+	$i=explode(",",$ip_restrict);
+
+	# Loop through all provided ranges
+	for ($n=0;$n<count($i);$n++)
+		{
+		$ip_restrict=trim($i[$n]);
+
+		# Match against the IP restriction.
+		$wildcard=strpos($ip_restrict,"*");
+
+		if ($wildcard!==false)
+			{
+			# Wildcard
+			if (substr($ip,0,$wildcard)==substr($ip_restrict,0,$wildcard))
+				return true;
+			}
+		else
+			{
+			# No wildcard, straight match
+			if ($ip==$ip_restrict)
+				return true;
+			}
+		}
+	return false;
+	}
+
+if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login) && !$api || hook('provideusercredentials'))
     {
     if (array_key_exists("user",$_COOKIE))
     	{
@@ -53,7 +82,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
         $username=escape_check($s[0]);
 	    $session_hash=escape_check($s[1]);
 		}
-	else
+	else if (isset($anonymous_login))
 		{
 		$username=$anonymous_login;
 		$session_hash="";
@@ -61,6 +90,7 @@ if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset
 
 	$hashsql="and u.session='$session_hash'";
 	if (isset($anonymous_login) && ($username==$anonymous_login)) {$hashsql="";} # Automatic anonymous login, do not require session hash.
+	hook('provideusercredentials');
 
     $userdata=sql_query("select u.ref, u.username, g.permissions, g.fixed_theme, g.parent, u.usergroup, u.current_collection, u.last_active, timestampdiff(second,u.last_active,now()) idle_seconds,u.email, u.password, u.fullname, g.search_filter, g.edit_filter, g.ip_restrict ip_restrict_group, g.name groupname, u.ip_restrict ip_restrict_user, resource_defaults, u.password_last_change,g.config_options,g.request_mode from user u,usergroup g where u.usergroup=g.ref and u.username='$username' $hashsql and u.approved=1 and (u.account_expires is null or u.account_expires='0000-00-00 00:00:00' or u.account_expires>now())");
     if (count($userdata)>0)
@@ -202,28 +232,11 @@ $ip_restrict=$ip_restrict_group;
 if ($ip_restrict_user!="") {$ip_restrict=$ip_restrict_user;} # User IP restriction overrides the group-wide setting.
 if ($ip_restrict!="")
 	{
-	# Allow multiple IP addresses to be entered, comma separated.
-	$i=explode(",",$ip_restrict);
 	$allow=false;
 
-	# Loop through all provided ranges
-	for ($n=0;$n<count($i);$n++)
+	if (!hook('iprestrict'))
 		{
-		$ip_restrict=trim($i[$n]);
-		
-		# Match against the IP restriction.
-		$wildcard=strpos($ip_restrict,"*");
-
-		if ($wildcard!==false)
-			{
-			# Wildcard
-			if (substr($ip,0,$wildcard)==substr($ip_restrict,0,$wildcard)) {$allow=true;}
-			}
-		else
-			{
-			# No wildcard, straight match
-			if ($ip==$ip_restrict) {$allow=true;}
-			}
+		$allow=ip_matches($ip, $ip_restrict);
 		}
 
 	if (!$allow)
