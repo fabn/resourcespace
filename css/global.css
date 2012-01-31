@@ -169,7 +169,7 @@ option {font-size:11px;}
 .SearchSpace {padding: 6px;width: 160px;}
 .SearchSpace p {padding:0 0 0.5em; margin:0; font-size:1em; line-height:1.1em;}
 .SearchSpace form {padding:0; margin:0;}
-.SearchSpace .SearchWidth {width: 156px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
+.SearchSpace .SearchWidth {width: 156px;height:16px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;border:0px;}
 .SearchSpace .tick {}
 .SearchSpace .SearchItem {margin: 10px 0 0;padding: 0;font-weight: bold;}
 .SearchSpace a:link, .SearchSpace a:visited {text-decoration:none;}
