@@ -78,9 +78,9 @@ function UserRatingSet(userref,ref,rating)
 
 
 </script>
-<table>
+<table cellpadding="0" cellspacing="0" width="100%">
 <tr class="DownloadDBlend">
-<td align="center" id="UserRatingMessage"><?php echo $lang["ratethisresource"]?></td>
+<td align="center" id="UserRatingMessage" style="padding:0px;"><?php echo $lang["ratethisresource"]?></td>
 <td width="33%" align="center" class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $rating?>,'StarWhite');">
 <?php if ($user_rating_remove && $user_rating_only_once) {?><a href="#" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $ref?>,0);return false;" id="RatingStarLink0" title="<?php echo $lang["ratingremovehover"]?>" style="display:<?php echo $removeratingvis;?>">x&nbsp;&nbsp;&nbsp;</a><?php }?>
 <?php for ($n=1;$n<=5;$n++)

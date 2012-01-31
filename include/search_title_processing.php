@@ -69,7 +69,7 @@ if ($search_titles)
 		$searchq=substr($search,5);
 		$searchq=explode(",",$searchq);
 		$searchq=$searchq[0];
-        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!last'.$searchq.$parameters_string.'>'.$lang["recent"]." ".$searchq.'</a>'.$searchcrumbs.'</h1> ';
+        $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!last'.$searchq.$parameters_string.'>'.$searchq.' '.$lang["recent"].'</a>'.$searchcrumbs.'</h1> ';
         }
     elseif (substr($search,0,8)=="!related")
         {
