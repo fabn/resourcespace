@@ -144,9 +144,7 @@ else
 	<ul>
 	<?php if (!hook("replaceheaderfullnamelink")){?>
 	<li><?php if ($allow_password_change && !checkperm("p")) { ?>
-	<a href="<?php echo $baseurl?>/pages/change_password.php"><?php } ?><?php echo $userfullname?>
-	<?php } /* end replacefullnamelink */?>
-	<?php if ($allow_password_change && !checkperm("p")) { ?></a><?php } ?></li>
+	<a href="<?php echo $baseurl?>/pages/change_password.php"><?php } ?><?php echo $userfullname?><?php } /* end replacefullnamelink */?><?php if ($allow_password_change && !checkperm("p")) { ?></a><?php } ?></li>
 	<?php hook("addtoplinks");?>
 	<li><a href="<?php echo $baseurl?>/login.php?logout=true&nc=<?php echo time()?>" target="_top"><?php echo $lang["logout"]?></a></li>
 	<?php hook("addtologintoolbarmiddle");?>
