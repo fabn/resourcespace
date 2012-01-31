@@ -146,8 +146,10 @@ if (!$basic_simple_search)
 	}
 	?>	
 	<?php if ($searchbar_selectall){?><script type="text/javascript">resetTickAll();</script><?php }?>
+	<?php if (!$basic_simple_search) {?>
 	</div>
-	
+	<?php }?>
+
 	<?php $searchbuttons="<div class=\"SearchItem\">";
 	if (!$basic_simple_search) { $searchbuttons.="<input name=\"Clear\" type=\"button\" value=\"&nbsp;&nbsp;".$lang['clearbutton']."&nbsp;&nbsp;\" onClick=\"document.getElementById('ssearchbox').value=''; document.getElementById('basicyear').value='';document.getElementById('basicmonth').value='';";
 	if ($searchbyday) { $searchbuttons.="document.getElementById('basicday').value='';"; } 
