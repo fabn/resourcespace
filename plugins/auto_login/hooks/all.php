@@ -41,4 +41,10 @@ function HookAuto_loginAllIprestrict()
 	return true;
 	}
 
+function HookAuto_loginAllInitialise()
+	{
+	sql_query('select auto_login_enabled from user limit 1');
+	return true;
+	}
+
 ?>
