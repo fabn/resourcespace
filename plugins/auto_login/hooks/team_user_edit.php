@@ -14,7 +14,7 @@ function HookAuto_loginTeam_user_editAdditionaluserfields()
 		<input name="auto_login_ip" type="text" class="stdwidth" value="<?php
 			echo $user["auto_login_ip"]?>">
 		<div class="clearerleft"> </div></div>
-	<?
+	<?php
 	}
 
 // Save auto login setting
