@@ -1231,6 +1231,10 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 					if ($p!="") {$p.=";";}
 					$p.=$selected[$m];
 					}
+
+				# Resolve keywords to make sure that the value has been indexed prior to including in the search string.
+				$keywords=split_keywords($selected[$m]);
+				foreach ($keywords as $keyword) {resolve_keyword($keyword,true);}
 				}
 			if ($p!="")
 				{
