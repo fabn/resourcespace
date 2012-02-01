@@ -179,6 +179,7 @@ checkboxes.each(function(box)
 #CollectionMenuExp
 	{
 	height:<?php echo $collection_frame_height-15?>px;
+	<?php if ($remove_collections_vertical_line){?>border-right: 0px;<?php }?>
 	}
 </style>
 
