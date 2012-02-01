@@ -25,6 +25,7 @@ a:visited {text-decoration:none;}
 a:hover {text-decoration:underline;}
 a:active {text-decoration:underline;}
 input[readonly] {border: none; background: none;}
+input,textarea {box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
 option {font-size:11px;}
 
 /*General tags*/
