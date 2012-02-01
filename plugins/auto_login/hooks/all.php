@@ -15,11 +15,11 @@ function HookAuto_loginAllProvideusercredentials()
 	if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET))
 		return false;
 
-	$results=sql_query('select username, ip_restrict from user where auto_login_enabled=1 and ip_restrict is not null');
+	$results=sql_query('select username, auto_login_ip from user where auto_login_enabled=1 and auto_login_ip is not null');
 	$ip=get_ip();
 	foreach ($results as $result)
 		{
-		if (ip_matches_regexp($ip, $result['ip_restrict']))
+		if (ip_matches_regexp($ip, $result['auto_login_ip']))
 			{
 			$username=$result['username'];
 			$hashsql='';
@@ -43,7 +43,7 @@ function HookAuto_loginAllIprestrict()
 
 function HookAuto_loginAllInitialise()
 	{
-	sql_query('select auto_login_enabled from user limit 1');
+	sql_query('select auto_login_enabled, auto_login_ip from user limit 1');
 	return true;
 	}
 

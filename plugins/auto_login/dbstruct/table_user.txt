@@ -1,1 +1,2 @@
 auto_login_enabled,int(1),YES,,,
+auto_login_ip,text,YES,,,
