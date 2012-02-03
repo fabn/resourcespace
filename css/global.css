@@ -113,7 +113,7 @@ option {font-size:11px;}
 
 /*Resource Panel layout*/
 .ResourcePanelShell {padding:0;float: left;margin: 0px 15px 10px 0px;width: 164px;}
-.ResourcePanel {padding:0;margin:0;width: 162px;padding-bottom:5px;}
+.ResourcePanel {padding:0;margin:0;width: 162px;padding-bottom:5px; height:205px;}
 .ResourcePanelPreview {height: 156px;width: 156px;margin: 3px;}
 .ResourcePanelInfo {margin-right: 5px;margin-left: 5px;margin-bottom: 8px;overflow:hidden;white-space:nowrap;}	
 .ResourcePanelCountry {margin-right: 5px;margin-left: 5px;margin-bottom: 5px;float: left;clear: left;display:inline;}	
