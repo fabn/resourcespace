@@ -531,7 +531,7 @@ if (!$basic_simple_search)
 	<?php
 	}
 ?>
-	
+<?php hook("addsearchbarpanel");?>	
 	
 	<?php if (($research_request) && (!isset($k) || $k=="") && (checkperm("q"))) { ?>
 	<div id="ResearchBoxPanel">

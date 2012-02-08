@@ -125,6 +125,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php } ?>
 <!-- end edit collection -->
 
+<?php hook("collectiontoolcompact1");?>
 
 <!-- contactsheet -->
 <?php if ($contact_sheet==true && $count_result>0) { ?>
