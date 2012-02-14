@@ -79,6 +79,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
     else
         {
 		$error=$result['error'];
+                hook("dispcreateacct");
         }
     }
 
