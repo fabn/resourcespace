@@ -26,13 +26,17 @@ if (getval("save","")!="")
 			}
 		else
 			{
+                        $tmp = hook("emailresourcerequest"); if($tmp): $result = $tmp; else:
 			$result=email_resource_request($ref,getvalescaped("request",""));
+                        endif;
 			}
 		}
 	else
 		{
 		# Request mode 1 : "Managed" mode via Manage Requests / Orders
+                $tmp = hook("manresourcerequest"); if($tmp): $result = $tmp; else:
 		$result=managed_collection_request($ref,getvalescaped("request",""),true);
+                endif;
 		}
 	
 	if ($result===false)
