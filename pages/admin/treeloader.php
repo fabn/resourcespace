@@ -3,6 +3,7 @@ include "../../include/db.php";
 include "../../include/general.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 $tree=file("data/tree.txt");
+hook("treealtercopy");
 
 ## one main plugin can replace the System Setup tree completely, with a file in the plugin called: admin/data/tree.txt.
 for ($n=0;$n<count($plugins);$n++)
