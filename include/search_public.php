@@ -16,7 +16,7 @@ for ($n=0;$n<count($collections);$n++)
 		<div class="ResourcePanelShell" id="ResourceShell">
 		<div class="ResourcePanel">
 	
-		<table  border="0" class="ResourceAlign"><tr><td>
+		<table  border="0" class="ResourceAlign"><?php hook("publicresulttop")?><tr><td>
 		
 		<div style="position: relative;height:140px;">
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
@@ -63,7 +63,6 @@ for ($n=0;$n<count($collections);$n++)
             <?php }
         ?></div><?php } ?>
         <?php } ?>
-
         <div class="ResourcePanelCountry" style="float:right;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewall"]?></a></div>		
 
 		<div class="clearer"></div>
@@ -80,7 +79,7 @@ for ($n=0;$n<count($collections);$n++)
 		<div class="ResourcePanelShellLarge" id="ResourceShell">
 		<div class="ResourcePanelLarge">
 	
-		<table  border="0" class="ResourceAlignLarge"><tr><td>
+		<table  border="0" class="ResourceAlignLarge"><?php hook("publicresulttop")?><tr><td>
 		
 		<div style="position: relative;height:330px;">
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
@@ -144,7 +143,7 @@ for ($n=0;$n<count($collections);$n++)
 		<div class="ResourcePanelShellSmall" id="ResourceShell">
 		<div class="ResourcePanelSmall">
 	
-		<table  border="0" class="ResourceAlignSmall"><tr><td>
+		<table  border="0" class="ResourceAlignSmall"><?php hook("publicresulttop")?><tr><td>
 		
 		<div style="position: relative;height:70px;">
 		<a href="<?php echo $pub_url?>" title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($collections[$n]["name"])))?>">
@@ -193,9 +192,7 @@ for ($n=0;$n<count($collections);$n++)
             <?php }
         ?></div><?php } ?>
         <?php } ?>
-        <div class="ResourcePanelInfo" style="font-size:9px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewall"]?></a></div>		
-
-		<div class="clearer"></div>
+        <div class="ResourcePanelInfo" style="font-size:9px;margin-bottom:0px;">&gt;&nbsp;<a target="collections" href="collections.php?collection=<?php echo $collections[$n]["ref"]?>"><?php echo $lang["action-select"]?></a>&nbsp;&nbsp;&gt;&nbsp;<a href="<?php echo $pub_url?>"><?php echo $lang["viewall"]?></a></div><div class="clearer"></div>
 		</div>
 		<div class="PanelShadow"></div>
 		</div>
