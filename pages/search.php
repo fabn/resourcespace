@@ -462,6 +462,7 @@ if (true) # Always show search header now.
 	$draw_pager=true;
 	?>
 	</div>
+        <?php hook("stickysearchresults"); ?>
 	<?php if (!$collections_compact_style){
         echo $search_title.$search_title_links;
         }
