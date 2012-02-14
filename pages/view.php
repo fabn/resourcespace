@@ -596,6 +596,7 @@ if ($access==0) # open access only (not restricted)
 		</tr>
 		<?php	
 		}
+        hook("morealtdownload");
 	}
 # --- end of alternative files listing
 

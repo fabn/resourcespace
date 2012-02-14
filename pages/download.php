@@ -118,6 +118,8 @@ if ($noattach=="")
 	
 	# Remove critical characters from filename
 	$filename = preg_replace('/:/', '_', $filename);
+
+        hook("downloadfilename");
 	
 	if (!$direct){		
 		# We use quotes around the filename to handle filenames with spaces.

@@ -115,6 +115,8 @@ $tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_path_working, $file)); if(is_a
 
 $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 
+$tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_path_working, $file)); if($tmp) $shell_exec_cmd = $tmp;
+
 if ($config_windows)
 	{
 	# Windows systems have a hard time with the long paths used for video generation. This work-around creates a batch file containing the command, then executes that.
@@ -173,7 +175,9 @@ if (isset($ffmpeg_alternatives))
 				}
 			
 			}
-					
+
+                $tmp = hook("preventgeneratealt", "", array($file)); if($tmp===true) $generate = false;
+
 		if ($generate) # OK to generate this alternative?
 			{
 			# Remove any existing alternative file(s) with this name.
@@ -189,6 +193,9 @@ if (isset($ffmpeg_alternatives))
 			
 			# Process the video 
 			$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
+
+                        $tmp = hook("ffmpegmodaltparams", "", array($shell_exec_cmd, $ffmpeg_path_working, $file, $n, $aref)); if($tmp) $shell_exec_cmd = $tmp;
+
 			$output=run_command($shell_exec_cmd);
 			
 			if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_alternatives[$n]["extension"], $qtfaststart_extensions) ){

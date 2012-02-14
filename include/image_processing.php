@@ -12,6 +12,8 @@
 if (!function_exists("upload_file")){
 function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	{
+        hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
+
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
 	hook ("removeannotations");
