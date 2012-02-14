@@ -181,7 +181,9 @@ for ($n=0;$n<count($collections);$n++)
 		</tr></table>	
         <?php // for spacing
         if ($display_user_rating_stars && $k==""){ ?><div  class="RatingStars">&nbsp;&nbsp;</div>
-        <?php } ?><?php //add spacing for display fields to even out the box size
+        <?php } ?>
+        <?php hook("icons"); //for spacing ?>
+        <?php //add spacing for display fields to even out the box size
         for ($x=0;$x<count($df);$x++){
             ?>
             <?php if (!hook("replaceresourcepanelinfosmallpublicsearch")){?>
