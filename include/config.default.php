@@ -737,7 +737,7 @@ $enable_copy_data_from=true;
 
 # Always record the name of the resource creator for new records.
 # If false, will only record when a resource is submitted into a provisional status.
-$always_record_resource_creator = false;
+$always_record_resource_creator = true;
 
 # Enable the 'related resources' field when editing resources.
 $enable_related_resources=true;
