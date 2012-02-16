@@ -126,9 +126,9 @@ option {font-size:11px;}
 .ResourcePanelShell a:hover, .ResourcePanelShell a:active {text-decoration:underline;}
 
 
-.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 95px;}
-.ResourcePanelSmall {padding:0;margin:0;width: 95px;padding-bottom:5px;}
-.ResourceAlignSmall {width:95px;height:90px;text-align: center;vertical-align: middle;}
+.ResourcePanelShellSmall {padding:0;float: left;margin: 0px 15px 10px 0px;width: 105px;}
+.ResourcePanelSmall {padding:0;margin:0;width: 105px;padding-bottom:5px;}
+.ResourceAlignSmall {width:105px;height:90px;text-align: center;vertical-align: middle;}
 
 .ResourcePanelShellLarge {padding:0 0 10px; float: left;margin: 0px 15px 0px 0px;width: 365px;}
 .ResourcePanelLarge {padding:0;margin:0;width: 365px;padding-bottom:5px;}

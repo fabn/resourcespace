@@ -25,11 +25,13 @@ $main_pages=array("search","collection_manage","collection_public","themes");
 
 // get collection information (different pages need different treatment) 
 if (($pagename=="search" || $pagename=="preview_all") && isset($search) && substr($search,0,11)=="!collection"){
-    $collection=explode(",",substr($search,11));$collection=$collection[0]; $colresult=do_search("!collection" . $collection);$count_result=count($colresult);
-} else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
+    $collection=explode(",",substr($search,11));
+    $collection=$collection[0]; 
+    $colresult=do_search("!collection" . $collection);
+	}
+else if ($pagename=="collection_manage" || $pagename=="collection_public" || $pagename=="view"){
     $collection=$collections[$n]['ref'];
     $colresult=do_search("!collection" . $collection);
-    $count_result=count($colresult);
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];    
     }
@@ -38,14 +40,15 @@ elseif ($pagename=="themes"){
     $collections=$getthemes;
     $collection=$getthemes[$m]["ref"];
     $colresult=do_search("!collection" . $collection);
-    $count_result=count($colresult);
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];
     }    
 else if ($pagename=="collections"){
-    $collection=$usercollection;$colresult=$result;$count_result=count($colresult);
+    $collection=$usercollection;$colresult=$result;
 }
+if ($pagename=="search" && isset($resources) && is_array($resources)){$colresult=$resources;$cinfo=get_collection($collections[$n]['ref']);$feedback=$cinfo["request_feedback"];$collection_results=true;$collection=$collections[$n]['ref'];}
 
+$count_result=count($colresult);
 // check editability
 
 $col_editable=false;
@@ -53,14 +56,14 @@ if (count($colresult)>0 && checkperm("e" . $colresult[0]["archive"]) && allow_mu
 	$col_editable=true;
 }
 
-
+if ($pagename=="search" && $display=="xlthumbs"){?><div class="ResourcePanelIcons" style="margin:0px;margin-bottom:8px;"></div><?php } 
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
-<form method="get" name="colactions" id="colactions">
+<form method="get" name="colactions" id="colactions" style="margin:0px;margin-bottom:0px;">
 <?php } 
-
+if ($pagename=="search" && $display!="xlthumbs" && $display!="list"){?><div class="ResourcePanelIcons"></div><?php }
 if ($pagename=="search" || $pagename=="collections"){?>
 <?php hook("beforecollectiontoolscolumn");?>
-<?php echo $lang['tools']?>: <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
+<?php if (!hook("modifycompacttoolslabel")){ echo $lang['tools'].":";} ?> <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
 <?php } ?>
 
 
@@ -73,7 +76,7 @@ if ($pagename=="search" || $pagename=="collections"){?>
 			?> class="SearchWidth"<?php 
 		} 
 	}
-if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view"){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view"){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
+if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view" || isset($collection_results)){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view" || isset($collection_results)){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
 
  
  <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>
@@ -219,7 +222,10 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <!-- end log -->
 
 
-    </select><?php if ($pagename=="collections"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
+    </select>
+    <?php if ($pagename=="collections"){?><?php if ($thumbs=="show") { ?><br /><br /><a href="collections.php?thumbs=hide" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["hidethumbnails"]?></a><?php } ?><?php if ($thumbs=="hide") { ?>&nbsp;&nbsp;&nbsp;<a href="collections.php?thumbs=show" onClick="ToggleThumbs();">&gt;&nbsp;<?php echo $lang["showthumbnails"]?></a><?php } ?></div><?php } ?>
 <?php if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
+
 </form>
+
 <?php } ?>
