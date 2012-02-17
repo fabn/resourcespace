@@ -499,9 +499,9 @@ if (!$basic_simple_search)
   <?php hook("searchbarafterbuttons"); ?>
 
   <?php if ($view_new_material) { ?><p><a href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>">&gt; <?php echo $lang["viewnewmaterial"]?></a></p><?php } ?>
-	</div>
 	
 	<?php } ?> <!-- END of Searchbarreplace hook -->
+	</div>
 	</div>
 	<div class="PanelShadow"></div>
 <?php } ?>	
