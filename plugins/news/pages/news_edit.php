@@ -67,8 +67,8 @@ $jumpcount=1;
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
 <td><?php echo $lang["date"]?></td>
-<td><?php echo $lang["fieldtitle-title"]?></td>
-<td><?php echo $lang["text"]?></td>
+<td><?php echo $lang["news_headline"]?></td>
+<td><?php echo $lang["news_body"]?></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
@@ -107,7 +107,7 @@ for ($n=$offset;(($n<count($news)) && ($n<($offset+$per_page)));$n++)
 			 <div class="Inline">			
 			<input type=text placeholder="<?php echo $lang['searchbytext']?>" name="findtext" id="findtext" value="<?php echo $findtext?>" maxlength="100" class="shrtwidth" />
 			
-			<input type="button" value="<?php echo $lang['clearall']?>" onClick="$('findtext').value='';form.submit();" />
+			<input type="button" value="<?php echo $lang['clearbutton']?>" onClick="$('findtext').value='';form.submit();" />
 			<input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" />
 			 
 			</div>
