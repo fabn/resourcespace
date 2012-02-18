@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20111128 för version 3078
+# Senast uppdaterad av Henrik Frizén 20120218 för version 3209
 #
 #
 # User group names (for the default user groups)
@@ -860,6 +860,9 @@ $lang["ratethisresource"]="Vilket betyg ger du det här materialet?";
 $lang["ratingthankyou"]="Tack för ditt betyg!";
 $lang["ratings"]="betyg";
 $lang["rating_lowercase"]="betyg";
+$lang["ratingremovehover"]="Klicka här om du vill ta bort ditt betyg";
+$lang["ratingremoved"]="Ditt betyg har tagits bort.";
+
 $lang["cannotemailpassword"]="Du kan inte skicka användarna deras existerande lösenord, eftersom de är lagrade i krypterad form.<br/><br/>Klicka på <b>Föreslå</b> om du vill generera ett nytt lösenord, som sedan kan skickas per e-post.";
 
 $lang["userrequestnotification1"]="Användarformuläret har fyllts i med följande uppgifter:";
