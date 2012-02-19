@@ -27,13 +27,13 @@ include "../../../include/header.php";
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>Annotate Configuration</h1>
+  <h1><?php echo $lang["annotate_configuration"];?></h1>
 
 <form id="form1" name="form1" method="post" action="">
 
-<?php echo config_text_field("extexclude","Extensions to exclude <br />(comma separated)",implode(',',$annotate_ext_exclude));?>   
+<?php echo config_text_field("extexclude",$lang["extensions_to_exclude"],implode(',',$annotate_ext_exclude));?>   
 <?php $rtypes=get_resource_types();
-echo config_custom_select_multi("rtexclude","Resource Types to exclude <br />(highlight to exclude)",$rtypes,$annotate_rt_exclude);?>
+echo config_custom_select_multi("rtexclude",$lang["resource_types_to_exclude"],$rtypes,$annotate_rt_exclude);?>
 
 <div class="Question">  
 <label for="submit"></label> 
