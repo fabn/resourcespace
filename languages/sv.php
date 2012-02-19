@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120218 för version 3209
+# Senast uppdaterad av Henrik Frizén 20120219 för version 3211
 #
 #
 # User group names (for the default user groups)
@@ -1314,6 +1314,7 @@ $lang["exif_extension"]="Exif-utökning";
 $lang["lastscheduledtaskexection"]="Senaste körning av schemalagda aktiviteter (dagar)";
 $lang["executecronphp"]="Sökningar efter liknande material kommer inte att fungera som de ska och schemalagda e-postrapporter kommer inte att skickas. Se till att <a href='../batch/cron.php'>’batch/cron.php’</a> körs åtminstone en gång per dag som ett cron-jobb eller liknande.";
 $lang["shouldbeormore"]="Bör vara ? eller mer."; # E.g. should be 200M or greater
+$lang["config"]="konfiguration";
 
 $lang["generateexternalurl"]="Generera extern webbadress";
 

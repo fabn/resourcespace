@@ -1289,6 +1289,7 @@ $lang["exif_extension"]="EXIF extension";
 $lang["lastscheduledtaskexection"]="Last scheduled task execution (days)";
 $lang["executecronphp"]="Relevance matching will not be effective and periodic e-mail reports will not be sent. Ensure <a href='../batch/cron.php'>batch/cron.php</a> is executed at least once daily via a cron job or similar.";
 $lang["shouldbeormore"]="should be ? or greater"; # E.g. should be 200M or greater
+$lang["config"]="config";
 
 $lang["generateexternalurl"]="Generate External URL";
 

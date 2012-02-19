@@ -36,7 +36,7 @@ function ResolveKB($value)
 $phpversion=phpversion();
 $phpinifile=php_ini_loaded_file();
 if ($phpversion<'4.4') {$result=$lang["status-fail"] . ": " . str_replace("?", "4.4", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
-?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion.'  config:'.$phpinifile;?></td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $phpversion.'&ensp;&ensp;'.$lang["config"].': '.$phpinifile;?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check MySQL version
 if ($use_mysqli){
@@ -47,7 +47,7 @@ else {
 	}
 if ($mysqlversion<'5') {$result=$lang["status-fail"] . ": " . str_replace("?", "5", $lang["shouldbeversion"]);} else {$result=$lang["status-ok"];}
 if ($use_mysqli){$encoding=mysqli_client_encoding($db);} else {$encoding=mysql_client_encoding();}
-?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion . " " . str_replace("%encoding", $encoding, $lang["client-encoding"]); ?></td><td><b><?php echo $result?></b></td></tr><?php
+?><tr><td><?php echo str_replace("?", "MySQL", $lang["softwareversion"]); ?></td><td><?php echo $mysqlversion . "&ensp;&ensp;" . str_replace("%encoding", $encoding, $lang["client-encoding"]); ?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check GD installed
 if (function_exists("gd_info"))
