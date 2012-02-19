@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120219 för version 3211
+# Senast uppdaterad av Henrik Frizén 20120219 för version 3214
 #
 #
 # User group names (for the default user groups)
@@ -721,6 +721,7 @@ $lang["deleteallsure"]="Vill du ta bort de här materialen? Om du väljer att fo
 $lang["batchdonotaddcollection"]="(Lägg inte till i någon samling)";
 $lang["collectionsthemes"]="Relaterade teman och gemensamma samlingar";
 $lang["recent"]="Nyaste";
+$lang["n_recent"]="%qty nyaste";
 $lang["batchcopyfrom"]="Kopiera metadata från material med nummer";
 $lang["copy"]="Kopiera";
 $lang["zipall"]="Zippa alla";

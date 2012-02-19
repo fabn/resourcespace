@@ -696,6 +696,7 @@ $lang["deleteallsure"]="Are you sure you wish to DELETE these resources? This wi
 $lang["batchdonotaddcollection"]="(do not add to a collection)";
 $lang["collectionsthemes"]="Related themes and public collections";
 $lang["recent"]="Recent";
+$lang["n_recent"]="%qty Recent";
 $lang["batchcopyfrom"]="Copy the data below from resource with ID";
 $lang["copy"]="Copy";
 $lang["zipall"]="Zip all";
