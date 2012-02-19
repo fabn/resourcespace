@@ -1169,25 +1169,27 @@ function string_similar($string1,$string2)
 function formatfilesize($bytes)
 	{
 	# Return a human-readable string representing $bytes in either KB or MB.
+	
+	global $lang;
 	if ($bytes<1024)
 		{
-		return number_format((double)$bytes) . "&nbsp;B";		
+		return number_format((double)$bytes) . "&nbsp;".$lang["byte-symbol"];
 		}
 	elseif ($bytes<pow(1024,2))
 		{
-		return number_format((double)ceil($bytes/1024)) . "&nbsp;KB";
+		return number_format((double)ceil($bytes/1024)) . "&nbsp;".$lang["kilobyte-symbol"];
 		}
 	elseif ($bytes<pow(1024,3))
 		{
-		return number_format((double)$bytes/pow(1024,2),1) . "&nbsp;MB";
+		return number_format((double)$bytes/pow(1024,2),1) . "&nbsp;".$lang["megabyte-symbol"];
 		}
 	elseif ($bytes<pow(1024,4))
 		{
-		return number_format((double)$bytes/pow(1024,3),1) . "&nbsp;GB";
+		return number_format((double)$bytes/pow(1024,3),1) . "&nbsp;".$lang["gigabyte-symbol"];
 		}
 	else
 		{
-		return number_format((double)$bytes/pow(1024,4),1) . "&nbsp;TB";
+		return number_format((double)$bytes/pow(1024,4),1) . "&nbsp;".$lang["terabyte-symbol"];
 		}
 	}
 

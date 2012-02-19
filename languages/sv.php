@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120219 för version 3214
+# Senast uppdaterad av Henrik Frizén 20120219 för version 3215
 #
 #
 # User group names (for the default user groups)
@@ -1538,3 +1538,9 @@ $lang["resources-with-requeststatus0-2"]="(%number väntande)"; # %number will b
 $lang["researches-with-requeststatus0-0"]="(alla tilldelade)"; # 0 Unassigned
 $lang["researches-with-requeststatus0-1"]="(1 ej tilldelad)"; # 1 Unassigned
 $lang["researches-with-requeststatus0-2"]="(%number ej tilldelade)"; # %number will be replaced, e.g. 3 Unassigned
+
+$lang["byte-symbol"]="B";
+$lang["kilobyte-symbol"]="kB"; # Egentligen handlar det om kiB o.s.v., men jag följer RS beteckningar.
+$lang["megabyte-symbol"]="MB";
+$lang["gigabyte-symbol"]="GB";
+$lang["terabyte-symbol"]="TB";

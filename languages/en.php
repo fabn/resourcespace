@@ -1513,3 +1513,9 @@ $lang["resources-with-requeststatus0-2"]="(%number Pending)"; # %number will be 
 $lang["researches-with-requeststatus0-0"]="(0 Unassigned)"; # 0 Unassigned
 $lang["researches-with-requeststatus0-1"]="(1 Unassigned)"; # 1 Unassigned
 $lang["researches-with-requeststatus0-2"]="(%number Unassigned)"; # %number will be replaced, e.g. 3 Unassigned
+
+$lang["byte-symbol"]="B";
+$lang["kilobyte-symbol"]="KB";
+$lang["megabyte-symbol"]="MB";
+$lang["gigabyte-symbol"]="GB";
+$lang["terabyte-symbol"]="TB";
