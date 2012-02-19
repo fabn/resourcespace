@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Annotate Plugin
-# Updated by Henrik Frizén 20120219 for svn r3213
+# Updated by Henrik Frizén 20120219 for svn r3216
 # -------
 #
 #
@@ -19,5 +19,5 @@ $lang["note-1"]="1 notering";
 $lang["note-2"]="%number noteringar"; # %number will be replaced, e.g. 3 notes
 
 $lang["annotate_configuration"]="Annotate &ndash; inställningar";
-$lang["extensions_to_exclude"]="Filnamnstillägg att exkludera<br />(kommaseparerade)";
+$lang["extensions_to_exclude"]="Filnamnsändelser att exkludera<br />(kommaseparerade)";
 $lang["resource_types_to_exclude"]="Materialtyper att exkludera<br />(markera dem som ska exkluderas)";

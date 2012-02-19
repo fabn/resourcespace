@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120219 för version 3215
+# Senast uppdaterad av Henrik Frizén 20120219 för version 3216
 #
 #
 # User group names (for the default user groups)
@@ -122,8 +122,8 @@ $lang["property-request_mode"]="Läge för begäranden/beställningar";
 $lang["property-allow_registration_selection"]="Tillåt val av denna grupp vid registrering";
 
 $lang["property-resource_type_id"]="Materialtypnr";
-$lang["information-allowed_extensions"]="Om du vill begränsa vilka typer av filer som ska kunna överföras för denna materialtyp, anger du här de <i>tillåtna</i> filnamnstilläggen (t.ex. jpg, gif).";
-$lang["property-allowed_extensions"]="Tillåtna filnamnstillägg";
+$lang["information-allowed_extensions"]="Om du vill begränsa vilka typer av filer som ska kunna överföras för denna materialtyp, anger du här de <i>tillåtna</i> filnamnsändelserna (t.ex. jpg, gif).";
+$lang["property-allowed_extensions"]="Tillåtna filnamnsändelser";
 
 $lang["property-field_id"]="Fältnr";
 $lang["property-title"]="Titel";
@@ -861,7 +861,7 @@ $lang["ratethisresource"]="Vilket betyg ger du det här materialet?";
 $lang["ratingthankyou"]="Tack för ditt betyg!";
 $lang["ratings"]="betyg";
 $lang["rating_lowercase"]="betyg";
-$lang["ratingremovehover"]="Klicka här om du vill ta bort ditt betyg";
+$lang["ratingremovehover"]="Ta bort ditt betyg";
 $lang["ratingremoved"]="Ditt betyg har tagits bort.";
 
 $lang["cannotemailpassword"]="Du kan inte skicka användarna deras existerande lösenord, eftersom de är lagrade i krypterad form.<br/><br/>Klicka på <b>Föreslå</b> om du vill generera ett nytt lösenord, som sedan kan skickas per e-post.";
@@ -1068,8 +1068,8 @@ $lang["addremove"]="";
 $lang["all_users"]="alla användare";
 $lang["new_resource"]="nytt material";
 
-$lang["invalidextension_mustbe"]="Ogiltigt filnamnstillägg, måste vara";
-$lang["allowedextensions"]="Giltiga filnamnstillägg";
+$lang["invalidextension_mustbe"]="Ogiltig filnamnsändelse, måste vara";
+$lang["allowedextensions"]="Giltiga filnamnsändelser";
 
 $lang["alternativebatchupload"]="Överför alternativa filer i grupp (Java)";
 
