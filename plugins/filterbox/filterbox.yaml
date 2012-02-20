@@ -1,0 +1,4 @@
+name    : filterbox
+author  : Dan Huby, Axel Dörfler
+version : 1.0
+desc    : Adds a filter box to the right to refine the current search
