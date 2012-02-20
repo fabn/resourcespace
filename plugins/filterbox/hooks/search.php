@@ -2,7 +2,8 @@
 
 function HookFilterboxSearchSearchbarreplace()
 	{
-	global $lang, $search, $archive;
+	global $lang, $search, $archive, $baseurl, $autocomplete_search;
+	include_once(dirname(__FILE__)."/../../../include/search_functions.php");
 	?>
 
 	<h2><?php echo $lang["filtertitle"]?></h2>
@@ -12,6 +13,18 @@ function HookFilterboxSearchSearchbarreplace()
 	<div class="Question" id="question_related" style="border-top:none;">
 	<input class="SearchWidth" type=text id="refine_keywords" name="refine_keywords" value=""
 		   autofocus />
+	<?php if ($autocomplete_search)
+		{
+		# Auto-complete search functionality
+		?>
+		<div id="autocomplete_filter_choices" class="autocomplete"></div>
+		<script type="text/javascript">
+			new Ajax.Autocompleter("refine_keywords", "autocomplete_filter_choices", "<?php
+					echo $baseurl?>/plugins/filterbox/ajax/autocomplete_filter.php");
+		</script>
+	<?php
+		}
+	?>
 	<input type=hidden name="archive" value="<?php echo $archive?>" />
 	<input type=hidden name="search" value="<?php echo htmlspecialchars($search) ?>" />
 	</div>
