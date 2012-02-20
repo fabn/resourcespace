@@ -334,6 +334,9 @@ $searchbyday=false;
 # For the tailor made preview sizes / downloads, this value is set per preview size in the system setup.
 $restricted_full_download=false;
 
+# Instead of showing a download size as "Restricted", the download size is hidden
+$hide_restricted_download_sizes=false;
+
 # Also search the archive and display a count with every search? (performance penalty)
 $archive_search=false;
 

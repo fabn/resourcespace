@@ -383,6 +383,8 @@ if ($resource["has_image"]==1 && $download_multisize)
 				$headline = "<a href='$direct_link' target='dl_window_$ref'>$headline</a>";
 			}
 		}
+		if ($hide_restricted_download_sizes && !$downloadthissize && !checkperm("q"))
+			continue;
 
 		?>
 		<tr class="DownloadDBlend" id="DownloadBox<?php echo $n?>">
