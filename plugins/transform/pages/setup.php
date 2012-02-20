@@ -48,24 +48,24 @@ include "../../../include/header.php";
 ?>
 <div class="BasicsBox"> 
   <h2>&nbsp;</h2>
-  <h1>Transform Configuration</h1>
+  <h1><?php echo $lang['transform_configuration'];?></h1>
 
 <form id="form1" name="form1" method="post" action="">
 
 <?php // echo config_text_field("cropper_default_target_format","Default Target Format",$cropper_default_target_format);?>
-<?php echo config_boolean_field("cropper_debug","Cropper Debug",$cropper_debug);?>
-<?php echo config_text_field("cropper_formatarray","Output Formats",implode(',',$cropper_formatarray));?>
-<?php echo config_text_field("cropper_allowed_extensions","Input Formats",implode(',',$cropper_allowed_extensions));?>
+<?php echo config_boolean_field("cropper_debug",$lang['cropper_debug'],$cropper_debug);?>
+<?php echo config_text_field("cropper_formatarray",$lang['output_formats'],implode(',',$cropper_formatarray));?>
+<?php echo config_text_field("cropper_allowed_extensions",$lang['input_formats'],implode(',',$cropper_allowed_extensions));?>
 <?php //echo config_boolean_field("cropper_force_original_format","cropper_force_original_format",$cropper_force_original_format);?>
 <?php //echo config_text_field("cropper_cropsize","cropper_cropsize","pre");?>
-<?php echo config_boolean_field("cropper_custom_filename","Custom Filename",$cropper_custom_filename);?>
+<?php echo config_boolean_field("cropper_custom_filename",$lang['custom_filename'],$cropper_custom_filename);?>
 <?php //echo config_boolean_field("cropper_use_filename_as_title","Use Filename as Title",$cropper_use_filename_as_title);?>
 <?php //echo config_boolean_field("cropper_allow_scale_up","cropper_allow_scale_up",$cropper_allow_scale_up);?>
-<?php echo config_boolean_field("cropper_rotation","Allow Rotation",$cropper_rotation);?>
-<?php echo config_boolean_field("cropper_transform_original","Allow Transform Original",$cropper_transform_original);?>
-<?php echo config_boolean_field("cropper_use_repage","Use 'repage'",$cropper_use_repage);?>
+<?php echo config_boolean_field("cropper_rotation",$lang['allow_rotation'],$cropper_rotation);?>
+<?php echo config_boolean_field("cropper_transform_original",$lang['allow_transform_original'],$cropper_transform_original);?>
+<?php echo config_boolean_field("cropper_use_repage",$lang['use_repage'],$cropper_use_repage);?>
 <?php //echo config_boolean_field("cropper_jpeg_rgb","cropper_jpeg_rgb",$cropper_jpeg_rgb);?>
-<?php echo config_boolean_field("cropper_enable_batch","Enable Batch Transform",$cropper_enable_batch);?> 
+<?php echo config_boolean_field("cropper_enable_batch",$lang['enable_batch_transform'],$cropper_enable_batch);?> 
 
 <div class="Question">  
 <label for="submit"></label> 

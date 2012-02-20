@@ -27,7 +27,7 @@ if ($doit == 0){
 	// user has not confirmed operation. So make them do that first
 
 	echo "<h1>" . $lang['batchtransform'] . "</h1>";
-	echo "<p><strong>WARNING: executing this command will permanently change resources. Use caution!</strong></p>";
+	echo "<p>". $lang['batchtransform-introtext'] . "</p>";
 ?>
 
 
@@ -66,7 +66,7 @@ if (!is_numeric($rotation) || $rotation > 360){
 
 # Locate imagemagick.
 if (!isset($imagemagick_path)){
-	echo "Error: ImageMagick must be configured for crop functionality. Please contact your system administrator.";
+	echo $lang['error-crop-imagemagick-not-configured'];
 	exit;
 }
 $basecommand=$imagemagick_path . "/bin/convert";
@@ -81,16 +81,16 @@ $failcount = 0;
 // retrieve a list of all resources in the collection:
 $resources = sql_array("select resource value from collection_resource where collection = '$collection'");
 if (count($resources) == 0){
-	echo "no resources found";
+	echo $lang['no_resources_found'];
 } else {
-	echo "<h2>Batch transforming collection $collection</h2>\n";
+	echo "<h2>" . str_replace("%col", $collection, $lang['batch_transforming_collection']) . "</h2>\n";
 	flush();
 	foreach($resources as $resource){
 		echo "<hr /><h4>$resource</h4>";
 		flush();
 		$edit_access=get_edit_access($resource);
 		if (!$edit_access){
-			echo " was not transformed: Access Denied.";
+			echo " " . $lang['not-transformed'];
 			$failcount++;
 		} else {
 
@@ -114,7 +114,7 @@ if (count($resources) == 0){
 			if (file_exists($newpath) && filesize($newpath) > 0){
 				// success!
 				if (!rename($newpath,$path)){
-					echo "   Error: unable to rename transformed file for resource $resource. <br />\n";
+					echo " " . str_replace("%res", $resource, $lang['error-unable-to-rename']) . "<br />\n";
 					$failcount++;
 				} else {
 					create_previews($resource,false,$new_ext);
@@ -132,12 +132,12 @@ if (count($resources) == 0){
 
 					resource_log($resource,'t','','batch transform');
 					echo "<img src='" . get_resource_path($resource,false,"thm",false,'jpg',-1,1) . "' /><br />\n";
-					echo "   SUCCESS!<br />\n";
+					echo " " . $lang['success'] . "<br />\n";
 					$successcount++;
 				}
 				
 			} else {
-				echo "   Error: Transform of resource $resource failed. <br />\n";
+				echo " " . str_replace("%res", $resource, $lang['error-transform-failed']) . "<br />\n";
 				$failcount++;
 			}
 		}
@@ -151,12 +151,42 @@ if ($successcount > 0){
 	collection_log($collection,'b',''," ($successcount)");
 }
 
-echo "<hr /><h3>Summary</h3>\n";
-echo count($resources) . " resources in collection.<br />";
-echo $successcount . " resources transformed successfully.<br />";
-if ($failcount > 0){
-	echo "$failcount errors.<br />";
-}
+echo "<hr /><h3>" . $lang['summary'] . "</h3>\n";
+$qty_total = count($resources);
+switch ($qty_total)
+    {
+    case 1:
+        echo $lang['resources_in_collection-1'];
+        break;
+    default:
+        echo str_replace("%qty", $qty_total, $lang['resources_in_collection-2']);
+        break;
+    }
+echo "<br />";
+switch ($successcount)
+    {
+    case 0:
+        echo $lang['resources_transformed_successfully-0'];
+        break;
+    case 1:
+        echo $lang['resources_transformed_successfully-1'];
+        break;
+    default:
+        echo str_replace("%qty", $successcount, $lang['resources_transformed_successfully-2']);
+        break;
+    }
+echo "<br />";
+switch ($failcount)
+    {
+    case 0:
+        break;
+    case 1:
+        echo $lang['errors-1'];
+        break;
+    default:
+        echo str_replace("%qty", $failcount, $lang['errors-2']);
+        break;
+    }
 
 include "../../../include/footer.php";
 
