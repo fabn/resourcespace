@@ -40,6 +40,8 @@ if ($access==2)
 		exit("This is a confidential resource.");
 		}
 
+hook('replacepreview');
+
 # next / previous resource browsing
 $go=getval("go","");
 if ($go!="")
