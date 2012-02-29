@@ -39,6 +39,9 @@ function i18n_get_translated($text)
     if ((strpos($text,",")!==false) && (strpos($text,"~")!==false)) {$s=explode(",",$text);$out="";for ($n=0;$n<count($s);$n++) {if ($n>0) {$out.=",";}; $out.=i18n_get_translated(trim($s[$n]));};return $out;}
     
     global $language,$defaultlanguage;
+	$asdefaultlanguage=$defaultlanguage;
+	if (!isset($asdefaultlanguage))
+		$asdefaultlanguage='en';
     
     # Split
     $s=explode("~",$text);
@@ -51,13 +54,14 @@ function i18n_get_translated($text)
     for ($n=1;$n<count($s);$n++)
         {
         # Not a translated string, return as-is
-        if (substr($s[$n],2,1)!=":" && substr($s[$n],5,1)!=":") {return $text;}
+        if (substr($s[$n],2,1)!=":" && substr($s[$n],5,1)!=":" && substr($s[$n],0,1)!=":") {return $text;}
         
         # Support both 2 character and 5 character language codes (for example en, en-US).
         $p=strpos($s[$n],':');
-        if (substr($s[$n],0,$p)==$language) {return substr($s[$n],$p+1);}
+		$textLanguage=substr($s[$n],0,$p);
+        if ($textLanguage==$language) {return substr($s[$n],$p+1);}
         
-        if (substr($s[$n],0,$p)==$defaultlanguage) {$default=substr($s[$n],$p+1);}
+        if ($textLanguage==$asdefaultlanguage || $p==0) {$default=substr($s[$n],$p+1);}
         }    
     
     # Translation not found? Return default language
