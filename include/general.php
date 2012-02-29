@@ -3150,59 +3150,6 @@ function draw_performance_footer(){
 	}
 }
 
-function http_get_preferred_language($strict_mode=false)
-	{
-	global $languages;
-
-	$lang_variable=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	if (empty($lang_variable))
-		return null;
-
-	$accepted_languages=preg_split('/,\s*/',$lang_variable);
-	$current_lang=false;
-	$current_quality=0;
-
-	foreach ($accepted_languages as $accepted_language)
-		{
-		$res=preg_match('/^([a-z]{1,8}(?:-[a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i',$accepted_language,$matches);
-		if (!$res)
-			continue;
-
-		$lang_code=explode('-',$matches[1]);
-
-		// Use specified quality, if any
-		if (isset($matches[2]))
-			$lang_quality=(float)$matches[2];
-		else
-			$lang_quality=1.0;
-
-		while (count($lang_code))
-			{
-			$found=false;
-			foreach ($languages as $short => $name)
-				{
-				if (strtolower($short)==strtolower(join('-', $lang_code)))
-					{
-					if ($lang_quality > $current_quality)
-						{
-						$current_lang=$short;
-						$current_quality=$lang_quality;
-						$found=true;
-						break;
-						}
-					}
-				}
-
-				if ($strict_mode || $found)
-					break;
-
-				array_pop($lang_code);
-			}
-		}
-
-        return $current_lang;
-	}
-
 function sql_affected_rows(){
 	global $use_mysqli;
 	if ($use_mysqli){
