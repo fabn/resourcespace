@@ -711,6 +711,8 @@ function http_get_preferred_language($strict_mode=false)
 	{
 	global $languages;
 
+	if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+		return null;
 	$lang_variable=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 	if (empty($lang_variable))
 		return null;
