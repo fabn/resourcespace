@@ -322,10 +322,31 @@ function save_resource_data_multi($collection)
 			elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
 				{
 				# date/expiry date type, construct the value from the date dropdowns
-				$val=getvalescaped("field_" . $fields[$n]["ref"] . "-y","");
-				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-m","");
-				$val.="-" . getvalescaped("field_" . $fields[$n]["ref"] . "-d","");
-				if (strlen($val)!=10) {$val="";}
+				$val=sprintf("%04d", getvalescaped("field_" . $fields[$n]["ref"] . "-y",""));
+				if ((int)$val<=0) 
+					{
+					$val="";
+					}
+				elseif (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-m",""))!="") 
+					{
+					$val.="-" . $field;
+					if (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-d",""))!="") 
+						{
+						$val.="-" . $field;
+						if (($field=getval("field_" . $fields[$n]["ref"] . "-h",""))!="")
+							{
+							$val.=" " . $field . ":";
+							if (($field=getvalescaped("field_" . $fields[$n]["ref"] . "-i",""))!="") 
+								{
+									$val.=$field;
+								} 
+							else 
+								{
+									$val.="00";
+								}
+							}
+						}
+					}
 				}
 			elseif ($fields[$n]["type"] == 3)
 				{
