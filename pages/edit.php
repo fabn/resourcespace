@@ -672,6 +672,7 @@ for ($n=0;$n<count($fields);$n++)
 
 	$name="field_" . $fields[$n]["ref"];
 	$value=$fields[$n]["value"];
+	$value=trim($value);
 	
 	if ($fields[$n]["omit_when_copying"] && $use!=$ref)
 		{
@@ -722,10 +723,14 @@ for ($n=0;$n<count($fields);$n++)
 		?>
 		<option value="FR"><?php echo $lang["findandreplace"]?></option>
 		<?php } ?>
-		<?php if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==3) { 
-		# Append applies to text boxes, checkboxes and dropdowns only.
+		<?php 
+		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==7 || $fields[$n]["type"]==3) { 
+		# Append applies to text boxes, checkboxes ,category tree and dropdowns only.
 		?>
 		<option value="AP"><?php echo $lang["appendtext"]?></option>
+		<?php } 
+		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==3) { ?>
+		# Remove applies to text boxes, checkboxes and dropdowns only.
 		<option value="RM"><?php echo $lang["removetext"]?></option>
 		<?php } ?>
 		</select>
@@ -759,7 +764,7 @@ for ($n=0;$n<count($fields);$n++)
 	$modified_field_type=(hook("modifyfieldtype"));
 	if ($modified_field_type){$fields[$n]["type"]=$modified_field_type-1;}
 
-	(hook("addfieldextras"));
+
 	# ----------------------------  Show field -----------------------------------
 	$type=$fields[$n]["type"];
 	if ($type=="") {$type=0;} # Default to text type.
