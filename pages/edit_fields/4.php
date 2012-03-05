@@ -45,6 +45,7 @@ elseif ($value!="")
    
 <input type=text size=5 name="<?php echo $name?>-y" value="<?php echo $dy?>" <?php if ($edit_autosave) {?>onChange="AutoSave('<?php echo $fields[$n]["ref"]?>');"<?php } ?>>
 
+<?php if ($fields[$n]["type"]!=10) { ?>
 <!-- Time (optional) -->
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -59,3 +60,5 @@ elseif ($value!="")
 ><option value=""><?php echo $lang["minute-abbreviated"]?></option>
 <?php for ($m=0;$m<=59;$m++) {?><option <?php if($m==$di){echo " selected";}?>><?php echo sprintf("%02d",$m)?></option><?php } ?>
 </select>
+<?php } ?>
+

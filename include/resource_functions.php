@@ -88,7 +88,7 @@ function save_resource_data($ref,$multi)
 						}
 					}
 				}
-			elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6)
+			elseif ($fields[$n]["type"]==4 || $fields[$n]["type"]==6 || $fields[$n]["type"]==10)
 				{
 				# date type, construct the value from the date/time dropdowns
 				$val=sprintf("%04d", getvalescaped("field_" . $fields[$n]["ref"] . "-y",""));
