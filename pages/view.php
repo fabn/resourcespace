@@ -367,7 +367,7 @@ if ($resource["has_image"]==1 && $download_multisize)
 		if ($sizes[$n]["id"]=="") {$fulldownload=true;}
 		
 		$counter++;
-		$headline = ($sizes[$n]['id'] == '') ? str_replace("?",strtoupper($resource["file_extension"]),$lang["originalfileoftype"]) : $sizes[$n]["name"];
+		$headline = ($sizes[$n]['id'] == '') ? str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["originalfileoftype"]) : $sizes[$n]["name"];
 
 		# Should we allow this download?
 		# If the download is allowed, show a download button, otherwise show a request button.
@@ -480,7 +480,7 @@ elseif (strlen($resource["file_extension"])>0 && !($access==1 && $restricted_ful
 		{
 		?>
 		<tr class="DownloadDBlend">
-		<td><h2><?php echo (isset($original_download_name))?str_replace("?",strtoupper($resource["file_extension"]),$original_download_name): str_replace("?",strtoupper($resource["file_extension"]),$lang["originalfileoftype"])?></h2></td>
+		<td><h2><?php echo (isset($original_download_name)) ? str_replace_formatted_placeholder("%extension", $resource["file_extension"], $original_download_name, true) : str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["originalfileoftype"]); ?></h2></td>
 		<td><?php echo formatfilesize(filesize_unlimited($path))?></td>
 		<td class="DownloadButton">
 		<?php if (!$direct_download || $save_as){ ?>
@@ -530,7 +530,7 @@ if (isset($flv_download) && $flv_download)
 	# Allow the FLV preview to be downloaded. $flv_download is set when showing the FLV preview video above.
 	?>
 	<tr class="DownloadDBlend">
-	<td><h2><?php echo (isset($ffmpeg_preview_download_name))?$ffmpeg_preview_download_name:str_replace("?",strtoupper($ffmpeg_preview_extension),$lang["fileoftype"]); ?></h2></td>
+	<td><h2><?php echo (isset($ffmpeg_preview_download_name)) ? $ffmpeg_preview_download_name : str_replace_formatted_placeholder("%extension", $ffmpeg_preview_extension, $lang["cell-fileoftype"]); ?></h2></td>
 	<td><?php echo formatfilesize(filesize($flvfile))?></td>
 	<td class="DownloadButton">
 	<?php if (!$direct_download || $save_as){?>
@@ -577,7 +577,6 @@ if ($access==0) # open access only (not restricted)
 		<td>
 		<?php if ($alt_thm!="") { ?><a href="preview.php?ref=<?php echo $ref?>&alternative=<?php echo $altfiles[$n]["ref"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>"><img src="<?php echo $alt_thm?>" class="AltThumb"></a><?php } ?>
 		<h2><?php echo htmlspecialchars($altfiles[$n]["name"])?></h2>
-		<!--<p><?php echo str_replace("?",strtoupper($altfiles[$n]["file_extension"]),$lang["fileoftype"])?></p>-->
 		<p><?php echo htmlspecialchars($altfiles[$n]["description"])?></p>
 		</td>
 		<td><?php echo formatfilesize($altfiles[$n]["file_size"])?></td>
@@ -947,7 +946,7 @@ if (count($result)>0)
 		<div class="RecordPanel">  
 
 		<div class="RecordResouce">
-		<div class="Title"><?php echo $lang["relatedresources"]?> - <?php echo strtoupper($rext);?></div>
+		<div class="Title"><?php echo str_replace_formatted_placeholder("%extension", $rext, $lang["relatedresources-filename_extension"]); ?></div>
 		<?php
 		# loop and display the results by file extension
 		for ($n=0;$n<count($result);$n++)			

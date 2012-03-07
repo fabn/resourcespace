@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120219 för version 3216
+# Senast uppdaterad av Henrik Frizén 20120307 för version 3234
 #
 #
 # User group names (for the default user groups)
@@ -395,6 +395,7 @@ $lang["retrypreviews"]="Försök skapa förhandsgranskningar igen";
 $lang["specifydefaultcontent"]="Ange den metadata som ska vara förvald för nya material";
 $lang["properties"]="&ndash; typspecifika egenskaper";
 $lang["relatedresources"]="Relaterade material";
+$lang["relatedresources-filename_extension"]="Relaterade material &ndash; %extension"; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "Related Resources - %EXTENSION" -> "Related Resources - JPG"
 $lang["indexedsearchable"]="Indexerade, sökbara fält";
 $lang["clearform"]="Rensa formulär";
 $lang["similarresources"]="liknande material"; # e.g. 17 similar resources
@@ -440,8 +441,10 @@ $lang["pixels"]="pixlar";
 $lang["download"]="Hämtning";
 $lang["preview"]="Förhandsgranskning";
 $lang["fullscreenpreview"]="Förhandsgranska på bildskärm";
-$lang["originalfileoftype"]="Originalfil &ndash; ?"; # ? will be replaced, e.g. "Original PDF File"
+$lang["originalfileoftype"]="Originalfil (%extension)"; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "Original %EXTENSION File" -> "Original PDF File"
 $lang["fileoftype"]="?-fil"; # ? will be replaced, e.g. "MP4 File"
+$lang["cell-fileoftype"]="%Extension-fil"; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "%EXTENSION File" -> "JPG File"
+$lang["fileextension"]="[%extension]"; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "[%EXTENSION]" -> "[JPG]"
 $lang["log"]="Logg";
 $lang["resourcedetails"]="Egenskaper för material";
 $lang["offlineresource"]="Frånkopplat material";
@@ -1069,7 +1072,9 @@ $lang["all_users"]="alla användare";
 $lang["new_resource"]="nytt material";
 
 $lang["invalidextension_mustbe"]="Ogiltig filnamnsändelse, måste vara";
+$lang["invalidextension_mustbe-extensions"]="Ogiltig filnamnsändelse, måste vara %extensions."; # Use %EXTENSIONS, %extensions or %Extensions as a placeholder. The placeholder will be replaced with the filename extensions, using the same case. E.g. "Invalid extension, must be %EXTENSIONS" -> "Invalid extension, must be JPG"
 $lang["allowedextensions"]="Giltiga filnamnsändelser";
+$lang["allowedextensions-extensions"]="Giltiga filnamnsändelser: %extensions"; # Use %EXTENSIONS, %extensions or %Extensions as a placeholder. The placeholder will be replaced with the filename extensions, using the same case. E.g. "Allowed Extensions: %EXTENSIONS" -> "Allowed Extensions: JPG, PNG"
 
 $lang["alternativebatchupload"]="Överför alternativa filer i grupp (Java)";
 
@@ -1172,8 +1177,8 @@ $lang["nodownloads"]="Inga hämtningar";
 $lang["uncollectedresources"]="Material som inte ingår i samlingar";
 $lang["nowritewillbeattempted"]="Exiftool kommer inte att försöka skriva metadata.";
 $lang["notallfileformatsarewritable"]="Exiftool kan dock inte skriva i alla filtyper.";
-$lang["filetypenotsupported"]="Filtypen %filetype stöds inte";
-$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool är inaktiverat för filtypen %filetype"; # %filetype will be replaced, e.g. Exiftool processing disabled for file type JPG
+$lang["filetypenotsupported"]="Filtypen %extension stöds inte."; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "%EXTENSION filetype not supported" -> "JPG filetype not supported"
+$lang["exiftoolprocessingdisabledforfiletype"]="Exiftool är inaktiverat för filtypen %extension."; # Use %EXTENSION, %extension or %Extension as a placeholder. The placeholder will be replaced with the filename extension, using the same case. E.g. "Exiftool processing disabled for file type %EXTENSION" -> "Exiftool processing disabled for file type JPG"
 $lang["nometadatareport"]="Ingen metadatarapport";
 $lang["metadatawritewillbeattempted"]="Exiftool kommer att försöka skriva nedanstående metadata.";
 $lang["embeddedvalue"]="Inbäddat värde";

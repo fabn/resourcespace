@@ -302,7 +302,7 @@ else
     $list=explode(",",trim($allowed_extensions));
     sort($list);
     $allowed_extensions=implode(",",$list);
-    ?><p><?php echo $lang['allowedextensions'].": ". strtoupper(str_replace(",",", ",$allowed_extensions));?></p><?php } ?>
+    ?><p><?php echo str_replace_formatted_placeholder("%extensions", str_replace(",",", ",$allowed_extensions), $lang['allowedextensions-extensions'])?></p><?php } ?>
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>

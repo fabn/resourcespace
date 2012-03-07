@@ -1287,11 +1287,11 @@ $show_error_messages=true;
 # Ability to set that the 'request' button on resources adds the item to the current collection (which then can be requested) instead of starting a request process for this individual item.
 $request_adds_to_collection=false;
 
-# Option to change the FFMPEG download name from the default ("FLV File") to a custom string.
+# Option to change the FFMPEG download name from the default ("FLV File" - in the used language) to a custom string.
 # $ffmpeg_preview_download_name = "Flash web preview";
 
-# Option to change the original download file name ("?" is replaced with the file extension)
-# $original_download_name="Original ? file";
+# Option to change the original download filename (Use %EXTENSION, %extension or %Extension as a placeholder. Using ? is now DEPRECATED. The placeholder will be replaced with the filename extension, using the same case. E.g. "Original %EXTENSION file" -> "Original WMV file")
+# $original_download_name="Original %EXTENSION file";
 
 
 # Generation of alternative image file sizes/formats using ImageMagick/GraphicMagick

@@ -124,3 +124,70 @@ function i18n_get_translations($value)
     return $return;
     }
 }
+
+function str_replace_formatted_placeholder($mixedplaceholder, $mixedreplace, $subject, $question_mark = false)
+    {
+    # Returns a string with all occurrences of the placeholders (array) in subject replaced with the given replace values (array). The replace values are formatted according to the formatting of the placeholders.
+    # The placeholders may be written in UPPERCASE, lowercase or Uppercasefirst.
+    # Each placeholder will be replaced by the replace value,
+    # written with the same case as the placeholder.
+    # It's possible to also include "?" as a placeholder for legacy reasons.
+
+    # E.g.
+    # str_replace_formatted_placeholder("%extension", $resource["file_extension"], $lang["originalfileoftype"], true)
+    # will search for the three words "%EXTENSION", "%extension" and "%Extension" and also the char "?"
+    # in the string $lang["originalfileoftype"]. If the found placeholder is %extension
+    # it will be replaced by the value of $resource["file_extension"],
+    # written in lowercase. If the found placeholder instead would have been "?" the value
+    # would have been written in UPPERCASE.
+
+    # Creates a multi-dimensional array of the placeholders written in different case styles.
+    if (is_array($mixedplaceholder)) {$placeholder = $mixedplaceholder;}
+    else {$placeholder = array($mixedplaceholder);}
+    for ($n = 0;$n<count($placeholder);$n++)
+        {
+        $array_placeholder[$n] = array(strtoupper($placeholder[$n]), strtolower($placeholder[$n]), ucfirstletter($placeholder[$n]));
+        }
+
+    # Creates a multi-dimensional array of the replace values written in different case styles.
+    if (is_array($mixedreplace)) {$replace = $mixedreplace;}
+    else {$replace = array($mixedreplace);}
+    for ($n = 0;$n<count($replace);$n++)
+        {
+        $array_replace[$n] = array(strtoupper($replace[$n]), strtolower($replace[$n]), ucfirst($replace[$n]));
+        }
+
+    # Adds "?" to the arrays if required.
+    if ($question_mark)
+        {
+        $array_placeholder[] = "?";
+        $array_replace[] = strtoupper($replace);
+        }
+
+    # Replaces the placeholders with the replace values and returns the new string.
+
+    $result = $subject;
+    for ($n = 0;$n<count($placeholder);$n++)
+        {
+        if (!isset($array_replace[$n][0])) {break;}
+        else
+            {
+            $result = str_replace($array_placeholder[$n], $array_replace[$n], $result);
+            }
+        }
+    return $result;
+    }
+
+function ucfirstletter($string)
+    {
+    # Returns a string with the first LETTER of $string capitalized.
+    # Compare with ucfirst($string) which returns a string with first CHAR of $string capitalized:
+    # ucfirstletter("abc") / ucfirstletter("%abc") returns "Abc" / "%Abc"
+    # ucfirst("abc") / ucfirst("%abc") returns "Abc" / "%abc"
+
+    # Search for the first letter ([a-zA-Z]), which may or may not be followed by other characters (.*).
+    # Replaces the found substring ('$0') with the same substring but now with the first character capitalized, using ucfirst().
+    # Note the /e modifier: If this modifier is set, preg_replace() does normal substitution of backreferences in the replacement string, evaluates it as PHP code, and uses the result for replacing the search string.  
+    return preg_replace("/[a-zA-Z].*/e", "ucfirst('$0')", $string);
+
+    }
