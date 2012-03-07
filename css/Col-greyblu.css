@@ -38,6 +38,7 @@ input[readonly] {color: #FFFFFF;}
 
 .CollectBack a:link, .CollectBack a:visited, .CollectBack a:active {color:#B6BBC1;}
 .CollectBack a:hover  {color:#FFFFFF;}
+.CollectBack h2 a:link, .CollectBack h2 a:visited, .CollectBack h2 a:active, .CollectBack h2 a:hover {color:white;}
 
 #CollectionMenu {border-right: 1px solid #79899C;}
 #CollectionMenuExp {border-right: 1px solid #79899C;}

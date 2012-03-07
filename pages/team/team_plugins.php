@@ -231,14 +231,14 @@ jQuery.noConflict();
     <td><?php echo $lang['description']; ?></td>
     <td><?php echo $lang['plugins-author']; ?></td>
     <td><?php echo $lang['plugins-instversion']; ?></td>
-    <td><?php echo $lang['tools']; ?></td>
+    <td><div class="ListTools"><?php echo $lang['tools']; ?></div></td>
     </tr></thead>
     <tbody>
     
     <?php foreach ($inst_plugins as $p){
         echo '<tr>';
         echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".sprintf("%.1f",$p['inst_version'])."</td>";
-        echo '<td>';
+        echo '<td><div class="ListTools">';
         if (isset($p['legacy_inst']))
             echo '<a href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
         else
@@ -251,7 +251,7 @@ jQuery.noConflict();
         if ($p['config_url']!='')
         	echo '<a href="'.$baseurl.$p['config_url'].'">&gt; '.$lang['options'].'</a> ';
 
-        echo '</td></tr>';
+        echo '</div></td></tr>';
     } ?>
     </tbody>
     </table>
@@ -268,7 +268,7 @@ jQuery.noConflict();
     <td><?php echo $lang['description']; ?></td>
     <td><?php echo $lang['plugins-author']; ?></td>
     <td><?php echo $lang['plugins-version']; ?></td>
-    <td><?php echo $lang['tools']; ?></td>
+    <td><div class="ListTools"><?php echo $lang['tools']; ?></div></td>
     </tr></thead>
     <tbody>
     <?php 
@@ -278,14 +278,14 @@ jQuery.noConflict();
 			echo '<td>?</td>';
 		else
 			echo '<td>'.$p['version'].'</td>';
-        echo '<td>';
+        echo '<td><div class="ListTools">';
         echo '<a href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
         // echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang["action-delete"].'</a> ';
         if ($p['info_url']!='')
             echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
             echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
-        echo '</td></tr>';        
+        echo '</div></td></tr>';        
     }
     ?>
     </tbody>

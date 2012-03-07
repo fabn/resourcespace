@@ -432,7 +432,7 @@ elseif ($k!="")
 <?php } ?>
 
 <?php if (!hook("thumbsmenu")) { ?>
-  <?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2><?php } ?>
+  <?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php } ?></h2><?php } ?>
   <form method="get" id="colselect">
 		<div class="SearchItem" style="padding:0;margin:0;"><?php echo $lang["currentcollection"]?>&nbsp;(<strong><?php echo $count_result?></strong>&nbsp;<?php if ($count_result==1){echo $lang["item"];} else {echo $lang["items"];}?>): 
 		<select name="collection" id="collection" onchange="if(document.getElementById('collection').value==-1){document.getElementById('entername').style.display='block';document.getElementById('entername').focus();return false;} document.getElementById('colselect').submit();"<?php if ($collection_dropdown_user_access_mode){?>class="SearchWidthExp"<?php } else { ?> class="SearchWidth"<?php } ?>>
@@ -753,7 +753,7 @@ elseif ($k!="")
 } else { 
 ?>
 
-<div id="CollectionMinTitle"><?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main" style="color:white"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
+<div id="CollectionMinTitle"><?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
 
 <!--Menu-->	
 <div id="CollectionMinRightNav">
