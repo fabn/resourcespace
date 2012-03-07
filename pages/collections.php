@@ -580,7 +580,7 @@ if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)
 		<table border="0" class="CollectionResourceAlign"><tr><td>
 		<a target="main" href="<?php echo $url?>"><img border=0 width=56 height=75 src="<?php echo $iconpath?>"/></a></td>
 		</tr></table>
-		<div class="CollectionPanelInfo"><a target="main" href="<?php echo $url?>"><?php echo $lang["savedsearch"]?> <?php echo $n+1?></a>&nbsp;</div>
+		<div class="CollectionPanelInfo"><a target="main" href="<?php echo $url?>"><?php echo tidy_trim($lang["savedsearch"],(13-strlen($n+1)))?> <?php echo $n+1?></a>&nbsp;</div>
 		<div class="CollectionPanelInfo"><a href="collections.php?removesearch=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?>
 		</a></div>				
 		</div>
