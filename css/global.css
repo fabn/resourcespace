@@ -32,7 +32,7 @@ option {font-size:11px;}
 .clearer {clear:both;}
 .clearerleft {clear:left;}
 .Hidden {visibility: hidden;height: 0;width: 0;overflow: hidden;}
-
+.nowrap {white-space:nowrap;}
 
 /*General layout*/
 #Header {margin:20px 25px;padding:0;text-align:left;}

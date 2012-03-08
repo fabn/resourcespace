@@ -1067,7 +1067,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php } ?>
 		<?php } ?>
 
-		<?php if ($allow_share && $k=="") { ?><a href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
+		<?php if ($allow_share && $k=="") { ?><a class="nowrap" href="resource_email.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["action-email"]?></a><?php } ?></div></td>
 		
 		
 		</tr>
