@@ -5,18 +5,18 @@ include_once "../../../include/db.php";
 include_once "../../../include/authenticate.php";
 include_once "../../../include/general.php";
 include_once "../../../include/resource_functions.php";
-$ref=getval("ref","");
+$ref=getvalescaped("ref","");
 if ($ref==""){die("no");}
 
-$top=getval('top','');
-$left=getval('left','');
-$width=getval('width','');
-$height=getval('height','');
+$top=getvalescaped('top','');
+$left=getvalescaped('left','');
+$width=getvalescaped('width','');
+$height=getvalescaped('height','');
 $text=getvalescaped('text','');
-$id=getval('id','');
-$preview_width=getval('pw','');
-$preview_height=getval('ph','');
-
+$id=getvalescaped('id','');
+$preview_width=getvalescaped('pw','');
+$preview_height=getvalescaped('ph','');
+$text = str_replace(array(chr(13), chr(10)), '<br />', $text);
 
 sql_query("delete from annotate_notes where ref='$ref' and note_id='$id'");
 

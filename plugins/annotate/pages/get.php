@@ -15,8 +15,6 @@ sql_query("update resource set annotation_count=".count($notes)." where ref=$ref
 // check if display size is different from original preview size, and if so, modify coordinates
 
 
-
-
 $json="[";
 $notes_array=array();
 for ($x=0;$x<count($notes);$x++){
@@ -29,7 +27,7 @@ for ($x=0;$x<count($notes);$x++){
 		$notes[$x]['height']=$ratio*$notes[$x]['height'];
 		$notes[$x]['top_pos']=$ratio*$notes[$x]['top_pos'];
 		$notes[$x]['left_pos']=$ratio*$notes[$x]['left_pos'];
-	
+		$notes[$x]['note'] = str_replace(array(chr(13), chr(10)), '<br />', $notes[$x]['note']);
 
 	
 	if ($x>0){$json.=",";}
