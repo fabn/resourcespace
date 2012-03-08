@@ -120,3 +120,41 @@ input[readonly] {color: #FFFFFF;}
 
 /* single file upload progress bar */
 .meter-value {background-color: #B5C3D4;}
+
+/* System Setup */
+.treetext {color: #000000;}
+.treetext a:link {color: #000000; background: none;}
+.treetext a:visited {color: #000000; background: none;}
+.treetext a:hover {color: #000000; background: none;}
+.treetext a:active {color: #000000; background: none;}
+
+.proptitle
+	{
+	color: #FFFFFF;
+	background: rgb(119,119,119);
+	}	
+.propbox
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
+.propbox a:link {color: rgb(181,195,212); background: none;}
+.propbox a:visited {color: rgb(181,195,212); background: none;}
+.propbox a:hover {color: #000000; background: none;}
+.propbox a:active {color: #000000; background: none;}
+
+.permissionstable tr td.permheader
+	{
+	color: #000000;
+	background: rgb(221,221,221)
+	}
+.permissionstable tbody
+	{
+	color: #000000;
+	}
+
+.CodeMirror-wrapping
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
