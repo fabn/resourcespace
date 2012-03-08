@@ -514,7 +514,7 @@ if (true) # Always show search header now.
 			{
 			?>
 			<p><?php echo $lang["try"]?>: <a href="search.php?search=<?php echo urlencode(strip_tags($result))?>"><?php echo stripslashes($result)?></a></p>
-			<?php
+			<?php $result=array();
 			}
 			else
 			{
