@@ -240,16 +240,16 @@ jQuery.noConflict();
         echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".sprintf("%.1f",$p['inst_version'])."</td>";
         echo '<td><div class="ListTools">';
         if (isset($p['legacy_inst']))
-            echo '<a href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
+            echo '<a class="nowrap" href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
         else
-            echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
+            echo '<a class="nowrap" href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
         if ($p['info_url']!='')
         	{
-            echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
+            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
  			}
-        echo '<a href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt; '.$lang['groupaccess'].'</a> ';
+        echo '<a class="nowrap" href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt; '.$lang['groupaccess'].'</a> ';
         if ($p['config_url']!='')
-        	echo '<a href="'.$baseurl.$p['config_url'].'">&gt; '.$lang['options'].'</a> ';
+        	echo '<a class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt; '.$lang['options'].'</a> ';
 
         echo '</div></td></tr>';
     } ?>
@@ -279,12 +279,12 @@ jQuery.noConflict();
 		else
 			echo '<td>'.$p['version'].'</td>';
         echo '<td><div class="ListTools">';
-        echo '<a href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
+        echo '<a class="nowrap" href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
         // echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang["action-delete"].'</a> ';
         if ($p['info_url']!='')
-            echo '<a href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
+            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
-            echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
+            echo '<a class="nowrap" href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
         echo '</div></td></tr>';        
     }
     ?>
