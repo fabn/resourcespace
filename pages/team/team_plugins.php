@@ -242,7 +242,7 @@ jQuery.noConflict();
         if (isset($p['legacy_inst']))
             echo '<a class="nowrap" href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
         else
-            echo '<a class="nowrap" href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
+            echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
         if ($p['info_url']!='')
         	{
             echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
@@ -279,12 +279,12 @@ jQuery.noConflict();
 		else
 			echo '<td>'.$p['version'].'</td>';
         echo '<td><div class="ListTools">';
-        echo '<a class="nowrap" href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
+        echo '<a href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
         // echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang["action-delete"].'</a> ';
         if ($p['info_url']!='')
             echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
-            echo '<a class="nowrap" href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
+            echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
         echo '</div></td></tr>';        
     }
     ?>
