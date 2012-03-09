@@ -22,7 +22,7 @@ hook("simplesearch_stripsimplefields");
 
 # Recognise a quoted search, which is a search for an exact string
 $quoted_string=false;
-if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {$quoted_string=true;$search=substr($search,1,-1);}
+if (substr($quicksearch,0,1)=="\"" && substr($quicksearch,-1,1)=="\"") {$quoted_string=true;$quicksearch=substr($quicksearch,1,-1);}
 
 $quicksearch=refine_searchstring($quicksearch);
 $keywords=split_keywords($quicksearch);
