@@ -19,8 +19,14 @@ hook("simplesearch_stripsimplefields");
 
 # Process all keywords, putting set fieldname/value pairs into an associative array ready for setting later.
 # Also build a quicksearch string.
+
+# Recognise a quoted search, which is a search for an exact string
+$quoted_string=false;
+if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {$quoted_string=true;$search=substr($search,1,-1);}
+
 $quicksearch=refine_searchstring($quicksearch);
 $keywords=split_keywords($quicksearch);
+
 $set_fields=array();
 $simple=array();
 for ($n=0;$n<count($keywords);$n++)
@@ -41,9 +47,11 @@ for ($n=0;$n<count($keywords);$n++)
 			}
 		}
 	}
-
 # Set the text search box to the stripped value.
 $quicksearch=join(" ",trim_array($simple));
+
+# Add the quotes back, if a quoted string
+if ($quoted_string) {$quicksearch="\"" . $quicksearch . "\"";}
 
 # Set the predefined date fields
 $found_year="";if (isset($set_fields["year"])) {$found_year=$set_fields["year"];}

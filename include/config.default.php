@@ -1654,6 +1654,7 @@ $wildcard_expand_limit=50;
 # Should *all* manually entered keywords (e.g. basic search and 'all fields' search on advanced search) be treated as wildcards?
 # E.g. "cat" will always match "catch", "catalogue", "catagory" with no need for an asterisk.
 # WARNING - this option could cause search performance issues due to the hugely expanded searches that will be performed.
+# It will also cause some other features to be disabled: related keywords and quoted string support
 $wildcard_always_applied=false;
 
 

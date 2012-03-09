@@ -27,6 +27,12 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 
 	hook("modifyorderarray");
 
+
+	# Recognise a quoted search, which is a search for an exact string
+	$quoted_string=false;
+	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {$quoted_string=true;$search=substr($search,1,-1);}
+
+
 	$order_by=$order[$order_by];
 	$keywords=split_keywords($search);
 	$search=trim($search);
@@ -159,6 +165,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	global $config_search_for_number, $category_tree_search_use_and;
 	if ($config_search_for_number && is_numeric($search)) {$keysearch=false;}
 	
+	
+	
 	if ($keysearch)
 		{
 		for ($n=0;$n<count($keywords);$n++)
@@ -286,11 +294,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						$s=explode(":",$keyword);$keyword=$s[1];
 						}
 
+
 					
 					global $noadd, $wildcard_always_applied;
-					if (!in_array($keyword,$noadd)) # skip common words that are excluded from indexing
+					if (in_array($keyword,$noadd)) # skip common words that are excluded from indexing
 						{
-							
+						$skipped_last=true;
+						}
+					else
+						{
 						# Handle wildcards
 						if (strpos($keyword,"*")!==false || $wildcard_always_applied)
 							{
@@ -341,7 +353,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						else		
 							{
 							# Not a wildcard. Normal matching.
-							
+
 							$keyref=resolve_keyword($keyword); # Resolve keyword. Ignore any wildcards when resolving. We need wildcards to be present later but not here.
 							if ($keyref===false)
 								{
@@ -370,28 +382,48 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 									$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
 									}
 								
+								# Quoted string support
+								# If the string was initially 'quoted' then the keywords must appear in order, i.e. the indexed position of the keyword must be one more than the position of the previous position.
+								$positionsql="";
+								if ($quoted_string)
+									{
+									if ($c>1)
+										{
+										$last_key_offset=1;
+										if (isset($skipped_last) && $skipped_last) {$last_key_offset=2;} # Support skipped keywords - if the last keyword was skipped (listed in $noadd), increase the allowed position from the previous keyword. Useful for quoted searches that contain $noadd words, e.g. "black and white" where "and" is a skipped keyword.
+										$positionsql="and k" . $c . ".position=k" . ($c-1) . ".position+" . $last_key_offset;
+										#echo $positionsql;
+										}								
+									}
+								
 								# Form join
 								global $use_temp_tables;
 								if (substr($search,0,8)=="!related") {$use_temp_tables=false;} // temp tables can't be used twice (unions)
 								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
-								if (!$use_temp_tables){
-                  if (!empty($sql_exclude_fields)) {
-                    $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
-                  }
-                  $sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql)";
+								if (!$use_temp_tables)
+									{
+					                if (!empty($sql_exclude_fields)) 
+					                	{
+					                    $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+						                }
+					                  $sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql) $positionsql";
+					                  	
 									if ($score!="") {$score.="+";}
 									$score.="k" . $c . ".hit_count";
-								}
-								else { //use temp tables
+									}
+								else
+									{ //use temp tables
 									if (!isset($temptable_counter)){$temptable_counter = 0;}
                                     $temptable_counter++;
                                     $jtemptable = 'jtt' . $c . '_' . $temptable_counter;
                                     sql_query("drop table IF EXISTS $jtemptable ",false);
-                  $exclude_sql='';                  
-									if (!empty($sql_exclude_fields)) {
-									  $exclude_sql="and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
-									}
-									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where k".$c.".keyword='$keyref' $relatedsql $exclude_sql");
+					                $exclude_sql='';                  
+					                
+									if (!empty($sql_exclude_fields))
+										{
+									  	$exclude_sql="and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+										}
+									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where (k".$c.".keyword='$keyref' $relatedsql) $positionsql $exclude_sql");
 
 									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref ";
 								
@@ -403,6 +435,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								daily_stat("Keyword usage",$keyref);
 								}
 							}
+						$skipped_last=false;
 						}
 					}
 				}
