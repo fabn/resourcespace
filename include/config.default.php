@@ -1783,6 +1783,7 @@ $use_smtp=false;
 $smtp_secure=''; # '', 'tls' or 'ssl'. For Gmail, 'tls' or 'ssl' is required.
 $smtp_host=''; # Hostname, e.g. 'smtp.gmail.com'.
 $smtp_port=25; # Port number, e.g. 465 for Gmail using SSL.
+$smtp_auth=true; # Send credentials to SMTP server (false to use anonymous access)
 $smtp_username=''; # Username (full email address).
 $smtp_password=''; # Password.
 
