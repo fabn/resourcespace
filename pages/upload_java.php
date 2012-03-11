@@ -14,8 +14,6 @@ $search=getvalescaped("search","");
 $offset=getvalescaped("offset","",true);
 $order_by=getvalescaped("order_by","");
 $archive=getvalescaped("archive","",true);
-$restypes=getvalescaped("restypes","");
-if (strpos($search,"!")!==false) {$restypes="";}
 
 $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
@@ -239,7 +237,7 @@ if (test==null || typeof(test)=="undefined") {
 		window.location.href="search.php";
 	}
 }
-popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo urlencode(getvalescaped("no_exif",""))?>&autorotate=<?php echo urlencode(getvalescaped("autorotate",""))?>');
+popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo urlencode(getvalescaped("no_exif",""))?>&autorotate=<?php echo urlencode(getvalescaped("autorotate",""))?>&replace_resource=<?php echo $replace_resource?>');
 
 </script>
 <?php }?>
@@ -257,37 +255,41 @@ popUp('upload_java_popup.php?collection_add=<?php echo $collection_add?>&resourc
 	}
 }
 
-# Define the titles:
+# Define the titles and the introtext:
 if ($replace!="") 
 	{
 	# Replace Resource Batch
 	$titleh1 = $lang["replaceresourcebatch"];
 	$titleh2 = "";
+	$intro = $lang["intro-java_upload"];
 	}
 elseif ($replace_resource!="")
 	{
 	# Replace file
 	$titleh1 = $lang["replacefile"];
 	$titleh2 = "";
+	$intro = $lang["intro-java_upload-replace_resource"];
 	}
 elseif ($alternative!="")
 	{
 	# Batch upload alternative files (Java)
 	$titleh1 = $lang["alternativebatchupload"];
 	$titleh2 = "";
+	$intro = $lang["intro-java_upload"];
 	}
 else
 	{
 	# # Add Resource Batch - In Browser (Java - recommended)
 	$titleh1 = $lang["addresourcebatchbrowserjava"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_files"]), $lang["header-upload-subtitle"]);
+	$intro = $lang["intro-java_upload"];
 	}
 ?>
 <?php hook("upload_page_top"); ?>
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
-<p><?php echo $lang["intro-java_upload"] ?></p>
+<p><?php echo $intro ?></p>
 
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);
@@ -310,7 +312,7 @@ else
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>" />
+            <param name="postURL" value="upload_java.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
@@ -336,7 +338,7 @@ else
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
-<?php if ($alternative=="" && $replace=="")
+<?php if ($alternative=="" && $replace=="" && $replace_resource=="")
 	{ # Only show the back button in the step-by-step guide of Add Resource Batch - In Browser (Java - recommended)
 	?>
 	<div style="margin: 10px 0px;">

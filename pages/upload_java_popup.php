@@ -15,7 +15,7 @@ $collectionname=$collectiondata['name'];
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
 
-$alternative=getval("alternative",""); # Upload alternative resources
+$replace_resource=getvalescaped("replace_resource",""); # Option to replace existing resource file
 
 # generate AllowedFileExtensions parameter
 $allowed="";
@@ -38,7 +38,7 @@ http://www.resourcespace.org/
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 <title><?php echo htmlspecialchars($applicationname)?></title>
-<link rel="icon" type="image/png" href="<?php echo $baseurl?>/gfx/interface/favicon.png" />
+<link rel="icon" type="image/png" href="<?php echo $baseurl."/".$header_favicon?>" />
 <link href="<?php echo $baseurl?>/css/global.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" />
 <?php if (!hook("adjustcolortheme")){ ?>
 <link href="<?php echo $baseurl?>/css/Col-<?php echo (isset($userfixedtheme) && $userfixedtheme!="")?$userfixedtheme:getval("colourcss",$defaulttheme)?>.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" />
@@ -67,18 +67,48 @@ for ($n=0;$n<count($plugins);$n++)
 		}	
 	}
 ?>
+</head>
 
-
-
-</head><body>
+<body>
 <div id="height">
-<div id="Header">
+<div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
+<?php if ($header_text_title){?>
+    <div id="TextHeader"><?php echo $applicationname;?></a></div>
+    <?php if ($applicationdesc!=""){?>
+        <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
+    <?php } ?>
+<?php }?>
+<div id="HeaderNav1" class="HorizontalNav "></div>
 <div class="BasicsBox" id="uploadbox"> 
 
-</p>
-</div><h2>&nbsp;</h2>
-<h1><?php echo $lang["fileupload"]?><?php if (isset($collectionname)){?> - <?php echo $lang['collection']?>: <?php echo $collectionname?><?php } ?></h1>
-<p><?php echo text("introtext")?></p>
+<?php
+# Define the titles:
+if ($replace_resource!="")
+	{
+	# Replace file
+	$titleh1 = $lang["replacefile"];
+	$titleh2 = "";
+	$intro = $lang["intro-java_upload-replace_resource"];
+	}
+else
+	{
+	# # Add Resource Batch - In Browser (Java - recommended)
+	$titleh1 = $lang["addresourcebatchbrowserjava"];
+	if (isset($collectionname))
+		{
+		$titleh2 = str_replace(array("%number","%subtitle"), array("2", str_replace("%collection", $collectionname, $lang["upload_files-to_collection"])), $lang["header-upload-subtitle"]);
+		}
+	else
+		{
+		$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_files"]), $lang["header-upload-subtitle"]);
+		}
+	$intro = $lang["intro-java_upload"];
+	}
+?>
+<br>
+<h1><?php echo $titleh1 ?></h1>
+<h2><?php echo $titleh2 ?></h2>
+<p><?php echo $intro ?></p>
 
 <?php if ($allowed_extensions!=""){
     $allowed_extensions=str_replace(", ",",",$allowed_extensions);
@@ -101,7 +131,7 @@ for ($n=0;$n<count($plugins);$n++)
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>" />
+            <param name="postURL" value="upload_java.php?collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>&replace_resource=<?php echo $replace_resource?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
@@ -125,7 +155,7 @@ for ($n=0;$n<count($plugins);$n++)
 <!-- --------------------------------------------------------------------------------------------------------
 ----------------------------------     END OF THE APPLET TAG    ---------------------------------------------
 ---------------------------------------------------------------------------------------------------------- -->
-</div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()"><?php echo $lang['closethiswindow']?></A>  
+</div></div><p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p> <A href="javascript: self.close ()"><?php echo $lang['closethiswindow']?></A>  
 </div>
 <script type='text/javascript'>window.moveTo(0,0);
 window.resizeTo(690,document.getElementById('height').offsetHeight+100);

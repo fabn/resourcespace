@@ -32,7 +32,7 @@ if ($use_local)
 
 	# Define the titles:
 	$titleh1 = $lang["addresourcebatchlocalfolder"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	
 	# We compute the folder name from the upload folder option.
 	$folder = getAbsolutePath($local_ftp_upload_folder, true);
@@ -56,7 +56,7 @@ else
 
 	# Define the titles:
 	$titleh1 = $lang["addresourcebatchftp"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("3", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("3", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	
 	$ftp=@ftp_connect(getval("ftp_server",""));
 	if ($ftp===false) {exit("FTP connection failed.");}

@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120307 för version 3234
+# Senast uppdaterad av Henrik Frizén 20120311 för version 3248
 #
 #
 # User group names (for the default user groups)
@@ -381,7 +381,7 @@ $lang["previewimage"]="Förhandsgranska bild";
 $lang["file"]="Fil";
 $lang["upload"]="Överföring";
 $lang["action-upload"]="Överför";
-$lang["uploadafile"]="Överför fil";
+$lang["uploadafile"]="Överför en fil";
 $lang["replacefile"]="Ersätt fil";
 $lang["imagecorrection"]="Redigera förhandsgranskningar";
 $lang["previewthumbonly"]="(endast förhandsgranskning/miniatyrbild)";
@@ -1480,6 +1480,7 @@ $lang["foldercontent"] = "Mappinnehåll";
 $lang["intro-local_upload"] = "Välj en eller flera filer från den lokala överföringsmappen och klicka sedan på <b>Överför</b>. När filerna är överförda kan de tas bort från överföringsmappen.";
 $lang["intro-ftp_upload"] = "Välj en eller flera filer från ftp-mappen och klicka sedan på <b>Överför</b>.";
 $lang["intro-java_upload"] = "Klicka på <b>Bläddra</b> för att välja en eller flera filer och klicka sedan på <b>Överför</b>.";
+$lang["intro-java_upload-replace_resource"] = "Klicka på <b>Bläddra</b> för att välja en fil och klicka sedan på <b>Överför</b>.";
 $lang["intro-swf_upload"] = "Klicka på <b>Överför</b> för att välja en eller flera filer som sedan direkt överförs. Håll ner en skift-tangent för att välja flera filer samtidigt.";
 $lang["intro-single_upload"] = "Klicka på <b>Bläddra</b> för att välja en fil och klicka sedan på <b>Överför</b>.";
 $lang["intro-batch_edit"] = "Ange förvalda inställningar för överföring och förvald metadata för materialen du kommer att överföra.";
@@ -1549,3 +1550,6 @@ $lang["kilobyte-symbol"]="kB"; # Egentligen handlar det om kiB o.s.v., men jag f
 $lang["megabyte-symbol"]="MB";
 $lang["gigabyte-symbol"]="GB";
 $lang["terabyte-symbol"]="TB";
+
+$lang["upload_files"]="Överför filer";
+$lang["upload_files-to_collection"]="Överför filer (till samlingen ’%collection’)"; # %collection will be replaced, e.g. Upload Files (to the collection 'My Collection')

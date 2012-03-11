@@ -288,7 +288,7 @@ else
 	{
 	# Add Resource Batch - In Browser (Flash)
 	$titleh1 = $lang["addresourcebatchbrowser"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	}
 ?>
 <?php hook("upload_page_top"); ?>

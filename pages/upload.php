@@ -109,12 +109,12 @@ if ($ref!="")
 else if ($archive=="2")
 	{ # Add single archived resource
 	$titleh1 = $lang["newarchiveresource"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	}
 else
 	{ # Add single resource
 	$titleh1 = $lang["addresource"];
-	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["fileupload"]), $lang["header-upload-subtitle"]);
+	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	}
 ?>
 <?php hook("upload_page_top"); ?>

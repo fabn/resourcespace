@@ -1455,6 +1455,7 @@ $lang["foldercontent"] = "Folder Content";
 $lang["intro-local_upload"] = "Select one or more files from the local upload folder and click <b>Upload</b>. Once the files are uploaded they can be deleted from the upload folder.";
 $lang["intro-ftp_upload"] = "Select one or more files from the FTP folder and click <b>Upload</b>.";
 $lang["intro-java_upload"] = "Click <b>Browse</b> to locate one or more files and then click <b>Upload</b>.";
+$lang["intro-java_upload-replace_resource"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
 $lang["intro-swf_upload"] = "Click <b>Upload</b> to locate and upload one or more files. Hold down the Shift key to select multiple files.";
 $lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
 $lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";
@@ -1524,3 +1525,6 @@ $lang["kilobyte-symbol"]="KB";
 $lang["megabyte-symbol"]="MB";
 $lang["gigabyte-symbol"]="GB";
 $lang["terabyte-symbol"]="TB";
+
+$lang["upload_files"]="Upload Files";
+$lang["upload_files-to_collection"]="Upload Files (to the collection '%collection')"; # %collection will be replaced, e.g. Upload Files (to the collection 'My Collection')
