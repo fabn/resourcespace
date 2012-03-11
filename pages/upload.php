@@ -149,11 +149,16 @@ function check(filename) {
 <div class="clearerleft"> </div>
 </div>
 
-<div class="Question">
-<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
-<div class="clearerleft"> </div>
-</div>
-
+<?php /* Show the import embedded metadata checkbox when uploading a missing file or replacing a file.
+In the other upload workflows this checkbox is shown in a previous page. */
+if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_file","")!="")
+    { ?>
+    <div class="Question">
+    <label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
+    <div class="clearerleft"> </div>
+    </div>
+    <?php
+    } ?>
 
 <?php if ($show_progress){?>
 <div class="Question" id="meter" style="display:none;">
