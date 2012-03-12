@@ -620,12 +620,12 @@ if ($count_result>0)
 		
 		<?php 
 
-		$title=get_data_by_field($result[$n]['ref'],$view_title_field);	
+		$title=$result[$n]["field".$view_title_field];	
 		if (isset($metadata_template_title_field) && isset($metadata_template_resource_type))
 			{
 			if ($result[$n]['resource_type']==$metadata_template_resource_type)
 				{
-				$title=get_data_by_field($ref,$metadata_template_title_field);
+				$title=$result[$n]["field".$metadata_template_title_field];
 				}	
 			}	
 			
