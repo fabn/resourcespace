@@ -1412,6 +1412,7 @@ $lang["pleaseenteravalidnumber"]="Please enter a valid number";
 $lang["purgeusersnousers"]="There are no users to purge.";
 
 $lang["editallresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for the selected resources.";
+$lang["editresourcetypewarning"]="Warning: changing the resource type will delete any resource type specific metadata currently stored for this resource.";
 
 $lang["geodragmode"]="Drag mode";
 $lang["geodragmodearea"]="position pin";

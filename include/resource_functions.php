@@ -582,7 +582,7 @@ function save_resource_data_multi($collection)
 	hook("aftersaveresourcedata");	
 	}
 
-function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
+function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='')
 	{
 	# Removes one instance of each keyword->resource mapping for each occurrence of that
 	# keyword in $string.
@@ -593,13 +593,19 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		#echo "<li>removing " . $keywords[$n];
-			sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' limit 1");
+			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and include this condition
+				{
+				sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' and $optional_column= $optional_value limit 1");
+				}
+			else{
+				sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' limit 1");
+				}
 			sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keywords[$n]) . "' limit 1");
 		}	
 	}
 	
 if (!function_exists("add_keyword_mappings")){		
-function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false)
+function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='')
 	{
 	# For each instance of a keyword in $string, add a keyword->resource mapping.
 	# Create keywords that do not yet exist.
@@ -625,7 +631,10 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 				#echo "<li>New keyword.";
 				}
 			# create mapping, increase hit count.
-			sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$n','$resource_type_field')");
+			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
+				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$n','$resource_type_field','$optional_value')");}
+			else  
+				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$n','$resource_type_field')");}
 			sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword' limit 1");
 			
 			# Log this
@@ -1046,8 +1055,8 @@ function update_resource_type($ref,$type)
 	
 	# Clear data that is no longer needed (data/keywords set for other types).
 	sql_query("delete from resource_data where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 or resource_type=0)");
-	sql_query("delete from resource_keyword where resource='$ref' and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 or resource_type=0)");	
-	
+	sql_query("delete from resource_keyword where resource='$ref' and resource_type_field!=-1 and resource_type_field not in (select ref from resource_type_field where resource_type='$type' or resource_type=999 or resource_type=0)");	
+		
 	}
 	
 function relate_to_array($ref,$array)	

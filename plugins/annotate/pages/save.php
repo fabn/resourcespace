@@ -1,6 +1,5 @@
 <?php
 
-
 include_once "../../../include/db.php";
 include_once "../../../include/authenticate.php";
 include_once "../../../include/general.php";
@@ -24,9 +23,15 @@ if (substr($text,0,strlen($username))!=$username){$text=$username.": ".$text;}
 
 sql_query("insert into annotate_notes (ref,top_pos,left_pos,width,height,preview_width,preview_height,note,user) values ('$ref','$top','$left','$width','$height','$preview_width','$preview_height','$text','$userref') ");
 
-echo sql_insert_id();
+$annotateid = sql_insert_id();
+echo $annotateid;
 
 $notes=sql_query("select * from annotate_notes where ref='$ref'");
 sql_query("update resource set annotation_count=".count($notes)." where ref=$ref");
 
-add_keyword_mappings($ref,$text,-1);
+#Add annotation to keywords
+$keywordtext = substr(strstr($text,": "),2); # don't add the username to the keywords
+debug("adding annotation to resource keywords. Keywords: " . $keywordtext);
+
+add_keyword_mappings($ref,$keywordtext,-1,false,false,"annotation_ref",$annotateid);
+#add_keyword_mappings($ref,$text,-1);
