@@ -78,7 +78,7 @@ input[readonly] {color: #000000;}
 
 .Question{border-top: 1px solid #BBBBBB;}
 .RecordPanel {background: #F0F0F0 url(../gfx/whitegry/interface/recordpanel.gif) repeat-x;	border: 1px solid #BBBBBB;}
-.RecordPanel .RecordDownloadSpace h2 {color: #FFFFFF;}
+.RecordPanel .RecordDownloadSpace h2 {color: #3C3C3C;}
 .RecordDownloadSpace .HorizontalWhiteNav a:active, .RecordPanel .RecordDownloadSpace .HorizontalWhiteNav a:hover {color:#FFFFFF;} 
 .NoFind {border: 1px solid #BBBBBB;background: #FFFFFF;}
 .NoFind .highlight {color:#000000;font-weight: bold;}

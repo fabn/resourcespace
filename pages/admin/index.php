@@ -9,7 +9,7 @@ include ("../../include/header.php");
 overflow:hidden;
 }</style>
 
-<?php $lfsize=400;if(isset($admin_header_height)){$topsize=$admin_header_height;}Else{$topsize=110;}?>
+<?php $lfsize=400;if(isset($admin_header_height)){$topsize=$admin_header_height;}Else{$topsize=120;}?>
 <iframe class="iframe" id="left" name="left" style="position:absolute;top:<?php echo $topsize?>px;width:<?php echo $lfsize?>px;" src="tree.php" frameborder="0" height="100%" style="display:inline;"  ></iframe>
 <iframe class="iframe" id="right" name="right" src="blank.php" frameborder="0" scrolling="auto" width="100%" height="100%" marginwidth="0" marginheight="0" style="position:absolute;top:<?php echo $topsize?>px;left:<?php echo $lfsize+25?>px;margin:0;margin-right:15px;display:inline;"></iframe>
 
