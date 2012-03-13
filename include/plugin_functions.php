@@ -45,6 +45,7 @@ function activate_plugin($name){
         sql_query("UPDATE plugins SET config_url='{$plugin_yaml_esc['config_url']}', " .
         		  "descrip='{$plugin_yaml_esc['desc']}', author='{$plugin_yaml_esc['author']}', " .
         		  "inst_version='{$plugin_yaml_esc['version']}', " .
+        		  "priority='{$plugin_yaml_esc['default_priority']}', " .
         		  "update_url='{$plugin_yaml_esc['update_url']}', info_url='{$plugin_yaml_esc['info_url']}' " .
         		  "WHERE name='{$plugin_yaml_esc['name']}'");
         return true;
@@ -104,6 +105,7 @@ function get_plugin_yaml($path, $validate=true){
 	$plugin_yaml['update_url'] = '';
 	$plugin_yaml['config_url'] = '';
 	$plugin_yaml['desc'] = '';
+	$plugin_yaml['default_priority'] = '999';
 	if ($yaml_file_ptr!=false){
 		while (($line = fgets($yaml_file_ptr))!=''){
 			if($line[0]!='#'){ #Exclude comments from parsing
