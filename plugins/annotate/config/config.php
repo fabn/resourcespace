@@ -5,4 +5,7 @@ $annotate_rt_exclude=array(3,4);
 $annotate_ext_exclude=array("pdf","odt");
 //public visibility of annotations 
 $annotate_public_view=true;
+//display author of annotation
+$annotate_show_author=false;
+
 

@@ -38,6 +38,7 @@ include "../../../include/header.php";
 <?php $rtypes=get_resource_types();
 echo config_custom_select_multi("rtexclude",$lang["resource_types_to_exclude"],$rtypes,$annotate_rt_exclude);?>
 <?php echo config_boolean_field("annotate_public_view",$lang["annotate_public_view"],$annotate_public_view);?>
+<?php echo config_boolean_field("annotate_show_author",$lang["annotate_show_author"],$annotate_show_author);?>
 
 <div class="Question">  
 <label for="submit"></label> 

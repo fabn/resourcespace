@@ -21,3 +21,5 @@ $lang["annotate_configuration"]="Annotate Configuration";
 $lang["extensions_to_exclude"]="Extensions to exclude<br />(comma separated)";
 $lang["resource_types_to_exclude"]="Resource Types to exclude<br />(highlight to exclude)";
 $lang["annotate_public_view"] = "Are annotations publicly visible e.g. when sharing collections?:";
+$lang["annotate_show_author"] = "Display annotation author when viewing previews?";
+
