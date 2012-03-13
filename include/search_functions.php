@@ -382,19 +382,6 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 									$relatedsql.=" or k" . $c . ".keyword='" . $related[$m] . "'";
 									}
 								
-								# Quoted string support
-								# If the string was initially 'quoted' then the keywords must appear in order, i.e. the indexed position of the keyword must be one more than the position of the previous position.
-								$positionsql="";
-								if ($quoted_string)
-									{
-									if ($c>1)
-										{
-										$last_key_offset=1;
-										if (isset($skipped_last) && $skipped_last) {$last_key_offset=2;} # Support skipped keywords - if the last keyword was skipped (listed in $noadd), increase the allowed position from the previous keyword. Useful for quoted searches that contain $noadd words, e.g. "black and white" where "and" is a skipped keyword.
-										$positionsql="and k" . $c . ".position=k" . ($c-1) . ".position+" . $last_key_offset;
-										#echo $positionsql;
-										}								
-									}
 								
 								# Form join
 								global $use_temp_tables;
@@ -402,6 +389,21 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
 								if (!$use_temp_tables)
 									{
+									// Not using temporary tables
+									
+									# Quoted string support
+									$positionsql="";
+									if ($quoted_string)
+										{
+										if ($c>1)
+											{
+											$last_key_offset=1;
+											if (isset($skipped_last) && $skipped_last) {$last_key_offset=2;} # Support skipped keywords - if the last keyword was skipped (listed in $noadd), increase the allowed position from the previous keyword. Useful for quoted searches that contain $noadd words, e.g. "black and white" where "and" is a skipped keyword.
+											$positionsql="and k" . $c . ".position=k" . ($c-1) . ".position+" . $last_key_offset;
+											}								
+										}
+
+
 					                if (!empty($sql_exclude_fields)) 
 					                	{
 					                    $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
@@ -418,14 +420,27 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
                                     $jtemptable = 'jtt' . $c . '_' . $temptable_counter;
                                     sql_query("drop table IF EXISTS $jtemptable ",false);
 					                $exclude_sql='';                  
+
+									# Quoted string support
+									$positionsql="";
+									if ($quoted_string)
+										{
+										if ($c>1)
+											{
+											$last_key_offset=1;
+											if (isset($skipped_last) && $skipped_last) {$last_key_offset=2;} # Support skipped keywords - if the last keyword was skipped (listed in $noadd), increase the allowed position from the previous keyword. Useful for quoted searches that contain $noadd words, e.g. "black and white" where "and" is a skipped keyword.
+											$positionsql="and $jtemptable.position=" . 'jtt' . ($c-1) . '_' . ($temptable_counter-1) . ".position+" . $last_key_offset;
+											}								
+										}
+
 					                
 									if (!empty($sql_exclude_fields))
 										{
 									  	$exclude_sql="and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
 										}
-									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count from 	resource_keyword k".$c." where (k".$c.".keyword='$keyref' $relatedsql) $positionsql $exclude_sql");
+									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count,k".$c.".position from 	resource_keyword k".$c." where (k".$c.".keyword='$keyref' $relatedsql)  $exclude_sql");
 
-									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref ";
+									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref $positionsql";
 								
 									if ($score!="") {$score.="+";}
 									$score.=$jtemptable . ".hit_count";
