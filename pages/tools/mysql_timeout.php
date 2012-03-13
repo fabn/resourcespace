@@ -33,7 +33,15 @@ for ($s=0;$s<60;$s+=10) # Do this once every 10 seconds for a minute, then this 
 		$info=trim($vals[6]) . " : " . trim($vals[7]);
 		$query=trim($vals[8]);
 		
-		if ((($type=="Query") && ($time>$query_timeout) && strpos($query,"select")!==false) || (($type=="Sleep") && ($time>$sleep_timeout)))
+		if  (
+			($type=="Query") && ($time>$query_timeout) && 
+				(
+				strpos($query,"select")!==false
+				||
+				strpos($query,"create temporary table")!==false	
+				)
+			|| (($type=="Sleep") && ($time>$sleep_timeout))
+			)
 			{
 			# Kill this process.
 			echo "killing $id... $info\n";

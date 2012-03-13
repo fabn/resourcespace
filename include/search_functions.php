@@ -294,7 +294,11 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 						$s=explode(":",$keyword);$keyword=$s[1];
 						}
 
-
+					# Omit resources containing this keyword?
+					$omit=false;
+					if (substr($keyword,0,1)=="-") {$omit=true;$keyword=substr($keyword,1);}
+					
+					
 					
 					global $noadd, $wildcard_always_applied;
 					if (in_array($keyword,$noadd)) # skip common words that are excluded from indexing
@@ -355,7 +359,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 							# Not a wildcard. Normal matching.
 
 							$keyref=resolve_keyword($keyword); # Resolve keyword. Ignore any wildcards when resolving. We need wildcards to be present later but not here.
-							if ($keyref===false)
+							if ($keyref===false && !$omit)
 								{
 								$fullmatch=false;
 								$soundex=resolve_soundex($keyword);
@@ -408,10 +412,22 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 					                	{
 					                    $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
 						                }
-					                  $sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql) $positionsql";
-					                  	
-									if ($score!="") {$score.="+";}
-									$score.="k" . $c . ".hit_count";
+
+									if (!$omit)
+										{
+										# Include in query
+						                $sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and (k" . $c . ".keyword='$keyref' $relatedsql) $positionsql";
+								                  	
+										if ($score!="") {$score.="+";}
+										$score.="k" . $c . ".hit_count";
+										}
+									else
+										{
+										# Exclude matching resources from query (omit feature)
+										if ($sql_filter!="") {$sql_filter.=" and ";}
+										$sql_filter .= "r.ref not in (select resource from resource_keyword where keyword='$keyref')"; # Filter out resources that do contain the keyword.
+										}						                
+						                
 									}
 								else
 									{ //use temp tables
@@ -439,11 +455,22 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 									  	$exclude_sql="and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
 										}
 									$test=sql_query("create temporary table $jtemptable SELECT distinct k".$c.".resource,k".$c.".hit_count,k".$c.".position from 	resource_keyword k".$c." where (k".$c.".keyword='$keyref' $relatedsql)  $exclude_sql");
+									
+									if (!$omit)
+										{
+										# Include in query
+										$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref $positionsql";
 
-									$sql_join .= " join $jtemptable on $jtemptable.resource = r.ref $positionsql";
-								
-									if ($score!="") {$score.="+";}
-									$score.=$jtemptable . ".hit_count";
+										if ($score!="") {$score.="+";}
+										$score.=$jtemptable . ".hit_count";
+										}
+									else
+										{
+										# Exclude matching resources from query (omit feature)
+										if ($sql_filter!="") {$sql_filter.=" and ";}
+										$sql_filter .= "r.ref not in (select resource from $jtemptable)"; # Filter out resources that do contain the keyword.
+										}
+										
 								}
 								
 								# Log this
@@ -581,7 +608,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
                                   $thetemptable = 'dupehashx' . '_' . $temptable_counter;
 
 				$dupequery = "select distinct r.hit_count score, $select from resource r $sql_join join $thetemptable on r.file_checksum = $thetemptable.hash where $sql_filter order by file_checksum";
-				sql_query("CREATE TEMPORARY TABLE $thetemptable (`hash` varchar(255) NOT NULL,`hashcount` int(10) default NULL, KEY `Index 1` (`hash`))",false);
+				sql_query("create temporary table $thetemptable (`hash` varchar(255) NOT NULL,`hashcount` int(10) default NULL, KEY `Index 1` (`hash`))",false);
 				sql_query("insert into $thetemptable select file_checksum, count(file_checksum) from resource where archive = 0 and ref > 0 and file_checksum <> '' and file_checksum is not null group by file_checksum having count(file_checksum) > 1",false);
 				$duperesult = sql_query($dupequery,false,$fetchrows);
 				return $duperesult;
@@ -777,7 +804,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# This must be a standard (non-special) search.
 	
 	# Construct and perform the standard search query.
-	$sql="";
+	#$sql="";
 	if ($sql_filter!="")
 		{
 		if ($sql!="") {$sql.=" and ";}
@@ -821,13 +848,30 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	# All keywords resolved OK, but there were no matches
 	# Remove keywords, least used first, until we get results.
 	$lsql="";
+	$omitmatch=false;
 	for ($n=0;$n<count($keywords);$n++)
 		{
+		if (substr($keywords[$n],0,1)=="-")
+			{
+			$omitmatch=true;
+			$omit=$keywords[$n];
+			}
 		if ($lsql!="") {$lsql.=" or ";}
 		$lsql.="keyword='" . $keywords[$n] . "'";
 		}
-	$least=sql_value("select keyword value from keyword where $lsql order by hit_count asc limit 1","");
-	return trim_spaces(str_replace(" " . $least . " "," "," " . join(" ",$keywords) . " "));
+	if ($omitmatch)
+		{
+		return trim_spaces(str_replace(" " . $omit . " "," "," " . join(" ",$keywords) . " "));		
+		}
+	if ($lsql!="")
+		{
+		$least=sql_value("select keyword value from keyword where $lsql order by hit_count asc limit 1","");
+		return trim_spaces(str_replace(" " . $least . " "," "," " . join(" ",$keywords) . " "));
+		}
+	else
+		{
+		return array();
+		}
 	}
 }
 

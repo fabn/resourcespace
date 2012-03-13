@@ -325,7 +325,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 	if ((substr($ns,0,1)==",") ||  ($index==false && strpos($ns,":")!==false)) # special 'constructed' query type, split using comma so
 	# we support keywords with spaces.
 		{
-		$ns=cleanse_string($ns,true);
+		$ns=cleanse_string($ns,true,!$index);
 		$return=explode(",",$ns);
 		# If we are indexing, append any values that contain spaces.
 					
@@ -359,7 +359,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 	else
 		{
 		# split using spaces and similar chars (according to configured whitespace characters)
-		$ns=explode(" ",cleanse_string($ns,false));
+		$ns=explode(" ",cleanse_string($ns,false,!$index));
 		if ($index && $partial_index) {$ns=add_partial_index($ns);}
 		return trim_array($ns,$config_trimchars);
 		}
@@ -368,19 +368,26 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 }
 
 if (!function_exists("cleanse_string")){
-function cleanse_string($string,$preserve_separators)
+function cleanse_string($string,$preserve_separators,$preserve_hyphen=false)
         {
         # Removes characters from a string prior to keyword splitting, for example full stops
         # Also makes the string lower case ready for indexing.
         global $config_separators;
+        $separators=$config_separators;
+        
+        if ($preserve_hyphen)
+        	{
+        	# Preserve hyphen - used when NOT indexing so we know which keywords to omit from the search.
+        	$separators=array_diff($separators,array("-")); # Remove hyphen from separator array.
+        	}
         if ($preserve_separators)
                 {
-                return mb_strtolower(trim_spaces(str_replace($config_separators," ",$string)),'UTF-8');
+                return mb_strtolower(trim_spaces(str_replace($separators," ",$string)),'UTF-8');
                 }
         else
                 {
                 # Also strip out the separators used when specifying multiple field/keyword pairs (comma and colon)
-                $s=$config_separators;
+                $s=$separators;
                 $s[]=",";
                 $s[]=":";
                 return mb_strtolower(trim_spaces(str_replace($s," ",$string)),'UTF-8');
