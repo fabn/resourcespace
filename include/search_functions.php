@@ -839,7 +839,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$result=array_pad($result,$count,0);
 		}
 
-	debug("Search found $result results");
+	debug("Search found " . count($result) . " results");
 	if (count($result)>0) {return $result;}
 	
 	# (temp) - no suggestion for field-specific searching for now - TO DO: modify function below to support this
