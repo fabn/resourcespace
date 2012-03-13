@@ -449,11 +449,15 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 
 .RecordPanel .RecordDownload /* Subpanel:Main>Resource Tools, borders */
 	{
+	border-radius:0px; -moz-border-radius: 0px; -webkit-border-radius: 0px;
 	border-top: 1px solid #252525;
 	border-right: 1px solid #C0C0C0;
 	border-bottom: 1px solid #C0C0C0;
 	border-left: 1px solid #252525;
-	}
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	}	
 .RecordPanel .RecordDownloadSpace h2 {color: #E0E0E0; background: none;} /*Subpanel:Main>Resource Tools */
 .RecordPanel .RecordDownloadSpace {background: #505050 url(../gfx/interface/shadeback-inverted.png) repeat-x 0px 0px;} /* Subpanel:Main>Resource Tools, background */
 .RecordPanel .RecordDownload {color: #E0E0E0; background: none;} /* Subpanel:Main>Resource Tools: Table header */
