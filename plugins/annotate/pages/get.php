@@ -2,7 +2,7 @@
 
 
 include_once "../../../include/db.php";
-include_once "../../../include/authenticate.php";
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include_once "../../../include/authenticate.php";}
 include_once "../../../include/general.php";
 
 $ref=getval("ref","");
@@ -38,7 +38,7 @@ for ($x=0;$x<count($notes);$x++){
 	$json.='"height":'.$notes[$x]['height'].', ';
 	$json.='"text":"'.str_replace('"','\"',$notes[$x]['note']).'", ';
 	$json.='"id":"'.$notes[$x]['note_id'].'", ';
-	if ($notes[$x]['user']==$userref){
+	if (isset($userref) && ($notes[$x]['user']==$userref)){
 	$json.='"editable":true';
 	} else {
 	$json.='"editable":false';	

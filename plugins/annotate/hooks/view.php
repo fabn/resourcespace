@@ -2,11 +2,11 @@
 
 
 function HookAnnotateViewRenderinnerresourcepreview(){
-	global $ref,$ffmpeg_preview_extension,$resource,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$annotate_ext_exclude,$annotate_rt_exclude;
-if ($k!=""){return false;}
+	global $ref,$ffmpeg_preview_extension,$resource,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$annotate_ext_exclude,$annotate_rt_exclude,$annotate_public_view;
+
 if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
 if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
-
+if (!($k=="") && !$annotate_public_view){return false;}
 $download_multisize=true;
 
 $flvfile=get_resource_path($ref,true,"pre",false,$ffmpeg_preview_extension);
@@ -52,11 +52,13 @@ if ($resource["has_image"]==1)
 		?>	<script language="javascript">
 			jQuery(window).load(function() {
 				jQuery("#toAnnotate").annotateImage({
-					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
 					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
 					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>",
-					editable: true,
-					useAjax: true   
+					useAjax: true,
+					<?php  if ($k==""){?> editable: true <?php }
+					else
+					{ ?> editable: false <?php } ?>  					
 				});
 			});
 		</script>

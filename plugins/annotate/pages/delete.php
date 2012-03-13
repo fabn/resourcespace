@@ -6,6 +6,8 @@ include_once "../../../include/authenticate.php";
 include_once "../../../include/general.php";
 include_once "../../../include/resource_functions.php";
 
+$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref",""),$k))) {include "../../../include/authenticate.php";}
+
 $ref=getvalescaped("ref","");
 if ($ref==""){die("no");}
 $id=getvalescaped('id','');

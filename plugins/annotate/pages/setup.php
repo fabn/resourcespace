@@ -12,10 +12,13 @@ if (getval("submit","")!="")
 	else {
 		$annotate_rt_exclude=array();
 	}
-
+	$annotate_public_view=$_POST['annotate_public_view'];
+	
 	$config=array();
 	$config['annotate_rt_exclude']=$annotate_rt_exclude;
 	$config['annotate_ext_exclude']=$annotate_ext_exclude;
+	$config['annotate_public_view']=$annotate_public_view;
+
 
 	set_plugin_config("annotate",$config);
 	
@@ -34,6 +37,7 @@ include "../../../include/header.php";
 <?php echo config_text_field("extexclude",$lang["extensions_to_exclude"],implode(',',$annotate_ext_exclude));?>   
 <?php $rtypes=get_resource_types();
 echo config_custom_select_multi("rtexclude",$lang["resource_types_to_exclude"],$rtypes,$annotate_rt_exclude);?>
+<?php echo config_boolean_field("annotate_public_view",$lang["annotate_public_view"],$annotate_public_view);?>
 
 <div class="Question">  
 <label for="submit"></label> 

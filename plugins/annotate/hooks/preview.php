@@ -1,11 +1,12 @@
 <?php
 
 function HookAnnotatePreviewPreviewimage2 (){
-global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude;
+global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude,$annotate_public_view;;
 if (getval("alternative","")!=""){return false;}
 $resource=get_resource_data($ref);
 if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
 if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
+if (!($k=="") && !$annotate_public_view){return false;}
 
 if (!file_exists($path) && !file_exists($path_orig)){return false;}
 if (!file_exists($path)){$sizes = getimagesize($path_orig);}
@@ -33,11 +34,13 @@ $h = $sizes[1];
 <script language="javascript">
 			jQuery(window).load(function() {
 				jQuery("#toAnnotate").annotateImage({
-					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>",
-					editable: true,
-					useAjax:true
+					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>&k=<?php echo $k ?>",
+					useAjax: true,
+					<?php  if ($k==""){?> editable: true <?php }
+					else
+					{ ?> editable: false <?php } ?>  
 				});
 			});
 		</script>

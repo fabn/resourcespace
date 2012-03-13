@@ -1,7 +1,8 @@
 <?php
 
 function HookAnnotateSearchIcons(){ 
-	global $result,$n,$lang;
+	global $result,$n,$lang,$k,$annotate_public_view;
+	if (!($k=="") && !$annotate_public_view){return false;}
     if (!is_array($result)){?><div class="clearerleft"></div><div class="ResourcePanelInfo"><span class="IconUserRatingSpace"></span></div><?php return true;}
 	if (isset($result[$n]) && $result[$n]['annotation_count']!=null && $result[$n]['annotation_count']!=0 && $result[$n]['file_extension']!="pdf"){
 	?>
