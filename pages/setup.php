@@ -694,6 +694,7 @@ else{
 						}
 				?>
 				<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo str_replace("?", "PHP", $lang["softwareversion"]) . ": " . $phpversion . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
+				<p><?php echo str_replace("%phpinifile", php_ini_loaded_file(), $lang["php-config-file"]); ?></p>
 				<?php
 					if (function_exists('gd_info'))
 						$gdinfo = gd_info();
@@ -783,7 +784,7 @@ else{
 						$pass = true;
 						}
 				?>
-					<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo $lang["setup-checkstoragewrite"] . ($result!='OK'?'<br>':'') . "(" . $result . ")"; ?></p>
+					<p class="<?php echo ($pass==true?'':'failure'); ?>"><?php echo $lang["setup-checkstoragewrite"] . ($pass==false?'<br>':' ') . "(" . $result . ")"; ?></p>
 			</div>
 			<h1><?php echo $lang["setup-welcome"];?></h1>
 			<p><?php echo $lang["setup-introtext"];?><p>

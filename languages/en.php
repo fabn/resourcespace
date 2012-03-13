@@ -883,6 +883,7 @@ $lang["setup-successdetails"]="Your initial ResourceSpace setup is complete.  Be
 $lang["setup-successnextsteps"]="Next steps:";
 $lang["setup-successremovewrite"]="You can now remove write access to 'include/'.";
 $lang["setup-visitwiki"]='Visit the <a href="http://wiki.resourcespace.org/index.php/Main_Page">ResourceSpace Documentation Wiki</a> for more information about customizing your installation.';
+$lang["php-config-file"]="PHP config: '%phpinifile'"; # %phpinifile will be replaced, e.g. PHP config: '/etc/php5/apache2/php.ini'
 $lang["setup-checkconfigwrite"]="Write access to config directory:";
 $lang["setup-checkstoragewrite"]="Write access to storage directory:";
 $lang["setup-welcome"]="Welcome to ResourceSpace";
