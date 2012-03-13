@@ -158,3 +158,8 @@ input[readonly] {color: #FFFFFF;}
 	color: #000000;
 	background: #FFFFFF;
 	}
+
+.PanelShadow
+	{
+	background: none;
+	}

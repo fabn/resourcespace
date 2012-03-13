@@ -1,4 +1,4 @@
-body,html {color:#737373;background: #F3F3F3 url(../gfx/whitegry/interface/back.gif) repeat-x fixed;}
+body,html {color:#737373;background: #FFF;}
 h2 {color: #000000;}
 h1 {color: #000000;}
 .CollectDivide {color:#FFFFFF;background: #000000 url(../gfx/whitegry/interface/CollectDivide.gif) repeat-x;}
@@ -11,7 +11,7 @@ a:active {color:#737373;}
 
 input[readonly] {color: #000000;}
 
-#Header {border-bottom: 1px solid #BBBBBB;background: url(../gfx/whitegry/titles/title.gif) no-repeat;}
+#Header {border-bottom: 1px solid #d0d0d0;background: url(../gfx/whitegry/titles/title.gif) no-repeat;}
 #Footer {border-top: 1px solid #BBBBBB;}
 #TextHeader, #TextHeader a {color:#616161;}
 #TextDesc{color:#616161;}
@@ -160,3 +160,17 @@ input[readonly] {color: #000000;}
 	color: #000000;
 	background: #FFFFFF;
 	}
+	
+/* Additional CSS effects from WhiteSpace */
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload, .RecordPanel, .ResourcePanel
+	{
+	border: 1px solid #d0d0d0;
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;	background: #e9e9e9 url(../gfx/whitegry/interface/shadeback.png) repeat-x 0 0;
+	}
+	
+.PanelShadow
+	{
+	background: none;
+	}
+	

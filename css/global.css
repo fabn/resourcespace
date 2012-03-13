@@ -39,7 +39,7 @@ option {font-size:11px;}
 #TextHeader{font-size:25px;float:left;}
 #TextHeader a {text-decoration:none;}
 #TextDesc{font-size:12px;float:left;display:block;clear:left;}
-#HeaderNav1 {text-align:right;}
+#HeaderNav1 {text-align:right;height:40px;}
 #HeaderNav2 {text-align:right;margin-top: 28px;margin-bottom: 4px;}
 
 #Footer {margin:20px 25px;padding:0;text-align:left;}
@@ -404,3 +404,13 @@ div.autocomplete ul li {
 .SearchOptionNav {padding-bottom:0;margin-bottom:5px;margin-right:20px;float:left;}
 .dynamickeywords {float:left;}
 .keywordsselected {margin-top:10px;}
+
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload, .RecordPanel, .ResourcePanel
+	{
+	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
+
+    -webkit-box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
+    -moz-box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
+    box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
+	}
+	
