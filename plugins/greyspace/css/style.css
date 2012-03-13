@@ -1,0 +1,665 @@
+/* Color scheme ***************************************************************
+Blue, dark:		#000080 (details - e.g. meter value)
+Blue, medium:	#0000C0 (user links: link/visted)
+Blue, bright:	#0000E0	(user links: hover/active)
+Green, bright:	#00FF00
+Yellow, bright:	#FFFF00 (highlighted texts)
+Orange, medium:	#FFC000
+Red, dark:		#250000 (dark red edges)
+Red, medium-:	#500000 (red panel background)
+Red, medium+:	#C00000 (medium red edges)
+Red, bright:	#E00000 (archived resource)
+Red, bright:	#FF0000 (red warning text)
+
+Black:			#000000 (black texts - e.g. pull down selections, links: hover/active on light background)
+Grey, Dark:		#252525 (dark edges, horizontal dark lines, regular text/icons on light background, links: link/visited on light background)
+				#303030 (page background)
+Grey, Medium-:	#505050 (panel background)
+Grey, Medium+:	#808080 (link dividers)
+Grey, Bright:	#A0A0A0 (disabled links, field titles, link labels)
+				#C0C0C0 (resource panel backgrounds, medium bright edges, horizontal bright lines)
+White, dark		#E0E0E0 (bright edges, regular text/icons, field values)
+White			#F0F0F0 (white outlines, links: link/visited)
+White, bright:	#FFFFFF (white backgrounds - e.g. pull down selections, links: hover/active, selected items)
+**************************************************************************** */
+
+
+/* Default definitions ***************************************************** */
+body,html {color: #E0E0E0; background: #303030 url(../gfx/interface/back.png) repeat-x 0px 0px;}
+h1 {color: #E0E0E0; background: none;} /* Page titles, e.g. in login page */
+h2 {color: #E0E0E0; background: none;} /* Sub titles */
+p {color: #E0E0E0; background: none;} /* Introtexts */
+a:link {color: #F0F0F0; background: none;} /* Links */
+a:visited {color: #F0F0F0; background: none;}
+a:hover {color: #FFFFFF; background: none;}
+a:active {color: #FFFFFF; background: none;}
+input[readonly] {color: #E0E0E0;} /* Read-only form fields */
+
+.PanelShadow {background: none} /* Panel shadows */
+.Selected, .Selected a {color: #FFFFFF; background: none;} /* Misc selections */
+.highlight {color: #252525; background: #FFFF00;} /* Highlight, e.g. of search results */
+.NewFlag {color: #00FF00; background: none;} /* Flag for new items e.g. for new themes */
+.OxColourPale {color: #A0A0A0; background: none;} /* Misc texts - e.g. in footer text and for descriptions in the page Research Request */
+.searchcrumbs a {color:#F0F0F0; font-weight: bold;} /* Search titles */
+.meter-value {background-color: #000080;} /* Progress bar, e.g. for single file upload */
+
+
+/* General layout ********************************************************** */
+#Header /* Header */
+	{
+	margin-top: 0px;
+	border-bottom: 2px ridge #C0C0C0;
+	background: url(../gfx/titles/resourcespace.png) no-repeat 0px 20px;
+	}
+#HeaderNav1 /* Header, top navigation */
+	{
+	height: 50px;
+	padding: 10px;
+	}
+#HeaderNav2 /* Header, lower navigation */
+	{
+	margin-top: 15px;
+	}
+#TextHeader, #TextHeader a /* Header, application name if logo is replaced with text */
+	{
+	padding-top: 20px;
+	color: #0000C0; background: none;
+	} 
+#TextDesc /* Header, application description if logo is replaced with text */
+	{
+	color: #0000C0; background: none;
+	}
+
+#Footer {border-top: 2px ridge #C0C0C0;} /* Footer */
+
+#FooterNavLeft {color: #A0A0A0; background: none;} /* Footer, left navigation texts, e.g. language */
+#FooterNavLeft a:link {color: #F0F0F0; background: none;} /* Footer, left navigation links, e.g. language */
+#FooterNavLeft a:visited {color: #F0F0F0; background: none;}
+#FooterNavLeft a:hover {color: #FFFFFF; background: none;}
+#FooterNavLeft a:active {color: #FFFFFF; background: none;}
+
+#FooterNavRight {color: #A0A0A0; background: none;} /* Footer, right navigation texts */
+#FooterNavRight a:link {color: #F0F0F0; background: none;} /* Footer, right navigation links */
+#FooterNavRight a:visited {color: #F0F0F0; background: none;}
+#FooterNavRight a:hover {color: #FFFFFF; background: none;}
+#FooterNavRight a:active {color: #FFFFFF; background: none;}
+
+.HorizontalNav a /* Horisontal navigation links, e.g. top links in header. */
+	{
+	padding-top: 1px;
+	padding-right: 3px;
+	padding-bottom: 1px;
+	padding-left: 3px;
+	background: #808080 url(../gfx/interface/HeaderButton.png);
+	font-weight: bold;}
+.HorizontalNav a:link {color: #0000C0;}
+.HorizontalNav a:visited {color: #0000C0;}
+.HorizontalNav a:hover {color: #0000FF; background: #A1A1A1 url(../gfx/interface/HeaderButton-active.png); text-decoration:none;}
+.HorizontalNav a:active {color: #0000FF; background: #A1A1A1 url(../gfx/interface/HeaderButton-active.png);}
+
+.HorizontalNav li {border-left: 4px ridge #0000C0;} /* Horisontal navigation link dividers, e.g. for top links in header. */
+
+.HorizontalWhiteNav a:link {color: #F0F0F0; background: none;} /* Horisontal navigation links, e.g. links in header and footer. */
+.HorizontalWhiteNav a:visited {color: #F0F0F0; background: none;}
+.HorizontalWhiteNav a:hover {color: #FFFFFF; background: none;}
+.HorizontalWhiteNav a:active {color: #FFFFFF; background: none;}
+
+.HorizontalWhiteNav li {border-left: 2px ridge #808080;} /* Horisontal navigation link dividers, e.g. in header and footer. */
+
+
+/* In page navigation, e.g. in search results page ************************* */
+.TopInpageNav /* Top */
+	{
+	border-bottom: 2px groove #252525;
+	color: #A0A0A0; background: none;
+	}
+.TopInpageNav a:link {color: #F0F0F0; background: none;} /* Links in top */
+.TopInpageNav a:visited {color: #F0F0F0; background: none;}
+.TopInpageNav a:hover {color: #FFFFFF; background: none;}
+.TopInpageNav a:active {color: #FFFFFF; background: none;}
+
+.BottomInpageNav /* Bottom */
+	{
+	margin-top:20px;
+	padding-top: 5px;
+	border-top: 2px groove #252525;
+	color: #A0A0A0; background: none; /* For non existing links */
+	}
+.BottomInpageNav a:link {color: #F0F0F0; background: none;} /* Links in bottom */
+.BottomInpageNav a:visited {color: #F0F0F0; background: none;}
+.BottomInpageNav a:hover {color: #FFFFFF; background: none;}
+.BottomInpageNav a:active {color: #FFFFFF; background: none;}
+
+.TopInpageNav .HorizontalWhiteNav {color: #A0A0A0;} /* Non existing page link and link dividers in top pager */
+.BottomInpageNav .HorizontalWhiteNav {color: #A0A0A0;}/* Non existing page link and link dividers in bottom pager */
+
+	
+/* Bottom key texts ******************************************************** */
+.BottomInpageKey {color: #E0E0E0; background: none;}
+
+
+/* Form layout ************************************************************* */
+.Question /* Form fields */
+	{
+	border-top: 2px groove #252525;
+	color: #E0E0E0; background: none;
+	}
+
+.SearchWidth /* Pull down menus */
+	{
+	color: #000000;
+	background: #FFFFFF;
+	}
+
+
+/* List views ************************************************************** */
+.Listview td {border-bottom: 1px solid #303030; color: #E0E0E0; background: none;} /* Cell borders. Text colour for all columns but title and tools */
+/* The cell bottom border should have a distinct colour for the list to look good if it is empty. */
+.Listview tr {background: #505050 url(../gfx/interface/listblend.gif) repeat-x 0px 0px;} /* Cell background */
+
+.Listview .ListviewStyle td .ListTitle a:link {color:#F0F0F0; background: none;} /* Text colour for title column */
+.Listview .ListviewStyle td .ListTitle a:visited {color:#F0F0F0; background: none;}
+.Listview .ListviewStyle td .ListTools a:link {color:#F0F0F0; background: none;}
+.Listview .ListviewStyle td .ListTools a:visited {color:#F0F0F0; background: none;}
+
+.Listview .ListviewStyle tr:hover {background: #C0C0C0;} /* Row hovering background highlight for all columns */
+.Listview .ListviewStyle tr:hover td {color: #252525; background: none;} /* Row hovering text colour highlight for all columns but title and tools */
+.Listview .ListviewStyle tr:hover td .ListTitle a {color: #252525; background: none;} /* Row hovering text colour highlight for title column */
+.Listview .ListviewStyle tr:hover td .ListTools a {color: #252525; background: none;} /* Row hovering text colour highlight for tools column */
+
+.Listview .ListviewStyle tr.ListviewTitleStyle td {border-bottom: 1px solid #C0C0C0; color: #E0E0E0; background: #303030;} /* Header border. Header cell background, border and text colour and background, for all columns but tools column */
+.Listview .ListviewStyle tr.ListviewTitleStyle td a {color: #F0F0F0; background: #303030;} /* Header link text colour and background, for all columns but tools and the sorting column */
+.Listview .ListviewStyle tr.ListviewTitleStyle td.Selected a {color: #FFFFFF; background: #303030;} /* Header link text colour and background for sorting column */
+.Listview .ListviewStyle tr.ListviewTitleStyle td .ListTools {color: #E0E0E0; background: #303030;} /* Header text colour and background for tools column */
+
+.Listview .ListviewStyle tr.ListviewBoxedTitleStyle td {color:#E0E0E0; background: #505050;} /* Header text colour and background, for all columns but tools. For list inside panels, e.g. in themes page */
+
+.Listview .ListviewStyle tr td .ListTitle .ListViewSubTable tr /* Subtable background, e.g. in edit fields page */
+	{
+	background: none;
+	}
+.Listview .ListviewStyle tr td .ListTitle .ListViewSubTable tr td /* Subtable border, e.g. in edit fields page */
+	{
+	border-bottom: 0px; 
+	}
+.Listview .ListviewStyle tr td .ListTitle h2 /* Subtable title, e.g. in edit fields page */
+	{
+	color: #E0E0E0; background: none;
+	}
+
+	
+/* Misc tables, e.g. for installation check ******************************** */
+.InfoTable
+	{
+	border-collapse: collapse;
+	color: #E0E0E0; background: none;
+	}
+.InfoTable tr
+	{
+	background: #505050 url(../gfx/interface/listblend.gif) repeat-x;
+	}
+.InfoTable td
+	{
+	padding: 10px;
+	border-top: 1px solid #C0C0C0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #C0C0C0;
+	}
+
+
+/* Misc errors ************************************************************* */
+.FormError {color: #FF0000; background: none;} /* Error description for forms not ready for submission */
+.FormIncorrect /* Box for error messages, e.g. in login page */
+	{
+	padding: 5px;
+	border-top: 2px solid #C00000;
+	border-right: 2px solid #500000;
+	border-bottom: 2px solid #500000; 
+	border-left: 2px solid #C00000;
+	color: #FF0000; background: #505050;
+	} 
+
+.NoFind /* Search result without any items found */
+	{
+	border-top: 2px solid #C00000;
+	border-right: 2px solid #500000;
+	border-bottom: 2px solid #500000; 
+	border-left: 2px solid #C00000;
+	color: #FF0000; background: #505050;
+	}
+.NoFind p {color: #E0E0E0; background: none;}
+.NoFind a:link {color: #F0F0F0; background: none; text-decoration: underline;}
+.NoFind a:visited {color:#F0F0F0; background: none; text-decoration: underline;}
+.NoFind a:hover {color:#FFFFFF; background: none; text-decoration: underline;}
+.NoFind a:active {color:#FFFFFF; background: none; text-decoration: underline;}
+.NoFind .highlight {color:#252525; background: #FFFF00;}
+
+
+/* Basic page ************************************************************** */
+.BasicsBox {color: #E0E0E0; background: none;} /* Texts */
+.BasicsBox h1 {color: #E0E0E0; background: none;} /* Page titles */
+.BasicsBox h2 {color: #E0E0E0; background: none;} /* Sub titles (not much used) */
+.BasicsBox p {color: #E0E0E0; background: none;} /* Introtexts */
+.BasicsBox p a:link {color: #F0F0F0; background: none;} /* Links inside p */
+.BasicsBox p a:visited {color: #F0F0F0; background: none;}
+.BasicsBox p a:hover {color: #FFFFFF; background: none;}
+.BasicsBox p a:active {color: #FFFFFF; background: none;}
+.BasicsBox a:link {color: #F0F0F0; background: none;} /* Links */
+.BasicsBox a:visited {color: #F0F0F0; background: none;}
+.BasicsBox a:hover {color: #FFFFFF; background: none;}
+.BasicsBox a:active {color: #FFFFFF; background: none;}
+
+.BasicsBox .HorizontalNav li
+	{
+	border-top-style: none;
+	border-right: 1px solid #C0C0C0;
+	border-bottom-style: none;
+	border-left-style: none;
+	}
+
+.BasicsBox .VerticalNav li {list-style: url(../gfx/interface/bullet.png) none inside;} /* Vertical navigation bullet */
+
+.BasicsBox ul, .BasicsBox ol {color: #E0E0E0; background: none;} /* Ordered, unordered lists */
+
+.BasicsBox .VerticalNav a:link {color: #F0F0F0; background: none;} /* Links */
+.BasicsBox .VerticalNav a:visited {color: #F0F0F0; background: none;}
+.BasicsBox .VerticalNav a:hover {color: #FFFFFF; background: none;}
+.BasicsBox .VerticalNav a:active {color: #FFFFFF; background: none;}
+
+	
+/* Collection layout ******************************************************* */
+#CollectionMenu
+	{
+	margin-top: 3px;
+	padding-top: 3px;
+	border-right: 4px ridge #C0C0C0; /* Vertical divider */
+	}
+#CollectionMenuExp
+	{
+	border-right: 3px solid #C0C0C0;
+	}
+
+.CollectDivide {background: #252525 url(../gfx/interface/CollectDivide.gif) repeat-x;} /* Horizontal divider */
+.CollectBack {color: #252525; background: #E0E0E0 url(../gfx/interface/CollectBack.gif) repeat-x fixed;} /* Background */
+.CollectBack h2 {color: #252525; background: none;} /* Title, e.g. "My Collections" */
+.CollectBack h2 a:link {color: #252525; background: none; font-weight: bold;} /* Compact style: Title link, e.g. "My Collections" */
+.CollectBack h2 a:visited {color: #252525; background: none; font-weight: bold;}
+.CollectBack h2 a:hover {color: #000000; background: none; font-weight: bold;}
+.CollectBack h2 a:active {color: #000000; background: none; font-weight: bold;}
+.CollectBack .SearchItem {color: #252525; background: none;} /* Collection info, e.g. "Current collection (0 items)" */
+.CollectBack a:link {color: #252525; background: none;} /* Links */
+.CollectBack a:visited {color: #252525; background: none;}
+.CollectBack a:hover {color: #000000; background: none;}
+.CollectBack a:active {color: #000000; background: none;}
+
+#CollectionMinDropTitle {color: #252525; background: none;}  /* Minimized collection bar info - part 1, e.g. "Current collection:" */
+#CollectionMinitems {color: #252525; background: none;} /* Minimized collection bar info - part 2, e.g. "(0 items)" */
+#CollectionMinRightNav li {border-left: 1px solid #C0C0C0;} /* Minimized collection bar link dividers */
+
+.CollectBack .CollectionPanelShell /* Thumbnail panels */
+	{
+	margin-top: 3px; /* Spacing between thumbnail panels */
+	margin-right: 1px;
+	margin-bottom: 2px;
+	margin-left: 1px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	border-radius: 5px;	-moz-border-radius: 5px; -webkit-border-radius: 5px;
+	border-top: 1px solid #505050; /* Thumbnail panel border */
+	border-right: 1px solid #505050;
+	border-bottom: 1px solid #505050;
+	border-left: 1px solid #505050;
+	background: #C0C0C0 url(../gfx/interface/resourcepanel.png) repeat-x 0px 0px;
+	}
+.CollectBack .CollectionResourceAlign .CollectImageBorder
+	{
+	border-top: 1px solid #505050; /* Thumbnail picture border */
+	border-right: 1px solid #505050;
+	border-bottom: 1px solid #505050;
+	border-left: 1px solid #505050;
+	}
+.CollectBack .CollectionPanelInfo  a {color: #252525; background: none;} /* Thumbnail title */
+
+
+/* Theme box panel, Right search box panel and Research box panel ********** */
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel
+	{
+	border-radius: 5px;	-moz-border-radius: 5px; -webkit-border-radius: 5px;
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	background: #505050 url(../gfx/interface/shadeback.png) repeat-x 0px 0px;
+	}
+.SearchSpace h2 {color: #E0E0E0; background: none;} /* Panel titles */
+.SearchSpace p {color: #E0E0E0; background: none;} /* Panel intro texts */
+.SearchSpace  a:link {color: #F0F0F0; background: none;} /* Links */ 
+.SearchSpace  a:visited {color: #F0F0F0; background: none;}
+.SearchSpace  a:hover {color: #FFFFFF; background: none;}
+.SearchSpace  a:active {color: #FFFFFF; background: none;}
+
+.SearchSpace .tick {color: #E0E0E0; background: none;} /* Right search box panel: Checkbox labels */
+.SearchSpace .SearchItem {color: #E0E0E0; background: none;} /* Right search box panel: Search item labels */
+
+
+/* Home styling ************************************************************ */
+.HomePicturePanel /* Home Page picture slideshow */
+	{
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	height: 350px;
+	width: 517px;
+	}
+.HomePicturePanelIN, #image1
+	{
+	border: none;
+	}
+
+.HomePanelIN /* Home panels */
+	{
+	padding-top: 8px;
+	padding-right: 10px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	border-radius: 5px;	-moz-border-radius: 5px; -webkit-border-radius: 5px;
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	background: #505050 url(../gfx/interface/shadeback.png) repeat-x 0px 0px;
+	}
+
+.HomePanel h2 {background: url(../gfx/interface/HomeArrow.png) no-repeat 0px 6px;}
+
+.HomePanel {color: #E0E0E0; background: none;} /* Text in home panels */
+	
+.HomePanel a:link {color: #F0F0F0; background: none;}
+.HomePanel a:visited {color: #F0F0F0; background: none;}
+.HomePanel a:hover {color: #FFFFFF; background: none;}
+.HomePanel a:active {color: #FFFFFF; background: none;}
+
+
+/* Gegraphic search layout ************************************************* */
+#map_canvas
+	{
+	background: #505050
+	}
+
+
+/* Resource Panel layout *************************************************** */
+.ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
+	{
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	background: #C0C0C0 url(../gfx/interface/resourcepanel.png) repeat-x 0px 0px;
+	}
+.ResourcePanel .ResourceAlign img, .ResourcePanelSmall .ResourceAlignSmall img, .ResourcePanelLarge .ResourceAlignLarge img /* Thumbnail picture borders */
+	{
+	border-top: 1px solid #252525;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #252525;
+	}
+.ResourcePanelSmall {border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+.ResourcePanel {border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px;}
+.ResourcePanelLarge {border-radius: 15px; -moz-border-radius: 15px; -webkit-border-radius: 15px;}
+.ResourcePanelInfo  a {color: #252525; background: none;} /* Resource title */
+.ResourcePanelInfo  {color: #252525; background: none;} /* Resource details, default fields */
+.ResourcePanelInfo  .extended {color: #252525; background: none;} /* Resource details, extended fields*/
+
+
+/* Record Panel layout ***************************************************** */
+.RecordPanel /* Subpanels in View resource page */
+	{
+	border-radius: 5px;	-moz-border-radius: 5px; -webkit-border-radius: 5px;
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	background: #505050 url(../gfx/interface/recordpanel.gif) repeat-x;
+	}
+.RecordPanel a:link {color: #F0F0F0; background: none;}
+.RecordPanel a:visited {color: #F0F0F0; background: none;}
+.RecordPanel a:hover {color: #FFFFFF; background: none;}
+.RecordPanel a:active {color: #FFFFFF; background: none;}
+	
+.RecordPanel .Title  /* Subpanel titles (excluding the title of the resource) in view resource page */
+	{
+	border-bottom: 1px solid #C0C0C0;
+	color: #E0E0E0; background: none;
+	} 
+
+.RecordPanel .RecordHeader h1 {color: #E0E0E0; background: none;} /* Subpanel:Main>Resource title in view resource page */
+
+.ImageBorder, .Picture  /* Picture border, e.g. in view or edit resource pages */
+	{
+	border-top: 1px solid #252525;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #252525;
+	outline: 1px solid #F0F0F0;
+	}
+
+.RecordPanel .RecordDownload /* Subpanel:Main>Resource Tools, borders */
+	{
+	border-top: 1px solid #252525;
+	border-right: 1px solid #C0C0C0;
+	border-bottom: 1px solid #C0C0C0;
+	border-left: 1px solid #252525;
+	}
+.RecordPanel .RecordDownloadSpace h2 {color: #E0E0E0; background: none;} /*Subpanel:Main>Resource Tools */
+.RecordPanel .RecordDownloadSpace {background: #505050 url(../gfx/interface/shadeback-inverted.png) repeat-x 0px 0px;} /* Subpanel:Main>Resource Tools, background */
+.RecordPanel .RecordDownload {color: #E0E0E0; background: none;} /* Subpanel:Main>Resource Tools: Table header */
+.RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #252525; color: #E0E0E0; background: none;} /* Subpanel:Main>Resource Tools: Table and >File size */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #E0E0E0; background: none;}  /* Subpanel:Main>Resource Tools>File information>Size details */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a:link {color: #0000C0; background: none;} /* Subpanel:Main>Resource Tools>Download buttons */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a:visited {color: #0000C0; background: none;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a:hover {color: #0000E0; background: none;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend a:active {color: #0000E0; background: none;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .DownloadButton {background: #808080 url(../gfx/interface/DownloadButton.png) repeat-x 0px 0px;} /* Subpanel:Main>Resource Tools>Download buttons */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend {background: #505050 url(../gfx/interface/DownloadCell.png) repeat-x;}  /* Subpanel:Main>Resource Tools>File information / File size */
+
+.RecordPanel .RecordDownload  a:link {color: #F0F0F0; background: none;} /* Subpanel:Main>Resource Tools: Tools */
+.RecordPanel .RecordDownload  a:visited {color: #F0F0F0; background: none;}
+.RecordPanel .RecordDownload  a:hover {color: #FFFFFF; background: none;}
+.RecordPanel .RecordDownload  a:active {color: #FFFFFF; background: none;}
+
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .RatingStars a:link {color: #F0F0F0; background: none;} /* Subpanel:Main>Resource Tools>User Ratings */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .RatingStars a:visited {color: #F0F0F0; background: none;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .RatingStars a:hover {color: #FFFFFF; background: none;}
+.RecordPanel .RecordDownloadSpace .DownloadDBlend .RatingStars a:active {color: #FFFFFF; background: none;}
+
+.RecordPanel .Listview .ListviewStyle tr.ListviewTitleStyle td {color: #E0E0E0; background: #505050;} /* Subpanel: Misc>List header cell background and text colour and background, for all columns but tools column */
+.RecordPanel .Listview .ListviewStyle tr.ListviewTitleStyle td .ListTools {color: #E0E0E0; background: #505050;} /*  Subpanel: Misc>List header text colour and background for tools column */
+
+.RecordPanel .SearchSimilar {color: #E0E0E0; background: none;} /* Subpanel:Search similar */
+
+.ResourcePendingSubmissionTitle {color: #FFC000; background: none;} /* Pending submission flag, e.g. in view resource page */
+.ResourcePendingReviewTitle {color: #FFC000; background: none;} /* Pending review flag, e.g. in view resource page */
+.ArchiveResourceTitle {color: #E00000; background: none;} /* Archived flag, e.g. in view resource page */
+.DeletedResourceTitle {color: #E00000; background: none;} /* Deleted flag, e.g. in view resource page */
+.backtoresults {color: #A0A0A0; background: none;} /* Resource link and link dividers in top pager for results, e.g. in view resource page */
+
+.RecordPanel .PageInformal /* Subpanel:Main>Resource is being transcoded */
+	{
+	padding: 5px;
+	border-top: 1px solid #250000; 
+	border-right: 1px solid #C00000;
+	border-bottom: 1px solid #C00000; 
+	border-left: 1px solid #250000;
+	color: #FF0000;	background: #500000;
+	} 
+
+/* Record panels, e.g. in view resource, properties */
+.RecordPanel .itemNarrow h3 {color: #A0A0A0; background: none;} /* Field titles */
+.RecordPanel .itemNarrow p {color: #E0E0E0; background: none;} /* Field values */
+.RecordPanel .item h3 {color: #A0A0A0; background: none;} /* Field titles (using a display template) */
+.RecordPanel .item p {color: #E0E0E0; background: none;} /* Field values (using a display template) */
+
+/* Tab panels, e.g. in view resource, properties (if tabs are used) */
+.StyledTabbedPanel
+	{
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	clear:left;
+	margin-top: 6px;
+	border-top: 1px solid #C0C0C0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525; 
+	border-left: 1px solid #C0C0C0;
+	background: #505050
+	}
+.TabBar .Tab a /* Tab */
+	{
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-top: 0;
+	margin-right: 1px;
+	margin-bottom: 0;
+	margin-left: 0;
+	border-top: 1px solid #C0C0C0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #C0C0C0;
+	color: #F0F0F0; background-color: #505050;}
+.TabBar .TabSelected a /* Selected tab */
+	{
+	padding-top: 6px;
+	padding-bottom: 7px;
+	margin-bottom: 15px;
+	border-top: 1px solid #C0C0C0;
+	border-right: 1px solid #252525;
+	border-bottom: none;
+	border-left: 1px solid #C0C0C0;
+	color: #FFFFFF; background-color: #505050;
+	}
+
+/* Notes and story extract fields (using display template), e.g. in view resource, properties */
+.RecordStory
+	{
+	border-top: 1px solid #252525;
+	border-right: 1px solid #C0C0C0;
+	border-bottom: 1px solid #C0C0C0;
+	border-left: 1px solid #252525;
+	color: #E0E0E0;
+	background: #505050 url(../gfx/interface/DownloadCell.png) repeat-x 0px 0px;
+	}
+.RecordStory h1{color: #A0A0A0; background: none;} /* Field title */
+.RecordStory p {color: #E0E0E0; background: none;} /* Field value */
+
+
+/* System Setup ************************************************************ */
+.treetext {color: #252525;} /* Text in the navigation tree*/
+.treetext a:link {color: #252525; background: none;} /* Links in the navigation tree*/
+.treetext a:visited {color: #252525; background: none;}
+.treetext a:hover {color: #000000; background: none;}
+.treetext a:active {color: #000000; background: none;}
+
+.proptitle /* Properties title*/
+	{
+	color: #E0E0E0;
+	background: #505050 url(../gfx/interface/recordpanel.gif) repeat-x;
+	}	
+.propbox /* Properties box*/
+	{
+	color: #E0E0E0;
+	background: #505050
+	}
+.propbox a:link {color: #F0F0F0; background: none;} /* Links in the properties box*/
+.propbox a:visited {color: #F0F0F0; background: none;}
+.propbox a:hover {color: #FFFFFF; background: none;}
+.propbox a:active {color: #FFFFFF; background: none;}
+
+.permissionstable tr td.permheader /* Permission manager: Header */
+	{
+	color: #252525;
+	background: #C0C0C0
+	}
+.permissionstable tbody /* Permission manager: Body */
+	{
+	color: #E0E0E0;
+	}
+
+.CodeMirror-wrapping /* Code editor (e.g. config.php) */
+	{
+	color: #252525;
+	background: #FFFFFF;
+	}
+
+
+/* Icon definitions ******************************************************** */
+.ASC {background: url(../gfx/interface/ASC.png) no-repeat;background-position:center;}
+.DESC {background: url(../gfx/interface/DESC.png) no-repeat;background-position:center;}
+.IconCollect {background: url(../gfx/interface/IcCol.png) no-repeat;}
+.KeyCollect {background: url(../gfx/interface/KeyCol.png) no-repeat;}
+.IconCollectOut {background: url(../gfx/interface/IcColOut.png) no-repeat;}
+.KeyCollectOut {background: url(../gfx/interface/KeyColOut.png) no-repeat;}
+.IconComment {background: url(../gfx/interface/IcComment.png) no-repeat;}
+.KeyComment {background: url(../gfx/interface/KeyComment.png) no-repeat;}
+.IconEmail {background: url(../gfx/interface/IcEml.png) no-repeat;}
+.KeyEmail {background: url(../gfx/interface/KeyEml.png) no-repeat;}
+.IconPreview {background: url(../gfx/interface/IcPre.png) no-repeat;}
+.KeyPreview {background: url(../gfx/interface/KeyPre.png) no-repeat;}
+.IconReorder {background: url(../gfx/interface/IcReorder.png) no-repeat;}
+.KeyReorder {background: url(../gfx/interface/KeyReorder.png) no-repeat;}
+.IconStar {background: url(../gfx/interface/IcStar.png) no-repeat;}
+.KeyStar {background: url(../gfx/interface/KeyStar.png) no-repeat;}
+.IconUserRatingStar {background: url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
+.IconUserRatingSpace {background: url(../gfx/interface/RatingStarBlank.gif) no-repeat;}
+.IconVideo {background: url(../gfx/interface/IcVideo.png) no-repeat 140px 5px;}
+.IconVideoLarge {background: url(../gfx/interface/IcVideo.png) no-repeat 340px 5px;}
+.CollectionPanelInfo .IconReorder {background: url(../gfx/interface/IcReorder.png) no-repeat;}
+.CollectionPanelInfo .IconComment {background: url(../gfx/interface/IcComment.png) no-repeat;}
+.CollectionPanelInfo .IconCommentAnim {background: url(../gfx/interface/IcComment_anim.gif) no-repeat;}
+.CollectionPanelInfo .IconRemove {background: url(../gfx/interface/IcColOut.png) no-repeat;}
+.StarSelect {background: transparent url(../gfx/interface/RatingStarYellow.gif) no-repeat;}
+.StarEmpty {background: transparent url(../gfx/interface/RatingStarGrey.gif) no-repeat;}
+.StarCurrent {background: transparent url(../gfx/interface/RatingStarWhite.gif) no-repeat;}
+.StarWhite {background: transparent url(../gfx/interface/RatingStarWhite.gif) no-repeat;;}
+.StarGrey {background: transparent url(../gfx/interface/RatingStarGrey.gif) no-repeat;;}
+
+
+/* Plugins ***************************************************************** */
+/* The priority of GreySpace has to be higher (lower number) than the priorities of the plugins to be styled. */
+
+/* News plugin */
+#NewsBox
+	{
+	color: #E0E0E0;
+	background: #000080 url(../gfx/interface/shadeback-blue.png) repeat-x 0px 0px;
+	}
+
+.NewsHeader
+	{
+	color: #E0E0E0;	
+	}
+
+#NewsBodyDisplay {color: #E0E0E0;}
+#NewsBodyDisplay a:link {color: #F0F0F0; background: none; font-weight: bold;}
+#NewsBodyDisplay a:visited {color: #F0F0F0; background: none; font-weight: bold;}
+#NewsBodyDisplay a:hover {color: #FFFFFF; background: none; font-weight: bold;}
+#NewsBodyDisplay a:active {color: #FFFFFF; background: none; font-weight: bold;}
+
+
+/* Annotate plugin */
+#image-annotate-add
+	{
+	background: #C0C0C0 url(../gfx/interface/asterisk_yellow.png) no-repeat 5px 2px;
+	}
+#image-annotate-edit-form
+	{
+    background: #808080 none repeat scroll 0 0;
+    border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;
+	}
