@@ -405,7 +405,7 @@ div.autocomplete ul li {
 .dynamickeywords {float:left;}
 .keywordsselected {margin-top:10px;}
 
-#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload, .RecordPanel, .ResourcePanel
+#ThemeBoxPanel, #SearchBoxPanel, #ResearchBoxPanel, .HomePanelIN, .RecordPanel .RecordDownload, .RecordPanel, .ResourcePanel, .ResourcePanelSmall, .ResourcePanelLarge
 	{
 	border-radius:10px;	-moz-border-radius: 10px; -webkit-border-radius: 10px;
 
