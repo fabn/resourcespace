@@ -42,7 +42,7 @@ if ($checkbox_ordered_vertically)
 				$option=$options[$o];
 				$trans=$option_trans[$option];
 
-				$name=$fields[$n]["ref"] . "_" . base64_encode($option);
+				$name=$fields[$n]["ref"] . "_" . md5($option);
 				if ($option!="")
 					{
 					?>
@@ -67,7 +67,7 @@ else
 
 	foreach ($option_trans as $option=>$trans)
 		{
-		$name=$fields[$n]["ref"] . "_" . base64_encode($option);
+		$name=$fields[$n]["ref"] . "_" . md5($option);
 		$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
 		?>
 		<td width="1"><input type="checkbox" name="<?php echo $name?>" value="yes" <?php if (in_array($option,$set)) {?>checked<?php } ?>

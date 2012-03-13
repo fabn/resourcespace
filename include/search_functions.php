@@ -995,7 +995,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 							$option=$options[$o];
 							$trans=$option_trans[$option];
 
-							$name=$field["ref"] . "_" . urlencode($option);
+							$name=$field["ref"] . "_" . md5($option);
 							if ($option!="")
 								{
 								?>
@@ -1020,7 +1020,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 				foreach ($option_trans as $option=>$trans)
 					{
 					$wrap++;if ($wrap>$cols) {$wrap=1;?></tr><tr><?php }
-					$name=$field["ref"] . "_" . urlencode($option);
+					$name=$field["ref"] . "_" . md5($option);
 					if ($option!="")
 						{
 						?>
@@ -1220,7 +1220,7 @@ function search_form_to_search_query($fields,$fromsearchbar=false)
 				$c=0;
 				for ($m=0;$m<count($options);$m++)
 					{
-					$name=$fields[$n]["ref"] . "_" . urlencode($options[$m]);
+					$name=$fields[$n]["ref"] . "_" . md5($options[$m]);
 					$value=getvalescaped($name,"");
 					if ($value=="yes")
 						{
