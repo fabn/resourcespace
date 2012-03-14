@@ -414,3 +414,24 @@ div.autocomplete ul li {
     box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
 	}
 	
+.TabSelected a 
+        {       
+        border-top-right-radius:5px;border-top-left-radius:5px; 
+        -moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+        -webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+        }
+        
+.Tab a 
+        {       
+        border-top-right-radius:5px;border-top-left-radius:5px; 
+        -moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px; 
+        -webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;
+        }
+        
+.StyledTabbedPanel 
+        {       
+        border-bottom-right-radius:10px;border-bottom-left-radius:10px; border-top-right-radius:10px;
+        -moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
+        -webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
+        }
+        
