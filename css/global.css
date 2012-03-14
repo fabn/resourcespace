@@ -413,7 +413,7 @@ div.autocomplete ul li {
     -moz-box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
     box-shadow: 4px 5px 5px rgba(0, 0, 0, .18);
 	}
-	
+
 .TabSelected a 
         {       
         border-top-right-radius:5px;border-top-left-radius:5px; 
@@ -434,4 +434,5 @@ div.autocomplete ul li {
         -moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
         -webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
         }
-        
+
+.xlargesearchimage {max-height:350px;max-width:350px;}
