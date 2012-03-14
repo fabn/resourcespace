@@ -13,12 +13,13 @@ if (getval("submit","")!="")
 		$annotate_rt_exclude=array();
 	}
 	$annotate_public_view=$_POST['annotate_public_view'];
-	
+	$annotate_show_author=$_POST['annotate_show_author'];	
+
 	$config=array();
 	$config['annotate_rt_exclude']=$annotate_rt_exclude;
 	$config['annotate_ext_exclude']=$annotate_ext_exclude;
 	$config['annotate_public_view']=$annotate_public_view;
-
+	$config['annotate_show_author']=$annotate_show_author;
 
 	set_plugin_config("annotate",$config);
 	
