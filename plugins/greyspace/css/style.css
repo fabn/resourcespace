@@ -449,7 +449,7 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 
 .RecordPanel .RecordDownload /* Subpanel:Main>Resource Tools, borders */
 	{
-	border-radius:0px; -moz-border-radius: 0px; -webkit-border-radius: 0px;
+	border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
 	border-top: 1px solid #252525;
 	border-right: 1px solid #C0C0C0;
 	border-bottom: 1px solid #C0C0C0;
@@ -516,6 +516,9 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	padding-left: 5px;
 	clear:left;
 	margin-top: 6px;
+	border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px; -moz-border-radius-bottomright: 3px; -moz-border-radius-topright: 3px;
+	-webkit-border-bottom-left-radius: 3px; -webkit-border-bottom-right-radius: 3px; -moz-border-radius-topright: 3px;
 	border-top: 1px solid #C0C0C0;
 	border-right: 1px solid #252525;
 	border-bottom: 1px solid #252525; 
@@ -530,6 +533,9 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	margin-right: 1px;
 	margin-bottom: 0;
 	margin-left: 0;
+	border-top-right-radius: 3px; border-top-left-radius: 3px;
+	-moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px;
 	border-top: 1px solid #C0C0C0;
 	border-right: 1px solid #252525;
 	border-bottom: 1px solid #252525;
@@ -540,6 +546,9 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	padding-top: 6px;
 	padding-bottom: 7px;
 	margin-bottom: 15px;
+	border-top-right-radius: 3px; border-top-left-radius: 3px;
+	-moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px;
 	border-top: 1px solid #C0C0C0;
 	border-right: 1px solid #252525;
 	border-bottom: none;
