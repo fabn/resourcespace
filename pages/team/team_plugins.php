@@ -236,8 +236,26 @@ jQuery.noConflict();
     <tbody>
     
     <?php foreach ($inst_plugins as $p){
+        # Make sure that the version number is displayed with at least one decimal place.
+        # If the version number is 0 the displayed version is $lang["notavailableshort"].
+        # (E.g. 0 -> (en:)N/A ; 1 -> 1.0 ; 0.92 -> 0.92)
+        if ($p['inst_version']==0)
+            {
+            $formatted_inst_version = $lang["notavailableshort"];
+            }
+        else
+            {
+            if (sprintf("%.1f",$p['inst_version'])==$p['inst_version'])
+                {
+                $formatted_inst_version = sprintf("%.1f",$p['inst_version']);
+                }
+            else
+                {
+                $formatted_inst_version = $p['inst_version'];
+                }
+            }
         echo '<tr>';
-        echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".sprintf("%.1f",$p['inst_version'])."</td>";
+        echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".$formatted_inst_version."</td>";
         echo '<td><div class="ListTools">';
         if (isset($p['legacy_inst']))
             echo '<a class="nowrap" href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
@@ -275,7 +293,7 @@ jQuery.noConflict();
    	foreach($plugins_avail as $p){
         echo '<tr><td>'.$p['name'].'</td><td>'.$p['desc'].'</td><td>'.$p['author'].'</td>';
 		if ($p['version'] == 0)
-			echo '<td>?</td>';
+			echo '<td>' . $lang["notavailableshort"] . '</td>';
 		else
 			echo '<td>'.$p['version'].'</td>';
         echo '<td><div class="ListTools">';
