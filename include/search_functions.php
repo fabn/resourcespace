@@ -44,13 +44,14 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 	if ($restypes!="")
 		{
 		if ($sql_filter!="") {$sql_filter.=" and ";}
-		$sql_filter.="resource_type in ($restypes)";
+		$restypes_x=explode(",",$restypes);
+		$sql_filter.="resource_type in ('" . join("','",$restypes_x) . "')";
 		}
 	
 	if ($starsearch!="")
 		{
 		if ($sql_filter!="") {$sql_filter.=" and ";}
-		$sql_filter.="user_rating >= $starsearch";
+		$sql_filter.="user_rating >= '$starsearch'";
 		}	
 
 	# If returning disk used by the resources in the search results ($return_disk_usage=true) then wrap the returned SQL in an outer query that sums disk usage.
@@ -572,6 +573,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		# Extract the number of records to produce
 		$last=explode(",",$search);
 		$last=str_replace("!last","",$last[0]);
+		
+		if (!is_numeric($last)) {$last=1000;} # 'Last' must be a number. SQL injection filter.
 		
 		# Fix the order by for this query (special case due to inner query)
 		$order_by=str_replace("r.rating","rating",$order_by);

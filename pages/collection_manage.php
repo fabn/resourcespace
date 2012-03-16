@@ -10,6 +10,8 @@ include "../include/resource_functions.php";
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
 $col_order_by=getvalescaped("col_order_by","created");
+if (!in_array($col_order_by,array("fullname","name","ref","count","public"))) {$col_order_by="created";} # Check the value is one of the valid values (SQL injection filter)
+
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
 # pager

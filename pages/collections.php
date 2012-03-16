@@ -556,7 +556,7 @@ elseif ($k!="")
 <div id="CollectionSpace">
 <?php } ?>
 
-<?php
+<?php 
 # Loop through saved searches
 if (isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)
 	{ // don't include saved search item in result if this is a smart collection  
