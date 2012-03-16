@@ -17,6 +17,7 @@ if (getval("auto","")!="") {$error=str_replace("30",$session_length,$lang["sessi
 # Display a no-cookies message
 if (getval("nocookies","")!="" && getval("cookiecheck","")=="") {$error=$lang["nocookies"];}
 
+if (!hook("replaceauth")) {
 # First check that this IP address has not been locked out due to excessive attempts.
 $ip=get_ip();
 $lockouts=sql_value("select count(*) value from ip_lockout where ip='" . escape_check($ip) . "' and tries>='" . $max_login_attempts_per_ip . "' and date_add(last_try,interval " . $max_login_attempts_wait_minutes . " minute)>now()",0);
@@ -82,6 +83,7 @@ elseif (array_key_exists("username",$_POST) && getval("langupdate","")=="")
                 hook("dispcreateacct");
         }
     }
+}
 
 if ((getval("logout","")!="") && array_key_exists("user",$_COOKIE))
     {
@@ -133,6 +135,7 @@ if (getval("langupdate","")!="")
 
 
 include "include/header.php";
+if (!hook("replaceloginform")) {
 ?>
 
   <h1><?php echo text("welcomelogin")?></h1>
@@ -205,6 +208,6 @@ else
     </script>
     <?php
 	}
-
+}
 include "include/footer.php";
 ?>
