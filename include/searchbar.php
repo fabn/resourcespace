@@ -413,7 +413,7 @@ if (!$basic_simple_search)
 	
 	</script>
 		
-	<div class="SearchItem"><?php echo $lang["bydate"]?><br />
+	<div id="basicdate" class="SearchItem"><?php echo $lang["bydate"]?><br />
 	<select id="basicyear" name="year" class="SearchWidth" <?php if (!$searchbyday) { ?>style="width:70px;"<?php } ?>>
 	  <option selected="selected" value=""><?php echo $lang["anyyear"]?></option>
 	  <?php
