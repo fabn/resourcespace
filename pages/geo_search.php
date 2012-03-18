@@ -12,7 +12,7 @@ include "../include/header.php";
 
 
 <!-- Drag mode selector -->
-<div>
+<div id="GeoDragMode">
 <?php echo $lang["geodragmode"] ?>:&nbsp;
 <input type="radio" name="dragmode" id="dragmodearea" checked="true" onClick="control.point.activate()" /><label for="dragmodearea"><?php echo $lang["geodragmodearea"] ?></label>
 &nbsp;&nbsp;

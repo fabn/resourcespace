@@ -26,20 +26,20 @@ White, bright:	#FFFFFF (white backgrounds - e.g. pull down selections, links: ho
 
 /* Default definitions ***************************************************** */
 body,html {color: #E0E0E0; background: #303030 url(../gfx/interface/back.png) repeat-x 0px 0px;}
-h1 {color: #E0E0E0; background: none;} /* Page titles, e.g. in login page */
-h2 {color: #E0E0E0; background: none;} /* Sub titles */
-p {color: #E0E0E0; background: none;} /* Introtexts */
-a:link {color: #F0F0F0; background: none;} /* Links */
-a:visited {color: #F0F0F0; background: none;}
-a:hover {color: #FFFFFF; background: none;}
-a:active {color: #FFFFFF; background: none;}
+h1 {color: #E0E0E0;} /* Page titles, e.g. in login page */
+h2 {color: #E0E0E0;} /* Sub titles */
+p {color: #E0E0E0;} /* Introtexts */
+a:link {color: #F0F0F0;} /* Links */
+a:visited {color: #F0F0F0;}
+a:hover {color: #FFFFFF;}
+a:active {color: #FFFFFF;}
 input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 
 .PanelShadow {background: none} /* Panel shadows */
-.Selected, .Selected a {color: #FFFFFF; background: none;} /* Misc selections */
+.Selected, .Selected a {color: #FFFFFF;} /* Misc selections */
 .highlight {color: #252525; background: #FFFF00;} /* Highlight, e.g. of search results */
-.NewFlag {color: #00FF00; background: none;} /* Flag for new items e.g. for new themes */
-.OxColourPale {color: #A0A0A0; background: none;} /* Misc texts - e.g. in footer text and for descriptions in the page Research Request */
+.NewFlag {color: #00FF00;} /* Flag for new items e.g. for new themes */
+.OxColourPale {color: #A0A0A0;} /* Misc texts - e.g. in footer text and for descriptions in the page Research Request */
 .searchcrumbs a {color:#F0F0F0; font-weight: bold;} /* Search titles */
 .meter-value {background-color: #000080;} /* Progress bar, e.g. for single file upload */
 
@@ -384,10 +384,15 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 .HomePanel a:active {color: #FFFFFF; background: none;}
 
 
-/* Gegraphic search layout ************************************************* */
-#map_canvas
+/* Geographic search layout ************************************************* */
+#GeoDragMode
 	{
-	background: #505050
+	margin-bottom: 5px;
+	}
+.Picture.olMap
+	{
+	border: 2px groove #252525;
+	outline: none;
 	}
 
 
@@ -438,7 +443,7 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 
 .RecordPanel .RecordHeader h1 {color: #E0E0E0; background: none;} /* Subpanel:Main>Resource title in view resource page */
 
-.ImageBorder, .Picture  /* Picture border, e.g. in view or edit resource pages */
+.ImageBorder, .Picture /* Picture border, e.g. in view or edit resource pages */
 	{
 	border-top: 1px solid #252525;
 	border-right: 1px solid #252525;
@@ -458,10 +463,11 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	-moz-box-shadow: none;
 	box-shadow: none;
 	}	
-.RecordPanel .RecordDownloadSpace h2 {color: #E0E0E0; background: none;} /*Subpanel:Main>Resource Tools */
+.RecordPanel .RecordDownload .RecordDownloadSpace h2 {font-weight: normal; color: #E0E0E0; background: none;} /*Subpanel:Main>Resource Tools */
 .RecordPanel .RecordDownloadSpace {background: #505050 url(../gfx/interface/shadeback-inverted.png) repeat-x 0px 0px;} /* Subpanel:Main>Resource Tools, background */
 .RecordPanel .RecordDownload {color: #E0E0E0; background: none;} /* Subpanel:Main>Resource Tools: Table header */
 .RecordPanel .RecordDownload .DownloadDBlend td {border: 1px solid #252525; color: #E0E0E0; background: none;} /* Subpanel:Main>Resource Tools: Table and >File size */
+.RecordPanel .RecordDownloadSpace .DownloadDBlend h2 {font-weight: bold;}  /* Subpanel:Main>Resource Tools>File information>Size title */
 .RecordPanel .RecordDownloadSpace .DownloadDBlend p {color: #E0E0E0; background: none;}  /* Subpanel:Main>Resource Tools>File information>Size details */
 .RecordPanel .RecordDownloadSpace .DownloadDBlend a:link {color: #0000C0; background: none;} /* Subpanel:Main>Resource Tools>Download buttons */
 .RecordPanel .RecordDownloadSpace .DownloadDBlend a:visited {color: #0000C0; background: none;}
@@ -502,6 +508,7 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	} 
 
 /* Record panels, e.g. in view resource, properties */
+.RecordPanel .itemNarrow, .RecordPanel .item {margin-left: 5px;}
 .RecordPanel .itemNarrow h3 {color: #A0A0A0; background: none;} /* Field titles */
 .RecordPanel .itemNarrow p {color: #E0E0E0; background: none;} /* Field values */
 .RecordPanel .item h3 {color: #A0A0A0; background: none;} /* Field titles (using a display template) */
@@ -510,12 +517,12 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 /* Tab panels, e.g. in view resource, properties (if tabs are used) */
 .StyledTabbedPanel
 	{
+	margin-top: 6px;
 	padding-top: 10px;
 	padding-right: 5px;
 	padding-bottom: 5px;
 	padding-left: 5px;
 	clear:left;
-	margin-top: 6px;
 	border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-right-radius: 3px;
 	-moz-border-radius-bottomleft: 3px; -moz-border-radius-bottomright: 3px; -moz-border-radius-topright: 3px;
 	-webkit-border-bottom-left-radius: 3px; -webkit-border-bottom-right-radius: 3px; -moz-border-radius-topright: 3px;
@@ -527,12 +534,12 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	}
 .TabBar .Tab a /* Tab */
 	{
-	padding-top: 4px;
-	padding-bottom: 4px;
 	margin-top: 0;
 	margin-right: 1px;
 	margin-bottom: 0;
 	margin-left: 0;
+	padding-top: 4px;
+	padding-bottom: 4px;
 	border-top-right-radius: 3px; border-top-left-radius: 3px;
 	-moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px;
 	-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px;
@@ -543,9 +550,9 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	color: #F0F0F0; background-color: #505050;}
 .TabBar .TabSelected a /* Selected tab */
 	{
+	margin-bottom: 15px;
 	padding-top: 6px;
 	padding-bottom: 7px;
-	margin-bottom: 15px;
 	border-top-right-radius: 3px; border-top-left-radius: 3px;
 	-moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px;
 	-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px;
@@ -559,6 +566,27 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 /* Notes and story extract fields (using display template), e.g. in view resource, properties */
 .RecordStory
 	{
+	margin-left: 5px;
+	padding: 0px;
+	color: #E0E0E0;
+	background: none;
+	}
+.RecordStory h1  /* Field title (in the default display template) */
+	{
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	font-size: 1em; font-weight:normal; color: #A0A0A0; background: none;}
+.RecordStory p  /* Field value (in the default display template) */
+	{
+	margin-left: -5px;
+	margin-bottom: 0px;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 15px;
+	padding-left: 5px;
+	border-radius: 3px;	-moz-border-radius: 3px; -webkit-border-radius: 3px;
 	border-top: 1px solid #252525;
 	border-right: 1px solid #C0C0C0;
 	border-bottom: 1px solid #C0C0C0;
@@ -566,8 +594,6 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 	color: #E0E0E0;
 	background: #505050 url(../gfx/interface/DownloadCell.png) repeat-x 0px 0px;
 	}
-.RecordStory h1{color: #A0A0A0; background: none;} /* Field title */
-.RecordStory p {color: #E0E0E0; background: none;} /* Field value */
 
 
 /* System Setup ************************************************************ */
@@ -644,6 +670,40 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 /* Plugins ***************************************************************** */
 /* The priority of GreySpace has to be higher (lower number) than the priorities of the plugins to be styled. */
 
+/* Annotate plugin */
+#image-annotate-add
+	{
+	background: #C0C0C0 url(../gfx/interface/asterisk_yellow.png) no-repeat 5px 2px;
+	}
+#image-annotate-add:hover
+	{
+	background-color: #E0E0E0;
+	text-decoration: none;
+	}
+#image-annotate-edit-form
+	{
+	background-color: #808080;
+	border-top: 1px solid #E0E0E0;
+	border-right: 1px solid #252525;
+	border-bottom: 1px solid #252525;
+	border-left: 1px solid #E0E0E0;	;
+	}
+#image-annotate-edit-form a
+	{
+	background-color: #C0C0C0 !important;
+	}
+#image-annotate-edit-form a:hover
+	{
+	background-color: #E0E0E0 !important;
+	text-decoration: none;
+	}
+
+.image-annotate-canvas /* Picture border, e.g. in view and preview resource pages */
+	{
+	border: 1px solid #252525 !important;
+	outline: 1px solid #F0F0F0;
+	}
+
 /* News plugin */
 #NewsBox
 	{
@@ -661,18 +721,3 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 #NewsBodyDisplay a:visited {color: #F0F0F0; background: none; font-weight: bold;}
 #NewsBodyDisplay a:hover {color: #FFFFFF; background: none; font-weight: bold;}
 #NewsBodyDisplay a:active {color: #FFFFFF; background: none; font-weight: bold;}
-
-
-/* Annotate plugin */
-#image-annotate-add
-	{
-	background: #C0C0C0 url(../gfx/interface/asterisk_yellow.png) no-repeat 5px 2px;
-	}
-#image-annotate-edit-form
-	{
-    background: #808080 none repeat scroll 0 0;
-    border-top: 1px solid #E0E0E0;
-	border-right: 1px solid #252525;
-	border-bottom: 1px solid #252525;
-	border-left: 1px solid #E0E0E0;
-	}

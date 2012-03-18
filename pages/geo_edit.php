@@ -55,7 +55,7 @@ if (isset($_POST['submit']))
 <p>&gt;&nbsp;<a href="view.php?ref=<?php echo $ref?>"><?php echo $lang['backtoview']; ?></a></p>
 
 <!-- Drag mode selector -->
-<div>
+<div id="GeoDragMode">
 <?php echo $lang["geodragmode"] ?>:&nbsp;
 <input type="radio" name="dragmode" id="dragmodearea" checked="true" onClick="control.point.activate()" /><label for="dragmodearea"><?php echo $lang["geodragmodearea"] ?></label>
 &nbsp;&nbsp;
