@@ -6,6 +6,7 @@ function HookAnnotateViewRenderinnerresourcepreview(){
 
 if (in_array($resource['file_extension'],$annotate_ext_exclude)){return false;}
 if (in_array($resource['resource_type'],$annotate_rt_exclude)){return false;}
+
 if (!($k=="") && !$annotate_public_view){return false;}
 $download_multisize=true;
 
@@ -24,7 +25,7 @@ if ($resource["has_image"]==1)
 		button_ok = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["ok"])) ?>";
 		button_cancel = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["cancel"])) ?>";
 		button_delete = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["action-delete"])) ?>";
-		button_add = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["action-add_note"])) ?>";
+		button_add = "&gt;&nbsp;<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["action-add_note"])) ?>";
 		error_saving = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["error-saving"])) ?>";
 		error_deleting = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["error-deleting"])) ?>";
 	</script>
@@ -49,9 +50,12 @@ if ($resource["has_image"]==1)
 
 	if (file_exists($imagepath))
 		{ 
-		?>	<script language="javascript">
+		?>	
+		<script language="javascript">
+			
 			jQuery(window).load(function() {
-				jQuery("#toAnnotate").annotateImage({
+					
+					jQuery("#toAnnotate").annotateImage({
 					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
 					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
 					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>",
@@ -59,14 +63,18 @@ if ($resource["has_image"]==1)
 					<?php  if ($k==""){?> editable: true <?php }
 					else
 					{ ?> editable: false <?php } ?>  					
-				});
+				});  
+
 			});
+			
 		</script>
+
 		<div id="wrapper" style="display:block;clear:none;float:left;margin: 0px 10px 10px 0px;">
 <div>
 <img id="toAnnotate" src="<?php echo $imageurl?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
 	</div>
-	<br>&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>"><?php echo $lang["fullscreenpreview"]?></a>
+	<div style="padding-top:10px;">
+	<a style="display:inline;" href="preview.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["fullscreenpreview"]?>">&gt;&nbsp;<?php echo $lang["fullscreenpreview"]?></a>
     
      <?php
      // MAGICTOUCH PLUGIN COMPATIBILITY
@@ -77,10 +85,10 @@ if ($resource["has_image"]==1)
      ///////////////
      ?>
      
-<?php /* 
-&nbsp;&nbsp;&gt;&nbsp;<a style="display:inline;" href="../plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" title="<?php echo $lang["pdfwithnotes"]?>"><?php echo $lang["pdfwithnotes"]?></a>
-*/
-?>
+
+&nbsp;<a style="display:inline;" href="../plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
+</div>
+
 	</div>
 <?php 
 		} 

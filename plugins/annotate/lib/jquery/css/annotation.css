@@ -1,22 +1,22 @@
 .image-annotate-add {
-    background: #fff url(../images/asterisk_yellow.png) no-repeat 3px 3px;
-    border: solid 2px #ccc !important;
-    color: #000 !important;
-    cursor: pointer;
-    display: block;
-    float: left;
-    font-family: Verdana, Sans-Serif;
-    font-size: 10px;    
-    height: 16px;
-    line-height: 18px;    
-    padding: 2px 0 2px 24px;
-    margin: 5px 0;
-    width: 50px;
-    text-decoration: none;
+   /* background: #fff url(../images/asterisk_yellow.png) no-repeat 3px 3px;
+   border: solid 2px #ccc !important;
+   color: #000 !important;
+   cursor: pointer;*/
+   display: inline;
+   float: left;
+   padding-top:10px;
+   padding-right:5px;
+   /* font-family: Verdana, Sans-Serif;
+   font-size: 10px;    
+   height: 16px;
+   line-height: 18px;    
+   padding: 2px 0 2px 24px;
+   margin: 5px 0;
+   width: 50px;
+   text-decoration: none;*/
 }
-.image-annotate-add:hover {
-    background-color: #eee;
-}
+
 .image-annotate-canvas {
     border: solid 1px #ccc;
     background-position: left top;
@@ -64,6 +64,7 @@
 .image-annotate-edit {
     display: none;
 }
+
 #image-annotate-edit-form {
     height: 82px;
     padding: 7px;
