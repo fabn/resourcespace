@@ -7,6 +7,8 @@ function get_annotation_file_path($ref,$getfilepath,$is_collection=false,$extens
 	global $storagedir;
 	global $scramble_key;	
 	
+	if (!file_exists($storagedir . "/annotate")){mkdir($storagedir . "/annotate",0777);}
+	
 	# Fetching the file path? Add the full path to the file
 	$filefolder="annotate/".$ref;
 	if ($is_collection){$filefolder="annotate/col$ref";}
