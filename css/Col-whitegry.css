@@ -116,8 +116,8 @@ input[readonly] {color: #000000;}
 .NewFlag {background-color:#737373;color:#fff;}
 
 /* Mouseover effect on list views */
-.ListviewStyle tr:hover td {background-color: #eeeeee;} 
-.ListviewStyle tr.ListviewTitleStyle:hover td, .ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;} 
+.ListviewStyle tr:hover td {background-color: #ddd;} 
+.ListviewStyle tr.ListviewTitleStyle:hover td, .ListviewStyle tr.ListviewBoxedTitleStyle:hover td {background:none;background-color:#fff;} 
 
 /* single file upload progress bar */
 .meter-value {background-color: #BBBBBB;}
