@@ -101,14 +101,14 @@ if (count($resources) == 0){
 			// strategy = we will transform to new path, check file, then replace the original.
 			$newpath = $path."_btr.$new_ext";
 
-			$command = $basecommand .  ' ' . $path;
+			$command = $basecommand .  "\"$path\"";
 
 			$command .= " -delete 1--1 -flatten "; // make sure we're only operating on first layer; fixes embedded preview weirdness
 
 			if ($rotation > 0){
 				$command .= " -rotate $rotation ";
 			}
-			$command .= " $newpath";
+			$command .= " \"$newpath\"";
 			//echo "   $command<br>";
 			$shell_result = run_command($command);
 			if (file_exists($newpath) && filesize($newpath) > 0){
