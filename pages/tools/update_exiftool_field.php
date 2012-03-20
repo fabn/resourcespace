@@ -15,6 +15,9 @@ set_time_limit(60*60*40);
 $fieldrefs=getval("fieldrefs",0);
 if ($fieldrefs==0){die ("Please add a list of refs to the fieldrefs url parameter, which are the ref numbers of the fields that you would like exiftool to extract from. <br /><br />For example: pages/tools/update_exiftool_field.php?fieldrefs=75,3");}
 
+$exiftool_fullpath = get_utility_path("exiftool");
+if ($exiftool_fullpath==false) {die ("Could not find Exiftool.");}
+
 $blanks=getval("blanks","true"); // if new value is blank, it will replace the old value.
 $fieldrefs=explode(",",$fieldrefs);
 
@@ -49,7 +52,7 @@ foreach ($fieldrefs as $fieldref){
 		
 		$resource=get_resource_data($ref);
 			
-		$command=$exiftool_path."/exiftool -s -s -s -".$exiftool_tag." ". escapeshellarg($image);
+		$command = $exiftool_fullpath . " -s -s -s -" . $exiftool_tag . " " . escapeshellarg($image);
 	
 		$value = iptc_return_utf8(trim(run_command($command)));
 	

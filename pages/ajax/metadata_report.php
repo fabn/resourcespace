@@ -5,9 +5,13 @@ include "../../include/general.php";
 include "../../include/resource_functions.php"; 
 
 
-if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-{
-
+$exiftool_fullpath = get_utility_path("exiftool");
+if ($exiftool_fullpath==false)
+	{
+	echo $lang["exiftoolnotfound"];
+	}
+else
+	{
 	$ref=getval("ref","");
 	$resource=get_resource_data($ref);
 	$ext=$resource['file_extension'];
@@ -19,31 +23,31 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 	if (!file_exists($image)) {die($lang['error']);}
 
 	#test if filetype is supported by exiftool
-	$command=$exiftool_path."/exiftool -listf";
+	$command=$exiftool_fullpath . " -listf";
 	$formats=run_command($command);
 	$ext=strtoupper($ext);
 	if (strlen(strstr($formats,$ext))<2){die(str_replace_formatted_placeholder("%extension", $ext, $lang['filetypenotsupported']));}
 	if (in_array(strtolower($ext),$exiftool_no_process)) {die(str_replace_formatted_placeholder("%extension", $ext, $lang['exiftoolprocessingdisabledforfiletype']));}
 	
 	#build array of writable tags
-	$command=$exiftool_path."/exiftool -listw";
+	$command=$exiftool_fullpath . " -listw";
 	$writable_tags=run_command($command);
 	$writable_tags=strtolower(str_replace("\n","",$writable_tags));
 	$writable_tags_array=explode(" ",$writable_tags);
 	
-	$command=$exiftool_path."/exiftool -ver";
+	$command=$exiftool_fullpath . " -ver";
 	$exiftool_version=run_command($command);
 	
 	if($exiftool_version>=7.4){
 	#build array of writable formats
-	$command=$exiftool_path."/exiftool -listwf";
+	$command=$exiftool_fullpath . " -listwf";
 	$writable_formats=run_command($command);
 	$writable_formats=str_replace("\n","",$writable_formats);
 	$writable_formats_array=explode(" ",$writable_formats);
 	$file_writability=in_array($ext,$writable_formats_array); 
 	}
 	
-	$command=$exiftool_path."/exiftool -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
+	$command=$exiftool_fullpath . " -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= run_command($command);
 		          
 	# get commands that would be run on download:      
@@ -141,7 +145,3 @@ if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(strip
 		}	
 	echo "</tr></table>";
 	}
-	else 
-		{
-		echo $lang["exiftoolnotfound"];
-		}

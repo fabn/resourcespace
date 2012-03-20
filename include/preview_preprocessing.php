@@ -8,6 +8,8 @@
 global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
 global $dUseCIEColor;
 
+$exiftool_fullpath = get_utility_path("exiftool");
+
 if (!$previewonly)
 	{
 	$file=get_resource_path($ref,true,"",false,$extension,-1,1,false,"",$alternative); 
@@ -82,8 +84,8 @@ if (isset($qlpreview_path) && !in_array($extension, $qlpreview_exclude_extension
    ----------------------------------------
 */
 # Note: for good results, InDesign Preferences must be set to save Preview image at Extra Large size.
-global $exiftool_path;
-if (!isset($exiftool_path)){
+if ($exiftool_fullpath==false)
+	{
 	if ($extension=="indd" && !isset($newfile))
 		{
 		$indd_thumb = extract_indd_thumb ($file);
@@ -105,27 +107,25 @@ if (!isset($exiftool_path)){
 # Thanks to Jeff Harmon for this code
 
 if ($extension=="indd" && !isset($newfile))
-       {
-       global $exiftool_path;
-       if (isset($exiftool_path))
-               {
-               run_command($exiftool_path.'/exiftool -b -thumbnailimage '.$file.' > '.$target);
-               }
-       if (file_exists($target))
-               {
-               #if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
-               if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
-               }		
-		hook("indesign");	
-       }
+    {
+    if ($exiftool_fullpath!=false)
+        {
+        run_command($exiftool_fullpath.' -b -thumbnailimage '.$file.' > '.$target);
+        }
+    if (file_exists($target))
+        {
+        #if the file contains an image, use it; if it's blank, it needs to be erased because it will cause an error in ffmpeg_processing.php
+        if (filesize($target)>0){$newfile = $target;}else{unlink($target);}
+        }
+    hook("indesign");
+    }
 
 
 /* ----------------------------------------
 	Try InDesign - for CS5 (page previews)
    ----------------------------------------
 */
-global $exiftool_path;
-if (isset($exiftool_path))
+if ($exiftool_fullpath!=false)
 	{
 	if ($extension=="indd" && !isset($newfile))
 		{
@@ -134,28 +134,31 @@ if (isset($exiftool_path))
 		if (is_array($indd_thumbs))
 			{
 			$n=0;	
-			foreach ($indd_thumbs as $indd_thumb){
+			foreach ($indd_thumbs as $indd_thumb)
+				{
 				base64_to_jpeg( $indd_thumb, $target."_".$n);
 				$n++;
 				}
 			$pagescommand="";
-			for ($x=0;$x<$n;$x++){
+			for ($x=0;$x<$n;$x++)
+				{
 				$pagescommand.=" ".$target."_".$x;
 				}
 			// process jpgs as a pdf so the existing pdf paging code can be used.	
 			$file=get_resource_path($ref,true,"",false,"pdf");		
 			$jpg2pdfcommand=$command . " ".$pagescommand." " . $file; 
 			$output=run_command($jpg2pdfcommand);
-			for ($x=0;$x<$n;$x++){
+			for ($x=0;$x<$n;$x++)
+				{
 				unlink($target."_".$x);
 				}
 			$extension="pdf";
 			$dUseCIEColor=false;
 			$n=0;	
 			$x=0;
-		}
-	}	
-}
+			}
+		}	
+	}
 	
 /* ----------------------------------------
 	Try PhotoshopThumbnail
@@ -167,10 +170,9 @@ if ($extension=="psd" && !isset($newfile))
 	global $photoshop_thumb_extract;
 	if ($photoshop_thumb_extract)
 		{
-		global $exiftool_path;
-		if (isset($exiftool_path))
+		if ($exiftool_fullpath!=false)
 			{
-			run_command($exiftool_path.'/exiftool -b -PhotoshopThumbnail '.$file.' > '.$target);
+			run_command($exiftool_fullpath.' -b -PhotoshopThumbnail '.$file.' > '.$target);
 			}
 		if (file_exists($target))
 			{
@@ -233,16 +235,15 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 	global $nef_thumb_extract;
 	global $dng_thumb_extract;
 	
-	global $exiftool_path;
 	if (($extension=="cr2" && $cr2_thumb_extract) || ($extension=="nef" && $nef_thumb_extract) || ($extension=="dng" && $dng_thumb_extract))
 		{
-		if (isset($exiftool_path))
+		if ($exiftool_fullpath!=false)
 			{	
 			// previews are stored in a couple places, and some nef files have large previews in -otherimage
 			if ($extension=="nef"){$bin_tag=" -otherimage ";}
 			if ($extension=="cr2"||$extension=="dng"){$bin_tag=" -previewimage ";}
 			// attempt
-			$wait=run_command($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+			$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
 
 			// check for nef -otherimage failure
 			if ($extension=="nef"&&!filesize($target)>0)
@@ -250,7 +251,7 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 				unlink($target);	
 				$bin_tag=" -previewimage ";
 				//2nd attempt
-				$wait=run_command($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+				$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
 				}
 				
 			// NOTE: in case of failures, other suboptimal possibilities 
@@ -261,7 +262,7 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 				//unlink($target);	
 				//$bin_tag=" -thumbnailimage ";
 				//attempt
-				//$wait=run_command($exiftool_path.'/exiftool -b '.$bin_tag.' '.$file.' > '.$target);
+				//$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
 				//}
 			
 			if (filesize($target)>0)
@@ -456,10 +457,9 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 
 if ($extension=="mp3" && !isset($newfile))
 	{
-	global $exiftool_path;
-	if (isset($exiftool_path))
+	if ($exiftool_fullpath!=false)
 		{
-		run_command($exiftool_path.'/exiftool -b -picture '.$file.' > '.$target);
+		run_command($exiftool_fullpath.' -b -picture '.$file.' > '.$target);
 		}
 	if (file_exists($target))
 		{

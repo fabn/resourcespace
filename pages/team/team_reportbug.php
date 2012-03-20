@@ -43,9 +43,10 @@ if (isset($imagemagick_path)){
    if (isset($out[0])) {$custom_field_4 = $out[0];}
 }
 $custom_field_5 = $lang["notavailableshort"];
-if (isset($exiftool_path)){
+$exiftool_fullpath = get_utility_path("exiftool");
+if ($exiftool_fullpath!=false){
     $out = array();
-    exec($exiftool_path.'/exiftool -ver', $out);
+    exec($exiftool_fullpath . ' -ver', $out);
     if (isset($out[0])) {$custom_field_5 = $out[0];}
 }
 $custom_field_6 = $lang["notavailableshort"];

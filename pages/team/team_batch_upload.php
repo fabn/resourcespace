@@ -128,7 +128,6 @@ for ($n=0;$n<count($uploadfiles);$n++)
 			}
 
 		# get file metadata 
-		global $exiftool_path;
 		if (getval("no_exif","")=="") {extract_exif_comment($ref,$extension);}
 		
 		# extract text from documents (e.g. PDF, DOC).

@@ -3170,3 +3170,52 @@ function sql_affected_rows(){
 		return mysql_affected_rows();
 	}
 }
+
+function get_utility_path($utilityname)
+    {
+    # !!! Under development - only exiftool is implemented!!!
+
+    # Returns the full path to a utility if installed, else returns false.
+    # Note that this function doesn't check that the utility is working.
+
+    global $imagemagick_path, $ghostscript_path, $ghostscript_executable, $ffmpeg_path, $exiftool_path, $antiword_path, $pdftotext_path, $blender_path;
+
+    switch (strtolower($utilityname))
+        {
+        case "imagemagick":
+            break;
+        case "ghostscript":
+            # Use $ghostscript_executable as the application name.
+            break;
+        case "ffmpeg":
+            break;
+        case "exiftool":
+            if (!isset($exiftool_path)) {return false;} # Exiftool path not configured.
+            else
+                {
+				return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"));
+                }
+            break;
+        case "antiword":
+            break;
+        case "pdftotext":
+            break;
+        case "blender":
+            break;
+
+        }
+    }
+
+function get_executable_path($path, $executable)
+    {
+    # Try some paths, start with a Unix style path.
+    $fullpath = stripslashes($path) . "/" . $executable["unix"];
+    if (file_exists($fullpath)) {return $fullpath;}
+    else
+        {
+        # Try a Windows style path.
+        $fullpath = $path . "\\" . $executable["win"];
+        if (file_exists($fullpath)) {return $fullpath;}
+        else {return false;} # No path found.
+        }
+    }

@@ -134,13 +134,13 @@ $mime="application/octet-stream";
 if ($noattach=="")
 	{		
 	# Get mime type via exiftool if possible
-	if (isset($exiftool_path)){
-		if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-			{	
-			$command=$exiftool_path."/exiftool -s -s -s -t -mimetype " . escapeshellarg($path);
-			$mime=run_command($command);
-			}	
-	}	
+	$exiftool_fullpath = get_utility_path("exiftool");
+	if ($exiftool_fullpath!=false)
+		{	
+		$command=$exiftool_fullpath . " -s -s -s -t -mimetype " . escapeshellarg($path);
+		$mime=run_command($command);
+		}	
+		
 	# Override or correct for lack of exiftool with config mappings	
 	if (isset($mime_type_by_extension[$ext]))
 		{

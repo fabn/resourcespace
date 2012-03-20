@@ -1074,52 +1074,46 @@ function get_exiftool_fields($resource_type)
 
 function write_metadata($path,$ref)
 	{
-	global $exiftool_path,$exiftool_remove_existing,$storagedir,$exiftool_write,$exiftool_no_process;
+	global $exiftool_remove_existing,$storagedir,$exiftool_write,$exiftool_no_process;
 	
 	# Fetch file extension
 	$resource_data=get_resource_data($ref);
 	$extension=$resource_data["file_extension"];
 	$resource_type=$resource_data["resource_type"];
-		
-	if (isset($exiftool_path) && ($exiftool_write) && !in_array($extension,$exiftool_no_process))
+
+	$exiftool_fullpath = get_utility_path("exiftool");
+	
+	if (($exiftool_fullpath!=false) && ($exiftool_write) && !in_array($extension,$exiftool_no_process))
 		{
-		if (file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		$filename = pathinfo($path);
+		$filename = $filename['basename'];	
+		$tmpfile=get_temp_dir() . "/" . $filename;
+		copy($path,$tmpfile);
+	
+		#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile.
+		# Argument -E: escape values for HTML. Used for handling foreign characters in shells not using UTF-8.
+		$command = $exiftool_fullpath . " -overwrite_original -E ";
+		if ($exiftool_remove_existing) {$command.= "-EXIF:all -XMP:all= -IPTC:all= ";}
+		$write_to=get_exiftool_fields($resource_type);
+		for($i=0;$i< count($write_to);$i++)
 			{
-		      # Since get_temp_dir method does this check, omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
-				$filename = pathinfo($path);
-				$filename = $filename['basename'];	
-				$tmpfile=get_temp_dir() . "/" . $filename;
-				copy($path,$tmpfile);
+			$fieldtype=$write_to[$i]['type'];
+			$field=explode(",",$write_to[$i]['exiftool_field']);
+			# write datetype fields as ISO 8601 date ("c") 
+			if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
+			else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
 			
-					#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile
-					$command=$exiftool_path."/exiftool -overwrite_original ";
-					if ($exiftool_remove_existing) {$command.="-EXIF:all -XMP:all= -IPTC:all= ";}
-					$write_to=get_exiftool_fields($resource_type);
-					for($i=0;$i< count($write_to);$i++)
-						{
-						$fieldtype=$write_to[$i]['type'];
-						$field=explode(",",$write_to[$i]['exiftool_field']);
-						# write datetype fields as ISO 8601 date ("c") 
-						if ($fieldtype=="4"){$writevalue=date("c",strtotime(get_data_by_field($ref,$write_to[$i]['ref'])));}
-						else {$writevalue=get_data_by_field($ref,$write_to[$i]['ref']);}
-						
-						# Remove initial comma (for checkbox lists)
-						if (substr($writevalue,0,1)==",") {$writevalue=substr($writevalue,1);}
-						
-						foreach ($field as $field)
-							{
-							$command.="-".$field."=\"". str_replace("\"","\\\"",$writevalue) . "\" " ;
-							}
-						}
-					$command.=" '$tmpfile'";
-					$output=run_command($command);
-					
-			return $tmpfile;
+			# Remove initial comma (for checkbox lists)
+			if (substr($writevalue,0,1)==",") {$writevalue=substr($writevalue,1);}
+			
+			foreach ($field as $field)
+				{
+				$command.= escapeshellarg("-" . $field . "=" . htmlentities($writevalue, ENT_QUOTES, "UTF-8")) . " ";
+				}
 			}
-		else
-			{
-			return false;
-			}
+			$command.= " " . escapeshellarg($tmpfile);
+			$output=run_command($command);
+		return $tmpfile;
 		}
 	else
 		{
@@ -2299,35 +2293,38 @@ function get_page_count($resource,$alternative=-1)
     # also handle alternative file multipage previews by switching $resource array if necessary
     # $alternative specifies an actual alternative file
     $ref=$resource['ref'];
-    if ($alternative!=-1){
+    if ($alternative!=-1)
+        {
         $pagecount=sql_value("select page_count value from resource_alt_files where ref=$alternative","");
         $resource=get_alternative_file($ref,$alternative);
-    }
-    else {
+        }
+    else
+        {
         $pagecount=sql_value("select page_count value from resource_dimensions where resource=$ref","");
-    }
+        }
     if ($pagecount!=""){return $pagecount;}
     # or, populate this column with exiftool (for installations with many pdfs already previewed and indexed, this allows pagecount updates on the fly when needed):
     # use exiftool. 
-    global $exiftool_path;
     # locate exiftool
-    if ($exiftool_path!=""){
-        $command=$exiftool_path . "/bin/exiftool";
-        if (!file_exists($command)) {$command=$exiftool_path . "/exiftool";}
-        if (!file_exists($command)) {$command=$exiftool_path . "\exiftool.exe";} // please test
-        if (!file_exists($command)) {exit("Could not find 'exiftool' utility. $command'");}	
-        
-        if ($resource['file_extension']=="pdf" && $alternative==-1){
+    $exiftool_fullpath = get_utility_path("exiftool");
+    if ($exiftool_fullpath==false){exit("Could not find 'exiftool' utility. $command'");}
+    else
+        {
+        $command = $exiftool_fullpath;
+        if ($resource['file_extension']=="pdf" && $alternative==-1)
+            {
             $file=get_resource_path($ref,true,"",false,"pdf");
             }
-        else if ($alternative==-1){
+        else if ($alternative==-1)
+            {
             # some unoconv files are not pdfs but this needs to use the auto-alt file
             $alt_ref=sql_value("select ref value from resource_alt_files where resource=$ref and unoconv=1","");
             $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alt_ref);
-        }
-        else {
+            }
+        else
+            {
             $file=get_resource_path($ref,true,"",false,"pdf",-1,1,false,"",$alternative);
-        }
+            }
     
         $command=$command." -sss -pagecount $file";
         $output=run_command($command);
@@ -2335,14 +2332,16 @@ function get_page_count($resource,$alternative=-1)
         $pages=str_replace(":","",$pages);
         $pages=trim($pages);
 
-	if (!is_numeric($pages)){ $pages = 1; } // default to 1 page if we didn't get anything back
+    if (!is_numeric($pages)){ $pages = 1; } // default to 1 page if we didn't get anything back
 
-        if ($alternative!=-1){
+        if ($alternative!=-1)
+            {
             sql_query("update resource_alt_files set page_count='$pages' where ref=$alternative");
-        }
-        else {
+            }
+        else
+            {
             sql_query("update resource_dimensions set page_count='$pages' where resource=$ref");
-        }
+            }
         return $pages;
     }
 }

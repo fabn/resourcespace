@@ -12,11 +12,13 @@
 if (!function_exists("upload_file")){
 function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	{
-        hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
+    hook("clearaltfiles", "", array($ref)); // optional: clear alternative files before uploading new resource
 
 	# revert is mainly for metadata reversion, removing all metadata and simulating a reupload of the file from scratch.
 	
 	hook ("removeannotations");
+
+	$exiftool_fullpath = get_utility_path("exiftool");
 	
 	# Process file upload for resource $ref
 	if ($revert==true){
@@ -58,16 +60,15 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 
     # Work out extension
 	if (!isset($extension)){
-		global $exiftool_path;
 		# first try to get it from the filename
 		$extension=explode(".",$filename);
 		if(count($extension)>1){
 			$extension=trim(strtolower($extension[count($extension)-1]));
 			} 
 		# if not, try exiftool	
-		else if (isset($exiftool_path) && file_exists(stripslashes($exiftool_path) . "/exiftool"))
+		else if ($exiftool_fullpath!=false)
 			{
-			$file_type_by_exiftool=run_command($exiftool_path."/exiftool -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
+			$file_type_by_exiftool=run_command($exiftool_fullpath." -filetype -s -s -s ".escapeshellarg($processfile['tmp_name']));
 			if (strlen($file_type_by_exiftool)>0){$extension=str_replace(" ","_",trim(strtolower($file_type_by_exiftool)));$filename=$filename;}else{return false;}
 			}
 		# if no clue of extension by now, return false		
@@ -158,7 +159,6 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	# delete existing resource_dimensions
     sql_query("delete from resource_dimensions where resource='$ref'");
 	# get file metadata 
-    global $exiftool_path;
     if (!$no_exif) {extract_exif_comment($ref,$extension);}
 
 	# extract text from documents (e.g. PDF, DOC).
@@ -247,92 +247,91 @@ function extract_exif_comment($ref,$extension="")
 	if (!file_exists($image)) {return false;}
 	hook("pdfsearch");
 
-global $exiftool_path,$exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
-if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
-	{
-	if (file_exists(stripslashes($exiftool_path) . "/exiftool") || file_exists(stripslashes($exiftool_path) . "/exiftool.exe"))
-			{	
-			$resource=get_resource_data($ref);
-			
-			# Field 8 is used in a special way for staticsync; don't overwrite.
-			if ($resource['file_path']!=""){$omit_title_for_staticsync=true;} else {$omit_title_for_staticsync=false;}
-			
-			hook("beforeexiftoolextraction");
-			
-			if ($exiftool_resolution_calc)
+	global $exif_comment,$exiftool_no_process,$exiftool_resolution_calc, $disable_geocoding;
+	$exiftool_fullpath = get_utility_path("exiftool");
+	if (($exiftool_fullpath!=false) && !in_array($extension,$exiftool_no_process))
+		{
+		$resource=get_resource_data($ref);
+		
+		# Field 8 is used in a special way for staticsync; don't overwrite.
+		if ($resource['file_path']!=""){$omit_title_for_staticsync=true;} else {$omit_title_for_staticsync=false;}
+		
+		hook("beforeexiftoolextraction");
+		
+		if ($exiftool_resolution_calc)
+			{
+			# see if we can use exiftool to get resolution/units, and dimensions here.
+			# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
+			# and exiftool can provide more data. 
+		
+			$command = $exiftool_fullpath . " -s -s -s -t -composite:imagesize -xresolution -resolutionunit " . escapeshellarg($image);
+			$dimensions_resolution_unit=explode("\t",run_command($command));
+			# if dimensions resolution and unit could be extracted, add them to the database.
+			# they can be used in view.php to give more accurate data.
+			if (count($dimensions_resolution_unit)==3)
 				{
-				# see if we can use exiftool to get resolution/units, and dimensions here.
-				# Dimensions are normally extracted once from the view page, but for the original file, it should be done here if possible,
-				# and exiftool can provide more data. 
-			
-				$command=$exiftool_path."/exiftool -s -s -s -t -composite:imagesize -xresolution -resolutionunit " . escapeshellarg($image);
-				$dimensions_resolution_unit=explode("\t",run_command($command));
-				# if dimensions resolution and unit could be extracted, add them to the database.
-				# they can be used in view.php to give more accurate data.
-				if (count($dimensions_resolution_unit)==3)
-					{
-					$dru=$dimensions_resolution_unit;
-					$filesize=filesize($image); 
-					$wh=explode("x",$dru[0]);
-					$width=$wh[0];
-					$height=$wh[1];
-					$resolution=$dru[1];
-					$unit=$dru[2];
-					sql_query("insert into resource_dimensions (resource, width, height, resolution, unit, file_size) values ('$ref', '$width', '$height', '$resolution', '$unit', '$filesize')");  
-					}
+				$dru=$dimensions_resolution_unit;
+				$filesize=filesize($image); 
+				$wh=explode("x",$dru[0]);
+				$width=$wh[0];
+				$height=$wh[1];
+				$resolution=$dru[1];
+				$unit=$dru[2];
+				sql_query("insert into resource_dimensions (resource, width, height, resolution, unit, file_size) values ('$ref', '$width', '$height', '$resolution', '$unit', '$filesize')");  
 				}
-			
-			$read_from=get_exiftool_fields($resource['resource_type']);
+			}
+		
+		$read_from=get_exiftool_fields($resource['resource_type']);
 
-			# run exiftool to get all the valid fields. Use -s -s option so that
-			# the command result isn't printed in columns, which will help in parsing
-			# We then split the lines in the result into an array
-			$command=$exiftool_path."/exiftool -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" -G " . escapeshellarg($image);
-			$metalines = explode("\n", run_command($command));
+		# run exiftool to get all the valid fields. Use -s -s option so that
+		# the command result isn't printed in columns, which will help in parsing
+		# We then split the lines in the result into an array
+		$command = $exiftool_fullpath . " -s -s -f -m -d \"%Y-%m-%d %H:%M:%S\" -G " . escapeshellarg($image);
+		$metalines = explode("\n", run_command($command));
 
-			$metadata = array(); # an associative array to hold metadata field/value pairs
-			
-			# go through each line and split field/value using the first
-			# occurrance of ": ".  The keys in the associative array is converted
-			# into uppercase for easier lookup later
-			foreach($metalines as $metaline)
+		$metadata = array(); # an associative array to hold metadata field/value pairs
+		
+		# go through each line and split field/value using the first
+		# occurrance of ": ".  The keys in the associative array is converted
+		# into uppercase for easier lookup later
+		foreach($metalines as $metaline)
+			{
+			# Use stripos() if available, but support earlier PHP versions if not.
+			if (function_exists("stripos"))
 				{
-				# Use stripos() if available, but support earlier PHP versions if not.
-				if (function_exists("stripos"))
+				$pos=stripos($metaline, ": ");
+				}
+			else
+				{
+				$pos=strpos($metaline, ": ");
+				}
+
+			if ($pos) #get position of first ": ", return false if not exist
+				{
+				# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
+				
+				# Extract group name and tag name.
+				$s=explode("]",substr($metaline, 0, $pos));
+				if (count($s)>1 && strlen($s[0])>1)
 					{
-					$pos=stripos($metaline, ": ");
-					}
-				else
-					{
-					$pos=strpos($metaline, ": ");
-					}
-	
-				if ($pos) #get position of first ": ", return false if not exist
-					{
-					# add to the associative array, also clean up leading/trailing space & single quote (on windows sometimes)
+					# Extract value
+					$value=trim(substr($metaline,$pos+2));
+
+					# Replace '..' with line feed - either Exiftool itself or Adobe Bridge replaces line feeds with '..'
+					$value=str_replace('...','.\n',$value); # Three dots together is interpreted as a full stop then line feed, not the other way round
+					$value=str_replace('..','\n',$value);
 					
-					# Extract group name and tag name.
-					$s=explode("]",substr($metaline, 0, $pos));
-					if (count($s)>1 && strlen($s[0])>1)
-						{
-						# Extract value
-						$value=trim(substr($metaline,$pos+2));
-
-						# Replace '..' with line feed - either Exiftool itself or Adobe Bridge replaces line feeds with '..'
-						$value=str_replace('...','.\n',$value); # Three dots together is interpreted as a full stop then line feed, not the other way round
-						$value=str_replace('..','\n',$value);
-						
-						# Extract group name and tag name
-						$groupname=strtoupper(substr($s[0],1));
-						$tagname=strtoupper(trim($s[1]));
-						
-						# Store both tag data under both tagname and groupname:tagname, to support both formats when mapping fields. 
-						$metadata[$tagname] = $value;
-						$metadata[$groupname . ":" . $tagname] = $value;
-						debug("Exiftool: extracted field '$groupname:$tagname', value is '$value'");
-						}
+					# Extract group name and tag name
+					$groupname=strtoupper(substr($s[0],1));
+					$tagname=strtoupper(trim($s[1]));
+					
+					# Store both tag data under both tagname and groupname:tagname, to support both formats when mapping fields. 
+					$metadata[$tagname] = $value;
+					$metadata[$groupname . ":" . $tagname] = $value;
+					debug("Exiftool: extracted field '$groupname:$tagname', value is '$value'");
 					}
 				}
+			}
 
 		// We try to fetch the original filename from database.
 		$resources = sql_query("SELECT resource.file_path FROM resource WHERE resource.ref = " . $ref);
@@ -350,7 +349,8 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 		if (isset($metadata['FILENAME'])) {$metadata['STRIPPEDFILENAME'] = strip_extension($metadata['FILENAME']);}
 
 		# Geolocation Metadata Support
-		if (!$disable_geocoding && isset($metadata['GPSLATITUDE'])){
+		if (!$disable_geocoding && isset($metadata['GPSLATITUDE']))
+			{
 			# Set vars
             $dec_long=0;$dec_lat=0;
 
@@ -371,7 +371,7 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
             	{
                 sql_query("update resource set geo_long='" . escape_check($dec_long) . "',geo_lat='" . escape_check($dec_lat) . "' where ref='$ref'");
             	}
-        }
+			}
         
         
 		# now we lookup fields from the database to see if a corresponding value
@@ -428,95 +428,92 @@ if (isset($exiftool_path) && !in_array($extension,$exiftool_no_process))
 					}
 				}
 			}
-
 		}
-
-	}
-elseif (isset($exif_comment))
-{
-	#
-	# Exiftool is not installed. As a fallback we grab some predefined basic fields using the PHP function
-	# exif_read_data()
-	#
-	
-	$data=@exif_read_data($image);
-
-	if ($data!==false)
+	elseif (isset($exif_comment))
 		{
-		$comment="";
-		#echo "<pre>EXIF\n";print_r($data);exit();
-
-		if (isset($data["ImageDescription"])) {$comment=$data["ImageDescription"];}
-		if (($comment=="") && (isset($data["COMPUTED"]["UserComment"]))) {$comment=$data["COMPUTED"]["UserComment"];}
-		if ($comment!="")
-			{
-			# Convert to UTF-8
-			$comment=iptc_return_utf8($comment);
-			
-			# Save comment
-			global $exif_comment;
-			update_field($ref,$exif_comment,$comment);
-			}
-		if (isset($data["Model"]))
-			{
-			# Save camera make/model
-			global $exif_model;
-			update_field($ref,$exif_model,$data["Model"]);
-			}
-		if (isset($data["DateTimeOriginal"]))
-			{
-			# Save camera date/time
-			global $exif_date;
-			$date=$data["DateTimeOriginal"];
-			# Reformat date to ISO standard
-			$date=substr($date,0,4) . "-" . substr($date,5,2) . "-" . substr($date,8,11);
-			update_field($ref,$exif_date,$date);
-			}
-		}
+		#
+		# Exiftool is not installed. As a fallback we grab some predefined basic fields using the PHP function
+		# exif_read_data()
+		#
 		
-	# Try IPTC headers
-	$size = getimagesize($image, $info);
-	if (isset($info["APP13"]))
-		{
-		$iptc = iptcparse($info["APP13"]);
-		#echo "<pre>IPTC\n";print_r($iptc);exit();
+		$data=@exif_read_data($image);
 
-		# Look for iptc fields, and insert.
-		$fields=sql_query("select * from resource_type_field where length(iptc_equiv)>0");
-		for ($n=0;$n<count($fields);$n++)
+		if ($data!==false)
 			{
-			$iptc_equiv=$fields[$n]["iptc_equiv"];
-			if (isset($iptc[$iptc_equiv][0]))
+			$comment="";
+			#echo "<pre>EXIF\n";print_r($data);exit();
+
+			if (isset($data["ImageDescription"])) {$comment=$data["ImageDescription"];}
+			if (($comment=="") && (isset($data["COMPUTED"]["UserComment"]))) {$comment=$data["COMPUTED"]["UserComment"];}
+			if ($comment!="")
 				{
-				# Found the field
-				if (count($iptc[$iptc_equiv])>1)
+				# Convert to UTF-8
+				$comment=iptc_return_utf8($comment);
+				
+				# Save comment
+				global $exif_comment;
+				update_field($ref,$exif_comment,$comment);
+				}
+			if (isset($data["Model"]))
+				{
+				# Save camera make/model
+				global $exif_model;
+				update_field($ref,$exif_model,$data["Model"]);
+				}
+			if (isset($data["DateTimeOriginal"]))
+				{
+				# Save camera date/time
+				global $exif_date;
+				$date=$data["DateTimeOriginal"];
+				# Reformat date to ISO standard
+				$date=substr($date,0,4) . "-" . substr($date,5,2) . "-" . substr($date,8,11);
+				update_field($ref,$exif_date,$date);
+				}
+			}
+			
+		# Try IPTC headers
+		$size = getimagesize($image, $info);
+		if (isset($info["APP13"]))
+			{
+			$iptc = iptcparse($info["APP13"]);
+			#echo "<pre>IPTC\n";print_r($iptc);exit();
+
+			# Look for iptc fields, and insert.
+			$fields=sql_query("select * from resource_type_field where length(iptc_equiv)>0");
+			for ($n=0;$n<count($fields);$n++)
+				{
+				$iptc_equiv=$fields[$n]["iptc_equiv"];
+				if (isset($iptc[$iptc_equiv][0]))
 					{
-					# Multiple values (keywords)
-					$value="";
-					for ($m=0;$m<count($iptc[$iptc_equiv]);$m++)
+					# Found the field
+					if (count($iptc[$iptc_equiv])>1)
 						{
-						if ($m>0) {$value.=", ";}
-						$value.=$iptc[$iptc_equiv][$m];
+						# Multiple values (keywords)
+						$value="";
+						for ($m=0;$m<count($iptc[$iptc_equiv]);$m++)
+							{
+							if ($m>0) {$value.=", ";}
+							$value.=$iptc[$iptc_equiv][$m];
+							}
 						}
-					}
-				else
-					{
-					$value=$iptc[$iptc_equiv][0];
-					}
+					else
+						{
+						$value=$iptc[$iptc_equiv][0];
+						}
+						
+					$value=iptc_return_utf8($value);
 					
-				$value=iptc_return_utf8($value);
-				
-				# Date parsing
-				if ($fields[$n]["type"]==4)
-					{
-					$value=substr($value,0,4) . "-" . substr($value,4,2) . "-" . substr($value,6,2);
-					}
-				
-				if (trim($value)!="") {update_field($ref,$fields[$n]["ref"],$value);}
-				}			
+					# Date parsing
+					if ($fields[$n]["type"]==4)
+						{
+						$value=substr($value,0,4) . "-" . substr($value,4,2) . "-" . substr($value,6,2);
+						}
+					
+					if (trim($value)!="") {update_field($ref,$fields[$n]["ref"],$value);}
+					}			
+				}
 			}
 		}
-	}
 	
 	# Update the XML metadata dump file.
 	update_xml_metadump($ref);
@@ -1301,27 +1298,34 @@ function extract_indd_thumb ($filename) {
     	$indd_thumb = strip_tags($r['0']);
     	$indd_thumb = str_replace("#xA;","",$indd_thumb);
     	return $indd_thumb;} else {return "no";}
-     }
+    }
      
-function extract_indd_pages ($filename) {
-	global $exiftool_path;
-	run_command($exiftool_path.'/exiftool -b '.$filename.' > '.$filename.'metadata');
-    $source = file_get_contents($filename.'metadata');
-    $xmpdata = $source;
-    $regexp     = "/<xmpGImg:image>.+<\/xmpGImg:image>/";
-    preg_match_all ($regexp, $xmpdata, $r);
-    $indd_thumbs=array();
-    if (isset($r[0]) && count($r[0])>0){
-		$n=0;
-		foreach ($r[0] as $image){
-    	$indd_thumbs[$n] = strip_tags($image);
-    	$indd_thumbs[$n] = str_replace("#xA;","",$indd_thumbs[$n]);
-		$n++;
-		}
-		$n=0;
-		unlink($filename.'metadata');
-    	return ($indd_thumbs);} 
-     }     
+function extract_indd_pages ($filename)
+    {
+    $exiftool_fullpath = get_utility_path("exiftool");
+    if ($exiftool_fullpath!=false)
+        {
+        run_command($exiftool_fullpath.' -b '.$filename.' > '.$filename.'metadata');
+        $source = file_get_contents($filename.'metadata');
+        $xmpdata = $source;
+        $regexp     = "/<xmpGImg:image>.+<\/xmpGImg:image>/";
+        preg_match_all ($regexp, $xmpdata, $r);
+        $indd_thumbs=array();
+        if (isset($r[0]) && count($r[0])>0)
+            {
+            $n=0;
+            foreach ($r[0] as $image)
+                {
+                $indd_thumbs[$n] = strip_tags($image);
+                $indd_thumbs[$n] = str_replace("#xA;","",$indd_thumbs[$n]);
+                $n++;
+                }
+            $n=0;
+            unlink($filename.'metadata');
+            return ($indd_thumbs);
+            } 
+        }
+    }     
  
  
 function generate_file_checksum($resource,$extension,$anyway=false)
@@ -1516,24 +1520,30 @@ function extract_text($ref,$extension,$path="")
 	
 	}
 	
-function get_image_orientation($file){
-	global $exiftool_path;
-	if (isset($exiftool_path))
-		{
-		$orientation=run_command($exiftool_path.'/exiftool -s -s -s -orientation '.$file);
-		$orientation=str_replace("Rotate","",$orientation);
-		//only handles CW rotation, haven't seen CCW yet
-		if (strpos($orientation,"CCW")){$rotation="CCW";} else {$rotation="CW";}
-		if ($rotation=="CW"){
-			$orientation=trim(str_replace("CW","",$orientation));
-		}
-		else {
-			$orientation=trim(str_replace("CCW","",360-$orientation));
-		}
-		return $orientation;
-	}
-	else return 0;
-}
+function get_image_orientation($file)
+    {
+    $exiftool_fullpath = get_utility_path("exiftool");
+    if ($exiftool_fullpath==false)
+        {
+        return 0;
+        }
+    else    
+        {
+        $orientation=run_command($exiftool_fullpath.' -s -s -s -orientation '.$file);
+        $orientation=str_replace("Rotate","",$orientation);
+        //only handles CW rotation, haven't seen CCW yet
+        if (strpos($orientation,"CCW")){$rotation="CCW";} else {$rotation="CW";}
+        if ($rotation=="CW")
+            {
+            $orientation=trim(str_replace("CW","",$orientation));
+            }
+        else
+            {
+            $orientation=trim(str_replace("CCW","",360-$orientation));
+            }
+        return $orientation;
+        }
+    }
 
 function AutoRotateImage ($src_image){
 	global $imagemagick_path;

@@ -178,13 +178,6 @@ function CheckGhostscript()
 
 	return true;
 	}
-function CheckExiftool()
-{
- 	global $exiftool_path;
-	if (file_exists($exiftool_path . "/exiftool")) return true;
-	if (file_exists($exiftool_path . "/exiftool.exe")) return true;	
-	return false;
-}
 
 # Check ImageMagick path
 if (isset($imagemagick_path))
@@ -248,7 +241,7 @@ else
 ?><tr><td colspan="2">Ghostscript</td><td><b><?php echo $result?></b></td></tr><?php
 
 
-# Check Exif function
+# Check Exif extension
 if (function_exists('exif_read_data')) 
 	{
 	$result=$lang["status-ok"];
@@ -261,21 +254,31 @@ else
 ?><tr><td colspan="2"><?php echo $lang["exif_extension"]?></td><td><b><?php echo $result?></b></td></tr><?php
 
 # Check Exiftool path
-if (isset($exiftool_path))
+if (!isset($exiftool_path))
 	{
-	if (CheckExiftool())
+	$result=$lang["status-notinstalled"];
+	}
+else
+	{
+	if (get_utility_path("exiftool")!=false)
 		{
 		$result=$lang["status-ok"];
 		}
 	else
 		{
-		$result=$lang["status-fail"] . ": " . str_replace("?", "$exiftool_path/exiftool", $lang["softwarenotfound"]);
+		if (strtolower(substr(PHP_OS, 0, 3)) === 'win')
+			{
+			# On a Windows server.
+			$result=$lang["status-fail"] . ":<br>" . str_replace("?", "$exiftool_path\exiftool.exe", $lang["softwarenotfound"]);
+			}
+		else
+			{
+			# Not on a Windows server.
+			$result=$lang["status-fail"] . ": " . str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
+			}
 		}
 	}
-else
-	{
-	$result=$lang["status-notinstalled"];
-	}
+
 ?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr>
 
 <?php hook("addinstallationcheck");?>
