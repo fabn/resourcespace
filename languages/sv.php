@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120311 för version 3248
+# Senast uppdaterad av Henrik Frizén 20120320 för version 3296
 #
 #
 # User group names (for the default user groups)
@@ -98,6 +98,8 @@ $lang["fieldtype-text_box_large_multi-line"]="Textfält (stort flerradigt)";
 $lang["fieldtype-text_box_formatted_and_ckeditor"]="Textfält (formaterat)";
 $lang["fieldtype-check_box_list"]="Kryssrutor (grupp)";
 $lang["fieldtype-drop_down_list"]="Rullgardinslista";
+$lang["fieldtype-date"]="Datum";
+$lang["fieldtype-date_and_optional_time"]="Datum och eventuell tid";
 $lang["fieldtype-date_and_time"]="Datum/tid";
 $lang["fieldtype-expiry_date"]="Utgångsdatum";
 $lang["fieldtype-category_tree"]="Kategoriträd";
@@ -908,6 +910,7 @@ $lang["setup-successdetails"]="Den grundläggande delen av installationen av Res
 $lang["setup-successnextsteps"]="Nästa steg:";
 $lang["setup-successremovewrite"]="Du bör nu avlägsna skrivrättigheten till katalogen ’include/’.";
 $lang["setup-visitwiki"]='Besök <a href="http://wiki.resourcespace.org/index.php/Main_Page">ResourceSpace Documentation Wiki</a> (engelskspråkig wiki) om du vill hitta mer information om hur du anpassar din installation.';
+$lang["php-config-file"]="Konfiguration för PHP: '%phpinifile'"; # %phpinifile will be replaced, e.g. PHP config: '/etc/php5/apache2/php.ini'
 $lang["setup-checkconfigwrite"]="Skrivrättighet till konfigurationskatalog:";
 $lang["setup-checkstoragewrite"]="Skrivrättighet till lagringskatalog:";
 $lang["setup-welcome"]="Välkommen till ResourceSpace";
@@ -1437,6 +1440,7 @@ $lang["pleaseenteravalidnumber"]="Ange ett korrekt nummer";
 $lang["purgeusersnousers"]="Det finns inga användare att rensa ut.";
 
 $lang["editallresourcetypewarning"]="Varning! Om du ändrar materialtypen tas eventuell redan lagrad typspecifik metadata bort för materialen.";
+$lang["editresourcetypewarning"]="Varning! Om du ändrar materialtypen tas eventuell redan lagrad typspecifik metadata bort för materialet.";
 
 $lang["geodragmode"]="<b>Dragläge</b>";
 $lang["geodragmodearea"]="Placera nål";
