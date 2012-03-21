@@ -439,15 +439,31 @@ function CheckDBStruct($path)
 				# Create Table
 				$sql="";
 				$f=fopen($path . "/" . $file,"r");
+				$hasPrimaryKey = false;
+				$pk_sql = "PRIMARY KEY (";
 				while (($col = fgetcsv($f,5000)) !== false)
-					{
+				{
 					if ($sql.="") {$sql.=", ";}
 					$sql.=$col[0] . " " . str_replace("§",",",$col[1]);
 					if ($col[4]!="") {$sql.=" default " . $col[4];}
-					if ($col[3]=="PRI") {$sql.=" primary key";}
-					if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
+					if ($col[3]=="PRI")
+					{
+						if($hasPrimaryKey)
+						{
+							$pk_sql .= ",";
+						}
+						$pk_sql.=$col[0];
+						$hasPrimaryKey = true;
 					}
-				
+					if ($col[5]=="auto_increment") {$sql.=" auto_increment ";}
+				}
+				$pk_sql .= ")";
+				if($hasPrimaryKey)
+				{
+					$sql.="," . $pk_sql;
+				}
+				debug($sql);
+
 				sql_query("create table $table ($sql)",false,-1,false);
 				
 				# Add initial data
