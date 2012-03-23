@@ -5,7 +5,7 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_path, $ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
 global $dUseCIEColor;
 
 $exiftool_fullpath = get_utility_path("exiftool");
@@ -493,26 +493,12 @@ if ($extension=="txt" && !isset($newfile))
 	Try FFMPEG for video files
    ----------------------------------------
 */
-if (isset($ffmpeg_path))
-	{
-	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
-	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
-	}
+$ffmpeg_fullpath = get_utility_path("ffmpeg");
 
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
+if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $ffmpeg_supported_extensions))
         {
-        $ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
-        	
-        # A work-around for Windows systems. Prefixing the command prevents a problem
-        # with double quotes.
-        global $config_windows;
-        if ($config_windows)
-        	{
-		    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
-        	}
-        
         $snapshottime = 1;
-        $out = run_command($ffmpeg_path_working." -i " . escapeshellarg($file) . " 2>&1");
+        $out = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file) . " 2>&1");
         if(preg_match("/Duration: (\d+):(\d+):(\d+)\.\d+, start/", $out, $match))
         	{
 			$duration = $match[1]*3600+$match[2]*60+$match[3];
@@ -529,7 +515,7 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && !isset($newfile)
 		if ($extension=="mxf")
 			{ $snapshottime = 0; }
         
-        $output=run_command($ffmpeg_path_working . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target));
+        $output = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target));
 
         if (file_exists($target)) 
             {
@@ -564,23 +550,12 @@ if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && !isset($newfile)
 	Try FFMPEG for audio files
    ----------------------------------------
 */
-if (isset($ffmpeg_path) && file_exists($ffmpeg_path_working) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
+if (($ffmpeg_fullpath!=false) && in_array($extension, $ffmpeg_audio_extensions)&& !isset($newfile))
 	{
-	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
-	
-	# A work-around for Windows systems. Prefixing the command prevents a problem
-	# with double quotes.
-	global $config_windows;
-	if ($config_windows)
-		{
-	    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
-		}
-	
 	# Produce the MP3 preview.
-	$mp3file=get_resource_path($ref,true,"",false,"mp3"); 
-	$output=run_command($ffmpeg_path_working . " -i " . escapeshellarg($file) . " " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file));
+	$mp3file = get_resource_path($ref,true,"",false,"mp3"); 
+	$output = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file) . " " . $ffmpeg_audio_params . " " . escapeshellarg($mp3file));
 	}
-
 
 
 /* ----------------------------------------

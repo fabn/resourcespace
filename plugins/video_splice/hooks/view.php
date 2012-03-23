@@ -2,7 +2,7 @@
 
 function HookVideo_spliceViewAfterresourceactions()
 	{
-	global $videosplice_resourcetype,$resource,$lang;
+	global $videosplice_resourcetype,$resource,$lang,$config_windows;
 	
 	if ($resource["resource_type"]!=$videosplice_resourcetype) {return false;} # Not the right type.
 
@@ -52,10 +52,7 @@ function HookVideo_spliceViewAfterresourceactions()
 			$t=str_pad($dh,2,"0",STR_PAD_LEFT) . ":" . str_pad($dm,2,"0",STR_PAD_LEFT) . ":" . str_pad($ds,2,"0",STR_PAD_LEFT);
 			
 			# Establish FFMPEG location.
-			global $ffmpeg_path;
-			$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
-			if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
-			$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
+			$ffmpeg_fullpath = get_utility_path("ffmpeg");
 
 			# Work out source/destination
 			global $ffmpeg_preview_extension,$ref;
@@ -88,12 +85,29 @@ function HookVideo_spliceViewAfterresourceactions()
 				# Set created_by, archive and extension
 				sql_query("update resource set created_by='$userref',archive=-2,file_extension='" . $ffmpeg_preview_extension . "' where ref='$newref'");
 				}
-			
 			# Unlink the target
 			if (file_exists($target)) {unlink ($target);}
-			
-			$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($source) . " -ss $ss -t $t " . escapeshellarg($target);
-			$output=exec($shell_exec_cmd);
+
+			if ($config_windows)
+				{
+				# Windows systems have a hard time with the long paths used for video generation.
+				$target_ext = strrchr($target, '.');
+				$source_ext = strrchr($source, '.');
+				$target_temp = get_temp_dir() . "/vs_t" . $newref . $target_ext;
+				$target_temp = str_replace("/", "\\", $target_temp);
+				$source_temp = get_temp_dir() . "/vs_s" . $ref . $source_ext;
+				$source_temp = str_replace("/", "\\", $source_temp);
+				copy($source, $source_temp);
+				$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($source_temp) . " -ss $ss -t $t " . escapeshellarg($target_temp);
+				$output = exec($shell_exec_cmd);
+				rename($target_temp, $target);
+				unlink($source_temp);
+				}
+			else
+				{
+				$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($source) . " -ss $ss -t $t " . escapeshellarg($target);
+				$output = exec($shell_exec_cmd);
+				}
 			#echo "<p>" . $shell_exec_cmd . "</p>";
 
 			# Generate preview/thumbs if not in preview mode
@@ -112,7 +126,7 @@ function HookVideo_spliceViewAfterresourceactions()
 				<?php
 
 				}
-			}			
+			}
 		}
 
 ?>

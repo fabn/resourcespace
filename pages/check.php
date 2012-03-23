@@ -135,30 +135,27 @@ function CheckImagemagick()
 	return true;
 	}
 
-$ffmpeg_version="";
-function CheckFfmpeg()
-{
- 	global $ffmpeg_path, $lang;
- 	
- 	# Check for path
- 	$path=$ffmpeg_path . "/ffmpeg";
-	if (!file_exists($path)) {$path=$ffmpeg_path . "/ffmpeg.exe";}
-	if (!file_exists($path)) {return false;}
-	
-	# Check execution and return version
-		$out = run_external(escapeshellcmd($path) . " -version", $code);
-    if (isset($out[0])) {$version = $out[0];}
-	if (strpos(strtolower($version),"ffmpeg")===false)
-		{
-		return str_replace("?", "$version", $lang["executionofconvertfailed"]);
-		}	
-		
-	# Set version
-	$s=explode("\n",$version);
-	global $ffmpeg_version;$ffmpeg_version=$s[0];
-	
-	return true;
-}
+function get_ffmpeg_version()
+    {
+    global $lang;
+
+    # Check for path
+    $ffmpeg_fullpath = get_utility_path("ffmpeg");
+    if ($ffmpeg_fullpath==false) {return false;}
+    else
+        {
+        # Check execution and return version
+        $version = run_command($ffmpeg_fullpath . " -version");
+        if (strpos(strtolower($version),"ffmpeg")===false)
+            {
+            return str_replace("?", "$version", $lang["executionofconvertfailed"]);
+            }
+
+        # Set version
+        $s=explode("\n",$version);
+        return $ffmpeg_version=$s[0];
+        }
+    }
 
 $ghostscript_tested="";
 function CheckGhostscript()
@@ -202,21 +199,32 @@ else
 
 
 # Check FFmpeg path
-if (isset($ffmpeg_path))
-	{
-	if (CheckFfmpeg())
-		{
-		$result=$lang["status-ok"];
-		}
-	else
-		{
-		$result= $lang["status-fail"] . ": " . str_replace("?", "$ffmpeg_path/ffmpeg", $lang["softwarenotfound"]);
-		}
-	}
+$ffmpeg_version = get_ffmpeg_version();
+if (!isset($ffmpeg_path))
+    {
+    $result=$lang["status-notinstalled"];
+    }
 else
-	{
-	$result=$lang["status-notinstalled"];
-	}
+    {
+    if ($ffmpeg_version!=false)
+        {
+        $result=$lang["status-ok"];
+        }
+    else
+        {
+        if (strtolower(substr(PHP_OS, 0, 3)) === 'win')
+            {
+            # On a Windows server.
+            $result=$lang["status-fail"] . ":<br>" . str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
+            }
+        else
+            {
+            # Not on a Windows server.
+            $result=$lang["status-fail"] . ": " . str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
+            }
+        }
+    }
+
 ?><tr><td <?php if ($ffmpeg_version=="") { ?>colspan="2"<?php } ?>>FFmpeg</td>
 <?php if ($ffmpeg_version!="") { ?><td><?php echo $ffmpeg_version ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
@@ -269,7 +277,7 @@ else
 		if (strtolower(substr(PHP_OS, 0, 3)) === 'win')
 			{
 			# On a Windows server.
-			$result=$lang["status-fail"] . ":<br>" . str_replace("?", "$exiftool_path\exiftool.exe", $lang["softwarenotfound"]);
+			$result=$lang["status-fail"] . ":<br>" . str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
 			}
 		else
 			{

@@ -14,7 +14,10 @@ include "../../include/db.php";
 include "../../include/authenticate.php";if (!checkperm("a")) {exit ("Permission denied.");}
 include "../../include/general.php";
 
+# Error message
 $errortext = getval('errortext', '');
+
+# ResourceSpace Build
 $build = '';
 if ($productversion == 'SVN'){
     $p_version = 'Trunk (SVN)';
@@ -33,38 +36,64 @@ else {
     if (preg_match('/^(\d+)\.(\d+)\.(\d+)/', $productversion, $matches)!=0){
         $build = $matches[3];
     }
-} 
+}
+
+# ResourceSpace version
 $p_version = $productversion == 'SVN'?'Trunk (SVN)':$productversion;
+
+# Browser User-Agent
 $custom_field_2 = $_SERVER['HTTP_USER_AGENT'];
-$custom_field_4 = $lang["notavailableshort"];
+
+# ImageMagick version
+$custom_field_4 = "N/A"; # Should not be translated as this information is sent to the bug tracker.
 if (isset($imagemagick_path)){
    $out = array();
    exec($imagemagick_path.'/convert -v', $out);
    if (isset($out[0])) {$custom_field_4 = $out[0];}
 }
-$custom_field_5 = $lang["notavailableshort"];
+
+# ExifTool version
 $exiftool_fullpath = get_utility_path("exiftool");
-if ($exiftool_fullpath!=false){
-    $out = array();
-    exec($exiftool_fullpath . ' -ver', $out);
-    if (isset($out[0])) {$custom_field_5 = $out[0];}
-}
-$custom_field_6 = $lang["notavailableshort"];
-if (isset($ffmpeg_path)){
-	$path = $ffmpeg_path . "/ffmpeg";
-	if (!file_exists($path)) {$path = $ffmpeg_path . "/ffmpeg.exe";}
-	if (file_exists($path)){
-		$out = array();
-		$out = run_external(escapeshellcmd($path) . " -version", $code);
-		if (isset($out[0])) {$custom_field_6 = $out[0];}
-	}
-}
+if ($exiftool_fullpath==false)
+    {
+    $custom_field_5 = "N/A"; # Should not be translated as this information is sent to the bug tracker.
+    }
+else
+    {
+    $version = run_command($exiftool_fullpath . ' -ver');
+    # Set version
+    $s=explode("\n",$version);
+    $custom_field_5 = $s[0];
+    }
 
+# FFmpeg version
+$ffmpeg_fullpath = get_utility_path("ffmpeg");
+if ($ffmpeg_fullpath==false)
+    {
+    $custom_field_6 = "N/A"; # Should not be translated as this information is sent to the bug tracker.
+    }
+else
+    {
+    $version = run_command($ffmpeg_fullpath . " -version");
+    if (strpos(strtolower($version),"ffmpeg")===false)
+        {
+        return str_replace("?", "$version", $lang["executionofconvertfailed"]);
+        }
+    # Set version
+    $s=explode("\n",$version);
+    $custom_field_6 = $s[0];
+    }
+
+# Server Platform
 $serverversion = $_SERVER['SERVER_SOFTWARE'];
-$custom_field_3 = phpversion();
-if (isset($_REQUEST['submit'])){
 
-header ("Location: " . 
+# PHP version
+$custom_field_3 = phpversion();
+
+
+if (isset($_REQUEST['submit']))
+    {
+    header ("Location: " . 
         'http://bugs.resourcespace.org/bug_report_advanced_page.php?'.
         "platform=$serverversion&".
         "product_version=$p_version&".
@@ -75,8 +104,9 @@ header ("Location: " .
         "custom_field_3=$custom_field_3&".
         "build=$build&".
         "additional_info=$errortext");
-}
-else {
+    }
+else
+    {
     include ("../../include/header.php"); ?>
     <div class="BasicsBox"> 
         <h1><?php echo $lang["reportbug"]?></h1>
@@ -95,4 +125,4 @@ else {
         <form method="post"><input type="submit" name="submit" value="<?php echo $lang["reportbug-preparebutton"] ?>"/></form>
     </div>
     <?php include ("../../include/footer.php");
-}
+    }

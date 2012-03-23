@@ -3188,12 +3188,17 @@ function get_utility_path($utilityname)
             # Use $ghostscript_executable as the application name.
             break;
         case "ffmpeg":
+            if (!isset($ffmpeg_path)) {return false;} # FFmpeg path not configured.
+            else
+                {
+                return get_executable_path($ffmpeg_path, array("unix"=>"ffmpeg", "win"=>"ffmpeg.exe"));
+                }
             break;
         case "exiftool":
             if (!isset($exiftool_path)) {return false;} # Exiftool path not configured.
             else
                 {
-				return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"));
+                return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"));
                 }
             break;
         case "antiword":
@@ -3210,12 +3215,12 @@ function get_executable_path($path, $executable)
     {
     # Try some paths, start with a Unix style path.
     $fullpath = stripslashes($path) . "/" . $executable["unix"];
-    if (file_exists($fullpath)) {return $fullpath;}
+    if (file_exists($fullpath)) {return escapeshellarg($fullpath);}
     else
         {
         # Try a Windows style path.
         $fullpath = $path . "\\" . $executable["win"];
-        if (file_exists($fullpath)) {return $fullpath;}
+        if (file_exists($fullpath)) {return escapeshellarg($fullpath);}
         else {return false;} # No path found.
         }
     }

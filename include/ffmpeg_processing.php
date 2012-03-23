@@ -2,14 +2,17 @@
 
 if (!defined("RUNNING_ASYNC")) {define("RUNNING_ASYNC", !isset($ffmpeg_preview));}
 
-if (RUNNING_ASYNC)
+$ffmpeg_fullpath = get_utility_path("ffmpeg");
+
+if (!RUNNING_ASYNC)
+	{
+	global $qtfaststart_path, $qtfaststart_extensions;
+	}
+else
 	{
 	require dirname(__FILE__)."/db.php";
 	require dirname(__FILE__)."/general.php";
 	
-	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
-	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
-	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
 	
 	if (empty($_SERVER['argv'][1]) || $scramble_key!==$_SERVER['argv'][1]) {exit("Incorrect scramble_key");}
 	
@@ -25,24 +28,9 @@ if (RUNNING_ASYNC)
 	if (!isset($_SERVER['argv'][5])) {exit("Previewonly param missing");}
 	$previewonly=$_SERVER['argv'][5];
 	
-	# A work-around for Windows systems. Prefixing the command prevents a problem
-	# with double quotes.
-    global $config_windows;
-    if ($config_windows)
-       	{
-	    $ffmpeg_path_working = "cd & " . $ffmpeg_path_working;
-       	}
-	
 	sql_query("UPDATE resource SET is_transcoding = 1 WHERE ref = '".escape_check($ref)."'");
 	}
-else 
-	{
-	global $qtfaststart_path, $qtfaststart_extensions;
-	$ffmpeg_path_working=$ffmpeg_path . "/ffmpeg";
-	if (!file_exists($ffmpeg_path_working)) {$ffmpeg_path_working.=".exe";}
-	$ffmpeg_path_working=escapeshellarg($ffmpeg_path_working);
-	}
-	
+
 # Increase timelimit
 set_time_limit(0);
 
@@ -59,7 +47,7 @@ global $config_windows, $ffmpeg_get_par;
 if ($ffmpeg_get_par) {
   $par = 1;
   # Find out the Pixel Aspect Ratio
-  $shell_exec_cmd = $ffmpeg_path_working . " -i " . escapeshellarg($file) . " 2>&1";
+  $shell_exec_cmd = $ffmpeg_fullpath . " -i " . escapeshellarg($file) . " 2>&1";
 
   if ($config_windows)
   	{
@@ -111,11 +99,13 @@ if ($width % 2){$width++;}
 if ($height % 2) {$height++;}
 
 /* Plugin hook to modify the output W & H before running ffmpeg. Better way to return both W and H at the same is appreciated.  */
-$tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_path_working, $file)); if(is_array($tmp) and $tmp) list($width, $height) = $tmp;
+$tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_fullpath, $file));
+if (is_array($tmp) and $tmp) {list($width, $height) = $tmp;}
 
-$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
+$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
 
-$tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_path_working, $file)); if($tmp) $shell_exec_cmd = $tmp;
+$tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_fullpath, $file));
+if ($tmp) {$shell_exec_cmd = $tmp;}
 
 if ($config_windows)
 	{
@@ -140,8 +130,8 @@ if ($ffmpeg_get_par) {
     # Frame size must be a multiple of two
     if ($width % 2){$width++;}
     if ($height % 2) {$height++;}
-    $shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
-    $output=run_command($shell_exec_cmd);
+    $shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($file) . " -s {$width}x{$height} -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target);
+    $output = run_command($shell_exec_cmd);
   }
 }
 
@@ -176,7 +166,8 @@ if (isset($ffmpeg_alternatives))
 			
 			}
 
-                $tmp = hook("preventgeneratealt", "", array($file)); if($tmp===true) $generate = false;
+        $tmp = hook("preventgeneratealt", "", array($file));
+        if ($tmp===true) {$generate = false;}
 
 		if ($generate) # OK to generate this alternative?
 			{
@@ -192,11 +183,12 @@ if (isset($ffmpeg_alternatives))
 			$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
 			
 			# Process the video 
-			$shell_exec_cmd = $ffmpeg_path_working . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
+            $shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($file) . " " . $ffmpeg_alternatives[$n]["params"] . " " . escapeshellarg($apath);
 
-                        $tmp = hook("ffmpegmodaltparams", "", array($shell_exec_cmd, $ffmpeg_path_working, $file, $n, $aref)); if($tmp) $shell_exec_cmd = $tmp;
+            $tmp = hook("ffmpegmodaltparams", "", array($shell_exec_cmd, $ffmpeg_fullpath, $file, $n, $aref));
+            if($tmp) {$shell_exec_cmd = $tmp;}
 
-			$output=run_command($shell_exec_cmd);
+            $output = run_command($shell_exec_cmd);
 			
 			if($qtfaststart_path && file_exists($qtfaststart_path . "/qt-faststart") && in_array($ffmpeg_alternatives[$n]["extension"], $qtfaststart_extensions) ){
 				$apathtmp=$apath.".tmp";
@@ -204,7 +196,7 @@ if (isset($ffmpeg_alternatives))
 				$output=run_command($qtfaststart_path . "/qt-faststart " . escapeshellarg($apathtmp) . " " . escapeshellarg($apath)." 2>&1");
 				unlink($apathtmp);
 			}
-	
+
 			if (file_exists($apath))
 				{
 				# Update the database with the new file details.
