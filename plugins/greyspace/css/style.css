@@ -671,15 +671,6 @@ input[readonly] {color: #E0E0E0;} /* Read-only form fields */
 /* The priority of GreySpace has to be higher (lower number) than the priorities of the plugins to be styled. */
 
 /* Annotate plugin */
-#image-annotate-add
-	{
-	background: #C0C0C0 url(../gfx/interface/asterisk_yellow.png) no-repeat 5px 2px;
-	}
-#image-annotate-add:hover
-	{
-	background-color: #E0E0E0;
-	text-decoration: none;
-	}
 #image-annotate-edit-form
 	{
 	background-color: #808080;
