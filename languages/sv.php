@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120320 för version 3296
+# Senast uppdaterad av Henrik Frizén 20120323 för version 3305
 #
 #
 # User group names (for the default user groups)
@@ -1145,6 +1145,10 @@ $lang['location-details'] = "Med <b>Dragläge</b> växlar du mellan att position
 $lang['location-noneselected']="Ingen plats vald";
 $lang['location'] = 'Plats';
 $lang['mapzoom'] = 'Kartzoomning';
+$lang['openstreetmap'] = "Openstreetmap";
+$lang['google_terrain'] = "Google: Terräng";
+$lang['google_default_map'] = "Google: Grundkarta";
+$lang['google_satellite'] = "Google: Satellit";
 
 $lang["publiccollections"]="Gemensamma samlingar";
 $lang["viewmygroupsonly"]="Visa bara mina grupper";

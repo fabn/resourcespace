@@ -1120,6 +1120,10 @@ $lang['location-details'] = 'Use "Drag mode" to switch between pin positioning a
 $lang['location-noneselected']="No Location Selected";
 $lang['location'] = 'Location';
 $lang['mapzoom'] = 'Map Zoom';
+$lang['openstreetmap'] = "OpenStreetMap";
+$lang['google_terrain'] = "Google Terrain";
+$lang['google_default_map'] = "Google Default Map";
+$lang['google_satellite'] = "Google Satellite";
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";
