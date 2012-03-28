@@ -114,6 +114,7 @@ if ($config_windows)
 	file_put_contents(get_temp_dir() . "/ffmpeg.bat",$shell_exec_cmd);
 	$shell_exec_cmd=get_temp_dir() . "/ffmpeg.bat";
 	}
+
 $output=run_command($shell_exec_cmd);
 
 if ($ffmpeg_get_par) {
@@ -208,11 +209,12 @@ if (isset($ffmpeg_alternatives))
 					}
 				}
 			}
-		// update the resource table with any ffmpeg_alt_previews	
+		/*// update the resource table with any ffmpeg_alt_previews	
 		if (count($ffmpeg_alt_previews)>0){
 			$ffmpeg_alternative_previews=implode(",",$ffmpeg_alt_previews);
 			sql_query("update resource set ffmpeg_alt_previews='".escape_check($ffmpeg_alternative_previews)."' where ref='$ref'");
 		}
+		*/
 	}
 }
 
