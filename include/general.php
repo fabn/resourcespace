@@ -3127,7 +3127,7 @@ function draw_performance_footer(){
 		foreach($querylog as $query=>$values){
 		if (substr($query,0,7)!="explain"){
 		?>
-		<tr><td align="left"><?php echo $query?></td><td>&nbsp;
+		<tr><td align="left"><div style="word-wrap: break-word; width:350px;"><?php echo $query?></div></td><td>&nbsp;
 		<table class="InfoTable">
 		<?php if (strtolower(substr($query,0,6))=="select"){
 			
