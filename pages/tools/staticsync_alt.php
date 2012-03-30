@@ -4,6 +4,10 @@ include dirname(__FILE__) . "/../../include/general.php";
 include dirname(__FILE__) . "/../../include/resource_functions.php";
 include dirname(__FILE__) . "/../../include/image_processing.php";
 
+if (file_exists(dirname(__FILE__) . "/staticsync_local_functions.php")){
+	include(dirname(__FILE__) . "/staticsync_local_functions.php");
+}
+
 if ($staticsync_ingest){
 	echo date('Y-m-d H:i:s    ');
 	echo "Staticsync is running in ingest mode.\n";
@@ -291,6 +295,11 @@ function ProcessFolder($folder)
 						$currentkeywords .= ',';
 					}
 					update_field($r,1,$currentkeywords.$staticsync_run_timestamp);
+
+					if (function_exists('staticsync_local_functions')){
+						// if local cleanup functions have been defined, run them
+						staticsync_local_functions($r);
+					}
 
 					# Add any alternative files
 					$altpath=$fullpath . $staticsync_alternatives_suffix;
