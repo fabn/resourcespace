@@ -1124,6 +1124,7 @@ $lang['openstreetmap'] = "OpenStreetMap";
 $lang['google_terrain'] = "Google Terrain";
 $lang['google_default_map'] = "Google Default Map";
 $lang['google_satellite'] = "Google Satellite";
+$lang["markers"] = "Markers";
 
 $lang["publiccollections"]="Public Collections";
 $lang["viewmygroupsonly"]="View my groups only";

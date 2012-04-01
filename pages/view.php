@@ -882,7 +882,7 @@ if (!$disable_geocoding) {
 	            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 	            map.getProjectionObject() // to Spherical Mercator Projection
 	          );
-	    var markers = new OpenLayers.Layer.Markers( "Markers" );
+	    var markers = new OpenLayers.Layer.Markers("<?php echo $lang["markers"]?>");
 	    map.addLayer(markers);
 
 	    <?php if (!hook("addmapicon")) { ?>

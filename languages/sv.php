@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120323 för version 3305
+# Senast uppdaterad av Henrik Frizén 20120401 för version 3320
 #
 #
 # User group names (for the default user groups)
@@ -1149,6 +1149,7 @@ $lang['openstreetmap'] = "Openstreetmap";
 $lang['google_terrain'] = "Google: Terräng";
 $lang['google_default_map'] = "Google: Grundkarta";
 $lang['google_satellite'] = "Google: Satellit";
+$lang["markers"] = "Markörer";
 
 $lang["publiccollections"]="Gemensamma samlingar";
 $lang["viewmygroupsonly"]="Visa bara mina grupper";

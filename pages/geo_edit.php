@@ -100,7 +100,7 @@ if ($resource["geo_long"]!="") {
 	}
 	map.events.on({"zoomend": zoomListener});
  
-    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    var markers = new OpenLayers.Layer.Markers("<?php echo $lang["markers"]?>");
     map.addLayer(markers);
 <?php  
 if (!hook("makemarker")) {
