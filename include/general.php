@@ -2734,19 +2734,22 @@ function user_email_exists($email)
 	}
 
 function filesize_unlimited($path)
-	{
-	# A resolution, at least on UNIX systems, for PHP's issue with large files and filesize().
-	$f=@filesize($path);
-	if ($f<1024*1024*1024 && $f>0) {return $f;} # Less than 1GB? We trust filesize(). It always returns 1.6GB for anything really large.
-	
-	# Attempt to use 'du' utility.
-	$f2=exec("du " . escapeshellarg($path));
-	$f2s=explode("\t",$f2);
-	if (count($f2s)!=2) {return $f;} # Bomb out, the output wasn't as we expected. Return the filesize() output.
-	
-	return $f2s[0] * 1024;
-		
-	}
+    {
+    # A resolution for PHP's issue with large files and filesize().
+
+    if (PHP_OS=='WINNT')
+        {
+        return exec('for %I in (' . escapeshellarg($path) . ') do @echo %~zI' );
+        }
+    else
+        {
+        # Attempt to use 'du' utility.
+        $f2 = exec("du " . escapeshellarg($path));
+        $f2s = explode("\t",$f2);
+        if (count($f2s)!=2) {return @filesize($path);} # Bomb out, the output wasn't as we expected. Return the filesize() output.
+        return $f2s[0] * 1024;
+        }
+    }
 
 function strip_leading_comma($val)
 	{
