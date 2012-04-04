@@ -38,6 +38,7 @@ if ($access!=0 || ($original && !$edit_access)){
 }
 
 
+$imversion = get_imagemagick_version();
 
 // generate a preview image for the operation if it doesn't already exist
 if (!file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
@@ -170,6 +171,20 @@ else
 	$tmpdir = get_temp_dir();
 	$newpath = "$tmpdir/transform_plugin/download_$ref." . $new_ext;
 	}
+
+// workaround for weird change in colorspace command in ImageMagick 6.7.5
+if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
+       if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
+                $colorspace1 = " -colorspace RGB ";
+                $colorspace2 =  " -colorspace sRGB ";
+        } else {
+                $colorspace1 = " -colorspace sRGB ";
+                $colorspace2 =  " -colorspace RGB ";
+        }
+} else {
+	$colorspace1 = '';
+	$colorspace2 = '';
+}
 	
 $command .= " \"$originalpath\" ";
 
@@ -180,15 +195,7 @@ $command .= " \"$originalpath\" ";
 // as a second layer and messes up the image if you just flatten.
 $command .= "-delete 1--1 -flatten ";
 
-$imversion = get_imagemagick_version();
-
-if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
-	if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
-		$command .= " -colorspace sRGB ";
-	} else {
-		$command .= " -colorspace RGB ";
-	}
-}
+$command .= $colorspace1;
 
 if ($crop_necessary){
 	$command .= " -crop " . $finalwidth . "x" . $finalheight . "+" . $finalxcoord . "+$finalycoord ";
@@ -266,13 +273,7 @@ if ($flip || $rotation > 0){
 }
 
 
-if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
-	if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
-		$command .= " -colorspace RGB ";
-	} else {
-		$command .= " -colorspace sRGB ";
-	}
-}
+$command .= $colorspace2;
 
 $command .= " \"$newpath\"";
 

@@ -3,6 +3,11 @@
 function generate_transform_preview($ref){
 	global $storagedir;	
         global $imagemagick_path;
+	global $imversion;
+
+	if (!isset($imversion)){
+		$imversion = get_imagemagick_version();
+	}
 
 	$tmpdir = get_temp_dir();
 
@@ -18,7 +23,15 @@ function generate_transform_preview($ref){
 	# Since this check is in get_temp_dir() omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 	if(!is_dir(get_temp_dir() . "/transform_plugin")){mkdir(get_temp_dir() . "/transform_plugin",0777);}
 
-        $command .= " \"$originalpath\" +matte -delete 1--1 -flatten -colorspace RGB -geometry 450 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
+       if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
+                $colorspace1 = " -colorspace RGB ";
+                $colorspace2 =  " -colorspace sRGB ";
+        } else {
+                $colorspace1 = " -colorspace sRGB ";
+                $colorspace2 =  " -colorspace RGB ";
+        }
+
+        $command .= " \"$originalpath\" +matte -delete 1--1 -flatten $colorspace1 -geometry 450 $colorspace2 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         run_command($command);
 	
 
