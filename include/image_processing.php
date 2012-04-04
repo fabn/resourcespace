@@ -1627,11 +1627,10 @@ function get_ghostscript_command()
 	return $command;
 	}
 
-function get_imagemagick_version($full = false){
+function get_imagemagick_version($array=true){
 	// return version number of ImageMagick, or false if it is not installed or cannot be determined.
+	// will return an array of major/minor/version/patch if $array is true, otherwise just the version string
 	global $imagemagick_path;
-	global $imagemagick_version;
-
 	$command=$imagemagick_path . "/bin/convert";
 	if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
    	if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
@@ -1642,15 +1641,15 @@ function get_imagemagick_version($full = false){
 	//          Version: ImageMagick 6.5.0-0 2011-02-18 Q16 http://www.imagemagick.org
         //          Copyright: Copyright (C) 1999-2009 ImageMagick Studio LLC
 
-	if (preg_match("/^Version: +ImageMagick (\d+)\.(\d+)\.([^ ]* )/",$versionstring,$matches)){
+	if (preg_match("/^Version: +ImageMagick (\d+)\.(\d+)\.(\d+)-(\d+) /",$versionstring,$matches)){
 		$majorver = $matches[1];
 		$minorver = $matches[2];
-		$remainder = $matches[3];
-		$imagemagick_version =  "$majorver.$minorver";
-		if ($full){
-			return "$majorver.$minorver.$remainder";
+		$revision = $matches[3];
+		$patch = $matches[4];
+		if ($array){
+			return array($majorver,$minorver,$revision,$patch);
 		} else {
-			return $imagemagick_version;	
+			return "$majorver.$minorver.$revision-$patch";
 		}
 	} else {
 		return false;
