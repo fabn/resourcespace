@@ -2202,12 +2202,14 @@ function check_access_key($resource,$key)
 			exit();
 			}
 		
-		global $usergroup,$userpermissions,$userrequestmode;
-		$userinfo=sql_query("select u.usergroup,g.permissions from user u join usergroup g on u.usergroup=g.ref where u.ref='$user'");
+		global $usergroup,$userpermissions,$userrequestmode,$userfixedtheme;
+		$userinfo=sql_query("select u.usergroup,g.permissions,g.fixed_theme from user u join usergroup g on u.usergroup=g.ref where u.ref='$user'");
 		if (count($userinfo)>0)
 			{
 			$usergroup=$userinfo[0]["usergroup"];
 			$userpermissions=explode(",",$userinfo[0]["permissions"]);
+			if (trim($userinfo[0]["fixed_theme"])!="") {$userfixedtheme=$userinfo[0]["fixed_theme"];} # Apply fixed theme also
+
 			if (hook("modifyuserpermissions")){$userpermissions=hook("modifyuserpermissions");}
 			$userrequestmode=0; # Always use 'email' request mode for external users
 			}
