@@ -1973,9 +1973,22 @@ function update_xml_metadump($resource)
 	
 	$path=dirname(get_resource_path($resource,true,"pre",true)) . "/metadump.xml";
 	if (file_exists($path)){$wait=unlink($path);}
+	
+	$ext = htmlspecialchars(sql_value("select file_extension value from resource where ref = '$resource'",''),ENT_QUOTES);
+	
+	if ($result = sql_query("select resource_type, name from resource left join resource_type on resource.resource_type = resource_type.ref where resource.ref = '$resource'",false)){
+		$rtype = $result[0]['resource_type'];
+		$rtypename = htmlspecialchars($result[0]['name'],ENT_QUOTES);
+	} else {
+		$rtype = '';
+		$rtypename = '';
+	}
+
 	$f=fopen($path,"w+");
 	fwrite($f,"<?xml version=\"1.0\"?>\n");
-	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" resourcespace:resourceid=\"$resource\">\n\n");
+	fwrite($f,"<record xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" resourcespace:resourceid=\"$resource\"");
+	fwrite($f," resourcespace:extension=\"$ext\" resourcespace:resourcetype=\"$rtypename\" resourcespace:resourcetypeid=\"$rtype\" ");
+	fwrite($f,">\n\n");
   
   	$data=get_resource_field_data($resource,false,false); # Get field data ignoring permissions
   	for ($n=0;$n<count($data);$n++)
