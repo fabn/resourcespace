@@ -25,7 +25,7 @@ function generate_transform_preview($ref){
 
        if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
                 $colorspace1 = " -colorspace RGB ";
-                $colorspace2 =  " -colorspace sRGB ";
+                $colorspace2 =  " ";
         } else {
                 $colorspace1 = " -colorspace sRGB ";
                 $colorspace2 =  " -colorspace RGB ";
