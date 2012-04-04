@@ -180,8 +180,14 @@ $command .= " \"$originalpath\" ";
 // as a second layer and messes up the image if you just flatten.
 $command .= "-delete 1--1 -flatten ";
 
+$imversion = get_imagemagick_version();
+
 if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
-	$command .= " -colorspace RGB ";
+	if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
+		$command .= " -colorspace sRGB ";
+	} else {
+		$command .= " -colorspace RGB ";
+	}
 }
 
 if ($crop_necessary){
@@ -257,6 +263,15 @@ if ($rotation > 0){
 if ($flip || $rotation > 0){
     // assume we should reset exif orientation flag since they have rotated to another orientation
     $command .= " -orient undefined ";
+}
+
+
+if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
+	if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
+		$command .= " -colorspace RGB ";
+	} else {
+		$command .= " -colorspace sRGB ";
+	}
 }
 
 $command .= " \"$newpath\"";
