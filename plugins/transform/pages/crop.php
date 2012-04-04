@@ -174,12 +174,13 @@ else
 
 // workaround for weird change in colorspace command in ImageMagick 6.7.5
 if (strtoupper($new_ext) == 'JPG' && $cropper_jpeg_rgb){
-       if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
-                $colorspace1 = " -colorspace RGB ";
-                $colorspace2 =  " ";
-        } else {
+       if ($imversion[0]<6 || ($imversion[0] == 6 &&  $imversion[1]<7) || ($imversion[0] == 6 && $imversion[1] == 7 && $imversion[2]<5)){
+
                 $colorspace1 = " -colorspace sRGB ";
                 $colorspace2 =  " -colorspace RGB ";
+        } else {
+                $colorspace1 = " -colorspace RGB ";
+                $colorspace2 =  " -colorspace sRGB ";
         }
 } else {
 	$colorspace1 = '';

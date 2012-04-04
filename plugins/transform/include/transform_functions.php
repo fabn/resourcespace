@@ -23,17 +23,17 @@ function generate_transform_preview($ref){
 	# Since this check is in get_temp_dir() omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 	if(!is_dir(get_temp_dir() . "/transform_plugin")){mkdir(get_temp_dir() . "/transform_plugin",0777);}
 
-       if ($imversion[0]<=6 && $imversion[1]<=7 && $imversion[2]<=5){
-                $colorspace1 = " -colorspace RGB ";
-                $colorspace2 =  " ";
-        } else {
+       if ($imversion[0]<6 || ($imversion[0] == 6 &&  $imversion[1]<7) || ($imversion[0] == 6 && $imversion[1] == 7 && $imversion[2]<5)){
                 $colorspace1 = " -colorspace sRGB ";
                 $colorspace2 =  " -colorspace RGB ";
+        } else {
+                $colorspace1 = " -colorspace RGB ";
+                $colorspace2 =  " -colorspace sRGB ";
         }
 
         $command .= " \"$originalpath\" +matte -delete 1--1 -flatten $colorspace1 -geometry 450 $colorspace2 \"$tmpdir/transform_plugin/pre_$ref.jpg\"";
         run_command($command);
-	
+
 
 	// while we're here, clean up any old files still hanging around
 	$dp = opendir(get_temp_dir() . "/transform_plugin");
