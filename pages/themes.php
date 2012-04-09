@@ -33,6 +33,12 @@ function DisplayTheme($themes=array())
 		if ($themes_category_split_pages && $themes_category_split_pages_parents){?><h1><?php
 		echo $lang["collections"];?></h1><?php }
 		
+		// count total items in themes
+	    $totalcount=0;
+	    for ($m=0;$m<count($getthemes);$m++)
+			{$totalcount=$totalcount+$getthemes[$m]['c'];
+		}
+		
 		if ($theme_images_align_right)
 			{
 			?>
@@ -69,7 +75,7 @@ function DisplayTheme($themes=array())
 			{
 			echo stripslashes(str_replace("*","",$themename));
 			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
-            <p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : str_replace("%number", $collcount, $lang["collections-2"]); ?></p></td></tr></table>
+            <p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); ?></p></td></tr></table>
             <!-- The number of collections should never be equal to zero. -->
 
 		<div class="clearerright"> </div>

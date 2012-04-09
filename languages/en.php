@@ -1470,7 +1470,7 @@ $lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then cl
 $lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";
 
 $lang["collections-1"] = "(<strong>1</strong> Collection)";
-$lang["collections-2"] = "(<strong>%number</strong> Collections)"; # %number will be replaced, e.g. 3 Collections
+$lang["collections-2"] = "(<strong>%d</strong> Collections containing <strong>%d</strong> Items)"; # %number will be replaced, e.g. 3 Collections
 $lang["total-collections-0"] = "<strong>Total: 0</strong> Collections";
 $lang["total-collections-1"] = "<strong>Total: 1</strong> Collection";
 $lang["total-collections-2"] = "<strong>Total: %number</strong> Collections"; # %number will be replaced, e.g. Total: 5 Collections
