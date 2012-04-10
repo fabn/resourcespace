@@ -112,8 +112,8 @@ if ($use_recent_as_home){$homepage_url=$baseurl."/pages/search.php?search=".urle
 ?>
 
 <div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
-<?php if ($header_link && !$header_text_title){?><a class="headerlink" style="margin:20px 25px; position: absolute; display: block; width: <?php echo $header_link_width?>px; height: <?php echo $header_link_height?>px;  top: 0px; left: 0px;" href="<?php echo $homepage_url?>"></a><?php } ?>
-<?php if ($header_text_title){?>
+<?php if ($header_link && !$header_text_title && getval("k","")==""){?><a class="headerlink" style="margin:20px 25px; position: absolute; display: block; width: <?php echo $header_link_width?>px; height: <?php echo $header_link_height?>px;  top: 0px; left: 0px;" href="<?php echo $homepage_url?>"></a><?php } ?>
+<?php if ($header_text_title && getval("k","")==""){?>
     <div id="TextHeader"><a href="<?php echo $homepage_url?>"><?php echo $applicationname;?></a></div>
     <?php if ($applicationdesc!=""){?>
         <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
