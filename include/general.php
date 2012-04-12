@@ -1575,7 +1575,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 				
 				# [embed_thumbnail] (requires url in templatevars['thumbnail'])
 				else if (substr($variable,0,15)=="embed_thumbnail"){
-					$$variable="<img src='cid:thumbnail' />";
+					$$variable="<img style='border:1px solid #d1d1d1;' src='cid:thumbnail' />";
 				}
 				
 				# embed images (ex [img_/var/www/resourcespace/gfx/whitegry/titles/title.gif])
