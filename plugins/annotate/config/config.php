@@ -9,3 +9,4 @@ $annotate_public_view=true;
 //display author of annotation
 $annotate_show_author=false;
 $annotate_font="helvetica";
+$annotate_pdf_output=false;

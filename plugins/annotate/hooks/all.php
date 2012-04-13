@@ -15,7 +15,8 @@ function HookAnnotateAllRemoveannotations(){
 
 function HookAnnotateAllCollectiontoolcompact(){
 	# Link in collections bar (minimised)
-	global $collection,$lang,$pagename;?>
+	global $collection,$lang,$pagename,$annotate_pdf_output;
+	if (!$annotate_pdf_output){return false;}?>
     <option value="<?php echo $collection?>|0|0|../plugins/annotate/pages/annotate_pdf_config.php?col=<?php echo $collection ?>|main|false">&gt;&nbsp;<?php echo $lang['pdfwithnotes']?></option><?php
 }
 

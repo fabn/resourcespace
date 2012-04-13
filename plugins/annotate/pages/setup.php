@@ -16,6 +16,7 @@ if (getval("submit","")!="")
 	$annotate_public_view=getvalescaped("annotate_public_view","");
 	$annotate_show_author=getvalescaped("annotate_show_author","");	
 	$annotate_font=getvalescaped("annotate_font","");
+	$annotate_pdf_output=getvalescaped("annotate_pdf_output","");
 	
 	$config=array();
 	$config['annotate_rt_exclude']=$annotate_rt_exclude;
@@ -24,6 +25,7 @@ if (getval("submit","")!="")
 	$config['annotate_public_view']=$annotate_public_view;
 	$config['annotate_show_author']=$annotate_show_author;
 	$config['annotate_font']=$annotate_font;
+	$config['annotate_pdf_output']=$annotate_pdf_output;
 	set_plugin_config("annotate",$config);
 	
 	redirect("pages/team/team_home.php");
@@ -45,6 +47,7 @@ echo config_custom_select_multi("rtexclude",$lang["resource_types_to_exclude"],$
 <?php echo config_boolean_field("debug",$lang["annotatedebug"],$annotate_debug);?>
 <?php echo config_boolean_field("annotate_public_view",$lang["annotate_public_view"],$annotate_public_view);?>
 <?php echo config_boolean_field("annotate_show_author",$lang["annotate_show_author"],$annotate_show_author);?>
+<?php echo config_boolean_field("annotate_pdf_output",$lang["annotate_pdf_output"],$annotate_pdf_output);?>
 
 <div class="Question">  
 <label for="submit"></label> 

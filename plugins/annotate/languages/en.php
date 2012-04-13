@@ -26,3 +26,4 @@ $lang["annotate_public_view"] = "Are annotations publicly visible e.g. when shar
 $lang["annotate_show_author"] = "Display annotation author when viewing previews?";
 
 $lang["annotate_font"]="Font";
+$lang["annotate_pdf_output"]="PDF Output Option (experimental)";
