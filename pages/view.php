@@ -66,6 +66,7 @@ if ($go!="")
 	if ($k!="" && !check_access_key($ref,$k)) {$ref=$origref;} # cancel the move.
 	}
 
+hook("chgffmpegpreviewext", "", array($ref));
 
 # Load resource data
 $resource=get_resource_data($ref);
