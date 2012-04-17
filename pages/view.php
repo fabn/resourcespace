@@ -843,6 +843,8 @@ for ($n=0;$n<count($fields);$n++)
 <div class="PanelShadow"></div>
 </div>
 
+<?php hook("custompanels"); //For custom panels immediately below resource display area ?>
+
 <?php 
 if (!$disable_geocoding) { 
   // only show this section if the resource is geocoded OR they have permission to do it themselves
