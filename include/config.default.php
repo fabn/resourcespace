@@ -1548,6 +1548,9 @@ $xml_metadump_dc_map=array
 # Use Plugins Manager
 $use_plugins_manager = true;
 
+# Allow Plugin Upload
+$enable_plugin_upload = true;
+
 
 # ------------- Geocoding / geolocation -------------
 # Note that a Google Maps API key is no longer required.

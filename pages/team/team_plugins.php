@@ -60,7 +60,7 @@ elseif (isset($_REQUEST['delete'])){ # Delete a plugin from the plugins director
     }
 }
 */
-elseif (isset($_REQUEST['submit'])){ # Upload a plugin .rsp file. 
+elseif ($enable_plugin_upload && isset($_REQUEST['submit'])){ # Upload a plugin .rsp file. 
 	if (($_FILES['pfile']['error'] == 0) && (pathinfo($_FILES['pfile']['name'], PATHINFO_EXTENSION)=='rsp')){
 	    require "../../lib/pcltar/pcltar.lib.php";
 	    
@@ -311,7 +311,9 @@ jQuery.noConflict();
     </div>
     <?php } else { ?>
     <p><?php echo $lang['plugins-noneavailable']; ?></p>
-    <?php } ?>
+    <?php } 
+    if ($enable_plugin_upload) {
+    ?>
     <h2><?php echo $lang['plugins-uploadheader']; ?></h2>
     <form enctype="multipart/form-data" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
@@ -320,7 +322,9 @@ jQuery.noConflict();
 	</form>
 	<?php if (isset($rejected)&& !$rejected) { ?>	
 	    <p><?php echo $lang['plugins-uploadsuccess']; ?></p>
-	<?php } ?>
+	<?php } 
+  }
+	?>
     </div>
     <form id="anc-post" method="post">
     <input type="hidden" id="anc-input" name="" value="" />
