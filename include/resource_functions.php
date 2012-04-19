@@ -882,8 +882,19 @@ function copy_resource($from,$resource_type=-1)
 	
 	$add="";
 
+	# Work out the archive status
+	$archive=sql_value("select archive value from resource where ref='$from'",0);
+	if (!checkperm("e" . $archive))
+		{
+		# Find the right permission mode to use
+		for ($n=-2;$n<3;$n++)
+			{
+			if (checkperm("e" . $n)) {$archive=$n;break;}
+			}
+		}
+
 	# First copy the resources row
-	sql_query("insert into resource($add resource_type,creation_date,rating,archive,access,created_by $joins_sql) select $add" . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",now(),rating,archive,access,created_by $joins_sql from resource where ref='$from';");
+	sql_query("insert into resource($add resource_type,creation_date,rating,archive,access,created_by $joins_sql) select $add" . (($resource_type==-1)?"resource_type":("'" . $resource_type . "'")) . ",now(),rating,'" . $archive . "',access,created_by $joins_sql from resource where ref='$from';");
 	$to=sql_insert_id();
 	
 	# Copying a resource of the 'pending review' state? Notify, if configured.
