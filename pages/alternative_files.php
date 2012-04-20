@@ -89,6 +89,8 @@ for ($n=0;$n<count($files);$n++)
 	<a href="#" onclick="if (confirm('<?php echo $lang["filedeleteconfirm"]?>')) {document.getElementById('filedelete').value='<?php echo $files[$n]["ref"]?>';document.getElementById('fileform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-delete"]?></a>
 
 	&nbsp;<a href="alternative_file.php?resource=<?php echo $ref?>&ref=<?php echo $files[$n]["ref"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a>
+
+        <?php hook("refreshinfo"); ?>
 	
 	</td>
 	
