@@ -37,8 +37,12 @@ http://www.resourcespace.org/
 <?php } ?>
 <?php if ($pagename!="preview_all"){?><!--[if lte IE 7]> <link href="<?php echo $baseurl?>/css/globalIE.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]--><?php } ?>
 <!--[if lte IE 5.6]> <link href="<?php echo $baseurl?>/css/globalIE5.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css"  media="screen,projection,print" /> <![endif]-->
+
+<?php if (!hook("disablescriptaculous")) { ?>
 <script src="<?php echo $baseurl?>/lib/js/prototype.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script src="<?php echo $baseurl?>/lib/js/scriptaculous.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<?php } ?>
+
 <script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
