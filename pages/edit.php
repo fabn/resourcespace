@@ -764,12 +764,12 @@ for ($n=0;$n<count($fields);$n++)
 	$modified_field_type=(hook("modifyfieldtype"));
 	if ($modified_field_type){$fields[$n]["type"]=$modified_field_type-1;}
 
-	(hook("addfieldextras"));
+	hook("addfieldextras");
 	# ----------------------------  Show field -----------------------------------
 	$type=$fields[$n]["type"];
 	if ($type=="") {$type=0;} # Default to text type.
 	$field=$fields[$n];
-	include "edit_fields/" . $type . ".php";
+	if (!hook("replacefield","",array($fields[$n]["type"],$fields[$n]["ref"],$n))) {include "edit_fields/" . $type . ".php";}
 	# ----------------------------------------------------------------------------
 
 	# Display any error messages from previous save
