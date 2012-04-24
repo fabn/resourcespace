@@ -2076,7 +2076,6 @@ function check_use_watermark(){
 	# Two cases:
 	# if access is restricted and the group has "w"
 	# if $watermark is set and it's an external share.
-	
 	global $access,$k,$watermark;
 	if ($access==1 &&    (checkperm('w') || ($k!="" && isset($watermark)) )    ){return true;} else {return false;} 
 }
@@ -2331,7 +2330,7 @@ function get_page_count($resource,$alternative=-1)
     # use exiftool. 
     # locate exiftool
     $exiftool_fullpath = get_utility_path("exiftool");
-    if ($exiftool_fullpath==false){exit("Could not find 'exiftool' utility. $command'");}
+    if ($exiftool_fullpath==false){exit("Could not find 'exiftool' utility. $exiftool_fullpath'");}
     else
         {
         $command = $exiftool_fullpath;
