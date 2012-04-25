@@ -507,7 +507,7 @@ $collection_download = false;
 # Example given for Windows with the 7z utility:
 # $collection_download_settings[0]["name"] = 'ZIP';
 # $collection_download_settings[0]["extension"] = 'zip';
-# $collection_download_settings[0]["arguments"] = 'a -tzip';
+# $collection_download_settings[0]["arguments"] = 'a -scsWIN -tzip';
 # $collection_download_settings[0]["mime"] = 'application/zip';
 # ...
 
