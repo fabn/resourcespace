@@ -9,7 +9,7 @@ hook("themeheader");
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
+	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -109,7 +109,7 @@ function DisplayTheme($themes=array())
 			
                 <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 		
-                <?php if (isset($zipcommand)) { ?>
+                <?php if (isset($zipcommand) || $collection_download) { ?>
                 &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
                 <?php } ?>
 			

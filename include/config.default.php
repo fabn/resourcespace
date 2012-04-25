@@ -62,31 +62,47 @@ $send_statistics=true;
 # Enable work-arounds required when installed on Microsoft Windows systems
 $config_windows=false;
 
+# Server charset (needed when dealing with filenames in some situations, e.g. at collection download).
+#$server_charset = ''; # E.g. 'UTF-8', 'ISO-8859-1' or 'Windows-1252'.
+
 # ---- Paths to various external utilities ----
 
 # If using ImageMagick, uncomment and set next 2 lines
-# $imagemagick_path="/sw/bin";
-# $ghostscript_path="/sw/bin";
+# $imagemagick_path='/sw/bin';
+# $ghostscript_path='/sw/bin';
 $ghostscript_executable='gs';
 
 # If using FFMpeg to generate video thumbs and previews, uncomment and set next line.
-# $ffmpeg_path="/usr/bin";
+# $ffmpeg_path='/usr/bin';
 
 # Install Exiftool and set this path to enable metadata-writing when resources are downloaded
-# $exiftool_path="/usr/local/bin";
+# $exiftool_path='/usr/local/bin';
 
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
-# $antiword_path="/usr/bin";
+# $antiword_path='/usr/bin';
 
 # Path to pdftotext - part of the XPDF project, see http://www.foolabs.com/xpdf/
 # Enables extraction of text from PDF files
-# $pdftotext_path="/usr/bin";
+# $pdftotext_path='/usr/bin';
 
 # Path to blender
-# $blender_path="/usr/bin/";
+# $blender_path='/usr/bin/';
 
+# Path to an archiver utility - uncomment and set the lines below if download of collections is enabled ($collection_download = true)
+# Example given for Linux with the zip utility:
+# $archiver_path = '/usr/bin';
+# $archiver_executable = 'zip';
+# $archiver_listfile_argument = "-@ <";
 
+# Example given for Linux with the 7z utility:
+# $archiver_path = '/usr/bin';
+# $archiver_executable = '7z';
+# $archiver_listfile_argument = "@";
 
+# Example given for Windows with the 7z utility:
+# $archiver_path = 'C:\Program\7-Zip';
+# $archiver_executable = '7z.exe';
+# $archiver_listfile_argument = "@";
 
 
 
@@ -463,7 +479,37 @@ $groupuploadfolders=false;
 $orderbyrating=false;
 
 # Zip command to use to create zip archive (uncomment to enable download of collections as a zip file)
-# $zipcommand="zip -j";
+# $zipcommand =
+# This setting is deprecated and replaced by $collection_download and $collection_download_settings.
+
+# Set $collection_download to true to enable download of collections as archives (e.g. zip files).
+# The setting below overrides - if true - the $zipcommand.
+# You also have to uncomment and set $collection_download_settings for it to work.
+# (And don't forget to set $archiver_path etc. in the path section.)
+$collection_download = false;
+
+# Example given for Linux with the zip utility:
+# $collection_download_settings[0]["name"] = 'ZIP';
+# $collection_download_settings[0]["extension"] = 'zip';
+# $collection_download_settings[0]["arguments"] = '-j';
+# $collection_download_settings[0]["mime"] = 'application/zip';
+
+# Example given for Linux with the 7z utility:
+# $collection_download_settings[0]["name"] = 'ZIP';
+# $collection_download_settings[0]["extension"] = 'zip';
+# $collection_download_settings[0]["arguments"] = 'a -tzip';
+# $collection_download_settings[0]["mime"] = 'application/zip';
+# $collection_download_settings[1]["name"] = '7Z';
+# $collection_download_settings[1]["extension"] = '7z';
+# $collection_download_settings[1]["arguments"] = 'a -t7z';
+# $collection_download_settings[1]["mime"] = 'application/x-7z-compressed';
+
+# Example given for Windows with the 7z utility:
+# $collection_download_settings[0]["name"] = 'ZIP';
+# $collection_download_settings[0]["extension"] = 'zip';
+# $collection_download_settings[0]["arguments"] = 'a -tzip';
+# $collection_download_settings[0]["mime"] = 'application/zip';
+# ...
 
 # Option to write a text file into zipped collections containing resource data
 $zipped_collection_textfile=false;

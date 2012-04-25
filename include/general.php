@@ -3178,12 +3178,12 @@ function sql_affected_rows(){
 
 function get_utility_path($utilityname)
     {
-    # !!! Under development - only exiftool is implemented!!!
+    # !!! Under development - only some of the utilities are implemented!!!
 
     # Returns the full path to a utility if installed, else returns false.
     # Note that this function doesn't check that the utility is working.
 
-    global $imagemagick_path, $ghostscript_path, $ghostscript_executable, $ffmpeg_path, $exiftool_path, $antiword_path, $pdftotext_path, $blender_path;
+    global $imagemagick_path, $ghostscript_path, $ghostscript_executable, $ffmpeg_path, $exiftool_path, $antiword_path, $pdftotext_path, $blender_path, $archiver_path, $archiver_executable;
 
     switch (strtolower($utilityname))
         {
@@ -3212,7 +3212,14 @@ function get_utility_path($utilityname)
             break;
         case "blender":
             break;
-
+        case "archiver":
+            if (!isset($archiver_path)) {return false;} # Archiver path not configured.
+            if (!isset($archiver_executable)) {return false;} # Archiver executable not configured.
+            else
+                {
+                return get_executable_path($archiver_path, array("unix"=>$archiver_executable, "win"=>$archiver_executable));
+                }
+            break;
         }
     }
 

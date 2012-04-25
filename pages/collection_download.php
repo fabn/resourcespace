@@ -13,6 +13,19 @@ $submitted=getvalescaped("submitted","");
 $includetext=getvalescaped("text","false");
 $useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
+$settings_id=getvalescaped("settings","");
+
+$archiver_fullpath = get_utility_path("archiver");
+
+if (!isset($zipcommand))
+    {
+    if (!$collection_download) {exit($lang["download-of-collections-not-enabled"]);}
+    if ($archiver_fullpath==false) {exit($lang["archiver-utility-not-found"]);}
+    if (!isset($collection_download_settings)) {exit($lang["collection_download_settings-not-defined"]);}
+    else if (!is_array($collection_download_settings)) {exit($lang["collection_download_settings-not-an-array"]);}
+    if (!isset($archiver_listfile_argument)) {exit($lang["listfile-argument-not-defined"]);}
+    }
+$archiver = $collection_download && ($archiver_fullpath!=false) && (isset($archiver_listfile_argument)) && (isset($collection_download_settings) ? is_array($collection_download_settings) : false);
 
 # initiate text file
 if (($zipped_collection_textfile==true)&&($includetext=="true")) { 
@@ -66,10 +79,7 @@ if ($submitted != "")
 	{
 	$path="";
 	$deletion_array=array();
-	
-	# No temporary folder? Create one
-	# Since this check is done in get_temp_dir() method, omit: if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
-	
+
 	# Build a list of files to download
 	for ($n=0;$n<count($result);$n++)
 		{
@@ -114,9 +124,7 @@ if ($submitted != "")
 				# If using original filenames when downloading, copy the file to new location so the name is included.
 				if ($original_filenames_when_downloading)	
 					{
-					# Since this check is done in get_temp_dir() method, omit: if(!is_dir($storagedir . "/tmp")){mkdir($storagedir . "/tmp",0777);}
 					# Retrieve the original file name		
-
 					$filename=get_data_by_field($ref,$filename_field);	
 
 					if (strlen($filename)>0)
@@ -141,12 +149,21 @@ if ($submitted != "")
 						if ($prefix_resource_id_to_filename) {$filename=$prefix_filename_string . $ref . "_" . $filename;}
 						
 						$fs=explode("/",$filename);$filename=$fs[count($fs)-1];
-						
-						# Copy to a new location
-						$newpath=get_temp_dir() . "/" . $filename;
-						copy($p,$newpath);
-						
-						# Add the temporary file to the post-zip deletion list.
+
+                        # Convert $filename to the charset used on the server.
+                        if (!isset($server_charset)) {$to_charset = 'UTF-8';}
+                        else
+                            {
+                            if ($server_charset!="") {$to_charset = $server_charset;}
+                            else {$to_charset = 'UTF-8';}
+                            }
+                        $filename = mb_convert_encoding($filename, $to_charset, 'UTF-8');
+
+                        # Copy to a new location
+                        $newpath = get_temp_dir() . "/" . $filename;
+                        copy($p, $newpath);
+
+						# Add the temporary file to the post-archiving deletion list.
 						$deletion_array[]=$newpath;
 						
 						# Set p so now we are working with this new file
@@ -190,10 +207,10 @@ if ($submitted != "")
 				}
 			}
 		}
-	if ($path=="") {exit("Nothing to download.");}	
-	
-	
-    # append summary notes about the completeness of the package, write the text file, add to zip, and schedule for deletion 	
+    if ($path=="") {exit($lang["nothing_to_download"]);}	
+
+
+    # Append summary notes about the completeness of the package, write the text file, add to archive, and schedule for deletion
     if (($zipped_collection_textfile==true)&&($includetext=="true")){
         $qty_sizes = count($available_sizes[$size]);
         $qty_total = count($result);
@@ -243,57 +260,85 @@ if ($submitted != "")
         $deletion_array[]=$textfile;	
     }
 
-	# Create and send the zipfile
-	$file = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";	
-		
+    # Define the archive file.
+    if ($archiver)
+        {
+        $file = $lang["collectionidprefix"] . $collection . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
+        }
+    else
+        {
+        $file = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
+        }
+
 	# Write command parameters to file.
 	$cmdfile = get_temp_dir() . "/zipcmd" . $collection . "-" . $size . ".txt";
 	$fh = fopen($cmdfile, 'w') or die("can't open file");
 	fwrite($fh, $path);
 	fclose($fh);
 
-		
-	# Execute the zip command.
-	if ($config_windows)
-		{
-		# Use the Zzip format to specify the external file
-		exec("$zipcommand " . get_temp_dir() . "/" . $file . " @" . $cmdfile);
-		}
-	else
-		{
-		# UNIX et al.
-		# Pipe the file containing the filenames to zip
-		exec("$zipcommand " . get_temp_dir() . "/" . $file . " -@ < " . $cmdfile);
-		}
-	
-	# Zip done, add the 
+    # Execute the archiver command.
+    # If $collection_download is true the $collection_download_settings are used if defined, else the legacy $zipcommand is used.
+    if ($archiver)
+        {
+        exec($archiver_fullpath . " " . $collection_download_settings[$settings_id]["arguments"] . " " . escapeshellarg(get_temp_dir() . "/" . $file) . " " . $archiver_listfile_argument . escapeshellarg($cmdfile));
+        }
+    else
+        {
+        if ($config_windows)
+            # Add the command file, containing the filenames, as an argument.
+            {
+            exec("$zipcommand " . escapeshellarg(get_temp_dir() . "/" . $file) . " @" . escapeshellarg($cmdfile));
+            }
+        else
+            {
+            # Pipe the command file, containing the filenames, to the executable.
+            exec("$zipcommand " . escapeshellarg(get_temp_dir() . "/" . $file) . " -@ < " . escapeshellarg($cmdfile));
+            }
+        }
+
+    # Archive created, schedule the command file for deletion.
 	$deletion_array[]=$cmdfile;
 
 	# Remove temporary files.
 	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
-	
-	# Get the file size of the zip.
-	$filesize=@filesize(get_temp_dir() . "/" . $file);
-	
-	if ($use_collection_name_in_zip_name)
-		{
-		# Use collection name (if configured)
-		$filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . "-" . $size . ".zip";
-		}
-	else
-		{
-		# Do not include the collection name in the filename (default)
-		$filename= $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
-		}
-		
+
+    # Get the file size of the archive.
+    $filesize = @filesize_unlimited(get_temp_dir() . "/" . $file);
+
+    if ($use_collection_name_in_zip_name)
+        {
+        # Use collection name (if configured)
+        if ($archiver)
+            {
+            $filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
+            }
+        else
+            {
+            $filename = $lang["collectionidprefix"] . $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . "-" . $size . ".zip";
+            }
+        }
+    else
+        {
+        # Do not include the collection name in the filename (default)
+        if ($archiver)
+            {
+            $filename = $lang["collectionidprefix"] . $collection . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
+            }
+        else
+            {
+            $filename = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
+            }
+        }
+
 	header("Content-Disposition: attachment; filename=" . $filename);
-	header("Content-Type: application/zip");
+    if ($archiver) {header("Content-Type: " . $collection_download_settings[$settings_id]["mime"]);}
+    else {header("Content-Type: application/zip");}
 	header("Content-Length: " . $filesize);
-	
+
 	set_time_limit(0);
 	readfile(get_temp_dir() . "/" . $file);
-	
-	# Remove zip file.
+
+    # Remove archive.
 	unlink(get_temp_dir() . "/" . $file);
 	exit();	
 	}
@@ -389,7 +434,7 @@ foreach ($available_sizes as $key=>$value) {
             echo "(0 " . $lang["originals-available-0"] . ")";
             }
         ?></label><input type=checkbox id="use_original" name="use_original" value="yes" >
-<div class="clearerleft"> </div>
+<div class="clearerleft"> </div></div>
 
 <?php 
 
@@ -400,13 +445,32 @@ if ($zipped_collection_textfile=="true") { ?>
 <option value="true"><?php echo $lang["yes"]?></option>
 <option value="false"><?php echo $lang["no"]?></option>
 </select>
-<div class="clearerleft"> </div><br>
-<?php } ?>
-<div class="Inline"><input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" /></div>
-</div>
+<div class="clearerleft"> </div></div><?php
+}
+
+# Archiver settings
+if ($archiver)
+    { ?>
+    <div class="Question">
+    <label for="archivetype"><?php echo $lang["archivesettings"]?></label>
+    <div class="tickset">
+    <select name="settings" class="stdwidth" id="archivesettings"><?php
+    foreach ($collection_download_settings as $key=>$value)
+        { ?>
+        <option value="<?php echo $key ?>"><?php echo lang_or_i18n_get_translated($value["name"],"archive-") ?></option><?php
+        } ?>
+    </select>
+    <div class="clearerleft"> </div></div><br>
+    </div><?php
+    } ?>
+
+<div class="QuestionSubmit"> 
+<label for="download"> </label>
+<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" /></div>
+
 <div class="clearerleft"> </div>
 <div id="progress"></div>
-</div>
+
 </form>
 
 </div>

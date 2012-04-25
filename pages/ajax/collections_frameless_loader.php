@@ -143,7 +143,7 @@ $research=sql_value("select ref value from research_request where collection='$u
 <li><a href="<?php echo $baseurl_short?>pages/team_research_edit.php?ref=<?php echo $research?>">&gt;<?php echo $lang["editresearchrequests"]?></a></li>
 <li><a href="<?php echo $baseurl_short?>pages/team_research.php">&gt; <?php echo $lang["manageresearchrequests"]?></a></li>
 <?php } ?>
-<?php if (isset($zipcommand)) { ?>
+<?php if (isset($zipcommand) || $collection_download) { ?>
 <li><a href="<?php echo $baseurl_short?>pages/collection_download.php?collection=<?php echo $usercollection?>">&gt; <?php echo $lang["action-download"]?></a></li>
 <?php } ?>
 <li><a href="<?php echo $baseurl_short?>pages/collection_manage.php">&gt; <?php echo $lang["managemycollections"]?></a></li>

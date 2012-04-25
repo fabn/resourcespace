@@ -401,7 +401,7 @@ elseif ($k!="")
 	<br />
 	<?php echo $lang["created"] . " " . nicedate($tempcol["created"])?><br />
   	<?php echo $count_result . " " . $lang["youfoundresources"]?><br />
-  	<?php if (isset($zipcommand)) { ?>
+    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 	<a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
 	<?php } ?>
     <?php if ($feedback) {?><br /><br /><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a><?php } ?>
@@ -535,7 +535,7 @@ elseif ($k!="")
 	    }
 	?>
     
-   	<?php if (isset($zipcommand)) { ?>
+    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>">&gt; <?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
 	<?php hook("collectiontool");?>
@@ -729,7 +729,7 @@ elseif ($k!="")
 	?>
 <div id="CollectionMinTitle"><h2><?php echo $tempcol["name"]?></h2></div>
 <div id="CollectionMinRightNav">
-  	<?php if (isset($zipcommand)) { ?>
+    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
 	<li><a href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>" target="main"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>"><?php echo $lang["sendfeedback"]?></a></li><?php } ?>
@@ -793,7 +793,7 @@ elseif ($k!="")
     <?php } else { ?>
     <li><a href="search.php?search=<?php echo urlencode("!collection" . $usercollection)?>" target="main"><?php echo $lang["viewall"]?></a></li>
     <?php } ?>
-   	<?php if (isset($zipcommand)) { ?>
+    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
     <li><a target="main" href="terms.php?k=<?php echo $k?>&url=<?php echo urlencode("pages/collection_download.php?collection=" .  $usercollection . "&k=" . $k)?>"><?php echo $lang["action-download"]?></a></li>
 	<?php } ?>
     <?php if ($count_result>0 && $k=="" && checkperm("q"))

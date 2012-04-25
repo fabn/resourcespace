@@ -3,7 +3,7 @@ include_once("collections_functions.php");
 
 function DisplayThemeBar($theme1)
         {
-        global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$n,$baseurl;
+        global $lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$n,$baseurl;
 
         # Work out theme name
         $themename=$theme1;

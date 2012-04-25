@@ -102,11 +102,11 @@ if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagenam
 <!-- end preview_all -->
 
 
-<!-- zipall -->
-   	<?php if (isset($zipcommand) && $count_result>0) { ?>
+<!-- collection download -->
+    <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
     <option value="<?php echo $collection?>|0|0|terms.php?url=<?php echo urlencode("pages/collection_download.php?collection=" .  $collection )?>|main">&gt;&nbsp;<?php echo $lang["action-download"]?>...</option>
-	<?php } ?>
-<!-- end zipall -->
+    <?php } ?>
+<!-- end collection download -->
 
 
 <!-- edit metadata -->    

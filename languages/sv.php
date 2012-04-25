@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120401 för version 3320
+# Senast uppdaterad av Henrik Frizén 20120425 för version 3346
 #
 #
 # User group names (for the default user groups)
@@ -351,7 +351,16 @@ $lang["couldnotmatchallusernames"]="Ett användarnamn är felaktigt";
 $lang["emailcollectionmessage"]="har skickat en samling med material till dig från $applicationname. Denna samling har lagts till i Mina samlingar."; # suffixed to user name e.g. "Fred has e-mailed you a collection..."
 $lang["emailcollectionmessageexternal"]="har skickat en samling med material till dig från $applicationname."; # suffixed to user name e.g. "Fred has e-mailed you a collection..."
 $lang["clicklinkviewcollection"]="Klicka på länken nedan om du vill visa samlingen.";
-$lang["zippedcollectiontextfile"]="Inkludera textfil med information om material/samling";
+$lang["zippedcollectiontextfile"]="Inkludera en textfil med information om material/samling";
+$lang["archivesettings"]="Arkivinställningar";
+$lang["archive-zip"]="Zip";
+$lang["archive-7z"]="7z";
+$lang["download-of-collections-not-enabled"]="Hämtning av samlingar är inte aktiverad.";
+$lang["archiver-utility-not-found"]="Kan inte hitta arkiveringsverktyget.";
+$lang["collection_download_settings-not-defined"]="\$collection_download_settings är inte definierad.";
+$lang["collection_download_settings-not-an-array"]="\$collection_download_settings är inte en matris.";
+$lang["listfile-argument-not-defined"]="\$archiver_listfile_argument är inte definierad.";
+$lang["nothing_to_download"]="Inget att hämta.";
 $lang["copycollectionremoveall"]="Avlägsna alla material innan kopiering";
 $lang["purgeanddelete"]="Rensa ut";
 $lang["purgecollectionareyousure"]="Vill du ta bort både den här samlingen och alla material i den?";
@@ -730,7 +739,7 @@ $lang["n_recent"]="%qty nyaste";
 $lang["batchcopyfrom"]="Kopiera metadata från material med nummer";
 $lang["copy"]="Kopiera";
 $lang["zipall"]="Zippa alla";
-$lang["downloadzip"]="Hämta samlingen som en zip-fil";
+$lang["downloadzip"]="Hämta samlingen som ett arkiv";
 $lang["downloadsize"]="Hämtningsstorlek";
 $lang["tagging"]="Taggning";
 $lang["speedtagging"]="Snabbtaggning";
@@ -1325,6 +1334,9 @@ $lang["blockedbrowsingoffilestore"]="Åtkomsten till katalogen ’filestore’ �
 $lang["noblockedbrowsingoffilestore"]="Mappen ’filestore’ är inte blockerad för webbläsare. Avlägsna ’Indexes’ från ’Options’ i Apache.";
 $lang["executionofconvertfailed"]="Exekveringen misslyckades &ndash; ett oväntat svar gavs när kommandot ’convert’ exekverades. Svaret var: ”?”.<br>I Windows och IIS&nbsp;6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
 $lang["exif_extension"]="Exif-utökning";
+$lang["archiver_utility"]="Arkiveringsverktyg";
+$lang["zipcommand_deprecated"]="\$zipcommand bör inte längre användas. Använd istället \$collection_download och \$collection_download_settings.";
+$lang["zipcommand_overridden"]="Notera dock att \$zipcommand är definierat men åsidosatt.";
 $lang["lastscheduledtaskexection"]="Senaste körning av schemalagda aktiviteter (dagar)";
 $lang["executecronphp"]="Sökningar efter liknande material kommer inte att fungera som de ska och schemalagda e-postrapporter kommer inte att skickas. Se till att <a href='../batch/cron.php'>’batch/cron.php’</a> körs åtminstone en gång per dag som ett cron-jobb eller liknande.";
 $lang["shouldbeormore"]="Bör vara ? eller mer."; # E.g. should be 200M or greater
@@ -1518,7 +1530,7 @@ $lang["saveandreturntolist"]="Spara och återvänd till lista";
 $lang["backtomanagecontent"]="Tillbaka: Hantera webbplatsens innehåll";
 $lang["editcontent"]="Redigera innehåll";
  
-$lang["confirmcollectiondownload"]="Vänta medan zip-arkivet skapas. Detta kan ta en stund och tiden är beroende av den totala storleken av de ingående materialen.";
+$lang["confirmcollectiondownload"]="Vänta medan arkivet skapas. Detta kan ta en stund och tiden är beroende av den totala storleken av de ingående materialen.";
  
 $lang["starttypingkeyword"]="Ange nyckelord…";
 $lang["createnewentryfor"]="Skapa nytt nyckelord: ";

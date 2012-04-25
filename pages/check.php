@@ -287,9 +287,40 @@ else
 		}
 	}
 
-?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr>
+?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr><?php
 
-<?php hook("addinstallationcheck");?>
+# Check archiver path
+if ($collection_download || isset($zipcommand)) # Only check if it is going to be used.
+    {
+    if (!(isset($archiver_path) && isset($archiver_executable)) && !isset($zipcommand))
+        {
+        $result = $lang["status-notinstalled"];
+        }
+    elseif ($collection_download && (get_utility_path("archiver")!=false))
+        {
+        $result = $lang["status-ok"];
+        if (isset($zipcommand)) {$result.= "<br/>" . $lang["zipcommand_overridden"];}
+        }
+    elseif (isset($zipcommand))
+        {
+        $result = $lang["status-warning"] . ": " . $lang["zipcommand_deprecated"];
+        }
+    else
+        {
+        if ($config_windows)
+            {
+            # On a Windows server.
+            $result = $lang["status-fail"] . ": " . str_replace("?", $archiver_path . "\\" . $archiver_executable, $lang["softwarenotfound"]);
+            }
+        else
+            {
+            $result = $lang["status-fail"] . ": " . str_replace("?", stripslashes($archiver_path) . "/" . $archiver_executable, $lang["softwarenotfound"]);
+            }
+        }
+    ?><tr><td colspan="2"><?php echo $lang["archiver_utility"] ?></td><td><b><?php echo $result?></b></td></tr><?php
+    }
+
+hook("addinstallationcheck");?>
 
 <tr>
 <td><?php echo $lang["lastscheduledtaskexection"] ?></td>
