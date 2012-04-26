@@ -2330,7 +2330,7 @@ function get_page_count($resource,$alternative=-1)
     # use exiftool. 
     # locate exiftool
     $exiftool_fullpath = get_utility_path("exiftool");
-    if ($exiftool_fullpath==false){exit("Could not find 'exiftool' utility. $exiftool_fullpath'");}
+    if ($exiftool_fullpath==false){}
     else
         {
         $command = $exiftool_fullpath;
