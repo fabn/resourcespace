@@ -110,7 +110,7 @@ if ($extension=="indd" && !isset($newfile))
     {
     if ($exiftool_fullpath!=false)
         {
-        run_command($exiftool_fullpath.' -b -thumbnailimage '.$file.' > '.$target);
+        run_command($exiftool_fullpath.' -b -thumbnailimage '.escapeshellarg($file).' > '.$target);
         }
     if (file_exists($target))
         {
@@ -172,7 +172,7 @@ if ($extension=="psd" && !isset($newfile))
 		{
 		if ($exiftool_fullpath!=false)
 			{
-			run_command($exiftool_fullpath.' -b -PhotoshopThumbnail '.$file.' > '.$target);
+			run_command($exiftool_fullpath.' -b -PhotoshopThumbnail '.escapeshellarg($file).' > '.$target);
 			}
 		if (file_exists($target))
 			{
@@ -191,7 +191,7 @@ global $psd_transparency_checkerboard;
 if ($extension=="psd" && !isset($newfile) && $psd_transparency_checkerboard)
 	{
 	global $imagemagick_path;
-	$wait=run_command($imagemagick_path."/composite  -compose Dst_Over -tile pattern:checkerboard ".$file." ".$target);
+	$wait=run_command($imagemagick_path."/composite  -compose Dst_Over -tile pattern:checkerboard ".escapeshellarg($file)." ".$target);
 	if (file_exists($target)){
 		$newfile=$target;
 	}
@@ -214,7 +214,7 @@ if ($extension=="swf" && !isset($newfile))
 	global $dump_gnash_path;
 	if (isset($dump_gnash_path))
 		{
-		run_command($dump_gnash_path.'/dump-gnash -t 1 --screenshot 5 --screenshot-file '.$target.' '.$file);
+		run_command($dump_gnash_path.'/dump-gnash -t 1 --screenshot 5 --screenshot-file '.$target.' '.escapeshellarg($file));
 		}
 	if (file_exists($target))
 		{
@@ -243,7 +243,7 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 			if ($extension=="nef"){$bin_tag=" -otherimage ";}
 			if ($extension=="cr2"||$extension=="dng"){$bin_tag=" -previewimage ";}
 			// attempt
-			$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
+			$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.escapeshellarg($file).' > '.$target);
 
 			// check for nef -otherimage failure
 			if ($extension=="nef"&&!filesize($target)>0)
@@ -251,7 +251,7 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 				unlink($target);	
 				$bin_tag=" -previewimage ";
 				//2nd attempt
-				$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.$file.' > '.$target);
+				$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.escapeshellarg($file).' > '.$target);
 				}
 				
 			// NOTE: in case of failures, other suboptimal possibilities 
@@ -296,7 +296,7 @@ as Apple Pages, Apple Keynote, and Apple Numbers.
 */ 
 if ( (($extension=="pages") || ($extension=="numbers") || ($extension=="key")) && !isset($newfile)) 
 	{ 
-    run_command("unzip -p $file \"QuickLook/Thumbnail.jpg\" > $target");
+    run_command("unzip -p ".escapeshellarg($file)." \"QuickLook/Thumbnail.jpg\" > $target");
 	$newfile = $target; 
 	} 	
 		
@@ -313,7 +313,7 @@ if (in_array($extension,$unoconv_extensions) && isset($unoconv_path) && !isset($
 	$unocommand=$unoconv_path . "/unoconv";
 	if (!file_exists($unocommand)) {exit("Unoconv executable not found at '$unoconv_path'");}
 	
-	run_command($unocommand . " --format=pdf \"" . $file . "\"");
+	run_command($unocommand . " --format=pdf \"" . escapeshellarg($file) . "\"");
 	$path_parts=pathinfo($file);
 	$basename_minus_extension=remove_extension($path_parts['basename']);
 	$pdffile=$path_parts['dirname']."/".$basename_minus_extension.".pdf";
@@ -348,7 +348,7 @@ if (in_array($extension,$calibre_extensions) && isset($calibre_path) && !isset($
 	$basename_minus_extension=remove_extension($path_parts['basename']);
 	$pdffile=$path_parts['dirname']."/".$basename_minus_extension.".pdf";
 
-	$wait=run_command("xvfb-run ". $calibrecommand . " " . $file . " " .$pdffile." ") ;
+	$wait=run_command("xvfb-run ". $calibrecommand . " " . escapeshellarg($file) . " " .$pdffile." ") ;
 
     if (file_exists($pdffile))
 		{
@@ -373,7 +373,7 @@ if (in_array($extension,$calibre_extensions) && isset($calibre_path) && !isset($
 if ((($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth")) && !isset($newfile))
 
 	{
-run_command("unzip -p $file \"Thumbnails/thumbnail.png\" > $target");
+run_command("unzip -p ".escapeshellarg($file)." \"Thumbnails/thumbnail.png\" > $target");
 $odcommand=$command . " \"$target\"[0]  \"$target\""; 
 				$output=run_command($odcommand); if(file_exists($target)){$newfile = $target;}
 	}
@@ -387,7 +387,7 @@ $odcommand=$command . " \"$target\"[0]  \"$target\"";
 */
 if ((($extension=="docx") || ($extension=="xlsx") || ($extension=="pptx") || ($extension=="xps")) && !isset($newfile))
 	{
-	run_command("unzip -p $file \"docProps/thumbnail.jpeg\" > $target");$newfile = $target;
+	run_command("unzip -p ".escapeshellarg($file)." \"docProps/thumbnail.jpeg\" > $target");$newfile = $target;
 	}
 
 
@@ -404,7 +404,7 @@ if ($extension=="blend" && !isset($newfile))
 	if (!file_exists($blendercommand)|| is_dir($blendercommand)) {$blendercommand=$blender_path . "/blender";}
 	if (!file_exists($blendercommand)) {$blendercommand=$blender_path . "\blender.exe";}
 	if (!file_exists($blendercommand)) {exit("Could not find blender application. '$blendercommand'");}	
-	$error=run_command($blendercommand. " -b $file -F JPEG -o $target -f 1");
+	$error=run_command($blendercommand. " -b ".escapeshellarg($file)." -F JPEG -o $target -f 1");
 
     if (file_exists($target."0001"))
 		{
@@ -432,7 +432,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 	$command=$antiword_path . "/antiword";
 	if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
 	if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
-	run_command($command . " -p a4 \"" . $file . "\" > \"" . $target . ".ps" . "\"");
+	run_command($command . " -p a4 \"" . escapeshellarg($file) . "\" > \"" . $target . ".ps" . "\"");
 	if (file_exists($target . ".ps"))
 		{
 		# Postscript file exists
@@ -459,7 +459,7 @@ if ($extension=="mp3" && !isset($newfile))
 	{
 	if ($exiftool_fullpath!=false)
 		{
-		run_command($exiftool_fullpath.' -b -picture '.$file.' > '.$target);
+		run_command($exiftool_fullpath.' -b -picture '.escapeshellarg($file).' > '.$target);
 		}
 	if (file_exists($target))
 		{
