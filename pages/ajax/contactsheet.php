@@ -310,9 +310,9 @@ for ($n=0;$n<count($result);$n++){
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
-		
-		$command=get_ghostscript_command();
-		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.pdf\"";
+
+        $ghostscript_fullpath = get_utility_path("ghostscript");
+        $command = ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf");
 		run_command($command);
 		
 		$command=$imagemagick_path . "/bin/convert";

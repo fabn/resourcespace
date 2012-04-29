@@ -5,10 +5,12 @@
 # for example types that use GhostScript or FFmpeg.
 #
 
-global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $pdf_pages,$antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
+global $imagemagick_path, $imagemagick_preserve_profiles, $imagemagick_quality, $ghostscript_path, $pdf_pages, $antiword_path, $unoconv_path, $pdf_dynamic_rip, $ffmpeg_audio_extensions, $ffmpeg_audio_params, $qlpreview_path,$ffmpeg_supported_extensions, $qlpreview_exclude_extensions;
 global $dUseCIEColor;
 
+# Locate utilities
 $exiftool_fullpath = get_utility_path("exiftool");
+$ghostscript_fullpath = get_utility_path("ghostscript");
 
 if (!$previewonly)
 	{
@@ -436,11 +438,9 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 	if (file_exists($target . ".ps"))
 		{
 		# Postscript file exists
-		
-		# Locate ghostscript command
-		$gscommand=get_ghostscript_command();
-		$gscommand = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dEPSCrop " . escapeshellarg($target . ".ps");
-		$output=run_command($gscommand);
+
+        $gscommand = $ghostscript_fullpath . " -dBATCH -dNOPAUSE -sDEVICE=jpeg -r150 -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=1 -dLastPage=1 -dEPSCrop " . escapeshellarg($target . ".ps");
+        $output = run_command($gscommand);
 
 		if (file_exists($target))
 			{
@@ -625,8 +625,6 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 	if ($extension=="eps") {$pdf_pages=1;}
 	if ($extension=="ai") {$pdf_pages=1;}
 	if ($extension=="ps") {$pdf_pages=1;}
-	# Locate ghostscript command
-	$gscommand=get_ghostscript_command();
 	$resolution=150;
 
         if ($pdf_dynamic_rip) {
@@ -675,7 +673,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 		if (file_exists($target)) {unlink($target);}
 
 		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
-		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
+		$gscommand2 = $ghostscript_fullpath . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
  		$output=run_command($gscommand2);
 
     	debug("PDF multi page preview: page $n, executing " . $gscommand2);
@@ -719,7 +717,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 			$copy_path=get_resource_path($copy,true,"",true,"pdf");
 			
 			# Extract this one page to a new resource.
-			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
+			$gscommand2 = $ghostscript_fullpath . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
 	 		$output=run_command($gscommand2);
  		
  			# Update the file extension

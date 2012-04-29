@@ -3190,7 +3190,12 @@ function get_utility_path($utilityname)
         case "imagemagick":
             break;
         case "ghostscript":
-            # Use $ghostscript_executable as the application name.
+            if (!isset($ghostscript_path)) {return false;} # Ghostscript path not configured.
+            if (!isset($ghostscript_executable)) {return false;} # Ghostscript executable not configured.
+            else
+                {
+                return get_executable_path($ghostscript_path, array("unix"=>$ghostscript_executable, "win"=>$ghostscript_executable));
+                }
             break;
         case "ffmpeg":
             if (!isset($ffmpeg_path)) {return false;} # FFmpeg path not configured.

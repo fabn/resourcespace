@@ -50,9 +50,9 @@ if (getval("method","")!="")
 			}		
 			
 		# Extract this one page to a new resource.
-		$gscommand = get_ghostscript_command();
-		$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $from . " -dLastPage=" . $to . " " . escapeshellarg($file);
-		$output=run_command($gscommand2);
+        $ghostscript_fullpath = get_utility_path("ghostscript");
+        $gscommand = $ghostscript_fullpath . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $from . " -dLastPage=" . $to . " " . escapeshellarg($file);
+        $output = run_command($gscommand);
 
 
 		if (getval("method","")=="alternativefile")
@@ -205,10 +205,10 @@ DrawRanges();
 		if (file_exists($target)) {unlink($target);}
 
 		if ($dUseCIEColor){$dUseCIEColor=" -dUseCIEColor ";} else {$dUseCIEColor="";}
-		$gscommand2 = $gscommand . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
- 		$output=run_command($gscommand2);
+		$gscommand = $ghostscript_fullpath . " -dBATCH -r".$resolution." ".$dUseCIEColor." -dNOPAUSE -sDEVICE=jpeg -sOutputFile=" . escapeshellarg($target) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " -dEPSCrop " . escapeshellarg($file);
+		$output = run_command($gscommand);
 
-    	debug("PDF multi page preview: page $n, executing " . $gscommand2);
+    	debug("PDF multi page preview: page $n, executing " . $gscommand);
 
 	
 		# Set that this is the file to be used.
@@ -249,9 +249,9 @@ DrawRanges();
 			$copy_path=get_resource_path($copy,true,"",true,"pdf");
 			
 			# Extract this one page to a new resource.
-			$gscommand2 = $gscommand . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
-	 		$output=run_command($gscommand2);
- 		
+			$gscommand = $ghostscript_fullpath . " -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=" . escapeshellarg($copy_path) . "  -dFirstPage=" . $n . " -dLastPage=" . $n . " " . escapeshellarg($file);
+			$output = run_command($gscommand);
+
  			# Update the file extension
  			sql_query("update resource set file_extension='pdf' where ref='$copy'");
  		

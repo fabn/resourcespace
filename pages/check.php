@@ -146,12 +146,12 @@ function get_ffmpeg_version()
         if ($config_windows)
             {
             # On a Windows server.
-            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
+            $error_msg = str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
             }
         else
             {
             # Not on a Windows server.
-            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
+            $error_msg = str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
             }
         return array("version" => "", "success" => false, "error" => $error_msg);
         }
@@ -170,24 +170,40 @@ function get_ffmpeg_version()
         }
     }
 
-$ghostscript_tested="";
-function CheckGhostscript()
-	{
- 	global $ghostscript_path, $ghostscript_executable, $ghostscript_tested;
- 	$ghostscript_tested = $ghostscript_path . '/' . $ghostscript_executable;
-	if (!file_exists($ghostscript_tested))
-		{
-		$ghostscript_tested=$ghostscript_path. '\\' . $ghostscript_executable . '.exe';
-		if (!file_exists($ghostscript_tested))
-			return false;
-		}
+function get_ghostscript_version()
+    {
+    global $config_windows, $ghostscript_path, $ghostscript_executable, $lang;
 
-	$version=run_command('"'.$ghostscript_tested.'"' . " -version");
-	if (strpos($version, "Ghostscript")===false)
-		return false;
+    # Check for path
+    $ghostscript_fullpath = get_utility_path("ghostscript");
+    if ($ghostscript_fullpath==false)
+        {
+        if ($config_windows)
+            {
+            # On a Windows server.
+            $error_msg = str_replace("?", $ghostscript_path . "\\" . $ghostscript_executable, $lang["softwarenotfound"]);
+            }
+        else
+            {
+            # Not on a Windows server.
+            $error_msg = str_replace("?", stripslashes($ghostscript_path) . "/" . $ghostscript_executable, $lang["softwarenotfound"]);
+            }
+        return array("version" => "", "success" => false, "error" => $error_msg);
+        }
+    else
+        {
+        # Check execution and return version
+        $version = run_command($ghostscript_fullpath . " -version");
+        if (strpos(strtolower($version), "ghostscript")===false)
+            {
+            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("ghostscript", $version), $lang["execution_failed"]));
+            }
 
-	return true;
-	}
+        # Return result array with version
+        $s = explode("\n", $version);
+        return array("version" => $s[0], "success" => true, "error" => "");
+        }
+    }
 
 function get_exiftool_version()
     {
@@ -200,12 +216,12 @@ function get_exiftool_version()
         if ($config_windows)
             {
             # On a Windows server.
-            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
+            $error_msg = str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
             }
         else
             {
             # Not on a Windows server.
-            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
+            $error_msg = str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
             }
         return array("version" => "", "success" => false, "error" => $error_msg);
         }
@@ -266,24 +282,26 @@ else
 <?php if ($ffmpeg["success"]==true) { ?><td><?php echo $ffmpeg["version"] ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
 
-# Check Ghostscript path
-if (isset($ghostscript_path))
-	{
-	if (CheckGhostscript())
-		{
-		$result=$lang["status-ok"];
-		}
-	else
-		{
-		$result= $lang["status-fail"] . ": " . str_replace("?", $ghostscript_tested, $lang["softwarenotfound"]);
-		}
-	}
+# Check Ghostscript
+if (!isset($ghostscript_path))
+    {
+    $result = $lang["status-notinstalled"];
+    }
 else
-	{
-	$result=$lang["status-notinstalled"];
-	}
-?><tr><td colspan="2">Ghostscript</td><td><b><?php echo $result?></b></td></tr><?php
-
+    {
+    $ghostscript = get_ghostscript_version();
+    if ($ghostscript["success"]==true)
+        {
+        $result = $lang["status-ok"];
+        }
+    else
+        {
+        $result = $lang["status-fail"] . ": " . $ghostscript["error"];
+        }
+    }
+?><tr><td <?php if ($ghostscript["success"]==false) { ?>colspan="2"<?php } ?>>Ghostscript</td>
+<?php if ($ghostscript["success"]==true) { ?><td><?php echo $ghostscript["version"] ?></td><?php } ?>
+<td><b><?php echo $result?></b></td></tr><?php
 
 # Check Exif extension
 if (function_exists('exif_read_data')) 

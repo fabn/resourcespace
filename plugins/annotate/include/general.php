@@ -201,9 +201,9 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
 		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
-		
-		$command= get_ghostscript_command();
-		$command.= " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=\"".$jpgstoragepath."\" \"".$pdfstoragepath."\"";
+
+        $ghostscript_fullpath = get_utility_path("ghostscript");
+        $command = $ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg($jpgstoragepath) . " " . escapeshellarg($pdfstoragepath);
 		run_command($command);
 		
 		$command=$imagemagick_path . "/bin/convert";
@@ -211,7 +211,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
-		$command.= " -resize 300x300 -quality 90 -colorspace RGB \"".$jpgstoragepath."\" \"".$jpgstoragepath."\"";
+		$command.= " -resize 300x300 -quality 90 -colorspace RGB " . escapeshellarg($jpgstoragepath) ." " . escapeshellarg($jpgstoragepath);
 		run_command($command);
 		return true;
 		}

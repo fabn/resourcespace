@@ -546,7 +546,7 @@ function iptc_return_utf8($text)
  
 function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=false,$previewbased=false,$alternative=-1)
 	{
-	global $imagemagick_path,$ghostscript_path,$preview_generate_max_file_size;
+    global $imagemagick_path, $preview_generate_max_file_size;
 
 	# Debug
 	debug("create_previews(ref=$ref,thumbonly=$thumbonly,extension=$extension,previewonly=$previewonly,previewbased=$previewbased,alternative=$alternative)");
@@ -1613,19 +1613,6 @@ function extract_icc_profile($ref,$extension) {
    if (file_exists($outfile)) { return true; } else { return false; }
 
 }
-
-function get_ghostscript_command()
-	{
-	global $ghostscript_path, $ghostscript_executable;
-
-	$command=$ghostscript_path . '/' . $ghostscript_executable;
-	if (!file_exists($command))
-		$command=$ghostscript_path. '\\' . $ghostscript_executable . '.exe';
-	if (!file_exists($command))
-		exit("Could not find GhostScript '" . $ghostscript_executable . "' utility.'");
-
-	return $command;
-	}
 
 function get_imagemagick_version($array=true){
 	// return version number of ImageMagick, or false if it is not installed or cannot be determined.
