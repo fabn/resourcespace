@@ -125,7 +125,7 @@ function CheckImagemagick()
 	$version=run_command($path . " -version");
 	if (strpos($version,"ImageMagick")===false && strpos($version,"GraphicsMagick")===false)
 		{
-		return str_replace("?", "$version", $lang["executionofconvertfailed"]);
+		return str_replace(array("%command", "%output"), array("convert", $version), $lang["execution_failed"]);
 		}	
 		
 	# Set version
@@ -153,7 +153,7 @@ function get_ffmpeg_version()
             # Not on a Windows server.
             $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
             }
-        return array("version" =>"", "success" => false, "error" => $error_msg);
+        return array("version" => "", "success" => false, "error" => $error_msg);
         }
     else
         {
@@ -161,7 +161,7 @@ function get_ffmpeg_version()
         $version = run_command($ffmpeg_fullpath . " -version");
         if (strpos(strtolower($version), "ffmpeg")===false)
             {
-            return array("version" =>"", "success" => false, "error" => str_replace("?", "$version", $lang["executionofffmpegfailed"]));
+            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("ffmpeg", $version), $lang["execution_failed"]));
             }
 
         # Return result array with version
@@ -188,6 +188,41 @@ function CheckGhostscript()
 
 	return true;
 	}
+
+function get_exiftool_version()
+    {
+    global $config_windows, $exiftool_path, $lang;
+
+    # Check for path
+    $exiftool_fullpath = get_utility_path("exiftool");
+    if ($exiftool_fullpath==false)
+        {
+        if ($config_windows)
+            {
+            # On a Windows server.
+            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
+            }
+        else
+            {
+            # Not on a Windows server.
+            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
+            }
+        return array("version" => "", "success" => false, "error" => $error_msg);
+        }
+    else
+        {
+        # Check execution and return version
+        $version = run_command($exiftool_fullpath . " -ver");
+        if (preg_match("/^([0-9]+)+\.([0-9]+)$/", $version)==false) # E.g. 8.84
+            {
+            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("exiftool", $version), $lang["execution_failed"]));
+            }
+
+        # Return result array with version
+        $s = explode("\n", $version);
+        return array("version" => $s[0], "success" => true, "error" => "");
+        }
+    }
 
 # Check ImageMagick path
 if (isset($imagemagick_path))
@@ -224,7 +259,7 @@ else
         }
     else
         {
-        $result = $ffmpeg["error"];
+        $result = $lang["status-fail"] . ": " . $ffmpeg["error"];
         }
     }
 ?><tr><td <?php if ($ffmpeg["success"]==false) { ?>colspan="2"<?php } ?>>FFmpeg</td>
@@ -262,33 +297,26 @@ else
 	}
 ?><tr><td colspan="2"><?php echo $lang["exif_extension"]?></td><td><b><?php echo $result?></b></td></tr><?php
 
-# Check Exiftool path
+# Check Exiftool
 if (!isset($exiftool_path))
-	{
-	$result=$lang["status-notinstalled"];
-	}
+    {
+    $result = $lang["status-notinstalled"];
+    }
 else
-	{
-	if (get_utility_path("exiftool")!=false)
-		{
-		$result=$lang["status-ok"];
-		}
-	else
-		{
-		if (strtolower(substr(PHP_OS, 0, 3)) === 'win')
-			{
-			# On a Windows server.
-			$result=$lang["status-fail"] . ":<br>" . str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
-			}
-		else
-			{
-			# Not on a Windows server.
-			$result=$lang["status-fail"] . ": " . str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
-			}
-		}
-	}
-
-?><tr><td colspan="2">Exiftool</td><td><b><?php echo $result?></b></td></tr><?php
+    {
+    $exiftool = get_exiftool_version();
+    if ($exiftool["success"]==true)
+        {
+        $result = $lang["status-ok"];
+        }
+    else
+        {
+        $result = $lang["status-fail"] . ": " . $exiftool["error"];
+        }
+    }
+?><tr><td <?php if ($exiftool["success"]==false) { ?>colspan="2"<?php } ?>>Exiftool</td>
+<?php if ($exiftool["success"]==true) { ?><td><?php echo $exiftool["version"] ?></td><?php } ?>
+<td><b><?php echo $result?></b></td></tr><?php
 
 # Check archiver path
 if ($collection_download || isset($zipcommand)) # Only check if it is going to be used.
