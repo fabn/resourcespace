@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120429 för version 3351
+# Senast uppdaterad av Henrik Frizén 20120429 för version 3354
 #
 #
 # User group names (for the default user groups)
@@ -1332,7 +1332,8 @@ $lang["writeaccesstohomeanim"]="Skrivrättighet till katalogen ’" . $homeanim_
 $lang["nowriteaccesstohomeanim"]="Skrivrättighet till katalogen ’" . $homeanim_folder ."’  saknas. Skrivrättighet måste finnas för att tillägget <b>transform</b> ska kunna infoga bilder i startsidans bildspel.";
 $lang["blockedbrowsingoffilestore"]="Åtkomsten till katalogen ’filestore’ är blockerad för webbläsare?";
 $lang["noblockedbrowsingoffilestore"]="Mappen ’filestore’ är inte blockerad för webbläsare. Avlägsna ’Indexes’ från ’Options’ i Apache.";
-$lang["executionofconvertfailed"]="Exekveringen misslyckades &ndash; ett oväntat svar gavs när kommandot ’convert’ exekverades. Svaret var: ”?”.<br>I Windows och IIS&nbsp;6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
+$lang["executionofconvertfailed"]="Exekveringen misslyckades &ndash; ett oväntat svar gavs när convert exekverades. Svaret var: ”?”.<br>I Windows och IIS&nbsp;6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
+$lang["executionofffmpegfailed"]="Exekveringen misslyckades &ndash; ett oväntat svar gavs när ffmpeg exekverades. Svaret var: ”?”.<br>I Windows och IIS&nbsp;6 måste åtkomst ges för kommandon i kommandotolken. Se installationsinstruktionerna i wikin."; # ? will be replaced.
 $lang["exif_extension"]="Exif-utökning";
 $lang["archiver_utility"]="Arkiveringsverktyg";
 $lang["zipcommand_deprecated"]="\$zipcommand bör inte längre användas. Använd istället \$collection_download och \$collection_download_settings.";

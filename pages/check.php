@@ -137,23 +137,36 @@ function CheckImagemagick()
 
 function get_ffmpeg_version()
     {
-    global $lang;
+    global $config_windows, $ffmpeg_path, $lang;
 
     # Check for path
     $ffmpeg_fullpath = get_utility_path("ffmpeg");
-    if ($ffmpeg_fullpath==false) {return false;}
+    if ($ffmpeg_fullpath==false)
+        {
+        if ($config_windows)
+            {
+            # On a Windows server.
+            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
+            }
+        else
+            {
+            # Not on a Windows server.
+            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
+            }
+        return array("version" =>"", "success" => false, "error" => $error_msg);
+        }
     else
         {
         # Check execution and return version
         $version = run_command($ffmpeg_fullpath . " -version");
-        if (strpos(strtolower($version),"ffmpeg")===false)
+        if (strpos(strtolower($version), "ffmpeg")===false)
             {
-            return str_replace("?", "$version", $lang["executionofconvertfailed"]);
+            return array("version" =>"", "success" => false, "error" => str_replace("?", "$version", $lang["executionofffmpegfailed"]));
             }
 
-        # Set version
-        $s=explode("\n",$version);
-        return $ffmpeg_version=$s[0];
+        # Return result array with version
+        $s = explode("\n", $version);
+        return array("version" => $s[0], "success" => true, "error" => "");
         }
     }
 
@@ -197,38 +210,26 @@ else
 <?php if ($imagemagick_version!="") { ?><td><?php echo $imagemagick_version ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
 
-
-# Check FFmpeg path
-$ffmpeg_version = get_ffmpeg_version();
+# Check FFmpeg
 if (!isset($ffmpeg_path))
     {
-    $result=$lang["status-notinstalled"];
+    $result = $lang["status-notinstalled"];
     }
 else
     {
-    if ($ffmpeg_version!=false)
+    $ffmpeg = get_ffmpeg_version();
+    if ($ffmpeg["success"]==true)
         {
-        $result=$lang["status-ok"];
+        $result = $lang["status-ok"];
         }
     else
         {
-        if (strtolower(substr(PHP_OS, 0, 3)) === 'win')
-            {
-            # On a Windows server.
-            $result=$lang["status-fail"] . ":<br>" . str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
-            }
-        else
-            {
-            # Not on a Windows server.
-            $result=$lang["status-fail"] . ": " . str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
-            }
+        $result = $ffmpeg["error"];
         }
     }
-
-?><tr><td <?php if ($ffmpeg_version=="") { ?>colspan="2"<?php } ?>>FFmpeg</td>
-<?php if ($ffmpeg_version!="") { ?><td><?php echo $ffmpeg_version ?></td><?php } ?>
+?><tr><td <?php if ($ffmpeg["success"]==false) { ?>colspan="2"<?php } ?>>FFmpeg</td>
+<?php if ($ffmpeg["success"]==true) { ?><td><?php echo $ffmpeg["version"] ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
-
 
 # Check Ghostscript path
 if (isset($ghostscript_path))

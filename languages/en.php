@@ -1308,6 +1308,7 @@ $lang["nowriteaccesstohomeanim"]="$homeanim_folder not writable. Open permission
 $lang["blockedbrowsingoffilestore"]="Blocked browsing of 'filestore' directory";
 $lang["noblockedbrowsingoffilestore"]="filestore folder appears to be browseable; remove 'Indexes' from Apache 'Options' list.";
 $lang["executionofconvertfailed"]="Execution failed; unexpected output when executing convert command. Output was '?'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki."; # ? will be replaced.
+$lang["executionofffmpegfailed"]="Execution failed; unexpected output when executing ffmpeg command. Output was '?'.<br>If on Windows and using IIS 6, access must be granted for command line execution. Refer to installation instructions in the wiki."; # ? will be replaced.
 $lang["exif_extension"]="EXIF extension";
 $lang["archiver_utility"]="Archiver utility";
 $lang["zipcommand_deprecated"]="Using \$zipcommand is deprecated and replaced by \$collection_download and \$collection_download_settings.";
