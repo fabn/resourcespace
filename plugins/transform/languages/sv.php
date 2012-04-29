@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Transform Plugin
-# Updated by Henrik Frizén 20120220 for svn r3224
+# Updated by Henrik Frizén 20120429 for svn r3351
 # -------
 #
 #
@@ -11,7 +11,7 @@ $lang["log-a"]="Skapade alternativ fil";
 $lang['transform']="Transformera";
 $lang['transformimage']="Transformera bild";
 $lang['transformed']="Transformerad";
-$lang['transformblurb']="Ange eventuell beskärning genom att rita en rektangulär markering direkt på bilden. Du kan sedan flytta och ändra storlek på markeringen. När du är klar anger du ett filnamn för den nya beskurna bilden och klickar på <b>Spara som alternativ fil</b> eller <b>Hämta</b>. Du kan även ange en bredd och/eller höjd för att skala om den beskurna bilden.<br/><br/><strong>Formuläret nedan kan lämnas tomt.</strong> Om du inte anger en bredd och höjd kommer markeringens bredd och höjd att användas.";
+$lang['transformblurb']="Ange eventuell beskärning genom att rita en rektangulär markering direkt på bilden. Du kan sedan flytta och ändra storlek på markeringen. När du är klar anger du ett filnamn för den nya beskurna bilden och klickar på <b>Spara&nbsp;som&nbsp;alternativ&nbsp;fil</b> eller <b>Hämta</b>. Du kan även ange en bredd och/eller höjd för att skala om den beskurna bilden.<br/><br/><strong>Formuläret nedan kan lämnas tomt.</strong> Om du inte anger en bredd och höjd kommer markeringens bredd och höjd att användas.";
 $lang['width']="Bredd";
 $lang['height']="Höjd";
 $lang['px']="px";
@@ -55,7 +55,7 @@ $lang['resources_transformed_successfully-2']="%qty material transformerade."; #
 $lang['errors-1']="1 fel.";
 $lang['errors-2']="%qty fel."; # %qty will be replaced with the quantity of errors
 
-$lang['transform_configuration']="Transform &ndash; inställningar";
+$lang['transform_configuration']="Transformera &ndash; inställningar";
 $lang['cropper_debug']="Felsökningsläge";
 $lang['output_formats']="Utdataformat";
 $lang['input_formats']="Indataformat";
@@ -63,4 +63,4 @@ $lang['custom_filename']="Egna filnamn";
 $lang['allow_rotation']="Tillåt rotation";
 $lang['allow_transform_original']="Tillåt transformation av original";
 $lang['use_repage']="Använd argumentet ’repage’";
-$lang['enable_batch_transform']="Aktivera transformering i grupp";
+$lang['enable_batch_transform']="Aktivera verktyget <b>Transformera i grupp</b>";

@@ -1,7 +1,7 @@
 <?php
 # Swedish
 # Language File for the Flickr Theme Publish Plugin
-# Updated by Henrik Frizén 20111127 for svn r3074
+# Updated by Henrik Frizén 20120429 for svn r3351
 # -------
 #
 #
@@ -21,7 +21,7 @@ $lang["unpublished-2"]="%number opublicerade"; # e.g. 17 unpublished
 $lang["flickrloggedinas"]="Du kommer att publicera på Flickr-kontot";
 
 $lang["flickrnotloggedin"]="Logga in på Flickr-kontot (målkontot)";
-$lang["flickronceloggedinreload"]="Klicka på <b>Läs om</b> när du har loggat in och autentiserat programmet.";
+$lang["flickronceloggedinreload"]="Klicka på <b>Läs&nbsp;om</b> när du har loggat in och autentiserat programmet.";
 
 $lang["flickr_publish_as"]="Publicera:";
 $lang["flickr_public"]="offentligt";

@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120425 för version 3346
+# Senast uppdaterad av Henrik Frizén 20120429 för version 3351
 #
 #
 # User group names (for the default user groups)
@@ -381,7 +381,7 @@ $lang["treeobjecttype-resource_type"]=$lang["resourcetype"]="Materialtyp";
 $lang["resourcetypes"]="Materialtyper";
 $lang["deleteresource"]="Ta bort material";
 $lang["downloadresource"]="Hämta material";
-$lang["rightclicktodownload"]="Högerklicka på denna länk och välj <b>Spara mål som</b> för att hämta materialet."; # For Opera/IE browsers only
+$lang["rightclicktodownload"]="Högerklicka på denna länk och välj <b>Spara&nbsp;mål&nbsp;som</b> för att hämta materialet."; # For Opera/IE browsers only
 $lang["downloadinprogress"]="Hämtning pågår";
 $lang["editmultipleresources"]="Redigera material i grupp";
 $lang["editresource"]="Redigera material";
@@ -952,7 +952,7 @@ $lang["setup-apiscramblekey"]="Skramlingsnyckel för api:et:";
 $lang["setup-paths"]="Sökvägar";
 $lang["setup-pathsdetail"]="Ange sökväg, utan efterföljande snedstreck, för varje program. Lämna sökvägen tom för att inaktivera ett program. En del sökvägar har upptäckts och fyllts i automatiskt.";
 $lang["setup-applicationname"]="Programmets namn:";
-$lang["setup-basicsettingsfooter"]="Obs! Alla <strong>obligatoriska</strong> inställningar är samlade på den här sidan. Om du inte är intresserad av att kontrollera de avancerade inställningarna kan du klicka på <b>Starta installation</b>.";
+$lang["setup-basicsettingsfooter"]="Obs! Alla <strong>obligatoriska</strong> inställningar är samlade på den här sidan. Om du inte är intresserad av att kontrollera de avancerade inställningarna kan du klicka på <b>Starta&nbsp;installation</b>.";
 $lang["setup-if_mysqlserver"]="Ip-adressen eller <abbr title=\"Fullständigt kvalificerat domännamn\">fqdn</abbr> för MySQL-servern. Ange ’localhost’ om MySQL är installerad på samma server som webbservern.";
 $lang["setup-if_mysqlusername"]="Användarnamnet som ska användas för att ansluta till MySQL-servern. Användaren måste ha rättighet att skapa tabeller i databasen.";
 $lang["setup-if_mysqlpassword"]="Lösenordet för MySQL-användaren.";
@@ -1173,10 +1173,10 @@ $lang["downloadreport"]="Hämta rapport";
 #Bug Report Page
 $lang['reportbug']="Förbered en buggrapport till utvecklarna av ResourceSpace";
 $lang['reportbug-detail']="Följande information har sammanställts till buggrapporten. Du kommer i nästa steg att kunna redigera all data innan du skickar in rapporten.";
-$lang['reportbug-login']="&gt; Obs! Klicka här för att logga in i bugghanteringssystemet <i>innan</i> du klickar på <b>Förbered buggrapport</b>";
+$lang['reportbug-login']="&gt; Obs! Klicka här för att logga in i bugghanteringssystemet <i>innan</i> du klickar på <b>Förbered&nbsp;buggrapport</b>";
 $lang['reportbug-preparebutton']="Förbered buggrapport";
 
-$lang["enterantispamcode"]="<strong>Inloggningstest</strong> <sup>*</sup><br />Fyll i koden:";
+$lang["enterantispamcode"]="<strong>Robotfilter</strong> <sup>*</sup><br />Fyll i koden:";
 
 $lang["groupaccess"]="Gruppåtkomst";
 $lang["plugin-groupsallaccess"]="Detta tillägg är aktiverat för alla grupper";
@@ -1250,7 +1250,7 @@ $lang["nodownloadsavailable"]="Det finns inga hämtningar tillgängliga för det
 $lang["proceedtocheckout"]="Gå till kassan";
 $lang["totalprice"]="Totalsumma";
 $lang["price"]="Pris";
-$lang["waitingforpaymentauthorisation"]="Vi har ännu inte fått betalningsuppdraget. Vänta en kort stund och klicka sedan på <b>Läs om</b>.";
+$lang["waitingforpaymentauthorisation"]="Vi har ännu inte fått betalningsuppdraget. Vänta en kort stund och klicka sedan på <b>Läs&nbsp;om</b>.";
 $lang["reload"]="Läs om";
 $lang["downloadpurchaseitems"]="Hämta köpta artiklar";
 $lang["downloadpurchaseitemsnow"]="Använd länkarna nedan för att hämta dina köpta artiklar direkt.<br><br>Lämna inte den här sidan innan du har hämtat alla artiklar.";
@@ -1413,7 +1413,7 @@ $lang["can_create_resources_and_upload_files-general_users"]="Kan skapa material
 $lang["can_delete_resources"]="Kan ta bort material<br>(till vilka användaren har skrivrättighet)";
 $lang["can_manage_archive_resources"]="Kan hantera arkivmaterial";
 $lang["can_tag_resources_using_speed_tagging"]="Kan tagga material med Snabbtaggning<br>(måste vara aktiverat i ’config.php’)";
-$lang["enable_bottom_collection_bar"]="Aktivera panelen <b>Mina samlingar</b> i nederkant av skärmen";
+$lang["enable_bottom_collection_bar"]="Aktivera panelen <b>Mina&nbsp;samlingar</b> i nederkant av skärmen";
 $lang["can_publish_collections_as_themes"]="Kan publicera samlingar som teman";
 $lang["can_see_all_theme_categories"]="Kan se alla temakategorier";
 $lang["can_see_theme_category"]="Kan se temakategori";
