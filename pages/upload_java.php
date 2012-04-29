@@ -146,7 +146,7 @@ if (array_key_exists("File0",$_FILES))
 			}
 
 		chmod($path,0777);
-		$file_size=@filesize($path);
+		$file_size = @filesize_unlimited($path);
 		
 		# Save alternative file data.
 		sql_query("update resource_alt_files set file_name='" . escape_check($filename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now() where resource='$alternative' and ref='$aref'");

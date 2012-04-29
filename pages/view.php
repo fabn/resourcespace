@@ -532,7 +532,7 @@ if (isset($flv_download) && $flv_download)
 	?>
 	<tr class="DownloadDBlend">
 	<td><h2><?php echo (isset($ffmpeg_preview_download_name)) ? $ffmpeg_preview_download_name : str_replace_formatted_placeholder("%extension", $ffmpeg_preview_extension, $lang["cell-fileoftype"]); ?></h2></td>
-	<td><?php echo formatfilesize(filesize($flvfile))?></td>
+	<td><?php echo formatfilesize(filesize_unlimited($flvfile))?></td>
 	<td class="DownloadButton">
 	<?php if (!$direct_download || $save_as){?>
 		<a href="terms.php?ref=<?php echo $ref?>&k=<?php echo $k?>&url=<?php echo urlencode("pages/download_progress.php?ref=" . $ref . "&ext=" . $ffmpeg_preview_extension . "&size=pre&k=" . $k . "&search=" . urlencode($search) . "&offset=" . $offset . "&archive=" . $archive . "&sort=".$sort."&order_by=" . urlencode($order_by))?>"><?php echo $lang["action-download"] ?></a>

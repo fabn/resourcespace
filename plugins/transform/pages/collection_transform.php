@@ -111,7 +111,7 @@ if (count($resources) == 0){
 			$command .= " \"$newpath\"";
 			//echo "   $command<br>";
 			$shell_result = run_command($command);
-			if (file_exists($newpath) && filesize($newpath) > 0){
+			if (file_exists($newpath) && filesize_unlimited($newpath) > 0){
 				// success!
 				if (!rename($newpath,$path)){
 					echo " " . str_replace("%res", $resource, $lang['error-unable-to-rename']) . "<br />\n";
@@ -121,7 +121,7 @@ if (count($resources) == 0){
 
 
 					// get final pixel dimensions of resulting file
-					$newfilesize = filesize($path);
+					$newfilesize = filesize_unlimited($path);
 					$newfiledimensions = getimagesize($path);
 					$newfilewidth = $newfiledimensions[0];
 					$newfileheight = $newfiledimensions[1];

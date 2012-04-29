@@ -271,7 +271,7 @@ function extract_exif_comment($ref,$extension="")
 			if (count($dimensions_resolution_unit)==3)
 				{
 				$dru=$dimensions_resolution_unit;
-				$filesize=filesize($image); 
+				$filesize=filesize_unlimited($image); 
 				$wh=explode("x",$dru[0]);
 				$width=$wh[0];
 				$height=$wh[1];
@@ -591,7 +591,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	# If configured, make sure the file is within the size limit for preview generation
 	if (isset($preview_generate_max_file_size))
 		{
-		$filesize=filesize($file)/(1024*1024);# Get filesize in MB
+		$filesize = filesize_unlimited($file)/(1024*1024);# Get filesize in MB
 		if ($filesize>$preview_generate_max_file_size) {return false;}
 		}
 	
@@ -626,7 +626,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		
 				if (file_exists($apath)){
 					# Update the database with the new file details.
-					$file_size=filesize($apath);
+					$file_size = filesize_unlimited($apath);
 					sql_query("update resource_alt_files set file_name='" . escape_check($image_alternatives[$n]["filename"] . "." . $image_alternatives[$n]["target_extension"]) . "',file_extension='" . escape_check($image_alternatives[$n]["target_extension"]) . "',file_size='" . $file_size . "',creation_date=now() where ref='$aref'");
 				}
 			}
@@ -1346,7 +1346,7 @@ function generate_file_checksum($resource,$extension,$anyway=false)
                         # Generate the ID
                         if ($file_checksums_fullfile){
                             # Fetch the string used to generate the unique ID
-                            $use=filesize($path) . "_" . file_get_contents($path,null,null,0,50000);
+                            $use=filesize_unlimited($path) . "_" . file_get_contents($path,null,null,0,50000);
                             $checksum=md5($use);
                         } else {
                             $checksum=md5_file($path);
@@ -1604,7 +1604,7 @@ function extract_icc_profile($ref,$extension) {
 
    $cmdout= run_command("$command $infile $outfile $stderrclause ");
    
-   if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize($outfile) == 0){
+   if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize_unlimited($outfile) == 0){
    // the icc profile extraction failed. So delete file.
    if (file_exists($outfile)){ unlink ($outfile); };
    return false;

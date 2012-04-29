@@ -1321,7 +1321,7 @@ function save_alternative_file($resource,$ref)
 			else
 				{
 				chmod($path,0777);
-				$file_size=@filesize($path);
+				$file_size = @filesize_unlimited($path);
 				$sql.=",file_name='" . escape_check($filename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now()";
 				}
 			

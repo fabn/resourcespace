@@ -201,7 +201,7 @@ if (isset($ffmpeg_alternatives))
 			if (file_exists($apath))
 				{
 				# Update the database with the new file details.
-				$file_size=filesize($apath);
+				$file_size = filesize_unlimited($apath);
 				sql_query("update resource_alt_files set file_name='" . escape_check($ffmpeg_alternatives[$n]["filename"] . "." . $ffmpeg_alternatives[$n]["extension"]) . "',file_extension='" . escape_check($ffmpeg_alternatives[$n]["extension"]) . "',file_size='" . $file_size . "',creation_date=now() where ref='$aref'");
 				// add this filename to be added to resource.ffmpeg_alt_previews
 				if (isset($ffmpeg_alternatives[$n]['alt_preview']) && $ffmpeg_alternatives[$n]['alt_preview']==true){

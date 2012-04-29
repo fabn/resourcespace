@@ -268,7 +268,7 @@ function ProcessFolder($folder)
 								# Find extension
 								$ext=explode(".",$altfile);$ext=$ext[count($ext)-1];
 								
-								$aref=add_alternative_file($r,$altfile,str_replace("?",strtoupper($ext),$lang["originalfileoftype"]),$altfile,$ext,filesize($altpath . "/" . $altfile));
+								$aref = add_alternative_file($r, $altfile, str_replace("?",strtoupper($ext),$lang["originalfileoftype"]), $altfile, $ext, filesize_unlimited($altpath . "/" . $altfile));
 								$path=get_resource_path($r, true, "", true, $ext, -1, 1, false, "", $aref);
 								rename ($altpath . "/" . $altfile,$path); # Move alternative file
 								}

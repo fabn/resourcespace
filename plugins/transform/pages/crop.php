@@ -295,7 +295,7 @@ if ($cropper_debug){
 
 
 // get final pixel dimensions of resulting file
-$newfilesize = filesize($newpath);
+$newfilesize = filesize_unlimited($newpath);
 $newfiledimensions = getimagesize($newpath);
 $newfilewidth = $newfiledimensions[0];
 $newfileheight = $newfiledimensions[1];
@@ -372,7 +372,7 @@ if (!$download && !$original && getval("slideshow","")==""){
     $origalt  = add_alternative_file($ref,$origalttitle,$origaltdesc);
     $origaltpath = get_resource_path($ref, true, "", true, $orig_ext, -1, 1, false, "", $origalt);
     $mporig =  round(($origwidth*$origheight)/1000000,2);
-    $filesizeorig = filesize($originalpath);
+    $filesizeorig = filesize_unlimited($originalpath);
     rename($originalpath,$origaltpath);
     $result = sql_query("update resource_alt_files set file_name='{$origfilename}',file_extension='$orig_ext',file_size = '$filesizeorig' where ref='$origalt'");
     $neworigpath = get_resource_path($ref,true,'',false,$new_ext);

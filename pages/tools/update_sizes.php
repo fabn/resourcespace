@@ -19,7 +19,7 @@ if (count($resourceinfo)>0)
 	{
 	$extension = $resourceinfo[0]['file_extension'];
 	$file=get_resource_path($ref,true,"",false,$extension);
-	$filesize=@filesize($file);
+	$filesize = @filesize_unlimited($file);
 	if (isset($imagemagick_path))
 		{
 		$prefix = '';

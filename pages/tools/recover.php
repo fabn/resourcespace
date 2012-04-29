@@ -204,7 +204,7 @@ function recover_resource_files($id,$res,$meta,$alts){
 
 		foreach ($alts as $altid=>$altpath){
 			$filext = pathinfo($altpath, PATHINFO_EXTENSION);
-			$filesize = filesize($altpath);
+			$filesize = filesize_unlimited($altpath);
 			$newid = add_alternative_file($id,"$altid.$filext",'','',$filext,$filesize);
 			$newpath = get_resource_path($id,true,"",false,$filext,-1,1,false,"",$newid);
 			if (!copy ($altpath,$newpath)){

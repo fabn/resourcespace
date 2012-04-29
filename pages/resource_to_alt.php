@@ -74,7 +74,7 @@ function alt_from_resource($source,$target,$name='',$delete=false){
 		return false;
 	} else {
 
-		$file_size = filesize($srcpath);
+		$file_size = filesize_unlimited($srcpath);
 		$altid = add_alternative_file($target,$name,$description="",$file_name="",$file_extension="",$file_size,$alt_type='');
 		$newpath = get_resource_path($target,true,"",true,$srcext,-1,1,false,'',$altid);
 		copy($srcpath,$newpath);

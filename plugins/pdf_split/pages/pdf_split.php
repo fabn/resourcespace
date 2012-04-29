@@ -64,7 +64,7 @@ if (getval("method","")!="")
 				create_previews($ref,false,"pdf",false,false,$aref);
 				}
 			# Update size.
-			sql_query("update resource_alt_files set file_size='" . filesize($copy_path) . "' where ref='$aref'");
+			sql_query("update resource_alt_files set file_size='" . filesize_unlimited($copy_path) . "' where ref='$aref'");
 			}
 		else
 			{
