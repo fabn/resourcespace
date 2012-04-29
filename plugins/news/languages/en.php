@@ -1,6 +1,6 @@
 <?php
 # English
-# Language File for news plugin
+# Language File for the News Plugin
 # -------
 # Note: when translating to a new language, preserve the original case if possible.
 
@@ -12,4 +12,4 @@ $lang["news_search"]="Search News Items";
 $lang["news_addtitle"]="Enter headline that will appear on the home page";
 $lang["news_headline"]="Headline";
 $lang["news_body"]="Body content";
-
+$lang["news_nonewmessages"]="No new messages";
