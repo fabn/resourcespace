@@ -271,7 +271,7 @@ function search_public_collections($search="", $order_by="name", $sort="ASC", $e
 		$groups=array($usergroup); # Start with user's own group
 		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent='$usergroup'")); # Children
 		$groups=array_merge($groups,sql_array("select parent value from usergroup where ref='$usergroup'")); # Parent
-		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent=(select parent from usergroup where ref='$usergroup')")); # Siblings (same parent)
+		$groups=array_merge($groups,sql_array("select ref value from usergroup where parent<>0 and parent=(select parent from usergroup where ref='$usergroup')")); # Siblings (same parent)
 		
 		$sql.=" and u.usergroup in ('" . join ("','",$groups) . "')";
 		}
