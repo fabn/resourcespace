@@ -265,6 +265,7 @@ else
 if (!isset($ffmpeg_path))
     {
     $result = $lang["status-notinstalled"];
+    $ffmpeg["success"] = false;
     }
 else
     {
