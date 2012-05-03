@@ -12,10 +12,8 @@ function generate_transform_preview($ref){
 	$tmpdir = get_temp_dir();
 
         // get imagemagick path
-        $command=$imagemagick_path . "/bin/convert";
-        if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-        if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-        if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}
+        $command = get_utility_path("im-convert");
+        if ($command==false) {exit("Could not find ImageMagick 'convert' utility.");}
 
         $orig_ext = sql_value("select file_extension value from resource where ref = '$ref'",'');
         $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
