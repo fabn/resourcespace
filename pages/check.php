@@ -32,6 +32,7 @@ function ResolveKB($value)
   <br/><br/>
 <table class="InfoTable">
 <?php
+
 # Check PHP version
 $phpversion=phpversion();
 $phpinifile=php_ini_loaded_file();
@@ -84,15 +85,13 @@ $upload_max_filesize=ini_get("upload_max_filesize");
 if (ResolveKB($upload_max_filesize)<(100*1024)) {$result=$lang["status-warning"] . ": " . str_replace("?", "100M", $lang["shouldbeormore"]);} else {$result=$lang["status-ok"];}
 ?><tr><td><?php echo str_replace("?", "upload_max_filesize", $lang["phpinivalue"]); ?></td><td><?php echo $upload_max_filesize?></td><td><b><?php echo $result?></b></td></tr><?php
 
-
 # Check write access to filestore
 $success=is_writable($storagedir);
 if ($success===false) {$result=$lang["status-fail"] . ": " . $lang["nowriteaccesstofilestore"];} else {$result=$lang["status-ok"];}
-?><tr><td colspan="2"><?php echo $lang["writeaccesstofilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
+?><tr><td colspan="2"><?php echo $lang["writeaccesstofilestore"] ?></td><td><b><?php echo $result?></b></td></tr><?php
 
-<?php
+# Check write access to homeanim (if transform plugin is installed)
 if (in_array("transform",$plugins)){
-# Check write access to homeanim
 $success=is_writable(dirname(__FILE__) . "/../".$homeanim_folder);
 if ($success===false) {$result=$lang["status-fail"] . ": " . $lang["nowriteaccesstohomeanim"];} else {$result=$lang["status-ok"];}
 ?><tr><td colspan="2"><?php echo $lang["writeaccesstohomeanim"] ?></td><td><b><?php echo $result?></b></td></tr>
@@ -111,29 +110,43 @@ else
 ?><tr><td colspan="2"><?php echo $lang["blockedbrowsingoffilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
 
 <?php
-$imagemagick_version="";
-function CheckImagemagick()
-	{
- 	global $imagemagick_path, $lang;
+function get_imagemagick_version()
+    {
+    global $config_windows, $imagemagick_path, $lang;
  
- 	# Check for path
- 	$path=$imagemagick_path . "/convert";
-	if (!file_exists($path)) {$path=$imagemagick_path . "/convert.exe";}
-	if (!file_exists($path)) {return false;}
-	
-	# Check execution and return version
-	$version=run_command($path . " -version");
-	if (strpos($version,"ImageMagick")===false && strpos($version,"GraphicsMagick")===false)
-		{
-		return str_replace(array("%command", "%output"), array("convert", $version), $lang["execution_failed"]);
-		}	
-		
-	# Set version
-	$s=explode("\n",$version);
-	global $imagemagick_version;$imagemagick_version=$s[0];
-	
-	return true;
-	}
+    # Check for path
+    $convert_fullpath = get_utility_path("im-convert");
+    if ($convert_fullpath==false)
+        {
+        if ($config_windows)
+            {
+            # On a Windows server.
+            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $imagemagick_path . "\\convert.exe", $lang["softwarenotfound"]);
+            }
+        else
+            {
+            # Not on a Windows server.
+            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($imagemagick_path) . "/convert", $lang["softwarenotfound"]);
+            }
+        return array("name" => "ImageMagick/GraphicsMagick", "version" =>"", "success" => false, "error" => $error_msg);
+        }
+    else
+        {
+        # Check execution and find out name and version
+        $version = run_command($convert_fullpath . " -version");
+        $name = "";
+        if (strpos($version,"ImageMagick")==true) {$name = "ImageMagick";}
+        if (strpos($version,"GraphicsMagick")==true) {$name = "GraphicsMagick";}
+        if ($name=="")
+            {
+            return array("name" => "ImageMagick/GraphicsMagick", "version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("convert", $version), $lang["execution_failed"]));
+            }
+        
+        # Return result array with name and version
+        $s = explode("\n",$version);
+        return array("name" => $name, "version" =>$s[0], "success" => true, "error" => "");
+        }
+    }
 
 function get_ffmpeg_version()
     {
@@ -141,6 +154,7 @@ function get_ffmpeg_version()
 
     # Check for path
     $ffmpeg_fullpath = get_utility_path("ffmpeg");
+
     if ($ffmpeg_fullpath==false)
         {
         if ($config_windows)
@@ -240,25 +254,27 @@ function get_exiftool_version()
         }
     }
 
-# Check ImageMagick path
-if (isset($imagemagick_path))
-	{	 
-	$result=CheckImagemagick();
-	if ($result===true)
-		{
-		$result=$lang["status-ok"];
-		}
-	else
-		{
-		$result=$lang["status-fail"] . ": " . $result;
-		}
-	}
+# Check ImageMagick
+if (!isset($imagemagick_path))
+    { 
+    $result = $lang["status-notinstalled"];
+    $imagemagick["name"] = "ImageMagick/GraphicsMagick";
+    $imagemagick["success"] = false;
+    }
 else
-	{
-	$result=$lang["status-notinstalled"];
-	}
-?><tr><td <?php if ($imagemagick_version=="") { ?>colspan="2"<?php } ?>>ImageMagick</td>
-<?php if ($imagemagick_version!="") { ?><td><?php echo $imagemagick_version ?></td><?php } ?>
+    {
+    $imagemagick = get_imagemagick_version();
+    if ($imagemagick["success"]==true)
+        {
+        $result = $lang["status-ok"];
+        }
+    else
+        {
+        $result = $imagemagick["error"];
+        }
+    }
+?><tr><td <?php if ($imagemagick["success"]==false) { ?>colspan="2"<?php } ?>><?php echo $imagemagick["name"] ?></td>
+<?php if ($imagemagick["success"]==true) { ?><td><?php echo $imagemagick["version"] ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
 
 # Check FFmpeg
@@ -336,7 +352,6 @@ else
 ?><tr><td <?php if ($exiftool["success"]==false) { ?>colspan="2"<?php } ?>>Exiftool</td>
 <?php if ($exiftool["success"]==true) { ?><td><?php echo $exiftool["version"] ?></td><?php } ?>
 <td><b><?php echo $result?></b></td></tr><?php
-
 # Check archiver path
 if ($collection_download || isset($zipcommand)) # Only check if it is going to be used.
     {

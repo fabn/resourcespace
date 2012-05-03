@@ -22,17 +22,16 @@ if (count($resourceinfo)>0)
 	$filesize = @filesize_unlimited($file);
 	if (isset($imagemagick_path))
 		{
+        # Check ImageMagick identify utility.
+        $identify_fullpath = get_utility_path("im-identify");
+        if ($identify_fullpath==false) {exit("Could not find ImageMagick 'identify' utility.");}
+
 		$prefix = '';
 		# Camera RAW images need prefix
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
-	
-		# Locate imagemagick.
-		$identcommand=$imagemagick_path . "/bin/identify";
-		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "/identify";}
-		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
-		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
+
 		# Get image's dimensions.
-		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
+        $identcommand = $identify_fullpath . ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 		$identoutput=run_command($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 		@list(,$sw,$sh) = $smatches;

@@ -299,7 +299,6 @@ for ($n=0;$n<count($result);$n++){
 #Make AJAX preview?:
 	if ($preview==true && isset($imagemagick_path)) 
 		{
-		# Since get_temp_dir() method does this check, omit: if(!is_dir($storagedir."/tmp")){mkdir($storagedir."/tmp",0777);}
 		if (file_exists(get_temp_dir() . "/contactsheetrip.jpg")){unlink(get_temp_dir() . "/contactsheetrip.jpg");}
 		if (file_exists(get_temp_dir() . "/contactsheet.jpg")){unlink(get_temp_dir() . "/contactsheet.jpg");}
 		if (file_exists(get_temp_dir() . "/contactsheet.pdf")){unlink(get_temp_dir() . "/contactsheet.pdf");}
@@ -308,19 +307,16 @@ for ($n=0;$n<count($result);$n++){
 		
 		# Set up  
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
-		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
-		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
+		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path); # Path 
 
         $ghostscript_fullpath = get_utility_path("ghostscript");
         $command = ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf");
 		run_command($command);
-		
-		$command=$imagemagick_path . "/bin/convert";
-		if (!file_exists($command)) {$command=$imagemagick_path . "/convert.exe";}
-		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
-		
-		$command.= " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace RGB \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"";
+
+        $convert_fullpath = get_utility_path("im-convert");
+        if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
+
+        $command = $convert_fullpath . " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace RGB \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"";
 		run_command($command);
 		exit();
 		}

@@ -596,11 +596,9 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 		}
 	
 	# Locate imagemagick.
-	$command=$imagemagick_path . "/bin/convert";
-	if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-	if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-	if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
-	
+    $convert_fullpath = get_utility_path("im-convert");
+    if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
+
 	# Handle alternative image file generation.
 	global $image_alternatives;
 	if (isset($image_alternatives) && $alternative==-1){
@@ -621,8 +619,8 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				$apath=get_resource_path($ref,true,"",true,$image_alternatives[$n]["target_extension"],-1,1,false,"",$aref);
 				
 				# Process the image
-				$shell_exec_cmd = $command . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
-				$output=run_command($shell_exec_cmd);
+                $command = $convert_fullpath . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
+                $output = run_command($command);
 
 				if (file_exists($apath)){
 					# Update the database with the new file details.
@@ -793,13 +791,11 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 		if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
 		# Locate imagemagick.
-		$identcommand=$imagemagick_path . "/bin/identify";
-		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "/identify";}
-		if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
-		if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
-		# Get image's dimensions.
-		$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
+        $identify_fullpath = get_utility_path("im-identify");
+        if ($identify_fullpath==false) {exit("Could not find ImageMagick 'identify' utility at location '$imagemagick_path'.");}
 
+		# Get image's dimensions.
+		$identcommand = $identify_fullpath . ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 		$identoutput=run_command($identcommand);
 		preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				if ((@list(,$sw,$sh) = $smatches)===false) { return false; }
@@ -818,19 +814,17 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			if(file_exists($scr_path)){$file=$scr_path;}
 			
 			# Locate imagemagick.
-			$command=$imagemagick_path . "/bin/convert";
-			if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-			if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-			if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
-			
+            $convert_fullpath = get_utility_path("im-convert");
+            if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'.");}
+
 			if( $prefix == "cr2:" || $prefix == "nef:" ) {
 			    $flatten = "";
 			} else {
 			    $flatten = "-flatten";
 			}
-			
-			$command .= ' '. escapeshellarg($file) .'[0] +matte ' . $flatten . ' -quality ' . $imagemagick_quality;
-			
+
+            $command = $convert_fullpath . ' '. escapeshellarg($file) .'[0] +matte ' . $flatten . ' -quality ' . $imagemagick_quality;
+
 			# fetch target width and height
 			$tw=$ps[$n]["width"];$th=$ps[$n]["height"];
 			$id=$ps[$n]["id"];
@@ -1554,11 +1548,9 @@ function AutoRotateImage ($src_image){
 			      // note that it would be theoretically possible to implement this
                               // with a combination of exiftool and GD image rotation functions.
 	}
-        # Locate imagemagick.
-        $command=$imagemagick_path . "/bin/convert";
-        if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-        if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-        if (!file_exists($command)) {return false;}
+    # Locate imagemagick.
+    $convert_fullpath = get_utility_path("im-convert");
+    if ($convert_fullpath==false) {return false;}
 
 	$exploded_src = explode('.',$src_image);
 	$ext = $exploded_src[count($exploded_src)-1];
@@ -1572,7 +1564,7 @@ function AutoRotateImage ($src_image){
 	$new_image = $noext . '-autorotated.' . $ext ;
 	$src_image = $src_image;
 
-	$command .= ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
+    $command = $convert_fullpath . ' ' . escapeshellarg($src_image) . ' -auto-orient ' .  escapeshellarg($new_image);
 	run_command($command);
 	if (file_exists($new_image)){
 		unlink($src_image);
@@ -1585,12 +1577,11 @@ function AutoRotateImage ($src_image){
 	
 
 function extract_icc_profile($ref,$extension) {
-   global $config_windows, $imagemagick_path;
+   global $config_windows;
+
    # Locate imagemagick, or fail this if it isn't installed
-   $command=$imagemagick_path . "/bin/convert";
-   if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-   if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-   if (!file_exists($command)) {return false;}
+   $convert_fullpath = get_utility_path("im-convert");
+   if ($convert_fullpath==false) {return false;}
 
    if ($config_windows){ $stderrclause = ''; } else { $stderrclause = '2>&1'; }
 
@@ -1602,7 +1593,7 @@ function extract_icc_profile($ref,$extension) {
       unlink($outfile);
    }
 
-   $cmdout= run_command("$command $infile $outfile $stderrclause ");
+   $cmdout = run_command("$convert_fullpath $infile $outfile $stderrclause");
    
    if ( preg_match("/no color profile is available/",$cmdout) || !file_exists($outfile) ||filesize_unlimited($outfile) == 0){
    // the icc profile extraction failed. So delete file.
@@ -1617,13 +1608,12 @@ function extract_icc_profile($ref,$extension) {
 function get_imagemagick_version($array=true){
 	// return version number of ImageMagick, or false if it is not installed or cannot be determined.
 	// will return an array of major/minor/version/patch if $array is true, otherwise just the version string
-	global $imagemagick_path;
-	$command=$imagemagick_path . "/bin/convert";
-	if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-   	if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-   	if (!file_exists($command)) {return false;}
 
-	$versionstring = shell_exec($command . " --version");
+    # Locate imagemagick, or return false if it isn't installed
+    $convert_fullpath = get_utility_path("im-convert");
+    if ($convert_fullpath==false) {return false;}
+
+    $versionstring = run_command($convert_fullpath . " --version");
 	// example: 
 	//          Version: ImageMagick 6.5.0-0 2011-02-18 Q16 http://www.imagemagick.org
         //          Copyright: Copyright (C) 1999-2009 ImageMagick Studio LLC

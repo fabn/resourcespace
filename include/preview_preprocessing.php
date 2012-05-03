@@ -27,9 +27,7 @@ else
 # Set up ImageMagick
 
 putenv("MAGICK_HOME=" . $imagemagick_path); 
-putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
-putenv("PATH=/bin:" . $ghostscript_path . ":" . $imagemagick_path . ":" . 
-$imagemagick_path . "/bin"); # Path
+putenv("PATH=/bin:" . $ghostscript_path . ":" . $imagemagick_path); # Path
 
 if ($alternative==-1)
 	{
@@ -43,10 +41,8 @@ if (file_exists($target)) {unlink($target);}
 
 
 # Locate imagemagick.
- $command=$imagemagick_path . "/bin/convert";
- if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
- if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
- if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility. $command'");}	
+$convert_fullpath = get_utility_path("im-convert");
+if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
 
 debug ("Starting preview preprocessing. File extension is $extension.");
 
@@ -148,7 +144,7 @@ if ($exiftool_fullpath!=false)
 				}
 			// process jpgs as a pdf so the existing pdf paging code can be used.	
 			$file=get_resource_path($ref,true,"",false,"pdf");		
-			$jpg2pdfcommand=$command . " ".$pagescommand." " . $file; 
+			$jpg2pdfcommand = $convert_fullpath . " ".$pagescommand." " . $file; 
 			$output=run_command($jpg2pdfcommand);
 			for ($x=0;$x<$n;$x++)
 				{
@@ -192,8 +188,9 @@ if ($extension=="psd" && !isset($newfile))
 global $psd_transparency_checkerboard;
 if ($extension=="psd" && !isset($newfile) && $psd_transparency_checkerboard)
 	{
-	global $imagemagick_path;
-	$wait=run_command($imagemagick_path."/composite  -compose Dst_Over -tile pattern:checkerboard ".escapeshellarg($file)." ".$target);
+    $composite_fullpath = get_utility_path("im-composite");
+    $wait = run_command($composite_fullpath . " -compose Dst_Over -tile pattern:checkerboard ".escapeshellarg($file)." ".$target);
+
 	if (file_exists($target)){
 		$newfile=$target;
 	}
@@ -272,13 +269,12 @@ if (($extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($new
 				$orientation=get_image_orientation($file);
 				if ($orientation!=0)
 					{
-					$command=$imagemagick_path . "/mogrify";
-					$command .= ' -rotate +' .$orientation.' '. $target ;
-					$wait=run_command($command);
-					//imagemagick is much faster than this:
-					//$source = imagecreatefromjpeg($target);
-					//$source=AltImageRotate($source,$orientation);
-					//imagejpeg($source,$target,95);
+                    $mogrify_fullpath = get_utility_path("im-mogrify");
+                    if ($mogrify_fullpath!=false)
+                        {
+                        $command = $mogrify_fullpath . ' -rotate +' . $orientation .' '. $target;
+                        $wait = run_command($command);
+                        }
 					}
 				$newfile = $target;
 				}
@@ -374,11 +370,12 @@ if (in_array($extension,$calibre_extensions) && isset($calibre_path) && !isset($
 */
 if ((($extension=="odt") || ($extension=="ott") || ($extension=="odg") || ($extension=="otg") || ($extension=="odp") || ($extension=="otp") || ($extension=="ods") || ($extension=="ots") || ($extension=="odf") || ($extension=="otf") || ($extension=="odm") || ($extension=="oth")) && !isset($newfile))
 
-	{
-run_command("unzip -p ".escapeshellarg($file)." \"Thumbnails/thumbnail.png\" > $target");
-$odcommand=$command . " \"$target\"[0]  \"$target\""; 
-				$output=run_command($odcommand); if(file_exists($target)){$newfile = $target;}
-	}
+    {
+    run_command("unzip -p ".escapeshellarg($file)." \"Thumbnails/thumbnail.png\" > $target");
+    $odcommand = $convert_fullpath . " \"$target\"[0]  \"$target\""; 
+    $output = run_command($odcommand);
+    if(file_exists($target)){$newfile = $target;}
+    }
 
 
 /* ----------------------------------------
@@ -605,7 +602,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 			$eps_density_x = $eps_data_x / $eps_bbox_x * 72;
 			$eps_density_y = $eps_data_y / $eps_bbox_y * 72;
 			$eps_target=get_resource_path($ref,true,"",false,"miff");
-			$nfcommand = $command . ' -compress zip -colorspace RGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
+			$nfcommand = $convert_fullpath . ' -compress zip -colorspace RGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
 			run_command($nfcommand);
 			if (file_exists($eps_target))
 			{
@@ -689,7 +686,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 		# resize directly to the screen size (no other sizes needed)
 		 if (file_exists($target)&& $n!=1)
 			{
-			$command2=$command . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
+			$command2 = $convert_fullpath . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
 			$output=run_command($command2); $pagecount=$n;
 				
 			# Add a watermarked image too?
@@ -700,7 +697,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 				if (file_exists($path)) {unlink($path);}
     				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
-				$command2 = $command . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
+				$command2 = $convert_fullpath . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
 					$output=run_command($command2);
 				}
 				

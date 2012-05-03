@@ -20,7 +20,7 @@ $errortext = getval('errortext', '');
 # ResourceSpace Build
 $build = '';
 if ($productversion == 'SVN'){
-    $p_version = 'Trunk (SVN)';
+    $p_version = 'Trunk (SVN)'; # Should not be translated as this information is sent to the bug tracker.
     //Try to run svn info to determine revision number
     $out = array();
     exec('svn info ../../', $out);
@@ -39,18 +39,24 @@ else {
 }
 
 # ResourceSpace version
-$p_version = $productversion == 'SVN'?'Trunk (SVN)':$productversion;
+$p_version = $productversion == 'SVN'?'Trunk (SVN)':$productversion; # Should not be translated as this information is sent to the bug tracker.
 
 # Browser User-Agent
 $custom_field_2 = $_SERVER['HTTP_USER_AGENT'];
 
 # ImageMagick version
-$custom_field_4 = "N/A"; # Should not be translated as this information is sent to the bug tracker.
-if (isset($imagemagick_path)){
-   $out = array();
-   exec($imagemagick_path.'/convert -v', $out);
-   if (isset($out[0])) {$custom_field_4 = $out[0];}
-}
+$convert_fullpath = get_utility_path("im-convert");
+if ($convert_fullpath==false)
+    {
+    $custom_field_4 = "N/A"; # Should not be translated as this information is sent to the bug tracker.
+    }
+else
+    {
+    $version = run_command($convert_fullpath . " -version");
+    # Set version
+    $s = explode("\n", $version);
+    $custom_field_4 = $s[0];
+    }
 
 # ExifTool version
 $exiftool_fullpath = get_utility_path("exiftool");
@@ -62,7 +68,7 @@ else
     {
     $version = run_command($exiftool_fullpath . ' -ver');
     # Set version
-    $s=explode("\n",$version);
+    $s = explode("\n", $version);
     $custom_field_5 = $s[0];
     }
 
@@ -75,12 +81,8 @@ if ($ffmpeg_fullpath==false)
 else
     {
     $version = run_command($ffmpeg_fullpath . " -version");
-    if (strpos(strtolower($version),"ffmpeg")===false)
-        {
-        return str_replace("?", "$version", $lang["executionofconvertfailed"]);
-        }
     # Set version
-    $s=explode("\n",$version);
+    $s = explode("\n", $version);
     $custom_field_6 = $s[0];
     }
 
@@ -118,7 +120,7 @@ else
         <tr><td><?php echo str_replace("?", "PHP", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_3?></td></tr>
         <tr><td><?php echo str_replace("?", "ExifTool", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_5?></td></tr>
         <tr><td><?php echo str_replace("?", "FFmpeg", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_6?></td></tr>
-        <tr><td><?php echo str_replace("?", "ImageMagick", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_4?></td></tr>
+        <tr><td><?php echo str_replace("?", "ImageMagick/GraphicsMagick", $lang["softwareversion"]); ?></td><td><?php echo $custom_field_4?></td></tr>
         <tr><td><?php echo $lang["browseruseragent"]; ?></td><td><?php echo $custom_field_2?></td></tr>
         </table>
         <br /><p><b><a href="http://bugs.resourcespace.org/login_page.php" target="_blank"><?php echo $lang['reportbug-login']?></a></b></p>

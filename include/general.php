@@ -534,12 +534,10 @@ function get_image_sizes($ref,$internal=false,$extension="jpg",$onlyifexists=tru
 				if (preg_match('/^(dng|nef|x3f|cr2|crw|mrw|orf|raf|dcr)$/i', $extension, $rawext)) { $prefix = $rawext[0] .':'; }
 
 				# Locate imagemagick.
-				$identcommand=$imagemagick_path . "/bin/identify";
-				if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "/identify";}
-				if (!file_exists($identcommand)) {$identcommand=$imagemagick_path . "\identify.exe";}
-				if (!file_exists($identcommand)) {exit("Could not find ImageMagick 'identify' utility.'");}	
+                $identify_fullpath = get_utility_path("im-identify");
+                if ($identify_fullpath==false) {exit("Could not find ImageMagick 'identify' utility at location '$imagemagick_path'.");}	
 				# Get image's dimensions.
-				$identcommand .= ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
+                $identcommand = $identify_fullpath . ' -format %wx%h '. escapeshellarg($prefix . $file) .'[0]';
 				$identoutput=run_command($identcommand);
 				preg_match('/^([0-9]+)x([0-9]+)$/ims',$identoutput,$smatches);
 				@list(,$sw,$sh) = $smatches;
@@ -3187,7 +3185,33 @@ function get_utility_path($utilityname)
 
     switch (strtolower($utilityname))
         {
-        case "imagemagick":
+        case "im-convert":
+            if (!isset($imagemagick_path)) {return false;} # ImageMagick convert path not configured.
+            else
+                {
+                return get_executable_path($imagemagick_path, array("unix"=>"convert", "win"=>"convert.exe"));
+                }
+            break;
+        case "im-identify":
+            if (!isset($imagemagick_path)) {return false;} # ImageMagick identify path not configured.
+            else
+                {
+                return get_executable_path($imagemagick_path, array("unix"=>"identify", "win"=>"identify.exe"));
+                }
+            break;
+        case "im-composite":
+            if (!isset($imagemagick_path)) {return false;} # ImageMagick composite path not configured.
+            else
+                {
+                return get_executable_path($imagemagick_path, array("unix"=>"composite", "win"=>"composite.exe"));
+                }
+            break;
+        case "im-mogrify":
+            if (!isset($imagemagick_path)) {return false;} # ImageMagick mogrify path not configured.
+            else
+                {
+                return get_executable_path($imagemagick_path, array("unix"=>"mogrify", "win"=>"mogrify.exe"));
+                }
             break;
         case "ghostscript":
             if (!isset($ghostscript_path)) {return false;} # Ghostscript path not configured.

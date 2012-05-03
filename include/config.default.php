@@ -67,7 +67,7 @@ $config_windows=false;
 
 # ---- Paths to various external utilities ----
 
-# If using ImageMagick, uncomment and set next 2 lines
+# If using ImageMagick/GraphicsMagick, uncomment and set next 2 lines
 # $imagemagick_path='/sw/bin';
 # $ghostscript_path='/sw/bin';
 $ghostscript_executable='gs';

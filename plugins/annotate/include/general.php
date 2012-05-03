@@ -199,8 +199,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		# Set up  
 		
 		putenv("MAGICK_HOME=" . $imagemagick_path); 
-		putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
-		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin"); # Path 
+		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path); # Path 
 
         $ghostscript_fullpath = get_utility_path("ghostscript");
         $command = $ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg($jpgstoragepath) . " " . escapeshellarg($pdfstoragepath);

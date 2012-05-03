@@ -932,7 +932,7 @@ else{
 					<?php if(isset($errors['imagemagick_path'])){?>
 						<div class="erroritem"><?php echo $lang["setup-err_path"];?> 'convert'.</div>
 					<?php } ?>
-					<label for="imagemagickpath"><?php echo str_replace("%bin", "Imagemagick", $lang["setup-binpath"]) . ":"; ?></label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo @$imagemagick_path; ?>"/>
+					<label for="imagemagickpath"><?php echo str_replace("%bin", "ImageMagick/GraphicsMagick", $lang["setup-binpath"]) . ":"; ?></label><input id="imagemagickpath" type="text" name="imagemagick_path" value="<?php echo @$imagemagick_path; ?>"/>
 				</div>
 				<div class="configitem">
 					<?php if(isset($errors['ghostscript_path'])){?>
