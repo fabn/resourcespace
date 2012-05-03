@@ -603,7 +603,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 	
 	# Handle alternative image file generation.
 	global $image_alternatives;
-	if (isset($image_alternatives)){
+	if (isset($image_alternatives) && $alternative==-1){
 		for($n=0;$n<count($image_alternatives);$n++){
 			$exts=explode(",",$image_alternatives[$n]["source_extensions"]);
 			if (in_array($extension,$exts))
@@ -623,7 +623,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 				# Process the image
 				$shell_exec_cmd = $command . " " . $image_alternatives[$n]["params"] . " " . escapeshellarg($file) . " " . escapeshellarg($apath);
 				$output=run_command($shell_exec_cmd);
-		
+
 				if (file_exists($apath)){
 					# Update the database with the new file details.
 					$file_size = filesize_unlimited($apath);
