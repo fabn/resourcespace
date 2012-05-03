@@ -69,10 +69,8 @@ if (!isset($imagemagick_path)){
 	echo $lang['error-crop-imagemagick-not-configured'];
 	exit;
 }
-$basecommand=$imagemagick_path . "/bin/convert";
-if (!file_exists($basecommand)) {$basecommand=$imagemagick_path . "/convert";}
-if (!file_exists($basecommand)) {$basecommand=$imagemagick_path . "\convert.exe";}
-if (!file_exists($basecommand)) {exit("Could not find ImageMagick 'convert' utility.'");}	
+$basecommand = get_utility_path("im-convert");
+if ($basecommand==false) {exit("Could not find ImageMagick 'convert' utility.");}
 
 $successcount = 0;
 $failcount = 0;

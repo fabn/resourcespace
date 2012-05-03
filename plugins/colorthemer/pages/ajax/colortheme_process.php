@@ -7,9 +7,10 @@ include('../../../../include/authenticate.php');
 include('../../include/colorfunctions.php');
 
 putenv("MAGICK_HOME=" . $imagemagick_path); 
-putenv("DYLD_LIBRARY_PATH=" . $imagemagick_path . "/lib"); 
-putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path . ":" . $imagemagick_path . "/bin");  
+putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path);  
 
+$convert_fullpath = get_utility_path("im-convert");
+$composite_fullpath = get_utility_path("im-composite");
 
 // There is only one slot now but future revision to manage multiple themes 
 // may be able to use this as a starting point.
@@ -52,23 +53,23 @@ else {
 	}
 
 		# convert title colors
-		$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$path." ".$storagedir."/tmp/title.gif";
+		$command = $convert_fullpath . " -modulate 100,$sat,$hue ".$path." ".$storagedir."/tmp/title.gif";
 		run_command($command);
 
 		# convert theme preview colors
-		$command = $imagemagick_path."/convert -modulate 100,$sat,$hue  ".$storagedir."/../plugins/colorthemer/gfx/$style.png ".$storagedir."/tmp/colortheme.png";
+		$command = $convert_fullpath . " -modulate 100,$sat,$hue  ".$storagedir."/../plugins/colorthemer/gfx/$style.png ".$storagedir."/tmp/colortheme.png";
 		run_command($command);
 		
 		# add title onto preview
-		$command = $imagemagick_path."/composite -geometry +25+17  ".$storagedir."/tmp/title.gif ".$storagedir."/tmp/colortheme.png ".$storagedir."/tmp/composite.png";
+		$command = $composite_fullpath . " -geometry +25+17  ".$storagedir."/tmp/title.gif ".$storagedir."/tmp/colortheme.png ".$storagedir."/tmp/composite.png";
 		run_command($command);
 		
 		# add home image onto preview
-		$command= $imagemagick_path."/composite -geometry +26+108 ".$storagedir."/../".$homeanim_folder."/1.jpg ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/composite.png";
+		$command = $composite_fullpath . " -geometry +26+108 ".$storagedir."/../".$homeanim_folder."/1.jpg ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/composite.png";
 		run_command($command);
 		
 		# resize
-		$command=$imagemagick_path."/convert -resize x400 ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/compositepreview.jpg";
+		$command = $convert_fullpath . " -resize x400 ".$storagedir."/tmp/composite.png ".$storagedir."/tmp/compositepreview.jpg";
 		run_command($command);
 }
 

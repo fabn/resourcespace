@@ -51,11 +51,9 @@ if (!isset($imagemagick_path)){
 	echo "Error: ImageMagick must be configured for crop functionality. Please contact your system administrator.";
 	exit;
 }
-$command=$imagemagick_path . "/bin/convert";
-if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
-if (!file_exists($command)) {$command=$imagemagick_path . "\convert.exe";}
-if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility.'");}	
 
+$command = get_utility_path("im-convert");
+if ($command==false) {exit("Could not find ImageMagick 'convert' utility.");}
 
 // retrieve file extensions
 $orig_ext = sql_value("select file_extension value from resource where ref = '$ref'",'');

@@ -14,8 +14,9 @@ switch($style){
 	break;
 }
 
-
 $dir_handle = @opendir($path) or die("Unable to open $path");
+
+$convert_fullpath = get_utility_path("im-convert");
 
 $n=1;
 while ($file = readdir($dir_handle)) {
@@ -29,7 +30,7 @@ foreach ($files as $file){
 	$oldfile = $storagedir."/colorthemes/$ref/$file";
 	if (file_exists($oldfile)){unlink($oldfile);}
 		
-	$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$path."/".$file." ".$storagedir."/colorthemes/$ref/$file";
+	$command = $convert_fullpath . " -modulate 100,$sat,$hue ".$path."/".$file." ".$storagedir."/colorthemes/$ref/$file";
 	#echo $command;
 	run_command($command);
 }
@@ -39,37 +40,37 @@ closedir($dir_handle);
 
 // a few special cases:
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcReorder.gif ".$storagedir."/colorthemes/$ref/ColIcReorder.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/IcReorder.gif ".$storagedir."/colorthemes/$ref/ColIcReorder.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcRemove.gif ".$storagedir."/colorthemes/$ref/ColIcRemove.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/IcRemove.gif ".$storagedir."/colorthemes/$ref/ColIcRemove.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment_anim.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment_anim.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/IcComment.gif ".$storagedir."/colorthemes/$ref/ColIcComment.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarRed.gif ".$storagedir."/colorthemes/$ref/RatingStarRed.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarRed.gif ".$storagedir."/colorthemes/$ref/RatingStarRed.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarBlank.gif ".$storagedir."/colorthemes/$ref/RatingStarBlank.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarBlank.gif ".$storagedir."/colorthemes/$ref/RatingStarBlank.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarLightGrey.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarLightGrey.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarGrey.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarGrey.gif ".$storagedir."/colorthemes/$ref/RatingStarGrey.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert ../../../../gfx/interface/RatingStarYellow.gif ".$storagedir."/colorthemes/$ref/RatingStarYellow.gif";
+$command = $convert_fullpath . " ../../../../gfx/interface/RatingStarYellow.gif ".$storagedir."/colorthemes/$ref/RatingStarYellow.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightBlue.gif ".$storagedir."/colorthemes/$ref/RatingStarLightBlue.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarLightBlue.gif ".$storagedir."/colorthemes/$ref/RatingStarLightBlue.gif";
 run_command($command);
 
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarWhite.gif ".$storagedir."/colorthemes/$ref/RatingStarWhite.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ../../../../gfx/interface/RatingStarWhite.gif ".$storagedir."/colorthemes/$ref/RatingStarWhite.gif";
 run_command($command);
 
 
@@ -85,7 +86,7 @@ run_command($command);
 		break;
 	}
 # convert title colors
-$command = $imagemagick_path."/convert -modulate 100,$sat,$hue ".$titlepath." ".$storagedir."/colorthemes/$ref/title.gif";
+$command = $convert_fullpath . " -modulate 100,$sat,$hue ".$titlepath." ".$storagedir."/colorthemes/$ref/title.gif";
 run_command($command);
 
 
