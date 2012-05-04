@@ -3174,7 +3174,7 @@ function sql_affected_rows(){
 	}
 }
 
-function get_utility_path($utilityname)
+function get_utility_path($utilityname, &$checked_path = null)
     {
     # !!! Under development - only some of the utilities are implemented!!!
 
@@ -3183,57 +3183,38 @@ function get_utility_path($utilityname)
 
     global $imagemagick_path, $ghostscript_path, $ghostscript_executable, $ffmpeg_path, $exiftool_path, $antiword_path, $pdftotext_path, $blender_path, $archiver_path, $archiver_executable;
 
+    $checked_path = null;
+
     switch (strtolower($utilityname))
         {
         case "im-convert":
             if (!isset($imagemagick_path)) {return false;} # ImageMagick convert path not configured.
-            else
-                {
-                return get_executable_path($imagemagick_path, array("unix"=>"convert", "win"=>"convert.exe"));
-                }
+            return get_executable_path($imagemagick_path, array("unix"=>"convert", "win"=>"convert.exe"), $checked_path);
             break;
         case "im-identify":
             if (!isset($imagemagick_path)) {return false;} # ImageMagick identify path not configured.
-            else
-                {
-                return get_executable_path($imagemagick_path, array("unix"=>"identify", "win"=>"identify.exe"));
-                }
+            return get_executable_path($imagemagick_path, array("unix"=>"identify", "win"=>"identify.exe"), $checked_path);
             break;
         case "im-composite":
             if (!isset($imagemagick_path)) {return false;} # ImageMagick composite path not configured.
-            else
-                {
-                return get_executable_path($imagemagick_path, array("unix"=>"composite", "win"=>"composite.exe"));
-                }
+            return get_executable_path($imagemagick_path, array("unix"=>"composite", "win"=>"composite.exe"), $checked_path);
             break;
         case "im-mogrify":
             if (!isset($imagemagick_path)) {return false;} # ImageMagick mogrify path not configured.
-            else
-                {
-                return get_executable_path($imagemagick_path, array("unix"=>"mogrify", "win"=>"mogrify.exe"));
-                }
+            return get_executable_path($imagemagick_path, array("unix"=>"mogrify", "win"=>"mogrify.exe"), $checked_path);
             break;
         case "ghostscript":
             if (!isset($ghostscript_path)) {return false;} # Ghostscript path not configured.
             if (!isset($ghostscript_executable)) {return false;} # Ghostscript executable not configured.
-            else
-                {
-                return get_executable_path($ghostscript_path, array("unix"=>$ghostscript_executable, "win"=>$ghostscript_executable));
-                }
+            return get_executable_path($ghostscript_path, array("unix"=>$ghostscript_executable, "win"=>$ghostscript_executable), $checked_path);
             break;
         case "ffmpeg":
             if (!isset($ffmpeg_path)) {return false;} # FFmpeg path not configured.
-            else
-                {
-                return get_executable_path($ffmpeg_path, array("unix"=>"ffmpeg", "win"=>"ffmpeg.exe"));
-                }
+            return get_executable_path($ffmpeg_path, array("unix"=>"ffmpeg", "win"=>"ffmpeg.exe"), $checked_path);
             break;
         case "exiftool":
             if (!isset($exiftool_path)) {return false;} # Exiftool path not configured.
-            else
-                {
-                return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"));
-                }
+            return get_executable_path($exiftool_path, array("unix"=>"exiftool", "win"=>"exiftool.exe"), $checked_path);
             break;
         case "antiword":
             break;
@@ -3244,24 +3225,23 @@ function get_utility_path($utilityname)
         case "archiver":
             if (!isset($archiver_path)) {return false;} # Archiver path not configured.
             if (!isset($archiver_executable)) {return false;} # Archiver executable not configured.
-            else
-                {
-                return get_executable_path($archiver_path, array("unix"=>$archiver_executable, "win"=>$archiver_executable));
-                }
+            return get_executable_path($archiver_path, array("unix"=>$archiver_executable, "win"=>$archiver_executable), $checked_path);
             break;
         }
     }
 
-function get_executable_path($path, $executable)
+function get_executable_path($path, $executable, &$checked_path)
     {
-    # Try some paths, start with a Unix style path.
-    $fullpath = stripslashes($path) . "/" . $executable["unix"];
-    if (file_exists($fullpath)) {return escapeshellarg($fullpath);}
+    global $config_windows;
+    if ($config_windows)
+        {
+        $checked_path = $path . "\\" . $executable["win"];
+        if (file_exists($checked_path)) {return escapeshellarg($checked_path);}
+        }
     else
         {
-        # Try a Windows style path.
-        $fullpath = $path . "\\" . $executable["win"];
-        if (file_exists($fullpath)) {return escapeshellarg($fullpath);}
-        else {return false;} # No path found.
+        $checked_path = stripslashes($path) . "/" . $executable["unix"];
+        if (file_exists($checked_path)) {return escapeshellarg($checked_path);}
         }
+    return false; # No path found.
     }

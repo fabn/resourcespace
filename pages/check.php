@@ -107,218 +107,16 @@ else
 	{
 	$result=$lang["status-fail"] . ": " . $lang["noblockedbrowsingoffilestore"];
 	}
-?><tr><td colspan="2"><?php echo $lang["blockedbrowsingoffilestore"] ?></td><td><b><?php echo $result?></b></td></tr>
+?><tr><td colspan="2"><?php echo $lang["blockedbrowsingoffilestore"] ?></td><td><b><?php echo $result?></b></td></tr><?php
 
-<?php
-function get_imagemagick_version()
-    {
-    global $config_windows, $imagemagick_path, $lang;
- 
-    # Check for path
-    $convert_fullpath = get_utility_path("im-convert");
-    if ($convert_fullpath==false)
-        {
-        if ($config_windows)
-            {
-            # On a Windows server.
-            $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $imagemagick_path . "\\convert.exe", $lang["softwarenotfound"]);
-            }
-        else
-            {
-            # Not on a Windows server.
-            $error_msg = $lang["status-fail"] . ": " . str_replace("?", stripslashes($imagemagick_path) . "/convert", $lang["softwarenotfound"]);
-            }
-        return array("name" => "ImageMagick/GraphicsMagick", "version" =>"", "success" => false, "error" => $error_msg);
-        }
-    else
-        {
-        # Check execution and find out name and version
-        $version = run_command($convert_fullpath . " -version");
-        $name = "";
-        if (strpos($version,"ImageMagick")==true) {$name = "ImageMagick";}
-        if (strpos($version,"GraphicsMagick")==true) {$name = "GraphicsMagick";}
-        if ($name=="")
-            {
-            return array("name" => "ImageMagick/GraphicsMagick", "version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("convert", $version), $lang["execution_failed"]));
-            }
-        
-        # Return result array with name and version
-        $s = explode("\n",$version);
-        return array("name" => $name, "version" =>$s[0], "success" => true, "error" => "");
-        }
-    }
-
-function get_ffmpeg_version()
-    {
-    global $config_windows, $ffmpeg_path, $lang;
-
-    # Check for path
-    $ffmpeg_fullpath = get_utility_path("ffmpeg");
-
-    if ($ffmpeg_fullpath==false)
-        {
-        if ($config_windows)
-            {
-            # On a Windows server.
-            $error_msg = str_replace("?", $ffmpeg_path . "\\ffmpeg.exe", $lang["softwarenotfound"]);
-            }
-        else
-            {
-            # Not on a Windows server.
-            $error_msg = str_replace("?", stripslashes($ffmpeg_path) . "/ffmpeg", $lang["softwarenotfound"]);
-            }
-        return array("version" => "", "success" => false, "error" => $error_msg);
-        }
-    else
-        {
-        # Check execution and return version
-        $version = run_command($ffmpeg_fullpath . " -version");
-        if (strpos(strtolower($version), "ffmpeg")===false)
-            {
-            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("ffmpeg", $version), $lang["execution_failed"]));
-            }
-
-        # Return result array with version
-        $s = explode("\n", $version);
-        return array("version" => $s[0], "success" => true, "error" => "");
-        }
-    }
-
-function get_ghostscript_version()
-    {
-    global $config_windows, $ghostscript_path, $ghostscript_executable, $lang;
-
-    # Check for path
-    $ghostscript_fullpath = get_utility_path("ghostscript");
-    if ($ghostscript_fullpath==false)
-        {
-        if ($config_windows)
-            {
-            # On a Windows server.
-            $error_msg = str_replace("?", $ghostscript_path . "\\" . $ghostscript_executable, $lang["softwarenotfound"]);
-            }
-        else
-            {
-            # Not on a Windows server.
-            $error_msg = str_replace("?", stripslashes($ghostscript_path) . "/" . $ghostscript_executable, $lang["softwarenotfound"]);
-            }
-        return array("version" => "", "success" => false, "error" => $error_msg);
-        }
-    else
-        {
-        # Check execution and return version
-        $version = run_command($ghostscript_fullpath . " -version");
-        if (strpos(strtolower($version), "ghostscript")===false)
-            {
-            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("ghostscript", $version), $lang["execution_failed"]));
-            }
-
-        # Return result array with version
-        $s = explode("\n", $version);
-        return array("version" => $s[0], "success" => true, "error" => "");
-        }
-    }
-
-function get_exiftool_version()
-    {
-    global $config_windows, $exiftool_path, $lang;
-
-    # Check for path
-    $exiftool_fullpath = get_utility_path("exiftool");
-    if ($exiftool_fullpath==false)
-        {
-        if ($config_windows)
-            {
-            # On a Windows server.
-            $error_msg = str_replace("?", $exiftool_path . "\\exiftool.exe", $lang["softwarenotfound"]);
-            }
-        else
-            {
-            # Not on a Windows server.
-            $error_msg = str_replace("?", stripslashes($exiftool_path) . "/exiftool", $lang["softwarenotfound"]);
-            }
-        return array("version" => "", "success" => false, "error" => $error_msg);
-        }
-    else
-        {
-        # Check execution and return version
-        $version = run_command($exiftool_fullpath . " -ver");
-        if (preg_match("/^([0-9]+)+\.([0-9]+)$/", $version)==false) # E.g. 8.84
-            {
-            return array("version" => "", "success" => false, "error" => str_replace(array("%command", "%output"), array("exiftool", $version), $lang["execution_failed"]));
-            }
-
-        # Return result array with version
-        $s = explode("\n", $version);
-        return array("version" => $s[0], "success" => true, "error" => "");
-        }
-    }
-
-# Check ImageMagick
-if (!isset($imagemagick_path))
-    { 
-    $result = $lang["status-notinstalled"];
-    $imagemagick["name"] = "ImageMagick/GraphicsMagick";
-    $imagemagick["success"] = false;
-    }
-else
-    {
-    $imagemagick = get_imagemagick_version();
-    if ($imagemagick["success"]==true)
-        {
-        $result = $lang["status-ok"];
-        }
-    else
-        {
-        $result = $imagemagick["error"];
-        }
-    }
-?><tr><td <?php if ($imagemagick["success"]==false) { ?>colspan="2"<?php } ?>><?php echo $imagemagick["name"] ?></td>
-<?php if ($imagemagick["success"]==true) { ?><td><?php echo $imagemagick["version"] ?></td><?php } ?>
-<td><b><?php echo $result?></b></td></tr><?php
+# Check ImageMagick/GraphicsMagick
+display_utility_status("im-convert");
 
 # Check FFmpeg
-if (!isset($ffmpeg_path))
-    {
-    $result = $lang["status-notinstalled"];
-    $ffmpeg["success"] = false;
-    }
-else
-    {
-    $ffmpeg = get_ffmpeg_version();
-    if ($ffmpeg["success"]==true)
-        {
-        $result = $lang["status-ok"];
-        }
-    else
-        {
-        $result = $lang["status-fail"] . ": " . $ffmpeg["error"];
-        }
-    }
-?><tr><td <?php if ($ffmpeg["success"]==false) { ?>colspan="2"<?php } ?>>FFmpeg</td>
-<?php if ($ffmpeg["success"]==true) { ?><td><?php echo $ffmpeg["version"] ?></td><?php } ?>
-<td><b><?php echo $result?></b></td></tr><?php
+display_utility_status("ffmpeg");
 
 # Check Ghostscript
-if (!isset($ghostscript_path))
-    {
-    $result = $lang["status-notinstalled"];
-    }
-else
-    {
-    $ghostscript = get_ghostscript_version();
-    if ($ghostscript["success"]==true)
-        {
-        $result = $lang["status-ok"];
-        }
-    else
-        {
-        $result = $lang["status-fail"] . ": " . $ghostscript["error"];
-        }
-    }
-?><tr><td <?php if ($ghostscript["success"]==false) { ?>colspan="2"<?php } ?>>Ghostscript</td>
-<?php if ($ghostscript["success"]==true) { ?><td><?php echo $ghostscript["version"] ?></td><?php } ?>
-<td><b><?php echo $result?></b></td></tr><?php
+display_utility_status("ghostscript");
 
 # Check Exif extension
 if (function_exists('exif_read_data')) 
@@ -332,34 +130,19 @@ else
 	}
 ?><tr><td colspan="2"><?php echo $lang["exif_extension"]?></td><td><b><?php echo $result?></b></td></tr><?php
 
-# Check Exiftool
-if (!isset($exiftool_path))
-    {
-    $result = $lang["status-notinstalled"];
-    }
-else
-    {
-    $exiftool = get_exiftool_version();
-    if ($exiftool["success"]==true)
-        {
-        $result = $lang["status-ok"];
-        }
-    else
-        {
-        $result = $lang["status-fail"] . ": " . $exiftool["error"];
-        }
-    }
-?><tr><td <?php if ($exiftool["success"]==false) { ?>colspan="2"<?php } ?>>Exiftool</td>
-<?php if ($exiftool["success"]==true) { ?><td><?php echo $exiftool["version"] ?></td><?php } ?>
-<td><b><?php echo $result?></b></td></tr><?php
-# Check archiver path
+# Check ExifTool
+display_utility_status("exiftool");
+
+# Check archiver
 if ($collection_download || isset($zipcommand)) # Only check if it is going to be used.
     {
-    if (!(isset($archiver_path) && isset($archiver_executable)) && !isset($zipcommand))
+    $archiver_fullpath = get_utility_path("archiver", $path);
+
+    if ($path==null && !isset($zipcommand))
         {
         $result = $lang["status-notinstalled"];
         }
-    elseif ($collection_download && (get_utility_path("archiver")!=false))
+    elseif ($collection_download && $archiver_fullpath!=false)
         {
         $result = $lang["status-ok"];
         if (isset($zipcommand)) {$result.= "<br/>" . $lang["zipcommand_overridden"];}
@@ -370,15 +153,7 @@ if ($collection_download || isset($zipcommand)) # Only check if it is going to b
         }
     else
         {
-        if ($config_windows)
-            {
-            # On a Windows server.
-            $result = $lang["status-fail"] . ": " . str_replace("?", $archiver_path . "\\" . $archiver_executable, $lang["softwarenotfound"]);
-            }
-        else
-            {
-            $result = $lang["status-fail"] . ": " . str_replace("?", stripslashes($archiver_path) . "/" . $archiver_executable, $lang["softwarenotfound"]);
-            }
+        $result = $lang["status-fail"] . ": " . str_replace("?", $path, $lang["softwarenotfound"]);
         }
     ?><tr><td colspan="2"><?php echo $lang["archiver_utility"] ?></td><td><b><?php echo $result?></b></td></tr><?php
     }
@@ -389,7 +164,6 @@ hook("addinstallationcheck");?>
 <td><?php echo $lang["lastscheduledtaskexection"] ?></td>
 <td><?php $last_cron=sql_value("select datediff(now(),value) value from sysvars where name='last_cron'",$lang["status-never"]);echo $last_cron ?></td>
 <td><?php if ($last_cron>2 || $last_cron==$lang["status-never"]) { ?><b><?php echo $lang["status-warning"] ?></b><br/><?php echo $lang["executecronphp"] ?><?php } else {?><b><?php echo $lang["status-ok"] ?></b><?php } ?></td>
-
 </tr>
 
 
@@ -398,4 +172,132 @@ hook("addinstallationcheck");?>
 
 <?php
 include "../include/footer.php";
+
+function display_utility_status($utilityname)
+    {
+    global $lang;
+    $utility = get_utility_version($utilityname);
+
+    if ($utility["success"]==true)
+        {
+        $result = $lang["status-ok"];
+        }
+    else
+        {
+        $result = $utility["error"];
+        }
+
+    ?><tr><td <?php if ($utility["success"]==false) { ?>colspan="2"<?php } ?>><?php echo $utility["name"] ?></td>
+    <?php if ($utility["success"]==true) { ?><td><?php echo $utility["version"] ?></td><?php } ?>
+    <td><b><?php echo $result?></b></td></tr><?php
+    }
+
+function get_utility_displayname($utilityname)
+    {
+
+    # Define the display name of a utility.
+    switch (strtolower($utilityname))
+        {
+        case "im-convert":
+           return "ImageMagick/GraphicsMagick";
+           break;
+        case "ghostscript":
+            return "Ghostscript";
+            break;
+        case "ffmpeg":
+            return "FFmpeg";
+            break;
+        case "exiftool":
+            return "ExifTool";
+            break;
+        case "antiword":
+            return "Antiword";
+            break;
+        case "pdftotext":
+            return "pdftotext";
+            break;
+        case "blender":
+            return "Blender";
+            break;
+        case "archiver":
+            return "Archiver";
+            break;
+        default:
+            return $utilityname;
+        }
+    }
+
+function get_utility_version($utilityname)
+    {
+    global $lang, $config_windows;
+
+    # Get utility path.
+    $utility_fullpath = get_utility_path($utilityname, $path);
+
+    # Get utility display name.
+    $name = get_utility_displayname($utilityname);
+
+    # Check path.
+    if ($path==null)
+        {
+        # There was no complete path to check - the utility is not installed.
+        $error_msg = $lang["status-notinstalled"];
+        return array("name" => $name, "version" => "", "success" => false, "error" => $error_msg);
+        }
+    if ($utility_fullpath==false)
+        {
+        # There was a path but it was incorrect - the utility couldn't be found.
+        $error_msg = $lang["status-fail"] . ":<br>" . str_replace("?", $path, $lang["softwarenotfound"]);
+        return array("name" => $name, "version" => "", "success" => false, "error" => $error_msg);
+        }
+
+    # Look up the argument to use to get the version.
+    switch (strtolower($utilityname))
+        {
+        case "exiftool":
+            $version_argument = "-ver";
+            break;
+        default:
+            $version_argument = "-version";
+        }
+
+    # Check execution and find out version.
+    $version_command = $utility_fullpath . " " . $version_argument;
+    $version = run_command($version_command);
+
+    switch (strtolower($utilityname))
+        {
+        case "im-convert":
+           if (strpos($version, "ImageMagick")==true) {$name = "ImageMagick";}
+           if (strpos($version, "GraphicsMagick")==true) {$name = "GraphicsMagick";}
+           if ($name=="ImageMagick" || $name=="GraphicsMagick") {$expected = true;}
+           else {$expected = false;}
+           break;
+        case "ghostscript":
+            if (strpos(strtolower($version), "ghostscript")===false) {$expected = false;}
+            else {$expected = true;}
+            break;
+        case "ffmpeg":
+            if (strpos(strtolower($version), "ffmpeg")===false) {$expected = false;}
+            else {$expected = true;}
+            break;
+        case "exiftool":
+            if (preg_match("/^([0-9]+)+\.([0-9]+)$/", $version)==false) {$expected = false;} # E.g. 8.84
+            else {$expected = true;}
+            break;
+        }
+
+    if ($expected==false)
+        {
+        # There was a correct path but the version check failed - unexpected output when executing the command.
+        $error_msg = $lang["status-fail"] . ":<br>" . str_replace(array("%command", "%output"), array($version_command, $version), $lang["execution_failed"]);
+        return array("name" => $name, "version" => "", "success" => false, "error" => $error_msg);
+        }
+    else    
+        {
+        # There was a working path and the output was the expected - the version is returned.
+        $s = explode("\n", $version);
+        return array("name" => $name, "version" => $s[0], "success" => true, "error" => "");
+        }
+    }
 ?>
