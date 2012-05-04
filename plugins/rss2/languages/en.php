@@ -4,6 +4,10 @@
 # -------
 #
 #
+$lang["rss_setup_heading"]="RSS2 Configuration";
+$lang["rss_limits"]="rss_limits:";
+$lang["rss_fields"]="rss_fields:";
+$lang["rss_ttl"]="rss_ttl:";
 $lang["new_content_rss_feed"]="New Content RSS Feed";
 $lang["subject"]="Subject";
 $lang["rss_feed_for_search_filter"]="Create RSS feed for this search query";

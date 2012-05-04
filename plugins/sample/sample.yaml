@@ -1,0 +1,5 @@
+name: sample
+author: Dave Ehnebuske
+version: 0.7
+desc: Provides an example of how to write a plugin for ResourceSpace
+config_url: /plugins/sample/pages/setup.php

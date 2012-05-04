@@ -165,10 +165,7 @@ while (false !== ($file = readdir($dirh))) {
             foreach ($plugin_yaml as $key=>$value){
                 $plugins_avail[$file][$key] = $value ;
             }
-            if (get_plugin_config($file)!=null)
-            	$plugins_avail[$file]['config']=true;
-           	else
-           		$plugins_avail[$file]['config']=false;
+            $plugins_avail[$file]['config']=(sql_value("SELECT config AS value FROM plugins WHERE name='$file'",'') != '');
            		
            	# If no yaml, or yaml file but no description present, 
            	# attempt to read an 'about.txt' file
@@ -258,17 +255,20 @@ jQuery.noConflict();
         echo "<td>{$p['name']}</td><td>{$p['descrip']}</td><td>{$p['author']}</td><td>".$formatted_inst_version."</td>";
         echo '<td><div class="ListTools">';
         if (isset($p['legacy_inst']))
-            echo '<a class="nowrap" href="#">&gt; '.$lang['plugins-legacyinst'].'</a>'; # TODO: Update this link to point to a help page on the wiki
+            echo '<a class="nowrap" href="#">&gt;&nbsp;'.$lang['plugins-legacyinst'].'</a> '; # TODO: Update this link to point to a help page on the wiki
         else
-            echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt; '.$lang['plugins-deactivate'].'</a> ';
+            echo '<a href="#'.$p['name'].'" class="p-deactivate">&gt;&nbsp;'.$lang['plugins-deactivate'].'</a> ';
         if ($p['info_url']!='')
         	{
-            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
+            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt;&nbsp;'.$lang['plugins-moreinfo'].'</a> ';
  			}
-        echo '<a class="nowrap" href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt; '.$lang['groupaccess'].'</a> ';
-        if ($p['config_url']!='')
-        	echo '<a class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt; '.$lang['options'].'</a> ';
-
+        echo '<a class="nowrap" href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt;&nbsp;'.$lang['groupaccess'].'</a> ';
+        if ($p['config_url']!='')        
+			{
+        	echo '<a class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt;&nbsp;'.$lang['options'].'</a> ';        
+			if (sql_value("SELECT config_json as value from plugins where name='".$p['name']."'",'')!='' && function_exists('json_decode'))
+	        	echo '<a class="nowrap" href="team_download_plugin_config.php?pin='.$p['name'].'">&gt;&nbsp;'.$lang['plugins-download'].'</a> ';
+			}
         echo '</div></td></tr>';
     } ?>
     </tbody>
@@ -297,12 +297,12 @@ jQuery.noConflict();
 		else
 			echo '<td>'.$p['version'].'</td>';
         echo '<td><div class="ListTools">';
-        echo '<a href="#'.$p['name'].'" class="p-activate">&gt; '.$lang['plugins-activate'].'</a> ';
-        // echo '<a href="#'.$p['name'].'" class="p-delete">&gt; '.$lang["action-delete"].'</a> ';
+        echo '<a href="#'.$p['name'].'" class="p-activate">&gt;&nbsp;'.$lang['plugins-activate'].'</a> ';
+        // echo '<a href="#'.$p['name'].'" class="p-delete">&gt;&nbsp;'.$lang["action-delete"].'</a> ';
         if ($p['info_url']!='')
-            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt; '.$lang['plugins-moreinfo'].'</a> ';
+            echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt;&nbsp;'.$lang['plugins-moreinfo'].'</a> ';
         if ($p['config'])
-            echo '<a href="#'.$p['name'].'" class="p-purge">&gt; '.$lang['plugins-purge'].'</a> ';
+            echo '<a href="#'.$p['name'].'" class="p-purge">&gt;&nbsp;'.$lang['plugins-purge'].'</a> ';
         echo '</div></td></tr>';        
     }
     ?>

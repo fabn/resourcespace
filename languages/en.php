@@ -701,6 +701,10 @@ $lang["statusandrelationships"]="Status and Relationships";
 
 # Lists
 $lang["months"]=array("January","February","March","April","May","June","July","August","September","October","November","December");
+$lang["false-true"]=array("False","True");
+
+# Formatting
+$lang["plugin_field_fmt"]="%A (%B)"; // %A and %B are replaced by content defined by individual plugins. See, e.e., config_db_single_select in /include/plugin_functions.php
 
 # New for 1.3
 $lang["savesearchitemstocollection"]="Save search items to collection";
@@ -1106,9 +1110,9 @@ $lang['plugins-instversion'] = 'Installed Version';
 $lang['plugins-uploadheader'] = 'Upload Plugin';
 $lang['plugins-uploadtext'] = 'Select a .rsp file to install.';
 $lang['plugins-deactivate'] = 'Deactivate';
-$lang['plugins-moreinfo'] = 'More Info';
+$lang['plugins-moreinfo'] = 'More&nbsp;Info';
 $lang['plugins-activate'] = 'Activate';
-$lang['plugins-purge'] = 'Purge Configuration';
+$lang['plugins-purge'] = 'Purge&nbsp;Configuration';
 $lang['plugins-rejmultpath'] = 'Archive contains multiple paths. (Security Risk)';
 $lang['plugins-rejrootpath'] = 'Archive contains absolute paths. (Security Risk)';
 $lang['plugins-rejparentpath'] = 'Archive contain parent paths (../). (Security Risk)';
@@ -1120,6 +1124,16 @@ $lang['plugins-uploadsuccess'] = 'Plugin uploaded succesfully.';
 $lang['plugins-headertext'] = 'Plugins extend the functionality of ResourceSpace.';
 $lang['plugins-legacyinst'] = 'Activated via config.php';
 $lang['plugins-uploadbutton'] = 'Upload Plugin';
+$lang['plugins-download'] = 'Download&nbsp;Configuration';
+$lang['plugins-upload-title'] = 'Get Configuration from File';
+$lang['plugins-upload'] = 'Upload Configuration';
+$lang['plugins-getrsc'] = 'File to use:';
+$lang['plugins-saveconfig'] = 'Save Configuration';
+$lang['plugins-didnotwork'] = 'Sorry, that didn\'t work. Choose a valid .rsc file for this plugin and then click \'Upload Configuration\' button.';
+$lang['plugins-goodrsc'] = 'Configuration uploaded ok. Click \'Save Configuration\' button to save.';
+$lang['plugins-badrsc'] = 'Sorry, that wasn\'t a valid .rsc file.';
+$lang['plugins-wrongplugin'] = 'Sorry, that\'s an .rsc file for the %plugin plugin. Choose one for this plugin.'; // %plugin is replaced by the name of the plugin being configured.
+$lang['plugins-configvar'] = 'Sets configuration variable: $%cvn'; //%cvn is replaced by the name of the config variable being set
 
 #Location Data
 $lang['location-title'] = 'Location Data';
@@ -1467,6 +1481,7 @@ $lang["emptycollectionareyousure"]="Are you sure you want to remove all resource
 
 $lang["error-cannoteditemptycollection"]="You cannot edit an empty collection.";
 $lang["error-permissiondenied"]="Permission denied.";
+$lang["error-oldphp"] = "Requires PHP version %version or higher."; # %version will be replaced with, e.g., "5.2"
 $lang["error-collectionnotfound"]="Collection not found.";
 
 $lang["header-upload-subtitle"] = "Step %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources

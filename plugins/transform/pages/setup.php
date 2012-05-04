@@ -1,77 +1,36 @@
 <?php
-include "../../../include/db.php";
-include "../../../include/authenticate.php"; if (!checkperm("u")) {exit ("Permission denied.");}
-include "../../../include/general.php";
+#
+# Setup page for transform plugin
+#
 
-// commented out variables that either don't seem to work or I'm unsure how to test -tom
+// Do the include and authorization checking ritual.
+include '../../../include/db.php';
+include '../../../include/authenticate.php'; if (!checkperm('a')) {exit ($lang['error-permissiondenied']);}
+include '../../../include/general.php';
 
-if (getval("submit","")!="")
-	{
-	//$cropper_default_target_format = getvalescaped("cropper_default_target_format","");
-	$cropper_debug = getvalescaped("cropper_debug","");
-	$cropper_formatarray=explode(",",getvalescaped("cropper_formatarray",""));
-	$cropper_allowed_extensions=explode(",",getvalescaped("cropper_allowed_extensions",""));
-	//$cropper_force_original_format = getvalescaped("cropper_force_original_format","");
-	//$cropper_cropsize = getvalescaped("cropper_cropsize","");
-	$cropper_custom_filename = getvalescaped("cropper_custom_filename","");
-	//$cropper_use_filename_as_title = getvalescaped("cropper_use_filename_as_title","");
-	//$cropper_allow_scale_up = getvalescaped("cropper_allow_scale_up","");
-	$cropper_rotation = getvalescaped("cropper_rotation","");
-	$cropper_transform_original = getvalescaped("cropper_transform_original","");
-	$cropper_use_repage = getvalescaped("cropper_use_repage","");
-	//$cropper_jpeg_rgb = getvalescaped("cropper_jpeg_rgb","");
-	$cropper_enable_batch = getvalescaped("cropper_enable_batch","");
+// Specify the name of this plugin, the heading to display for the page.
+$plugin_name = 'transform';
+$page_heading = $lang['transform_configuration'];
 
-	$config=array();
-	//$config['cropper_default_target_format']=$cropper_default_target_format;
-	$config['cropper_debug']=$cropper_debug;
-	$config['cropper_formatarray']=$cropper_formatarray;
-	$config['cropper_allowed_extensions']=$cropper_allowed_extensions;
-	//$config['cropper_force_original_format']=$cropper_force_original_format;
-	//$config['cropper_cropsize']=$cropper_cropsize;
-	$config['cropper_custom_filename']=$cropper_custom_filename;
-	//$config['cropper_use_filename_as_title']=$cropper_use_filename_as_title;
-	//$config['cropper_allow_scale_up']=$cropper_allow_scale_up;
-	$config['cropper_rotation']=$cropper_rotation;
-	$config['cropper_transform_original']=$cropper_transform_original;
-	$config['cropper_use_repage']=$cropper_use_repage;
-	//$config['cropper_jpeg_rgb']=$cropper_jpeg_rgb;
-	$config['cropper_enable_batch']=$cropper_enable_batch;
-	
-	set_plugin_config("transform",$config);
-	
-	redirect("pages/team/team_home.php");
-	}
+// Build the $page_def array of descriptions of each configuration variable the plugin uses.
+#$page_def[] = config_add_text_input('cropper_default_target_format', 'Default Target Format');
+$page_def[] = config_add_boolean_select('cropper_debug', $lang['cropper_debug']);
+$page_def[] = config_add_text_list_input('cropper_formatarray', $lang['output_formats']);
+$page_def[] = config_add_text_list_input('cropper_allowed_extensions', $lang['input_formats']);
+#$page_def[] = config_add_text_input('cropper_default_target_format', 'Default Target Format');
+#$page_def[] = config_add_boolean_select('cropper_cropsize', 'cropper_cropsize');
+$page_def[] = config_add_boolean_select('cropper_custom_filename', $lang['custom_filename']);
+#$page_def[] = config_add_boolean_select('cropper_use_filename_as_title', 'Use Filename as Title');
+#$page_def[] = config_add_boolean_select('cropper_allow_scale_up', 'cropper_allow_scale_up');
+$page_def[] = config_add_boolean_select('cropper_rotation', $lang['allow_rotation']);
+$page_def[] = config_add_boolean_select('cropper_transform_original', $lang['allow_transform_original']);
+$page_def[] = config_add_boolean_select('cropper_use_repage', $lang['use_repage']);
+#$page_def[] = config_add_boolean_select('cropper_jpeg_rgb', 'cropper_jpeg_rgb');
+$page_def[] = config_add_boolean_select('cropper_enable_batch', $lang['enable_batch_transform']);
+// Commented out lines above that either don't seem to work or I'm unsure how to test
 
-
-include "../../../include/header.php";
-?>
-<div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
-  <h1><?php echo $lang['transform_configuration'];?></h1>
-
-<form id="form1" name="form1" method="post" action="">
-
-<?php // echo config_text_field("cropper_default_target_format","Default Target Format",$cropper_default_target_format);?>
-<?php echo config_boolean_field("cropper_debug",$lang['cropper_debug'],$cropper_debug);?>
-<?php echo config_text_field("cropper_formatarray",$lang['output_formats'],implode(',',$cropper_formatarray));?>
-<?php echo config_text_field("cropper_allowed_extensions",$lang['input_formats'],implode(',',$cropper_allowed_extensions));?>
-<?php //echo config_boolean_field("cropper_force_original_format","cropper_force_original_format",$cropper_force_original_format);?>
-<?php //echo config_text_field("cropper_cropsize","cropper_cropsize","pre");?>
-<?php echo config_boolean_field("cropper_custom_filename",$lang['custom_filename'],$cropper_custom_filename);?>
-<?php //echo config_boolean_field("cropper_use_filename_as_title","Use Filename as Title",$cropper_use_filename_as_title);?>
-<?php //echo config_boolean_field("cropper_allow_scale_up","cropper_allow_scale_up",$cropper_allow_scale_up);?>
-<?php echo config_boolean_field("cropper_rotation",$lang['allow_rotation'],$cropper_rotation);?>
-<?php echo config_boolean_field("cropper_transform_original",$lang['allow_transform_original'],$cropper_transform_original);?>
-<?php echo config_boolean_field("cropper_use_repage",$lang['use_repage'],$cropper_use_repage);?>
-<?php //echo config_boolean_field("cropper_jpeg_rgb","cropper_jpeg_rgb",$cropper_jpeg_rgb);?>
-<?php echo config_boolean_field("cropper_enable_batch",$lang['enable_batch_transform'],$cropper_enable_batch);?> 
-
-<div class="Question">  
-<label for="submit"></label> 
-<input type="submit" name="submit" value="<?php echo $lang["save"]?>">   
-</div><div class="clearerleft"></div>
-
-</form>
-</div>	
-<?php include "../../../include/footer.php";
+// Do the page generation ritual
+$upload_status = config_gen_setup_post($page_def, $plugin_name);
+include '../../../include/header.php';
+config_gen_setup_html($page_def, $plugin_name, $upload_status, $page_heading);
+include '../../../include/footer.php';

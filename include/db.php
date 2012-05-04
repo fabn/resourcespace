@@ -129,7 +129,11 @@ if ($use_plugins_manager){
 			}
 		}
 	}
-	$active_plugins = (sql_query("SELECT name,enabled_groups,config FROM plugins WHERE inst_version>=0 order by priority DESC"));
+    # Need verbatum queries for this query
+    $mysql_vq = $mysql_verbatim_queries;
+    $mysql_verbatim_queries = true;
+	$active_plugins = (sql_query("SELECT name,enabled_groups,config,config_json FROM plugins WHERE inst_version>=0 order by priority DESC"));
+    $mysql_verbatim_queries = $mysql_vq;
 	foreach($active_plugins as $plugin){
 
 		# Check group access, only enable for global access at this point
@@ -138,7 +142,7 @@ if ($use_plugins_manager){
 			# Add to the plugins array if not already present which is what we are working with
 			# later on.
 			if (!in_array($plugin['name'],$plugins)) {$plugins[]=$plugin['name'];}
-			include_plugin_config($plugin['name'], $plugin['config']);
+			include_plugin_config($plugin['name'], $plugin['config'], $plugin['config_json']);
 			}
 	}
 } else {
@@ -616,9 +620,6 @@ function CheckDBStruct($path)
 			}
 		}
 	}
-
-
-
 	
 function getval($val,$default,$force_numeric=false)
     {
@@ -630,13 +631,22 @@ function getval($val,$default,$force_numeric=false)
     }
 
 function getvalescaped($val,$default,$force_numeric=false)
-    {
-    # return a value from get/post, escaped and SQL-safe
-    $value=escape_check(getval($val,$default,$force_numeric));
-    
-    # XSS vulnerability checking
-    if (strpos(strtolower($value),"<script")!==false) {return $default;}
-    
+    {    
+   	# return a value from get/post, escaped, SQL-safe and XSS-free
+	$value=getval($val,$default,$force_numeric);
+	if (is_array($value))
+		{
+		foreach ($value as &$item)
+			{
+    		$item=escape_check($item); 
+	    	if (strpos(strtolower($item),"<script")!==false) return $default;
+    		}
+		}
+	else
+		{
+    	$value=escape_check($value);
+	    if (strpos(strtolower($value),"<script")!==false) {return $default;}
+    	}
     return $value;
     }
     
@@ -649,12 +659,14 @@ function getuid()
 function escape_check($text) #only escape a string if we need to, to prevent escaping an already escaped string
     {
 	global $db,$use_mysqli;
-	if ($use_mysqli){
+	if ($use_mysqli)
+		{
 		$text=mysqli_real_escape_string($db,$text);
-    }
-    else {
+    	}
+    else 
+		{
 		$text=mysql_real_escape_string($text);
-	}
+		}
     # turn all \\' into \'
     while (!(strpos($text,"\\\\'")===false))
         {
@@ -683,7 +695,7 @@ function unescape($text)
     $text=str_replace("\\'","\'",$text);
     $text=str_replace("\\n","\n",$text);
     $text=str_replace("\\r","\r",$text);
-    $text=str_replace("\\","",$text);
+    $text=str_replace("\\","",$text);    
     
 
     return $text;
@@ -977,24 +989,41 @@ function daily_stat($activity_type,$object_ref)
 		}
 	}    
 
-function include_plugin_config($plugin_name,$config="")
+function include_plugin_config($plugin_name,$config="",$config_json="")
 	{
-	$configpath=dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.php";
+    global $mysql_charset;
+	$configpath = dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.php";
 	if (file_exists($configpath)) {include $configpath;}
 
-	if ($config!="")
+    if ($config_json != "" && function_exists('json_decode'))
+        {
+        if (!isset($mysql_charset))
+            {
+            $config_json = iconv('ISO-8859-1', 'UTF-8', $config_json);
+            }
+        $config_json = json_decode($config_json, true);
+        if ($config_json)
+            {
+            foreach($config_json as $key=>$value)
+                {
+                $$key = $value;
+                }
+            }
+        }
+	elseif ($config != "")
 		{
 		$config=unserialize(base64_decode($config));
 		foreach($config as $key=>$value)
-			$$key=$value;
+			$$key = $value;
 		}
 
 	# Copy config variables to global scope.
-	$vars=get_defined_vars();
+    unset($plugin_name, $config, $config_json, $configpath);
+	$vars = get_defined_vars();
 	foreach ($vars as $name=>$value)
 		{
 		global $$name;
-		$$name=$value;
+		$$name = $value;
 		}
 	}
 

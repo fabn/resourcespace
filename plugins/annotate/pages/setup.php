@@ -1,59 +1,29 @@
 <?php
-include "../../../include/db.php";
-include "../../../include/authenticate.php"; if (!checkperm("u")) {exit ("Permission denied.");}
-include "../../../include/general.php";
+#
+# Annotate setup page
+#
 
-if (getval("submit","")!="")
-	{
-	$annotate_ext_exclude=explode(",",getvalescaped("extexclude",""));
-	$annotate_debug=getvalescaped("debug","");
-	if (isset($_POST['rtexclude'])){
-		$annotate_rt_exclude=$_POST['rtexclude'];
-	}
-	else {
-		$annotate_rt_exclude=array();
-	}
-	$annotate_public_view=getvalescaped("annotate_public_view","");
-	$annotate_show_author=getvalescaped("annotate_show_author","");	
-	$annotate_font=getvalescaped("annotate_font","");
-	$annotate_pdf_output=getvalescaped("annotate_pdf_output","");
-	
-	$config=array();
-	$config['annotate_rt_exclude']=$annotate_rt_exclude;
-	$config['annotate_ext_exclude']=$annotate_ext_exclude;
-	$config['annotate_debug']=$annotate_debug;
-	$config['annotate_public_view']=$annotate_public_view;
-	$config['annotate_show_author']=$annotate_show_author;
-	$config['annotate_font']=$annotate_font;
-	$config['annotate_pdf_output']=$annotate_pdf_output;
-	set_plugin_config("annotate",$config);
-	
-	redirect("pages/team/team_home.php");
-	}
+// Do the include and authorization checking ritual -- don't change this section.
+include '../../../include/db.php';
+include '../../../include/authenticate.php'; if (!checkperm('a')) {exit ($lang['error-permissiondenied']);}
+include '../../../include/general.php';
 
+// Specify the name of this plugin and the heading to display for the page.
+$plugin_name = 'annotate';
+$plugin_page_heading = $lang['annotate_configuration'];
 
-include "../../../include/header.php";
-?>
-<div class="BasicsBox"> 
-  <h2>&nbsp;</h2>
-  <h1><?php echo $lang["annotate_configuration"];?></h1>
+// Build the $page_def array of descriptions of each configuration variable the plugin uses.
 
-<form id="form1" name="form1" method="post" action="">
+$page_def[] = config_add_text_list_input('annotate_ext_exclude', $lang['extensions_to_exclude']);
+$page_def[] = config_add_multi_rtype_select('annotate_rt_exclude', $lang['resource_types_to_exclude']);
+$page_def[] = config_add_single_select('annotate_font', $lang['annotate_font'], array('helvetica', 'dejavusanscondensed'), false);
+$page_def[] = config_add_boolean_select('annotate_debug', $lang['annotatedebug']);
+$page_def[] = config_add_boolean_select('annotate_public_view', $lang['annotate_public_view']);
+$page_def[] = config_add_boolean_select('annotate_show_author', $lang['annotate_show_author']);
+$page_def[] = config_add_boolean_select('annotate_pdf_output', $lang["annotate_pdf_output"]);
 
-<?php echo config_text_field("extexclude",$lang["extensions_to_exclude"],implode(',',$annotate_ext_exclude));?>   
-<?php $rtypes=get_resource_types();
-echo config_custom_select_multi("rtexclude",$lang["resource_types_to_exclude"],$rtypes,$annotate_rt_exclude);?>
-<?php echo config_custom_select("annotate_font",$lang["annotate_font"],array("helvetica","dejavusanscondensed"),$annotate_font);?>
-<?php echo config_boolean_field("debug",$lang["annotatedebug"],$annotate_debug);?>
-<?php echo config_boolean_field("annotate_public_view",$lang["annotate_public_view"],$annotate_public_view);?>
-<?php echo config_boolean_field("annotate_show_author",$lang["annotate_show_author"],$annotate_show_author);?>
-<?php echo config_boolean_field("annotate_pdf_output",$lang["annotate_pdf_output"],$annotate_pdf_output);?>
-
-<div class="Question">  
-<label for="submit"></label> 
-<input type="submit" name="submit" value="<?php echo $lang["save"]?>">   
-</div><div class="clearerleft"></div>
-
-</form>
-</div>	
-<?php include "../../../include/footer.php";
+// Do the page generation ritual -- don't change this section.
+$upload_status = config_gen_setup_post($page_def, $plugin_name);
+include '../../../include/header.php';
+config_gen_setup_html($page_def, $plugin_name, $upload_status, $plugin_page_heading);
+include '../../../include/footer.php';
