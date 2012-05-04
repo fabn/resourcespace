@@ -26,7 +26,7 @@
 # En första version av översättningen skapades av Henrik Frizén (förnamn.efternamn utan accenttecken i e-postboxen.Sveriges landskod) 20110124 för version 2295
 #
 # Senast uppdaterad av [Namn] [Datum] för version [svn-version], [kommentar]
-# Senast uppdaterad av Henrik Frizén 20120429 för version 3355
+# Senast uppdaterad av Henrik Frizén 20120504 för version 3365
 #
 #
 # User group names (for the default user groups)
@@ -726,6 +726,10 @@ $lang["statusandrelationships"]="Status och relationer";
 
 # Lists
 $lang["months"]=array("januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december");
+$lang["false-true"]=array("Falskt","Sant");
+
+# Formatting
+$lang["plugin_field_fmt"]="%A (%B)"; // %A and %B are replaced by content defined by individual plugins. See, e.e., config_db_single_select in /include/plugin_functions.php
 
 # New for 1.3
 $lang["savesearchitemstocollection"]="Lägg till hittade poster i aktuell samling";
@@ -1145,6 +1149,16 @@ $lang['plugins-uploadsuccess'] = 'Överföringen av tillägget slutfördes korre
 $lang['plugins-headertext'] = 'Tillägg kan ge nya funktioner och ny stil till ResourceSpace.';
 $lang['plugins-legacyinst'] = 'Aktiverat via ’config.php’';
 $lang['plugins-uploadbutton'] = 'Överför tillägg';
+$lang['plugins-download'] = 'Hämta&nbsp;inställningar';
+$lang['plugins-upload-title'] = 'Överför inställningar från fil';
+$lang['plugins-upload'] = 'Överför inställningar';
+$lang['plugins-getrsc'] = 'Fil att använda:';
+$lang['plugins-saveconfig'] = 'Spara inställningar';
+$lang['plugins-didnotwork'] = 'Ett problem uppstod. Välj en giltig rsc-fil för det här tillägget och klicka på <b>Överför&nbsp;inställningar</b>.';
+$lang['plugins-goodrsc'] = 'Inställningarna överförda. Klicka på <b>Spara&nbsp;inställningar</b> om du vill spara inställningarna.';
+$lang['plugins-badrsc'] = 'Detta var inte en giltig rsc-fil.';
+$lang['plugins-wrongplugin'] = 'Detta var en rsc-fil för tillägget %plugin. Välj en fil för det här tillägget.'; // %plugin is replaced by the name of the plugin being configured.
+$lang['plugins-configvar'] = 'Ställer in konfigurationsvariabeln: $%cvn'; //%cvn is replaced by the name of the config variable being set
 
 #Location Data
 $lang['location-title'] = 'Platsinformation';
@@ -1492,6 +1506,7 @@ $lang["emptycollectionareyousure"]="Vill du avlägsna alla material från den h�
 
 $lang["error-cannoteditemptycollection"]="Du kan inte redigera en tom samling.";
 $lang["error-permissiondenied"]="Tillåtelse nekades.";
+$lang["error-oldphp"] = "Kräver php-version %version eller senare."; # %version will be replaced with, e.g., "5.2"
 $lang["error-collectionnotfound"]="Samlingen hittades inte.";
 
 $lang["header-upload-subtitle"] = "Steg %number: %subtitle"; # %number, %subtitle will be replaced, e.g. Step 1: Specify Default Content For New Resources
