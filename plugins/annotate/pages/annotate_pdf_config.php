@@ -32,7 +32,7 @@ if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
 # Include a couple functions for the Ajax contactsheet update
-$headerinsert.="<script src=\"../../../lib/js/jquery-1.6.1.min.js?css_reload_key=<?php echo $css_reload_key?>\" type=\"text/javascript\"></script>
+$headerinsert.="<script src=\"../../../lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>\" type=\"text/javascript\"></script>
 <script>jQuery.noConflict();</script>
 ";
 $bodyattribs="onload=\"jQuery().annotate('preview');\"";

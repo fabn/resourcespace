@@ -18,7 +18,7 @@ if ($resource["has_image"]==1)
 	?><style type="text/css" media="all">@import "../plugins/annotate/lib/jquery/css/annotation.css";</style>
 	<!--[if !IE]>--><script type="text/javascript" src="../plugins/annotate/lib/jquery/js/jquery-1.3.2-min.js"></script><!--<![endif]-->
 	<!--[if lt IE 9]><script type="text/javascript" src="../plugins/annotate/lib/jquery/js/jquery-1.3.2-min.js"></script><![endif]-->
-	<!--[if gte IE 9]><script type="text/javascript" src="../lib/js/jquery-1.6.1.min.js"></script><![endif]-->
+	<!--[if gte IE 9]><script type="text/javascript" src="../lib/js/jquery-1.7.2.min.js"></script><![endif]-->
 	<script type="text/javascript" src="../plugins/annotate/lib/jquery/js/jquery-ui-1.7.2-min.js"></script>
 	<script type="text/javascript" src="../plugins/annotate/lib/jquery/js/jquery.annotate.js"></script>
 	<script type="text/javascript">

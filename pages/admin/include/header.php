@@ -2,7 +2,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="<?php echo $baseurl?>/pages/admin/muse.css" />
 <script src="../../lib/CodeMirror/js/codemirror.js" type="text/javascript"></script>
-<script type="text/javascript" src="../../lib/js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery-1.7.2.min.js"></script>
 <style type="text/css">
     .CodeMirror-line-numbers {
         width: 2.5em;

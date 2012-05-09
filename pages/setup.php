@@ -216,7 +216,7 @@ $lang = set_language($defaultlanguage);
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="../css/global.css" rel="stylesheet" type="text/css" media="screen,projection,print" /> 
 <link href="../css/Col-greyblu.css" rel="stylesheet" type="text/css" media="screen,projection,print" id="colourcss" /> 
-<script type="text/javascript" src="../lib/js/jquery-1.6.1.min.js"></script> 
+<script type="text/javascript" src="../lib/js/jquery-1.7.2.min.js"></script> 
 
 <script type="text/javascript"> 
  
