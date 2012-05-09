@@ -47,14 +47,14 @@ for ($n=0;$n<count($users);$n++)
 
 <div class="Question">
 <label><?php echo $lang["nameofproject"]?></label>
-<input name="name" class="stdwidth" value="<?php echo getval("description","")?>">
+<input name="name" class="stdwidth" value="<?php echo htmlspecialchars(getval("description","")) ?>">
 <div class="clearerleft"> </div>
 <?php if (isset($error_name)) { ?><div class="FormError">!! <?php echo $lang["noprojectname"]?> !!</div><?php } ?>
 </div>
 
 <div class="Question">
 <label><?php echo $lang["descriptionofproject"]?><br/><span class="OxColourPale"><?php echo $lang["descriptionofprojecteg"]?></span></label>
-<textarea rows=5 cols=50 name="description" class="stdwidth"><?php echo getval("description","")?></textarea>
+<textarea rows=5 cols=50 name="description" class="stdwidth"><?php echo htmlspecialchars(getval("description","")) ?></textarea>
 <div class="clearerleft"> </div>
 <?php if (isset($error_description)) { ?><div class="FormError">!! <?php echo $lang["noprojectdescription"]?> !!</div><?php } ?>
 </div>
@@ -79,7 +79,7 @@ for ($n=0;$n<count($users);$n++)
 ?>
 <div class="Question" id="email">
 <label><?php echo $lang["email"]?></label>
-<input name="email" class="stdwidth" value="<?php echo getval("email","")?>">
+<input name="email" class="stdwidth" value="<?php echo htmlspecialchars(getval("email","")) ?>">
 <div class="clearerleft"> </div>
 <?php if (isset($error_email)) { ?><div class="FormError">!! <?php echo $lang["setup-emailerr"]?> !!</div><?php } ?>
 </div>
@@ -87,13 +87,13 @@ for ($n=0;$n<count($users);$n++)
 
 <div class="Question" id="contacttelephone">
 <label><?php echo $lang["contacttelephone"]?></label>
-<input name="contact" class="stdwidth" value="<?php echo getval("contact","")?>">
+<input name="contact" class="stdwidth" value="<?php echo htmlspecialchars(getval("contact","")) ?>">
 <div class="clearerleft"> </div>
 </div>
 
 <div class="Question" id="finaluse">
 <label><?php echo $lang["finaluse"]?><br/><span class="OxColourPale"><?php echo $lang["finaluseeg"]?></span></label>
-<input name="finaluse" class="stdwidth" value="<?php echo getval("finaluse","")?>">
+<input name="finaluse" class="stdwidth" value="<?php echo htmlspecialchars(getval("finaluse","")) ?>">
 <div class="clearerleft"> </div>
 </div>
 
