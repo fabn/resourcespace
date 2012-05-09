@@ -161,7 +161,7 @@ function str_replace_formatted_placeholder($mixedplaceholder, $mixedreplace, $su
     if ($question_mark)
         {
         $array_placeholder[] = "?";
-        $array_replace[] = strtoupper($replace);
+        $array_replace[] = strtoupper($replace[0]);
         }
 
     # Replaces the placeholders with the replace values and returns the new string.

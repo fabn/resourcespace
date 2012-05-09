@@ -602,7 +602,7 @@ if ($access==0) # open access only (not restricted)
 	}
 # --- end of alternative files listing
 
-if ($use_mp3_player && file_exists($mp3realpath)){
+if ($use_mp3_player && file_exists($mp3realpath) && $access==0){
 		include "mp3_play.php";
 }
 
