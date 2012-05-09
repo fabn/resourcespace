@@ -67,6 +67,7 @@ if ($collection!="")
 		$error=$lang['error-cannoteditemptycollection'];
 		include "../include/header.php";
 		error_alert($error);
+		exit();
 	}
 	
 	# check editability
@@ -74,6 +75,7 @@ if ($collection!="")
 		$error=$lang['error-permissiondenied'];
 		include "../include/header.php";
 		error_alert($error);
+		exit();
 	}
 	$ref=$items[0];
 	}
@@ -96,7 +98,9 @@ $resource=get_resource_data($ref);
 if (!get_edit_access($ref,$resource["archive"])) {
 		$error=$lang['error-permissiondenied'];
 		include "../include/header.php";
-		error_alert($error);}
+		error_alert($error);
+		exit();
+		}
 
 if (getval("regen","")!="")
 	{
@@ -615,9 +619,18 @@ $originalref=$use;
 
 if (getval("copyfrom","")!="")
 	{
-	$use=getvalescaped("copyfrom","");
-	$original_fields=get_resource_field_data($ref,$multiple,true);
+	# Copy from function
+	$copyfrom=getvalescaped("copyfrom","");
+	$copyfrom_access=get_resource_access($copyfrom);
+	
+	# Check access level
+	if ($copyfrom_access!=2) # Do not allow confidential resources (or at least, confidential to that user) to be copied from
+		{
+		$use=$copyfrom;
+		$original_fields=get_resource_field_data($ref,$multiple,true);
+		}
 	}
+
 if (getval("metadatatemplate","")!="")
 	{
 	$use=getvalescaped("metadatatemplate","");

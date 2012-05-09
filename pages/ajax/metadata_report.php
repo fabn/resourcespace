@@ -4,6 +4,7 @@ include "../../include/authenticate.php";
 include "../../include/general.php"; 
 include "../../include/resource_functions.php"; 
 
+if (!$metadata_report) {exit("This function is not enabled.");}
 
 $exiftool_fullpath = get_utility_path("exiftool");
 if ($exiftool_fullpath==false)

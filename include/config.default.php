@@ -234,6 +234,8 @@ $exif_date=12;
 
 # If exiftool is installed, you can optionally enable the metadata report available on the View page. 
 # You may want to enable it on the usergroup level by overriding this config option in System Setup.
+#
+# WARNING - enabling this will allow a user to download the original resource even if they don't have access via other means, as the scrambled filename may be visible in the metadata report.
 $metadata_report=false;
 
 # Allow a link to re-extract metadata per-resource (on the View Page) to users who have edit abilities.
