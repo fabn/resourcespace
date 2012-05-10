@@ -1,0 +1,5 @@
+name: embeddocument
+author: Dan Huby
+version: 1.01
+desc: Provides a function to generate HTML for embeddable document previews on remote sites.
+config_url: /plugins/embeddocument/pages/setup.php

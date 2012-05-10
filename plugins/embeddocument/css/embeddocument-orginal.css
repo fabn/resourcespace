@@ -1,0 +1,26 @@
+.embeddocument_main
+	{
+	width:480px;
+	border:1px solid #BBB;
+	background-color: #FFF;
+	}
+.embeddocument_preview
+	{
+	width:480px;
+	border: none;
+	}
+
+.embeddocument_buttons_left
+	{
+	float:left;
+	font-family: Tahoma, Arial, Sans-serif;
+	font-size:12px;
+	}
+.embeddocument_buttons_right
+	{
+	float:right;
+	}
+.embeddocument_begn
+	{
+	margin-left:14px;
+	}
