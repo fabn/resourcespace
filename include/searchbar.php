@@ -189,6 +189,7 @@ if (!$basic_simple_search)
 			case 0: # -------- Text boxes?><?php
 			case 1:
 			case 5:
+			case 9:
 			?>	
 			<input class="SearchWidth" type=text name="field_<?php echo $fields[$n]["name"]?>" id="field_<?php echo $fields[$n]["name"]?>" value="<?php echo htmlspecialchars($value)?>"><?php
 			if ($autocomplete_search) { 
@@ -299,6 +300,7 @@ if (!$basic_simple_search)
 			$value=str_replace(";",",",$value);
 			?>
 			
+			<div id="field_<?php echo $fields[$n]["name"]?>" >
 			<div id="<?php echo $fields[$n]["name"]?>_statusbox" class="MiniCategoryBox"></div>
 			<input type="hidden" name="field_cat_<?php echo $fields[$n]["name"]?>" id="<?php echo $fields[$n]["name"]?>_category" value="<?php echo $value?>">
 			
@@ -306,7 +308,7 @@ if (!$basic_simple_search)
 			<?php
 			# Add floating frame HTML. This must go in the footer otherwise it appears in the wrong place in IE due to it existing within a floated parent (the search bar).
 			$extrafooterhtml.="
-			<div class=\"RecordPanel\" style=\"display:none;position:absolute;top:100px;left:200px;text-align:left;\" id=\"cattree_" . $fields[$n]["name"] . "\">" . $lang["pleasewait"] . "</div>
+			<div class=\"RecordPanel\" style=\"display:none;position:fixed;top:100px;left:200px;text-align:left;\" id=\"cattree_" . $fields[$n]["name"] . "\">" . $lang["pleasewait"] . "</div>
 			<script type=\"text/javascript\">
 			// Load Category Tree
 			new Ajax.Updater ('cattree_" . $fields[$n]["name"] . "','" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "', { method: 'post', evalScripts: true });
@@ -314,7 +316,7 @@ if (!$basic_simple_search)
 			";
 			?>
 			<a href="#" onClick="document.getElementById('cattree_<?php echo $fields[$n]["name"]?>').style.display='block';return false;
-			"><?php echo $lang["select"] ?></a>
+			"><?php echo $lang["select"] ?></a></div>
 			<?php
 			# Add to clear function
 			$clear_function.="DeselectAll('" . $fields[$n]["name"] ."');";
