@@ -155,6 +155,14 @@ function get_plugin_yaml($path, $validate=true)
     return $plugin_yaml;
     }
 
+function get_plugin_config($name){
+    $config = sql_value("SELECT config as value from plugins where name='$name'",'');
+    if ($config=='')
+        return null;
+    else
+        return unserialize(base64_decode($config));
+}
+
 /**
  * A subset json_encode function that only works on $config arrays but has none
  * of the version-to-version variability and other "unusual" behavior of PHP's.
