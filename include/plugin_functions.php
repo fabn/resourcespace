@@ -155,14 +155,6 @@ function get_plugin_yaml($path, $validate=true)
     return $plugin_yaml;
     }
 
-function get_plugin_config($name){
-    $config = sql_value("SELECT config as value from plugins where name='$name'",'');
-    if ($config=='')
-        return null;
-    else
-        return unserialize(base64_decode($config));
-}
-
 /**
  * A subset json_encode function that only works on $config arrays but has none
  * of the version-to-version variability and other "unusual" behavior of PHP's.
@@ -182,6 +174,14 @@ function config_json_encode($config)
             {
             $output .= '"' . config_encode($value) . '"';
             }
+        elseif (is_bool($value))
+            {
+            $output .= ($value?'true':'false');
+            }
+        elseif (is_numeric($value))
+            {
+            $output .= strval($value);
+            }
         elseif (is_array($value))
             {
             $output .= '[';
@@ -190,6 +190,14 @@ function config_json_encode($config)
                 if (is_string($item))
                     {
                     $output .= '"' . config_encode($item) . '", ';
+                    }
+                elseif (is_bool($item))
+                    {
+                    $output .= $item?'true':'false' . ', ';
+                    }
+                elseif (is_numeric($item))
+                    {
+                    $output .= strval($item) . ', ';
                     }
                 else
                     {
@@ -282,6 +290,45 @@ function config_clean($config)
     }
 
 /**
+ * Return plugin config stored in plugins table for a given plugin name.
+ *
+ * Queries the plugins table for a stored config value and, if found,
+ * unserializes the data and returns the result.  If config isn't found
+ * returns null.
+ *
+ * @param string $name Plugin name
+ * @return mixed|null Returns config data or null if no config.
+ * @see set_plugin_config
+ */
+function get_plugin_config($name){
+    global $mysql_verbatim_queries, $mysql_charset;
+
+    # Need verbatum queries here
+    $mysql_vq = $mysql_verbatim_queries;
+    $mysql_verbatim_queries = true;
+    $configs = sql_query("SELECT config,config_json from plugins where name='$name'",'');
+    $configs = $configs[0];
+    $mysql_verbatim_queries = $mysql_vq;
+    if (!array_key_exists('config', $configs))
+        {
+        return null;
+        }
+    elseif (array_key_exists('config_json', $configs) && function_exists('json_decode'))
+        {
+        if (!isset($mysql_charset))
+            {
+            $configs['config_json'] = iconv('ISO-8859-1', 'UTF-8', $configs['config_json']);
+            }
+            return json_decode($configs['config_json'], true);
+
+        }
+    else
+        {
+    	return unserialize(base64_decode($configs['config']));
+    	}
+}
+
+/**
  * Store a plugin's configuration in the database.
  *
  * Serializes the $config parameter and stores in the config
@@ -296,6 +343,7 @@ function config_clean($config)
  *
  * @param string $plugin_name Plugin name
  * @param mixed $config Configuration variable to store.
+ * @see get_plugin_config
  */
 function set_plugin_config($plugin_name, $config)
     {
