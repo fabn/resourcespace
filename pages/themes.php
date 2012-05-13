@@ -25,27 +25,27 @@ function DisplayTheme($themes=array())
 		{
 		?>
 		<div class="RecordBox">
-		<div class="RecordPanel">  
-		
+		<div class="RecordPanel">
+
 		<div class="RecordHeader">
-		
+
 		<?php
 		if ($themes_category_split_pages && $themes_category_split_pages_parents){?><h1><?php
 		echo $lang["collections"];?></h1><?php }
-		
+
 		// count total items in themes
 	    $totalcount=0;
 	    for ($m=0;$m<count($getthemes);$m++)
 			{$totalcount=$totalcount+$getthemes[$m]['c'];
 		}
-		
+
 		if ($theme_images_align_right)
 			{
 			?>
 			<div style="float:right;">
-			<?php	
+			<?php
 			}
-		
+
 		$images=get_theme_image($themes);
 		if (($images!==false) && ($theme_images))
 			{
@@ -59,7 +59,7 @@ function DisplayTheme($themes=array())
 			{
 			?>
 			</div>
-			<?php	
+			<?php
 			}
 		?>
         <table><tr><td style="margin:0px;padding:0px;">
@@ -70,7 +70,7 @@ function DisplayTheme($themes=array())
 				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
 				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 				}
-			} 
+			}
 		else
 			{
 			echo stripslashes(str_replace("*","",$themename));
@@ -89,7 +89,7 @@ function DisplayTheme($themes=array())
 		<?php hook("beforecollectiontoolscolumnheader");?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
-		
+
 		<?php
 		for ($m=0;$m<count($getthemes);$m++)
 			{
@@ -106,21 +106,21 @@ function DisplayTheme($themes=array())
             } else {
 
                 ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
-			
+
                 <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
-		
+
                 <?php if (isset($zipcommand) || $collection_download) { ?>
                 &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
                 <?php } ?>
-			
+
                 <?php if ($contact_sheet==true) { ?>
                 &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
                 <?php } ?>
-		
+
                 <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
-		
+
                 <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
-		
+
                 <?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
 			<?php } ?>
 			</td>
@@ -130,7 +130,7 @@ function DisplayTheme($themes=array())
 		?>
 		</table>
 		</div>
-		
+
 		</div>
 		<div class="PanelShadow"> </div>
 		</div>
@@ -160,7 +160,7 @@ for ($n=$lastlevelchange;$n<=$themecount;$n++){
 	if ($n>$lastlevelchange && !$themes_category_split_pages){
 	$themes[$n-1]="";
 	}
-}	
+}
 
 //if ($lastlevelchange=="1") {$theme2="";$theme3="";}
 //if ($lastlevelchange=="2") {$theme3="";}
@@ -168,12 +168,12 @@ include "../include/header.php";
 ?>
 
 
-<div class="BasicsBox"> 
+<div class="BasicsBox">
 <form method=get id="themeform">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
 <?php if (!$themes_category_split_pages) { ?>
-  <h1><?php echo getval("title",$lang["themes"])?></h1>
+  <h1><?php echo htmlspecialchars(getval("title",$lang["themes"]),ENT_QUOTES)?></h1>
   <p><?php echo text("introtext")?></p>
 <?php } ?>
 
@@ -185,10 +185,10 @@ if ($themes_category_split_pages && isset($themes[0]))
 	# Display back link
 	$link="themes.php?";
 	for ($x=0;$x<count($themes);$x++){
-		if ($x!=0){ $link.="&"; } 
+		if ($x!=0){ $link.="&"; }
 		$link.="theme";
 		$link.=($x==0)?"":$x;
-		$link.="=". urlencode((!isset($themes[$x+1]))?"":$themes[$x]); 
+		$link.="=". urlencode((!isset($themes[$x+1]))?"":$themes[$x]);
 	}
 	?>
 	<p><a href="<?php echo $link?>">&lt;&lt; <?php echo $lang["back"]?></a></p>
@@ -209,19 +209,19 @@ elseif ($themes_category_split_pages)
 	#
 
 	?>
-	<?php 
+	<?php
 	if (count($themes)<$theme_category_levels){
 	$headers=get_theme_headers($themes);
-	if (count($headers)>0){?>	
+	if (count($headers)>0){?>
 		<div class="RecordBox">
-		<div class="RecordPanel">  
+		<div class="RecordPanel">
 
 		<div class="RecordHeader">
-		<h1 style="margin-top:5px;"><?php 
+		<h1 style="margin-top:5px;"><?php
 		if (!isset($themes[0])){
 			echo $lang["themes"];
 			}
-		else{ 
+		else{
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
 				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php
@@ -230,12 +230,12 @@ elseif ($themes_category_split_pages)
 					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 					}
 			}
-			else { 
-				echo $lang["subcategories"]; 
+			else {
+				echo $lang["subcategories"];
 			}
 		}?></h1>
 		</div>
-		
+
 		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
@@ -243,11 +243,11 @@ elseif ($themes_category_split_pages)
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 		<?php
-		
+
 		# Theme headers
 		for ($n=0;$n<count($headers);$n++)
 			{
-			$link="themes.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]); 
+			$link="themes.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]);
 			for ($x=2;$x<count($themes)+2;$x++){
 				if (isset($headers[$n])){
 					$link.="&theme".$x."=" . urlencode((!isset($themes[$x-1]))? ((!isset($themes[$x-2]))?"":$headers[$n]):$themes[$x-1]);
@@ -272,29 +272,29 @@ elseif ($themes_category_split_pages)
 			</tr>
 			<?php
 			}*/
-			
+
 		?>
 		</table>
 		</div>
-		
+
 		</div>
 		<div class="PanelShadow"> </div>
 		</div>
 	<?php } }/*end if subcategory headers */ ?>
-	<?php	
+	<?php
 	}
 else
 	{
 	# --------------- All theme categories on one page, OR multi level browsing via dropdowns. -------------------
 
-	
+
 	if ($theme_category_levels>1)
 		{
 		# Display dropdown box for multiple theme selection levels.
 		?>
 		<div class="RecordBox">
-		<div class="RecordPanel">  
-		
+		<div class="RecordPanel">
+
 		<div class="Question" style="border-top:none;">
 		<label for="theme1"><?php echo $lang["themecategory"] . " 1" ?></label>
 		<select class="stdwidth" name="theme1" id="theme1" onchange="document.getElementById('lastlevelchange').value='1';document.getElementById('themeform').submit();">
@@ -303,7 +303,7 @@ else
 			//{
 			?><option value=""><?php echo $lang["select"]?></option><?php
 			//}
-		
+
 		# ----------------- Level 1 headers -------------------------
 		$headers=get_theme_headers(array());
 		for ($n=0;$n<count($headers);$n++)
@@ -316,7 +316,7 @@ else
 		</select>
 		<div class="clearerleft"> </div>
 		</div>
-		
+
 		<?php
 		if (count($themes)>0){
 		for ($x=0;$x<count($themes);$x++){
@@ -327,13 +327,13 @@ else
 			for($n=0;$n<$x+1;$n++){
 				$themearray[]=$themes[$n];
 				}
-			$headers=get_theme_headers($themearray);	
+			$headers=get_theme_headers($themearray);
 			if (count($headers)>0)
 				{
 				?>
 				<div class="Question" style="border-top:none;">
 				<label for="theme<?php echo $x+2?>"><?php echo $lang["themecategory"] . " ".($x+2) ?></label>
-		
+
 				<select class="stdwidth" name="theme<?php echo $x+2?>" id="theme<?php echo $x+2?>" onchange="document.getElementById('lastlevelchange').value='<?php echo $x+2?>';document.getElementById('themeform').submit();">
 				<?php
 				//if (!isset($themes[$x+1])||$themes[$x+1]=="")
@@ -391,13 +391,13 @@ if ($header=="" && !isset($themes[0]))
 	for ($n=0;$n<count($headers);$n++)
 		{
 		$node=getval("node",0);
-		
+
 		if ((checkperm("f*") || checkperm("f" . $headers[$n]["ref"]))
 		&& !checkperm("f-" . $headers[$n]["ref"]) && ($smart_theme=="" || $smart_theme==$headers[$n]["ref"]))
 			{
 			?>
 			<div class="RecordBox">
-			<div class="RecordPanel">  
+			<div class="RecordPanel">
 
 			<div class="RecordHeader">
 			<h1 style="margin-top:5px;">
@@ -416,7 +416,7 @@ if ($header=="" && !isset($themes[0]))
 			?>
 			</h1>
 			</div>
-		
+
 			<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
 			<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 			<tr class="ListviewBoxedTitleStyle">
@@ -424,14 +424,14 @@ if ($header=="" && !isset($themes[0]))
 			<?php hook("beforecollectiontoolscolumnheader");?>
 			<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 			</tr>
-			
+
 			<?php
 			$themes=get_smart_themes($headers[$n]["ref"],$node);
 			for ($m=0;$m<count($themes);$m++)
 				{
 				$s=$headers[$n]["name"] . ":" . $themes[$m]["name"];
 
-				# Indent this item?				
+				# Indent this item?
 				$indent=str_pad("",$themes[$m]["indent"]*5," ") . ($themes[$m]["indent"]==0?"":"&#746;") . "&nbsp;";
 				$indent=str_replace(" ","&nbsp;",$indent);
 
@@ -453,7 +453,7 @@ if ($header=="" && !isset($themes[0]))
 					<?php
 					}
 				?>
-				
+
 				<?php echo i18n_get_translated($themes[$m]["name"])?></a>
 				</div></td>
 				<?php hook("beforecollectiontoolscolumn");?>
@@ -470,7 +470,7 @@ if ($header=="" && !isset($themes[0]))
 			?>
 			</table>
 			</div>
-			
+
 			</div>
 			<div class="PanelShadow"> </div>
 			</div>
