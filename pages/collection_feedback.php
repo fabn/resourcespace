@@ -59,6 +59,10 @@ include "../include/header.php";
 		$use_watermark=check_use_watermark($ref);
 		
 		$title=$ref . " : " . htmlspecialchars(tidy_trim (i18n_get_translated ($result[$n]["field".$view_title_field]),60));
+		if (isset($collection_feedback_display_field)) {
+			$displaytitle=htmlspecialchars(get_data_by_field($ref,$collection_feedback_display_field));
+			}
+		else {$displaytitle=$title;}
 		?>	
 		<!--Resource Panel-->
 		<div class="ResourcePanelShell" id="ResourceShell<?php echo $ref?>">
@@ -79,7 +83,7 @@ include "../include/header.php";
 				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 				}
 		
-		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $title?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $displaytitle?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<?php } else { ?>		<img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>"/><?php } ?>
 
 		
@@ -87,7 +91,7 @@ include "../include/header.php";
 		</tr></table>
 		<span class="ResourceSelect"><input type="checkbox" name="select_<?php echo $ref?>" value="yes"></span>
 
-		<div class="ResourcePanelInfo"><?php echo $title?>&nbsp;</div>
+		<div class="ResourcePanelInfo"><?php echo $displaytitle?>&nbsp;</div>
 			
 		<div class="clearer"> </div>
 		</div>

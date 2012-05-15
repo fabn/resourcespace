@@ -963,6 +963,8 @@ $notify_user_contributed_unsubmitted=false;
 
 # When requesting feedback, allow the user to select resources (e.g. pick preferred photos from a photo shoot).
 $feedback_resource_select=false;
+# When requesting feedback, display the contents of the specified field (if available) instead of the resource ID. 
+#$collection_feedback_display_field=51;
 
 
 # Uncomment and set the below value to set the maximum size of uploaded file that thumbnail/preview images will be created for.
