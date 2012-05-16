@@ -75,7 +75,9 @@ function DisplayTheme($themes=array())
 			{
 			echo stripslashes(str_replace("*","",$themename));
 			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
-            <p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); ?></p></td></tr></table>
+            <p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); 
+            hook("themeaction");
+            ?></p></td></tr></table>
             <!-- The number of collections should never be equal to zero. -->
 
 		<div class="clearerright"> </div>
