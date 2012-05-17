@@ -11,7 +11,9 @@ if(strlen(getval('direct',''))>0){$direct = true;} else { $direct = false;}
 # if direct downloading without authentication is enabled, skip the authentication step entirely
 if (!($direct_download_noauth && $direct)){
 	# External access support (authenticate only if no key provided, or if invalid access key provided)
-	ob_end_flush();
+	if (ob_get_level() > 0){
+		ob_end_flush();
+	}
 	$k=getvalescaped("k","");if (($k=="") || (!check_access_key(getvalescaped("ref","",true),$k))) {include "../include/authenticate.php";}
 }
 
@@ -36,9 +38,11 @@ if ($direct_download_noauth && $direct){
 
 if (!$allowed)
 	{
-	# This download is not allowed. How did the user get here?
-	exit("Permission denied");
-	ob_end_flush();
+		# This download is not allowed. How did the user get here?
+		exit("Permission denied");
+		if (ob_get_level() > 0){
+			ob_end_flush();
+		}
 	}
 
 # additional access check, as the resource download may be allowed, but access restriction should force watermark.	
@@ -67,7 +71,9 @@ if ($noattach=="" && $alternative==-1) # Only for downloads (not previews)
 	if ($tmpfile!==false && file_exists($tmpfile)){$path=$tmpfile;}
 	}
 
-ob_end_clean(); // if anything was output, kill it, since we just want the file.
+if (ob_get_level() > 0){
+	ob_end_clean(); // if anything was output, kill it, since we just want the file.
+}
 	
 $filesize=filesize_unlimited($path);
 header("Content-Length: " . $filesize);
