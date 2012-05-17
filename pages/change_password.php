@@ -27,11 +27,11 @@ include "../include/header.php";
 	<h1><?php echo $lang["changeyourpassword"]?></h1>
 
     <p><?php echo text("introtext")?></p>
-	
+
 	<?php if (getval("expired","")!="") { ?><div class="FormError">!! <?php echo $lang["password_expired"]?> !!</div><?php } ?>
-	    
-	<form method="post">  
-	<input type="hidden" name="expired" value="<?php echo getval("expired","")?>">
+
+	<form method="post">
+	<input type="hidden" name="expired" value="<?php echo getvalescaped("expired","")?>">
 	<div class="Question">
 	<label for="password"><?php echo $lang["newpassword"]?></label>
 	<input type="password" name="password" id="password" class="stdwidth">
@@ -46,13 +46,13 @@ include "../include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 
-	
+
 	<div class="QuestionSubmit">
-	<label for="buttons"> </label>			
+	<label for="buttons"> </label>
 	<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 	</div>
 	</form>
-	
+
 <?php hook("afterchangepasswordform");?>
 <?php
 include "../include/footer.php";
