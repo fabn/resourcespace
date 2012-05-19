@@ -42,7 +42,6 @@ elseif ($pagename=="themes"){
     $colresult=do_search("!collection" . $collection);
     $cinfo=get_collection($collection);
     $feedback=$cinfo["request_feedback"];
-    $k="";
     }    
 else if ($pagename=="collections"){
     $collection=$usercollection;$colresult=$result;
