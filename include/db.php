@@ -992,8 +992,12 @@ function daily_stat($activity_type,$object_ref)
 function include_plugin_config($plugin_name,$config="",$config_json="")
 	{
     global $mysql_charset;
-	$configpath = dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.php";
+	$configpath = dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.default.php";
 	if (file_exists($configpath)) {include $configpath;}
+
+	$configpath2 = dirname(__FILE__)."/../plugins/" . $plugin_name . "/config/config.php";
+	if (file_exists($configpath2)) {include $configpath2;}
+
 
     if ($config_json != "" && function_exists('json_decode'))
         {

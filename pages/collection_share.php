@@ -56,6 +56,8 @@ include "../include/header.php";
 
 <li><a href="collection_share.php?ref=<?php echo $ref?>&generateurl=true"><?php echo $lang["generateurl"]?></a></li>
 
+<?php hook("extra_share_options") ?>
+
 <?php if (getval("generateurl","")!="")
 	{
 	?>
