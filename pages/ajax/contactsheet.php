@@ -310,7 +310,7 @@ for ($n=0;$n<count($result);$n++){
 		putenv("PATH=" . $ghostscript_path . ":" . $imagemagick_path); # Path 
 
         $ghostscript_fullpath = get_utility_path("ghostscript");
-        $command = ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf");
+        $command = $ghostscript_fullpath . " -sDEVICE=jpeg -dFirstPage=$previewpage -o -r100 -dLastPage=$previewpage -sOutputFile=" . escapeshellarg(get_temp_dir() . "/contactsheetrip.jpg") . " " . escapeshellarg(get_temp_dir() . "/contactsheet.pdf");
 		run_command($command);
 
         $convert_fullpath = get_utility_path("im-convert");
