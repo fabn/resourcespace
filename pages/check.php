@@ -268,8 +268,8 @@ function get_utility_version($utilityname)
     switch (strtolower($utilityname))
         {
         case "im-convert":
-           if (strpos($version, "ImageMagick")==true) {$name = "ImageMagick";}
-           if (strpos($version, "GraphicsMagick")==true) {$name = "GraphicsMagick";}
+           if (strpos($version, "ImageMagick")!==false) {$name = "ImageMagick";}
+           if (strpos($version, "GraphicsMagick")!==false) {$name = "GraphicsMagick";}
            if ($name=="ImageMagick" || $name=="GraphicsMagick") {$expected = true;}
            else {$expected = false;}
            break;
