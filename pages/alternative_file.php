@@ -34,6 +34,7 @@ if (getval("name","")!="")
 	{
 	# Save file data
 	save_alternative_file($resource,$ref);
+	hook ("savealternatefiledata");
 	redirect ("pages/alternative_files.php?ref=$resource&search=".urlencode($search)."&offset=$offset&order_by=$order_by&sort=$sort&archive=$archive");
 	}
 
