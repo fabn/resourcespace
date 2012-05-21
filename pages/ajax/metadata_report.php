@@ -48,7 +48,7 @@ else
 	$file_writability=in_array($ext,$writable_formats_array); 
 	}
 	
-	$command=$exiftool_fullpath . " -s -t -G --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
+	$command=$exiftool_fullpath . " -s -t -G --filename --exiftoolversion --filepermissions --NativeDigest --History --Directory " . escapeshellarg($image)." 2>&1";
 	$report= run_command($command);
 		          
 	# get commands that would be run on download:      
