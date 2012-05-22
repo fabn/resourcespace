@@ -7,6 +7,13 @@ include "../include/collections_functions.php";
 $offset=getvalescaped("offset",0);
 $find=getvalescaped("find","");
 $col_order_by=getvalescaped("col_order_by","created");
+
+$collection_valid_order_bys=array("fullname","name","ref","count","public","created");
+$modified_collection_valid_order_bys=hook("modifycollectionvalidorderbys");
+if ($modified_collection_valid_order_bys){$collection_valid_order_bys=$modified_collection_valid_order_bys;}
+if (!in_array($col_order_by,$collection_valid_order_bys)) {$col_order_by="created";} # Check the value is one of the valid values (SQL injection filter)
+
+
 $override_group_restrict=getvalescaped("override_group_restrict","false");
 $sort=getval("sort","ASC");
 $revsort = ($sort=="ASC") ? "DESC" : "ASC";
