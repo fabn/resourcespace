@@ -1,4 +1,4 @@
-body { padding: 0pt; margin: 0pt;}
+body { padding: 0pt; margin: 0pt; background-color: #000; color: #fff;}
 
 .embedslideshow_player
 	{
@@ -21,7 +21,7 @@ ul.embedslideshow_controls_standard
 	}
 		
 ul.embedslideshow_controls_standard li
-	{color:#666;
+	{color:#999;
 	font: Verdana, Arial, Sans-serif;
 	font-size:12px;	
 	margin:auto 2px;
@@ -42,8 +42,8 @@ input#embedslideshow_page_box {
 		-moz-border-radius: 3px;
 		margin: 0 auto; 
 		padding:4.5px 0;
-		color:#666;
-		background:#eee;
+		color:#999;
+		background:#000;
 		text-align: center;
 		}
 ul.embedslideshow_controls_custom

@@ -10,6 +10,8 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 	if (getval("embedslideshow","")!="" )
 		{
 		?>
+		<p><?php echo $lang["embedslideshow_action_description"] ?></p>
+				
 		<div class="Question">		
 		<label><?php echo $lang["embedslideshow_size"] ?></label>
 		<select name="size" class="stdwidth">
@@ -46,8 +48,7 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 		<input type="checkbox" value="1" name="maximise" <?php if (!isset($_POST["size"]) || (isset($_POST["maximise"]) && $_POST["maximise"]=="1")) { ?>checked<?php } ?>>
 		<div class="clearerleft"></div>
 		</div>		
-		
-		<p><?php echo $lang["embedslideshow_action_description"] ?></p>
+
 		<div class="QuestionSubmit" style="padding-top:0;margin-top:0;">
 		<label for="buttons"> </label>
 		<input name="generateslideshow" type="submit" value="&nbsp;&nbsp;<?php echo $lang["generateslideshowhtml"]?>&nbsp;&nbsp;" />
@@ -119,6 +120,13 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 		<textarea style="width:535px;height:120px;"><?php echo htmlspecialchars($embed); ?></textarea>
 		<div class="clearerleft"></div>
 		</div>
+
+		<div class="Question">		
+		<label><?php echo $lang["embedslideshow_directlink"] ?></label>
+		<div class="Fixed"><a href="<?php echo $baseurl ?>/plugins/embedslideshow/pages/viewer.php?ref=<?php echo $ref ?>&key=<?php echo $key ?>&size=<?php echo getval("size","") ?>&transition=<?php echo getval("transition","") ?>&width=<?php echo $width ?>&height=<?php echo $height ?>" target="_blank"><?php echo $lang["embedslideshow_directlinkopen"] ?></a></div>
+		<div class="clearerleft"></div>
+		</div>
+				
 		<div class="Question">		
 		<label><?php echo $lang["slideshowpreview"] ?></label>
 			<div class="Fixed">

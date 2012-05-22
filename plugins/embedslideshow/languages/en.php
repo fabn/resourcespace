@@ -20,4 +20,7 @@ $lang["embedslideshow_maximise_option"]="Maximise Option?";
 
 $lang["embedslideshow_seconds"]="? seconds";
 $lang["embedslideshow_notransition"]="No automatic transition";
+
+$lang["embedslideshow_directlink"]="Non-embedded direct URL";
+$lang["embedslideshow_directlinkopen"]="Open direct link (new page)";
 ?>

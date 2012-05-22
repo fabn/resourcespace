@@ -36,7 +36,8 @@ $use_watermark=check_use_watermark();
 
 <script type="text/javascript">
 var embedslideshow_page=1;
-var embedslideshow_offsets =  new Array();
+var embedslideshow_x_offsets =  new Array();
+var embedslideshow_y_offsets =  new Array();
 <?php if ($transition>0) { ?>
 var embedslideshow_auto=true;
 <?php } else { ?>
@@ -67,13 +68,24 @@ foreach ($resources as $resource)
 	
 	# sets height and width to display 
 	$ratio=$resource["thumb_width"]/$resource["thumb_height"];
-	$width=getvalescaped("width","");
-	$height=floor($width / $ratio);
+
+	if ($ratio>=1)
+		{
+		# Landscape image, width is the largest - scale the height
+		$width=getvalescaped("width","");
+		$height=floor($width / $ratio);
+		}
+	else
+		{
+		$height=getvalescaped("width","");
+		$width=floor($height * $ratio);
+		}
 	
 	?>
-	<a class="embedslideshow_preview_inner" id="embedslideshow_preview<?php echo $page ?>" style="display:none;" href="#" onClick="embedslideshow_ShowPage(<?php echo ($page + 1) ?>,false,false);return false;"><img border="0" width=<?php echo $width ?> height=<?php echo $height ?> src="<?php echo $preview_path ?>"></a>
+	<a class="embedslideshow_preview_inner" id="embedslideshow_preview<?php echo $page ?>" style="display:none;" href="#" onClick="embedslideshow_auto=false;embedslideshow_ShowPage(<?php echo ($page + 1) ?>,false,false);return false;"><img border="0" width=<?php echo $width ?> height=<?php echo $height ?> src="<?php echo $preview_path ?>"></a>
 	<script type="text/javascript">
-	embedslideshow_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$height)/2)+4 ?>;
+	embedslideshow_x_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$width)/2)+4 ?>;
+	embedslideshow_y_offsets[<?php echo $page ?>]=<?php echo ceil(($player_width-$height)/2)+4 ?>;
 	</script>
 	<?php
 	$page++;
@@ -145,8 +157,9 @@ function embedslideshow_ShowPage(page_set,from_auto,jump)
 	//document.getElementById("embedslideshow_preview").innerHTML=embedslideshow_pages[embedslideshow_page];
 
 	// Center in space
-	$('#embedslideshow_preview' + embedslideshow_page).css('top',embedslideshow_offsets[embedslideshow_page] + 'px');
-	
+	$('#embedslideshow_preview' + embedslideshow_page).css('top',embedslideshow_y_offsets[embedslideshow_page] + 'px');
+	$('#embedslideshow_preview' + embedslideshow_page).css('left',embedslideshow_x_offsets[embedslideshow_page] + 'px');
+		
 	// Fade in new page
 	$('#embedslideshow_preview' + embedslideshow_page).fadeIn(embedslideshow_fadetime);
 	
