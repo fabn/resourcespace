@@ -2940,7 +2940,7 @@ function run_command($command)
 	$process = @proc_open($command, array(1 => array('pipe', 'w')), $pipe, NULL, NULL,
 			array('bypass_shell' => true));
 	if (is_resource($process))
-		return stream_get_contents($pipe[1]);
+		return trim(stream_get_contents($pipe[1]));
 
 	return '';
 	}
