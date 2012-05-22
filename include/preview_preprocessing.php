@@ -311,7 +311,7 @@ if (in_array($extension,$unoconv_extensions) && isset($unoconv_path) && !isset($
 	$unocommand=$unoconv_path . "/unoconv";
 	if (!file_exists($unocommand)) {exit("Unoconv executable not found at '$unoconv_path'");}
 	
-	run_command($unocommand . " --format=pdf \"" . escapeshellarg($file) . "\"");
+	run_command($unocommand . " --format=pdf " . escapeshellarg($file));
 	$path_parts=pathinfo($file);
 	$basename_minus_extension=remove_extension($path_parts['basename']);
 	$pdffile=$path_parts['dirname']."/".$basename_minus_extension.".pdf";
@@ -431,7 +431,7 @@ if ($extension=="doc" && isset($antiword_path) && isset($ghostscript_path) && !i
 	$command=$antiword_path . "/antiword";
 	if (!file_exists($command)) {$command=$antiword_path . "\antiword.exe";}
 	if (!file_exists($command)) {exit("Antiword executable not found at '$antiword_path'");}
-	run_command($command . " -p a4 \"" . escapeshellarg($file) . "\" > \"" . $target . ".ps" . "\"");
+	run_command($command . " -p a4 " . escapeshellarg($file) . " > \"" . $target . ".ps" . "\"");
 	if (file_exists($target . ".ps"))
 		{
 		# Postscript file exists
