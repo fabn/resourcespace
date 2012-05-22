@@ -129,7 +129,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <?php } ?>
 <!-- end edit collection -->
 
-<?php hook("collectiontoolcompact1","",array("collection"=>$collection,"count_result"=>$count_result));?>
+<?php hook("collectiontoolcompact1","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo));?>
 
 <!-- contactsheet -->
 <?php if ($contact_sheet==true && $count_result>0) { ?>
@@ -144,7 +144,7 @@ if ($show_edit_all_link && $count_result>0 && $col_editable) { ?>
 <!-- end contactsheet -->
 
 
-<?php hook("collectiontoolcompact","",array("collection"=>$collection,"count_result"=>$count_result));?>
+<?php hook("collectiontoolcompact","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo));?>
 
 
 <!-- share -->
