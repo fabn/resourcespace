@@ -513,6 +513,7 @@ function collections_comparator_desc($a, $b)
 	return strnatcasecmp(i18n_get_translated($b['name']), i18n_get_translated($a['name']));
 	}		
 
+if (!function_exists("get_themes")){
 function get_themes($themes=array(""))
 	{	
 	# Return a list of themes under a given header (theme category).
@@ -535,6 +536,7 @@ function get_themes($themes=array(""))
 	usort($collections, 'collections_comparator');
 	return $collections;
 	}
+}
 
 function get_smart_theme_headers()
 	{

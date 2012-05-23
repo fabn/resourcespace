@@ -7,19 +7,18 @@ include "../include/collections_functions.php";
 include "../include/search_functions.php";
 include "../include/resource_functions.php";
 
-$offset=getvalescaped("offset",0);
-$find=getvalescaped("find","");
-$col_order_by=getvalescaped("col_order_by","created");
+$offset=getvalescaped("offset",getvalescaped("saved_col_offset",0));setcookie("saved_col_offset",$offset);
+$find=getvalescaped("find",getvalescaped("saved_find",""));setcookie("saved_find",$find);
+$col_order_by=getvalescaped("col_order_by",getvalescaped("saved_col_order_by","created"));setcookie("saved_col_order_by",$col_order_by);
+$sort=getvalescaped("sort",getvalescaped("saved_col_sort","ASC"));setcookie("saved_col_sort",$sort);
+$revsort = ($sort=="ASC") ? "DESC" : "ASC";
+# pager
+$per_page=getvalescaped("per_page_list",$default_perpage_list,true);setcookie("per_page_list",$per_page);
 
 $collection_valid_order_bys=array("fullname","name","ref","count","public");
 $modified_collection_valid_order_bys=hook("modifycollectionvalidorderbys");
 if ($modified_collection_valid_order_bys){$collection_valid_order_bys=$modified_collection_valid_order_bys;}
 if (!in_array($col_order_by,$collection_valid_order_bys)) {$col_order_by="created";} # Check the value is one of the valid values (SQL injection filter)
-
-$sort=getval("sort","ASC");
-$revsort = ($sort=="ASC") ? "DESC" : "ASC";
-# pager
-$per_page=getvalescaped("per_page_list",$default_perpage_list);setcookie("per_page_list",$per_page);
 
 if (array_key_exists("find",$_POST)) {$offset=0;} # reset page counter when posting
 
@@ -215,8 +214,9 @@ include "../include/header.php";
     <form method="post">
 		<div class="Question">
 			<div class="tickset">
-			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo htmlspecialchars(getval("find","")) ?>" maxlength="100" class="shrtwidth" /></div>
+			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo htmlspecialchars(unescape($find)); ?>" maxlength="100" class="shrtwidth" /></div>
 			 <div class="Inline"><input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" /></div>
+			 <div class="Inline"><input name="Clear" type="button" onclick="document.getElementById('find').value='';submit();" value="&nbsp;&nbsp;<?php echo $lang["clearbutton"]?>&nbsp;&nbsp;" /></div>
 			</div>
 			<div class="clearerleft"> </div>
 		</div>
