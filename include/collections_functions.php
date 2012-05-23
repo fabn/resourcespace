@@ -40,11 +40,20 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
    		$sql.=" (length(c.theme)=0 or c.theme is null) ";
    		}
    
+	$order_sort="";
+	if ($order_by!="name"){$order_sort=" order by $order_by $sort";}
+   
 	$return="select * from (select c.*,u.username,u.fullname,count(r.resource) count from user u join collection c on u.ref=c.user and c.user='$user' left outer join collection_resource r on c.ref=r.collection $sql group by c.ref
 	union
-	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist $keysql order by $order_by $sort";
+	select c.*,u.username,u.fullname,count(r.resource) count from user_collection uc join collection c on uc.collection=c.ref and uc.user='$user' and c.user<>'$user' left outer join collection_resource r on c.ref=r.collection left join user u on c.user=u.ref $sql group by c.ref) clist $keysql $order_sort";
 
 	$return=sql_query($return);
+	
+	if ($order_by=="name"){
+		if ($sort=="ASC"){usort($return, 'collections_comparator');}
+		else if ($sort=="DESC"){usort($return,'collections_comparator_desc');}
+	}
+	
 	// To keep My Collection creation consistent: Check that user has at least one collection of his/her own  (not if collection result is empty, which may include shares), 
 	$hasown=false;
 	for ($n=0;$n<count($return);$n++){
@@ -498,6 +507,11 @@ function collections_comparator($a, $b)
 	{
 	return strnatcasecmp(i18n_get_translated($a['name']), i18n_get_translated($b['name']));
 	}
+
+function collections_comparator_desc($a, $b)
+	{
+	return strnatcasecmp(i18n_get_translated($b['name']), i18n_get_translated($a['name']));
+	}		
 
 function get_themes($themes=array(""))
 	{	
