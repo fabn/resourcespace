@@ -22,6 +22,11 @@ $start = getval('start','0');
 if (!is_numeric($start)){ $start = 0; }
 
 $resources=sql_query("select r.ref,u.username,u.fullname from resource r left outer join user u on r.created_by=u.ref $sql order by ref");
+
+
+$time_start = microtime(true);
+
+
 for ($n=$start;$n<count($resources);$n++)
 	{
 	$ref=$resources[$n]["ref"];
@@ -32,4 +37,9 @@ for ($n=$start;$n<count($resources);$n++)
 	echo "Done $ref ($n/" . count($resources) . ") - $words words<br />\n";
 	flush();
 	}
-?>
+
+
+$time_end = microtime(true);
+$time = $time_end - $time_start;
+
+echo "Reindex took $time seconds\n";
