@@ -637,30 +637,33 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		# smart collections update
 		global $allow_smart_collections;
 		if ($allow_smart_collections){
-			$smartsearch=sql_value("select savedsearch value from collection where ref=$collection",null);
-			if ($smartsearch!=0){
-				$smartsearch=sql_query("select * from collection_savedsearch where ref=$smartsearch");
-				$smartsearch=$smartsearch[0];
-				$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true);
-				# results is a list of the current search without any restrictions
-				# we need to compare against the current collection contents to minimize inserts and deletions
-				$current=sql_query("select resource from collection_resource where collection=$collection");
-				$current_contents=array(); $results_contents=array();
-				if (!empty($current)){foreach($current as $current_item){ $current_contents[]=$current_item['resource'];}}
-				if (!empty($results)&&is_array($results)){foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}}
+			$smartsearch_ref=sql_value("select savedsearch value from collection where ref=$collection","");
+
+			if ($smartsearch_ref!=""){
+				$smartsearch=sql_query("select * from collection_savedsearch where ref=$smartsearch_ref");
+				if (isset($smartsearch[0]['search'])){
+					$smartsearch=$smartsearch[0];
+					$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true);
+					# results is a list of the current search without any restrictions
+					# we need to compare against the current collection contents to minimize inserts and deletions
+					$current=sql_query("select resource from collection_resource where collection=$collection");
+					$current_contents=array(); $results_contents=array();
+					if (!empty($current)){foreach($current as $current_item){ $current_contents[]=$current_item['resource'];}}
+					if (!empty($results)&&is_array($results)){foreach($results as $results_item){ $results_contents[]=$results_item['ref'];}}
 				
-					for ($n=0;$n<count($results_contents);$n++)
-						{
-						if (!in_array($results_contents[$n],$current_contents)){ add_resource_to_collection($results_contents[$n],$collection,true);}
-						}
+						for ($n=0;$n<count($results_contents);$n++)
+							{
+							if (!in_array($results_contents[$n],$current_contents)){ add_resource_to_collection($results_contents[$n],$collection,true);}
+							}
 					
 
-					for ($n=0;$n<count($current_contents);$n++)
-						{
-						if (!in_array($current_contents[$n],$results_contents)){ remove_resource_from_collection($current_contents[$n],$collection,true);}
-						}	
+						for ($n=0;$n<count($current_contents);$n++)
+							{
+							if (!in_array($current_contents[$n],$results_contents)){ remove_resource_from_collection($current_contents[$n],$collection,true);}
+							}	
 					
-				}
+					}
+				} 
 			}		
 
 		return sql_query($sql_prefix . "select distinct c.date_added,c.comment,c.purchase_size,c.purchase_complete,r.hit_count score,length(c.comment) commentset, $select from resource r  join collection_resource c on r.ref=c.resource $colcustperm  where c.collection='" . $collection . "' and $sql_filter group by r.ref order by $order_by" . $sql_suffix,false,$fetchrows);
