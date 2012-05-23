@@ -161,7 +161,9 @@ function get_plugin_yaml($path, $validate=true)
  * implementation.
  *
  * @param $config mixed a configuration variables array. This *must* be an array
- *      whose elements are UTF-8 encoded strings or arrays of such strings.
+ *      whose elements are UTF-8 encoded strings, booleans, numbers or arrays
+ *      of such elements and whose keys are either numbers or UTF-8 encoded
+ *      strings.
  * @return json encoded version of $config
  */
 function config_json_encode($config)
@@ -176,7 +178,7 @@ function config_json_encode($config)
             }
         elseif (is_bool($value))
             {
-            $output .= ($value?'true':'false');
+            $output .= $value?'true':'false';
             }
         elseif (is_numeric($value))
             {
@@ -184,38 +186,61 @@ function config_json_encode($config)
             }
         elseif (is_array($value))
             {
-            $output .= '[';
-            foreach ($value as $item)
+            $i=0;
+            $simple_keys = true;
+            foreach ($value as $key => $item)
                 {
+                if ($key != $i++)
+                    {
+                    $simple_keys = false;
+                    break;
+                    }
+                }
+            $output .= $simple_keys?'[':'{';
+            foreach ($value as $key => $item)
+                {
+                if (!$simple_keys)
+                	{
+                	if (is_numeric($key))
+                    	{
+                    	$output .= '"' . strval($key) . '":';
+                    	}
+                	else
+                    	{
+                    	$output .= '"' . config_encode($key) . '":';
+                    	}
+                    }
                 if (is_string($item))
                     {
-                    $output .= '"' . config_encode($item) . '", ';
+                    $output .= '"' . config_encode($item) . '"';
                     }
                 elseif (is_bool($item))
                     {
-                    $output .= $item?'true':'false' . ', ';
+                    $output .= $item?'true':'false';
                     }
                 elseif (is_numeric($item))
                     {
-                    $output .= strval($item) . ', ';
+                    $output .= strval($item);
                     }
                 else
                     {
-                    return $output; // Give up; beyond our capabilities
+                    return NULL; // Give up; beyond our capabilities
                     }
+                $output .= ', ';
+                debug('Array building: '. $output);
                 }
             if (substr($output, -2) == ', ')
                 {
-                $output = substr($output, 0, -2) . ']';
+                $output = substr($output, 0, -2) . ($simple_keys?']':'}');
                 }
             else
                 {
-                $output .= ']';
+                $output .= $simple_keys?']':'}';
                 }
             }
         else
             {
-            return $output; // Give up; beyond our capabilities
+            return NULL; // Give up; beyond our capabilities
             }
         $output .= ', ';
         }
