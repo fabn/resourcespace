@@ -7,7 +7,7 @@ include "../include/collections_functions.php";
 include "../include/search_functions.php";
 include "../include/resource_functions.php";
 
-$offset=getvalescaped("offset",getvalescaped("saved_col_offset",0));setcookie("saved_col_offset",$offset);
+$offset=getvalescaped("offset",0);
 $find=getvalescaped("find",getvalescaped("saved_find",""));setcookie("saved_find",$find);
 $col_order_by=getvalescaped("col_order_by",getvalescaped("saved_col_order_by","created"));setcookie("saved_col_order_by",$col_order_by);
 $sort=getvalescaped("sort",getvalescaped("saved_col_sort","ASC"));setcookie("saved_col_sort",$sort);
