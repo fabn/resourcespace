@@ -378,10 +378,10 @@ function cleanse_string($string,$preserve_separators,$preserve_hyphen=false)
         if ($preserve_hyphen)
         	{
         	# Preserve hyphen - used when NOT indexing so we know which keywords to omit from the search.
-		if (strpos($string," -")!==false)
-			{
-	        	$separators=array_diff($separators,array("-")); # Remove hyphen from separator array.
-			}
+			if (strpos($string," -")!==false && strpos($string," - ")==false)
+				{
+					$separators=array_diff($separators,array("-")); # Remove hyphen from separator array.
+				}
         	}
         if ($preserve_separators)
                 {
