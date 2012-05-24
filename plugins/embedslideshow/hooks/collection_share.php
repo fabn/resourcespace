@@ -23,7 +23,7 @@ function HookEmbedslideshowCollection_shareExtra_share_options()
 				{
 				# Slideshow size is max of height/width so that all images will fit within the slideshow area (for default installs height/width is the same anyway though)
 				?>
-				<option value="<?php echo $size["id"] ?>" <?php if ($size["id"]==getval("size","pre")) { ?>selected<?php } ?>><?php echo $size["name"] ?> (<?php echo max($size["width"],$size["height"]) ?> pixels)</option>		
+				<option value="<?php echo $size["id"] ?>" <?php if ($size["id"]==getval("size","pre")) { ?>selected<?php } ?>><?php echo str_replace(array("%name", "%pixels"), array($size["name"], max($size["width"], $size["height"])), $lang["sizename_pixels"]) ?></option>
 				<?php
 				}
 			}

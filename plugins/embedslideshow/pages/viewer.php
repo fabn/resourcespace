@@ -123,7 +123,7 @@ $maxpages=$page-1;
 <?php if ($width>200) {
 # Jump controls - only if enough room to display them
  ?>
-<li class="embedslideshow_jump" Style="cursor: pointer;" onClick="embedslideshow_auto=false;embedslideshow_ShowPage(document.getElementById('embedslideshow_page_box').value,false,true);return false;"><span>jump</span></li>
+<li class="embedslideshow_jump" Style="cursor: pointer;" onClick="embedslideshow_auto=false;embedslideshow_ShowPage(document.getElementById('embedslideshow_page_box').value,false,true);return false;"><span><?php echo $lang["jump"] ?></span></li>
 <li class="embedslideshow_jump-box"> <input type="text" id="embedslideshow_page_box" size="1" /> / <span id="page-count">#</span> </li>
 <?php } ?>
 </ul>

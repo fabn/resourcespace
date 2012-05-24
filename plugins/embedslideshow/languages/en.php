@@ -1,11 +1,16 @@
 <?php
-
+# English
+# Language File for the Embed Slideshow Plugin
+# -------
+#
+#
 $lang["embed"]="Embed";
-$lang["embedslideshow_minimise"]="- minimise slideshow";
+$lang["embedslideshow_minimise"]="&minus; minimise slideshow";
 $lang["embedslideshow_maximise"]="+ maximise slideshow";
 
 $lang["embedslideshow_size"]="Slideshow size?";
-$lang["embedslideshow_transitiontime"]="Transition time?";
+$lang["sizename_pixels"]="%name (%pixels pixels)"; # %name and %pixels will be replaced, e.g. Preview (600 pixels)
+$lang["embedslideshow_transitiontime"]="Slide duration?";
 
 $lang["embedslideshow"]="Embed Slideshow";
 $lang["embedslideshow_action_description"]="This will create an external share key and generate a corresponding block of HTML that can be inserted into an external website.";
@@ -23,4 +28,5 @@ $lang["embedslideshow_notransition"]="No automatic transition";
 
 $lang["embedslideshow_directlink"]="Non-embedded direct URL";
 $lang["embedslideshow_directlinkopen"]="Open direct link (new page)";
-?>
+
+$lang["jump"]="jump";
