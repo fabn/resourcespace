@@ -229,7 +229,7 @@ function get_utility_displayname($utilityname)
 
 function get_utility_version($utilityname)
     {
-    global $lang, $config_windows;
+    global $lang;
 
     # Get utility path.
     $utility_fullpath = get_utility_path($utilityname, $path);

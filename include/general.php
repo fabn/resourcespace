@@ -3206,7 +3206,7 @@ function get_utility_path($utilityname, &$checked_path = null)
         case "ghostscript":
             if (!isset($ghostscript_path)) {return false;} # Ghostscript path not configured.
             if (!isset($ghostscript_executable)) {return false;} # Ghostscript executable not configured.
-            return get_executable_path($ghostscript_path, array("unix"=>$ghostscript_executable, "win"=>$ghostscript_executable), $checked_path);
+            return get_executable_path($ghostscript_path, array("unix"=>$ghostscript_executable, "win"=>$ghostscript_executable), $checked_path, true); # Note that $check_exe is set to true. In that way get_utility_path() becomes backwards compatible with get_ghostscript_command().
             break;
         case "ffmpeg":
             if (!isset($ffmpeg_path)) {return false;} # FFmpeg path not configured.
@@ -3230,13 +3230,22 @@ function get_utility_path($utilityname, &$checked_path = null)
         }
     }
 
-function get_executable_path($path, $executable, &$checked_path)
+function get_executable_path($path, $executable, &$checked_path, $check_exe = false)
     {
     global $config_windows;
-    if ($config_windows)
+    $os = php_uname('s');
+    if ($config_windows || stristr($os, 'windows'))
         {
         $checked_path = $path . "\\" . $executable["win"];
         if (file_exists($checked_path)) {return escapeshellarg($checked_path);}
+        if ($check_exe)
+            {
+            # Also check the path with a suffixed ".exe".
+            $checked_path_without_exe = $checked_path;
+            $checked_path = $path . "\\" . $executable["win"] . ".exe"; 
+            if (file_exists($checked_path)) {return escapeshellarg($checked_path);}
+            $checked_path = $checked_path_without_exe; # Return the checked path without the suffixed ".exe".
+            }
         }
     else
         {
