@@ -236,6 +236,7 @@ elseif ($themes_category_split_pages)
 				echo $lang["subcategories"];
 			}
 		}?></h1>
+		<?php hook("beforethemeheaderlist");?>
 		</div>
 
 		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
