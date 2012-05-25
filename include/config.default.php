@@ -1370,6 +1370,8 @@ $checkbox_and=false;
 # Option to show resource ID in the thumbnail, next to the action icons.
 $display_resource_id_in_thumbnail=false;
 
+# Display a title above the search results for non-search cases, for example collections, recent resources
+$display_search_titles=true;
 
 
 

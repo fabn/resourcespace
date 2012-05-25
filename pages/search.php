@@ -463,19 +463,24 @@ if (true) # Always show search header now.
 	?>
 	</div>
         <?php hook("stickysearchresults"); ?>
-	<?php if (!$collections_compact_style){
-        echo $search_title.$search_title_links;
-        }
-    else {
-    echo $search_title;
-    ?><?php if (substr($search,0,11)=="!collection" && $k==""){
-        $cinfo=get_collection(substr($search,11));
-        $feedback=$cinfo["request_feedback"];
-        $count_result=count($result);
-        include("collections_compact_style.php");
-        ?><br /><br />
-    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
-    <?php } ?>
+	<?php
+	if ($display_search_titles)
+		{
+		if (!$collections_compact_style){
+	        echo $search_title.$search_title_links;
+	        }
+	    else {
+	    echo $search_title;
+	    ?><?php if (substr($search,0,11)=="!collection" && $k==""){
+	        $cinfo=get_collection(substr($search,11));
+	        $feedback=$cinfo["request_feedback"];
+	        $count_result=count($result);
+	        include("collections_compact_style.php");
+	        ?><br /><br />
+	    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
+    <?php }
+    	}
+     ?>
 
     <?php		
 
