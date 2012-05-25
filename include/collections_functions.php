@@ -495,12 +495,18 @@ function get_theme_headers($themes=array())
 	}
 	
 	$return=array();
-	$themes=sql_query("select * from collection where public=1 and $selecting is not null and length($selecting)>0 $sql order by $selecting");
+	$themes=sql_query("select * from collection where public=1 and $selecting is not null and length($selecting)>0 $sql");
 	for ($n=0;$n<count($themes);$n++)
 		{
 		if ((!in_array($themes[$n][$selecting],$return)) && (checkperm("j*") || checkperm("j" . $themes[$n]["theme"]))) {$return[]=$themes[$n][$selecting];}
 		}
+	usort($return,"themes_comparator");	
 	return $return;
+	}
+
+function themes_comparator($a, $b)
+	{
+	return strnatcasecmp(i18n_get_translated($a), i18n_get_translated($b));
 	}
 
 function collections_comparator($a, $b)
