@@ -300,7 +300,7 @@ function save_resource_data_multi($collection)
 
 	for ($n=0;$n<count($fields);$n++)
 		{
-		if (getval("editthis_field_" . $fields[$n]["ref"],"")!="")
+		if (getval("editthis_field_" . $fields[$n]["ref"],"")!="" || hook("save_resource_data_multi_field_decision","",array($fields[$n]["ref"])))
 			{
 			if ($fields[$n]["type"]==2)
 				{

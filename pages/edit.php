@@ -719,11 +719,11 @@ for ($n=0;$n<count($fields);$n++)
 	if ($ref<0 && $blank_edit_template && getval("submitted","")=="") {$value="";}
 
 	?>
-	<?php if ($multiple) { # Multiple items, a toggle checkbox appears which activates the question
+	<?php if ($multiple && !hook("replace_edit_all_checkbox","",array($fields[$n]["ref"]))) { # Multiple items, a toggle checkbox appears which activates the question
 	?><div><input name="editthis_<?php echo $name?>" id="editthis_<?php echo $n?>" type="checkbox" value="yes" onClick="var q=document.getElementById('question_<?php echo $n?>');var m=document.getElementById('modeselect_<?php echo $n?>');var f=document.getElementById('findreplace_<?php echo $n?>');if (this.checked) {q.style.display='block';m.style.display='block';} else {q.style.display='none';m.style.display='none';f.style.display='none';document.getElementById('modeselectinput_<?php echo $n?>').selectedIndex=0;}">&nbsp;<label for="editthis<?php echo $n?>"><?php echo htmlspecialchars($fields[$n]["title"])?></label></div><?php } ?>
 
 	<?php
-	if ($multiple)
+	if ($multiple && !hook("replace_edit_all_mode_select","",array($fields[$n]["ref"])))
 		{
 		# When editing multiple, give option to select Replace All Text or Find and Replace
 		?>
