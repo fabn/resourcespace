@@ -958,6 +958,7 @@ function safe_file_name($name)
 	return $newname;
 	}
 
+if (!function_exists("daily_stat")){
 function daily_stat($activity_type,$object_ref)
 	{
 	# Update the daily statistics after a loggable event.
@@ -988,6 +989,7 @@ function daily_stat($activity_type,$object_ref)
 		sql_query("update daily_stat set count=count+1 where year='$year' and month='$month' and day='$day' and usergroup='$usergroup' and activity_type='$activity_type' and object_ref='$object_ref'");
 		}
 	}    
+}
 
 function include_plugin_config($plugin_name,$config="",$config_json="")
 	{

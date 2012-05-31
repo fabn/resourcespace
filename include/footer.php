@@ -20,10 +20,9 @@ if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","previ
 <!--Global Footer-->
 <div id="Footer">
 
+<?php if (!hook("replaceswapcss")){?>
 <script type="text/javascript">
-
-function SwapCSS(css)
-	{
+function SwapCSS(css){
 	document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css?css_reload_key=<?php echo $css_reload_key?>';
 	<?php if (!checkperm("b") && !$frameless_collections) { ?>parent.collections.document.getElementById('colourcss').href='<?php echo $baseurl?>/css/Col-' + css + '.css';<?php } ?>
 	
@@ -44,9 +43,9 @@ function SwapCSS(css)
 	<?php if (!checkperm("b") && !$frameless_collections) { ?>parent.collections.document.getElementById('<?php echo $plugins[$n]?>css').href='<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/Col-' + css + '.css';<?php } ?>
 	<?php }
 	}?>
-	
-	}
+}
 </script>
+<?php } ?>
 
 <?php if (getval("k","")=="") { ?>
 <div id="FooterNavLeft" class=""><?php if (isset($userfixedtheme) && $userfixedtheme=="") { ?><?php echo $lang["interface"]?>:&nbsp;&nbsp;

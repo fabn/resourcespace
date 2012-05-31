@@ -288,6 +288,7 @@ function set_resource_defaults($ref)
 		}
 	}
 
+if (!function_exists("save_resource_data_multi")){
 function save_resource_data_multi($collection)
 	{
 	# Save all submitted data for collection $collection, this is for the 'edit multiple resources' feature
@@ -581,6 +582,7 @@ function save_resource_data_multi($collection)
 	
 	hook("aftersaveresourcedata");	
 	}
+}
 
 function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='')
 	{

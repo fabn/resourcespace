@@ -398,6 +398,7 @@ function cleanse_string($string,$preserve_separators,$preserve_hyphen=false)
         }
 }
 
+if (!function_exists("resolve_keyword")){
 function resolve_keyword($keyword,$create=false)
 	{
 	# Returns the keyword reference for $keyword, or false if no such keyword exists.
@@ -410,6 +411,7 @@ function resolve_keyword($keyword,$create=false)
 		}
 	return $return;
 	}
+}
 
 function add_partial_index($keywords)
 	{
@@ -3105,6 +3107,7 @@ function format_display_field($value){
     return $sorted;
 }
 
+if (!function_exists("draw_performance_footer")){
 function draw_performance_footer(){
 	global $config_show_performance_footer,$querycount,$querytime,$querylog,$pagename;
 	if ($config_show_performance_footer){	
@@ -3161,6 +3164,7 @@ function draw_performance_footer(){
 	</div>
 	<?php
 	}
+}
 }
 
 function sql_affected_rows(){
