@@ -750,6 +750,7 @@ $tabname="";
 $tabcount=0;
 $fieldcount=0;
 $extra="";
+$tmp = hook("tweakfielddisp", "", array($ref, $fields)); if($tmp) $fields = $tmp;
 for ($n=0;$n<count($fields);$n++)
 	{
 	$value=$fields[$n]["value"];

@@ -217,6 +217,8 @@ if (getval("tweak","")!="")
 		break;
 		}
 
+        hook("moretweakingaction", "", array($tweak, $ref, $resource));
+
 	# Reload resource data.
 	$resource=get_resource_data($ref,false);
 	}
@@ -391,6 +393,7 @@ else
 <?php } else { ?>
 <option value="restore"><?php echo $lang["retrypreviews"]?></option>
 <?php } ?>
+<? hook("moretweakingopt"); ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
@@ -1008,6 +1011,7 @@ if (!$multiple && $ref>0) {EditNav();}
     }
 ?>
 <!--<p><a href="view.php?ref=<?php echo $ref?>">Back to view</a></p>-->
+<? hook("autolivejs"); ?>
 <?php
 include "../include/footer.php";
 ?>

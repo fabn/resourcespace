@@ -848,7 +848,9 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				debug("Generating preview size " . $ps[$n]["id"] . " to " . $path);
 
 				# Delete any file at the target path. Unless using the previewbased option, in which case we need it.			
+                                if(!hook("imagepskipdel")):
 				if (!$previewbased){if (file_exists($path)){unlink($path);}}
+                                endif;
 
 				# Also try the watermarked version.
 				$wpath=get_resource_path($ref,true,$ps[$n]["id"],false,"jpg",-1,1,true,"",$alternative);
@@ -882,7 +884,9 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 
 
 				$runcommand = $command ." +matte $profile -resize " . $tw . "x" . $th . "\">\" ".escapeshellarg($path);
+                                if(!hook("imagepskipthumb")):
 				$output=run_command($runcommand);
+                                endif;
 				//echo $runcommand."<br /><br/>";
 				# echo $runcommand."<br>\n";
 				# Add a watermarked image too?

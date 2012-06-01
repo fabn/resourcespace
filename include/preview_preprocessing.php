@@ -37,8 +37,9 @@ if ($alternative==-1)
 
 
 # Set up target file
+if(!hook("previewpskipdel")):
 if (file_exists($target)) {unlink($target);}
-
+endif;
 
 # Locate imagemagick.
 $convert_fullpath = get_utility_path("im-convert");
@@ -511,8 +512,10 @@ if (($ffmpeg_fullpath!=false) && !isset($newfile) && in_array($extension, $ffmpe
 		
 		if ($extension=="mxf")
 			{ $snapshottime = 0; }
-        
+
+        if(!hook("previewpskipthumb")): 
         $output = run_command($ffmpeg_fullpath . " -i " . escapeshellarg($file) . " -f image2 -vframes 1 -ss ".$snapshottime." " . escapeshellarg($target));
+        endif;
 
         if (file_exists($target)) 
             {
