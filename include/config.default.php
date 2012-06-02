@@ -79,11 +79,11 @@ $ghostscript_executable='gs';
 # $exiftool_path='/usr/local/bin';
 
 # Path to Antiword - for text extraction / indexing of Microsoft Word Document (.doc) files
-# $antiword_path='/usr/bin';
+# $antiword_path='/usr/bin';
 
 # Path to pdftotext - part of the XPDF project, see http://www.foolabs.com/xpdf/
 # Enables extraction of text from PDF files
-# $pdftotext_path='/usr/bin';
+# $pdftotext_path='/usr/bin';
 
 # Path to blender
 # $blender_path='/usr/bin/';
@@ -161,7 +161,7 @@ $languages["fr"]="Français"; # French
 $languages["hr"]="Hrvatski Jezik"; # Croatian
 $languages["it"]="Italiano"; # Italian
 $languages["jp"]="日本語"; # Japanese
-$languages["nl"]="Nederlands"; # Dutch
+$languages["nl"]="Nederlands"; # Dutch
 $languages["no"]="Norsk"; # Norwegian
 $languages["pl"]="Polski"; # Polish
 $languages["pt"]="Português"; # Portuguese
@@ -709,7 +709,7 @@ $original_filenames_when_downloading=true;
 
 # When $original_filenames_when_downloading, should the original filename be prefixed with the resource ID?
 # This ensures unique filenames when downloading multiple files.
-# WARNING: if switching this off, be aware that when downloading a collection as a zip file, a file with the same name as another file in the collection will overwrite that existing file. It is therefore advisiable to leave this set to 'true'.
+# WARNING: if switching this off, be aware that when downloading a collection as a zip file, a file with the same name as another file in the collection will overwrite that existing file. It is therefore advisiable to leave this set to 'true'.
 $prefix_resource_id_to_filename=true;
 
 # When using $prefix_resource_id_to_filename above, what string should be used prior to the resource ID?
@@ -798,7 +798,7 @@ $enable_related_resources=true;
 $allow_keep_logged_in=true;
 
 # Show the link to 'user contributed assets' on the My Contributions page
-# Allows non-admin users to see the assets they have contributed
+# Allows non-admin users to see the assets they have contributed
 $show_user_contributed_resources=true;
 
 # Show the contact us link?
@@ -1184,7 +1184,7 @@ $themes_in_my_collections=false;
 
 # Show an upload link in the top navigation? (if 't' and 'c' permissions for the current user)
 $top_nav_upload=true;
-$top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
+$top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
 
 # Allow users to delete resources?
 # (Can also be controlled on a more granular level with the "D" restrictive permission.)
@@ -1350,7 +1350,7 @@ $request_adds_to_collection=false;
 # See below for examples.
 # The blocks must be numbered sequentially (0, 1, 2).
 # 'params' are any extra parameters to pass to ImageMagick for example DPI
-# 'source_extensions' is a comma-separated list of the files that will be processed, e.g. "eps,png,gif" (note no spaces).
+# 'source_extensions' is a comma-separated list of the files that will be processed, e.g. "eps,png,gif" (note no spaces).
 #
 # Example - automatically create a PNG file alternative when an EPS file is uploaded.
 # $image_alternatives[0]["name"]="PNG File";
@@ -1386,7 +1386,7 @@ $display_search_titles=true;
 # ------------------------ eCommerce Settings -----------------------------
 #
 # Pricing information for the e-commerce / basket request mode.
-# Pricing is size based, so that the user can select the download size they require.
+# Pricing is size based, so that the user can select the download size they require.
 $pricing["scr"]=10;
 $pricing["lpr"]=20;
 $pricing["hpr"]=30; # (hpr is usually the original file download)
@@ -1611,7 +1611,7 @@ $disable_geocoding = false;
 
 # OpenLayers: The default center and zoom for the map view when searching or selecting a new location. This is a world view.
 # For example, to specify the USA use: #$geolocation_default_bounds="-10494743.596017,4508852.6025659,4";
-# For example, to specify Utah, use $geolocation_default_bounds="-12328577.96607,4828961.5663655,6";
+# For example, to specify Utah, use $geolocation_default_bounds="-12328577.96607,4828961.5663655,6";
 $geolocation_default_bounds="-3.058839178216e-9,2690583.3951564,2";
 
 # The layers to make available. The first is the default.
