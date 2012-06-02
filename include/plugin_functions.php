@@ -164,14 +164,28 @@ function get_plugin_yaml($path, $validate=true)
  *      whose elements are UTF-8 encoded strings, booleans, numbers or arrays
  *      of such elements and whose keys are either numbers or UTF-8 encoded
  *      strings.
- * @return json encoded version of $config
+ * @return json encoded version of $config or null if $config is beyond our
+ *         capabilities to encode
  */
 function config_json_encode($config)
     {
-    $output = '{';
-    foreach ($config as $name=>$value)
+    $i=0;
+    $simple_keys = true;
+    foreach ($config as $name => $value)
         {
-        $output .= '"' . config_encode($name) . '":';
+        if ($name != $i++)
+            {
+            $simple_keys = false;
+            break;
+            }
+        }
+    $output = $simple_keys?'[':'{';
+    foreach ($config as $name => $value)
+        {
+        if (!$simple_keys)
+            {
+            $output .= '"' . config_encode($name) . '":';
+            }
         if (is_string($value))
             {
             $output .= '"' . config_encode($value) . '"';
@@ -186,57 +200,7 @@ function config_json_encode($config)
             }
         elseif (is_array($value))
             {
-            $i=0;
-            $simple_keys = true;
-            foreach ($value as $key => $item)
-                {
-                if ($key != $i++)
-                    {
-                    $simple_keys = false;
-                    break;
-                    }
-                }
-            $output .= $simple_keys?'[':'{';
-            foreach ($value as $key => $item)
-                {
-                if (!$simple_keys)
-                	{
-                	if (is_numeric($key))
-                    	{
-                    	$output .= '"' . strval($key) . '":';
-                    	}
-                	else
-                    	{
-                    	$output .= '"' . config_encode($key) . '":';
-                    	}
-                    }
-                if (is_string($item))
-                    {
-                    $output .= '"' . config_encode($item) . '"';
-                    }
-                elseif (is_bool($item))
-                    {
-                    $output .= $item?'true':'false';
-                    }
-                elseif (is_numeric($item))
-                    {
-                    $output .= strval($item);
-                    }
-                else
-                    {
-                    return NULL; // Give up; beyond our capabilities
-                    }
-                $output .= ', ';
-                debug('Array building: '. $output);
-                }
-            if (substr($output, -2) == ', ')
-                {
-                $output = substr($output, 0, -2) . ($simple_keys?']':'}');
-                }
-            else
-                {
-                $output .= $simple_keys?']':'}';
-                }
+            $output .= config_json_encode($value);
             }
         else
             {
@@ -244,7 +208,11 @@ function config_json_encode($config)
             }
         $output .= ', ';
         }
-    return substr($output, 0, -2) . '}';
+    if (substr($output, -2) == ', ')
+        {
+        $output = substr($output, 0, -2);
+        }
+    return $output . ($simple_keys?']':'}');
     }
 
 /**
@@ -533,6 +501,8 @@ function config_gen_setup_post($page_def,$plugin_name)
                     break;
                 case 'text_list':
                     $GLOBALS[$def[1]] = explode(',', getval($def[1], ''));
+                    break;
+                case 'hidden_param':
                     break;
                 default:
                     $GLOBALS[$def[1]] = getval($def[1], is_array($GLOBALS[$def[1]])?array():'');
@@ -1273,6 +1243,17 @@ function config_add_db_single_select($config_var, $label, $choices, $ixcol='ref'
 function config_add_db_multi_select($config_var, $label, $choices, $ixcol='ref', $dispcolA='name', $dispcolB='',  $fmt='', $width=300)
     {
     return array('db_multi_select', $config_var, $label, $choices, $ixcol, $dispcolA, $dispcolB, $fmt, $width);
+    }
+
+/**
+ * Return a data structure that will instruct the configuration page generator functions to
+ * add a hidden configuration variable.
+ *
+ * @param string $config_var the name of the configuration variable to be added.
+ */
+function config_add_hidden($config_var)
+    {
+    return array('hidden_param', $config_var);
     }
 
 /**
