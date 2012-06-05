@@ -126,8 +126,14 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
 	{
 	?>
+	<script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+	<script type="text/javascript">
+	jQuery.noConflict();
+	</script>
+	<?php if (!isset($disable_prototype)) { ?>
 	<script src="../lib/js/prototype.js" type="text/javascript"></script>
 	<script src="../lib/js/scriptaculous.js" type="text/javascript"></script>
+	<?php } ?>
 	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	function ReorderResources(id1,id2)
