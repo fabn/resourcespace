@@ -584,6 +584,7 @@ function save_resource_data_multi($collection)
 	}
 }
 
+if (!function_exists("remove_keyword_mappings")){
 function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='')
 	{
 	# Removes one instance of each keyword->resource mapping for each occurrence of that
@@ -605,7 +606,8 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 			sql_query("update keyword set hit_count=hit_count-1 where keyword='" . escape_check($keywords[$n]) . "' limit 1");
 		}	
 	}
-	
+}
+
 if (!function_exists("add_keyword_mappings")){		
 function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=false,$is_date=false,$optional_column='',$optional_value='')
 	{

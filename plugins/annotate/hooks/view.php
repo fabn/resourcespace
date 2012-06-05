@@ -43,6 +43,7 @@ if ($resource["has_image"]==1)
 		{
 		$imageurl=get_resource_path($ref,false,"pre",false,$resource["preview_extension"],-1,1,$use_watermark);
 		}
+	if (!file_exists($imagepath)){return false;}	
 	$sizes = getimagesize($imagepath);
 
 	$w = $sizes[0];

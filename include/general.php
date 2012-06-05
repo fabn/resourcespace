@@ -452,7 +452,7 @@ function trim_spaces($text)
 	}	
 		
 
-	
+if (!function_exists("update_resource_keyword_hitcount")){	
 function update_resource_keyword_hitcount($resource,$search)
 	{
 	# For the specified $resource, increment the hitcount for each matching keyword in $search
@@ -473,6 +473,7 @@ function update_resource_keyword_hitcount($resource,$search)
 		}	
 	if (count($keys)>0) {sql_query("update resource_keyword set new_hit_count=new_hit_count+1 where resource='$resource' and keyword in (" . join(",",$keys) . ")");}
 	}
+}
 	
 function copy_hitcount_to_live()
 	{
