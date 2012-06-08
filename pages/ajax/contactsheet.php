@@ -124,7 +124,7 @@ class MYPDF extends TCPDF {
 
 
 
-$pdf = new MYPDF($orientation , 'in', $pagesize, true, 'UTF-8', false); 
+$pdf = new MYPDF($orientation , 'in', $size, true, 'UTF-8', false); 
 $pdf->SetTitle(i18n_get_translated($collectiondata['name']).' - '.nicedate($date, true, true));
 $pdf->SetAuthor($user['fullname'].' '.$user['email']);
 $pdf->SetSubject($applicationname . " - " . $lang["contactsheet"]);

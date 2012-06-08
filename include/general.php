@@ -3132,17 +3132,22 @@ function draw_performance_footer(){
 	<?php
 
 		foreach($querylog as $query=>$values){
-		if (substr($query,0,7)!="explain"){
+		if (substr($query,0,7)!="explain" && $query!="show warnings"){
+		$show_warnings=false;
+		if (strtolower(substr($query,0,6))=="select"){
+			$explain=sql_query("explain extended ".$query);
+			$warnings=sql_query("show warnings");
+			$show_warnings=true;
+		}
 		?>
-		<tr><td align="left"><div style="word-wrap: break-word; width:350px;"><?php echo $query?></div></td><td>&nbsp;
+		<tr><td align="left"><div style="word-wrap: break-word; width:350px;"><?php echo $query?><?php if ($show_warnings){ foreach ($warnings as $warning){echo "<br /><br />".$warning['Level'].": ".htmlentities($warning['Message']);}}?></div></td><td>&nbsp;
 		<table class="InfoTable">
 		<?php if (strtolower(substr($query,0,6))=="select"){
-			
-			$explain=sql_query("explain ".$query);
-			?><tr><?php
+			?><tr>
+			<?php
 			foreach ($explain[0] as $explainitem=>$value){?>
 				<td align="left">   
-				<?php echo $explainitem?></td><?php 
+				<?php echo $explainitem?><br /></td><?php 
 				}
 			?></tr><?php
 			for($n=0;$n<count($explain);$n++){
