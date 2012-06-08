@@ -169,15 +169,12 @@ function get_plugin_yaml($path, $validate=true)
  */
 function config_json_encode($config)
     {
-    debug('config_json_encode - config:' . print_r($config, true));
     $i=0;
     $simple_keys = true;
     foreach ($config as $name => $value)
         {
-        debug('config_json_encode - name: ' . print_r($name, true) . ' i: ' . print_r($i, true). ' equality: '. print_r($name == $i, true));
         if (!is_numeric($name) || ($name != $i++))
             {
-            debug('config_json_encode - not simple key.');
             $simple_keys = false;
             break;
             }
