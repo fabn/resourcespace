@@ -1,11 +1,21 @@
 <?php
 include "../include/db.php";
-include "../include/authenticate.php";
+include "../include/authenticate.php"; if ($disable_upload_preview || checkperm("F*")) {exit ("Permission denied.");}
 include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
+
 $ref=getvalescaped("ref","",true);
 $status="";
+
+$resource=get_resource_data($ref);
+# Not allowed to edit this resource?
+if (!get_edit_access($ref,$resource["archive"])) {
+		$error=$lang['error-permissiondenied'];
+		include "../include/header.php";
+		error_alert($error);
+		exit();
+		}
 
 # fetch the current search 
 $search=getvalescaped("search","");

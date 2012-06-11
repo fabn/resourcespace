@@ -1,6 +1,6 @@
 <?php
 include "../include/db.php";
-include "../include/authenticate.php";
+include "../include/authenticate.php"; if (! (checkperm("c") || checkperm("d"))) {exit ("Permission denied.");}
 include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
@@ -219,7 +219,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo $replace ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo $replace ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 

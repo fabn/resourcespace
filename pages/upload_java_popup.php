@@ -1,5 +1,5 @@
 <?php include "../include/db.php";
-include "../include/authenticate.php";
+include "../include/authenticate.php"; if (! (checkperm("c") || checkperm("d"))) {exit ("Permission denied.");}
 include "../include/general.php";
 include "../include/image_processing.php";
 include "../include/resource_functions.php";
@@ -131,12 +131,13 @@ else
             <!-- param name="CODE"    value="wjhk.jupload2.JUploadApplet" / -->
             <!-- param name="ARCHIVE" value="wjhk.jupload.jar" / -->
             <!-- param name="type"    value="application/x-java-applet;version=1.5" /  -->
-            <param name="postURL" value="upload_java.php?collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($_COOKIE["user"])?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>&replace_resource=<?php echo $replace_resource?>" />
+            <param name="postURL" value="upload_java.php?collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>&replace_resource=<?php echo $replace_resource?>" />
             <param name="allowedFileExtensions" value="<?php echo $allowed?>">
             <param name="nbFilesPerRequest" value="1">
             <param name="allowHttpPersistent" value="false">
             <param name="debugLevel" value="0">
             <param name="showLogWindow" value="false">
+			<param name="readCookieFromNavigator" value="false">
             <param name="lang" value="<?php echo $language?>">
             <param name="maxChunkSize" value="<?php echo $jupload_chunk_size ?>">
          <?php if (isset($jupload_look_and_feel)){ ?>
