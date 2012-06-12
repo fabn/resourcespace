@@ -33,46 +33,39 @@ function UserRatingDisplay(rating,hiclass)
 	if (UserRatingDone) {return false;}
 	for (var n=1;n<=5;n++)
 		{
-		$('RatingStar'+n).removeClassName('StarGrey');
-		$('RatingStar'+n).removeClassName('StarWhite');
-		$('RatingStar'+n).removeClassName('StarSelect');
+		jQuery('#RatingStar'+n).removeClass('StarEmpty');
+		jQuery('#RatingStar'+n).removeClass('StarCurrent');
+		jQuery('#RatingStar'+n).removeClass('StarSelect');
 		if (n<=rating)
 			{
-			$('RatingStar'+n).addClassName(hiclass);
+			jQuery('#RatingStar'+n).addClass(hiclass);
 			}
 		else
 			{
-			$('RatingStar'+n).addClassName('StarGrey');
+			jQuery('#RatingStar'+n).addClass('StarEmpty');
 			}
 		}
 	}
 
 function UserRatingSet(userref,ref,rating)
 	{
-	$('RatingStarLink'+rating).blur(); // removes the white focus box around the star.
+	jQuery('#RatingStarLink'+rating).blur(); // removes the white focus box around the star.
 	if (UserRatingDone) {return false;}
-	new Ajax.Request("<?php echo $baseurl?>/pages/ajax/user_rating_save.php?userref="+userref+"&ref="+ref+"&rating=" + rating,{method: 'post'});
-	// attempting to migrate to jQuery, but it conflicts with prototype without the wrapper function
-	//jQuery(document).ready(function($) {
-	//	$.ajax({
-	//	  type: "POST",
-	//	  url: "<?php echo $baseurl?>/pages/ajax/user_rating_save.php",
-	//	  data: "user="+userref+"&ref="+ref+"&rating=" + rating
-	//	});
-	//});
-	$('RatingCount').style.visibility='hidden';
+	jQuery.ajax("ajax/user_rating_save.php?userref="+userref+"&ref="+ref+"&rating=" + rating,{method: 'post'});
+			
+	document.getElementById('RatingCount').style.visibility='hidden';
 	if (rating==0)
 		{
 		UserRatingDone=false;
 		UserRatingDisplay(0,'StarSelect');
 		UserRatingDone=true;
-		$('UserRatingMessage').innerHTML="<?php echo $lang["ratingremoved"]?>";
-		$('RatingStarLink0').style.display = 'none';
+		document.getElementById('UserRatingMessage').innerHTML="<?php echo $lang["ratingremoved"]?>";
+		document.getElementById('RatingStarLink0').style.display = 'none';
 		}
 	else
 		{
 		UserRatingDone=true;
-		$('UserRatingMessage').innerHTML="<?php echo $lang["ratingthankyou"]?>";		
+		document.getElementById('UserRatingMessage').innerHTML="<?php echo $lang["ratingthankyou"]?>";		
 		}
 	}
 
@@ -81,11 +74,11 @@ function UserRatingSet(userref,ref,rating)
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr class="DownloadDBlend">
 <td id="UserRatingMessage"><?php echo $lang["ratethisresource"]?></td>
-<td width="33%" class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $rating?>,'StarWhite');">
+<td width="33%" class="RatingStars" onMouseOut="UserRatingDisplay(<?php echo $rating?>,'StarCurrent');">
 <?php if ($user_rating_remove && $user_rating_only_once) {?><a href="#" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $ref?>,0);return false;" id="RatingStarLink0" title="<?php echo $lang["ratingremovehover"]?>" style="display:<?php echo $removeratingvis;?>">x&nbsp;&nbsp;&nbsp;</a><?php }?>
 <?php for ($n=1;$n<=5;$n++)
 	{
-	?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $n?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $ref?>,<?php echo $n?>);return false;" id="RatingStarLink<?php echo $n?>"><span id="RatingStar<?php echo $n?>" class="Star<?php echo ($n<=$rating?"White":"Grey")?>"><img src="../gfx/interface/sp.gif" width="15" height="15"></span></a><?php
+	?><a href="#" onMouseOver="UserRatingDisplay(<?php echo $n?>,'StarSelect');" onClick="UserRatingSet(<?php echo $userref?>,<?php echo $ref?>,<?php echo $n?>);return false;" id="RatingStarLink<?php echo $n?>"><span id="RatingStar<?php echo $n?>" class="Star<?php echo ($n<=$rating?"Current":"Empty")?>"><img src="../gfx/interface/sp.gif" width="15" height="15"></span></a><?php
 	#&#9733;
 	}
 ?>
