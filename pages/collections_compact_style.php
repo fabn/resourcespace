@@ -151,7 +151,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 
 <!-- collection download -->
     <?php if ((isset($zipcommand) || $collection_download) && $count_result>0) { ?>
-    <option value="<?php echo $collection?>|0|0|terms.php?url=<?php echo urlencode("pages/collection_download.php?collection=" .  $collection )?>|main">&gt;&nbsp;<?php echo $lang["action-download"]?>...</option>
+    <option value="<?php echo $collection?>|0|0|terms.php?url=<?php echo urlencode("pages/collection_download.php?collection=" .  $collection )?>|main">&gt;&nbsp;<?php echo $lang["zipall"]?>...</option>
     <?php } ?>
 <!-- end collection download -->
 
