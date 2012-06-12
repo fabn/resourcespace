@@ -13,13 +13,13 @@ function HookFlickr_theme_publishThemesAddcustomtool($theme)
 	<?php
 	}
 
-function HookFlickr_theme_publishThemesCollectiontoolcompact()
+function HookFlickr_theme_publishThemesCollectiontoolcompact1($collection, $count_result)
     {
     # Adds a Flickr command to the themes page in collection compact style.
     global $getthemes, $m, $lang;
     $theme = $getthemes[$m];
 
-    if ($theme["c"]>0) # Don't show the option if the theme is empty.
+    if ($count_result>0) # Don't show the option if the theme is empty.
         {
 
         # Work out how many resources in this theme are unpublished.
