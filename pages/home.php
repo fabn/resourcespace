@@ -74,7 +74,30 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 </script>
 <?php } ?>
 
-<div class="HomePicturePanel"><div class="HomePicturePanelIN" id='photoholder' style="background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;"></div>
+<div class="HomePicturePanel"
+
+<?php if (isset($home_slideshow_width)) {
+	echo "style=\"";
+	$slide_width = $home_slideshow_width + 2;
+	echo"width:" .  (string)$slide_width ."px; ";
+	echo "\" ";
+	}
+	?>><div class="HomePicturePanelIN" id='photoholder' style="
+	<?php
+	if (isset($home_slideshow_height)){		
+		echo"height:" .  (string)$home_slideshow_height ."px; ";
+		} 
+	?>
+		
+	background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;<?php
+	if (isset($home_slideshow_width)){
+		echo"width:" .  $home_slideshow_width ."px; ";
+		}
+	if (isset($home_slideshow_height)){
+		echo"height:" .  $home_slideshow_height ."px; ";
+		} 
+	?>"></div>
+	
 <div class="PanelShadow"></div>
 </div>
 <?php } # End of hook replaceslideshow

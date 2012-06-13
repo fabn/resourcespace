@@ -401,7 +401,9 @@ if (!$download && !$original && getval("slideshow","")==""){
 	$sequence=getval("sequence","");
 	if (!is_numeric($sequence)) {exit("Invalid sequence number. Please enter a numeric value.");}
 	if (!checkperm("t")) {exit ("Permission denied.");}
-	rename($newpath,dirname(__FILE__) . "/../../../".$homeanim_folder."/" . $sequence . ".jpg");
+	copy($newpath,dirname(__FILE__) . "/../../../".$homeanim_folder."/" . $sequence . ".jpg");
+	unlink($newpath);
+	unlink(get_temp_dir() . "/transform_plugin/pre_$ref.jpg");
 	}
 else
 	{
@@ -413,7 +415,8 @@ else
 
 	set_time_limit(0);
 	readfile($newpath);
-	unlink($newpath);
+	unlink($newpath);	
+	unlink(get_temp_dir() . "/transform_plugin/pre_$ref.jpg");
 	exit();
 }
 
@@ -632,8 +635,11 @@ include "../../../include/header.php";
     <input type='hidden' name='origheight' id='origheight'  value='<?php echo $origheight ?>' />
     <?php if ($original){ ?> <input type='hidden' name='mode' id='mode'  value='original' /> <?php } ?>
 	<?php if (substr(sprintf('%o', fileperms(dirname(__FILE__)."/../../../".$homeanim_folder)), -4)=="0777"){ echo $lang['replaceslideshowimage']; ?>
-	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='517';document.getElementById('new_height').value='350';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/><?php } ?>
-	
+	<input type="checkbox" name='slideshow' id='slideshow' value="1" onClick="if (this.checked) {document.getElementById('new_width').value='<?php
+	if (isset($home_slideshow_width)){echo $home_slideshow_width;}else{echo "517";}
+		?>';document.getElementById('new_height').value='<?php
+		if (isset($home_slideshow_height)){echo $home_slideshow_height;	} else {echo"350";}?>';document.getElementById('transform_options').style.display='none';document.getElementById('transform_actions').style.display='none';document.getElementById('transform_slideshow_options').style.display='block';evaluate_values();} else {document.getElementById('transform_options').style.display='block';document.getElementById('transform_actions').style.display='block';document.getElementById('transform_slideshow_options').style.display='none';}"/><?php } ?>
+
     <table id="transform_slideshow_options" style="display:none;">
     <tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
       <tr>
