@@ -436,14 +436,3 @@ div.autocomplete ul li {
         }
 
 .xlargesearchimage {max-height:350px;max-width:350px;}
-
-#easyTooltip{
-	padding:5px;
-	background: inherit;
-	color: inherit;
-	width: auto;
-	border: 1px solid;
-	border-radius:5px;
-	-moz-border-radius: 5px; 
-	-webkit-border-radius: 5px;
-	}

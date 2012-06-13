@@ -124,15 +124,6 @@ function UpdateResultCount()
 	document.getElementById("advancedform").target="";
 	document.getElementById("countonly").value="";
 	}
-	
-jQuery(document).ready(function(){
-	
-		jQuery('.Question').easyTooltip({
-			xOffset: 10,
-			yOffset: 15
-			});
-		});
-		
 </script>
 
 

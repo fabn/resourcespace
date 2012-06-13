@@ -138,7 +138,7 @@ if (!$basic_simple_search)
                 if( elem.checked == true){checkcount=checkcount+1;}
             });
 		if (checkcount==tickboxes.length-1){$('tickall').checked=true;}	
-	}	
+	}
 	</script>
 	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}  HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
@@ -175,7 +175,7 @@ if (!$basic_simple_search)
 	for ($n=0;$n<count($fields);$n++)
 		{
 		hook("modifysearchfieldtitle");?>
-		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>" title="<?php echo htmlspecialchars($fields[$n]["tooltip_text"])?>" ><?php echo $fields[$n]["title"]?><br />
+		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>"><?php echo $fields[$n]["title"]?><br />
 		<?php
 		
 		$value=""; # to do, fetch set value.
@@ -479,16 +479,6 @@ if (!$basic_simple_search)
 
 	<script type="text/javascript">
 	function ResetTicks() {<?php echo $clear_function?>}
-	
-	jQuery(document).ready(function(){
-	
-		jQuery('.SearchItem').easyTooltip({
-			xOffset: 10,
-			yOffset: 15
-			});
-		});
-		
-	
 	</script>
 	
 	<!--				
