@@ -566,6 +566,8 @@ $infobox_fields=array(18,10,29,53);
 $infobox_display_resource_id=true;
 # Display a small resource file type icon in the info box?
 $infobox_display_resource_icon=true;
+# Display resource type name under the title in the info box?
+$infobox_display_resource_type=false;
 
 # An alternative mode for the InfoBox, that displays the preview image instead of any metadata.
 $infobox_image_mode=false;

@@ -85,7 +85,7 @@ if (isset($metadata_template_title_field) && isset($metadata_template_resource_t
 	}	
 
 echo trim(htmlspecialchars(i18n_get_translated($title)))?></h2>
-
+<?php if ($infobox_display_resource_type){?><p><?php echo get_resource_type_name($resource['resource_type']);?></p><?php } ?>
 <?php
 # Display fields
 for ($n=0;$n<count($infobox_fields);$n++)
