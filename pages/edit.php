@@ -666,6 +666,16 @@ if (isset($metadata_template_resource_type)&&(isset($metadata_template_title_fie
 
 ?>
 <br /><br /><h1><?php echo $lang["resourcemetadata"]?></h1>
+
+<?php if ($edit_show_save_clear_buttons_at_top) { ?>
+	<div class="QuestionSubmit">
+	<label for="buttons"> </label>
+	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;
+	<input <?php if ($multiple) { ?>onclick="return confirm('<?php echo $lang["confirmeditall"]?>');"<?php } ?> name="save" type="submit" value="&nbsp;&nbsp;<?php echo ($ref>0)?$lang["save"]:$lang["next"]?>&nbsp;&nbsp;" /><br><br>
+	<div class="clearerleft"> </div>
+	</div>
+<?php } ?>
+
 <?php
 for ($n=0;$n<count($fields);$n++)
 	{
@@ -986,7 +996,7 @@ if ($multiple && !$disable_geocoding)
 	} 
 ?>
 	
-
+	
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>
 	<input name="resetform" type="submit" value="<?php echo $lang["clearbutton"]?>" />&nbsp;

@@ -1381,7 +1381,8 @@ $display_resource_id_in_thumbnail=false;
 # Display a title above the search results for non-search cases, for example collections, recent resources
 $display_search_titles=true;
 
-
+# Show "Save" and "Clear" buttons at the top of the resource edit form as well as at the bottom
+$edit_show_save_clear_buttons_at_top=false;
 
 
 
