@@ -124,7 +124,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 
 <!-- feedback -->
 <?php if ($feedback) {?>
-<option value="<?php echo $collection?>|0|0|collection_feedback.php?collection=<?php echo $collection?>&k=<?php echo $k?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|main|false">&gt;&nbsp;<?php echo $lang["sendfeedback"]?>...</option>
+<option value="<?php echo $collection?>|0|0|collection_feedback.php?collection=<?php echo $collection?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|main|false">&gt;&nbsp;<?php echo $lang["sendfeedback"]?>...</option>
 <?php } ?>
 <!-- end feedback -->
 
@@ -136,7 +136,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
     if ($min_access!=0)
         {
         ?>
-        <option value="<?php echo $collection?>|0|0|collection_request.php?ref=<?php echo $collection?>&k=<?php echo $k?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|main|false">&gt;&nbsp;<?php echo 	$lang["requestall"]?>...</option>
+        <option value="<?php echo $collection?>|0|0|collection_request.php?ref=<?php echo $collection?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|main|false">&gt;&nbsp;<?php echo 	$lang["requestall"]?>...</option>
         <?php
         }
     }
