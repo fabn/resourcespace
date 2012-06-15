@@ -1055,7 +1055,7 @@ if (count($result)>0)
 	<div class="RecordBox">
 	<div class="RecordPanel">  
 	
-	<div class="RecordResouce BasicsBox">
+	<div class="RecordResouce BasicsBox nopadding">
 	<div class="Title"><?php echo $lang["collectionsthemes"]?></div>
 	<div class="VerticalNav">
 	<ul>

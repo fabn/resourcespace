@@ -253,6 +253,7 @@ option {font-size:11px;}
 .BasicsBox .HorizontalNav li {display:inline;padding:0em 1em 0em 0em;margin:0em 0.5em 0em 0em;}
 .BasicsBox .VerticalNav ul {padding:0.2em 0;margin:0 0 1.5em;list-style:none;}
 .BasicsBox .VerticalNav li {padding:0 0.35em 0 0em;margin:0px 0.5em 1em 0px;}
+.nopadding,.nopadding .VerticalNav ul {padding:0px;margin:0px;}
 
 /* Themes */
 .ThemeBox {float: left;width: 250px;margin: 0px 15px 15px 0px;padding: 0px;}
