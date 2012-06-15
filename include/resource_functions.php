@@ -826,6 +826,15 @@ function delete_resource($ref)
 		$path=get_resource_path($ref, true, "", true, $alternatives[$n]["file_extension"], -1, 1, false, "", $alternatives[$n]["ref"]);
 		if (file_exists($path)) {unlink($path);}
 		}
+
+	
+	// remove metadump file, and attempt to remove directory
+	$dirpath = dirname(get_resource_path($ref, true, "", true));
+	if (file_exists("$dirpath/metadump.xml")){
+		unlink("$dirpath/metadump.xml");
+	}
+	@rmdir($dirpath); // try to delete directory, but if it has stuff in it fail silently for now
+			  // fixme - should we try to handle if there are other random files still there?
 	
 	# Log the deletion of this resource for any collection it was in. 
 	$in_collections=sql_query("select * from collection_resource where resource = '$ref'");
@@ -2428,3 +2437,4 @@ function overquota()
 		}
 	return false;
 	}
+
