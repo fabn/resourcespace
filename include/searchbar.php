@@ -544,6 +544,7 @@ if (!$basic_simple_search)
 <?php hook("addsearchbarpanel");?>	
 	
 	<?php if (($research_request) && (!isset($k) || $k=="") && (checkperm("q"))) { ?>
+	<?php if (!hook("replaceresearchrequestbox")){?>
 	<div id="ResearchBoxPanel">
   	<div class="SearchSpace">
   	<?php if (!hook("replaceresearchrequestboxcontent")){?>
@@ -554,6 +555,7 @@ if (!$basic_simple_search)
 	<?php } /* end replaceresearchrequestboxcontent */ ?>
 	</div>
 	<div class="PanelShadow"></div>
+	<?php } /* end replaceresearchrequestbox */ ?>
 	<?php } ?>
 
 	<?php if ($pagename!="login" && $pagename!="user_password" && $pagename!="user_request" && $frameless_collections && !checkperm("b"))
