@@ -389,10 +389,10 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								
 								
 								# Form join
-								global $use_temp_tables;
-								if (substr($search,0,8)=="!related") {$use_temp_tables=false;} // temp tables can't be used twice (unions)
+								global $use_temp_tables,$use_temp_tables_for_keyword_joins;
+								if (substr($search,0,8)=="!related") {$use_temp_tables_for_keyword_joins=false;} // temp tables can't be used twice (unions)
 								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
-								if (!$use_temp_tables)
+								if (!$use_temp_tables_for_keyword_joins || !$use_temp_tables)
 									{
 									// Not using temporary tables
 									
