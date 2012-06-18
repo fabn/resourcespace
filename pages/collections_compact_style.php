@@ -57,10 +57,11 @@ if (count($colresult)>0 && checkperm("e" . $colresult[0]["archive"]) && allow_mu
 	$col_editable=true;
 }
 
-if ($pagename=="search" && $display=="xlthumbs"){?><div class="ResourcePanelIcons" style="margin:0px;margin-bottom:8px;"></div><?php } 
+
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
 <form method="get" name="colactions" id="colactions">
 <?php } 
+if ($pagename=="search" && $display=="xlthumbs"){?><div class="ResourcePanelIcons" style="margin:0px;margin-bottom:8px;">&zwnj;</div><?php } 
 if ($pagename=="search" && $display!="xlthumbs" && $display!="list"){?><div class="ResourcePanelIcons">&zwnj;</div><?php }
 if ($pagename=="search" || $pagename=="collections"){?>
 <?php hook("beforecollectiontoolscolumn");?>

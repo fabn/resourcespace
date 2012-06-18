@@ -212,13 +212,13 @@ for ($n=0;$n<count($collections);$n++)
 		<?php hook ("listsearchpubliccheckboxes")?><td nowrap><div class="ListTitle"><a href="<?php echo $pub_url?>"><?php echo $lang["collection"] . ": " . highlightkeywords(tidy_trim(i18n_get_translated($collections[$n]["name"]),45),$search)?></a></div></td>
 		<?php 
 		for ($x=0;$x<count($df)-1;$x++){
-			?><td>&nbsp;</td><?php
+			?><td>-</td><?php
 			}
 				
 		?>
-		<td>&nbsp;</td>
+		<td>-</td>
 	    <?php if ($display_user_rating_stars && $k==""){ ?><td>&nbsp;&nbsp;</td><?php } ?>
-		<?php if ($id_column){?><td>&nbsp;</td><?php } ?>
+		<?php if ($id_column){?><td><?php echo $collections[$n]['ref']?></td><?php } ?>
 		<?php if (!isset($collections[$n]['savedsearch'])||(isset($collections[$n]['savedsearch'])&&$collections[$n]['savedsearch']==null)){ $collection_tag=$lang['collection'];} else {$collection_tag=$lang['smartcollection'];}?>
 		<?php if ($resource_type_column){?><td><?php echo $collection_tag?></td><?php } ?>
 		<?php if ($date_column){?><td><?php echo nicedate($collections[$n]["created"],false,true)?></td><?php } ?>
