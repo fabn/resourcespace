@@ -1696,6 +1696,9 @@ function get_resource_access($resource)
 	# passthru signifies that this is the case, so that blank values in group or user access mean that there is no data to be found, so don't check again .
 	$passthru="no";
 
+	// get_resource_data doesn't contain permissions, so fix for the case that such an array could be passed into this function unintentionally.
+	if (is_array($resource) && !isset($resource['group_access']) && !isset($resource['user_access'])){$resource=$resource['ref'];}
+	
 	if (!is_array($resource)){
 	$resourcedata=get_resource_data($resource,true);
 	}

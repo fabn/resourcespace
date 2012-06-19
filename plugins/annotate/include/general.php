@@ -42,7 +42,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 	# This leaves the pdfs and jpg previews in filestore/annotate so that they can be grabbed later.
 	# $cleanup will result in a slightly different path that is not cleaned up afterwards.
 	
-	global $lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$annotate_font;
+	global $lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$annotate_font,$access,$k;
 	$date= date("m-d-Y h:i a");
 	
 	include_once($storagedir.'/../include/search_functions.php');
@@ -129,7 +129,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		
 		$resourcedata= get_resource_data($resources[$n]);
 		$ref=$resources[$n];
-		$access=get_resource_access($resourcedata); // feed get_resource_access the resource array rather than the ref, since access is included.
+		$access=get_resource_access($resources[$n]); // feed get_resource_access the resource array rather than the ref, since access is included.
 		$use_watermark=check_use_watermark();
 
 		$imgpath = get_resource_path($ref,true,"hpr",false,"jpg",-1,1,$use_watermark);
