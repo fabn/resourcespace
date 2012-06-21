@@ -81,16 +81,29 @@ $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_d
 <option value="relevance"><?php echo $lang["relevance"]?></option>
 <option value="date"><?php echo $lang["date"]?></option>
 <option value="colour"><?php echo $lang["colour"]?></option>
-<option value="resourceid"><?php echo $lang["resourceid"]?></option>
+<option value="resourceid" selected><?php echo $lang["resourceid"]?></option>
 <?php 
 foreach ($all_field_info as $sortable_field)
-	{ 
-	?><option value="<?php echo $sortable_field['ref']?>"><?php echo $sortable_field["title"]?></option><?php
+	{ 	
+		// don't display the ones we've already covered above.
+		if (!($sortable_field["title"] == $lang["date"] || $sortable_field["title"] == $lang["colour"])){
+		?><option value="<?php echo $sortable_field['ref']?>"><?php echo $sortable_field["title"]?></option><?php
+		}
 	}	
 ?>
 </select>
 <div class="clearerleft"> </div>
 </div>
+
+<div class="Question">
+<label><?php echo $lang["sort-type"]?></label>
+<select class="shrtwidth" name="sort" id="sort" onChange="jQuery().rsContactSheet('preview');">
+<option value="asc" selected><?php echo $lang["ascending"]?></option>
+<option value="desc"><?php echo $lang["descending"]?></option>
+</select>
+<div class="clearerleft"> </div>
+</div>
+
 <?php } ?>
 
 <div id="ThumbnailOptions" class="Question">

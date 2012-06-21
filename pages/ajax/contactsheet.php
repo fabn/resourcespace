@@ -80,6 +80,7 @@ else if ($sheetstyle=="list")
 #Get data
 $collectiondata= get_collection($collection);
 if (is_numeric($order_by)){ $order_by="field".$order_by;}
+//debug("Contact Sheet Sort is $order_by $sort");
 $result=do_search("!collection" . $collection,"",$order_by,0,-1,$sort);
 
 if ($sheetstyle=="thumbnails"){

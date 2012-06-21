@@ -1564,3 +1564,8 @@ $lang["terabyte-symbol"]="TB";
 
 $lang["upload_files"]="Upload Files";
 $lang["upload_files-to_collection"]="Upload Files (to the collection '%collection')"; # %collection will be replaced, e.g. Upload Files (to the collection 'My Collection')
+
+$lang["ascending"] = "Ascending";
+$lang["descending"] = "Descending";
+$lang["sort-type"] = "Sort Type";
+
