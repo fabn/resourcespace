@@ -20,7 +20,7 @@ require_once('../../lib/tcpdf/tcpdf.php');
 $collection=getval("c","");
 $size=getval("size","");
 $column=getval("columns","");
-$order_by=getval("orderby","resourceid");
+$order_by=getval("orderby","relevance");
 $sort=getval("sort","asc");
 $orientation=getval("orientation","");
 $sheetstyle=getval("sheetstyle","thumbnails");

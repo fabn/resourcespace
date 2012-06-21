@@ -78,10 +78,10 @@ $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_d
 <div class="Question">
 <label><?php echo $lang["sortorder"]?></label>
 <select class="shrtwidth" name="orderby" id="orderby" onChange="jQuery().rsContactSheet('preview');">
-<option value="relevance"><?php echo $lang["relevance"]?></option>
+<option value="relevance" selected><?php echo $lang["collection-order"]?></option>
 <option value="date"><?php echo $lang["date"]?></option>
 <option value="colour"><?php echo $lang["colour"]?></option>
-<option value="resourceid" selected><?php echo $lang["resourceid"]?></option>
+<option value="resourceid"><?php echo $lang["resourceid"]?></option>
 <?php 
 foreach ($all_field_info as $sortable_field)
 	{ 	

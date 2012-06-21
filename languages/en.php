@@ -1568,4 +1568,4 @@ $lang["upload_files-to_collection"]="Upload Files (to the collection '%collectio
 $lang["ascending"] = "Ascending";
 $lang["descending"] = "Descending";
 $lang["sort-type"] = "Sort Type";
-
+$lang["collection-order"] = "Collection Order";
