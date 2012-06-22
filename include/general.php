@@ -661,7 +661,7 @@ function tidy_trim($text,$length)
 	$text=trim($text);
 	if (strlen($text)>$length)
 		{
-		$text=substr($text,0,$length-3);
+		$text=mb_substr($text,0,$length-3,'utf-8');
 		# Trim back to the last space
 		$t=strrpos($text," ");
 		$c=strrpos($text,",");
