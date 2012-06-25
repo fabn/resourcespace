@@ -64,6 +64,7 @@ if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagenam
 if ($pagename=="search" && $display=="xlthumbs"){?><div class="ResourcePanelIcons" style="margin:0px;margin-bottom:8px;">&zwnj;</div><?php } 
 if ($pagename=="search" && $display!="xlthumbs" && $display!="list"){?><div class="ResourcePanelIcons">&zwnj;</div><?php }
 if ($pagename=="search" || $pagename=="collections"){?>
+
 <?php hook("beforecollectiontoolscolumn");?>
 <?php if (!hook("modifycompacttoolslabel")){ echo $lang['tools'].":";} ?> <?php if (getval("thumbs","")=="show" && $pagename=="collections"){?><br><?php } ?>
 <?php } ?>
@@ -73,9 +74,9 @@ if ($pagename=="search" || $pagename=="collections"){?>
 	if ($thumbs=="show"){
 		?>style="padding:0;margin:0px;"<?php 
 	} if ($collection_dropdown_user_access_mode){
-		?>class="SearchWidthExp"<?php 
+		?>class="SearchWidthExp" style="margin:0;"<?php 
 		} else { 
-			?> class="SearchWidth"<?php 
+			?> class="SearchWidth" style="margin:0;"<?php 
 		} 
 	}
 if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view" || isset($collection_results)){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view" || isset($collection_results)){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">

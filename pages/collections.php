@@ -762,7 +762,7 @@ elseif ($k!="")
 <div id="CollectionMinTitle"><?php if (!hook("replacecollectiontitle")) { ?><h2><?php if ($collections_compact_style){?><a href="collection_manage.php" target="main"><?php } ?><?php echo $lang["mycollections"]?><?php if ($collections_compact_style){?></a><?php }?></h2><?php } ?></div>
 
 <!--Menu-->	
-<div id="CollectionMinRightNav">
+<div id="CollectionMinRightNav"><div id="MinSearchItem">
   <?php if ($collections_compact_style){
     include("collections_compact_style.php");
     }
@@ -820,7 +820,7 @@ elseif ($k!="")
   </ul>
   <?php } ?>
 </div>
-
+</div>
 <!--Collection Dropdown-->	
 <div id="CollectionMinDropTitle"><?php echo $lang["currentcollection"]?>:&nbsp;</div>				
 <div id="CollectionMinDrop">

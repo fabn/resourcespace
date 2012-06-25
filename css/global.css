@@ -84,8 +84,8 @@ option {font-size:11px;}
 .CollectBack a:hover, .CollectBack a:active {text-decoration:underline;}
 
 .CollectBack form {padding:0; margin:0;}
-.CollectBack .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
-.CollectBack .SearchWidthExp {width: 200px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;padding: 0px;}
+.CollectBack .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 0px 0px;padding: 0px;}
+.CollectBack .SearchWidthExp {width: 200px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin: 0px 0px;padding: 0px;}
 .CollectBack .SearchItem {margin: 0 0 10px;padding: 0;}
 .CollectBack .MinSearchItem {margin: 0;padding: 0;}
 
@@ -93,16 +93,16 @@ option {font-size:11px;}
 .CollectionPanelInfo{}
 .CollectionResourceAlign {width:77px;height:85px;text-align: center;vertical-align: middle;}
 
-#CollectionMinTitle{float: left;margin: 6px 10px 0px 25px;}
-#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 8px;}
-#CollectionMinDrop{float: left;margin: 6px 0px 0px;padding:0.2em 0em}
+#CollectionMinTitle{float: left;margin: 4px 10px 0px 25px;}
+#CollectionMinDropTitle{float: left;padding:0.2em 0em;margin-top: 5px;}
+#CollectionMinDrop{float: left;margin: 5px 0px 0px;padding:0.2em 0em}
 #CollectionMinDrop form{margin:0;padding:0}
-#CollectionMinitems{float: left;margin: 8px 10px 0px;padding:0.2em 0em}
-#CollectionMinRightNav{float: right;margin: 6px 25px 0px 0px;}
+#CollectionMinitems{float: left;margin: 5px 10px 0px;padding:0.2em 0em}
+#CollectionMinRightNav{float: right;margin: 5px 25px 0px 0px;padding:0.25em 0em}
 
 #CollectionMinDrop .SearchWidth {width: 150px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
 #CollectionMinDrop .SearchWidthExp {width: 200px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0;padding: 0;}
-#CollectionMinRightNav ul {padding:0.2em 0;margin:0;list-style:none;}
+#CollectionMinRightNav ul {padding:0em 0;margin:0;list-style:none;}
 #CollectionMinRightNav li {display:inline;padding:0 0.35em 0 0.5em;margin:0px;}
 
 
