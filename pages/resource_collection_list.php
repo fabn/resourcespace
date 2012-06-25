@@ -7,7 +7,7 @@ if (count($collections)!=0){
         <div class="RecordPanel">  
         <div class="Title"><?php echo $lang['associatedcollections']?></div>
 
-<div class="Listview">
+<div class="Listview nopadding" >
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
 <td><?php echo $lang["collectionname"]?></td>
