@@ -1057,19 +1057,17 @@ if (count($result)>0)
 	
 	<div class="RecordResouce BasicsBox nopadding">
 	<div class="Title"><?php echo $lang["collectionsthemes"]?></div>
-	<div class="VerticalNav">
-	<ul>
+
 	<?php
 		# loop and display the results
 		for ($n=0;$n<count($result);$n++)			
 			{
 			?>
-			<li><a href="search.php?search=!collection<?php echo $result[$n]["ref"]?>"><?php echo (strlen($result[$n]["theme"])>0)?htmlspecialchars(str_replace("*","",i18n_get_translated($result[$n]["theme"])) . " / "):$lang["public"] . " : "; ?><?php if (!$collection_public_hide_owner) {echo htmlspecialchars($result[$n]["fullname"] . " / ");} ?><?php echo htmlspecialchars(i18n_get_translated($result[$n]["name"])); ?></a></li>
+			<a href="search.php?search=!collection<?php echo $result[$n]["ref"]?>">&gt;&nbsp;<?php echo (strlen($result[$n]["theme"])>0)?htmlspecialchars(str_replace("*","",i18n_get_translated($result[$n]["theme"])) . " / "):$lang["public"] . " : "; ?><?php if (!$collection_public_hide_owner) {echo htmlspecialchars($result[$n]["fullname"] . " / ");} ?><?php echo htmlspecialchars(i18n_get_translated($result[$n]["name"])); ?></a><br />
 			<?php		
 			}
 		?>
-	</ul>
-	</div>
+	
 	</div>
 	</div>
 	<div class="PanelShadow"></div>
