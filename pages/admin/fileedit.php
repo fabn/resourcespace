@@ -87,7 +87,7 @@ if ($filename!="config.php" && $filename!="config.default.php"){
 
 <?php if ($filename!="config.default.php"){
 ?>
-<td align=right><input type="submit" name="submit" value="<?php echo $lang["save"] ?>" style="width:150px;" onclick="this.value='<?php echo $lang["pleasewait"] ?>';"></td></tr>
+<td align=right><input style="margin-top:20px;" type="submit" name="submit" value="<?php echo $lang["save"] ?>" style="width:150px;" onclick="this.value='<?php echo $lang["pleasewait"] ?>';"></td></tr>
 <?php } ?>
 </table>
 </form>
