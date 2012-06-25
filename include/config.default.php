@@ -1902,3 +1902,6 @@ $admin_header_height=120;
 
 # Remove the line that separates collections panel menu from resources
 $remove_collections_vertical_line=false;
+
+# Make dropdown selectors for Display and Results Display menus
+$display_selector_dropdowns=false;

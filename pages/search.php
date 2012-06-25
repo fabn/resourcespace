@@ -381,11 +381,32 @@ if (true) # Always show search header now.
 	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php if (count($result)==1){echo $lang["youfoundresource"];} else {echo $lang["youfoundresources"];}?></div>
 	<div class="InpageNavLeftBlock"><?php echo $lang["display"]?>:<br />
+	<?php if ($display_selector_dropdowns){?>
+	<select class="medcomplementwidth ListDropdown" style="width:auto" id="displaysize" name="displaysize" onchange="location = this.options[this.selectedIndex].value;">
+	<?php if ($xlthumbs==true) { ?><option <?php if ($display=="xlthumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=xlthumbs&k=<?php echo $k?>"><?php echo $lang["xlthumbs"]?></option><?php } ?>
+	<option <?php if ($display=="thumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></option>
+	<?php if ($smallthumbs==true) { ?><option <?php if ($display=="smallthumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></option><?php } ?>
+	<option <?php if ($display=="list"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=list&k=<?php echo $k?>"><?php echo $lang["list"]?></option>
+	</select>&nbsp;
+	<?php } else { ?>
 	<?php if ($xlthumbs==true) { ?> <?php if ($display=="xlthumbs") { ?><span class="Selected"><?php echo $lang["xlthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=xlthumbs&k=<?php echo $k?>"><?php echo $lang["xlthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
 	<?php if ($display=="thumbs") { ?> <span class="Selected"><?php echo $lang["largethumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></a><?php } ?>&nbsp; |&nbsp; 
 	<?php if ($smallthumbs==true) { ?> <?php if ($display=="smallthumbs") { ?><span class="Selected"><?php echo $lang["smallthumbs"]?></span><?php } else { ?><a href="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></a><?php } ?>&nbsp; |&nbsp;<?php } ?>
-	<?php if ($display=="list") { ?> <span class="Selected"><?php echo $lang["list"]?></span><?php } else { ?><a href="<?php echo $url?>&display=list&k=<?php echo $k?>"><?php echo $lang["list"]?></a><?php } ?> <?php hook("adddisplaymode"); ?> </div>
-	<?php
+	<?php if ($display=="list") { ?> <span class="Selected"><?php echo $lang["list"]?></span><?php } else { ?><a href="<?php echo $url?>&display=list&k=<?php echo $k?>"><?php echo $lang["list"]?></a><?php } ?> <?php hook("adddisplaymode"); ?> 
+	<?php } ?>
+	</div>
+	
+	<?php if ($display_selector_dropdowns){?>
+	<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
+		<select class="medcomplementwidth ListDropdown" style="width:auto" id="resultsdisplay" name="resultsdisplay" onchange="location = this.options[this.selectedIndex].value;">
+		<?php for($n=0;$n<count($results_display_array);$n++){
+			if ($display_selector_dropdowns){?>
+				<option <?php if ($per_page==$results_display_array[$n]){?>selected="selected"<?php } ?> value="search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>&sort=<?php echo $sort?>"><?php echo $results_display_array[$n]?></option>
+			<?php } ?>
+		<?php } ?>	
+		</select>
+	</div>
+	<?php } 
 	
 	# order by
 	#if (strpos($search,"!")===false)
@@ -441,14 +462,15 @@ if (true) # Always show search header now.
 		<?php hook("sortorder");?>
 		</div>
 		<?php
-		}
-		?>
+		} 
+		if (!$display_selector_dropdowns){?>
 		<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
 		<?php 
 		for($n=0;$n<count($results_display_array);$n++){?>
 		<?php if ($per_page==$results_display_array[$n]){?><span class="Selected"><?php echo $results_display_array[$n]?></span><?php } else { ?><a href="search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>&sort=<?php echo $sort?>"><?php echo $results_display_array[$n]?></a><?php } ?><?php if ($n>-1&&$n<count($results_display_array)-1){?>&nbsp;|<?php } ?>
 		<?php } ?>
 		</div>
+		<?php } ?>
 	<?php
 
 		
