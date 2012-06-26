@@ -121,8 +121,19 @@ else
 
 <h1><?php echo $titleh1 ?></h1>
 <h2><?php echo $titleh2 ?></h2>
+<?php if ($ref!=""){
+	$resource=get_resource_data($ref);?>
+	<?php if ($replace_file_resource_preview){ 
+		$imgpath=get_resource_path($resource['ref'],true,"col",false);
+		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resource['ref'],false,"col",false);?>"/><?php } 
+	} ?>
+	<?php if ($replace_file_resource_title){ 
+		echo "<h2>" . i18n_get_translated($resource['field'.$view_title_field]) . "</h2><br/>";
+	}
+}?>
 <p><?php echo $lang["intro-single_upload"] ?></p>
 
+	
 <script language="JavaScript">
 // Check allowed extensions:
 function check(filename) {

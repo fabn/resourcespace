@@ -1296,6 +1296,8 @@ $alternative_file_previews_batch=true;
 
 # Display resource title on alternative file management page
 $alternative_file_resource_title=true;
+# Display resource title on replace file page
+$replace_file_resource_title=true;
 
 # enable support for storing an alternative type for each alternate file
 # to activate, enter the array of support types below. Note that the 
@@ -1306,6 +1308,8 @@ $alt_types=array("");
 
 # Display col-size image of resource on alternative file management page
 $alternative_file_resource_preview=true;
+# Display col-size image of resource on replace file page
+$replace_file_resource_preview=true;
 
 # For alternative file previews... enable a thumbnail mouseover to see the preview image?
 $alternative_file_previews_mouseover=false;
