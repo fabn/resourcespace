@@ -61,8 +61,8 @@ if (count($colresult)>0 && checkperm("e" . $colresult[0]["archive"]) && allow_mu
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
 <form method="get" name="colactions" id="colactions">
 <?php } 
-if ($pagename=="search" && $display=="xlthumbs"){?><div class="ResourcePanelIcons" style="margin:0px;margin-bottom:8px;">&zwnj;</div><?php } 
-if ($pagename=="search" && $display!="xlthumbs" && $display!="list"){?><div class="ResourcePanelIcons">&zwnj;</div><?php }
+
+
 if ($pagename=="search" || $pagename=="collections"){?>
 
 <?php hook("beforecollectiontoolscolumn");?>
@@ -79,7 +79,7 @@ if ($pagename=="search" || $pagename=="collections"){?>
 			?> class="SearchWidth" style="margin:0;"<?php 
 		} 
 	}
-if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view" || isset($collection_results)){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view" || isset($collection_results)){echo $collections[$n]['ref'];}?>" onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
+if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename==='themes' || $pagename=="view" || isset($collection_results)){ $colvalue="colactionselect".$collections[$n]['ref'].".value"; } else { $colvalue="colactions.colactionselect.value"; }?> class="ListDropdown" name="colactionselect<?php if ($pagename=='collection_manage' || $pagename=='collection_public' || $pagename=='themes' || $pagename=="view" || isset($collection_results)){echo $collections[$n]['ref'];}?>" <?php if ($pagename=="search" && $display=="xlthumbs"){?>style="margin:-5px 0px 0px 5px"<?php } ?> <?php if ($pagename=="search" && ( $display=="thumbs" || $display=="smallthumbs")){?>style="margin:-5px 0px 0px 4px "<?php } ?> onchange="colAction(<?php echo $colvalue?>);<?php echo $colvalue?>='';">
 
  
 <option id="resetcolaction" value=""><?php echo $lang['select'];?></option>

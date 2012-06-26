@@ -497,7 +497,9 @@ if (true) # Always show search header now.
 	        $cinfo=get_collection(substr($search,11));
 	        $feedback=$cinfo["request_feedback"];
 	        $count_result=count($result);
+	        $collections_compact_style_titleview=true;
 	        include("collections_compact_style.php");
+	        $collection_compact_style_titleview=false;
 	        ?><br /><br />
 	    <?php } /*end if a collection search and compact_style - action selector*/ ?>    
     <?php }
