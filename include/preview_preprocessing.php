@@ -626,8 +626,12 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 	if ($extension=="ai") {$pdf_pages=1;}
 	if ($extension=="ps") {$pdf_pages=1;}
 	$resolution=150;
-
+	$scr_size=sql_query("select width,height from preview_size where id='scr'");
+	$scr_width=$scr_size[0]['width'];
+	$scr_height=$scr_size[0]['height'];
+	
         if ($pdf_dynamic_rip) {
+
 		/* We want to rip at ~150 dpi by default because it provides decent 
 		* quality previews and speed in the end. It is not always efficient to just 
 		* rip at 150, though, because for very large pages, a lot of pixels 
@@ -660,7 +664,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 				else{
 					$pdf_max_dim=$pdfinfo[1];
 					}
-				$resolution=ceil(1768/($pdf_max_dim/72));
+				$resolution=ceil((max($scr_width,$scr_height)*2)/($pdf_max_dim/72));
 				}
 			}
 		
@@ -689,7 +693,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 		# resize directly to the screen size (no other sizes needed)
 		 if (file_exists($target)&& $n!=1)
 			{
-			$command2 = $convert_fullpath . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize 850x850 " . escapeshellarg($target); 
+			$command2 = $convert_fullpath . " " . $prefix . escapeshellarg($target) . "[0] -quality $imagemagick_quality -resize ".$scr_width."x".$scr_height . " ".escapeshellarg($target); 
 			$output=run_command($command2); $pagecount=$n;
 				
 			# Add a watermarked image too?
@@ -700,7 +704,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 				if (file_exists($path)) {unlink($path);}
     				$watermarkreal=dirname(__FILE__). "/../" . $watermark;
     				
-				$command2 = $convert_fullpath . " \"$target\"[0] $profile -quality $imagemagick_quality -resize 800x800 -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 800,800\" " . escapeshellarg($path); 
+				$command2 = $convert_fullpath . " \"$target\"[0] $profile -quality $imagemagick_quality -resize ".$scr_width."x".$scr_height. " -tile " . escapeshellarg($watermarkreal) . " -draw \"rectangle 0,0 $scr_width,$scr_height\" " . escapeshellarg($path); 
 					$output=run_command($command2);
 				}
 				
