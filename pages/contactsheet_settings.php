@@ -23,14 +23,11 @@ contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
 ?><?php
 $bodyattribs="onload=\"jQuery().rsContactSheet('preview');\"";
 include "../include/header.php";
-?>
-<div class="BasicsBox">
+?><div class="BasicsBox" >
+<div class="BasicsBox" style="float:left;margin-bottom:0;" >
 <h1><?php echo $lang["contactsheetconfiguration"]?></h1>
 
 <p><?php echo $lang["contactsheetintrotext"]?></p>
-
-<!-- this is the container for some Ajax fun. The image will go here...-->
-<?php if ($contact_sheet_previews==true){?><div style="float:right;padding:15px 30px 15px 0;height:300px;"><img id="previewimage" name="previewimage"/></div><?php } ?>
 
 <!-- each time the form is modified, the variables are sent to contactsheet.php with preview=true
  contactsheet.php makes just the first page of the pdf (with col size images) 
@@ -40,7 +37,8 @@ include "../include/header.php";
 <input type=hidden name="c" value="<?php echo $collection?>">
 
 <!--<div name="error" id="error"></div>-->
-
+</div><div style="clear:left;"> </div>
+<div class="BasicsBox" style="width:450px;float:left;margin-top:0;" >
 <div class="Question">
 	<label><?php echo $lang["collectionname"]?></label><div class="Fixed"><?php echo i18n_get_translated($collectiondata['name'])?></div>
 <div class="clearerleft"> </div>
@@ -134,8 +132,14 @@ foreach ($all_field_info as $sortable_field)
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["create"]?>&nbsp;&nbsp;" />
 </div>
 </form>
-</div>
+</div></div>
+<div >
+	<!-- this is the container for some Ajax fun. The image will go here...-->
+<?php $cs_size=explode("x",$contact_sheet_preview_size);$height=$cs_size[1];?>
+<?php if ($contact_sheet_previews==true){?><div style="float:left;padding:0px -50px 15px 0;height:<?php echo $height?>px;margin-top:-15px;margin-right:-50px"><img id="previewimage" name="previewimage"/></div><?php } ?>
 
+	</div>
+	</div>
 <?php		
 include "../include/footer.php";
 ?>
