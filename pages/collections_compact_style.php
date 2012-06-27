@@ -163,6 +163,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 <!-- end upload-->
 
 <!-- edit collection -->
+<?php if (!hook("replacecompactstyleeditcollection","",array("collection"=>$collection,"count_result"=>$count_result,"cinfo"=>$cinfo))){?>
 <?php if (!checkperm("b") && (!collection_is_research_request($collection)) || (!checkperm("r"))) { ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><option value="<?php echo $collection?>|0|0|collection_edit.php?pagename=<?php echo $pagename?>&ref=<?php echo $collection?>&offset=<?php echo $offset?>&col_order_by=<?php echo $col_order_by?>&sort=<?php echo $sort?>&find=<?php echo urlencode($find)?>|main|false">&gt;&nbsp;<?php echo $lang["editcollection"]?>...</option><?php } ?>
     <?php } else {
@@ -170,6 +171,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 	?>
     <option value="<?php echo $collection?>|0|0|team/team_research.php|main|false">&gt;&nbsp;<?php echo $lang["manageresearchrequests"]?>...</option>    
     <option value="<?php echo $collection?>|0|0|team/team_research_edit.php?ref=<?php echo $research?>|main|false">&gt;&nbsp;<?php echo $lang["editresearchrequests"]?>...</option>    
+<?php } ?>
 <?php } ?>
 <!-- end edit collection -->
 
