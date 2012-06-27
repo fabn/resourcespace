@@ -1457,42 +1457,21 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	# need to be available.
 
 	# Include footer
-	global $email_footer;
+	global $email_footer,$storagedir;
 	$phpversion=phpversion();
 	if ($phpversion>='5.3') {
-	if (file_exists("../lib/phpmailer_v5_1/class.phpmailer.php")){
-		include_once("../lib/phpmailer_v5_1/class.phpmailer.php");
-		include_once("../lib/phpmailer/class.html2text.php");
+	if (file_exists($storagedir."/../lib/phpmailer_v5_1/class.phpmailer.php")){
+		include_once($storagedir."/../lib/phpmailer_v5_1/class.phpmailer.php");
+		include_once($storagedir."/../lib/phpmailer/class.html2text.php");
 		}
-	else if (file_exists("../../lib/phpmailer_v5_1/class.phpmailer.php")){
-		# team center
-		include_once("../../lib/phpmailer_v5_1/class.phpmailer.php");
-		include_once("../../lib/phpmailer/class.html2text.php");
-		}	
-	else if (file_exists("../../../lib/phpmailer_v5_1/class.phpmailer.php")){
-		# plugin
-		include_once("../../../lib/phpmailer_v5_1/class.phpmailer.php");
-		include_once("../../../lib/phpmailer/class.html2text.php");
-		}		
-		
 	} else {
 	// less than 5.3
-	if (file_exists("../lib/phpmailer/class.phpmailer.php")){
-		include_once("../lib/phpmailer/class.phpmailer.php");
-		include_once("../lib/phpmailer/class.html2text.php");
+	if (file_exists($storagedir."/../lib/phpmailer/class.phpmailer.php")){
+		include_once($storagedir."/../lib/phpmailer/class.phpmailer.php");
+		include_once($storagedir."/../lib/phpmailer/class.html2text.php");
 		}
-	else if (file_exists("../../lib/phpmailer/class.phpmailer.php")){
-		# team center
-		include_once("../../lib/phpmailer/class.phpmailer.php");
-		include_once("../../lib/phpmailer/class.html2text.php");
-		}	
-	else if (file_exists("../../../lib/phpmailer/class.phpmailer.php")){
-		# plugin
-		include_once("../../../lib/phpmailer/class.phpmailer.php");
-		include_once("../../../lib/phpmailer/class.html2text.php");
-		}	
 	}
-		
+		die ($storagedir."/../lib/phpmailer/class.phpmailer.php");
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	if ($reply_to=="") {$reply_to=$email_from;}
