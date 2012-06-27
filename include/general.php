@@ -1471,7 +1471,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 		include_once($storagedir."/../lib/phpmailer/class.html2text.php");
 		}
 	}
-		die ($storagedir."/../lib/phpmailer/class.phpmailer.php");
+		
 	global $email_from;
 	if ($from=="") {$from=$email_from;}
 	if ($reply_to=="") {$reply_to=$email_from;}
