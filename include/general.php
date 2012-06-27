@@ -1940,24 +1940,23 @@ function image_size_restricted_access($id)
 	return sql_value("select allow_restricted value from preview_size where id='$id'",false);
 	}
 	
-function get_user_log($user)
-{
+function get_user_log($user, $fetchrows=-1)
+	{
     # Returns a user action log for $user.
     # Standard field titles are translated using $lang.  Custom field titles are i18n translated.
 
     # Executes query.
-    $r = sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title,l.purchase_size,l.purchase_price, l.notes  from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date");
+    $r = sql_query("select r.ref resourceid,r.title resourcetitle,l.date,l.type,f.title,l.purchase_size,l.purchase_price, l.notes from resource_log l left outer join resource r on l.resource=r.ref left outer join resource_type_field f on f.ref=l.resource_type_field where l.user='$user' order by l.date",false,$fetchrows);
 
     # Translates field titles in the newly created array.
     $return = array();
     for ($n = 0;$n<count($r);$n++) {
-        $r[$n]["title"] = lang_or_i18n_get_translated($r[$n]["title"], "fieldtitle-");
+		if (is_array($r[$n])) {$r[$n]["title"] = lang_or_i18n_get_translated($r[$n]["title"], "fieldtitle-");}
         $return[] = $r[$n];
     }
     return $return;
+	}
 
-}
-	
 function get_breadcrumbs()
 	{
 	# Returns a HTML breadcrumb trail for display at the top of the screen.
