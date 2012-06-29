@@ -240,7 +240,7 @@ elseif ($themes_category_split_pages)
 		</div>
 
 		<div class="Listview" style="margin-top:10px;margin-bottom:10px;clear:left;">
-		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
+		<table  id="themeheaders" border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
 		<td><?php echo $lang["name"]?></td>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
