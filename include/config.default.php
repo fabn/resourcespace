@@ -1329,6 +1329,8 @@ $public_collections_top_nav=false;
 $themes_category_split_pages=false;
 # Display breadcrumb-style theme parent links instead of "Subcategories"
 $themes_category_split_pages_parents=false;
+# Include "Themes" root node before theme level crumbs to add context and link to themes.php
+$themes_category_split_pages_parents_root_node=true;
 # Navigate to deeper levels in theme category trees? Set to false to link to matching resources directly.
 $themes_category_navigate_levels=false;
 

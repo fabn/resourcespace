@@ -9,7 +9,7 @@ hook("themeheader");
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge;
+	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages_parents_root_node;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -65,6 +65,7 @@ function DisplayTheme($themes=array())
         <table><tr><td style="margin:0px;padding:0px;">
 		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
 			{
+			if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } 
 			$themeslinks="";
 			for ($x=0;$x<count($themes);$x++){
 				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
@@ -226,7 +227,7 @@ elseif ($themes_category_split_pages)
 		else{
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
-				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php
+				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } ?><?php
 				for ($x=0;$x<count($themes);$x++){
 					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
 					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
