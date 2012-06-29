@@ -158,7 +158,7 @@ hook("collectiontoolcompact2","",array("collection"=>$collection,"count_result"=
 <!-- end collection download -->
 
 <!-- upload *-->
-<?php global $top_nav_upload_type;if (checkperm("c")) {?>&nbsp;<option id="uploadtocollection" value="<?php echo $collection?>|0|0|edit.php?ref=-<?php echo $userref?>&<?php echo $top_nav_upload_type ?>=true&collection_add=<?php echo $collection?>|main|collections">&gt;&nbsp;<?php echo $lang["action-upload"]?>...</option>
+<?php global $top_nav_upload_type;if (checkperm("c")) {?>&nbsp;<option id="uploadtocollection" value="<?php echo $collection?>|0|0|edit.php?ref=-<?php echo $userref?>&<?php echo $top_nav_upload_type ?>=true&collection_add=<?php echo $collection?>|main|collections">&gt;&nbsp;<?php echo $lang["action-upload-to-collection"]?>...</option>
 <?php } ?>
 <!-- end upload-->
 

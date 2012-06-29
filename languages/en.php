@@ -367,6 +367,7 @@ $lang["previewimage"]="Preview Image";
 $lang["file"]="File";
 $lang["upload"]="Upload";
 $lang["action-upload"]="Upload";
+$lang["action-upload-to-collection"]="Upload to this Collection";
 $lang["uploadafile"]="Upload a file";
 $lang["replacefile"]="Replace File";
 $lang["imagecorrection"]="Edit Preview Images";
