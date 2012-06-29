@@ -760,6 +760,7 @@ $save_as=false;
 
 # Allow resources to be e-mailed / shared (internally and externally)
 $allow_share=true;
+$enable_theme_category_sharing=true;
 
 # Should those with 'restricted' access to a resource be able to share the resource?
 $restricted_share=false;

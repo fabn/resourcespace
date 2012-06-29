@@ -252,17 +252,19 @@ elseif ($themes_category_split_pages)
 			{
 			$link="themes.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]);
 			$editlink="theme_edit.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]);
+			$sharelink="theme_category_share.php?theme1=" . urlencode((!isset($themes[0]))? $headers[$n]:$themes[0]);
 			for ($x=2;$x<count($themes)+2;$x++){
 				if (isset($headers[$n])){
 					$link.="&theme".$x."=" . urlencode((!isset($themes[$x-1]))? ((!isset($themes[$x-2]))?"":$headers[$n]):$themes[$x-1]);
 					$editlink.="&theme".$x."=" . urlencode((!isset($themes[$x-1]))? ((!isset($themes[$x-2]))?"":$headers[$n]):$themes[$x-1]);
+					$sharelink.="&theme".$x."=" . urlencode((!isset($themes[$x-1]))? ((!isset($themes[$x-2]))?"":$headers[$n]):$themes[$x-1]);
 				}
 			}?>
 			<tr>
 			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo htmlspecialchars(i18n_get_translated(str_replace("*","",$headers[$n])))?></a></div></td>
 			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
-			<?php if (checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a>
-			<?php }
+			<?php if (checkperm("h") && $enable_theme_category_sharing) {?>&nbsp;<a href="<?php echo $sharelink ?>">&gt;&nbsp;<?php echo $lang["share"]?></a><?php }
+			if (checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php }
 			?>
 			</div></td>
 			</tr>

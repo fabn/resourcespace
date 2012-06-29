@@ -706,6 +706,36 @@ $lang["false-true"]=array("False","True");
 # Formatting
 $lang["plugin_field_fmt"]="%A (%B)"; // %A and %B are replaced by content defined by individual plugins. See, e.e., config_db_single_select in /include/plugin_functions.php
 
+
+#Sharing
+$lang["share"]="Share";
+$lang["sharecollection"]="Share Collection";
+$lang["sharecollection-name"]="Share Collection - %collectionname"; # %collectionname will be replaced, e.g. Share Collection - Cars
+$lang["generateurl"]="Generate URL";
+$lang["generateexternalurl"]="Generate External URL";
+$lang["generateurlinternal"]="The below URL will work for existing users only.";
+$lang["generateurlexternal"]="The below URL will work for everyone and does not require a login.";
+$lang["generatethemeurlsexternal"]="The below URLs will work for everyone and do not require a login.";
+$lang["showexistingthemeshares"]="Show existing shares for themes in this category.";
+$lang["internalusersharing"]="Internal User Sharing";
+$lang["externalusersharing"]="External User Sharing";
+$lang["accesskey"]="Access Key";
+$lang["sharedby"]="Shared By";
+$lang["sharedwith"]="Shared With";
+$lang["lastupdated"]="Last Updated";
+$lang["lastused"]="Last Used";
+$lang["noattachedusers"]="No attached users.";
+$lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this collection.";
+$lang["noexternalsharing"]="No external sharing.";
+$lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
+$lang["restrictedsharecollection"]="You have restricted access to one or more of the resources in this collection and therefore sharing is prohibited.";
+$lang["selectgenerateurlexternal"]="To create a URL that will work for external users (people that do not have a login) please choose the access level you wish to grant to the resources.";
+$lang["externalselectresourceaccess"]="If you are e-mailing external users, please select the level of access you would like to grant to this resource.";
+$lang["externalselectresourceexpires"]="If you are e-mailing external users, please select an expiry date for the generated URL.";
+$lang["externalshareexpired"]="Sorry, this share has expired and is no longer available.";
+
+
+
 # New for 1.3
 $lang["savesearchitemstocollection"]="Save search items to collection";
 $lang["removeallresourcesfromcollection"]="Remove all resources from this collection";
@@ -790,12 +820,7 @@ $lang["nocategoriesselected"]="No categories selected";
 $lang["showhidetree"]="Show/hide tree";
 $lang["clearall"]="Clear all";
 $lang["clearcategoriesareyousure"]="Are you sure you wish to clear all selected options?";
-$lang["share"]="Share";
-$lang["sharecollection"]="Share Collection";
-$lang["sharecollection-name"]="Share Collection - %collectionname"; # %collectionname will be replaced, e.g. Share Collection - Cars
-$lang["generateurl"]="Generate URL";
-$lang["generateurlinternal"]="The below URL will work for existing users only.";
-$lang["generateurlexternal"]="The below URL will work for everyone and does not require a login.";
+
 $lang["archive"]="Archive";
 $lang["collectionviewhover"]="Click to see the resources in this collection";
 $lang["collectioncontacthover"]="Create a contact sheet with the resources in this collection";
@@ -877,18 +902,6 @@ $lang["hidealllanguages"]="Hide all languages";
 $lang["clicktologinasthisuser"]="Click to log in as this user";
 $lang["addkeyword"]="Add keyword";
 $lang["selectedresources"]="Selected resources";
-
-$lang["internalusersharing"]="Internal User Sharing";
-$lang["externalusersharing"]="External User Sharing";
-$lang["accesskey"]="Access Key";
-$lang["sharedby"]="Shared By";
-$lang["sharedwith"]="Shared With";
-$lang["lastupdated"]="Last Updated";
-$lang["lastused"]="Last Used";
-$lang["noattachedusers"]="No attached users.";
-$lang["confirmdeleteaccess"]="Are you sure you wish to delete this access key? Users that have been given access using this key will no longer be able to access this collection.";
-$lang["noexternalsharing"]="No external sharing.";
-$lang["sharedcollectionaddwarning"]="Warning: This collection has been shared with external users. The resource you have added has now been made available to these users. Click 'share' to manage the external access for this collection.";
 $lang["addresourcebatchlocalfolder"]="Add Resource Batch - Fetch from local upload folder";
 
 # Setup Script
@@ -1008,8 +1021,6 @@ $lang["metadata-report"]="Metadata Report";
 # Video Playlist
 $lang["videoplaylist"]="Video Playlist";
 
-$lang["restrictedsharecollection"]="You have restricted access to one or more of the resources in this collection and therefore sharing is prohibited.";
-
 $lang["collection"]="Collection";
 $lang["idecline"]="I Decline"; # For terms and conditions
 
@@ -1017,13 +1028,6 @@ $lang["mycollection_notpublic"]="You cannot make your 'My Collection' into a pub
 
 $lang["resourcemetadata"]="Resource Metadata";
 
-$lang["selectgenerateurlexternal"]="To create a URL that will work for external users (people that do not have a login) please choose the access level you wish to grant to the resources.";
-
-$lang["externalselectresourceaccess"]="If you are e-mailing external users, please select the level of access you would like to grant to this resource.";
-
-$lang["externalselectresourceexpires"]="If you are e-mailing external users, please select an expiry date for the generated URL.";
-
-$lang["externalshareexpired"]="Sorry, this share has expired and is no longer available.";
 
 $lang["columnheader-expires"]=$lang["expires"]="Expires";
 $lang["never"]="Never";
@@ -1071,7 +1075,8 @@ $lang["alternativebatchupload"]="Batch upload alternative files (Java)";
 
 $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field option?";
 
-$lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";
+$lang["cannotshareemptycollection"]="This collection is empty and cannot be shared.";	
+$lang["cannotshareemptythemecategory"]="This theme category contains no themes and cannot be shared.";
 
 $lang["requestall"]="Request all";
 $lang["requesttype-email_only"]=$lang["resourcerequesttype0"]="Email Only";
@@ -1330,8 +1335,6 @@ $lang["lastscheduledtaskexection"]="Last scheduled task execution (days)";
 $lang["executecronphp"]="Relevance matching will not be effective and periodic e-mail reports will not be sent. Ensure <a href='../batch/cron.php'>batch/cron.php</a> is executed at least once daily via a cron job or similar.";
 $lang["shouldbeormore"]="should be ? or greater"; # E.g. should be 200M or greater
 $lang["config"]="config";
-
-$lang["generateexternalurl"]="Generate External URL";
 
 $lang["starsminsearch"]="Stars (Minimum)";
 $lang["anynumberofstars"]="Any Number of Stars";
