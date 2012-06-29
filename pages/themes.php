@@ -264,7 +264,7 @@ elseif ($themes_category_split_pages)
 			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo htmlspecialchars(i18n_get_translated(str_replace("*","",$headers[$n])))?></a></div></td>
 			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
 			<?php if (checkperm("h") && $enable_theme_category_sharing) {?>&nbsp;<a href="<?php echo $sharelink ?>">&gt;&nbsp;<?php echo $lang["share"]?></a><?php }
-			if (checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php }
+			if ($enable_theme_category_edit && checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php }
 			?>
 			</div></td>
 			</tr>

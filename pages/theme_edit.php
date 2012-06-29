@@ -4,7 +4,7 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/resource_functions.php";
 include "../include/search_functions.php"; 
-
+if (!$enable_theme_category_edit){ die ('$enable_theme_category_edit=false');}
 
 function save_themename()
 	{		

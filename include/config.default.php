@@ -762,6 +762,9 @@ $save_as=false;
 $allow_share=true;
 $enable_theme_category_sharing=true;
 
+# Allow theme names to be batch edited in the Themes page.
+$enable_theme_category_edit=true;
+
 # Should those with 'restricted' access to a resource be able to share the resource?
 $restricted_share=false;
 
