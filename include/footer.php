@@ -1,6 +1,9 @@
 
 
 <?php
+
+hook("beforefooter");
+
 # Include theme bar?
 if ($use_theme_bar && !in_array($pagename,array("search_advanced","login","preview","admin_header","user_password","user_request")) && ($loginterms==false))
 	{

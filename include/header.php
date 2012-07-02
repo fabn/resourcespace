@@ -296,4 +296,7 @@ if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes"
 	</td><td valign="top" style="margin:0;padding:0;">
 	<?php
 	}
+	
+hook("afterheader");
+	
 ?>

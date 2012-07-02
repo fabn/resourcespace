@@ -30,8 +30,8 @@ if ($minaccess>=1 && !$restricted_share) # Minimum access is restricted or lower
 	$show_error=true;
     $error=$lang["restrictedsharecollection"];
 	}
-	
-if (count(get_collection_resources($ref))==0) # Sharing an empty collection?
+
+if (!$collection_allow_empty_share && count(get_collection_resources($ref))==0) # Sharing an empty collection?
 	{
 	$show_error=true;
     $error=$lang["cannotshareemptycollection"];

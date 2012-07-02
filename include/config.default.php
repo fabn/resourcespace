@@ -1394,7 +1394,8 @@ $display_search_titles=true;
 # Show "Save" and "Clear" buttons at the top of the resource edit form as well as at the bottom
 $edit_show_save_clear_buttons_at_top=false;
 
-
+# Allow empty collections to be shared?
+$collection_allow_empty_share=false;
 
 
 

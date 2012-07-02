@@ -328,6 +328,9 @@ if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0
 # Include the page header to and render the search results
 include "../include/header.php";
 
+# Hook to replace all search results (used by ResourceConnect plugin, allows search mechanism to be entirely replaced)
+if (!hook("repleacesearchresults")) {
+
 if ($allow_reorder && $display!="list")
 	{
 	$url="search.php?search=" . urlencode($search) ;
@@ -533,6 +536,7 @@ if (true) # Always show search header now.
 	?>
 	<div class="clearerleft"></div>
 	<?php
+	
 	if (!is_array($result))
 		{
 		?>
@@ -1132,6 +1136,8 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php
 		}
 	
+	
+	
 	if ($display!="list")
 		{
 		?>
@@ -1177,7 +1183,10 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 	if (isset($draw_pager)) {pager(false);} ?>
 </div>	
 
-<?php hook("endofsearchpage");?>
+<?php 
+} # End of replace all results hook conditional
+
+hook("endofsearchpage");?>
 <?php	
 
 
