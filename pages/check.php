@@ -158,6 +158,11 @@ if ($collection_download || isset($zipcommand)) # Only check if it is going to b
     ?><tr><td colspan="2"><?php echo $lang["archiver_utility"] ?></td><td><b><?php echo $result?></b></td></tr><?php
     }
 
+# Check zip extension
+if ($use_zip_extension){
+display_extension_status("zip");
+}
+
 hook("addinstallationcheck");?>
 
 <tr>
@@ -191,6 +196,23 @@ function display_utility_status($utilityname)
     <?php if ($utility["success"]==true) { ?><td><?php echo $utility["version"] ?></td><?php } ?>
     <td><b><?php echo $result?></b></td></tr><?php
     }
+   
+function display_extension_status($extension)
+    {
+    global $lang;
+
+    if (extension_loaded($extension))
+        {
+        $result = $lang["status-ok"];
+        }
+    else
+        {
+        $result = $lang["status-error"];
+        }
+
+    ?><tr><td colspan="2">php-<?php echo $extension ?></td>
+    <td><b><?php echo $result?></b></td></tr><?php
+    }    
 
 function get_utility_displayname($utilityname)
     {

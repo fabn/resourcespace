@@ -2850,15 +2850,16 @@ function payment_set_complete($collection)
  * 1. tempdir - If set in config.php, use this value.
  * 2. storagedir ."/tmp" - If storagedir is set in config.php, use it and create a subfolder tmp.
  * 3. generate default path - use filestore/tmp if all other attempts fail.
+ * 4. if a uniqid is provided, create a folder within tmp and return the full path
  * @param bool $asUrl - If we want the return to be like http://my.resourcespace.install/path set this as true.
  * @return string Path to the tmp directory.
  */
-function get_temp_dir($asUrl = false)
+function get_temp_dir($asUrl = false,$uniqid="")
 {
     global $storagedir, $tempdir;
     // Set up the default.
     $result = dirname(dirname(__FILE__)) . "/filestore/tmp";
-
+	
     // if $tempdir is explicity set, use it.
     if(isset($tempdir))
     {
@@ -2890,6 +2891,15 @@ function get_temp_dir($asUrl = false)
             mkdir($result, 0777);
         }
     }
+    
+    if ($uniqid!=""){
+		$result.="/$uniqid";
+		if(!is_dir($result)){
+            // If it does not exist, create it.
+            mkdir($result, 0777);
+        }
+    }
+    
     // return the result.
     if($asUrl==true)
     {

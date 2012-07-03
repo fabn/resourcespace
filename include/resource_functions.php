@@ -1096,8 +1096,11 @@ function get_exiftool_fields($resource_type)
 	return sql_query("select ref,type,exiftool_field,exiftool_filter,options,name from resource_type_field where length(exiftool_field)>0 and (resource_type='$resource_type' or resource_type='0')  order by exiftool_field");
 	}
 
-function write_metadata($path,$ref)
+function write_metadata($path,$ref,$uniqid="")
 	{
+	// copys the file to tmp and runs exiftool on it	
+	// uniqid tells the tmp file to be placed in an isolated folder within tmp
+	
 	global $exiftool_remove_existing,$storagedir,$exiftool_write,$exiftool_no_process;
 	
 	# Fetch file extension
@@ -1111,7 +1114,7 @@ function write_metadata($path,$ref)
 		{
 		$filename = pathinfo($path);
 		$filename = $filename['basename'];	
-		$tmpfile=get_temp_dir() . "/" . $filename;
+		$tmpfile=get_temp_dir(false,$uniqid) . "/" . $filename;
 		copy($path,$tmpfile);
 	
 		#Now that we have already copied the original file, we can use exiftool's overwrite_original on the tmpfile.

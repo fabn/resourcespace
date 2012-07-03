@@ -104,7 +104,7 @@ $ghostscript_executable='gs';
 # $archiver_executable = '7z.exe';
 # $archiver_listfile_argument = "@";
 
-
+$use_zip_extension=false; //use php-zip extension instead of $archiver or $zipcommand
 
 
 

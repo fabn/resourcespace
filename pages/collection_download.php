@@ -7,6 +7,7 @@ $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalesc
 include "../include/search_functions.php";
 include "../include/resource_functions.php";
 
+$uniqid="";$id="";
 $collection=getvalescaped("collection","",true);
 $size=getvalescaped("size","");
 $submitted=getvalescaped("submitted","");
@@ -15,9 +16,22 @@ $useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
 
+if ($use_zip_extension){
+	$uniqid=getval("id",uniqid("Col".$collection."-"));
+	$progress_file=get_temp_dir(false,$uniqid) . "/progress_file.txt";
+}
+
+function update_zip_progress_file($note){
+	global $progress_file;
+	$fp = fopen($progress_file, 'w');		
+	$filedata=$note;
+	fwrite($fp, $filedata);
+	fclose($fp);
+}
+
 $archiver_fullpath = get_utility_path("archiver");
 
-if (!isset($zipcommand))
+if (!isset($zipcommand) && !$use_zip_extension)
     {
     if (!$collection_download) {exit($lang["download-of-collections-not-enabled"]);}
     if ($archiver_fullpath==false) {exit($lang["archiver-utility-not-found"]);}
@@ -25,6 +39,7 @@ if (!isset($zipcommand))
     else if (!is_array($collection_download_settings)) {exit($lang["collection_download_settings-not-an-array"]);}
     if (!isset($archiver_listfile_argument)) {exit($lang["listfile-argument-not-defined"]);}
     }
+    
 $archiver = $collection_download && ($archiver_fullpath!=false) && (isset($archiver_listfile_argument)) && (isset($collection_download_settings) ? is_array($collection_download_settings) : false);
 
 # initiate text file
@@ -58,7 +73,7 @@ for ($n=0;$n<count($result);$n++)
 	if (file_exists($p) && (($access==0) || ($access==1 && $restricted_full_download)) && resource_download_allowed($ref,'',$result[$n]['resource_type']))
 		{
 		$available_sizes['original'][]=$ref;
-		}
+		} 
 	
 	# check for the availability of each size and load it to the available_sizes array
 	foreach ($sizes as $sizeinfo)
@@ -71,18 +86,36 @@ for ($n=0;$n<count($result);$n++)
 		
 		}
 	}
+
 	
 #print_r($available_sizes);
 $used_resources=array();
 $subbed_original_resources = array();
 if ($submitted != "")
 	{
+    # Define the archive file.
+	if ($use_zip_extension){
+		$id=getvalescaped("id","");
+		$zipfile = get_temp_dir(false,$id)."/zip.zip";
+		$zip = new ZipArchive();
+		$zip->open($zipfile, ZIPARCHIVE::CREATE);
+	}
+    else if ($archiver)
+        {
+        $zipfile = get_temp_dir(false,$id)."/".$lang["collectionidprefix"] . $collection . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
+        }
+    else
+        {
+        $zipfile = get_temp_dir(false,$id)."/".$lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
+        }
+    
 	$path="";
 	$deletion_array=array();
 
 	# Build a list of files to download
 	for ($n=0;$n<count($result);$n++)
 		{
+		$copy=false; 
 		$ref=$result[$n]["ref"];
 		# Load access level
 		$access=get_resource_access($result[$n]);
@@ -116,8 +149,13 @@ if ($submitted != "")
 				
 				$used_resources[]=$ref;
 				# when writing metadata, we take an extra security measure by copying the files to tmp
-				$tmpfile=write_metadata($p,$ref);
-				if($tmpfile!==false && file_exists($tmpfile)){$p=$tmpfile;}		
+				$tmpfile=write_metadata($p,$ref,$id); // copies file
+				if($tmpfile!==false && file_exists($tmpfile)){
+					$p=$tmpfile; // file already in tmp, just rename it
+				}	
+				else {
+					$copy=true; // copy the file from filestore rather than renaming
+				}
 	
 				# if the tmpfile is made, from here on we are working with that. 
 				
@@ -159,15 +197,20 @@ if ($submitted != "")
                             }
                         $filename = mb_convert_encoding($filename, $to_charset, 'UTF-8');
 
-                        # Copy to a new location
-                        $newpath = get_temp_dir() . "/" . $filename;
-                        copy($p, $newpath);
+                        # Copy to tmp (if exiftool failed) or rename this file
+                        # this is for extra efficiency to reduce copying and disk usage
+                        
+                        if (!$use_zip_extension){
+							// the copy or rename to the filename is not necessary using the zip extension since the archived filename can be specified.
+							$newpath = get_temp_dir(false,$id) . "/" . $filename;
+							if (!$copy){rename($p, $newpath);} else {copy($p,$newpath);}
+							# Add the temporary file to the post-archiving deletion list.
+							$deletion_array[]=$newpath;
+							
+							# Set p so now we are working with this new file
+							$p=$newpath;
+							}
 
-						# Add the temporary file to the post-archiving deletion list.
-						$deletion_array[]=$newpath;
-						
-						# Set p so now we are working with this new file
-						$p=$newpath;
 						}
 					}
 				
@@ -191,7 +234,10 @@ if ($submitted != "")
 				}
 				
 				$path.=$p . "\r\n";	
-				
+				if ($use_zip_extension){
+					$zip->addFile($p,$filename);
+					update_zip_progress_file($zip->numFiles);
+				}
 				# build an array of paths so we can clean up any exiftool-modified files.
 				
 				if($tmpfile!==false && file_exists($tmpfile)){$deletion_array[]=$tmpfile;}
@@ -206,6 +252,7 @@ if ($submitted != "")
 				
 				}
 			}
+
 		}
     if ($path=="") {exit($lang["nothing_to_download"]);}	
 
@@ -251,59 +298,66 @@ if ($submitted != "")
             }
         }
 
-        $textfile = get_temp_dir() . "/". $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . $sizetext . ".txt";
+        $textfile = get_temp_dir(false,$id) . "/". $collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . $sizetext . ".txt";
         $fh = fopen($textfile, 'w') or die("can't open file");
         fwrite($fh, $text);
         fclose($fh);
-
-        $path.=$textfile . "\r\n";	
+		if ($use_zip_extension){
+			$zip->addFile($textfile,$collection . "-" . safe_file_name(i18n_get_translated($collectiondata['name'])) . $sizetext . ".txt");
+        } else {
+			$path.=$textfile . "\r\n";	
+        }
         $deletion_array[]=$textfile;	
     }
 
-    # Define the archive file.
-    if ($archiver)
-        {
-        $file = $lang["collectionidprefix"] . $collection . "-" . $size . "." . $collection_download_settings[$settings_id]["extension"];
-        }
-    else
-        {
-        $file = $lang["collectionidprefix"] . $collection . "-" . $size . ".zip";
-        }
 
 	# Write command parameters to file.
-	$cmdfile = get_temp_dir() . "/zipcmd" . $collection . "-" . $size . ".txt";
-	$fh = fopen($cmdfile, 'w') or die("can't open file");
-	fwrite($fh, $path);
-	fclose($fh);
+	//update_progress_file("writing zip command");	
+	if (!$use_zip_extension){
+		$cmdfile = get_temp_dir(false,$id) . "/zipcmd" . $collection . "-" . $size . ".txt";
+		$fh = fopen($cmdfile, 'w') or die("can't open file");
+		fwrite($fh, $path);
+		fclose($fh);
+	}
 
     # Execute the archiver command.
     # If $collection_download is true the $collection_download_settings are used if defined, else the legacy $zipcommand is used.
-    if ($archiver)
+    if ($use_zip_extension){
+		update_zip_progress_file("zipping");
+		$wait=$zip->close();
+		update_zip_progress_file("complete");
+		sleep(1);
+	}
+    else if ($archiver)
         {
-        exec($archiver_fullpath . " " . $collection_download_settings[$settings_id]["arguments"] . " " . escapeshellarg(get_temp_dir() . "/" . $file) . " " . $archiver_listfile_argument . escapeshellarg($cmdfile));
+        exec($archiver_fullpath . " " . $collection_download_settings[$settings_id]["arguments"] . " " . escapeshellarg($zipfile) . " " . $archiver_listfile_argument . escapeshellarg($cmdfile));
         }
-    else
+    else if (!$use_zip_extension)
         {
         if ($config_windows)
             # Add the command file, containing the filenames, as an argument.
             {
-            exec("$zipcommand " . escapeshellarg(get_temp_dir() . "/" . $file) . " @" . escapeshellarg($cmdfile));
+            exec("$zipcommand " . escapeshellarg($zipfile) . " @" . escapeshellarg($cmdfile));
             }
         else
             {
             # Pipe the command file, containing the filenames, to the executable.
-            exec("$zipcommand " . escapeshellarg(get_temp_dir() . "/" . $file) . " -@ < " . escapeshellarg($cmdfile));
+            exec("$zipcommand " . escapeshellarg($zipfile) . " -@ < " . escapeshellarg($cmdfile));
             }
         }
 
     # Archive created, schedule the command file for deletion.
-	$deletion_array[]=$cmdfile;
-
+	if (!$use_zip_extension){
+		$deletion_array[]=$cmdfile;
+	}
+	
 	# Remove temporary files.
-	foreach($deletion_array as $tmpfile) {delete_exif_tmpfile($tmpfile);}
+	foreach($deletion_array as $tmpfile) {
+		delete_exif_tmpfile($tmpfile);
+	}
 
     # Get the file size of the archive.
-    $filesize = @filesize_unlimited(get_temp_dir() . "/" . $file);
+    $filesize = @filesize_unlimited($zipfile);
 
     if ($use_collection_name_in_zip_name)
         {
@@ -336,10 +390,20 @@ if ($submitted != "")
 	header("Content-Length: " . $filesize);
 
 	set_time_limit(0);
-	readfile(get_temp_dir() . "/" . $file);
+	readfile($zipfile);
+
+	
 
     # Remove archive.
-	unlink(get_temp_dir() . "/" . $file);
+	unlink($zipfile);
+	
+	if ($use_zip_extension){
+				
+				unlink($progress_file);
+				rmdir(get_temp_dir(false,$id));
+	}
+	
+	
 	exit();	
 	}
 include "../include/header.php";
@@ -347,10 +411,54 @@ include "../include/header.php";
 ?>
 <div class="BasicsBox">
 <h1><?php echo $lang["downloadzip"]?></h1>
+<?php if ($use_zip_extension){?>
+<script>
+function ajax_download()
+	{
+	$('progress').style.display='none';
+	$('progressdiv').style.display='block';
+	var ifrm = document.getElementById('downloadiframe');
+	
+    ifrm.src = "collection_download.php?submitted=true&"+$('myform').serialize();
+    
+	progress= new Ajax.PeriodicalUpdater("progress2","ajax/collection_download_progress.php?id=<?php echo $uniqid?>",
+		{
+		onSuccess: function(response){
+                if (response.responseText.indexOf("Zipping")==-1 && response.responseText!="complete"){
+					var status=(response.responseText/<?php echo count($result)?>*100)+"%";
+					console.log(status);
+					$('progress3').innerHTML=status;
+				}
+				else if (response.responseText=="complete"){
+                   progress.stop();    
+                }  
+                else if (response.responseText.indexOf("Zipping")!=-1){
+					console.log(response.responseText);
+				}
+                else {console.log(response.responseText);}
+     
+		}
+	}
+	);
+}
 
-<form id='myform' action="collection_download.php?submitted=true" method=post>
+
+</script>
+<?php } ?>
+
+<?php if (!$use_zip_extension){?>
+	<form id='myform' action="collection_download.php?submitted=true" method=post>
+<?php } else { ?>
+	<form id='myform'>
+<?php } ?>
+
 <input type=hidden name="collection" value="<?php echo $collection?>">
 <input type=hidden name="k" value="<?php echo $k?>">
+
+<?php if ($use_zip_extension){?>
+	<input type=hidden name="id" value="<?php echo $uniqid?>">
+	<iframe id="downloadiframe" <?php if (!$debug_direct_download){?>style="display:none;"<?php } ?>></iframe>
+<?php } ?>
 
 <?php 
 hook("collectiondownloadmessage");
@@ -466,11 +574,24 @@ if ($archiver)
 
 <div class="QuestionSubmit"> 
 <label for="download"> </label>
-<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" /></div>
-
+<?php if (!$use_zip_extension){?>
+<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
+<?php } else { ?>
+<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){ajax_download();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
+<?php } ?>
+</div>
 <div class="clearerleft"> </div>
+</div>
 <div id="progress"></div>
 
+<?php if ($use_zip_extension){?>
+<div class="Question" id="progressdiv" style="display:none;"> 
+<label><?php echo $lang['progress']?></label>
+<div class="Fixed" id="progress2" style="diplay:none;">
+<div class="Fixed" id="progress3">
+</div></div>
+<div class="clearerleft"> </div></div>
+<?php } ?>
 </form>
 
 </div>
