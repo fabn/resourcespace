@@ -1253,6 +1253,7 @@ $lang["alternatetype"]="Alternative type";
 
 
 $lang["subcategories"]="Subcategories";
+$lang["subcategory"]="Subcategory";
 $lang["back"]="Back";
 
 $lang["pleasewait"]="Please wait...";

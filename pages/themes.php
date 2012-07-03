@@ -227,7 +227,7 @@ elseif ($themes_category_split_pages)
 		else{
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
-				echo $lang["subcategories"];?></h1><h1 style="margin-top:5px;"><?php if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } ?><?php
+				echo (count($headers)>1)?$lang["subcategories"]:$lang["subcategory"];?></h1><h1 style="margin-top:5px;"><?php if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } ?><?php
 				for ($x=0;$x<count($themes);$x++){
 					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
 					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
