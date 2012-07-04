@@ -27,6 +27,8 @@ foreach ($_GET as $key => $value) {
 	
 # Work out theme name and level, also construct back link
 $link="themes.php?";
+$lastlevelchange=getvalescaped("lastlevelchange",1);
+$link.="lastlevelchange=" . $lastlevelchange . "&";
 for ($x=0;$x<$themecount;$x++)
 	{		
 	if (!$x==0){$link.="&";}		
@@ -44,14 +46,16 @@ for ($x=0;$x<$themecount;$x++)
 	
 	if (isset($themes[$x])&&!isset($themes[$x+1]))
 		{
-		$themename=i18n_get_translated($themes[$x]);	
+		$themename=i18n_get_translated($themes[$x]);
+		if(!($themes_category_split_pages))
+			{$link.=urlencode($themes[$x]);}
 		}
 	else
-		{		
+		{
 		$link.=urlencode($themes[$x]);			
 		}
-}
-
+	}
+	
 if (getval("rename","")!="")
 	{
 		# Save theme category
@@ -72,7 +76,7 @@ if (!checkperm("t")) {
 
 ?>
 <div class="BasicsBox">
-<h1><?php echo $lang["action-edit"] . " " . $lang["theme"]?></h1>
+<h1><?php echo $lang["action-edit"] . " " . $lang["themecategory"]?></h1>
 <p><?php echo text("introtext")?></p>
 	<form method=post id="themeform">
 		<div class="Question">

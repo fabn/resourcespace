@@ -400,6 +400,7 @@ $use_recent_as_home=false;
 $theme_images=true;
 $theme_images_number=1; # How many to auto-select (if none chosen manually)
 $theme_images_align_right=false; # Align theme images to the right on the themes page? (particularly useful when there are multiple theme images)
+$show_theme_collection_stats=false; # Show count of themes and resources in theme category
 
 # How many levels of theme category to show.F
 # If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
@@ -760,7 +761,7 @@ $save_as=false;
 
 # Allow resources to be e-mailed / shared (internally and externally)
 $allow_share=true;
-$enable_theme_category_sharing=true;
+$enable_theme_category_sharing=false;
 
 # Hide display of internal URLs when sharing collections. Intended to prevent inadvertently sending external users invalid URLs
 $hide_internal_sharing_url=false;

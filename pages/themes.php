@@ -9,7 +9,7 @@ hook("themeheader");
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages_parents_root_node;
+	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange;
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -76,9 +76,51 @@ function DisplayTheme($themes=array())
 			{
 			echo stripslashes(str_replace("*","",$themename));
 			}?></h1></td></tr><tr><td style="margin:0px;padding:0px;">
-            <p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); 
-            hook("themeaction");
-            ?></p></td></tr></table>
+			
+			<?php
+			if (($show_theme_collection_stats) || (!($themes_category_split_pages) && ($enable_theme_category_sharing || $enable_theme_category_edit)))
+				{
+				$linkparams="";
+				for ($x=0;$x<count($themes);$x++){
+				$linkparams.="theme".($x+1)."=".urlencode($themes[$x])."&";
+				}
+				if($show_theme_collection_stats)
+					{
+					?>
+					<p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); 
+					?>
+					</p>
+					</td><td style="margin:0px;padding:0px;">
+					<?php
+					}
+					?>
+				<?php
+					if(!($themes_category_split_pages))
+					{
+					if (checkperm("h") && $enable_theme_category_sharing)
+						{
+						$sharelink="";
+						for ($x=0;$x<count($themes);$x++)
+							{
+							$sharelink.="theme".($x+1)."=" . urlencode($themes[$x]) ."&";					
+							}
+						?>
+						
+						</td><tr><td style="margin:0px;padding:0px;">
+						<a href="theme_category_share.php?<?php echo $linkparams?>"><?php echo "> " . $lang["share"] . "</a>";
+						}
+					hook("themeaction");
+					
+					if ($enable_theme_category_edit && checkperm("t"))
+						{
+						?>
+						<a href="theme_edit.php?<?php echo $linkparams . "lastlevelchange=" . $lastlevelchange?>"><?php echo "> " . $lang["action-edit"] . "</a>";
+						}
+					}
+				}
+				?>
+			
+			</td></tr></table>
             <!-- The number of collections should never be equal to zero. -->
 
 		<div class="clearerright"> </div>
