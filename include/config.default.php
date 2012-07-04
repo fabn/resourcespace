@@ -762,6 +762,9 @@ $save_as=false;
 $allow_share=true;
 $enable_theme_category_sharing=true;
 
+# Hide display of internal URLs when sharing collections. Intended to prevent inadvertently sending external users invalid URLs
+$hide_internal_sharing_url=false;
+
 # Allow theme names to be batch edited in the Themes page.
 $enable_theme_category_edit=true;
 

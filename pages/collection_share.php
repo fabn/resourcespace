@@ -60,12 +60,15 @@ include "../include/header.php";
 
 <?php if (getval("generateurl","")!="")
 	{
-	?>
-	<p><?php echo $lang["generateurlinternal"]?></p>
-	
-	<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>">
-	
-	<?php
+	if (!($hide_internal_sharing_url))
+		{
+		?>
+		<p><?php echo $lang["generateurlinternal"]?></p>
+		
+		<p><input class="URLDisplay" type="text" value="<?php echo $baseurl?>/?c=<?php echo $ref?>">
+		<?php
+		}
+		
 	$access=getvalescaped("access","");
 	$expires=getvalescaped("expires","");
 	if ($access=="")
@@ -124,17 +127,22 @@ include "../include/header.php";
 <?php if (collection_writeable($ref)||
 	(isset($collection['savedsearch']) && $collection['savedsearch']!=null && ($userref==$collection["user"] || checkperm("h"))))
 	{
-	?>
-	<h2><?php echo $lang["internalusersharing"]?></h2>
-	<div class="Question">
-	<label for="users"><?php echo $lang["attachedusers"]?></label>
-	<div class="Fixed"><?php echo (($collection["users"]=="")?$lang["noattachedusers"]:htmlspecialchars($collection["users"])); ?><br /><br />
-	<a href="collection_edit.php?ref=<?php echo $ref; ?>">&gt;&nbsp;<?php echo $lang["action-edit"];?></a>
-	</div>
-	<div class="clearerleft"> </div>
-	</div>
-	
-	<p>&nbsp;</p>
+	if (!($hide_internal_sharing_url))
+		{
+		?>
+		<h2><?php echo $lang["internalusersharing"]?></h2>
+		<div class="Question">
+		<label for="users"><?php echo $lang["attachedusers"]?></label>
+		<div class="Fixed"><?php echo (($collection["users"]=="")?$lang["noattachedusers"]:htmlspecialchars($collection["users"])); ?><br /><br />
+		<a href="collection_edit.php?ref=<?php echo $ref; ?>">&gt;&nbsp;<?php echo $lang["action-edit"];?></a>
+		</div>
+		<div class="clearerleft"> </div>
+		</div>
+		
+		<p>&nbsp;</p>
+		<?php
+		}
+		?>
 	<h2><?php echo $lang["externalusersharing"]?></h2>
 	<div class="Question">
 
