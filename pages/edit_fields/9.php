@@ -8,26 +8,25 @@ $readonly=($pagename=="search_advanced");
 
 <input type="hidden" name="<?php echo $name ?>" id="<?php echo $name ?>" value="<?php echo htmlspecialchars($value) ?>"/>
 
-<div id="<?php echo $name?>_choices" class="autocomplete"></div>
 
 <div id="<?php echo $name?>_selected" class="keywordsselected"></div>
 </div>
 
 <script type="text/javascript">
 
-new Ajax.Autocompleter("<?php echo $name?>_selector", "<?php echo $name?>_choices", "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>&readonly=<?php echo $readonly ?>",
-	{
-	afterUpdateElement : selectKeyword_<?php echo $name ?>
-	}
-);
+jQuery('#<?php echo $name?>_selector').autocomplete( { source: "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>&readonly=<?php echo $readonly ?>", 
+	select : selectKeyword_<?php echo $name ?>
+	});
 
 var Keywords_<?php echo $name ?>= new Array();
 var KeywordCounter_<?php echo $name ?>=0;
 var KeywordsTranslated_<?php echo $name ?>= new Array();
 
-function selectKeyword_<?php echo $name ?>()
+function selectKeyword_<?php echo $name ?>(event, ui)
 	{
-	var keyword=document.getElementById("<?php echo $name ?>_selector").value;
+	// var keyword=document.getElementById("<?php echo $name ?>_selector").value;
+	var keyword=ui.item.value;
+	
 	if (keyword.substring(0,<?php echo strlen($lang["createnewentryfor"]) ?>)=="<?php echo $lang["createnewentryfor"] ?>")
 		{
 		keyword=keyword.substring(<?php echo strlen($lang["createnewentryfor"])+1 ?>);
@@ -39,6 +38,7 @@ function selectKeyword_<?php echo $name ?>()
 	addKeyword_<?php echo $name ?>(keyword);
 	updateSelectedKeywords_<?php echo $name ?>(true);
 	document.getElementById('<?php echo $name ?>_selector').value='';
+	return false;
 	}
 
 function addKeyword_<?php echo $name ?>(keyword)

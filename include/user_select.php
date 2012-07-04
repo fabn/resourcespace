@@ -44,28 +44,18 @@ if ($userstring=="") {$userstring=$default_user_select;}
 
 </table>
 
-<div id="autocomplete_choices" class="autocomplete"></div>
 <?php if ($sharing_userlists){?>
 <div id="autocomplete_userlist_choices" class="autocomplete"></div>
 <?php } ?>
 
 <script type="text/javascript">
 
-new Ajax.Autocompleter("autocomplete", "autocomplete_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_user.php",
-	{
-	afterUpdateElement : addUser
-	}
-);
-
-<?php if ($sharing_userlists){?>
-updateUserSelect();
-new Ajax.Autocompleter("userlist_name_value", "autocomplete_userlist_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_userlist.php");
-<?php } ?>
-
-function addUser()
+function addUser(event,ui)
 	{
 	var username=document.getElementById("autocomplete").value;
 	var users=document.getElementById("users");
+
+	if (typeof ui!=='undefined') {username=ui.item.value;}
 	
 	if (username.indexOf("<?php echo $lang["group"]?>")!=-1)
 		{
@@ -91,7 +81,20 @@ function addUser()
 		);
 
 	<?php } ?>
-}
+	return false;
+	}
+
+jQuery('#autocomplete').autocomplete(
+	{
+	source: "<?php echo $baseurl?>/pages/ajax/autocomplete_user.php",
+	select: addUser
+	} );
+
+
+<?php if ($sharing_userlists){?>
+updateUserSelect();
+new Ajax.Autocompleter("userlist_name_value", "autocomplete_userlist_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_userlist.php");
+<?php } ?>
 
 
 <?php if ($sharing_userlists){?>	

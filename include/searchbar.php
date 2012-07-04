@@ -101,15 +101,16 @@ if ($display_user_rating_stars && $star_search){?>
 	<p><?php echo text("searchpanel")?></p>
 	
 	<form id="form1" method="get" action="<?php echo $baseurl?>/pages/search.php">
-	<?php if (!hook("replacesearchbox")){?>
+	<?php if (!hook("replacesearchbox")){ ?>
+		<div class="ui-widget">
         <input id="ssearchbox" <?php if ($hide_main_simple_search){?>type="hidden"<?php } ?> name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
+        </div>
 	<?php } ?>
 <?php if ($autocomplete_search) { 
 # Auto-complete search functionality
 ?>
-<div id="autocomplete_search_choices" class="autocomplete"></div>
 <script type="text/javascript">
-new Ajax.Autocompleter("ssearchbox", "autocomplete_search_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php");
+jQuery('#ssearchbox').autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php" } );
 </script>
 
 <?php } ?>
@@ -198,9 +199,8 @@ if (!$basic_simple_search)
 			if ($autocomplete_search) { 
 				# Auto-complete search functionality
 				?></div>
-				<div id="autocomplete_search_choices_<?php echo $fields[$n]["name"]?>" class="autocomplete"></div>
 				<script type="text/javascript">
-				new Ajax.Autocompleter("field_<?php echo $fields[$n]["name"]?>", "autocomplete_search_choices_<?php echo $fields[$n]["name"]?>", "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?field=<?php echo $fields[$n]["name"]?>&fieldref=<?php echo $fields[$n]["ref"]?>");
+				jQuery("#field_<?php echo $fields[$n]["name"]?>").autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?field=<?php echo $fields[$n]["name"]?>&fieldref=<?php echo $fields[$n]["ref"]?>"} );
 				</script>
 				<div class="SearchItem">
 			<?php } 
