@@ -547,10 +547,10 @@ if (!$basic_simple_search)
 <?php hook("addsearchbarpanel");?>	
 	
 	<?php if (($research_request) && (!isset($k) || $k=="") && (checkperm("q"))) { ?>
-	<?php if (!hook("replaceresearchrequestbox")){?>
+	<?php if (!hook("replaceresearchrequestbox")) { ?>
 	<div id="ResearchBoxPanel">
   	<div class="SearchSpace">
-  	<?php if (!hook("replaceresearchrequestboxcontent")){?>
+  	<?php if (!hook("replaceresearchrequestboxcontent"))  { ?>
 	<h2><?php echo $lang["researchrequest"]?></h2>
 	<p><?php echo text("researchrequest")?></p>
 	<div class="HorizontalWhiteNav"><a href="<?php echo $baseurl?>/pages/research_request.php">&gt; <?php echo $lang["researchrequestservice"]?></a></div>

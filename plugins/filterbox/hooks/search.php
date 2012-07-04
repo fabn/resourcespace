@@ -17,10 +17,8 @@ function HookFilterboxSearchSearchbarreplace()
 		{
 		# Auto-complete search functionality
 		?>
-		<div id="autocomplete_filter_choices" class="autocomplete"></div>
 		<script type="text/javascript">
-			new Ajax.Autocompleter("refine_keywords", "autocomplete_filter_choices", "<?php
-					echo $baseurl?>/plugins/filterbox/ajax/autocomplete_filter.php");
+		jQuery("#refine_keywords").autocomplete( { source: "<?php echo $baseurl?>/plugins/filterbox/ajax/autocomplete_filter.php" } );
 		</script>
 	<?php
 		}
@@ -38,6 +36,7 @@ function HookFilterboxSearchSearchbarreplace()
 
 	</div>
 	</div>
+	<br />
 	<div id="SearchBoxPanel">
 	<div class="SearchSpace">
 	<?php
