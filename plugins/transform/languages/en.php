@@ -33,6 +33,7 @@ $lang['priorversion']="Prior version";
 $lang['replaced']="Replaced";
 $lang['replaceslideshowimage']="Replace slideshow image";
 $lang['slideshowsequencenumber']="Sequence number (1, 2, 3 etc.)";
+$lang['slideshowmakelink']="Link the slideshow image to the resource view page";
 $lang['transformcrophelp']="Click and drag on the image to the left to select a crop area.";
 $lang['originalsize']="Original Size";
 $lang['allow_upscale']="Allow upscale?";

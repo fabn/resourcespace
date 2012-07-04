@@ -16,6 +16,8 @@ include "../include/image_processing.php";
 
 $ref=getvalescaped("ref","",true);
 
+# Update hit count
+update_hitcount($ref);
 	
 # fetch the current search (for finding simlar matches)
 $search=getvalescaped("search","");

@@ -42,6 +42,8 @@ $imversion = get_imagemagick_version();
 
 // generate a preview image for the operation if it doesn't already exist
 if (!file_exists(get_temp_dir() . "/transform_plugin/pre_$ref.jpg")){
+	//echo  "generating preview";
+	//exit();
 	generate_transform_preview($ref) or die("Error generating transform preview.");
 }
 
@@ -62,6 +64,8 @@ $preview_ext = sql_value("select preview_extension value from resource where ref
 // retrieve image paths for preview image and original file
 //$previewpath = get_resource_path($ref,true,$cropper_cropsize,false,$preview_ext);
 $previewpath = get_temp_dir() . "/transform_plugin/".$cropper_cropsize."_$ref.jpg";
+//echo $previewpath;
+//exit();
 $originalpath= get_resource_path($ref,true,'',false,$orig_ext);
 
 
@@ -402,6 +406,17 @@ if (!$download && !$original && getval("slideshow","")==""){
 	if (!is_numeric($sequence)) {exit("Invalid sequence number. Please enter a numeric value.");}
 	if (!checkperm("t")) {exit ("Permission denied.");}
 	copy($newpath,dirname(__FILE__) . "/../../../".$homeanim_folder."/" . $sequence . ".jpg");
+	$sslinkfile = dirname(__FILE__) . "/../../../".$homeanim_folder."/" . $sequence . ".txt";
+	if (getval("linkslideshow","")==1)
+		{
+		#Create/overwrite text file with link to resource view page
+		file_put_contents($sslinkfile,$ref);
+		}
+	else
+		#delete the existing link text file if it exists
+		{
+		if (file_exists($sslinkfile)){unlink($sslinkfile);}
+		}
 	unlink($newpath);
 	unlink(get_temp_dir() . "/transform_plugin/pre_$ref.jpg");
 	}
@@ -642,6 +657,12 @@ include "../../../include/header.php";
 
     <table id="transform_slideshow_options" style="display:none;">
     <tr><td colspan="4"><p><?php echo $lang['transformcrophelp'] ?></p></td></tr>
+	
+	<tr>
+		<td style='text-align:right'><?php echo $lang["slideshowmakelink"]; ?>: </td>
+		<td><input type="checkbox" name='linkslideshow' id='linkslideshow' value="1" checked></td>
+	</tr>
+	
       <tr>
         <td style='text-align:right'><?php echo $lang["slideshowsequencenumber"]; ?>: </td>
         <td><input type='text' name='sequence' id='sequence' value='' size='4' /></td>

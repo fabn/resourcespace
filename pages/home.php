@@ -2,6 +2,7 @@
 include "../include/db.php";
 include "../include/authenticate.php";
 include "../include/general.php";
+include "../include/resource_functions.php";
 include "../include/collections_functions.php";
 
 hook("homeheader");
@@ -16,12 +17,21 @@ if (!hook("replaceslideshow")) {
 $dir = dirname(__FILE__) . "/../" . $homeanim_folder; 
 $filecount = 0; 
 $checksum=0; # Work out a checksum which is the total of all the image files in bytes - used in image URLs to force a refresh if any of the images change.
-$d = dir($dir); 
-while ($f = $d->read()) { 
+$d = scandir($dir); 
+$reslinks=array();
+foreach ($d as $f) { 
  if(preg_match("/[0-9]+\.(jpg)/",$f))
  	{ 
  	$filecount++; 
 	$checksum+=filesize($dir . "/" . $f);
+	$linkfile=substr($f,0,(strlen($f)-4)) . ".txt";
+	$reslinks[$filecount]="";
+	if(file_exists("../" . $homeanim_folder . "/" . $linkfile))
+		{
+		$linkref=file_get_contents("../" . $homeanim_folder . "/" . $linkfile);
+		$linkaccess = get_resource_access($linkref);
+		if (($linkaccess!=="") && (($linkaccess==0) || ($linkaccess==1))){$reslinks[$filecount]=$baseurl . "/pages/view.php?ref=" . $linkref;}
+		}	
 	}
  } 
 
@@ -33,6 +43,16 @@ if ($filecount>1) { # Only add Javascript if more than one image.
 
 var num_photos=<?php echo $homeimages?>;  // <---- number of photos (/images/slideshow?.jpg)
 var photo_delay=5; // <---- photo delay in seconds
+var link = new Array();
+
+<?php 
+$l=1;
+foreach ($reslinks as $reslink)
+	{
+	echo "link[" . $l . "]=\"" .  $reslink . "\";";
+	$l++;
+	}
+?>
 
 var cur_photo=2;
 var last_photo=1;
@@ -46,22 +66,26 @@ var image2=0;
 function nextPhoto()
     {
       if (cur_photo==num_photos) {next_photo=1;} else {next_photo=cur_photo+1;}
-
+	
+	
       image1 = document.getElementById("image1");
       image2 = document.getElementById("photoholder");
-
+      sslink = document.getElementById("slideshowlink");
+	  linktarget=link[cur_photo];
 	  if (flip==0)
 	  	{
 	    // image1.style.visibility='hidden';
-	    Effect.Fade(image1);
-	    window.setTimeout("image1.src='../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>';",1000);
+	    //Effect.Fade(image1);
+		jQuery('#image1').fadeOut(1000)
+	    window.setTimeout("image1.src='../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
      	flip=1;
      	}
 	  else
 	  	{
 	    // image1.style.visibility='visible';
-	    Effect.Appear(image1);
-	    setTimeout("image2.style.background='url(../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>)';",1000);
+	    //Effect.Appear(image1);
+		jQuery('#image1').fadeIn(1000)
+	    window.setTimeout("image2.style.background='url(../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>)';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
 	    flip=0;
 		}	  	
      
@@ -82,21 +106,44 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 	echo"width:" .  (string)$slide_width ."px; ";
 	echo "\" ";
 	}
-	?>><div class="HomePicturePanelIN" id='photoholder' style="
+	?>>
+	
+	<a id="slideshowlink" target="main"
+	<?php
+	 
+	$linkurl="#";
+	if(file_exists("../" . $homeanim_folder . "/1.txt"))
+		{
+		$linkres=file_get_contents("../" . $homeanim_folder . "/1.txt");
+		$linkaccess = get_resource_access($linkres);
+		if (($linkaccess!=="") && (($linkaccess==0) || ($linkaccess==1))) {$linkurl=$baseurl . "/pages/view.php?ref=" . $linkres;}
+		echo "href=\"" . $linkurl ."\" ";
+		}	
+	
+	?>
+	\>
+	
+	<div class="HomePicturePanelIN" id='photoholder' style="
 	<?php
 	if (isset($home_slideshow_height)){		
 		echo"height:" .  (string)$home_slideshow_height ."px; ";
 		} 
 	?>
 		
-	background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');"><img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;<?php
+	background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');">
+	
+	
+	
+	<img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;<?php
 	if (isset($home_slideshow_width)){
 		echo"width:" .  $home_slideshow_width ."px; ";
 		}
 	if (isset($home_slideshow_height)){
 		echo"height:" .  $home_slideshow_height ."px; ";
 		} 
-	?>"></div>
+	?>">
+	</div>
+	</a>
 	
 <div class="PanelShadow"></div>
 </div>
