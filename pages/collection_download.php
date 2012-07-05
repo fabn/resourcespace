@@ -429,8 +429,10 @@ function ajax_download()
 					console.log(status);
 					$('progress3').innerHTML=status;
 				}
-				else if (response.responseText=="complete"){
+				else if (response.responseText=="complete"){ 
+					$('progress2').innerHTML="complete";
                    progress.stop();    
+                   
                 }  
                 else if (response.responseText.indexOf("Zipping")!=-1){
 					console.log(response.responseText);
