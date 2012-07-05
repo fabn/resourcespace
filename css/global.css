@@ -177,7 +177,7 @@ option {font-size:11px;}
 .SearchSpace a:hover, .SearchSpace a:active {text-decoration:underline;}
 
 
-.ListDropdown {width: 115px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0px;padding: 0px;}
+.ListDropdown {width: 115px;font: 10px Tahoma, Arial, Helvetica, sans-serif;margin:0px;padding: 0px;height:18px;}
 
 /*Forms*/
 #CentralSpaceLogin form {margin:0;padding:0;}
@@ -435,4 +435,5 @@ div.autocomplete ul li {
         -moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
         -webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
         }
+
 
