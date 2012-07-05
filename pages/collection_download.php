@@ -15,14 +15,10 @@ $includetext=getvalescaped("text","false");
 $useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
+$uniqid=getval("id",uniqid("Col".$collection."-"));
 
 if ($use_zip_extension){
 	$headerinsert="<script type=\"text/javascript\" src=\"".$baseurl."/lib/js/jquery-periodical-updater.js\"></script>";
-}
-
-if ($use_zip_extension){
-	$uniqid=getval("id",uniqid("Col".$collection."-"));
-	$progress_file=get_temp_dir(false,$uniqid) . "/progress_file.txt";
 }
 
 function update_zip_progress_file($note){
@@ -100,6 +96,7 @@ if ($submitted != "")
     # Define the archive file.
 	if ($use_zip_extension){
 		$id=getvalescaped("id","");
+		$progress_file=get_temp_dir(false,$id) . "/progress_file.txt";
 		$zipfile = get_temp_dir(false,$id)."/zip.zip";
 		$zip = new ZipArchive();
 		$zip->open($zipfile, ZIPARCHIVE::CREATE);
