@@ -389,6 +389,7 @@ if ($submitted != "")
     else {header("Content-Type: application/zip");}
 	header("Content-Length: " . $filesize);
 
+	ignore_user_abort(true); // collection download has a problem with leaving junk files when this script is aborted client side. This seems to fix that by letting the process run its course.
 	set_time_limit(0);
 	readfile($zipfile);
 
