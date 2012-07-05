@@ -236,7 +236,7 @@ if ($submitted != "")
 				$path.=$p . "\r\n";	
 				if ($use_zip_extension){
 					$zip->addFile($p,$filename);
-					update_zip_progress_file($zip->numFiles);
+					update_zip_progress_file("file ".$zip->numFiles);
 				}
 				# build an array of paths so we can clean up any exiftool-modified files.
 				
@@ -415,30 +415,39 @@ include "../include/header.php";
 <?php if ($use_zip_extension){?>
 <script>
 function ajax_download()
-	{
-	$('progress').style.display='none';
+	{	
+	$('downloadbuttondiv').style.display='none';	
+	$('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
+	$('progress3').style.display='none';
 	$('progressdiv').style.display='block';
 	var ifrm = document.getElementById('downloadiframe');
 	
     ifrm.src = "collection_download.php?submitted=true&"+$('myform').serialize();
     
-	progress= new Ajax.PeriodicalUpdater("progress2","ajax/collection_download_progress.php?id=<?php echo $uniqid?>",
+	progress= new Ajax.PeriodicalUpdater("progress3","ajax/collection_download_progress.php?id=<?php echo $uniqid?>",
 		{
 		onSuccess: function(response){
-                if (response.responseText.indexOf("Zipping")==-1 && response.responseText!="complete"){
-					var status=(response.responseText/<?php echo count($result)?>*100)+"%";
+                if (response.responseText.indexOf("file")!=-1){
+					var numfiles=response.responseText.replace("file ","");
+					if (numfiles==1){
+						var message=numfiles+' <?php echo $lang['fileaddedtozip']?>';
+					} else { 
+						var message=numfiles+' <?php echo $lang['filesaddedtozip']?>';
+					}	 
+					var status=(numfiles/<?php echo count($result)?>*100)+"%";
 					console.log(status);
-					$('progress3').innerHTML=status;
+					$('progress2').innerHTML=message;
 				}
 				else if (response.responseText=="complete"){ 
-					$('progress2').innerHTML="complete";
+				   $('progress2').innerHTML="<?php echo $lang['zipcomplete']?>";
+                   $('progress').style.display="none";
                    progress.stop();    
-                   
                 }  
-                else if (response.responseText.indexOf("Zipping")!=-1){
+                else {
+					// fix zip message or allow any
 					console.log(response.responseText);
-				}
-                else {console.log(response.responseText);}
+					$('progress2').innerHTML=response.responseText.replace("zipping","<?php echo $lang['zipping']?>");
+                }
      
 		}
 	}
@@ -556,7 +565,10 @@ if ($zipped_collection_textfile=="true") { ?>
 <option value="true"><?php echo $lang["yes"]?></option>
 <option value="false"><?php echo $lang["no"]?></option>
 </select>
-<div class="clearerleft"> </div></div><?php
+<div class="clearerleft"></div>
+</div>
+
+<?php
 }
 
 # Archiver settings
@@ -571,31 +583,34 @@ if ($archiver)
         <option value="<?php echo $key ?>"><?php echo lang_or_i18n_get_translated($value["name"],"archive-") ?></option><?php
         } ?>
     </select>
-    <div class="clearerleft"> </div></div><br>
+    <div class="clearerleft"></div></div><br>
     </div><?php
     } ?>
 
-<div class="QuestionSubmit"> 
+<div class="QuestionSubmit" id="downloadbuttondiv"> 
 <label for="download"> </label>
 <?php if (!$use_zip_extension){?>
 <input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
 <?php } else { ?>
-<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){ajax_download();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
+<input type="button" onclick="ajax_download();" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
 <?php } ?>
-</div>
 <div class="clearerleft"> </div>
 </div>
+
 <div id="progress"></div>
 
 <?php if ($use_zip_extension){?>
-<div class="Question" id="progressdiv" style="display:none;"> 
+<div class="Question" id="progressdiv" style="display:none;border-top:none;"> 
 <label><?php echo $lang['progress']?></label>
-<div class="Fixed" id="progress2" style="diplay:none;">
-<div class="Fixed" id="progress3">
-</div></div>
-<div class="clearerleft"> </div></div>
+<div class="Fixed" id="progress3" ></div>
+<div class="Fixed" id="progress2" style="diplay:none;"></div>
+
+
+<div class="clearerleft"></div></div>
 <?php } ?>
 </form>
+
+
 
 </div>
 <?php 

@@ -1526,6 +1526,12 @@ $lang["backtomanagecontent"]="Back to Manage Content";
 $lang["editcontent"]="Edit Content";
 
 $lang["confirmcollectiondownload"]="Please wait while we create the archive. This might take a while, depending on the total size of your resources.";
+$lang["collectiondownloadinprogress"]='Please wait while we create the archive. This might take a while, depending on the total size of your resources.<br />To continue working, you may  <a href=\"home.php\" target=\"_blank\">> Open a New Browser Window</a>';
+$lang["preparingzip"]="Preparing...";
+$lang["filesaddedtozip"]="files copied";
+$lang["fileaddedtozip"]="file copied";
+$lang["zipping"]="Zipping";
+$lang["zipcomplete"]="Your Zip file download should have started. You may leave this page.";
 
 $lang["starttypingkeyword"]="Start typing keyword...";
 $lang["createnewentryfor"]="Create new entry for";

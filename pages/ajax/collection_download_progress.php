@@ -14,13 +14,13 @@ if (!file_exists($progress_file)){
 
 
 $content= file_get_contents($progress_file);
-if ($content==""){echo "preparing..";}
+if ($content==""){echo $lang['preparingzip'];}
 
 else if ($content=="zipping"){
 	$files=scandir(get_temp_dir(false,$uniqid));
 		foreach ($files as $file){
 			if (strpos($file,"zip.zip")!==false){
-				echo "Zipping: ".formatfilesize(filesize(get_temp_dir(false,$uniqid)."/".$file));
+				echo "zipping ".formatfilesize(filesize(get_temp_dir(false,$uniqid)."/".$file));
 			}
 		}
 	}
