@@ -1526,7 +1526,7 @@ $lang["backtomanagecontent"]="Back to Manage Content";
 $lang["editcontent"]="Edit Content";
 
 $lang["confirmcollectiondownload"]="Please wait while we create the archive. This might take a while, depending on the total size of your resources.";
-$lang["collectiondownloadinprogress"]='Please wait while we create the archive. This might take a while, depending on the total size of your resources.<br />To continue working, you may  <a href=\"home.php\" target=\"_blank\">> Open a New Browser Window</a>';
+$lang["collectiondownloadinprogress"]='Please wait while we create the archive. This might take a while, depending on the total size of your resources.<br /><br />To continue working, you may  <a href=\"home.php\" target=\"_blank\">> Open a New Browser Window</a><br /><br />';
 $lang["preparingzip"]="Preparing...";
 $lang["filesaddedtozip"]="files copied";
 $lang["fileaddedtozip"]="file copied";
