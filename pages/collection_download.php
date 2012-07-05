@@ -17,6 +17,10 @@ $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
 
 if ($use_zip_extension){
+	$headerinsert="<script type=\"text/javascript\" src=\"".$baseurl."/lib/js/jquery-periodical-updater.js\"></script>";
+}
+
+if ($use_zip_extension){
 	$uniqid=getval("id",uniqid("Col".$collection."-"));
 	$progress_file=get_temp_dir(false,$uniqid) . "/progress_file.txt";
 }
@@ -416,19 +420,26 @@ include "../include/header.php";
 <script>
 function ajax_download()
 	{	
-	$('downloadbuttondiv').style.display='none';	
-	$('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
-	$('progress3').style.display='none';
-	$('progressdiv').style.display='block';
+	document.getElementById('downloadbuttondiv').style.display='none';	
+	document.getElementById('progress').innerHTML='<br /><br /><?php echo $lang["collectiondownloadinprogress"];?>';
+	document.getElementById('progress3').style.display='none';
+	document.getElementById('progressdiv').style.display='block';
 	var ifrm = document.getElementById('downloadiframe');
 	
     ifrm.src = "collection_download.php?submitted=true&"+$('myform').serialize();
     
-	progress= new Ajax.PeriodicalUpdater("progress3","ajax/collection_download_progress.php?id=<?php echo $uniqid?>",
-		{
-		onSuccess: function(response){
-                if (response.responseText.indexOf("file")!=-1){
-					var numfiles=response.responseText.replace("file ","");
+	progress= jQuery("progress3").PeriodicalUpdater("ajax/collection_download_progress.php?id=<?php echo $uniqid?>", {
+        method: 'post',          // method; get or post
+        data: '',               //  e.g. {name: "John", greeting: "hello"}
+        minTimeout: 500,       // starting value for the timeout in milliseconds
+        maxTimeout: 8000,       // maximum length of time between requests
+        multiplier: 1.5,          // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
+        type: 'text'           // response type - text, xml, json, etc.  
+       
+
+    }, function(remoteData, success, xhr, handle) {
+         if (remoteData.indexOf("file")!=-1){
+					var numfiles=remoteData.replace("file ","");
 					if (numfiles==1){
 						var message=numfiles+' <?php echo $lang['fileaddedtozip']?>';
 					} else { 
@@ -436,23 +447,25 @@ function ajax_download()
 					}	 
 					var status=(numfiles/<?php echo count($result)?>*100)+"%";
 					console.log(status);
-					$('progress2').innerHTML=message;
+					document.getElementById('progress2').innerHTML=message;
 				}
-				else if (response.responseText=="complete"){ 
-				   $('progress2').innerHTML="<?php echo $lang['zipcomplete']?>";
-                   $('progress').style.display="none";
+				else if (remoteData=="complete"){ 
+				   document.getElementById('progress2').innerHTML="<?php echo $lang['zipcomplete']?>";
+                   document.getElementById('progress').style.display="none";
                    progress.stop();    
                 }  
                 else {
 					// fix zip message or allow any
-					console.log(response.responseText);
-					$('progress2').innerHTML=response.responseText.replace("zipping","<?php echo $lang['zipping']?>");
+					console.log(remoteData);
+					document.getElementById('progress2').innerHTML=remoteData.replace("zipping","<?php echo $lang['zipping']?>");
                 }
      
-		}
-	}
-	);
+    });
+		
 }
+
+
+        
 
 
 </script>
@@ -603,7 +616,7 @@ if ($archiver)
 <div class="Question" id="progressdiv" style="display:none;border-top:none;"> 
 <label><?php echo $lang['progress']?></label>
 <div class="Fixed" id="progress3" ></div>
-<div class="Fixed" id="progress2" style="diplay:none;"></div>
+<div class="Fixed" id="progress2" ></div>
 
 
 <div class="clearerleft"></div></div>
