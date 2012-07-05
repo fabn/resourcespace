@@ -432,7 +432,7 @@ function ajax_download()
         method: 'post',          // method; get or post
         data: '',               //  e.g. {name: "John", greeting: "hello"}
         minTimeout: 500,       // starting value for the timeout in milliseconds
-        maxTimeout: 8000,       // maximum length of time between requests
+        maxTimeout: 2000,       // maximum length of time between requests
         multiplier: 1.5,          // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
         type: 'text'           // response type - text, xml, json, etc.  
        
