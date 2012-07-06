@@ -326,9 +326,9 @@ else
 <table cellpadding="0" cellspacing="0">
 <tr>
 <td><?php echo $lang["fileinformation"]?></td>
-<td><?php echo $lang["filesize"]?></td>
+<td ><?php echo $lang["filesize"]?></td>
 <?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td><?php echo $lang["price"] ?></td><?php } ?>
-<td><?php echo $lang["options"]?></td>
+<td class="textcenter"><?php echo $lang["options"]?></td>
 </tr>
 <?php
 $nodownloads=false;$counter=0;$fulldownload=false;
