@@ -304,7 +304,7 @@ if ($download_summary) {include "../include/download_summary.php";}
 <div class="RecordDownload" id="RecordDownload">
 <div class="RecordDownloadSpace">
 <?php if (!hook("renderinnerresourcedownloadspace")) { ?>
-<h2><?php echo $lang["resourcetools"]?></h2>
+<h2 id="resourcetools"><?php echo $lang["resourcetools"]?></h2>
 
 <?php 
 
