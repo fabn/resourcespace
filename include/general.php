@@ -3131,8 +3131,8 @@ function draw_performance_footer(){
 		$show_warnings=false;
 		if (strtolower(substr($query,0,6))=="select"){
 			$explain=sql_query("explain extended ".$query);
-			$warnings=sql_query("show warnings");
-			$show_warnings=true;
+			/*$warnings=sql_query("show warnings");
+			$show_warnings=true;*/
 		}
 		?>
 		<tr><td align="left"><div style="word-wrap: break-word; width:350px;"><?php echo $query?><?php if ($show_warnings){ foreach ($warnings as $warning){echo "<br /><br />".$warning['Level'].": ".htmlentities($warning['Message']);}}?></div></td><td>&nbsp;
