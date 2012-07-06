@@ -10,6 +10,7 @@ include "../include/header.php";
 
 <div class="BasicsBox"> 
 
+<?php if (!hook("replacehelp")){?>
 <?php if ($section=="") { ?>
   <h2>&nbsp;</h2>
   <h1><?php echo $lang["helpandadvice"]?></h1>
@@ -18,7 +19,7 @@ include "../include/header.php";
   <div class="VerticalNav">
   <ul>
   <?php
-  $sections=get_section_list("help");
+  $sections=get_section_list("help",$language,$usergroup);
   for ($n=0;$n<count($sections);$n++)
   	{
   	?>
@@ -35,6 +36,9 @@ include "../include/header.php";
   <p><?php echo text($section)?></p>
   <p><a href="help.php">&gt; <?php echo $lang["backtohelphome"]?></a></p>
 <?php } ?>
+<?php } // end hook replacehelp?>
+
+
 </div>
 
 <?php
