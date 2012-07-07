@@ -19,7 +19,7 @@ include "../include/header.php";
   <div class="VerticalNav">
   <ul>
   <?php
-  $sections=get_section_list("help",$language,$usergroup);
+  $sections=get_section_list("help");
   for ($n=0;$n<count($sections);$n++)
   	{
   	?>
