@@ -10,7 +10,7 @@ if ($userstring=="") {$userstring=$default_user_select;}
 <table cellpadding="0" cellspacing="0" width="300">
 
 <!-- autocomplete -->
-<tr><td><input type="text" class="medwidth" value="<?php echo $lang["starttypingusername"]?>" id="autocomplete" name="autocomplete_parameter" onClick="this.value='';" /></td>
+<tr><td><input type="text" class="medwidth" placeholder="<?php echo $lang["starttypingusername"]?>" id="autocomplete" name="autocomplete_parameter" onClick="this.value='';" /></td>
 <td><input type=button value="+" class="medcomplementwidth" onClick="addUser();" /></td></tr>
 <!-- -->
 
