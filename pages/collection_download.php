@@ -17,7 +17,10 @@ $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
 $uniqid=getval("id",uniqid("Col".$collection."-"));
 
+
 if ($use_zip_extension){
+	// set the time limit to unlimited, default 300 is not sufficient here.
+	set_time_limit(0);
 	$headerinsert="<script type=\"text/javascript\" src=\"".$baseurl."/lib/js/jquery-periodical-updater.js\"></script>";
 }
 
@@ -387,7 +390,9 @@ if ($submitted != "")
 
 	header("Content-Disposition: attachment; filename=" . $filename);
     if ($archiver) {header("Content-Type: " . $collection_download_settings[$settings_id]["mime"]);}
-    else {header("Content-Type: application/zip");}
+    else {
+	header("Content-Type: application/zip");}
+	if ($use_zip_extension){header("Content-Transfer-Encoding: binary");}
 	header("Content-Length: " . $filesize);
 
 	ignore_user_abort(true); // collection download has a problem with leaving junk files when this script is aborted client side. This seems to fix that by letting the process run its course.
