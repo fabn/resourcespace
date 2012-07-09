@@ -41,6 +41,7 @@ if ($userstring=="") {$userstring=$default_user_select;}
 
 <?php } ?>
 
+<?php hook ("addtouserselect");?>
 
 </table>
 
