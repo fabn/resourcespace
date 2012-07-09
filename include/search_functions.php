@@ -863,7 +863,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 			$omit=$keywords[$n];
 			}
 		if ($lsql!="") {$lsql.=" or ";}
-		$lsql.="keyword='" . $keywords[$n] . "'";
+		$lsql.="keyword='" . escape_check($keywords[$n]) . "'";
 		}
 	if ($omitmatch)
 		{
