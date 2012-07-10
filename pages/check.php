@@ -134,6 +134,7 @@ else
 display_utility_status("exiftool");
 
 # Check archiver
+if (!$use_zip_extension){
 if ($collection_download || isset($zipcommand)) # Only check if it is going to be used.
     {
     $archiver_fullpath = get_utility_path("archiver", $path);
@@ -157,6 +158,7 @@ if ($collection_download || isset($zipcommand)) # Only check if it is going to b
         }
     ?><tr><td colspan="2"><?php echo $lang["archiver_utility"] ?></td><td><b><?php echo $result?></b></td></tr><?php
     }
+}
 
 # Check zip extension
 if ($use_zip_extension){
