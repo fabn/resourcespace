@@ -22,8 +22,7 @@ $h = $sizes[1];
 
 ?>
 <style type="text/css" media="all">@import "<?php echo $baseurl?>/plugins/annotate/lib/jquery/css/annotation.css";</style>
-<script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery-1.3.2-min.js"></script>
-<script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery-ui-1.7.2-min.js"></script>
+
 <script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery.annotate.js"></script>
 <script type="text/javascript">
     button_ok = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["ok"])) ?>";
