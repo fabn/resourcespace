@@ -173,6 +173,9 @@ $languages["sv"]="Svenska"; # Swedish
 # Disable language selection options
 $disable_languages=false;
 
+# Show the language chooser on the bottom of each page
+$show_language_chooser=true;
+
 # FTP settings for batch upload
 # Only necessary if you plan to use the FTP upload feature.
 $ftp_server="my.ftp.server";

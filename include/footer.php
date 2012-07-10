@@ -60,7 +60,7 @@ function SwapCSS(css){
 	}
 ?>	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php } ?>
-<?php if ($disable_languages==false){?>
+<?php if ($disable_languages==false && $show_language_chooser){?>
 <?php echo $lang["language"]?>: <a href="<?php echo $baseurl?>/pages/change_language.php"><?php echo $languages[$language]?></a>
 <?php } ?>
 </div>
