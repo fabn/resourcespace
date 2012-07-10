@@ -145,7 +145,9 @@ if (!isset($allow_password_change)) {$allow_password_change=true;}
 if (isset($username) && ($pagename!="login") && ($loginterms==false)) { ?>
 <div id="HeaderNav1" class="HorizontalNav ">
 
-<?php if (isset($anonymous_login) && ($username==$anonymous_login))
+<?php
+hook("beforeheadernav1");
+if (isset($anonymous_login) && ($username==$anonymous_login))
 	{
 	?>
 	<ul>
