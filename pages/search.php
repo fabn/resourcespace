@@ -263,6 +263,10 @@ $search=refine_searchstring($search);
 if (strpos($search,"!")===false) {setcookie("search",$search);}
 $result=do_search($search,$restypes,$order_by,$archive,$per_page+$offset,$sort,false,$starsearch);
 
+# Allow results to be processed by a plugin
+$hook_result=hook("process_search_results","search",array("result"=>$result,"search"=>$search));
+if ($hook_result!==false) {$result=$hook_result;}
+
 if (substr($search,0,11)=="!collection")
 	{
 	$collection=substr($search,11);
@@ -631,7 +635,10 @@ if (true) # Always show search header now.
 		{
 		$ref=$result[$n]["ref"];
 		$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
-		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k; ?>
+		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k;
+		
+		if (isset($result[$n]["url"])) {$url=$result[$n]["url"];} # Option to override URL in results, e.g. by plugin using process_Search_results hook above
+		?>
 		<?php 
 		$rating="";
 		if (isset($rating_field)){$rating="field".$rating_field;}
@@ -639,6 +646,13 @@ if (true) # Always show search header now.
 			
 				
 			if ($display=="thumbs" && is_array($result)) { #  ---------------------------- Thumbnails view ----------------------------
+			
+			# Work out image to use.
+			$access=get_resource_access($result[$n]);
+			$use_watermark=check_use_watermark();
+			$thm_url=get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
+			
+			if (isset($result[$n]["thm_url"])) {$thm_url=$result[$n]["thm_url"];} # Option to override thumbnail image in results, e.g. by plugin using process_Search_results hook above
 			?>
 		 
 <?php if (!hook("renderresultthumb")) { ?>
@@ -648,12 +662,10 @@ if (true) # Always show search header now.
 	<div class="ResourcePanel">
 	<?php hook ("resourcethumbtop");?>
 <?php if (!hook("renderimagethumb")) { ?>			
-	<?php $access=get_resource_access($result[$n]);
-	$use_watermark=check_use_watermark();?>
 	<table border="0" class="ResourceAlign<?php if(!hook("replaceresourcetypeicon")){?><?php if (in_array($result[$n]["resource_type"],$videotypes)) { ?> IconVideoLarge<?php } ?><?php } //end hook replaceresoucetypeicon?>">
 	<?php hook("resourcetop")?>
 	<tr><td>
-	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { ?> width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" <?php } ?> src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
+	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { ?> width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" <?php } ?> src="<?php echo $thm_url ?>" class="ImageBorder"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
 	 /><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
@@ -684,7 +696,7 @@ if (true) # Always show search header now.
 		for ($x=0;$x<count($df);$x++)
 			{
 			#value filter plugin -tbd	
-			$value=$result[$n]['field'.$df[$x]['ref']];
+			$value=@$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
@@ -717,7 +729,7 @@ if (true) # Always show search header now.
 			}
 		?>
 		
-		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail && $ref>0) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 
 		<?php if (!hook("replaceresourcetools")){?>
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
@@ -824,6 +836,9 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 	}
 
     else {
+
+    $pre_url=get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
+	if (isset($result[$n]["pre_url"])) {$pre_url=$result[$n]["pre_url"];}
     ?>
 	<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img <?php 
 	if ($result[$n]["thumb_width"]!="" && $result[$n]["thumb_width"]!=0 && $result[$n]["thumb_height"]!="") { 
@@ -836,7 +851,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			$xlwidth=350*$ratio;
 		}
 		?> width="<?php echo $xlwidth?>" height="<?php echo $xlheight?>" <?php 
-	} ?>src="<?php echo get_resource_path($ref,false,"pre",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
+	} ?>src="<?php echo $pre_url ?>" class="ImageBorder"
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
 	 /><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>" 
 	<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
@@ -876,7 +891,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 		for ($x=0;$x<count($df);$x++)
 			{
 			#value filter plugin -tbd	
-			$value=$result[$n]['field'.$df[$x]['ref']];
+			$value=@$result[$n]['field'.$df[$x]['ref']];
 			$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 			if ($df[$x]['value_filter']!=""){
 				eval($df[$x]['value_filter']);
@@ -909,7 +924,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShell', o
 			}
 		?>
 		
-		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail && $ref>0) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 	    <?php if (!hook("replaceresourcetoolsxl")){?>
 		<?php if (!hook("replacefullscreenpreviewicon")){?>
 		<span class="IconPreview"><a href="preview.php?from=search&ref=<?php echo $ref?>&ext=<?php echo $result[$n]["preview_extension"]?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>" title="<?php echo $lang["fullscreenpreview"]?>"><img src="../gfx/interface/sp.gif" alt="<?php echo $lang["fullscreenpreview"]?>" width="22" height="12" /></a></span>
@@ -960,11 +975,17 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 	<div class="ResourcePanelSmall">	
 		<?php if (!hook("renderimagesmallthumb")){;?>
 		<?php $access=get_resource_access($result[$n]);
-		$use_watermark=check_use_watermark();?>
+		$use_watermark=check_use_watermark();
+		
+		# Work out the preview image path
+		$col_url=get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
+		if (isset($result[$n]["col_url"])) {$col_url=$result[$n]["col_url"];} # If col_url set in data, use instead, e.g. by manipulation of data via process_search_results hook
+		
+		?>
 		<table border="0" class="ResourceAlignSmall">
 		<?php hook("resourcetop")?>
 		<tr><td>
-		<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img  src="<?php echo get_resource_path($ref,false,"col",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"])?>" class="ImageBorder"
+		<a href="<?php echo $url?>" <?php if (!$infobox) { ?>title="<?php echo str_replace(array("\"","'"),"",htmlspecialchars(i18n_get_translated($result[$n]["field".$view_title_field])))?>"<?php } ?>><?php if ($result[$n]["has_image"]==1) { ?><img  src="<?php echo $col_url ?>" class="ImageBorder"
 		<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
 		 /><?php } else { ?><img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],true) ?>" 
 		<?php if ($infobox) { ?>onmouseover="InfoBoxSetResource(<?php echo $ref?>);" onmouseout="InfoBoxSetResource(0);"<?php } ?>
@@ -1027,7 +1048,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		
 		
 		<?php hook("smallsearchfreeicon");?>
-		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
+		<div class="ResourcePanelIcons"><?php if ($display_resource_id_in_thumbnail && $ref>0) { echo $ref; } else { ?>&nbsp;<?php } ?></div>	
 		<?php hook("smallsearchicon");?>
 		<?php if (!hook("replaceresourcetoolssmall")){?>
 		<span class="IconPreview">
@@ -1066,7 +1087,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		
 	
 		for ($x=0;$x<count($df);$x++){
-		$value=$result[$n]['field'.$df[$x]['ref']];
+		$value=@$result[$n]['field'.$df[$x]['ref']];
 		$plugin="../plugins/value_filter_" . $df[$x]['name'] . ".php";
 		if ($df[$x]['value_filter']!=""){
 			eval($df[$x]['value_filter']);
