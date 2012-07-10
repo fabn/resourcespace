@@ -512,6 +512,16 @@ if ($enable_add_collection_on_upload)
 	<?php
 	$list=get_user_collections($userref);
 	$currentfound=false;
+	
+        // make sure it's possible to set the collection with collection_add (compact style "upload to this collection"
+        if ($collection_add!="")
+               {
+               # Switch to the selected collection (existing or newly created) and refresh the frame.
+               set_user_collection($userref,$collection_add);
+               refresh_collection_frame($collection_add);
+               }
+
+
 	for ($n=0;$n<count($list);$n++)
 		{
 		if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
@@ -521,13 +531,6 @@ if ($enable_add_collection_on_upload)
 		}
 	if (!$currentfound)
 		{
-		// make sure it's possible to set the collection with collection_add (compact style "upload to this collection"
-		if ($collection_add!="")
-			{
-			# Switch to the selected collection (existing or newly created) and refresh the frame.
-			set_user_collection($userref,$collection_add);
-			refresh_collection_frame($collection_add);
-		}		
 		# The user's current collection has not been found in their list of collections (perhaps they have selected a theme to edit). Display this as a separate item.
 		$cc=get_collection($usercollection);
 		if ($cc!==false)
