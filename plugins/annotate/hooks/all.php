@@ -13,7 +13,7 @@ function HookAnnotateAllRemoveannotations(){
 	sql_query("delete from resource_keyword where resource='$ref' and annotation_ref>0");;
 }
 
-function HookAnnotateAllCollectiontoolcompact($collection, $count_result){
+function HookAnnotateAllCollectiontoolcompact1($collection, $count_result){
 	# Link in collections bar (minimised)
 	global $lang,$pagename,$annotate_pdf_output;
 	if (!$annotate_pdf_output || $count_result==0){return false;}?>
