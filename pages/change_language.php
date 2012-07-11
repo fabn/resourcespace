@@ -15,7 +15,7 @@ if (getval("save","")!="")
 		setcookie("language","");
 		}
 
-	redirect("pages/" . ($use_theme_as_home?'themes.php':$default_home_page));
+	redirect(getval("uri","pages/" . ($use_theme_as_home?'themes.php':$default_home_page)));
 	}
 include "../include/header.php";
 ?>
