@@ -173,6 +173,11 @@ hook("addinstallationcheck");?>
 <td><?php if ($last_cron>2 || $last_cron==$lang["status-never"]) { ?><b><?php echo $lang["status-warning"] ?></b><br/><?php echo $lang["executecronphp"] ?><?php } else {?><b><?php echo $lang["status-ok"] ?></b><?php } ?></td>
 </tr>
 
+<tr>
+<td><?php echo $lang["phpextensions"] ?></td>
+<td><?php echo implode(" ",get_loaded_extensions()); ?></td>
+<td></td>
+</tr>
 
 </table>
 </div>

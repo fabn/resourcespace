@@ -904,6 +904,7 @@ $lang["clicktologinasthisuser"]="Click to log in as this user";
 $lang["addkeyword"]="Add keyword";
 $lang["selectedresources"]="Selected resources";
 $lang["addresourcebatchlocalfolder"]="Add Resource Batch - Fetch from local upload folder";
+$lang["phpextensions"]="PHP Extensions";
 
 # Setup Script
 $lang["setup-alreadyconfigured"]="Your ResourceSpace installation is already configured.  To reconfigure, you may delete <pre>include/config.php</pre> and point your browser to this page again.";
