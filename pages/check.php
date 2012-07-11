@@ -175,7 +175,8 @@ hook("addinstallationcheck");?>
 
 <tr>
 <td><?php echo $lang["phpextensions"] ?></td>
-<td><?php echo implode(" ",get_loaded_extensions()); ?></td>
+<?php $extensions=get_loaded_extensions();sort($extensions);?>
+<td><?php echo implode(" ",$extensions); ?></td>
 <td></td>
 </tr>
 
