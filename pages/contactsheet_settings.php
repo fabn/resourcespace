@@ -10,14 +10,10 @@ $collectiondata= get_collection($collection);
 
 # Include a couple functions for the Ajax contactsheet update
 $headerinsert.="
-
-<script src=\"../lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>\" type=\"text/javascript\"></script>
 <script src=\"../lib/js/contactsheet.js\" type=\"text/javascript\"></script>
-<script>jQuery.noConflict();</script>
 <script>
 contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
 </script>
-
 ";
 
 ?><?php
