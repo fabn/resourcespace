@@ -61,7 +61,7 @@ $bodyattribs="onload=\"jQuery().annotate('preview');\"";
 include "../../../include/header.php";
 
 // a unique id allows us to isolate this page's temporary files. 	
-$uniqid=uniqid($ref."-");$uniqid="";
+$uniqid=uniqid($ref."-");
 $jpghttppath=get_annotate_file_path($realref,false,"jpg");
 
 
