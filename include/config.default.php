@@ -107,11 +107,6 @@ $ghostscript_executable='gs';
 $use_zip_extension=false; //use php-zip extension instead of $archiver or $zipcommand
 
 
-
-
-
-
-
 /* ---------------------------------------------------
 OTHER PARAMETERS
 
@@ -138,8 +133,8 @@ $header_favicon="gfx/interface/favicon.png";
 $header_text_title=false; //replace header logo with text, application name and description above
 // alternatively, for custom header gfx:
 $header_link=false; // turn on to create a clickable area over a logo graphic (to go to home page).
-$header_link_width=400; // you may like to adjust the size for you own logo.
-$header_link_height=55;
+# Uncomment the line below to set a header link different from the default home
+# $header_link_url=http://my-alternative-header-link
 
 # Include ResourceSpace version header in View Source
 $include_rs_header_info=true;
@@ -294,7 +289,7 @@ $imagemagick_calculate_sizes=false;
 
 # If using imagemagick for PDF, EPS and PS files, up to how many pages should be extracted for the previews?
 # If this is set to more than one the user will be able to page through the PDF file.
- $pdf_pages=30;
+$pdf_pages=30;
 
 # When uploading PDF files, split each page to a separate resource file?
 $pdf_split_pages_to_resources=false;

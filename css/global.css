@@ -43,6 +43,8 @@ option {font-size:11px;}
 #HeaderNav1 {text-align:right;height:40px;}
 #HeaderNav2 {text-align:right;margin-top: 28px;margin-bottom: 4px;}
 
+.headerlink {margin:20px 25px; position: absolute; display: block; width: 400px; height: 55px;  top: 0px; left: 0px;}
+
 #Footer {margin:20px 25px;padding:0;text-align:left;}
 #FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
 #FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
