@@ -10,3 +10,4 @@ $annotate_public_view=true;
 $annotate_show_author=false;
 $annotate_font="helvetica";
 $annotate_pdf_output=false;
+$annotate_pdf_output_only_annotated=false;

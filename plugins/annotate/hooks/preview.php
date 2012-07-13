@@ -1,4 +1,9 @@
 <?php
+function HookAnnotatePreviewReplacepreviewbacktoview(){
+	global $baseurl,$lang,$ref,$search,$offset,$order_by,$sort,$archive,$k;?>
+<p style="margin:7px 0 7px 0;padding:0;"><a href="<?php echo $baseurl?>/pages/view.php?<?php if (getval("annotate","")=="true"){?>annotate=true&<?php } ?>ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
+<?php return true;
+} 
 
 function HookAnnotatePreviewPreviewimage2 (){
 global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude,$annotate_public_view;;
@@ -62,7 +67,7 @@ $h = $sizes[1];
      }
      ///////////////
      ?>	
-     &nbsp;<a style="display:inline;" href="<?php echo $baseurl?>/plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
+     &nbsp;&nbsp;<a style="display:inline;float:right;" href="<?php echo $baseurl?>/plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
      
      	</div></div>
      <?php

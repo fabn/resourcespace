@@ -8,9 +8,11 @@ include('../../../include/authenticate.php');
 include('../include/general.php');
 
 $ref=getvalescaped("ref","");
-
 $size=getvalescaped("size","letter");
 $color=getvalescaped("color","yellow");
+
+$cleartmp=getvalescaped("cleartmp",""); 
+if ($cleartmp!=""){echo getvalescaped("uniqid","");clear_annotate_temp($ref,getvalescaped("uniqid",""));exit("cleared");}
 
 if(getvalescaped("preview","")!=""){$preview=true;} else {$preview=false;}
 

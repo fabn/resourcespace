@@ -2900,6 +2900,7 @@ function get_temp_dir($asUrl = false,$uniqid="")
     }
     
     if ($uniqid!=""){
+		$uniqid=str_replace("../","",$uniqid);//restrict to forward-only movements
 		$result.="/$uniqid";
 		if(!is_dir($result)){
             // If it does not exist, create it.

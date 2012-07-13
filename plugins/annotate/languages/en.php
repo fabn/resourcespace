@@ -27,3 +27,4 @@ $lang["annotate_show_author"] = "Display annotation author when viewing previews
 
 $lang["annotate_font"]="Font:";
 $lang["annotate_pdf_output"]="PDF Output Option (experimental)";
+$lang["annotate_pdf_output_only_annotated"]="Only include Annotated Resources in PDF Output";

@@ -118,8 +118,10 @@ if ($use_mp3_player){
 include "../include/header.php";
 ?>
 
-<? if(!hook("fullpreviewresultnav")): ?>
+<?php if(!hook("fullpreviewresultnav")): ?>
+<?php if (!hook("replacepreviewbacktoview")){?>
 <p style="margin:7px 0 7px 0;padding:0;"><a href="view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>">&lt; <?php echo $lang["backtoview"]?></a>
+<?php } /*end hook replacepreviewbacktoview*/ ?>
 <?php if ($k=="") { ?>
 
 <?php if (!checkperm("b")) { ?>

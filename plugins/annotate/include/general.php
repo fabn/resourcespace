@@ -1,48 +1,42 @@
 <?php
 
+function clear_annotate_temp($ref,$uniqid){
+	if ($uniqid!=""){$uniqfolder="/".$uniqid;} else {$uniqfolder="";}
+	$tmpfolder=get_temp_dir(false,"annotate$uniqfolder");
+	$jpg_path=get_annotate_file_path($ref,true,"jpg");
+	$pdf_path=get_annotate_file_path($ref,true,"pdf");
+	
+	if (file_exists($jpg_path)){unlink($jpg_path);}
+	if (file_exists($pdf_path)){unlink($pdf_path);}
+	if ($uniqfolder!="" && file_exists($tmpfolder)){rmdir($tmpfolder);}
+}
 
-function get_annotation_file_path($ref,$getfilepath,$is_collection=false,$extension="pdf",$cleanup=false)
-	{
+
+function get_annotate_file_path($ref,$getfilepath,$extension){
 	global $storageurl;
 	global $storagedir;
 	global $scramble_key;	
 	
 	if (!file_exists($storagedir . "/annotate")){mkdir($storagedir . "/annotate",0777);}
 	
-	# Fetching the file path? Add the full path to the file
-	$filefolder="annotate/".$ref;
-	if ($is_collection){$filefolder="annotate/col$ref";}
-	if ($getfilepath)
-	    {
-	    $folder=$storagedir . "/" .$filefolder;
-	    }
-	else
-	    {
-	    global $storageurl;
-	    $folder=$storageurl . "/" . $filefolder;
-	    }
-	if (!file_exists($folder)){mkdir($folder,0777);}
+	global $uniqid; // if setting uniqid before manual create_annotated_pdf function use
+	$uniqid=getvalescaped("uniqid",$uniqid); //or if sent through a request
+	if ($uniqid!=""){$uniqfolder="/".$uniqid;} else {$uniqfolder="";}
 	
-	if(!isset($_COOKIE['user'])){
-		$scramble="restricted";
-		}
-	else{
-		$cookieparts=explode("|",$_COOKIE['user']);
-		// don't use actual session cookie:
-		$scramble=substr(md5($ref.$scramble_key.$extension.$cookieparts[1]),2,10);
-		}
-	if (!$cleanup){$scramble=date("m-d-Y_H_i_s-").$scramble;} 
-	$file=$folder."/".$scramble.".".$extension;
-	
+	$tmpfolder=get_temp_dir(!$getfilepath,"annotate$uniqfolder");
+
+	$file=$tmpfolder."/$uniqid-annotations.".$extension;
+
 	return  $file;
-	}
+}
+	
 
 function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=false,$preview=false){
 	# function to create annotated pdf of resources or collections.
 	# This leaves the pdfs and jpg previews in filestore/annotate so that they can be grabbed later.
 	# $cleanup will result in a slightly different path that is not cleaned up afterwards.
 	
-	global $lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$annotate_font,$access,$k;
+	global $contact_sheet_preview_size,$annotate_pdf_output_only_annotated,$lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$annotate_font,$access,$k;
 	$date= date("m-d-Y h:i a");
 	
 	include_once($storagedir.'/../include/search_functions.php');
@@ -51,10 +45,10 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 	include_once($storagedir.'/../include/image_processing.php');
 	include_once($storagedir.'/../lib/tcpdf/tcpdf.php');
 
-	$pdfstoragepath=get_annotation_file_path($ref,true,$is_collection,"pdf",$cleanup);
-	$jpgstoragepath=get_annotation_file_path($ref,true,$is_collection,"jpg",$cleanup);
-	$pdfhttppath=get_annotation_file_path($ref,false,$is_collection,"pdf",$cleanup);
-	$jpghttppath=get_annotation_file_path($ref,false,$is_collection,"jpg",$cleanup);
+	$pdfstoragepath=get_annotate_file_path($ref,true,"pdf");
+	$jpgstoragepath=get_annotate_file_path($ref,true,"jpg");
+	$pdfhttppath=get_annotate_file_path($ref,false,"pdf");
+	$jpghttppath=get_annotate_file_path($ref,false,"jpg");
 	
 	class MYPDF extends TCPDF {
 		
@@ -95,12 +89,28 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 
 	}
 	if ($is_collection){
-		$collectiondata=get_collection($ref);$resources=get_collection_resources($ref);
+		$collectiondata=get_collection($ref);
+		$resources=do_search("!collection$ref");
 	} 
 	else { 
-		$resourcedata= get_resource_data($ref);$resources=array($ref);
+		$resourcedata=get_resource_data($ref);
+		$resources= do_search("!list$ref");
 	}
 	
+	// prune unnannotated resources if necessary
+	if ($annotate_pdf_output_only_annotated){
+		$resources_modified=array();
+		$x=0;
+		for ($n=0;$n<count($resources);$n++){
+			unset($notes);
+			if ($annotate_pdf_output_only_annotated && $resources[$n]['annotation_count']!=0){
+				$resources_modified[$x]=$resources[$n];
+				$x++;
+			} 
+		}
+		$resources=$resources_modified;
+	}
+	if (count($resources)==0){echo "nothing"; exit();}
 	if ($size == "a4") {$width=210/25.4;$height=297/25.4;} // convert to inches
 	if ($size == "a3") {$width=297/25.4;$height=420/25.4;}
 	if ($size == "letter") {$width=8.5;$height=11;}
@@ -123,13 +133,14 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 	$pdf->setPrintFooter(false);
 	$pdf->setMargins(.5,.5,.5);
 
+
 	// add a page
 	for ($n=0;$n<count($resources);$n++){
 		$pdf->AddPage();
 		
-		$resourcedata= get_resource_data($resources[$n]);
-		$ref=$resources[$n];
-		$access=get_resource_access($resources[$n]); // feed get_resource_access the resource array rather than the ref, since access is included.
+		$resourcedata= $resources[$n];
+		$ref=$resources[$n]['ref'];
+		$access=get_resource_access($resources[$n]['ref']); // feed get_resource_access the resource array rather than the ref, since access is included.
 		$use_watermark=check_use_watermark();
 
 		$imgpath = get_resource_path($ref,true,"hpr",false,"jpg",-1,1,$use_watermark);
@@ -158,12 +169,14 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		// set color for background
 		$pdf->SetFillColor(255, 255, 200);
 
-		$notes=sql_query("select * from annotate_notes where ref='$ref'");
 		$style= array('width' => 0.01, 'cap' => 'butt', 'join' => 'round' ,'dash' => '0', 'color' => array(100,100,100));
 		$style1 = array('width' => 0.04, 'cap' => 'butt', 'join' => 'round', 'dash' => '0', 'color' => array(255, 255, 0));
 		$style2 = array('width' => 0.02, 'cap' => 'butt', 'join' => 'round', 'dash' => '3', 'color' => array(255, 0, 0));
 		$ypos=$imageheight+1.5;$pdf->SetY($ypos);
 		$m=1;
+		unset($notes);
+		if ($resources[$n]['annotation_count']!=0){
+		$notes=sql_query("select * from annotate_notes where ref='$ref'");
 		foreach ($notes as $note){
 			$ratio=$imagewidth/$note['preview_width'];
 			$note_y=$note['top_pos']*$ratio;
@@ -184,6 +197,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 			$pdf->MultiRow($m,$noteparts[1]." - ".$note_user['fullname']);
 			$ypos=$ypos+.5;$m++;
 		}	
+		}
 	}
 
 	// reset pointer to the last page
@@ -210,7 +224,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
-		$command.= " -resize 300x300 -quality 90 -colorspace RGB " . escapeshellarg($jpgstoragepath) ." " . escapeshellarg($jpgstoragepath);
+		$command.= " -resize $contact_sheet_preview_size -quality 90 -colorspace RGB " . escapeshellarg($jpgstoragepath) ." " . escapeshellarg($jpgstoragepath);
 		run_command($command);
 		return true;
 		}
@@ -226,6 +240,8 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		// cleanup
 		if (file_exists($pdfstoragepath)){unlink($pdfstoragepath);}
 		if (file_exists($jpgstoragepath)){unlink($jpgstoragepath);}
+		$pathinfo=pathinfo($jpgstoragepath);
+		if (file_exists($pathinfo['dirname'])){rmdir($pathinfo['dirname']);}
 		$pdf->Output($filename.".pdf",'D');
 		}
 	else {

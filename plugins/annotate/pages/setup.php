@@ -21,6 +21,7 @@ $page_def[] = config_add_boolean_select('annotate_debug', $lang['annotatedebug']
 $page_def[] = config_add_boolean_select('annotate_public_view', $lang['annotate_public_view']);
 $page_def[] = config_add_boolean_select('annotate_show_author', $lang['annotate_show_author']);
 $page_def[] = config_add_boolean_select('annotate_pdf_output', $lang["annotate_pdf_output"]);
+$page_def[] = config_add_boolean_select('annotate_pdf_output_only_annotated', $lang["annotate_pdf_output_only_annotated"]);
 
 // Do the page generation ritual -- don't change this section.
 $upload_status = config_gen_setup_post($page_def, $plugin_name);
