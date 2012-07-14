@@ -82,10 +82,8 @@ var annotate_previewimage_prefix = "";
 
 			$.ajax(url,{
 			data: formdata,
-			success: function(response) {},
+			success: function(response) {$(this).annotate('refresh',response);},
 			complete: function(response) {
-				$(this).annotate('refresh',response);
-				$.ajax("annotate_pdf_gen.php?cleartmp=true&ref=<?php echo $ref?>&uniqid=<?php echo $uniqid?>",{complete: function(response){ $('#error2').html(response.responseText);}});
 				$('#error').html(response.responseText);
 				if (response.responseText=="nothing"){
 					$('#heading').hide();
@@ -121,6 +119,7 @@ var annotate_previewimage_prefix = "";
 			else {
 				$('#previewPageOptions').hide();
 			}
+			$.ajax("annotate_pdf_gen.php?cleartmp=true&ref=<?php echo $ref?>&uniqid=<?php echo $uniqid?>",{complete: function(response){ $('#error2').html(response.responseText);}});
 		},
 		
 		
@@ -171,7 +170,7 @@ function loadIt() {
 
 <div id="configform" class="BasicsBox" style="width:450px;float:left;margin-top:0;" >
 
-<form method=post name="annotateform" id="annotateform">
+<form method=post name="annotateform" id="annotateform" action="annotate_pdf_gen.php" >
 <input type=hidden name="ref" value="<?php echo $ref?>">
 <input type=hidden name="uniqid" value="<?php echo $uniqid?>">
 
@@ -197,7 +196,7 @@ function loadIt() {
 
 <div name="previewPageOptions" id="previewPageOptions" class="Question" style="display:none">
 <label><?php echo $lang['previewpage']?></label>
-<select class="shrtwidth" name="previewpage" id="previewpage" onChange="jQuery().annotate('preview');">
+<select class="shrtwidth" name="previewpage" id="previewpage" onChange="jQuery().annotate('preview');	">
 </select>
 </div>
 <?php if ($annotate_debug){?><div name="error" id="error"></div><?php } ?>
