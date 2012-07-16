@@ -442,7 +442,7 @@ $search_results_link=true;
 # Display a 'My Collections' link in the top navigation
 $mycollections_link=false;
 
-# Display a 'My REquests' link in the top navigation
+# Display a 'My Requests' link in the top navigation
 $myrequests_link=false;
 
 # display an alert icon next to the team centre link 
@@ -1917,3 +1917,6 @@ $remove_collections_vertical_line=false;
 
 # Make dropdown selectors for Display and Results Display menus
 $display_selector_dropdowns=false;
+
+#Display link to request log on view page
+$display_request_log_link=false;

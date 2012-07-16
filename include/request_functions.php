@@ -4,7 +4,7 @@
 
 function get_request($request)
 	{
-	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments,r.expires,r.assigned_to,r.reason,u2.username assigned_to_username from request r left outer join user u  on r.user=u.ref left outer join user u2 on r.assigned_to=u2.ref where r.ref='$request'");
+	$result=sql_query("select u.username,u.fullname,u.email,r.user,r.collection,r.created,r.request_mode,r.status,r.comments,r.expires,r.assigned_to,r.reason,r.reasonapproved,u2.username assigned_to_username from request r left outer join user u  on r.user=u.ref left outer join user u2 on r.assigned_to=u2.ref where r.ref='$request'");
 	if (count($result)==0)
 		{
 		return false;
@@ -33,6 +33,7 @@ function save_request($request)
 	$oldstatus=$currentrequest["status"];
 	$assigned_to=getvalescaped("assigned_to","");
 	$reason=getvalescaped("reason","");
+	$reasonapproved=getvalescaped("reasonapproved","");
 	
 	
 	# --------------------- User Assignment ------------------------
@@ -68,6 +69,7 @@ function save_request($request)
 			# Add expiry time to message.
 			$message.=$lang["requestapprovedexpires"] . " " . nicedate($expires) . "\n\n";
 			}
+		$reasonapproved=str_replace(array("\\r","\\n"),"\n",$reasonapproved);$reasonapproved=str_replace("\n\n","\n",$reasonapproved); # Fix line breaks.
 		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus1"],$message);
 		
 		# Mark resources as full access for this user
@@ -105,7 +107,7 @@ function save_request($request)
 		}
 
 	# Save status
-	sql_query("update request set status='$status',expires=" . ($expires==""?"null":"'$expires'") . ",reason='$reason' where ref='$request'");
+	sql_query("update request set status='$status',expires=" . ($expires==""?"null":"'$expires'") . ",reason='$reason',reasonapproved='$reasonapproved' where ref='$request'");
 
 	if (getval("delete","")!="")
 		{

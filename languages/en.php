@@ -437,6 +437,7 @@ $lang["resourcedetails"]="Resource Details";
 $lang["offlineresource"]="Offline Resource";
 $lang["action-request"]="Request";
 $lang["request"]="Request";
+$lang["requestlog"]="Request Log";
 $lang["searchforsimilarresources"]="Search for Similar Resources";
 $lang["clicktoviewasresultset"]="Click to view these resources as a result set";
 $lang["searchnomatches"]="Your search did not match any resources.";
@@ -1544,6 +1545,8 @@ $lang["can_assign_resource_requests"]="Can assign resource requests to others";
 $lang["can_be_assigned_resource_requests"]="Can be assigned resource requests (also; can only see resource requests assigned to them in the Manage Resource Requests area)";
 
 $lang["declinereason"]="Reason for declining";
+$lang["approvalreason"]="Reason for approving";
+
 $lang["requestnotassignedtoyou"]="Sorry, this request is no longer assigned to you. It is now assigned to user %.";
 $lang["requestassignedtoyou"]="Resource request assigned to you";
 $lang["requestassignedtoyoumail"]="A resource request has been assigned to you for approval. Please use the link below to approve or deny the resource request.";

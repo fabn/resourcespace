@@ -19,7 +19,7 @@ $ref=getvalescaped("ref","",true);
 # Update hit count
 update_hitcount($ref);
 	
-# fetch the current search (for finding simlar matches)
+# fetch the current search (for finding similar matches)
 $search=getvalescaped("search","");
 $order_by=getvalescaped("order_by","relevance");
 $offset=getvalescaped("offset",0,true);
@@ -326,7 +326,7 @@ else
 <table cellpadding="0" cellspacing="0">
 <tr>
 <td><?php echo $lang["fileinformation"]?></td>
-<td ><?php echo $lang["filesize"]?></td>
+<td><?php echo $lang["filesize"]?></td>
 <?php if ($userrequestmode==2 || $userrequestmode==3) { ?><td><?php echo $lang["price"] ?></td><?php } ?>
 <td class="textcenter"><?php echo $lang["options"]?></td>
 </tr>
@@ -649,7 +649,8 @@ hook ("resourceactions") ?>
 	<li><a href="alternative_files.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a></li><?php } ?>
 
 	<?php } ?>
-	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?><?php
+	<?php if (checkperm("e" . $resource["archive"])) { ?><li><a href="log.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["log"]?></a></li><?php } ?>
+	<?php if (checkperm("R") && $display_request_log_link) { ?><li><a href="request_log.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php echo $lang["requestlog"]?></a></li><?php } ?><?php
     } /* End replaceresourceactions */ 
 hook("afterresourceactions");
 hook("afterresourceactions2");

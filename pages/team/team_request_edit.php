@@ -100,8 +100,8 @@ if (isset($warn_field_request_approval))
 <div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>
 
 onClick="
-<?php if ($n==1) { ?>Effect.Appear('Expires',{duration:1});<?php } else { ?>Effect.DropOut('Expires',{duration:1});<?php } ?>
-<?php if ($n==2) { ?>Effect.Appear('Reason',{duration:1});<?php } else { ?>Effect.DropOut('Reason',{duration:1});<?php } ?>
+<?php if ($n==1) { ?>Effect.Appear('Expires',{duration:1});Effect.Appear('ReasonApprove',{duration:1});<?php } else { ?>Effect.DropOut('Expires',{duration:1});Effect.DropOut('ReasonApprove',{duration:1});<?php } ?>
+<?php if ($n==2) { ?>Effect.Appear('ReasonDecline',{duration:1});<?php } else { ?>Effect.DropOut('ReasonDecline',{duration:1});<?php } ?>
 "
 
 /><?php echo $lang["resourcerequeststatus" . $n]?></div>
@@ -135,9 +135,14 @@ if ($request["expires"]!="" && $sel==false)
 <div class="clearerleft"> </div>
 </div>
 
-<div class="Question" id="Reason" <?php if ($request["status"]!=2) { ?>style="display:none;"<?php } ?>>
+<div class="Question" id="ReasonDecline" <?php if ($request["status"]!=2) { ?>style="display:none;"<?php } ?>>
 <label><?php echo $lang["declinereason"]?></label>
 <textarea name="reason" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($request["reason"])?></textarea>
+<div class="clearerleft"> </div></div>
+
+<div class="Question" id="ReasonApprove" <?php if ($request["status"]!=1) { ?>style="display:none;"<?php } ?>>
+<label><?php echo $lang["approvalreason"]?></label>
+<textarea name="reasonapproved" class="stdwidth" rows=5 cols=50><?php echo htmlspecialchars($request["reasonapproved"])?></textarea>
 <div class="clearerleft"> </div></div>
 
 
