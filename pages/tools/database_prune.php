@@ -74,6 +74,7 @@ for ($n=0;$n<count($r);$n++)
 		}
 	}
 
+hook("dbprune");
 
 
 ?>

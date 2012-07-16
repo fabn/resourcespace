@@ -233,13 +233,14 @@ function hook($name,$pagename="",$params=array())
 			# Function must return 'true' if successful (so existing functionality is replaced)
 			$found=call_user_func_array($function, $params);
 			}
-	
+		else { //use 'else' here because without it it's possible to end up running hook functions twice when the hook passes pagename and params directly.
 		# Specific hook	
-		$function="Hook" . ucfirst($plugins[$n]) . ucfirst($pagename) . ucfirst($name);
-		if (function_exists($function))
-			{
-			# Function must return 'true' if successful (so existing functionality is replaced)
-			$found=call_user_func_array($function, $params);
+			$function="Hook" . ucfirst($plugins[$n]) . ucfirst($pagename) . ucfirst($name);
+			if (function_exists($function))
+				{
+				# Function must return 'true' if successful (so existing functionality is replaced)
+				$found=call_user_func_array($function, $params);
+				}
 			}
 		}
 	return $found;

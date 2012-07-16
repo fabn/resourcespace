@@ -1,5 +1,23 @@
 <?php 
 
+function HookAnnotateDatabase_pruneDbprune(){
+	sql_query("delete from resource_keyword where annotation_ref > 0 and annotation_ref not in (select note_id from annotate_notes)");
+	echo sql_affected_rows() . " orphaned annotation resource-keyword relationships deleted.<br/><br/>";
+}
+
+function HookAnnotateAllAfterreindexresource($ref){
+	// make sure annotation indexing isn't lost when doing a reindex.
+	$notes=sql_query("select * from annotate_notes where ref='$ref'");
+	global $pagename;
+
+	foreach($notes as $note){
+		#Add annotation to keywords
+		$keywordtext = substr(strstr($note['note'],": "),2); # don't add the username to the keywords
+
+		add_keyword_mappings($ref,i18n_get_indexable($keywordtext),-1,false,false,"annotation_ref",$note['note_id']);
+	}
+}
+
 function HookAnnotateAllModifyselect(){
 return (" ,r.annotation_count ");
 
@@ -7,6 +25,7 @@ return (" ,r.annotation_count ");
 
 function HookAnnotateAllRemoveannotations(){
 	global $ref;
+	
 	sql_query("delete from annotate_notes where ref='$ref'");
 	sql_query("update resource set annotation_count=0 where ref='$ref'");	
 	sql_query("delete from resource_keyword where resource='$ref' and annotation_ref>0");;

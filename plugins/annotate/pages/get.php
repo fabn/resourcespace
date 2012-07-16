@@ -27,7 +27,9 @@ for ($x=0;$x<count($notes);$x++){
 	$notes[$x]['height']=$ratio*$notes[$x]['height'];
 	$notes[$x]['top_pos']=$ratio*$notes[$x]['top_pos'];
 	$notes[$x]['left_pos']=$ratio*$notes[$x]['left_pos'];
-	$notes[$x]['note'] = str_replace(array(chr(13), chr(10)), '<br />', $notes[$x]['note']);
+	$notes[$x]['note'] = str_replace(chr(13). chr(10), '<br />', $notes[$x]['note']);
+	$notes[$x]['note'] = str_replace(chr(13), '<br />', $notes[$x]['note']);
+	$notes[$x]['note'] = str_replace(chr(10), '<br />', $notes[$x]['note']);
 		if (!$annotate_show_author) # Don't display author unless set in config
 			{$notes[$x]['note'] = substr(strstr($notes[$x]['note'],": "),2);}
 

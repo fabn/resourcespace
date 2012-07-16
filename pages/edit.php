@@ -764,6 +764,11 @@ for ($n=0;$n<count($fields);$n++)
 		<option value="FR"><?php echo $lang["findandreplace"]?></option>
 		<?php } ?>
 		<?php 
+		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5) { 
+		# Prepend applies to text boxes only.
+		?>
+		<option value="PP"><?php echo $lang["prependtext"]?></option>
+		<?php } 
 		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==7 || $fields[$n]["type"]==3) { 
 		# Append applies to text boxes, checkboxes ,category tree and dropdowns only.
 		?>

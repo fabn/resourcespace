@@ -398,6 +398,18 @@ function save_resource_data_multi($collection)
 						}
 					}
 					
+				# Prepend text/option(s) mode?
+				if (getval("modeselect_" . $fields[$n]["ref"],"")=="PP"){
+					global $filename_field;
+					if ($fields[$n]["ref"]==$filename_field){
+						$val=rtrim($origval,"_")."_".trim($existing); // use an underscore if editing filename.
+					}
+					else {
+						# Automatically append a space when appending text types.
+						$val=$origval . " " . $existing;
+					}
+				}
+					
 				# Remove text/option(s) mode?
 				if (getval("modeselect_" . $fields[$n]["ref"],"")=="RM")
 					{
@@ -2325,6 +2337,8 @@ function reindex_resource($ref)
 	# Always index the resource ID as a keyword
 	remove_keyword_mappings($ref, $ref, -1);
 	add_keyword_mappings($ref, $ref, -1);
+	
+	hook("afterreindexresource","all",array($ref));
 	
 	}
 }

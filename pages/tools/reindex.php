@@ -35,7 +35,7 @@ for ($n=$start;$n<count($resources);$n++)
 	
 	$words=sql_value("select count(*) value from resource_keyword where resource='$ref'",0);
 	echo "Done $ref ($n/" . count($resources) . ") - $words words<br />\n";
-	flush();
+	flush();ob_flush();
 	}
 
 

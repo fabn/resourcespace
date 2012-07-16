@@ -784,6 +784,7 @@ $lang["replaceresourcebatch"]="Replace Resource Batch";
 $lang["editmode"]="Edit Mode";
 $lang["replacealltext"]="Replace All Text / Option(s)";
 $lang["findandreplace"]="Find And Replace";
+$lang["prependtext"]="Prepend Text";
 $lang["appendtext"]="Append Text / Option(s)";
 $lang["removetext"]="Remove Text / Option(s)";
 $lang["find"]="Find";

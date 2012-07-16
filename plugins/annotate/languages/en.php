@@ -5,9 +5,9 @@
 #
 #
 $lang['annotations']="Annotations";
-$lang['pdfwithnotes']="PDF w/Annotations";
-$lang["annotatepdfconfig"]="PDF with Annotations";
-$lang["annotatepdfintrotext"]="Select the page size for your PDF with Annotations.";
+$lang['pdfwithnotes']="Annotations PDF";
+$lang["annotatepdfconfig"]="Annotations PDF";
+$lang["annotatepdfintrotext"]="Select the page size for your Annotations PDF.";
 
 $lang["error-saving"]="An error occurred saving that annotation.";
 $lang["error-deleting"]="An error occurred deleting that annotation.";
