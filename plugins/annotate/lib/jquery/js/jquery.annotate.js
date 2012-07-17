@@ -155,6 +155,7 @@ var error_deleting = "";
         ok.click(function() {
             var form = $('#image-annotate-edit-form form');
             var text = $('#image-annotate-text').val();
+           
             $.fn.annotateImage.appendPosition(form, editable)
             image.mode = 'view';
 
@@ -249,7 +250,7 @@ var error_deleting = "";
         image.canvas.children('.image-annotate-edit').show();
 
         // Add the note (which we'll load with the form afterwards)
-        var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text + '</textarea></form></div>');
+        var form = $('<div id="image-annotate-edit-form"><form><textarea id="image-annotate-text" name="text" rows="3" cols="30">' + this.note.text.replace(new RegExp('<br />', 'g'), '') + '</textarea></form></div>');
         this.form = form;
 
         $('body').append(this.form);
@@ -429,7 +430,7 @@ var error_deleting = "";
         ///	<summary>
         ///		Sets the position of an annotation.
         ///	</summary>
-        this.form.html(text);
+        this.form.html(text.replace(new RegExp('\n', 'g'), '<br />'));
         this.form.hide();
 
         // Resize

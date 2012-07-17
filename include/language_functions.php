@@ -75,6 +75,7 @@ function i18n_get_indexable($text)
     {
     # For field names / values using the i18n syntax, return all language versions, as necessary for indexing.
     $text=trim($text);
+    $text=str_replace("<br />"," ",$text); // make sure keywords don't get squashed together
     $text=strip_tags($text);
     $text=preg_replace('/~(.*?):/',',',$text);// remove i18n strings, which shouldn't be in the keywords
     //echo $text;die();

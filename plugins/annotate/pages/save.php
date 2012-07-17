@@ -14,13 +14,15 @@ $left=getvalescaped('left','');
 $width=getvalescaped('width','');
 $height=getvalescaped('height','');
 $text=getvalescaped('text','');
+$text=str_replace("<br />\n"," ",$text);// remove the breaks added by get.php
+	
 $id=getvalescaped('id','');
 $preview_width=getvalescaped('pw','');
 $preview_height=getvalescaped('ph','');
 
 $oldtext=sql_value("select note value from annotate_notes where ref='$ref' and note_id='$id'","");
 if ($oldtext!=""){
-	remove_keyword_mappings($ref,i18n_get_indexable(str_replace("<br />"," ",$oldtext)),-1,false,false,"annotation_ref",$id);
+	remove_keyword_mappings($ref,i18n_get_indexable($oldtext),-1,false,false,"annotation_ref",$id);
 }
 
 sql_query("delete from annotate_notes where ref='$ref' and note_id='$id'");
@@ -40,5 +42,5 @@ sql_query("update resource set annotation_count=".count($notes)." where ref=$ref
 $keywordtext = substr(strstr($text,": "),2); # don't add the username to the keywords
 debug("adding annotation to resource keywords. Keywords: " . $keywordtext);
 
-add_keyword_mappings($ref,i18n_get_indexable(str_replace("<br />"," ",$keywordtext)),-1,false,false,"annotation_ref",$annotateid);
+add_keyword_mappings($ref,i18n_get_indexable($keywordtext),-1,false,false,"annotation_ref",$annotateid);
 #add_keyword_mappings($ref,$text,-1);
