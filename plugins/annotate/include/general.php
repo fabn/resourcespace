@@ -193,8 +193,8 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 			$pdf->SetY($ypos);
 			$note_user=get_user($note['user']);
 			$pdf->SetLineStyle($style);
-			$noteparts=explode(": ",$note['note'],2);
-			$pdf->MultiRow($m,$noteparts[1]." - ".$note_user['fullname']);
+			$noteparts=explode(":",$note['note'],2);
+			$pdf->MultiRow($m,trim($noteparts[1])." - ".$note_user['fullname']);
 			$ypos=$ypos+.5;$m++;
 		}	
 		}
