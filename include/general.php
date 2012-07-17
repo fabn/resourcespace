@@ -2904,7 +2904,7 @@ function get_temp_dir($asUrl = false,$uniqid="")
 		$result.="/$uniqid";
 		if(!is_dir($result)){
             // If it does not exist, create it.
-            mkdir($result, 0777);
+            mkdir($result, 0777,true);
         }
     }
     
