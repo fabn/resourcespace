@@ -127,7 +127,7 @@ if (!$basic_simple_search)
 	
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
-	<div id="searchbarrt">
+	<div id="searchbarrt" <?php hook("searchbarrtdiv");?>>
 	<?php if ($searchbar_selectall){?>
 	<script type="text/javascript">
 	function resetTickAll(){
