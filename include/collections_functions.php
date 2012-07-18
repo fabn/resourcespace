@@ -800,6 +800,8 @@ function generate_collection_access_key($collection,$feedback=0,$email="",$acces
 		# Add the key to each resource in the collection
 		sql_query("insert into external_access_keys(resource,access_key,collection,user,request_feedback,email,date,access,expires) values ('" . $r[$m] . "','$k','$collection','$userref','$feedback','" . escape_check($email) . "',now(),$access," . (($expires=="")?"null":"'" . $expires . "'"). ");");
 		}
+		
+	hook("generate_collection_access_key","",array($collection,$k,$userref,$feedback,$email,$access,$expires));
 	return $k;
 	}
 	

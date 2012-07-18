@@ -37,10 +37,6 @@ if (getval("c","")!="")
 				$topurl="pages/search.php?search=" . urlencode("!collection" . $c) . "&k=" . $k;		
 				}
 			}
-		else
-			{
-			$topurl="pages/" . $default_home_page;
-			}
 		}
 	}
 
