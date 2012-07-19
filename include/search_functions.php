@@ -83,8 +83,8 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$sql_filter.="r.access<>'2'";
 		}
 		
-	# append archive searching (don't do this for collections, archived resources can still appear in collections)
-	if (substr($search,0,11)!="!collection" || ($collections_omit_archived && !checkperm("e2")))
+	# append archive searching (don't do this for collections or !listall, archived resources can still appear in these searches)
+	if ( (substr($search,0,8)!="!listall" && substr($search,0,11)!="!collection") || ($collections_omit_archived && !checkperm("e2")))
 		{
 		global $pending_review_visible_to_all;
 		if ($archive==0 && $pending_review_visible_to_all)
@@ -774,10 +774,15 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		}	
 	
 	# Search for a list of resources
+	# !listall = archive state is not applied as a filter to the list of resources.
 	if (substr($search,0,5)=="!list") 
 		{	
 		$resources=explode(" ",$search);
-		$resources=str_replace("!list","",$resources[0]);
+		if (substr($search,0,8)=="!listall"){
+			$resources=str_replace("!listall","",$resources[0]);
+		} else {
+			$resources=str_replace("!list","",$resources[0]);
+		}
 		$resources=explode(",",$resources);// separate out any additional keywords
 		$resources=escape_check($resources[0]);
 		if (strlen(trim($resources))==0){
