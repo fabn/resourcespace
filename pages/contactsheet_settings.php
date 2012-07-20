@@ -43,7 +43,7 @@ include "../include/header.php";
 <div class="Question">
 <label><?php echo $lang["display"]?></label>
 <select class="shrtwidth" name="sheetstyle" id="sheetstyle" onChange="
-	if ($('sheetstyle').value=='list')
+	if (jQuery('#sheetstyle').val()=='list')
 		{
 		document.getElementById('ThumbnailOptions').style.display='none';
 		}

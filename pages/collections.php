@@ -170,13 +170,12 @@ top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=tru
 <?php } ?>
 </script>
 
-<?php if(!hook("clearmaincheckboxesfromcollectionframe")){?>
-<?php if ($use_checkboxes_for_selection){?>
+<?php if(!hook("clearmaincheckboxesfromcollectionframe")){ ?>
+<?php if ($use_checkboxes_for_selection){ ?>
 <!--clear checkboxes-->
 <script type="text/javascript">
-var checkboxes=parent.main.$$('input.checkselect');
-checkboxes.each(function(box)
-{box.checked=false;});
+jQuery(".checkselect").each(function(index, Element)
+{jQuery(Element).attr('checked',false);});
 </script>
 <?php } ?>
 <?php } #end hook clearmaincheckboxesfromcollectionframe?>

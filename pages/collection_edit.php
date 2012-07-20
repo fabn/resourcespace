@@ -244,7 +244,7 @@ if ($enable_collection_copy)
 	<label for="copy"><?php echo $lang["copyfromcollection"]?></label>
 	<select name="copy" id="copy" class="stdwidth" onChange="
 	var ccra =document.getElementById('copycollectionremoveall');
-	if ($('copy').value!=''){ccra.style.display='block';}
+	if (jQuery('#copy').val()!=''){ccra.style.display='block';}
 	else{ccra.style.display='none';}">
 	<option value=""><?php echo $lang["donotcopycollection"]?></option>
 	<?php

@@ -118,7 +118,7 @@ echo "</ul>";
      onUpdate:saveOrder});
 
 function saveOrder() {
-   //$('resourcelist_debug').innerHTML = Sortable.serialize('resourcelist') 
+
    listorder = Sortable.serialize('resourcelist');
    var url = '<?php echo $_SERVER['PHP_SELF']; ?>';
     var pars = listorder
