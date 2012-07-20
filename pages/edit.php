@@ -192,6 +192,9 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 			redirect("pages/search.php?refreshcollectionframe=true&search=!collection" . $collection);
 			}
 		}
+	
+	# If auto-saving, no need to continue as it will only add to bandwidth usage to send the whole edit page back to the client. Send a simple 'SAVED' message instead.
+	if (getval("autosave","")!="") {exit("SAVED");}
 	}
 
 if (getval("tweak","")!="")
@@ -244,7 +247,7 @@ function ShowHelp(field)
 	// Show the help box if available.
 	if (document.getElementById('help_' + field))
 		{
-		Effect.Appear('help_' + field, { duration: 0.5 });
+		jQuery('#help_' + field).fadeIn();
 		}
 	}
 function HideHelp(field)
@@ -261,17 +264,24 @@ function HideHelp(field)
  if ($edit_autosave) { ?>
 function AutoSave(field)
 	{
-	$('AutoSaveStatus' + field).innerHTML='<?php echo $lang["saving"] ?>';
-	$('AutoSaveStatus' + field).show();
+	jQuery('#AutoSaveStatus' + field).html('<?php echo $lang["saving"] ?>');
+	jQuery('#AutoSaveStatus' + field).show();
 
-	$('mainform').request({
-	  onSuccess: function()
+	
+	jQuery.post(jQuery('#mainform').attr('action') + '&autosave=true',jQuery('#mainform').serialize(),
+	
+	function(data)
 	  	{
-		$('AutoSaveStatus' + field).innerHTML='<?php echo $lang["saved"] ?>';
-		Effect.Fade('AutoSaveStatus' + field);
-	  	},
-	  parameters: 'autosave=true'
-	});
+	  	if (data=="SAVED")
+	  		{
+		  		jQuery('#AutoSaveStatus' + field).html('<?php echo $lang["saved"] ?>');
+		  		jQuery('#AutoSaveStatus' + field).fadeOut('slow');
+		  	}
+		else
+			{
+		  		jQuery('#AutoSaveStatus' + field).html('<?php echo $lang["save-error"] ?>' + data);				
+			}
+		});
 	}
 <?php } 
 
@@ -506,7 +516,7 @@ if ($enable_add_collection_on_upload)
 	?>
 	<div class="Question" id="question_collectionadd">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
-	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if($(this).value==-1){$('collectioninfo').style.display='block';} else {$('collectioninfo').style.display='none';}">
+	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if(jQuery(this).val()==-1) {jQuery('#collectioninfo').fadeIn();} else {jQuery('#collectioninfo').fadeOut();}">
 	<?php if ($upload_add_to_new_collection_opt) { ?><option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option><?php } ?>
 	<?php if ($upload_do_not_add_to_new_collection_opt) { ?><option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option><?php } ?>
 	<?php
@@ -547,6 +557,7 @@ if ($enable_add_collection_on_upload)
 	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
 	<label for="collection_add"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
 	<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
+	<div class="clearerleft" style="padding-top:10px;"> </div>
 	</div>
 	
 	<?php if ($enable_public_collection_on_upload && ($enable_public_collections || checkperm('h')) && !checkperm('b')) { ?>

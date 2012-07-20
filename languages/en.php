@@ -1585,3 +1585,4 @@ $lang["ascending"] = "Ascending";
 $lang["descending"] = "Descending";
 $lang["sort-type"] = "Sort Type";
 $lang["collection-order"] = "Collection Order";
+$lang["save-error"]="!! Error auto saving - please save manually !!";

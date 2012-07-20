@@ -23,7 +23,7 @@ include "../include/header.php";
 
 <div class="BasicsBox">
 
-<form method=post onSubmit="if (($('usagecomment').value=='') || ($('usage').value=='')) {alert('<?php echo $lang["usageincorrect"] ?>');return false;}">
+<form method=post onSubmit="if ((jQuery('#usagecomment').val()=='') || (jQuery('#usage').va()=='')) {alert('<?php echo $lang["usageincorrect"] ?>');return false;}">
 
 <h1><?php echo $lang["usage"]?></h1>
 <p><?php echo $lang["indicateusage"]?></p>
