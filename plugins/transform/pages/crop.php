@@ -474,10 +474,10 @@ if ($resource["has_image"]==1)
 
 include "../../../include/header.php";
 
-
+# slider, sound, controls
 ?>
-<script type="text/javascript" src="../../../lib/js/prototype.js" language="javascript"></script>
-<script type="text/javascript" src="../../../lib/js/scriptaculous.js?load=builder,dragdrop" language="javascript"></script>
+<script type="text/javascript" src="../lib/prototype.js" language="javascript"></script>
+<script type="text/javascript" src="../lib/scriptaculous.js?load=effects,builder,dragdrop" language="javascript"></script>
 <script type="text/javascript" src="../lib/jsCropperUI/cropper.js" language="javascript"></script>
 
 <h1><?php echo $lang['transformimage'] ?></h1>
