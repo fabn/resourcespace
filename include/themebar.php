@@ -19,12 +19,14 @@ onclick="
 var theme_display=get_cookie('theme_<?php echo $n?>');
 if (theme_display=='off'){var toggle_theme_display='on';} else { var toggle_theme_display='off';}
 SetCookie('theme_<?php echo $n?>',toggle_theme_display,1000);
-Effect.toggle($('<?php echo str_replace("\"","",$themename)?>'),'blind',{ duration: 0.2 });
+jQuery('#themebar_<?php echo str_replace(array("\""," "),"",$themename)?>').slideToggle(0.2);
+
+
 return false;">                
                
 	<a href='#'><b><?php echo stripslashes(i18n_get_translated(str_replace("*","",$themename)))?></b></a></div>
                
-<div id="<?php echo str_replace("\"","",$themename)?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" >
+<div id="themebar_<?php echo str_replace(array("\""," "),"",$themename)?>" style="display:<?php if ($theme_display == 'off'){echo 'none';} else {echo '';}?>" >
                 <?php
                 for ($m=0;$m<count($themes);$m++)
                         { ?><br>
@@ -93,7 +95,7 @@ onclick="
 var smart_theme_display=get_cookie('smart_theme_<?php echo $n?>');
 if (smart_theme_display=='off'){var toggle_smart_theme_display='on';} else { var toggle_smart_theme_display='off';}
 SetCookie('smart_theme_<?php echo $n?>',toggle_smart_theme_display,1000);
-Effect.toggle($('<?php echo $header_name?>'),'blind',{ duration: 0.2 });
+jQuery('#<?php echo $header_name?>').slideToggle(0.2);
 return false;">
 
                         <?php echo "<a href='#'><B>".str_replace("*","",i18n_get_translated($headers[$n]["smart_theme_name"]))."</B></a><br>"?></div>
