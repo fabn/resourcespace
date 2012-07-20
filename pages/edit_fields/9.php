@@ -32,7 +32,7 @@ function selectKeyword_<?php echo $name ?>(event, ui)
 		keyword=keyword.substring(<?php echo strlen($lang["createnewentryfor"])+1 ?>);
 
 		// Add the word.
-		new Ajax.Request("<?php echo $baseurl?>/pages/edit_fields/9_ajax/add_keyword.php?field=<?php echo $field["ref"] ?>&keyword=" + encodeURI(keyword));
+		jQuery.post("<?php echo $baseurl?>/pages/edit_fields/9_ajax/add_keyword.php?field=<?php echo $field["ref"] ?>&keyword=" + encodeURI(keyword));
 		}
 
 	addKeyword_<?php echo $name ?>(keyword);

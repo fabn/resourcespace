@@ -27,11 +27,12 @@ function resizeadmin(){
     var maxwidth=window.innerWidth-<?php echo $lfsize + 45?>;
 	if (isNaN(maxwidth)){maxwidth=document.documentElement.clientWidth-<?php echo $lfsize + 45?>;}
     
-	$$('.iframe').each(function (elem) {
+    
+	jQuery('.iframe').each(function (index,elem) {
 		if (maxheight> elem.getAttribute("height").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("height")+'px'; }
 		else { elem.style.height=maxheight+'px';} } );
 		
-	$$('#right').each(function (elem) {
+	jQuery('#right').each(function (index,elem) {
 		if (maxwidth> elem.getAttribute("width").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("width")+'px'; }
 		else { elem.style.width=maxwidth+'px';} } ); 
 	}		

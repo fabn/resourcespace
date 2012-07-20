@@ -343,7 +343,7 @@ if(!hook("updatemaincheckboxesfromcollectionframe")){
 			$ref=$result[$n]["ref"];
 			?>
 			<script type="text/javascript">
-			if (parent.main.$('check<?php echo $ref?>')!=null){parent.main.$('check<?php echo $ref?>').checked=true;}
+			if (parent.main.jQuery('#check<?php echo $ref?>')){parent.main.jQuery('#check<?php echo $ref?>').attr('checked','true');}
 			</script>
 		<?php
 		}

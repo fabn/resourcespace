@@ -48,14 +48,6 @@ jQuery.noConflict();
 <!-- end of jQuery / jQueryUI load -->
 
 
-<?php if (!hook("disablescriptaculous")) { ?>
-<?php if (!isset($disable_prototype)) { ?>
-<script src="<?php echo $baseurl?>/lib/js/prototype.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-<script src="<?php echo $baseurl?>/lib/js/scriptaculous.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-<?php } ?>
-<?php } ?>
-
-
 <script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
