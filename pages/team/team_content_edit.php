@@ -114,7 +114,7 @@ if ($page=="help") { ?>
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
-<input name="save" type="submit" onclick="$('returntolist').value=true" value="&nbsp;&nbsp;<?php echo $lang['saveandreturntolist']?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onclick="jQuery('#returntolist').val(true)" value="&nbsp;&nbsp;<?php echo $lang['saveandreturntolist']?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>

@@ -87,7 +87,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 		
 			<input type=text placeholder="<?php echo $lang['searchbytext']?>" name="findtext" id="findtext" value="<?php echo $findtext?>" maxlength="100" class="shrtwidth" />
 			
-			<input type="button" value="<?php echo $lang['clearall']?>" onClick="$('findtext').value='';$('findpage').value='';$('findname').value='';form.submit();" />
+			<input type="button" value="<?php echo $lang['clearall']?>" onClick="jQuery('#findtext').val('');jQuery('#findpage').val('');jQuery('#findname').val('');form.submit();" />
 			<input name="Submit" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" />
 			 
 			</div>
