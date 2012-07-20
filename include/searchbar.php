@@ -59,23 +59,23 @@ $found_month="";if (isset($set_fields["month"])) {$found_month=$set_fields["mont
 $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 
 
-if ($display_user_rating_stars && $star_search){?>
+if ($display_user_rating_stars && $star_search){ ?>
 
 	<script type="text/javascript">
 	function StarSearchRatingDisplay(rating,hiclass)
 		{
 		for (var n=1;n<=5;n++)
 			{
-			$('RatingStar-'+n).removeClassName('StarEmpty');
-			$('RatingStar-'+n).removeClassName('StarCurrent');
-			$('RatingStar-'+n).removeClassName('StarSelect');
+			jQuery('#RatingStar-'+n).removeClass('StarEmpty');
+			jQuery('#RatingStar-'+n).removeClass('StarCurrent');
+			jQuery('#RatingStar-'+n).removeClass('StarSelect');
 			if (n<=rating)
 				{
-				$('RatingStar-'+n).addClassName(hiclass);
+				jQuery('#RatingStar-'+n).addClass(hiclass);
 				}
 			else
 				{
-				$('RatingStar-'+n).addClassName('StarEmpty');
+				jQuery('#RatingStar-'+n).addClass('StarEmpty');
 				}
 			}
 		}	
@@ -128,20 +128,20 @@ if (!$basic_simple_search)
 	?>
 	<input type="hidden" name="resetrestypes" value="yes">
 	<div id="searchbarrt" <?php hook("searchbarrtdiv");?>>
-	<?php if ($searchbar_selectall){?>
+	<?php if ($searchbar_selectall) { ?>
 	<script type="text/javascript">
 	function resetTickAll(){
 		var checkcount=0;
 		// set tickall to false, then check if it should be set to true.
-		$('tickall').checked=false;
-		var tickboxes=$('form1').getInputs('checkbox');
+		jQuery('#tickall').attr('checked',false);
+		var tickboxes=jQuery('#form1').children(':checkbox');
 			tickboxes.each(function (elem) {
                 if( elem.checked == true){checkcount=checkcount+1;}
             });
-		if (checkcount==tickboxes.length-1){$('tickall').checked=true;}	
+		if (checkcount==tickboxes.length-1){jQuery('#tickall').attr('checked',true);}	
 	}
 	</script>
-	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='for (i=0,n=$("form1").elements.length;i<n;i++) { if ($(this).checked==true){$("form1").elements[i].checked = true;} else {$("form1").elements[i].checked = false;}}  HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
+	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
@@ -341,13 +341,13 @@ if (!$basic_simple_search)
 			// When selecting resource type specific fields, automatically untick all other resource types, because selecting something from this field will never produce resources from the other resource types.
 			
 			// Always untick the Tick All box
-			if ($('tickall')) {$('tickall').checked=false;}
+			if (jQuery('#tickall')) {jQuery('#tickall').attr('checked', false);}
 			<?php
 			# Untick all other resource types.
 			for ($n=0;$n<count($types);$n++)
 				{
 				?>
-				if (resourcetype!=<?php echo $types[$n]["ref"]?>) {$("TickBox<?php echo $types[$n]["ref"]?>").checked=false;} else {$("TickBox<?php echo $types[$n]["ref"]?>").checked=true;}
+				if (resourcetype!=<?php echo $types[$n]["ref"]?>) {jQuery("#TickBox<?php echo $types[$n]["ref"]?>").attr('checked', false);} else {jQuery("#TickBox<?php echo $types[$n]["ref"]?>").attr('checked', true);}
 				<?php
 				}
 				?>
@@ -364,14 +364,14 @@ if (!$basic_simple_search)
 		<?php for ($n=0;$n<count($optionfields);$n++)
 			{
 			?>
-			Filter += "<?php if ($n>0) {echo ";";} ?><?php echo $optionfields[$n]?>:" + $('field_<?php echo $optionfields[$n]?>').value;
+			Filter += "<?php if ($n>0) {echo ";";} ?><?php echo $optionfields[$n]?>:" + jQuery('#field_<?php echo $optionfields[$n]?>').value;
 			
 			// Display waiting message
 			if (clickedfield!='<?php echo $optionfields[$n]?>')
 				{
-				if ($('field_<?php echo $optionfields[$n]?>').selectedIndex==0)
+				if (jQuery('field_<?php echo $optionfields[$n]?>').attr('selectedIndex', 0);)
 					{
-					$('field_<?php echo $optionfields[$n]?>').innerHTML="<option value=''><?php echo $lang["pleasewaitsmall"] ?></option>";
+					jQuery('field_<?php echo $optionfields[$n]?>').html("<option value=''><?php echo $lang["pleasewaitsmall"] ?></option>");
 					}
 				}
 			else
@@ -382,7 +382,7 @@ if (!$basic_simple_search)
 			} ?>
 		
 		// Send AJAX post request.
-		new Ajax.Request('<?php echo $baseurl_short?>pages/ajax/filter_basic_search_options.php?nofilter=' + encodeURIComponent(clickedfieldno) + '&filter=' + encodeURIComponent(Filter), { method: 'post',onSuccess: function(transport) {eval(transport.responseText);} });
+		jQuery.post('<?php echo $baseurl_short?>pages/ajax/filter_basic_search_options.php?nofilter=' + encodeURIComponent(clickedfieldno) + '&filter=' + encodeURIComponent(Filter), { success: function(data, textStatus, jqXHR) {eval(data);} });
 		<?php } ?>
 		}
 		
