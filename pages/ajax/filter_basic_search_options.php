@@ -65,7 +65,7 @@ for ($n=0;$n<count($s);$n++)
 				}
 			}
 		?>
-		$('field_<?php echo $field[$n]["name"]?>').innerHTML="<?php echo $select ?>";
+		jQuery('#field_<?php echo $field[$n]["name"]?>').html("<?php echo $select ?>");
 		<?php
 		}
 	}

@@ -428,7 +428,7 @@ function ajax_download()
 	document.getElementById('progressdiv').style.display='block';
 	var ifrm = document.getElementById('downloadiframe');
 	
-    ifrm.src = "collection_download.php?submitted=true&"+$('myform').serialize();
+    ifrm.src = "collection_download.php?submitted=true&"+jQuery('#myform').serialize();
     
 	progress= jQuery("progress3").PeriodicalUpdater("ajax/collection_download_progress.php?id=<?php echo $uniqid?>", {
         method: 'post',          // method; get or post
@@ -604,8 +604,8 @@ if ($archiver)
 
 <div class="QuestionSubmit" id="downloadbuttondiv"> 
 <label for="download"> </label>
-<?php if (!$use_zip_extension){?>
-<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload']?>')){$('progress').innerHTML='<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>';$('myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
+<?php if (!$use_zip_extension) { ?>
+<input type="button" onclick="if (confirm('<?php echo $lang['confirmcollectiondownload'] ?>')) {jQuery('#progress').html('<strong><br /><br /><?php echo $lang['pleasewait'];?></strong>');jQuery('#myform').submit();}" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
 <?php } else { ?>
 <input type="button" onclick="ajax_download();" value="&nbsp;&nbsp;<?php echo $lang["action-download"]?>&nbsp;&nbsp;" />
 <?php } ?>
