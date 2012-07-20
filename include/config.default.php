@@ -1920,3 +1920,6 @@ $display_selector_dropdowns=false;
 
 #Display link to request log on view page
 $display_request_log_link=false;
+
+#Show friendly error to user instead of 403 if IP not in permitted range.
+$iprestrict_friendlyerror=false;
