@@ -135,12 +135,10 @@ if (!$basic_simple_search)
 		// set tickall to false, then check if it should be set to true.
 		jQuery('#tickall').attr('checked',false);
 		var tickboxes=jQuery('#form1 .tickbox');
-		console.log(tickboxes);
 			jQuery(tickboxes).each(function (elem) {
                 if( tickboxes[elem].checked){checkcount=checkcount+1;}
             });
 		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
-		console.log(checkcount);
 	}
 	</script>
 	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
