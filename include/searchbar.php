@@ -134,14 +134,16 @@ if (!$basic_simple_search)
 		var checkcount=0;
 		// set tickall to false, then check if it should be set to true.
 		jQuery('#tickall').attr('checked',false);
-		var tickboxes=jQuery('#form1').children(':checkbox');
-			tickboxes.each(function (elem) {
-                if( elem.checked == true){checkcount=checkcount+1;}
+		var tickboxes=jQuery('#form1 .tickbox');
+		console.log(tickboxes);
+			jQuery(tickboxes).each(function (elem) {
+                if( tickboxes[elem].checked){checkcount=checkcount+1;}
             });
-		if (checkcount==tickboxes.length-1){jQuery('#tickall').attr('checked',true);}	
+		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
+		console.log(checkcount);
 	}
 	</script>
-	<div class="tick"><input type='checkbox' id='tickall' name='tickall' onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
+	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
