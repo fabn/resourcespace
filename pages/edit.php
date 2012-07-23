@@ -474,10 +474,7 @@ if ($camera_autorotation_checked) {echo ' checked';}?>>
 <div class="Question" id="question_resourcetype">
 <label for="resourcetype"><?php echo $lang["resourcetype"]?></label>
 <select name="resource_type" id="resourcetype" class="stdwidth" 
-<?php if ($ref>0) { ?>
-onChange="if (confirm('<?php echo $lang["editresourcetypewarning"]; ?>')){document.getElementById('mainform').submit();}else {return}"
-<?php } ?>
->
+onChange="<?php if ($ref>0) { ?>if (confirm('<?php echo $lang["editresourcetypewarning"]; ?>')){<?php } ?>document.getElementById('mainform').submit();<?php if ($ref>0) { ?>}else {return}<?php } ?>">
 <?php
 $types=get_resource_types();
 for ($n=0;$n<count($types);$n++)
