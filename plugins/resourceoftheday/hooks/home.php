@@ -23,7 +23,7 @@ function HookResourceofthedayHomeReplaceslideshow ()
 	<a href="view.php?ref=<?php echo $rotd ?>"><img class="ImageBorder" style="margin-bottom: 10px;" src="<?php echo $pre ?>" /></a>
 	<br />
 	<h2 ><?php echo i18n_get_translated(htmlspecialchars($title)) ?></h2>
-	<?php echo htmlspecialchars($caption) ?>
+	<?php echo $caption ?>
 	</div>
 	<?php
 	

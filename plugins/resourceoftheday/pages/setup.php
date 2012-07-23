@@ -16,7 +16,7 @@ if (getval("submit","")!="")
 	redirect("pages/team/team_home.php");
 	}
 
-$rotd_fields=sql_query("select * from resource_type_field where type=4 order by resource_type,order_by");
+$rotd_fields=sql_query("select * from resource_type_field where type in(4,10) order by resource_type,order_by");
 
 include "../../../include/header.php";
 ?>
