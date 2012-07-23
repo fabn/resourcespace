@@ -1,0 +1,6 @@
+name: resourceconnect
+desc: Connects ResourceSpace installations together to allow cross-installation searching
+author: Montala Limited
+version: 1.0
+info_url: http://www.montala.com
+config_url: /plugins/resourceconnect/pages/setup.php
