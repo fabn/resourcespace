@@ -125,7 +125,7 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
     // place collection titles
     else if (in_array($pagename,$search_title_pages)){
         if (isset($search_title)){
-            $title=$lang["searchresults"]." - ".strip_tags($search_title);
+            $title=$lang["searchresults"]." - ".html_entity_decode(strip_tags($search_title));
         }
         else if (($pagename=="collection_download") || $pagename=="edit" && getval("collection","")!=""){
             $collectiondata=get_collection($collection);
