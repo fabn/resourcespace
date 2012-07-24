@@ -164,7 +164,7 @@ if ($exiftool_fullpath!=false)
    ----------------------------------------
 */
 # Note: for good results, Photoshop Preferences must be set to save Preview image at Extra Large size.
-if ($extension=="psd" && !isset($newfile))
+if (($extension=="psd" || $extension=="psb") && !isset($newfile))
 	{
 	global $photoshop_thumb_extract;
 	if ($photoshop_thumb_extract)
