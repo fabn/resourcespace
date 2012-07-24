@@ -51,16 +51,16 @@ function save_resource_data($ref,$multi)
 		
 	global $auto_order_checkbox,$userresourcedefaults,$multilingual_text_fields,$languages,$language;
 
+	# save resource defaults
+	# (do this here so that user can override them if the fields are visible.)
+	set_resource_defaults($ref);	 
+
 	# Loop through the field data and save (if necessary)
 	$errors=array();
 	$fields=get_resource_field_data($ref,$multi);
 	$expiry_field_edited=false;
 	$resource_data=get_resource_data($ref);
-	
-	# save resource defaults
-	# (do this here so that user can override them if the fields are visible.)
-	set_resource_defaults($ref);	 
-	
+		
 	for ($n=0;$n<count($fields);$n++)
 		{
 		if (!(
