@@ -130,10 +130,6 @@ if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkbox
 	<script type="text/javascript">
 	jQuery.noConflict();
 	</script>
-	<?php if (!isset($disable_prototype)) { ?>
-	<script src="../lib/js/prototype.js" type="text/javascript"></script>
-	<script src="../lib/js/scriptaculous.js" type="text/javascript"></script>
-	<?php } ?>
 	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	function ReorderResources(id1,id2)
@@ -174,7 +170,7 @@ top.document.getElementById("topframe").rows="*<?php if ($collection_resize!=tru
 <?php if ($use_checkboxes_for_selection){ ?>
 <!--clear checkboxes-->
 <script type="text/javascript">
-jQuery(".checkselect").each(function(index, Element)
+jQuery(".checkselect",parent.main.document).each(function(index, Element)
 {jQuery(Element).attr('checked',false);});
 </script>
 <?php } ?>
@@ -343,7 +339,8 @@ if(!hook("updatemaincheckboxesfromcollectionframe")){
 			$ref=$result[$n]["ref"];
 			?>
 			<script type="text/javascript">
-			if (parent.main.jQuery('#check<?php echo $ref?>')){parent.main.jQuery('#check<?php echo $ref?>').attr('checked','true');}
+			if (jQuery('#check<?php echo $ref?>',parent.main.document)){
+				jQuery('#check<?php echo $ref?>',parent.main.document).attr('checked',true);}
 			</script>
 		<?php
 		}
