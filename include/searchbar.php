@@ -314,7 +314,7 @@ if (!$basic_simple_search)
 			<div class=\"RecordPanel\" style=\"display:none;position:fixed;top:100px;left:200px;text-align:left;\" id=\"cattree_" . $fields[$n]["name"] . "\">" . $lang["pleasewait"] . "</div>
 			<script type=\"text/javascript\">
 			// Load Category Tree
-			new Ajax.Updater ('cattree_" . $fields[$n]["name"] . "','" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "', { method: 'post', evalScripts: true });
+			jQuery('#cattree_" . $fields[$n]["name"] . "').load('" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "&nc=" . time() . "');
 			</script>		
 			";
 			?>
