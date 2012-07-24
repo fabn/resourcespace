@@ -29,10 +29,8 @@ if ($userstring=="") {$userstring=$default_user_select;}
 	<div id="userlist_+" style="display:none;"><input type=button value="<?php echo $lang['saveuserlist']?>" class="medcomplementwidth" onClick="saveUserList();" />
 	</td></tr>
 
-	<?php $user_userlists=sql_query("select * from user_userlist where user='$userref'");?>
-
 	<tr><td>
-	<select id="userlist_select" class="medwidth" onchange="document.getElementById('users').value=$(this).value;document.getElementById('userlist_name_div').style.display='none';document.getElementById('userlist_+').style.display='none';if ($('userlist_select').value==''){$('userlist_delete').style.display='none';}else{$('userlist_delete').style.display='inline';}"></select>
+		<select id="userlist_select" class="medwidth" onchange="document.getElementById('users').value=document.getElementById('userlist_select').value;document.getElementById('userlist_name_div').style.display='none';document.getElementById('userlist_+').style.display='none';if (document.getElementById('userlist_select').value==''){document.getElementById('userlist_delete').style.display='none';}else{document.getElementById('userlist_delete').style.display='inline';}"></select>
 	</td>
 	
 	<td>
@@ -44,10 +42,6 @@ if ($userstring=="") {$userstring=$default_user_select;}
 <?php hook ("addtouserselect");?>
 
 </table>
-
-<?php if ($sharing_userlists){?>
-<div id="autocomplete_userlist_choices" class="autocomplete"></div>
-<?php } ?>
 
 <script type="text/javascript">
 
@@ -74,10 +68,10 @@ function addUser(event,ui)
 	
 	<?php if ($sharing_userlists){?>
 	var parameters = 'userstring='+ users.value;
-	var newstring=new Ajax.Request("<?php echo $baseurl?>/pages/ajax/username_list_update.php",
+	var newstring=jQuery.ajax("<?php echo $baseurl?>/pages/ajax/username_list_update.php",
 		{
-		parameters: parameters,
-		onComplete: function(modified) {users.value=modified.responseText;	checkUserlist();}
+		data: parameters,
+		complete: function(modified) {users.value=modified.responseText;	checkUserlist();}
 		}
 		);
 
@@ -94,7 +88,9 @@ jQuery('#autocomplete').autocomplete(
 
 <?php if ($sharing_userlists){?>
 updateUserSelect();
-new Ajax.Autocompleter("userlist_name_value", "autocomplete_userlist_choices", "<?php echo $baseurl?>/pages/ajax/autocomplete_userlist.php");
+jQuery("#userlist_name_value").autocomplete(
+{ source:"<?php echo $baseurl?>/pages/ajax/autocomplete_userlist.php"
+} );
 <?php } ?>
 
 
@@ -106,36 +102,37 @@ function checkUserlist()
 
 	var sel = document.getElementById('userlist_select').options;
 	var newstring=true;
-	
+
 	for (n=0; n<=sel.length-1;n++) {
+		//alert (document.getElementById('users').value+'='+sel[n].value);
 		if(document.getElementById('users').value==sel[n].value){
 			sel[n].selected=true;document.getElementById("userlist_delete").style.display='inline';
 			newstring=false;
-		
 		break;}
 	}
-	
+
 	if (newstring){
 	 document.getElementById("userlist_name_div").style.display='block';
      document.getElementById("userlist_+").style.display='block';
 	 document.getElementById('userlist_select').value="";	
-	 document.getElementById('userlist_name_value').value='<?php echo $lang['typeauserlistname']?>';	
+	document.getElementById('userlist_name_value').value='';	
+	document.getElementById('userlist_name_value').placeholder='<?php echo $lang['typeauserlistname']?>';
 	 document.getElementById("userlist_delete").style.display='none';
 	}
 	else {
 	 document.getElementById("userlist_name_div").style.display='none';
      document.getElementById("userlist_+").style.display='none';
-     sel.options.selected=document.getElementById('users').value;
+
 	}
 }
 
 function saveUserList()
 	{
 	var parameters = 'user=<?php echo $userref?>&userstring='+ document.getElementById("users").value+'&userlistname='+document.getElementById("userlist_name_value").value;
-	new Ajax.Updater("userlist_select","<?php echo $baseurl?>/pages/ajax/userlist_save.php",
+	jQuery.ajax("<?php echo $baseurl?>/pages/ajax/userlist_save.php",
 		{
-		parameters: parameters,
-		onComplete: function(){
+		data: parameters,
+		complete: function(){
 			document.getElementById("userlist_name_div").style.display='none';
 			document.getElementById("userlist_+").style.display='none';
 			updateUserSelect();
@@ -148,10 +145,10 @@ function saveUserList()
 function deleteUserList()
 	{
 	var parameters = 'delete=true&userlistref='+document.getElementById('userlist_select').options[document.getElementById('userlist_select').selectedIndex].id;
-	new Ajax.Updater("userlist_select","<?php echo $baseurl?>/pages/ajax/userlist_save.php",
+	jQuery.ajax("<?php echo $baseurl?>/pages/ajax/userlist_save.php",
 		{
-		parameters: parameters,
-		onComplete: function(){
+		data: parameters,
+		complete: function(){
 			updateUserSelect();
 			//document.getElementById("userlist_name_div").style.display='none';
 			//document.getElementById("userlist_+").style.display='none';
@@ -166,12 +163,13 @@ function deleteUserList()
 function updateUserSelect()
 	{
 	var parameters = 'user=<?php echo $userref?>&userstring='+document.getElementById("users").value;
-	new Ajax.Updater("userlist_select","<?php echo $baseurl?>/pages/ajax/userlist_select_update.php",
-		{
-		parameters: parameters,
-		onComplete: function(){checkUserlist();
+	jQuery("#userlist_select").load("<?php echo $baseurl?>/pages/ajax/userlist_select_update.php",
+		
+		parameters,
+		function(){
+			checkUserlist();
 			}
-		}
+		
 	);
 
 }
