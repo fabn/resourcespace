@@ -438,5 +438,34 @@ div.autocomplete ul li {
         -moz-border-radius-bottomleft: 10px;-moz-border-radius-bottomright: 10px; -moz-border-radius-topright: 10px; 
         -webkit-border-bottom-left-radius: 10px;-webkit-border-bottom-right-radius: 10px;-moz-border-radius-topright: 10px; 
         }
+		
+#easyTooltip{
+	padding:5px;
+	background: inherit;
+	width: 156px;
+	border: 1px solid;
+	border-radius:5px;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+    -webkit-box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+    box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+	}
+	
+#advancedTooltip{
+	padding:5px;
+	background: inherit;
+	width: auto;
+	max-width: 360px;
+	border: 1px solid;
+	border-radius:5px;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+    -webkit-box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+    box-shadow: 4px 5px 5px rgba(0, 0, 0, .5);
+	}
+	
+	
 
 

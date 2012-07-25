@@ -179,7 +179,7 @@ if (!$basic_simple_search)
 	for ($n=0;$n<count($fields);$n++)
 		{
 		hook("modifysearchfieldtitle");?>
-		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>"><?php echo $fields[$n]["title"]?><br />
+		<div class="SearchItem" id="simplesearch_<?php echo $fields[$n]["ref"] ?>" <?php if (strlen($fields[$n]["tooltip_text"])>=1){echo "title=\"" . htmlspecialchars(lang_or_i18n_get_translated($fields[$n]["tooltip_text"], "fieldtooltip-")) . "\"";}?>><?php echo $fields[$n]["title"]?><br />
 		<?php
 		
 		$value=""; # to do, fetch set value.
@@ -200,7 +200,12 @@ if (!$basic_simple_search)
 				# Auto-complete search functionality
 				?></div>
 				<script type="text/javascript">
+				
+				jQuery(document).ready(function () { 
+				
 				jQuery("#field_<?php echo $fields[$n]["name"]?>").autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?field=<?php echo $fields[$n]["name"]?>&fieldref=<?php echo $fields[$n]["ref"]?>"} );
+				/* your script goes here */ })
+				
 				</script>
 				<div class="SearchItem">
 			<?php } 
@@ -481,6 +486,16 @@ if (!$basic_simple_search)
 	</div>
 
 	<script type="text/javascript">
+	
+	jQuery(document).ready(function(){
+		jQuery('.SearchItem').easyTooltip({
+			xOffset: -50,
+			yOffset: 40,
+			charwidth: 25,
+			cssclass: "ListviewStyle"
+			});
+		});
+
 	function ResetTicks() {<?php echo $clear_function?>}
 	</script>
 	

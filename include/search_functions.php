@@ -923,7 +923,7 @@ function get_advanced_search_fields($archive=false)
 	{
 	# Returns a list of fields suitable for advanced searching.	
 	$return=array();
-	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, display_as_dropdown from resource_type_field where advanced_search=1 and keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
+	$fields=sql_query("select ref, name, title, type, options ,order_by, keywords_index, partial_index, resource_type, resource_column, display_field, use_for_similar, iptc_equiv, display_template, tab_name, required, smart_theme_name, exiftool_field, advanced_search, simple_search, help_text, tooltip_text, display_as_dropdown from resource_type_field where advanced_search=1 and keywords_index=1 and length(name)>0 " . (($archive)?"":"and resource_type<>999") . " order by resource_type,order_by");
 	# Apply field permissions
 	for ($n=0;$n<count($fields);$n++)
 		{
@@ -949,7 +949,12 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 	if (!$forsearchbar)
 		{
 		?>
-		<div class="Question">
+		<div class="Question" <?php
+		if (strlen($field["tooltip_text"])>=1)
+			{
+			echo "title=\"" . htmlspecialchars(lang_or_i18n_get_translated($field["tooltip_text"], "fieldtooltip-")) . "\"";
+			}
+		?>>
 		<label><?php echo lang_or_i18n_get_translated($field["title"], "fieldtitle-")?></label>
 		<?php
 		}

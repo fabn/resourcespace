@@ -124,6 +124,18 @@ function UpdateResultCount()
 	document.getElementById("advancedform").target="";
 	document.getElementById("countonly").value="";
 	}
+	
+jQuery(document).ready(function(){
+	
+		jQuery('.Question').easyTooltip({
+			xOffset: -50,
+			yOffset: 40,
+			charwidth: 50,
+			tooltipId: "advancedTooltip",
+			cssclass: "ListviewStyle"
+			});
+		});
+
 </script>
 
 

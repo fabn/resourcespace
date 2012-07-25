@@ -44,6 +44,7 @@ http://www.resourcespace.org/
 jQuery.noConflict();
 </script>
 <script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<script src="<?php echo $baseurl?>/lib/js/easyTooltip.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <link type="text/css" href="<?php echo $baseurl?>/css/ui-lightness/jquery-ui-1.8.20.custom.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" />
 <!-- end of jQuery / jQueryUI load -->
 
