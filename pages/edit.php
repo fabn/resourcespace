@@ -593,6 +593,7 @@ if ($enable_add_collection_on_upload)
 } // end enable_add_collection_on_upload
 ?>
 	</div> <!-- end collectioninfo -->
+	</div> <!-- end question_collectionadd -->
 
 
 <?php } ?>
