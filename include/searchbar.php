@@ -203,8 +203,8 @@ if (!$basic_simple_search)
 				
 				jQuery(document).ready(function () { 
 				
-				jQuery("#field_<?php echo $fields[$n]["name"]?>").autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?field=<?php echo $fields[$n]["name"]?>&fieldref=<?php echo $fields[$n]["ref"]?>"} );
-				/* your script goes here */ })
+					jQuery("#field_<?php echo $fields[$n]["name"]?>").autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php?field=<?php echo $fields[$n]["name"]?>&fieldref=<?php echo $fields[$n]["ref"]?>"} );
+					})
 				
 				</script>
 				<div class="SearchItem">
