@@ -1060,6 +1060,7 @@ function render_search_field($field,$value="",$autoupdate,$class="stdwidth",$for
 								{
 								?>
 								<td valign=middle><input type=checkbox id="<?php echo $name?>" name="<?php echo $name?>" value="yes" <?php if (in_array(cleanse_string($trans,true),$set)) {?>checked<?php } ?> <?php if ($autoupdate) { ?>onClick="UpdateResultCount();"<?php } ?>></td><td valign=middle><?php echo htmlspecialchars($trans)?>&nbsp;&nbsp;</td>
+
 								<?php
 								}
 							else
@@ -1363,18 +1364,23 @@ function refine_searchstring($search){
 	# This causes an issue when using advanced search with check boxes.
 	# A keyword containing spaces will break the search when used with another keyword. 
 	#
+	
+	# This function solves several issues related to searching.
+	# it eliminates duplicate terms, helps the field content to carry values over into advanced search correctly, fixes a searchbar bug where separators (such as in a pasted filename) cause an initial search to fail, separates terms for searchcrumbs.
+	
 	global $use_refine_searchstring;
+	
 	if (!$use_refine_searchstring){return $search;}
-
+	
+	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {echo $search;return $search;} // preserve string search functionality.
+	
 	global $noadd;
-	// splits field-specific searches appropriately, and removes duplicate keywords
-	$search=str_replace ("\xe2\x80\x8b","",$search);
-
+	$search=str_replace(",-",", -",$search);
+	$search=str_replace ("\xe2\x80\x8b","",$search);// remove any zero width spaces.
+	
 	$keywords=split_keywords($search);
 
-	global $cattreefields; if (!isset($cattreefields)){
-		$cattreefields=get_category_tree_fields();
-	}
+	$orfields=get_OR_fields(); // leave checkbox type fields alone
 	
 	$fixedkeywords=array();
 	foreach ($keywords as $keyword){
@@ -1382,8 +1388,8 @@ function refine_searchstring($search){
 			$keywordar=explode(":",$keyword,2);
 			$keyname=$keywordar[0];
 			if (substr($keyname,0,1)!="!"){
-				if (!in_array($keyname,$cattreefields)){
-					$keyvalues=explode(" ",$keywordar[1]);
+				if (!in_array($keyname,$orfields)){
+					$keyvalues=explode(" ",str_replace($keywordar[0].":","",$keywordar[1]));
 				} else {
 					$keyvalues=array($keywordar[1]);
 				}
@@ -1393,7 +1399,7 @@ function refine_searchstring($search){
 					}
 				}
 			}
-			else {
+			else if (!in_array($keyword,$noadd)){
 				$keywords=explode(" ",$keyword);
 				$fixedkeywords[]=$keywords[0];} // for searches such as !list
 		}
@@ -1405,7 +1411,8 @@ function refine_searchstring($search){
 	}
 	$keywords=$fixedkeywords;
 	$keywords=array_unique($keywords);
-	$search=implode(",",$keywords);
+	$search=implode(", ",$keywords);
+	$search=str_replace(",-"," -",$search); // support the omission search
 	return $search;
 }
 }

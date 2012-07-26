@@ -85,8 +85,8 @@ for ($n=0;$n<count($keywords);$n++)
 	if (strpos($keyword,":")!==false)
 		{
 		$k=explode(":",$keyword);
-		$name=$k[0];
-		$keyword=$k[1];
+		$name=trim($k[0]);
+		$keyword=trim($k[1]);
 		if ($name=="day") {$found_day=$keyword;}
 		if ($name=="month") {$found_month=$keyword;}
 		if ($name=="year") {$found_year=$keyword;}
@@ -100,7 +100,8 @@ for ($n=0;$n<count($keywords);$n++)
 		if ($allwords=="") {$allwords=$keyword;} else {$allwords.=", " . $keyword;}
 		}
 	}
-$allwords=str_replace(",","",$allwords);
+$allwords=str_replace(", ","",$allwords);
+
 if (getval("resetform","")!="") {$found_year="";$found_month="";$found_day="";$allwords="";$starsearch="";}
 include "../include/header.php";
 ?>
@@ -141,7 +142,7 @@ jQuery(document).ready(function(){
 
 <!-- Search across all fields -->
 <div class="Question">
-<label for="allfields"><?php echo $lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?php echo $allwords?>" onChange="UpdateResultCount();">
+<label for="allfields"><?php echo $lang["allfields"]?></label><input class="stdwidth" type=text name="allfields" id="allfields" value="<?php echo htmlspecialchars($allwords)?>" onChange="UpdateResultCount();">
 <div class="clearerleft"> </div>
 </div>
 

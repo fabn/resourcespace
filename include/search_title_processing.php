@@ -4,27 +4,27 @@
 $search_title = "";
 $search_title_links = "";
 
-	
 # Display a title of the search (if there is a title)
 $searchcrumbs="";
-if ($search_titles_searchcrumbs){
+if ($search_titles_searchcrumbs && $use_refine_searchstring){
+$refinements=str_replace(" -",",-",urldecode($search));
 $refinements=explode(",",$search);	
 if (substr($search,0,1)=="!"){$startsearchcrumbs=1;} else {$startsearchcrumbs=0;}
 if ($refinements[0]!=""){
 	for ($n=$startsearchcrumbs;$n<count($refinements);$n++){
-		$search_title_element=$refinements[$n];
-		if ($n!=0 || $archive!=0){$searchcrumbs.=" &gt; </count> ";}
+		$search_title_element=str_replace(";"," OR ",$refinements[$n]);
+		if ($n!=0 || $archive!=0){$searchcrumbs.=" > </count> </count> </count> ";}
 		$searchcrumbs.="<a href=search.php?search=";
 		for ($x=0;$x<=$n;$x++){
 			$searchcrumbs.=urlencode($refinements[$x]);
-			if ($x!=$n){$searchcrumbs.=",";}		
+			if ($x!=$n && substr($refinements[$x+1],0)!="-"){$searchcrumbs.=",";}		
 		}
 		if (!$search_titles_shortnames){
 			$search_title_element=explode(":",$refinements[$n]);
 			if (isset($search_title_element[1])){
 				if (!isset($cattreefields)){$cattreefields=array();}
 				if (in_array($search_title_element[0],$cattreefields)){$search_title_element=$lang['fieldtype-category_tree'];}
-				else {$search_title_element=$search_title_element[1];}
+				else {$search_title_element=str_replace(";"," OR ",$search_title_element[1]);}
 				}
 			else{
 				$search_title_element=$search_title_element[0];

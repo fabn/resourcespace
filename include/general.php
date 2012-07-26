@@ -329,6 +329,7 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 	$search=str_replace("\\n"," ",$search);
 
 	$ns=trim_spaces($search);
+	
 	if ((substr($ns,0,1)==",") ||  ($index==false && strpos($ns,":")!==false)) # special 'constructed' query type, split using comma so
 	# we support keywords with spaces.
 		{
@@ -385,7 +386,7 @@ function cleanse_string($string,$preserve_separators,$preserve_hyphen=false)
         if ($preserve_hyphen)
         	{
         	# Preserve hyphen - used when NOT indexing so we know which keywords to omit from the search.
-			if (strpos($string," -")!==false && strpos($string," - ")==false)
+			if ((substr($string,0,1)=="-" /*support minus as first character for simple NOT searches */ || strpos($string," -")!==false) && strpos($string," - ")==false)
 				{
 					$separators=array_diff($separators,array("-")); # Remove hyphen from separator array.
 				}
@@ -2413,6 +2414,18 @@ function get_category_tree_fields()
 	}
 	return $cattreefields;
 	}	
+
+function get_OR_fields()
+	{
+	# Returns a list of fields that should retain semicolon separation of keywords in a search string
+
+	$fields=sql_query("select name from resource_type_field where type=7 or type=2 or type=3 and length(name)>0 order by order_by");
+	$orfields=array();
+	foreach ($fields as $field){
+		$orfields[]=$field['name'];
+	}
+	return $orfields;
+	}		
 	
 function get_fields_for_search_display($field_refs)
 {

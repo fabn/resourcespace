@@ -48,10 +48,16 @@ for ($n=0;$n<count($keywords);$n++)
 		}
 	}
 # Set the text search box to the stripped value.
-$quicksearch=join(" ",trim_array($simple));
+
+if ($quoted_string){
+	$quicksearch=join(" ",trim_array($simple));
+} else {
+	$quicksearch=join(", ",trim_array($simple));
+	$quicksearch=str_replace(",-"," -",$quicksearch);
+}
 
 # Add the quotes back, if a quoted string
-if ($quoted_string) {$quicksearch="\"" . $quicksearch . "\"";}
+if ($quoted_string) {$quicksearch="\"" . trim($quicksearch) . "\"";}
 
 # Set the predefined date fields
 $found_year="";if (isset($set_fields["year"])) {$found_year=$set_fields["year"];}
