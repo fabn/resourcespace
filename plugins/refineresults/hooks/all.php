@@ -8,18 +8,16 @@ function HookRefineresultsSearchBeforesearchresults()
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
 	?>
 	<div class="SearchOptionNav"><a href="#" onClick="
-	   function OnFinish(){
-        $('refine_keywords').focus();
-	}
-	if ($('RefinePlus').innerHTML=='+')
+	if (jQuery('#RefinePlus').html()=='+')
 		{
-		Effect.SlideDown('RefineResults',{duration:0.5,afterUpdate:OnFinish});
-		$('RefinePlus').innerHTML='&minus;';
+		jQuery('#RefineResults').slideToggle();
+		jQuery('#RefinePlus').html('&minus;');
+		jQuery('#refine_keywords').focus();
 		}
 	else
 		{
-		Effect.SlideUp('RefineResults',{duration:0.5});
-		$('RefinePlus').innerHTML='+';
+		jQuery('#RefineResults').slideToggle();
+		jQuery('#RefinePlus').html('+');
 		}
 	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a><?php if ($search!=""){?>&nbsp;&nbsp;<a href='search.php?search=<?php echo $parameters_string?>'>&gt;&nbsp;<?php echo $lang["clearsearch"]?></a><?php } ?></div>
 	<?php
