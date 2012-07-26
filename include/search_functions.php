@@ -1372,7 +1372,7 @@ function refine_searchstring($search){
 	
 	if (!$use_refine_searchstring){return $search;}
 	
-	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {echo $search;return $search;} // preserve string search functionality.
+	if (substr($search,0,1)=="\"" && substr($search,-1,1)=="\"") {return $search;} // preserve string search functionality.
 	
 	global $noadd;
 	$search=str_replace(",-",", -",$search);
