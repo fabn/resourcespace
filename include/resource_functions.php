@@ -1248,10 +1248,16 @@ function import_resource($path,$type,$title,$ingest=false)
 	return $r;
 	}
 
-function get_alternative_files($resource)
+function get_alternative_files($resource,$order_by="",$sort="")
 	{
 	# Returns a list of alternative files for the given resource
-	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='$resource' order by file_size desc");
+	if ($order_by!="" && $sort!=""){
+		$ordersort=$order_by." ".$sort.",";
+	} else {
+		$ordersort="";
+	}
+	
+	return sql_query("select ref,name,description,file_name,file_extension,file_size,creation_date,alt_type from resource_alt_files where resource='".escape_check($resource)."' order by ".escape_check($ordersort)." file_size desc");
 	}
 	
 function add_alternative_file($resource,$name,$description="",$file_name="",$file_extension="",$file_size=0,$alt_type='')

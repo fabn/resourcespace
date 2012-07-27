@@ -34,7 +34,7 @@ $sort=getval("sort",$default_sort);
 
 # next / previous resource browsing
 $go=getval("go","");
-if ($go!="")
+if ($go!="") 
 	{
 	$origref=$ref; # Store the reference of the resource before we move, in case we need to revert this.
 	
@@ -550,10 +550,26 @@ if (isset($flv_download) && $flv_download)
 # Alternative files listing
 if ($access==0) # open access only (not restricted)
 	{
-	$altfiles=get_alternative_files($ref);
+	$alt_order_by="";$alt_sort="";
+	if ($alt_types_organize){$alt_order_by="alt_type";$alt_sort="asc";} 
+	$altfiles=get_alternative_files($ref,$alt_order_by,$alt_sort);
+	$last_alt_type="-";
 	for ($n=0;$n<count($altfiles);$n++)
 		{
-		if ($n==0)
+		$alt_type=$altfiles[$n]['alt_type'];
+		if ($alt_types_organize){
+			if ($alt_type!=$last_alt_type){
+				$alt_type_header=$alt_type;
+				if ($alt_type_header==""){$alt_type_header=$lang["alternativefiles"];}
+				?>
+				<tr class="DownloadDBlend">
+				<td colspan="3"><h2><?php echo $alt_type_header?></h2></td>
+				</tr>
+				<?php
+			}
+			$last_alt_type=$alt_type;
+		}	
+		else if ($n==0)
 			{
 			?>
 			<tr>
@@ -643,9 +659,9 @@ hook ("resourceactions") ?>
 		<?php if (!$disable_link_in_view) { ?><li><a target="_top" href="<?php echo $baseurl?>/?r=<?php echo $ref?>">&gt; <?php echo $lang["link"]?></a></li><?php }} ?>
 	<?php if ($edit_access) { ?>
 		<li><a href="edit.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; 
-			<?php echo $lang["action-edit"]?></a>
-	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?>&nbsp;&nbsp;<a href="delete.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php if ($resource["archive"]==3){echo $lang["action-delete_permanently"];} else {echo $lang["action-delete"];}?></a><?php } ?></li>
-	<?php if (! $disable_alternative_files) { ?><br />
+			<?php echo $lang["action-edit"]?></a></li>
+	<?php if (!checkperm("D") and !(isset($allow_resource_deletion) && !$allow_resource_deletion)){?><li><a href="delete.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt; <?php if ($resource["archive"]==3){echo $lang["action-delete_permanently"];} else {echo $lang["action-delete"];}?></a><?php } ?></li>
+	<?php if (! $disable_alternative_files) { ?>
 	<li><a href="alternative_files.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["managealternativefiles"]?></a></li><?php } ?>
 
 	<?php } ?>

@@ -1310,6 +1310,8 @@ $replace_file_resource_title=true;
 # EXAMPLE: 
 # $alt_types=array("","Print","Web","Online Store","Detail");
 $alt_types=array("");
+# organize View page display according to alt_type
+$alt_types_organize=false;
 
 # Display col-size image of resource on alternative file management page
 $alternative_file_resource_preview=true;
