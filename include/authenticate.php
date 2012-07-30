@@ -70,18 +70,18 @@ function ip_matches($ip, $ip_restrict)
 
 if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login) && !$api || hook('provideusercredentials'))
     {
-    if (array_key_exists("user",$_COOKIE))
-    	{
-	    $s=explode("|",$_COOKIE["user"]);
-        $username=escape_check($s[0]);
-	    $session_hash=escape_check($s[1]);
-	    }
-	elseif (array_key_exists("user",$_GET))
+	if (array_key_exists("user",$_GET))
 		{
 	    $s=explode("|",$_GET["user"]);
         $username=escape_check($s[0]);
 	    $session_hash=escape_check($s[1]);
 		}
+  elseif (array_key_exists("user",$_COOKIE))
+  	{
+    $s=explode("|",$_COOKIE["user"]);
+      $username=escape_check($s[0]);
+    $session_hash=escape_check($s[1]);
+    }
 	else if (isset($anonymous_login))
 		{
 		$username=$anonymous_login;
