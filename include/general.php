@@ -2740,7 +2740,9 @@ function filesize_unlimited($path)
 
     if (PHP_OS=='WINNT')
         {
-        return exec('for %I in (' . escapeshellarg($path) . ') do @echo %~zI' );
+		$filesystem=new COM('Scripting.FileSystemObject');
+		$file=$filesystem->GetFile($path);
+		return $file->Size();
         }
     else
         {
