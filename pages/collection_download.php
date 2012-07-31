@@ -16,7 +16,11 @@ $useoriginal=getvalescaped("use_original","no");
 $collectiondata=get_collection($collection);
 $settings_id=getvalescaped("settings","");
 $uniqid=getval("id",uniqid("Col".$collection."-"));
-
+function findDuplicates($data,$dupval) {
+$nb= 0;
+foreach($data as $key => $val) {if ($val==$dupval) {$nb++;}}
+return $nb;
+}
 
 if ($use_zip_extension){
 	// set the time limit to unlimited, default 300 is not sufficient here.
@@ -115,7 +119,9 @@ if ($submitted != "")
     
 	$path="";
 	$deletion_array=array();
-
+	// set up an array to store the filenames as they are found (to analyze dupes)
+	$filenames=array();
+	
 	# Build a list of files to download
 	for ($n=0;$n<count($result);$n++)
 		{
@@ -200,7 +206,22 @@ if ($submitted != "")
                             else {$to_charset = 'UTF-8';}
                             }
                         $filename = mb_convert_encoding($filename, $to_charset, 'UTF-8');
-
+						
+						// check if a file has already been processed with this name
+						$orig_filename=$filename;
+						if (in_array($filename,$filenames)){
+							// if so, append a dupe tag
+							$path_parts=pathinfo($filename);
+							if (isset($path_parts['extension'])&& isset($path_parts['filename'])){
+								$filename_ext=$path_parts['extension'];
+								$filename_wo=$path_parts['filename'];
+								$x=findDuplicates($filenames,$filename);
+								$filename=$filename_wo."_dupe".$x.".".$filename_ext;
+							}
+						}
+						//add original file name to array
+						$filenames[]=$orig_filename;
+						
                         # Copy to tmp (if exiftool failed) or rename this file
                         # this is for extra efficiency to reduce copying and disk usage
                         
@@ -221,11 +242,12 @@ if ($submitted != "")
 				#Add resource data/collection_resource data to text file
 				if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
 					if ($size==""){$sizetext="";}else{$sizetext="-".$size;}
-					if ($subbed_original) { $sizetext = ' (' . $lang['substituted_original'] . ')'; }
+					if ($subbed_original) { $sizetext = '(' . $lang['substituted_original'] . ')'; }
 					$fields=get_resource_field_data($ref);
 					$commentdata=get_collection_resource_comment($ref,$collection);
 					if (count($fields)>0){ 
-					$text.= $lang["resourceid"] . ": " . $ref . ($sizetext=="" ? "" :" " . $sizetext) . "\r\n-----------------------------------------------------------------\r\n";
+					$text.= ($sizetext=="" ? "" : $sizetext) ." ". $filename. "\r\n-----------------------------------------------------------------\r\n";
+					$text.= $lang["resourceid"] . ": " . $ref . "\r\n";
 						for ($i=0;$i<count($fields);$i++){
 							$value=$fields[$i]["value"];
 							$title=str_replace("Keywords - ","",$fields[$i]["title"]);
