@@ -1925,3 +1925,7 @@ $display_request_log_link=false;
 
 #Show friendly error to user instead of 403 if IP not in permitted range.
 $iprestrict_friendlyerror=false;
+
+#Make search filter strict (prevents direct access to view/preview page)
+$search_filter_strict=true;
+

@@ -1776,6 +1776,25 @@ function get_resource_access($resource)
 		return $userspecific;
 		}
 		
+	global $usersearchfilter, $search_filter_strict; 
+	if ((trim($usersearchfilter)!="") && $search_filter_strict)
+		{
+		# A search filter has been set. Perform filter processing to establish if the user can view this resource.		
+		# Always load metadata, because the provided metadata may be missing fields due to permissions.
+		$metadata=get_resource_field_data($resource,false,false);
+				
+		for ($n=0;$n<count($metadata);$n++)
+			{
+			$name=$metadata[$n]["name"];
+			$value=$metadata[$n]["value"];			
+			if ($name!="")
+				{
+				$match=filter_match($usersearchfilter,$name,$value);
+				if ($match==1) {return 2;} # The match for this field was incorrect, always show as confidential in this event.
+				}
+			}
+		}
+		
 	if ($access==0 && !checkperm("g"))
 		{
 		# User does not have the 'g' permission. Always return restricted for active resources.
