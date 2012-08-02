@@ -778,7 +778,7 @@ for ($n=0;$n<count($fields);$n++)
 		?>
 		<option value="PP"><?php echo $lang["prependtext"]?></option>
 		<?php } 
-		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==7 || $fields[$n]["type"]==3) { 
+		if ($fields[$n]["type"]==0 || $fields[$n]["type"]==1 || $fields[$n]["type"]==5 || $fields[$n]["type"]==2 || $fields[$n]["type"]==7 || $fields[$n]["type"]==3 || $fields[$n]["type"]==9) { 
 		# Append applies to text boxes, checkboxes ,category tree and dropdowns only.
 		?>
 		<option value="AP"><?php echo $lang["appendtext"]?></option>
