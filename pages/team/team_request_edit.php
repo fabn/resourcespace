@@ -100,8 +100,8 @@ if (isset($warn_field_request_approval))
 <div class="Inline"><input type="radio" name="status" value="<?php echo $n?>" <?php if ($request["status"]==$n) { ?>checked <?php } ?>
 
 onClick="
-<?php if ($n==1) { ?>Effect.Appear('Expires',{duration:1});Effect.Appear('ReasonApprove',{duration:1});<?php } else { ?>Effect.DropOut('Expires',{duration:1});Effect.DropOut('ReasonApprove',{duration:1});<?php } ?>
-<?php if ($n==2) { ?>Effect.Appear('ReasonDecline',{duration:1});<?php } else { ?>Effect.DropOut('ReasonDecline',{duration:1});<?php } ?>
+<?php if ($n==1) { ?>jQuery('#Expires').fadeIn();jQuery('#ReasonApprove').fadeIn();<?php } else { ?>jQuery('#Expires').slideUp();jQuery('#ReasonApprove').slideUp();<?php } ?>
+<?php if ($n==2) { ?>jQuery('#ReasonDecline').fadeIn();<?php } else { ?>jQuery('#ReasonDecline').slideUp();<?php } ?>
 "
 
 /><?php echo $lang["resourcerequeststatus" . $n]?></div>
