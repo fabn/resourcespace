@@ -531,10 +531,35 @@ if ($enable_add_collection_on_upload)
 
 	for ($n=0;$n<count($list);$n++)
 		{
-		if ($list[$n]["ref"]==$usercollection) {$currentfound=true;}
-		?>
-		<option value="<?php echo $list[$n]['ref']?>" <?php if ($list[$n]['ref']==$collection_add){ ?>selected <?php }?>><?php echo htmlspecialchars($list[$n]["name"])?></option>
-		<?php
+		if ($collection_dropdown_user_access_mode){    
+                $colusername=$list[$n]['fullname'];
+                
+                # Work out the correct access mode to display
+                if (!hook('collectionaccessmode')) {
+                    if ($list[$n]["public"]==0){
+                        $accessmode= $lang["private"];
+                    }
+                    else{
+                        if (strlen($list[$n]["theme"])>0){
+                            $accessmode= $lang["theme"];
+                        }
+                    else{
+                            $accessmode= $lang["public"];
+                        }
+                    }
+                }
+            }	
+			
+		
+		#remove smart collections as they cannot be uploaded to.
+		if (!isset($list[$n]['savedsearch'])||(isset($list[$n]['savedsearch'])&&$list[$n]['savedsearch']==null)){
+			#show only active collections if a start date is set for $active_collections 
+			if (strtotime($list[$n]['created']) > ((isset($active_collections))?strtotime($active_collections):1))
+				{ if ($list[$n]["ref"]==$usercollection) {$currentfound=true;} ?>
+				<option value="<?php echo $list[$n]["ref"]?>" <?php if ($list[$n]['ref']==$collection_add) {?> 	selected<?php } ?>><?php echo htmlspecialchars(i18n_get_translated($list[$n]["name"]))?> <?php if ($collection_dropdown_user_access_mode){echo "(". $colusername."/".$accessmode.")"; } ?></option>
+				<?php }
+		
+			}
 		}
 	if (!$currentfound)
 		{
