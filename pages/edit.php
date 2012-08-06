@@ -541,7 +541,7 @@ if ($enable_add_collection_on_upload)
 		# The user's current collection has not been found in their list of collections (perhaps they have selected a theme to edit). Display this as a separate item.
 		$cc=get_collection($usercollection);
 		if ($cc!==false)
-			{
+			{$currentfound=true;
 			?>
 			<option value="<?php echo $usercollection?>" <?php if ($usercollection==$collection_add){?>selected <?php } ?>><?php echo htmlspecialchars($cc["name"])?></option>
 			<?php
@@ -550,26 +550,24 @@ if ($enable_add_collection_on_upload)
 	?>
 	</select>
 	<div class="clearerleft"> </div>
-	<div name="collectioninfo" id="collectioninfo">
-	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
+	<div name="collectioninfo" id="collectioninfo" <?php if ($currentfound){?>style="display:none;"<?php } ?>>
+	<div name="collectionname" id="collectionname" <?php if (!$currentfound && $upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
 	<label for="collection_add"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
 	<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
-	<div class="clearerleft" style="padding-top:10px;"> </div>
+	
 	</div>
 	
 	<?php if ($enable_public_collection_on_upload && ($enable_public_collections || checkperm('h')) && !checkperm('b')) { ?>
 	<label for="public"><?php echo $lang["access"]?></label>
 	<select id="public" name="public" class="shrtwidth"  <?php
 		if (checkperm('h')){ // if the user can add to a theme, include the code to toggle the theme selector
-		?>
-			onchange="if($(this).value==1){$('themeselect').style.display='block';resetThemeLevels();} else {$('themeselect').style.display='none'; clearThemeLevels();}"
-		<?php 
-		} ?>
+		?>onchange="if(jQuery(this).val()==1){jQuery('#themeselect').fadeIn();resetThemeLevels();} else {jQuery('#themeselect').fadeOut(); clearThemeLevels();}"<?php 
+		}
 	?>>
 	<option value="0" selected><?php echo $lang["private"]?></option>
 	<option value="1"><?php echo $lang["public"]?></option>
 	</select>
-	<div class="clearerleft"> </div>
+
 	
 	<?php 
 	if (checkperm('h')){ 
@@ -587,7 +585,7 @@ if ($enable_add_collection_on_upload)
 		
 		</div>
 		
-<?php 	
+		<?php 	
 		} // end if checkperm h 
 	} // end if public collections enabled
 } // end enable_add_collection_on_upload

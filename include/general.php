@@ -861,12 +861,14 @@ function get_usergroup($ref)
     }
 }
 
+if (!function_exists("get_user")){
 function get_user($ref)
 	{
 	# Return a user's credentials.
 	$return=sql_query("select * from user where ref='$ref'");
 	if (count($return)>0) {return $return[0];} else {return false;}
 	}
+}
 	
 if (!function_exists("save_user")){	
 function save_user($ref)
@@ -3275,3 +3277,30 @@ function get_executable_path($path, $executable, &$checked_path, $check_exe = fa
         }
     return false; # No path found.
     }
+
+if (!function_exists("resolve_user_emails")){
+function resolve_user_emails($ulist){
+	// return an array of emails from a list of usernames and email addresses. 
+	// with 'key_required' sibling array preserving the intent of internal/external sharing.
+	$emails_key_required=array();
+	for ($n=0;$n<count($ulist);$n++)
+		{
+		$uname=$ulist[$n];
+		$email=sql_value("select email value from user where username='" . escape_check($uname) . "'",'');
+		if ($email=='')
+			{
+			# Not a recognised user, if @ sign present, assume e-mail address specified
+			if (strpos($uname,"@")===false) {return($lang["couldnotmatchallusernames"]);}
+			$emails_key_required['emails'][$n]=$uname;
+			$emails_key_required['key_required'][$n]=true;
+			}
+		else
+			{
+			# Add e-mail address from user account
+			$emails_key_required['emails'][$n]=$email;
+			$emails_key_required['key_required'][$n]=false;
+			}
+		}
+	return $emails_key_required;
+}	
+}

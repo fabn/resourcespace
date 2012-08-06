@@ -720,24 +720,9 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	$emails=array();
 	$key_required=array();
 	
-	for ($n=0;$n<count($ulist);$n++)
-		{
-		$uname=$ulist[$n];
-		$email=sql_value("select email value from user where username='" . escape_check($uname) . "'",'');
-		if ($email=='')
-			{
-			# Not a recognised user, if @ sign present, assume e-mail address specified
-			if (strpos($uname,"@")===false) {return($lang["couldnotmatchallusernames"]);}
-			$emails[$n]=$uname;
-			$key_required[$n]=true;
-			}
-		else
-			{
-			# Add e-mail address from user account
-			$emails[$n]=$email;
-			$key_required[$n]=false;
-			}
-		}
+	$emails_keys=resolve_user_emails($ulist);
+	$emails=$emails_keys['emails'];
+	$key_required=$emails_keys['key_required'];
 
 	# Send an e-mail to each resolved user / e-mail address
 	$subject="$applicationname: $resourcename";

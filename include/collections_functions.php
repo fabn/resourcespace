@@ -684,24 +684,9 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	if ($feedback) {$feedback=1;} else {$feedback=0;}
 	$reflist=trim_array(explode(",",$colrefs));
 	
-	for ($n=0;$n<count($ulist);$n++)
-		{
-		$uname=$ulist[$n];
-		$email=sql_value("select email value from user where username='" . escape_check($uname) . "'",'');
-		if ($email=='')
-			{
-			# Not a recognised user, if @ sign present, assume e-mail address specified
-			if (strpos($uname,"@")===false) {return($lang["couldnotmatchallusernames"]);}
-			$emails[$n]=$uname;
-			$key_required[$n]=true;
-			}
-		else
-			{
-			# Add e-mail address from user account
-			$emails[$n]=$email;
-			$key_required[$n]=false;
-			}
-		}
+	$emails_key_required=resolve_user_emails($ulist);
+	$emails=$emails_keys['emails'];
+	$key_required=$emails_keys['key_required'];
 
 	# Add the collection(s) to the user's My Collections page
 	$urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
