@@ -618,7 +618,7 @@ if (isset($metadata_template_resource_type) && !$multiple && !checkperm("F*"))
 	?>
 	<div class="Question" id="question_metadatatemplate">
 	<label for="metadatatemplate"><?php echo $lang["usemetadatatemplate"]?></label>
-	<select name="metadatatemplate" class="stdwidth" style="width:310px;">
+	<select name="metadatatemplate" class="medwidth">
 	<option value=""><?php echo (getval("metadatatemplate","")=="")?$lang["select"]:$lang["undometadatatemplate"] ?></option>
 	<?php
 	$templates=get_metadata_templates();
@@ -630,7 +630,7 @@ if (isset($metadata_template_resource_type) && !$multiple && !checkperm("F*"))
 		}
 	?>
 	</select>
-	<input type="submit" name="copyfromsubmit" value="<?php echo $lang["action-select"]?>">
+	<input type="submit" class="medcomplementwidth" name="copyfromsubmit" value="<?php echo $lang["action-select"]?>">
 	</div>
 	<?php
 	}

@@ -192,7 +192,7 @@ option {font-size:11px;}
 .Question .medwidth,.medwidth{width: 250px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .shrtwidth,.shrtwidth{width: 145px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
 .Question .vshrtwidth{width: 93px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
-.Question .medcomplementwidth{width: 102px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px;}
+.Question .medcomplementwidth{width: 105px;font: 11px Tahoma, Arial, Helvetica, sans-serif;margin: 3px 0px 0px 2px;}
 .Question .Inline {float: left;margin: 3px 10px 0px 0px;}
 .Question .tickset {float: left;}
 .Question .OptionTable, .Question .OptionToggle {margin: 0 0 0 150px;padding:0;}

@@ -89,8 +89,8 @@ if ($i==0){$themeindex="";}else{$themeindex=$i+1;}
 		</select>
 		<div class="clearerleft"> </div>
 		<label><?php echo $lang["newcategoryname"]?></label>
-		<input type=text class="medwidth" name="newtheme<?php echo $i ?>" id="newtheme<?php echo $i ?>" value="" maxlength="100">
-		<input type=button class="medcomplementwidth" value="Save" style="display:inline;" onclick="updateThemeLevels(<?php echo $i ?>);"/>
+		<input type=text class="medwidth" name="newtheme<?php echo $i ?>" id="newtheme<?php echo $i ?>" value="">
+		<input type=button class="medcomplementwidth" value="Save" onclick="updateThemeLevels(<?php echo $i ?>);"/>
 		<div class="clearerleft"> </div>
 	</div>
 </div>
