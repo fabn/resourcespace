@@ -5,7 +5,7 @@ include "../../include/db.php";
 include "../../include/authenticate.php";
 include "../../include/general.php";
 
-$user=getvalescaped("user","");
+$user=getvalescaped("userref","");
 $userstring=getvalescaped("userstring","");
 $userlistname=getvalescaped("userlistname","");
 $delete=getvalescaped("delete","");

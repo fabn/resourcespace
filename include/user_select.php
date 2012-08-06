@@ -128,7 +128,7 @@ function checkUserlist()
 
 function saveUserList()
 	{
-	var parameters = 'user=<?php echo $userref?>&userstring='+ document.getElementById("users").value+'&userlistname='+document.getElementById("userlist_name_value").value;
+	var parameters = 'userref=<?php echo $userref?>&userstring='+ document.getElementById("users").value+'&userlistname='+document.getElementById("userlist_name_value").value;
 	jQuery.ajax("<?php echo $baseurl?>/pages/ajax/userlist_save.php",
 		{
 		data: parameters,
@@ -162,7 +162,7 @@ function deleteUserList()
 
 function updateUserSelect()
 	{
-	var parameters = 'user=<?php echo $userref?>&userstring='+document.getElementById("users").value;
+	var parameters = 'userref=<?php echo $userref?>&userstring='+document.getElementById("users").value;
 	jQuery("#userlist_select").load("<?php echo $baseurl?>/pages/ajax/userlist_select_update.php",
 		
 		parameters,
