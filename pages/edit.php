@@ -513,7 +513,7 @@ if ($enable_add_collection_on_upload)
 	?>
 	<div class="Question" id="question_collectionadd">
 	<label for="collection_add"><?php echo $lang["addtocollection"]?></label>
-	<select name="collection_add" id="collection_add" class="stdwidth"   onchange="if(jQuery(this).val()==-1) {jQuery('#collectioninfo').fadeIn();} else {jQuery('#collectioninfo').fadeOut();}">
+	<select name="collection_add" id="collection_add" class="stdwidth">
 	<?php if ($upload_add_to_new_collection_opt) { ?><option value="-1" <?php if ($upload_add_to_new_collection){ ?>selected <?php }?>>(<?php echo $lang["createnewcollection"]?>)</option><?php } ?>
 	<?php if ($upload_do_not_add_to_new_collection_opt) { ?><option value="" <?php if (!$upload_add_to_new_collection){ ?>selected <?php }?>><?php echo $lang["batchdonotaddcollection"]?></option><?php } ?>
 	<?php
@@ -550,8 +550,8 @@ if ($enable_add_collection_on_upload)
 	?>
 	</select>
 	<div class="clearerleft"> </div>
-	<div name="collectioninfo" id="collectioninfo" <?php if ($currentfound){?>style="display:none;"<?php } ?>>
-	<div name="collectionname" id="collectionname" <?php if (!$currentfound && $upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
+	<div name="collectioninfo" id="collectioninfo">
+	<div name="collectionname" id="collectionname" <?php if ($upload_add_to_new_collection && $upload_add_to_new_collection_opt){ ?> style="display:block;"<?php } else { ?> style="display:none;"<?php } ?>>
 	<label for="collection_add"><?php echo $lang["collectionname"]?><?php if ($upload_collection_name_required){?><sup>*</sup><?php } ?></label>
 	<input type=text id="entercolname" name="entercolname" class="stdwidth" value='<?php echo htmlentities(stripslashes(getval("entercolname","")), ENT_QUOTES);?>'> 
 	
