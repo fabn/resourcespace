@@ -15,36 +15,11 @@ if ($pos!==true && extension_loaded('uploadprogress')){
     $show_progress=true;
 }
 
-if ($show_progress){
-// progress bar if uploadprogress pecl extension is installed
-$uid = md5(uniqid(mt_rand()));
-$headerinsert.="<script type=\"text/javascript\">
-function showprogress(){
-        var started='no';
-progressbar = new Ajax.PeriodicalUpdater('progress-bar', '".$baseurl."/pages/ajax/get_progress.php',
-	{frequency:1,
-    parameters: { uid:'".$uid."'},
-	onSuccess: function(response) {
-            var status=response.responseText;
-            $('meter').style.display='block';
-            if (status<=100 && started=='yes'){      
-                $('meter-value').morph('width:'+status+'%',{duration:.2});
-                $('meter-text').innerHTML=status+'%'; 
-            }
-            if (status==100 && started=='yes'){
-                $('meter-text').innerHTML='".$lang['pleasewait']."';
-            }
-            if (status<100){      
-                started='yes';
-            }                         
-            }
-	 });
+if (extension_loaded("uploadprogress")){
+	$headerinsert.="<script type=\"text/javascript\" src=\"".$baseurl."/lib/js/jquery-periodical-updater.js\"></script>";
 }
 
 
-</script>
-";
-}
 
 $ref=getvalescaped("ref","",true);
 $resource_type=getvalescaped("resource_type","");
@@ -94,8 +69,42 @@ if (array_key_exists("userfile",$_FILES))
 
 
 include "../include/header.php";
-?>
 
+if ($show_progress){
+// progress bar if uploadprogress pecl extension is installed
+$uid = md5(uniqid(mt_rand()));?>
+
+<script type="text/javascript">
+function showprogress(){
+	
+	var progressbar = jQuery.PeriodicalUpdater('<?php echo $baseurl?>/pages/ajax/get_progress.php?uid=<?php echo $uid?>',{
+	   method: 'post',          // method; get or post
+        data: '',          
+        minTimeout: 500,       // starting value for the timeout in milliseconds
+        maxTimeout: 1000,       // maximum length of time between requests
+        multiplier: 1.5,          // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
+        type: 'text'           // response type - text, xml, json, etc.  
+       
+	},function(remoteData, success, xhr, handle) {
+            var status=remoteData; console.log('start');
+            jQuery('#meter').style.display='block';
+            if (status<=100 && started=='yes'){      
+				console.log(status);
+				jQuery('#meter-value').animate({width:status+'%',duration:.2});
+                jQuery('#meter-text').innerHTML=status+'%'; 
+            }
+            if (status==100 && started=='yes'){
+                jQuery('#meter-text').innerHTML='<?php echo $lang['pleasewait']?>';
+            }
+            if (status<100){      
+                started='yes';
+            }                         
+            });
+
+}
+
+</script>
+<?php } ?>
 <div id="test"></div>
 <div class="BasicsBox">
 <?php
@@ -149,7 +158,7 @@ function check(filename) {
 }
 </script>
 
-<form method="post" class="form" enctype="multipart/form-data" <?php if ($show_progress){?>onsubmit="showprogress();"<?php } ?>>
+<form method="post" class="form" enctype="multipart/form-data">
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
@@ -176,7 +185,7 @@ if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_file","")!="
     } ?>
 
 <?php if ($show_progress){?>
-<div class="Question" id="meter" style="display:none;">
+<div class="Question" id="meter">
 <label><?php echo $lang["progress"] ?></label>
 <div class="Fixed">
     <div class="Fixed meter-wrap" id="meter-wrap" name="meter-wrap">
@@ -197,7 +206,7 @@ if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_file","")!="
 		<input name="back" type="button" onclick="history.back(-1)" value="&nbsp;&nbsp;<?php echo $lang["back"] ?>&nbsp;&nbsp;" />
 		<input name="createblank" type="submit" value="&nbsp;&nbsp;<?php echo $lang['noupload'] ?>&nbsp;&nbsp;" /><?php
 		} ?>
-	<input name="save" type="submit" onclick="if (!check(this.form.userfile.value)){$('invalid').style.display='block';return false;}else {$('invalid').style.display='none';}" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
+	<input name="save" type="submit" onclick="<?php if ($show_progress){?>showprogress();<?php } ?> if (!check(this.form.userfile.value)){jQuery('#invalid').fadeIn();return false;}else {jQuery('#invalid').fadeOut();}" value="&nbsp;&nbsp;<?php echo $lang["action-upload"]?>&nbsp;&nbsp;" />
 </div>
 
 <?php if (!$hide_uploadertryother) { ?>
