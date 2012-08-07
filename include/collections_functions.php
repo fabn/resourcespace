@@ -719,7 +719,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	if ($fromusername==""){$fromusername=$applicationname;} // fromusername is used for describing the sender's name inside the email
 	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
 	
-	$templatevars['message']=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);	
+	$templatevars['message']="\"".str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message)."\"";	
 	$templatevars['fromusername']=$fromusername;
 	$templatevars['from_name']=$from_name;
 	
@@ -752,11 +752,11 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 			$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
 			$url="<a href=\"$url\">$collection_name</a>";}	
 			
-			$list .= $htmlbreak.$url."\n\n";
+			$list .= $htmlbreak.$url;
 					#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
 			}
-		$list.=$htmlbreak;	
+		//$list.=$htmlbreak;	
 		$templatevars['list']=$list;
 		$templatevars['from_name']=$from_name;
 		if ($emailcollectionmessageexternal){
@@ -765,7 +765,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		else {
 			$template="emailcollection";
 		}
-		$body=$templatevars['fromusername']." " . (($emailcollectionmessageexternal)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . $lang["message"] . ": " .$templatevars['message']."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
+		$body=$templatevars['fromusername']." " . (($emailcollectionmessageexternal)?$lang["emailcollectionmessageexternal"]:$lang["emailcollectionmessage"]) . "\n\n" . (($templatevars['message']=="")?$lang["message"] . ": ".$lang['none']:$lang["message"] . ": " .$templatevars['message'])."\n\n" . $lang["clicklinkviewcollection"] ."\n\n".$templatevars['list'];
 		send_mail($emails[$nx1],$subject,$body,$fromusername,$useremail,$template,$templatevars,$from_name,$cc);
 		}
 		
