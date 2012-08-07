@@ -65,7 +65,6 @@ if ($collection!="")
 	$items=get_collection_resources($collection);
 	if (count($items)==0) {
 		$error=$lang['error-cannoteditemptycollection'];
-		include "../include/header.php";
 		error_alert($error);
 		exit();
 	}
@@ -73,7 +72,6 @@ if ($collection!="")
 	# check editability
 	if (!allow_multi_edit($collection)){
 		$error=$lang['error-permissiondenied'];
-		include "../include/header.php";
 		error_alert($error);
 		exit();
 	}
@@ -97,7 +95,6 @@ $resource=get_resource_data($ref);
 # Not allowed to edit this resource?
 if (!get_edit_access($ref,$resource["archive"])) {
 		$error=$lang['error-permissiondenied'];
-		include "../include/header.php";
 		error_alert($error);
 		exit();
 		}

@@ -12,7 +12,6 @@ $resource=get_resource_data($ref);
 # Not allowed to edit this resource?
 if (!get_edit_access($ref,$resource["archive"])) {
 		$error=$lang['error-permissiondenied'];
-		include "../include/header.php";
 		error_alert($error);
 		exit();
 		}

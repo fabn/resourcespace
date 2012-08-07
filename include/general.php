@@ -1331,14 +1331,14 @@ function bulk_mail($userlist,$subject,$text,$html=false)
     if (trim($userlist)=="") {return ($lang["mustspecifyoneuser"]);}
     $userlist=resolve_userlist_groups($userlist);
     $ulist=trim_array(explode(",",$userlist));
-    $urefs=sql_array("select ref value from user where username in ('" . join("','",$ulist) . "')");
-    if (count($ulist)!=count($urefs)) {return($lang["couldnotmatchusers"]);}
-
+    
+    $emails=resolve_user_emails($ulist);
+    $emails=$emails['emails'];
+    
     $templatevars['text']=stripslashes(str_replace("\\r\\n","\n",$text));
     $body=$templatevars['text'];
 
     # Send an e-mail to each resolved user
-    $emails=sql_array("select email value from user where ref in ('" . join("','",$urefs) . "')");
     for ($n=0;$n<count($emails);$n++)
         {
         if ($emails[$n]!=""){
@@ -3019,6 +3019,11 @@ function run_external($cmd,&$code)
 }
 
 function error_alert($error,$back=true){
+
+	foreach ($GLOBALS as $key=>$value){
+		$$key=$value;
+	} 
+	if ($back){include($storagedir."/../include/header.php");}
 	echo "<script type='text/javascript'>
 	alert('$error');";
 	if ($back){echo "history.go(-1);";}
@@ -3290,13 +3295,17 @@ function resolve_user_emails($ulist){
 		if ($email=='')
 			{
 			# Not a recognised user, if @ sign present, assume e-mail address specified
-			if (strpos($uname,"@")===false) {return($lang["couldnotmatchallusernames"]);}
+			if (strpos($uname,"@")===false) {
+				error_alert($lang["couldnotmatchallusernames"]);die();
+			}
+			$emails_key_required['unames'][$n]=$uname;
 			$emails_key_required['emails'][$n]=$uname;
 			$emails_key_required['key_required'][$n]=true;
 			}
 		else
 			{
 			# Add e-mail address from user account
+			$emails_key_required['unames'][$n]=$uname;
 			$emails_key_required['emails'][$n]=$email;
 			$emails_key_required['key_required'][$n]=false;
 			}

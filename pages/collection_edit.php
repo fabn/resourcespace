@@ -16,7 +16,6 @@ $sort=getval("sort","ASC");
 # Fetch collection data
 $collection=get_collection($ref);if ($collection===false) {
 	$error=$lang['error-collectionnotfound'];
-	include "../include/header.php";
 	error_alert($error);
 	exit();
 	}

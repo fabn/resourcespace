@@ -684,7 +684,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	if ($feedback) {$feedback=1;} else {$feedback=0;}
 	$reflist=trim_array(explode(",",$colrefs));
 	
-	$emails_key_required=resolve_user_emails($ulist);
+	$emails_keys=resolve_user_emails($ulist);
 	$emails=$emails_keys['emails'];
 	$key_required=$emails_keys['key_required'];
 

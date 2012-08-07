@@ -721,6 +721,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	$key_required=array();
 	
 	$emails_keys=resolve_user_emails($ulist);
+	$unames=$emails_keys['unames'];
 	$emails=$emails_keys['emails'];
 	$key_required=$emails_keys['key_required'];
 
@@ -759,7 +760,7 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 		send_mail($emails[$n],$subject,$body,$fromusername,$useremail,"emailresource",$templatevars,$from_name,$cc);
 		
 		# log this
-		resource_log($resource,"E","",$notes=$ulist[$n]);
+		resource_log($resource,"E","",$notes=$unames[$n]);
 		
 		}
 		
