@@ -730,7 +730,8 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	if ($fromusername==""){$fromusername=$applicationname;} // fromusername is used for describing the sender's name inside the email
 	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
 	
-	if ($message!="") {$message=$lang["message"] . ": \"" . str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message)."\"";} else {$lang["message"] . ": ".$lang['none'];}
+	$message=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);
+	if ($message==""){$message=$lang['nomessage'];}
 	for ($n=0;$n<count($emails);$n++)
 		{
 		$key="";
