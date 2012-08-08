@@ -33,6 +33,8 @@ include "../../include/header.php";
 
 <div class="Question"><label><?php echo $lang["emailtext"]?></label><textarea name="text" class="stdwidth" rows=25 cols=50><?php echo htmlspecialchars(getval("text",""))?></textarea><div class="clearerleft"> </div></div>
 
+<?php hook("additionalemailfield");?>
+
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
 <input name="send" type="submit" value="&nbsp;&nbsp;<?php echo $lang["send"]?>&nbsp;&nbsp;" />

@@ -47,8 +47,9 @@ if (getval("save","")!="")
 		{
 		# Log this			
 		daily_stat("E-mailed resource",$ref);
-
-		redirect("pages/done.php?text=resource_email&resource=$ref&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
+		if (!hook("replaceresourceemailredirect")){
+			redirect("pages/done.php?text=resource_email&resource=$ref&search=".urlencode($search)."&offset=".$offset."&order_by=".$order_by."&sort=".$sort."&archive=".$archive);
+		}
 		}
 	}
 
@@ -133,6 +134,8 @@ for ($n=$access;$n<=1;$n++) { ?>
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+
+<?php hook("additionalemailfield");?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>
 <div class="QuestionSubmit">

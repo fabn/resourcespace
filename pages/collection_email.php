@@ -41,7 +41,9 @@ if (getval("save","")!="")
 		{
 		# Log this			
 		daily_stat("E-mailed collection",$ref);
-		redirect("pages/done.php?text=collection_email");
+		if (!hook("replacecollectionemailredirect")){
+			redirect("pages/done.php?text=collection_email");
+			}
 		}
 	}
 
@@ -221,6 +223,8 @@ for ($n=$minaccess;$n<=1;$n++) { ?>
 <div class="clearerleft"> </div>
 </div>
 <?php } ?>
+
+<?php hook("additionalemailfield");?>
 
 <?php if(!hook("replaceemailsubmitbutton")){?>
 <div class="QuestionSubmit">
