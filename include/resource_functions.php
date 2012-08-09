@@ -146,6 +146,17 @@ function save_resource_data($ref,$multi)
 				$val=getvalescaped("field_" . $fields[$n]["ref"],"");
 				} 
 			
+			# Check for regular expression match
+			if (trim(strlen($fields[$n]["regexp_filter"]))>=1 && strlen($val)>0)
+				{
+				if(preg_match("#^" . $fields[$n]["regexp_filter"] . "$#",$val,$matches)<=0)
+					{
+					global $lang;
+					$errors[$fields[$n]["ref"]]=$lang["information-regexp_fail"] . " : " . $val;
+#					exit($lang["information-regexp_fail"] . ": -<br>" . "reg exp: " . $escapedregexp . "<br>Escaped value passed: " . $val);
+					}
+				}
+			
 			if (str_replace("\r\n","\n",$fields[$n]["value"])!== str_replace("\r\n","\n",unescape($val)))
 				{
 				//$testvalue=$fields[$n]["value"];var_dump($testvalue);$val=unescape($val);var_dump($val);

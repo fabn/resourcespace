@@ -1062,11 +1062,16 @@ if (!$multiple && $ref>0) {EditNav();}
 <?php if (!$is_template) { ?><p><sup>*</sup> <?php echo $lang["requiredfield"]?></p><?php } ?>
 </div>
 
-<?php if (isset($show_error)){?>
-    <script type="text/javascript">
-    alert('<?php echo addslashes($lang["requiredfields"]) ?>');
-    </script><?php
+<?php if (isset($show_error)){
+	foreach ($save_errors as $save_error_field=>$save_error_message)
+		{	
+		?>
+	    <script type="text/javascript">
+	    alert('<?php echo $save_error_message ?>');
+	    </script><?php
+	    }
     }
+
 ?>
 <!--<p><a href="view.php?ref=<?php echo $ref?>">Back to view</a></p>-->
 <? hook("autolivejs"); ?>
