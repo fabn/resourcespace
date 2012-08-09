@@ -224,12 +224,15 @@ rl.date 'Date / Time',
 concat(u.username,' (',u.fullname,' )') 'Downloaded By User',
 g.name 'User Group',
 r.ref 'Resource ID',
-r.view_title_field 'Resource Title'
+r.title 'Resource Title',
+rt.name 'Resource Type'
+
 from
 resource_log rl
 join resource r on r.ref=rl.resource
 left outer join user u on rl.user=u.ref
 left outer join usergroup g on u.usergroup=g.ref
+left outer join resource_type rt on r.resource_type=rt.ref
 where
 rl.type='d'
 and
