@@ -755,7 +755,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
 				$link="<a href=\"$url\">$collection_name</a>";}	
 				// alternate list style
-				$list2.=$htmlbreak.$collection_name.'-'.$htmlbreaksingle.$url;
+				$list2.=$htmlbreak.$collection_name.' -'.$htmlbreaksingle.$url;
 				$list .= $htmlbreak.$link;
 				#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
