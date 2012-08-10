@@ -39,8 +39,12 @@ if (getval("save","")!="")
 
 	if ($errors=="")
 		{
-		# Log this			
-		daily_stat("E-mailed collection",$ref);
+		# Log this	
+		// fix for bomb on multiple collections, daily stat object ref must be a single number.
+		$crefs=explode(",",$ref);
+		foreach ($crefs as $cref){		
+			daily_stat("E-mailed collection",$cref);
+		}
 		if (!hook("replacecollectionemailredirect")){
 			redirect("pages/done.php?text=collection_email");
 			}

@@ -714,7 +714,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 	# htmlbreak is for composing list
 	$htmlbreak="";
 	global $use_phpmailer;
-	if ($use_phpmailer){$htmlbreak="<br><br>";} 
+	if ($use_phpmailer){$htmlbreak="<br><br>";$htmlbreaksingle="<br>";} 
 	
 	if ($fromusername==""){$fromusername=$applicationname;} // fromusername is used for describing the sender's name inside the email
 	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
@@ -735,6 +735,7 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 		{
 		## loop through collections
 		$list="";
+		$list2="";
 		for ($nx2=0;$nx2<count($reflist);$nx2++)
 			{
 			$url="";
@@ -750,16 +751,18 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 			$url=$baseurl . 	"/?c=" . $reflist[$nx2] . $key;
 			
 			if ($use_phpmailer){
-			$collection_name="";
-			$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
-			$url="<a href=\"$url\">$collection_name</a>";}	
-			
-			$list .= $htmlbreak.$url;
-					#log this
+				$collection_name="";
+				$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
+				$link="<a href=\"$url\">$collection_name</a>";}	
+				// alternate list style
+				$list2.=$htmlbreak.$collection_name.'-'.$htmlbreaksingle.$url;
+				$list .= $htmlbreak.$link;
+				#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
 			}
 		//$list.=$htmlbreak;	
 		$templatevars['list']=$list;
+		$templatevars['list2']=$list2;
 		$templatevars['from_name']=$from_name;
 		if ($emailcollectionmessageexternal){
 			$template="emailcollectionexternal";
