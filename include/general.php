@@ -2955,10 +2955,15 @@ function run_command($command)
 	{
 	# Works like system(), but returns the complete output string rather than just the
 	# last line of it.
-	$process = @proc_open($command, array(1 => array('pipe', 'w')), $pipe, NULL, NULL,
+	debug("CLI command: $command");
+	$process = @proc_open($command, array(1 => array('pipe', 'w'), 2 => array('pipe', 'w')), $pipe, NULL, NULL,
 			array('bypass_shell' => true));
-	if (is_resource($process))
-		return trim(stream_get_contents($pipe[1]));
+	if (is_resource($process)) {
+	  $output = trim(stream_get_contents($pipe[1]));
+	  debug("CLI output: $output");
+	  debug("CLI errors: ". trim(stream_get_contents($pipe[2])));
+		return $output;  
+	}
 
 	return '';
 	}
@@ -2968,6 +2973,7 @@ function run_external($cmd,&$code)
 # Thanks to dk at brightbyte dot de
 # http://php.net/manual/en/function.shell-exec.php
 # Returns an array with the resulting output (stdout & stderr). 
+    debug("CLI command: $cmd");
 
     $descriptorspec = array(
         0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
@@ -3014,6 +3020,8 @@ function run_external($cmd,&$code)
 
     fclose($pipes[1]);
     fclose($pipes[2]);
+    
+    debug("CLI output: ". implode("\n", $output));
 
     $code = proc_close($process);
 
