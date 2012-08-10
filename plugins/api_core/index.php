@@ -6,7 +6,7 @@ if (!in_array("api_core",$plugins)){die("no access");}
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<h1><?php echo $lang["apiaccess"]?></h1>
+<p><a href="<?php echo $baseurl?>/pages/change_password.php">&lt; <?php echo $lang["back"]?></a></p><h1><?php echo $lang["apiaccess"]?></h1>
 </div>
 
 <?php if (!$enable_remote_apis || $api_scramble_key=="abcdef123"){echo $lang["remoteapisnotavailable"]; exit();}?>

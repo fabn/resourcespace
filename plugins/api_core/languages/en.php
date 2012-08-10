@@ -1,5 +1,6 @@
 <?php
 $lang["apiaccess"]="API Access";
+$lang["apiaccess-intro"]="View information about available APIs, usage and keys";
 $lang["availableapis"]="Available APIs";
 $lang["remoteapisnotavailable"]="Remote APIs are not available on this system. Please ask your administrator to enable remote APIs with enable_remote_apis and a unique api_scramble_key.";
 $lang["yourauthkey"]="Your Authentication Key";
