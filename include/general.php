@@ -1570,6 +1570,12 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 					$$variable="<img style='border:1px solid #d1d1d1;' src='cid:thumbnail' />";
 				}
 				
+				# embed images (find them in relation to storagedir so that templates are portable)...  (ex [img_storagedir_/../gfx/whitegry/titles/title.gif])
+				else if (substr($variable,0,15)=="img_storagedir_"){
+					$$variable="<img src='cid:".basename(substr($variable,15))."'/>";
+					$images[]=$storagedir.substr($variable,15);
+				}
+				
 				# embed images (ex [img_/var/www/resourcespace/gfx/whitegry/titles/title.gif])
 				else if (substr($variable,0,4)=="img_"){
 					$$variable="<img src='cid:".basename(substr($variable,4))."'/>";
