@@ -58,12 +58,16 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	<td><?php echo nicedate($requests[$n]["created"],true)?></td>
 	<td><?php echo $requests[$n]["c"] ?></td>
 	<td><?php echo $lang["resourcerequeststatus" . $requests[$n]["status"]] ?></td>
-	<td><div class="ListTools">
+	<td>
+	<div class="ListTools">
+	<?php if ($requests[$n]["collection_id"] > 0){ // only show tools if the collection still exists ?>
 		<a href="search.php?search=<?php echo urlencode("!collection" . $requests[$n]["collection"])?>">&gt;&nbsp;<?php echo $lang["action-view"]?></a>
         &nbsp;<a <?php if ($frameless_collections && !checkperm("b")){ ?>href onclick="ChangeCollection(<?php echo $requests[$n]["collection"]?>);"
                 <?php } elseif ($autoshow_thumbs) {?>onclick=" top.document.getElementById('topframe').rows='*<?php if ($collection_resize!=true) {?>,3<?php } ?>,138'; return true;"
                 href="collections.php?collection=<?php echo $requests[$n]["collection"]?>&amp;thumbs=show" target="collections"
                 <?php } else {?>href="collections.php?collection=<?php echo $requests[$n]["collection"]?>" target="collections"<?php }?>>&gt;&nbsp;<?php echo $lang["action-select"]?></a>
+	<?php } // end of if collection still exists ?>
+	</div>
 	</td>
 	</tr>
 	<?php
@@ -72,7 +76,8 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 
 </table>
 </div><!--end of Listview -->
-<div class="BottomInpageNav"><?php pager(false); ?></div>
+<div class="BottomInpageNav"><?php pager(false); ?>
+</div>
 </div><!-- end of BasicsBox -->
 
 
