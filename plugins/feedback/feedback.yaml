@@ -1,0 +1,5 @@
+name: feedback
+author: Dan Huby
+version: 1.0
+desc: Adds a general user feedback function with configurable questions.
+config_url: /plugins/feedback/pages/setup.php
