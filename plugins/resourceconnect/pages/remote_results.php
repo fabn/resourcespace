@@ -22,9 +22,25 @@ if (count($userinfo)>0)
 	$userrequestmode=0; # Always use 'email' request mode for external users
 	}
 
+$restypes="";
+# Resolve resource types
+$resource_types=get_resource_types();
+$rtx=explode(",",getvalescaped("restypes",""));
+foreach ($rtx as $rt)
+	{
+	# Locate the resource type name in the local list.	
+	# We have to handle resource type names because the resource type numeric IDs could be different from system to system.
+	foreach ($resource_types as $resource_type)
+		{
+		if ($resource_type["name"]==$rt)
+			{
+			if ($restypes!="") {$restypes.=",";}	
+			$restypes.=$resource_type["ref"];
+			}
+		}
+	}
 
-
-$results=do_search($search,"","relevance",0,$pagesize+$offset,"desc",false,"",true); # Search, ignoring filters (as fields are unlikely to match).
+$results=do_search($search,$restypes,"relevance",0,$pagesize+$offset,"desc",false,"",true); # Search, ignoring filters (as fields are unlikely to match).
 
 # The access key is used to sign all inbound queries, the remote system must therefore know the access key.
 $access_key=md5("resourceconnect" . $scramble_key);

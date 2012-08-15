@@ -29,6 +29,24 @@ function HookResourceConnectSearchRepleacesearchresults()
 	$affiliate=$resourceconnect_affiliates[$resourceconnect_selected];
 	$counter=$resourceconnect_selected;
 	$page_size=15;
+	
+	$restypes="";
+	$resource_types=get_resource_types();
+	reset($_GET);foreach ($_GET as $key=>$value)
+		{
+		if (substr($key,0,8)=="resource")
+			{
+			$restype=substr($key,8);
+			if (is_numeric($restype)) 
+				{
+				if ($restypes!="") {$restypes.=",";}
+				foreach ($resource_types as $resource_type)		
+					{
+					if ($resource_type["ref"]==$restype) {$restypes.=$resource_type["name"];}
+					}
+				}
+			}
+		}
 	?>	
 		
 	<div id="resourceconnect_container_<?php echo $counter ?>"><p><?php echo $lang["resourceconnect-pleasewait"] ?></p></div>
@@ -42,7 +60,7 @@ function HookResourceConnectSearchRepleacesearchresults()
 		offset_<?php echo $counter ?>+=distance;
 		if (offset_<?php echo $counter ?><0) {offset_<?php echo $counter ?>=0;}
 	
-		jQuery('#resourceconnect_container_<?php echo $counter ?>').load('<?php echo $baseurl ?>/plugins/resourceconnect/pages/ajax_request.php?search=<?php echo urlencode($search) ?>&pagesize=<?php echo $page_size ?>&affiliate=<?php echo $resourceconnect_selected ?>&affiliatename=<?php echo urlencode($affiliate["name"]) ?>&offset=' + offset_<?php echo $counter ?>);
+		jQuery('#resourceconnect_container_<?php echo $counter ?>').load('<?php echo $baseurl ?>/plugins/resourceconnect/pages/ajax_request.php?search=<?php echo urlencode($search) ?>&pagesize=<?php echo $page_size ?>&affiliate=<?php echo $resourceconnect_selected ?>&affiliatename=<?php echo urlencode($affiliate["name"]) ?>&restypes=<?php echo urlencode($restypes) ?>&offset=' + offset_<?php echo $counter ?>);
 
 		
 		}

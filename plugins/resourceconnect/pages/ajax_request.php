@@ -13,12 +13,13 @@ $abaseurl=$affiliate["baseurl"];
 $search=getval("search","");
 $offset=getval("offset","");
 $pagesize=getval("pagesize","");
+$restypes=getval("restypes","");
 
 # Sign this request.
 $access_key=$affiliate["accesskey"];
 $sign=md5($access_key . $search);
 
-echo file_get_contents($abaseurl . "/plugins/resourceconnect/pages/remote_results.php?search=" . urlencode($search) . "&pagesize=" . $pagesize . "&offset=" . $offset . "&sign=" . urlencode($sign) . "&language_set="  . urlencode($language) . "&affiliatename=" . urlencode(getval("affiliatename","")) . "&resourceconnect_source=" . urlencode($baseurl));
+echo file_get_contents($abaseurl . "/plugins/resourceconnect/pages/remote_results.php?search=" . urlencode($search) . "&pagesize=" . $pagesize . "&offset=" . $offset . "&sign=" . urlencode($sign) . "&language_set="  . urlencode($language) . "&affiliatename=" . urlencode(getval("affiliatename","")) . "&restypes=" . urlencode($restypes) . "&resourceconnect_source=" . urlencode($baseurl));
 
 
 ?>

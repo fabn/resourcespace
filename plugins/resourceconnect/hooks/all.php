@@ -81,3 +81,12 @@ function HookResourceConnectAllGenerate_collection_access_key($collection,$k,$us
 	
 	}
 
+function HookResourceConnectAllAdvancedsearchlink()
+	{
+	global $resourceconnect_selected,$resourceconnect_this;
+	if (!checkperm("resourceconnect")) {return false;}
+
+	# Hide 'advanced search' link when current affiliate not selected.
+	return ($resourceconnect_selected!=$resourceconnect_this);
+		
+	}
