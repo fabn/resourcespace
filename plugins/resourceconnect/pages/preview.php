@@ -24,7 +24,7 @@ setcookie("search",$search);
 
 # Assemble a URL from the existing parameters.
 $url=getvalescaped("resourceconnect_source","") . "/pages/preview.php?" . $_SERVER["QUERY_STRING"];
-
+#echo $url;
 
 $html=file_get_contents($url);
 
