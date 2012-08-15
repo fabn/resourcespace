@@ -44,7 +44,8 @@ function HookResourceConnectAllInitialise()
 		# Not yet set, default to this site
 		$resourceconnect_selected=$resourceconnect_this;
 		}
-	setcookie("resourceconnect_selected",$resourceconnect_selected);
+#	setcookie("resourceconnect_selected",$resourceconnect_selected);
+	setcookie("resourceconnect_selected",$resourceconnect_selected,0,"/");
 	}
 
 function HookResourceConnectAllSearchfiltertop()

@@ -37,6 +37,15 @@ function HookResourceconnectViewNextpreviousextraurl()
 	echo "resourceconnect_source=" . urlencode(getval("resourceconnect_source",""));
 	}
 	
+function HookResourceconnectViewPreviewextraurl()
+	{
+	if (getval("resourceconnect_source","")=="") {return false;} # Not a ResourceConnect result set. 
+
+	# Forward the resourceconnect source.
+
+	echo "resourceconnect_source=" . urlencode(getval("resourceconnect_source",""));
+	}
+
 
 function HookResourceconnectViewResourceactions_anonymous()
 	{
