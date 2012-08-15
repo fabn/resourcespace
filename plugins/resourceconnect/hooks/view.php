@@ -34,7 +34,8 @@ function HookResourceconnectViewNextpreviousextraurl()
 
 	# Forward the resourceconnect source.
 
-	echo "resourceconnect_source=" . urlencode(getval("resourceconnect_source",""));
+	global $baseurl;
+	echo "resourceconnect_source=" .$baseurl;
 	}
 	
 function HookResourceconnectViewPreviewextraurl()
@@ -43,7 +44,8 @@ function HookResourceconnectViewPreviewextraurl()
 
 	# Forward the resourceconnect source.
 
-	echo "resourceconnect_source=" . urlencode(getval("resourceconnect_source",""));
+	global $baseurl;
+	echo "resourceconnect_source=" .$baseurl;
 	}
 
 
