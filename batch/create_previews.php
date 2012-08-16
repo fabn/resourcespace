@@ -97,7 +97,7 @@ if ($multiprocess)
 
 
 // We fetch the list of resources to process.
-$resources=sql_query("SELECT resource.ref, resource.file_extension FROM resource WHERE resource.has_image = 0");
+$resources=sql_query("SELECT resource.ref, resource.file_extension, resource.preview_attempts FROM resource WHERE resource.has_image = 0 and resource.archive = 0 and resource.ref>0");
 
 foreach($resources as $resource) // For each resources
   {
@@ -137,12 +137,12 @@ foreach($resources as $resource) // For each resources
 	    }
 
       // Processing resource.
-      echo sprintf("Processing resource n°%d.\n", $resource['ref']);
+      echo sprintf("Processing resource id " . $resource['ref'] . " - preview attempt #" . $resource['preview_attempts'] . "\n");
 
       $start_time = microtime(true);
 
       // For each fork, we need a new connection to database.
-		if ($use_mysqli){
+	if ($use_mysqli){
 			$db=mysqli_connect($mysql_server,$mysql_username,$mysql_password,$mysql_db);
 		} else {
 			mysql_connect($mysql_server,$mysql_username,$mysql_password);
@@ -164,7 +164,15 @@ foreach($resources as $resource) // For each resources
 					}
 				}
 			}
-      create_previews($resource['ref'], false, $resource['file_extension']);
+		if ($resource['preview_attempts']<5 and $resource['file_extension']!="") 
+		{
+		create_previews($resource['ref'], false, $resource['file_extension']);
+		echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
+		}
+	else
+		{
+		echo sprintf("Skipped resource " . $resource['ref'] . " - maximum attempts reached or nonexistent file extension. \n");
+		}
 
       echo sprintf("Processed resource %d in %01.2f seconds.\n", $resource['ref'], microtime(true) - $start_time);
 

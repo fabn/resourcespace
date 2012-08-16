@@ -553,9 +553,9 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 
 	# File checksum (experimental) - disabled for now
 	if (!$previewonly) {generate_file_checksum($ref,$extension);}
-
 	# first reset preview tweaks to 0
 	sql_query("update resource set preview_tweaks = '0|1' where ref = '$ref'");
+	
 
 	# pages/tools/update_previews.php?previewbased=true
 	# use previewbased to avoid touching original files (to preserve manually-uploaded preview images
@@ -722,7 +722,7 @@ function create_previews($ref,$thumbonly=false,$extension="jpg",$previewonly=fal
 			# flag database so a thumbnail appears on the site
 			if ($alternative==-1) # not for alternatives
 				{
-				sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
+				sql_query("update resource set has_image=1,preview_extension='jpg',preview_attempts=0,file_modified=now() where ref='$ref'");
 				}
 			}
 		}
@@ -912,9 +912,16 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 			{
 			extract_mean_colour($target,$ref);
 			# flag database so a thumbnail appears on the site
-			sql_query("update resource set has_image=1,preview_extension='jpg',file_modified=now() where ref='$ref'");
+			sql_query("update resource set has_image=1,preview_extension='jpg',preview_attempts=0,file_modified=now() where ref='$ref'");
 			}
-
+		else
+			{
+			if(!$target)
+				{
+				$preview_attempts=sql_value("select preview_attempts as value from resource where ref=" . $ref, 0);
+				sql_query("update resource set preview_attempts=" . ($preview_attempts+1) . " where ref='$ref'");
+				}
+			}
 		return true;
 		}
 	else

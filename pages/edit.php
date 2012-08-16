@@ -212,8 +212,15 @@ if (getval("tweak","")!="")
 		tweak_preview_images($ref,0,0.7,$resource["preview_extension"]);
 		break;
 		case "restore":
-		create_previews($ref,false,$resource["file_extension"]);
-		refresh_collection_frame();
+		if ($enable_thumbnail_creation_on_upload)
+			{
+			create_previews($ref,false,$resource["file_extension"]);
+			refresh_collection_frame();
+			}
+		else
+			{
+			sql_query("update resource set preview_attempts=0, has_image=0 where ref='$ref'");
+			}
 		break;
 		}
 
