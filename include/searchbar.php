@@ -86,7 +86,7 @@ if ($display_user_rating_stars && $star_search){ ?>
 				}
 			}
 		}	
-	}
+	})
 	</script>
 <?php } ?>
 
@@ -120,7 +120,7 @@ if ($display_user_rating_stars && $star_search){ ?>
 <script type="text/javascript">
 jQuery(document).ready(function () {
 	jQuery('#ssearchbox').autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php" } );
-	}
+	})
 </script>
 
 <?php } ?>
@@ -151,7 +151,7 @@ if (!$basic_simple_search)
             });
 		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
 	}
-	}
+	})
 	</script>
 	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
@@ -333,7 +333,7 @@ if (!$basic_simple_search)
 			// Load Category Tree
 			jQuery(document).ready(function () {
 				jQuery('#cattree_" . $fields[$n]["name"] . "').load('" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "&nc=" . time() . "');
-				}
+				})
 			</script>
 			";
 			?>
@@ -435,7 +435,7 @@ if (!$basic_simple_search)
 		?>
 		}
 	HideInapplicableSimpleSearchFields();
-	}
+	})
 	</script>
 		
 	<div id="basicdate" class="SearchItem"><?php echo $lang["bydate"]?><br />

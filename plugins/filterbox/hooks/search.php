@@ -20,7 +20,7 @@ function HookFilterboxSearchSearchbarreplace()
 		<script type="text/javascript">
 		jQuery(document).ready(function () {
 		jQuery("#refine_keywords").autocomplete( { source: "<?php echo $baseurl?>/plugins/filterbox/ajax/autocomplete_filter.php" } );
-			}
+			})
 		</script>
 	<?php
 		}
