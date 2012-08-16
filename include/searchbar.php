@@ -68,6 +68,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 if ($display_user_rating_stars && $star_search){ ?>
 
 	<script type="text/javascript">
+	jQuery(document).ready(function () {
 	function StarSearchRatingDisplay(rating,hiclass)
 		{
 		for (var n=1;n<=5;n++)
@@ -85,6 +86,7 @@ if ($display_user_rating_stars && $star_search){ ?>
 				}
 			}
 		}	
+	}
 	</script>
 <?php } ?>
 
@@ -116,7 +118,9 @@ if ($display_user_rating_stars && $star_search){ ?>
 # Auto-complete search functionality
 ?>
 <script type="text/javascript">
-jQuery('#ssearchbox').autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php" } );
+jQuery(document).ready(function () {
+	jQuery('#ssearchbox').autocomplete( { source: "<?php echo $baseurl?>/pages/ajax/autocomplete_search.php" } );
+	}
 </script>
 
 <?php } ?>
@@ -136,6 +140,7 @@ if (!$basic_simple_search)
 	<div id="searchbarrt" <?php hook("searchbarrtdiv");?>>
 	<?php if ($searchbar_selectall) { ?>
 	<script type="text/javascript">
+	jQuery(document).ready(function () {
 	function resetTickAll(){
 		var checkcount=0;
 		// set tickall to false, then check if it should be set to true.
@@ -145,6 +150,7 @@ if (!$basic_simple_search)
                 if( tickboxes[elem].checked){checkcount=checkcount+1;}
             });
 		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
+	}
 	}
 	</script>
 	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
@@ -325,8 +331,10 @@ if (!$basic_simple_search)
 			<div class=\"RecordPanel\" style=\"display:none;position:fixed;top:100px;left:200px;text-align:left;\" id=\"cattree_" . $fields[$n]["name"] . "\">" . $lang["pleasewait"] . "</div>
 			<script type=\"text/javascript\">
 			// Load Category Tree
-			jQuery('#cattree_" . $fields[$n]["name"] . "').load('" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "&nc=" . time() . "');
-			</script>		
+			jQuery(document).ready(function () {
+				jQuery('#cattree_" . $fields[$n]["name"] . "').load('" . $baseurl_short . "pages/ajax/category_tree_popup.php?field=" . $fields[$n]["ref"] . "&value=" . urlencode($value) . "&nc=" . time() . "');
+				}
+			</script>
 			";
 			?>
 			<a href="#" onClick="document.getElementById('cattree_<?php echo $fields[$n]["name"]?>').style.display='block';return false;
@@ -345,6 +353,7 @@ if (!$basic_simple_search)
 		}
 	?>
 	<script type="text/javascript">
+	jQuery(document).ready(function () {
 	function FilterBasicSearchOptions(clickedfield,resourcetype)
 		{
 		if (resourcetype!=0)
@@ -426,7 +435,7 @@ if (!$basic_simple_search)
 		?>
 		}
 	HideInapplicableSimpleSearchFields();
-	
+	}
 	</script>
 		
 	<div id="basicdate" class="SearchItem"><?php echo $lang["bydate"]?><br />
