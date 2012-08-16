@@ -1086,7 +1086,14 @@ function send_collection_feedback($collection,$comment)
 		}	
 	
 	
-	send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
+	$cc=getval("email","");
+	If (filter_var($cc, FILTER_VALIDATE_EMAIL)) {
+		send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body,"","","",NULL,"",$cc);
+		}
+	else
+		{
+		send_mail($user["email"],$applicationname . ": " . $lang["collectionfeedback"] . " - " . $cinfo["name"],$body);
+		}
 	
 	# Cancel the feedback request for this resource.
 	/* - Commented out - as it may be useful to leave the feedback request in case the user wishes to leave
