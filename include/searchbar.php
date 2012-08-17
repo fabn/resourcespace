@@ -139,8 +139,7 @@ if (!$basic_simple_search)
 	<input type="hidden" name="resetrestypes" value="yes">
 	<div id="searchbarrt" <?php hook("searchbarrtdiv");?>>
 	<?php if ($searchbar_selectall) { ?>
-	<script type="text/javascript">
-	jQuery(document).ready(function () {
+	<script type="text/javascript">	
 	function resetTickAll(){
 		var checkcount=0;
 		// set tickall to false, then check if it should be set to true.
@@ -151,7 +150,6 @@ if (!$basic_simple_search)
             });
 		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
 	}
-	})
 	</script>
 	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
@@ -353,7 +351,6 @@ if (!$basic_simple_search)
 		}
 	?>
 	<script type="text/javascript">
-	jQuery(document).ready(function () {
 	function FilterBasicSearchOptions(clickedfield,resourcetype)
 		{
 		if (resourcetype!=0)
@@ -433,8 +430,9 @@ if (!$basic_simple_search)
 				}
 			}
 		?>
-		}
-	HideInapplicableSimpleSearchFields();
+		}	
+	jQuery(document).ready(function () {	
+		HideInapplicableSimpleSearchFields();
 	})
 	</script>
 		
