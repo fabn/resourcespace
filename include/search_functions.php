@@ -322,11 +322,23 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 								$wildcards=sql_array("select ref value from keyword where keyword like '" . escape_check(str_replace("*","%",$keyword)) . "' order by hit_count desc limit " . $wildcard_expand_limit);
 		
 								# Form join							
-								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
-								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
-                if (!empty($sql_exclude_fields)) {
-                  $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
-                }
+                
+                if (!$omit)
+									{
+									# Include in query
+        								$sql_join.=" join resource_keyword k" . $c . " on k" . $c . ".resource=r.ref and k" . $c . ".keyword in ('" . join("','",$wildcards) . "')";
+        								$sql_exclude_fields = hook("excludefieldsfromkeywordsearch");
+                        if (!empty($sql_exclude_fields)) {
+                          $sql_join.=" and k" . $c . ".resource_type_field not in (". $sql_exclude_fields .")";
+                        }
+                  }
+									else
+									{
+									# Exclude matching resources from query (omit feature)
+									if ($sql_filter!="") {$sql_filter.=" and ";}
+									$sql_filter .= "r.ref not in (select resource from resource_keyword where keyword in ('" . join("','",$wildcards) . "'))"; # Filter out resources that do contain the keyword.
+									}						                
+								
                 
 								#echo $sql_join;
 							} else {
@@ -349,7 +361,18 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
                                                                         left join keyword k  on rk.keyword = k.ref
                                                                         where k.keyword like '" . escape_check(str_replace("*","%",$keyword)) . "'");
 
-                                                                        $sql_join .= " join $thetemptable on $thetemptable.resource = r.ref ";
+                                              									if (!$omit)
+                                              										{
+                                              										# Include in query
+                                                                    $sql_join .= " join $thetemptable on $thetemptable.resource = r.ref ";
+                                              										}
+                                              									else
+                                              										{
+                                              										# Exclude matching resources from query (omit feature)
+                                              										if ($sql_filter!="") {$sql_filter.=" and ";}
+                                              										$sql_filter .= "r.ref not in (select resource from $thetemptable)"; # Filter out resources that do contain the keyword.
+                                              										}
+
 							}
 
 
