@@ -355,9 +355,9 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 					for ($m=0;$m<count($words);$m++) {$return2[]=trim($words[$m]);}
 					}
 				}
-
-			if ($partial_index) {$return2=add_partial_index($return2);}
-			return trim_array($return2,$config_trimchars);
+			$return2=trim_array($return2,$config_trimchars);
+			if ($partial_index) {return add_partial_index($return2);}
+			return $return2;
 			}
 		else
 			{
@@ -368,8 +368,11 @@ function split_keywords($search,$index=false,$partial_index=false,$is_date=false
 		{
 		# split using spaces and similar chars (according to configured whitespace characters)
 		$ns=explode(" ",cleanse_string($ns,false,!$index));
-		if ($index && $partial_index) {$ns=add_partial_index($ns);}
-		return trim_array($ns,$config_trimchars);
+		$ns=trim_array($ns,$config_trimchars);
+		if ($index && $partial_index) {
+			return add_partial_index($ns);
+		}
+		return $ns;
 		}
 
 	}
@@ -426,10 +429,15 @@ function add_partial_index($keywords)
 	# For each keywords in the supplied keywords list add all possible infixes and return the combined array.
 	# This therefore returns all keywords that need indexing for the given string.
 	# Only for fields with 'partial_index' enabled.
-	$return=$keywords;
+	$return=array();
+	$position=0;
+	$x=0;
 	for ($n=0;$n<count($keywords);$n++)
 		{
 		$keyword=trim($keywords[$n]);
+		$return[$x]['keyword']=$keyword;
+		$return[$x]['position']=$position;
+		$x++;
 		if (strpos($keyword," ")===false) # Do not do this for keywords containing spaces as these have already been broken to individual words using the code above.
 			{
 			global $partial_index_min_word_length;
@@ -440,10 +448,13 @@ function add_partial_index($keywords)
 				for ($o=0;$o<=strlen($keyword)-$m;$o++)
 					{
 					$infix=substr($keyword,$o,$m);
-					$return[]=$infix;
+					$return[$x]['keyword']=$infix;
+					$return[$x]['position']=$position; // infix has same position as root
+					$x++;
 					}
 				}
 			} # End of no-spaces condition
+		$position++; // end of root keyword
 		} # End of partial indexing keywords loop
 	return $return;
 	}
@@ -636,7 +647,6 @@ function trim_array($array,$trimchars='')
 	{
 	# removes whitespace from the beginning/end of all elements in an array
 	
-
 	for ($n=0;$n<count($array);$n++)
 		{
 		$array[$n]=trim($array[$n]);
@@ -648,6 +658,7 @@ function trim_array($array,$trimchars='')
 		}
 	return $array;
 	}
+
 
 function tidylist($list)
 	{

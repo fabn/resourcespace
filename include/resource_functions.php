@@ -616,9 +616,13 @@ function remove_keyword_mappings($ref,$string,$resource_type_field,$partial_inde
 	# We also decrease the hit count for each keyword.
 	if (trim($string)=="") {return false;}
 	$keywords=split_keywords($string,true,$partial_index,$is_date);
+	
 	for ($n=0;$n<count($keywords);$n++)
 		{
-		#echo "<li>removing " . $keywords[$n];
+		if (is_array($keywords[$n])){
+			$keywords[$n]=$keywords[$n]['keyword'];
+		}
+		
 			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and include this condition
 				{
 				sql_query("delete from resource_keyword where resource='$ref' and keyword= ANY (select ref from keyword where keyword='" . escape_check($keywords[$n]) . "') and resource_type_field='$resource_type_field' and $optional_column= $optional_value limit 1");
@@ -643,8 +647,15 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 
 	for ($n=0;$n<count($keywords);$n++)
 		{
-		$kw=substr($keywords[$n],0,100); # Trim keywords to 100 chars as this is the length of the keywords column.
+			
+		unset ($kwpos);
+		if (is_array($keywords[$n])){
+			$kwpos=$keywords[$n]['position'];
+			$keywords[$n]=$keywords[$n]['keyword'];
+		}
 		
+		$kw=substr($keywords[$n],0,100); # Trim keywords to 100 chars as this is the length of the keywords column.
+		if (!isset($kwpos)){$kwpos=$n;}
 		global $noadd;
 		if (!(in_array($kw,$noadd)))
 			{
@@ -659,10 +670,11 @@ function add_keyword_mappings($ref,$string,$resource_type_field,$partial_index=f
 				}
 			# create mapping, increase hit count.
 			if ($optional_column<>'' && $optional_value<>'')	# Check if any optional column value passed and add this
-				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$n','$resource_type_field','$optional_value')");}
+				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field,$optional_column) values ('$ref','$keyword','$kwpos','$resource_type_field','$optional_value')");}
 			else  
-				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$n','$resource_type_field')");}
-			sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword' limit 1");
+				{sql_query("insert into resource_keyword(resource,keyword,position,resource_type_field) values ('$ref','$keyword','$kwpos','$resource_type_field')");}
+		
+			sql_query("update keyword set hit_count=hit_count+1 where ref='$keyword'");
 			
 			# Log this
 			daily_stat("Keyword added to resource",$keyword);
