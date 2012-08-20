@@ -748,21 +748,25 @@ function email_collection($colrefs,$collectionname,$fromusername,$userlist,$mess
 				$key="&k=". $k;
 				$emailcollectionmessageexternal=true;
 				}
-			$url=$baseurl . 	"/?c=" . $reflist[$nx2] . $key;
-			
+			$url=$baseurl . 	"/?c=" . $reflist[$nx2] . $key;		
+			$collection_name="";	
+			$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
 			if ($use_phpmailer){
-				$collection_name="";
-				$collection_name=sql_value("select name value from collection where ref='$reflist[$nx2]'","$reflist[$nx2]");
-				$link="<a href=\"$url\">$collection_name</a>";}	
-				// alternate list style
+				$link="<a href=\"$url\">$collection_name</a>";	
+				$list.= $htmlbreak.$link;	
+				// alternate list style				
 				$list2.=$htmlbreak.$collection_name.' -'.$htmlbreaksingle.$url;
-				$list .= $htmlbreak.$link;
-				#log this
+				$templatevars['list2']=$list2;					
+				}
+			else
+				{
+				$list.= $htmlbreak.$url;
+				}
+			#log this
 			collection_log($reflist[$nx2],"E",0, $emails[$nx1]);
 			}
 		//$list.=$htmlbreak;	
 		$templatevars['list']=$list;
-		$templatevars['list2']=$list2;
 		$templatevars['from_name']=$from_name;
 		if ($emailcollectionmessageexternal){
 			$template="emailcollectionexternal";
