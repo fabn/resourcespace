@@ -28,9 +28,9 @@ jQuery(document).ready(function () {
 		// var keyword=document.getElementById("<?php echo $name ?>_selector").value;
 		var keyword=ui.item.value;
 		
-		if (keyword.substring(0,<?php echo strlen($lang["createnewentryfor"]) ?>)=="<?php echo $lang["createnewentryfor"] ?>")
+		if (keyword.substring(0,<?php echo mb_strlen($lang["createnewentryfor"], 'UTF-8') ?>)=="<?php echo $lang["createnewentryfor"] ?>")
 			{
-			keyword=keyword.substring(<?php echo strlen($lang["createnewentryfor"])+1 ?>);
+			keyword=keyword.substring(<?php echo mb_strlen($lang["createnewentryfor"], 'UTF-8')+1 ?>);
 
 			// Add the word.
 			jQuery.post("<?php echo $baseurl?>/pages/edit_fields/9_ajax/add_keyword.php?field=<?php echo $field["ref"] ?>&keyword=" + encodeURI(keyword));
