@@ -223,27 +223,29 @@ if ($extension=="swf" && !isset($newfile))
 		}
 		
 	}	
-	
+
+
 /* ----------------------------------------
-	Try CR2 preview extraction via exiftool
+	Try RAW preview extraction via exiftool
    ----------------------------------------
 */
 
-if (($extension=="rw2" || $extension=="cr2" || $extension=="nef" || $extension=="dng") && !isset($newfile))
+if (($extension=="cr2" || $extension=="nef" || $extension=="dng" || $extension=="raf" || $extension=="rw2") && !isset($newfile))
 	{
 	global $cr2_thumb_extract;
 	global $nef_thumb_extract;
 	global $dng_thumb_extract;
 	global $rw2_thumb_extract;
+	global $raf_thumb_extract;
 	
-	if (($extension=="cr2" && $cr2_thumb_extract) || ($extension=="nef" && $nef_thumb_extract) || ($extension=="dng" && $dng_thumb_extract) || ($extension=="rw2" && $rw2_thumb_extract))
+	if (($extension=="cr2" && $cr2_thumb_extract) || ($extension=="nef" && $nef_thumb_extract) || ($extension=="dng" && $dng_thumb_extract) || ($extension=="rw2" && $rw2_thumb_extract) || ($extension=="raf" && $raf_thumb_extract))
 		{
 		if ($exiftool_fullpath!=false)
 			{	
 			// previews are stored in a couple places, and some nef files have large previews in -otherimage
 			if ($extension=="rw2"){$bin_tag=" -jpgfromraw ";}
 			if ($extension=="nef"){$bin_tag=" -otherimage ";}
-			if ($extension=="cr2"||$extension=="dng"){$bin_tag=" -previewimage ";}
+			if ($extension=="cr2"||$extension=="dng"||$extension=="raf"){$bin_tag=" -previewimage ";}
 			// attempt
 			$wait=run_command($exiftool_fullpath.' -b '.$bin_tag.' '.escapeshellarg($file).' > '.$target);
 
