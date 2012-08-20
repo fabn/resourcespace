@@ -11,6 +11,8 @@ $headerinsert.="
 <script type=\"text/javascript\">
 colorthemes_previewimage_prefix = '".addslashes($storageurl)."';
 </script>
+<script type=\"text/javascript\" src=\"../js/prototype.js\" language=\"javascript\"></script>
+<script type=\"text/javascript\" src=\"../js/scriptaculous.js?load=slider\" language=\"javascript\"></script>
 ";	
 $bodyattribs=" onLoad=\"previewColortheme();\"";
 include "../../../include/header.php";
