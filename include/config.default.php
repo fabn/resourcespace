@@ -278,7 +278,7 @@ $photoshop_thumb_extract=false;
 $cr2_thumb_extract=false; 
 $nef_thumb_extract=false;
 $dng_thumb_extract=false;
-
+$rw2_thumb_extract=false;
 # Turn on creation of a miff file for Photoshop EPS.
 # Off by default because it is 4x slower than just ripping with ghostscript, and bloats filestore.
 $photoshop_eps_miff=false;
