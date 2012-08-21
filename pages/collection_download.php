@@ -238,6 +238,10 @@ if ($submitted != "")
 
 						}
 					}
+				else
+					{
+					$filename=$prefix_filename_string . $ref . "_" . $size . "." . $pextension;
+					}
 				
 				#Add resource data/collection_resource data to text file
 				if (($zipped_collection_textfile==true)&&($includetext=="true")){ 
