@@ -68,7 +68,7 @@ $found_day="";if (isset($set_fields["day"])) {$found_day=$set_fields["day"];}
 if ($display_user_rating_stars && $star_search){ ?>
 
 	<script type="text/javascript">
-	jQuery(document).ready(function () {
+
 	function StarSearchRatingDisplay(rating,hiclass)
 		{
 		for (var n=1;n<=5;n++)
@@ -86,7 +86,7 @@ if ($display_user_rating_stars && $star_search){ ?>
 				}
 			}
 		}	
-	})
+
 	</script>
 <?php } ?>
 
