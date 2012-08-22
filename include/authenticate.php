@@ -42,6 +42,9 @@ if ($api && $enable_remote_apis ){
 if (!function_exists("ip_matches")){
 function ip_matches($ip, $ip_restrict)
 	{
+	global $system_login;
+	if ($system_login){return true;}	
+		
 	# Allow multiple IP addresses to be entered, comma separated.
 	$i=explode(",",$ip_restrict);
 
