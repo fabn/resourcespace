@@ -1791,7 +1791,7 @@ function get_resource_access($resource)
 		{
 		# A search filter has been set. Perform filter processing to establish if the user can view this resource.		
 		# Always load metadata, because the provided metadata may be missing fields due to permissions.
-		$metadata=get_resource_field_data($resource,false,false);
+		$metadata=get_resource_field_data($ref,false,false);
 				
 		for ($n=0;$n<count($metadata);$n++)
 			{
