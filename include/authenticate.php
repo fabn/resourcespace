@@ -8,7 +8,7 @@ $nocookies=false;
 if (!isset($api)){$api=false;} // $api is set above inclusion of authenticate.php in remotely accessible scripts.
 
 if ($api && $enable_remote_apis ){
-	include "login_functions.php";
+	include_once "login_functions.php";
 
 	# if using API (RSS or API), send credentials to login.php, as if normally posting, to establish login
 	if (getval("key","")==""){header("HTTP/1.0 403 Access Denied");exit("Access denied.");}
@@ -39,6 +39,7 @@ if ($api && $enable_remote_apis ){
 	}
 }
 
+if (!function_exists("ip_matches")){
 function ip_matches($ip, $ip_restrict)
 	{
 	# Allow multiple IP addresses to be entered, comma separated.
@@ -67,6 +68,7 @@ function ip_matches($ip, $ip_restrict)
 		}
 	return false;
 	}
+}
 
 if (array_key_exists("user",$_COOKIE) || array_key_exists("user",$_GET) || isset($anonymous_login) && !$api || hook('provideusercredentials'))
     {
@@ -253,9 +255,17 @@ if ($ip_restrict!="")
 #update activity table
 global $pagename;
 $terms="";if (($pagename!="login") && ($pagename!="terms")) {$terms=",accepted_terms=1";} # Accepted terms
-if (!$api){$last_browser=escape_check(substr($_SERVER["HTTP_USER_AGENT"],0,250));}
-else {$last_browser="API Client";}
-sql_query("update user set lang='$language', last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . $last_browser . "'$terms where ref='$userref'");
+if (!$api){
+	$last_browser=escape_check(substr($_SERVER["HTTP_USER_AGENT"],0,250));
+	}
+else {
+	$last_browser="API Client";
+}
+
+// don't update this table if the System is doing it's own operations
+if (!isset($system_login)){
+	sql_query("update user set lang='$language', last_active=now(),logged_in=1,last_ip='" . get_ip() . "',last_browser='" . $last_browser . "'$terms where ref='$userref'");
+}
 
 # Add group specific text (if any) when logged in.
 if (hook("replacesitetextloader"))
