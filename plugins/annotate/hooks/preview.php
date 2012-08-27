@@ -6,7 +6,7 @@ function HookAnnotatePreviewReplacepreviewbacktoview(){
 } 
 
 function HookAnnotatePreviewPreviewimage2 (){
-global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude,$annotate_public_view;;
+global $ext,$baseurl,$ref,$k,$search,$offset,$order_by,$sort,$archive,$lang,$download_multisize,$baseurl,$url,$path,$path_orig,$annotate_ext_exclude,$annotate_rt_exclude,$annotate_public_view,$annotate_pdf_output;
 if (getval("alternative","")!=""){return false;}
 
 $resource=get_resource_data($ref);
@@ -67,8 +67,9 @@ $h = $sizes[1];
      }
      ///////////////
      ?>	
+     <?php if ($annotate_pdf_output){?>
      &nbsp;&nbsp;<a style="display:inline;float:right;" href="<?php echo $baseurl?>/plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
-     
+     <?php } ?>
      	</div></div>
      <?php
 
