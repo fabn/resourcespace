@@ -184,7 +184,12 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
 		// leave player to place image
 		}	
     else{?>
+
+
+<?php if (!hook("replacepreviewimage")) { ?> 
 <td><a href="<?php echo ((getval("from","")=="search")?"search.php?":"view.php?ref=" . $ref . "&")?>search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&k=<?php echo $k?>&<?php echo hook("viewextraurl") ?>"><img class="Picture" src="<?php echo $url?>" alt=""/></a></td>
+<?php } // end hook replacepreviewimage ?> 
+
 
 <?php } ?>
 
