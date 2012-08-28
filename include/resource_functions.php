@@ -979,7 +979,7 @@ function copy_resource($from,$resource_type=-1)
 	return $to;
 	}
 	
-function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=0,$purchase_size="",$purchase_price=0)
+function resource_log($resource,$type,$field,$notes="",$fromvalue="",$tovalue="",$usage=-1,$purchase_size="",$purchase_price=0)
 	{
 	global $userref,$k,$lang;
 	
