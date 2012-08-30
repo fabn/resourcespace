@@ -19,6 +19,8 @@ var editor = CKEDITOR.replace( '<?php echo $name?>',
 
 	});
 
+<? hook("ckeditoroptions"); ?>
+
 <?php 
 # Add an event handler to auto save this field if changed.
 if ($edit_autosave) {?>
