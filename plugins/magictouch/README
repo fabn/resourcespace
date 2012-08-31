@@ -1,0 +1,1 @@
+If using the magictouch plugin with the annotate plugin, magictouch must be loaded first to avoid a bug where you end up with two images on the preview page. The magictouch priority (in the plugins table) should be a number less than the priority of annotate.
