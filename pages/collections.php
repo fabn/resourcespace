@@ -127,6 +127,7 @@ if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkbox
 	{
 	?>
 	<script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+	<script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 	<script type="text/javascript">
 	jQuery.noConflict();
 	</script>
