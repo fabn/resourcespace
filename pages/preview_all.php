@@ -220,7 +220,8 @@ if (!(isset($resource['is_transcoding']) && $resource['is_transcoding']==1) && f
     else{?>
 <?php if (!$collection_reorder_caption){?><a href="view.php?ref=<?php echo $result[$x]['ref']?>&search=<?php echo $search?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&sort=<?php echo $sort?>"><?php } //end if !reorder?><img class="image" id="image<?php echo $ref?>" imageheight="<?php echo $imageheight?>" src="<?php echo $url?>" alt="" style="height:<?php echo $height?>px;border:1px solid white;" /><?php if (!$collection_reorder_caption){?></a><?php } //end if !reorder?><br/><br/>
 <?php } ?>
-<?php if ($search_titles){$heightmod=150;} else {$heightmod=120;}?>
+<?php if ($search_titles){$heightmod=150;} else {$heightmod=120;}
+if ($collections_compact_style){$heightmod=$heightmod+20;}?>
 <script type="text/javascript">
 var maxheight=window.innerHeight-<?php echo $heightmod?>;
 if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-<?php echo $heightmod?>;}
@@ -254,10 +255,9 @@ if (maxheight><?php echo $imageheight?>){
 	window.onresize=function(event){
 	var maxheight=window.innerHeight-<?php echo $heightmod?>;
     if (isNaN(maxheight)){maxheight=document.documentElement.clientHeight-<?php echo $heightmod?>;}
-	$$('.image').each(function (elem) {
-
-		if (maxheight> elem.getAttribute("imageheight").replace(/px,*\)*/g,"")){elem.style.height=elem.getAttribute("imageheight")+'px'; }
-		else { elem.style.height=maxheight+'px';} } );}
+	jQuery('.image').each(function () {
+		if (maxheight> jQuery(this).attr("imageheight").replace(/px,*\)*/g,"")){jQuery(this).height(jQuery(this).attr("imageheight")+'px'); }
+		else { jQuery(this).height(maxheight+'px');} } );}
 </script>
 </form>
 <?php
