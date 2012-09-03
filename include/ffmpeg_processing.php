@@ -172,6 +172,9 @@ if (isset($ffmpeg_alternatives))
 
 		if ($generate) # OK to generate this alternative?
 			{
+
+			if(!hook("removepreviousalts", "", array($ffmpeg_alternatives, $file, $n))):
+
 			# Remove any existing alternative file(s) with this name.
 			$existing=sql_query("select ref from resource_alt_files where resource='$ref' and name='" . escape_check($ffmpeg_alternatives[$n]["name"]) . "'");
 			for ($m=0;$m<count($existing);$m++)
@@ -179,6 +182,8 @@ if (isset($ffmpeg_alternatives))
 				delete_alternative_file($ref,$existing[$m]["ref"]);
 				}
 			
+			endif;
+
 			# Create the alternative file.
 			$aref=add_alternative_file($ref,$ffmpeg_alternatives[$n]["name"]);
 			$apath=get_resource_path($ref,true,"",true,$ffmpeg_alternatives[$n]["extension"],-1,1,false,"",$aref);
