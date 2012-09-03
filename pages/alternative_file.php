@@ -32,6 +32,7 @@ $file=get_alternative_file($resource,$ref);if ($file===false) {exit("Alternative
 
 if (getval("name","")!="")
 	{
+	hook("markmanualupload");
 	# Save file data
 	save_alternative_file($resource,$ref);
 	hook ("savealternatefiledata");
