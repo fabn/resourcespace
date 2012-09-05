@@ -273,11 +273,14 @@ function get_resource_field_data_batch($refs)
 	return $return;
 	}
 	
-function get_resource_types()
+function get_resource_types($types="")
 	{
 	# Returns a list of resource types. The standard resource types are translated using $lang. Custom resource types are i18n translated.
-
-	$r=sql_query("select * from resource_type order by order_by,ref");
+	
+	// support getting info for a comma-delimited list of restypes (as in a search)
+	if ($types==""){$sql="";} else {$sql=" where ref in ($types) ";}
+	
+	$r=sql_query("select * from resource_type $sql order by order_by,ref");
 	$return=array();
 	# Translate names and check permissions
 	for ($n=0;$n<count($r);$n++)
@@ -2709,15 +2712,15 @@ function is_process_lock($name)
 function set_process_lock($name)
 	{
 	# Set a process lock
-	
 	file_put_contents(get_temp_dir() . "/process_locks/" . $name,time());
+	// make sure this is editable by the server in case a process lock could be set by different system users
+	chmod(get_temp_dir() . "/process_locks/" . $name,0777);
 	return true;
 	}
 	
 function clear_process_lock($name)
 	{
 	# Clear a process lock
-	
 	unlink(get_temp_dir() . "/process_locks/" . $name);
 	return true;
 	}
