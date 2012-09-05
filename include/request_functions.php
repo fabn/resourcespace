@@ -62,7 +62,7 @@ function save_request($request)
 		{
 		# --------------- APPROVED -------------
 		# Send approval e-mail
-		$message=$lang["requestapprovedmail"] . "\n\n";
+		$message=$lang["requestapprovedmail"] . "\n\n" . $lang["approvalreason"]. ": " . $reasonapproved . "\n\n" ;
 		$message.="$baseurl/?c=" . $currentrequest["collection"] . "\n";
 		if ($expires!="")
 			{
@@ -85,7 +85,7 @@ function save_request($request)
 		# Send declined e-mail
 
 		$reason=str_replace(array("\\r","\\n"),"\n",$reason);$reason=str_replace("\n\n","\n",$reason); # Fix line breaks.
-		$message=$lang["requestdeclinedmail"] . "\n\n" . $reason . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
+		$message=$lang["requestdeclinedmail"] . "\n\n" . $lang["declinereason"] . ": ". $reason . "\n\n$baseurl/?c=" . $currentrequest["collection"] . "\n";
 		send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestcollection"] . " - " . $lang["resourcerequeststatus2"],$message);
 
 		# Remove access that my have been granted by an inadvertant 'approved' command.
