@@ -61,8 +61,17 @@ if ($search_titles)
                 $collectiondata['name']=$collectiondata['name']." (". $colusername."/".$colaccessmode.")";    
                 }
             }
-                
-        $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a href=search.php?search=!collection'.$collection.$parameters_string.'>'.i18n_get_translated($collection_tag.$collectiondata["name"]).'</a></span>'.$searchcrumbs.'</div></h1> ';
+            
+        // add a tooltip to Smart Collection titles (which provides a more detailed view of the searchstring.    
+        $alt_text='';
+        if ($pagename=="search" && isset($collectiondata['savedsearch']) && $collectiondata['savedsearch']!=''){
+			$smartsearch=sql_query("select * from collection_savedsearch where ref=".$collectiondata['savedsearch']);
+			if (isset($smartsearch[0])){
+				$alt_text="title='search=".$smartsearch[0]['search']."&restypes=".$smartsearch[0]['restypes']."&archive=".$smartsearch[0]['archive']."&starsearch=".$smartsearch[0]['starsearch']."'";
+			}
+		} 
+		
+        $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a '.$alt_text.' href=search.php?search=!collection'.$collection.$parameters_string.'>'.i18n_get_translated($collection_tag.$collectiondata["name"]).'</a></span>'.$searchcrumbs.'</div></h1> ';
 		}	
     if (substr($search,0,5)=="!last")
         {
@@ -98,6 +107,10 @@ if ($search_titles)
         {
         $search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!archivepending'.$parameters_string.'>'.$lang["resourcespendingarchive"].'</a>'.$searchcrumbs.'</h1> ';
         }
+    elseif (substr($search,0,12)=="!userpending")
+		{
+		$search_title = '<h1 class="searchcrumbs"><a href=search.php?search=!userpending'.$parameters_string.'>'.$lang["userpending"].'</a>'.$searchcrumbs.'</h1> ';
+		}
     elseif (substr($search,0,14)=="!contributions")
         {
 		$cuser=substr($search,14);
@@ -142,7 +155,6 @@ if ($search_titles)
 		{ 
 		$search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'></a>'.$searchcrumbs.'</h1> '; 
 		}   
-    
 
 	// extra collection title links
 	if (substr($search,0,11)=="!collection"){

@@ -143,15 +143,15 @@ if (!$basic_simple_search)
 	function resetTickAll(){
 		var checkcount=0;
 		// set tickall to false, then check if it should be set to true.
-		jQuery('#tickall').attr('checked',false);
+		jQuery('#rttickall').attr('checked',false);
 		var tickboxes=jQuery('#form1 .tickbox');
 			jQuery(tickboxes).each(function (elem) {
                 if( tickboxes[elem].checked){checkcount=checkcount+1;}
             });
-		if (checkcount==tickboxes.length){jQuery('#tickall').attr('checked',true);}	
+		if (checkcount==tickboxes.length){jQuery('#rttickall').attr('checked',true);}	
 	}
 	</script>
-	<div class="tick"><input type='checkbox' id='tickall' name='tickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#tickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
+	<div class="tick"><input type='checkbox' id='rttickall' name='rttickall' checked="true" onclick='jQuery("#form1 :checkbox").each (function(index,Element) {jQuery(Element).attr("checked",(jQuery("#rttickall").attr("checked")=="checked"));}); HideInapplicableSimpleSearchFields(true); '/>&nbsp;<?php echo $lang['all']?></div>
 	<?php }?>
 	<?php
 	$rt=explode(",",@$restypes);
@@ -358,7 +358,7 @@ if (!$basic_simple_search)
 			// When selecting resource type specific fields, automatically untick all other resource types, because selecting something from this field will never produce resources from the other resource types.
 			
 			// Always untick the Tick All box
-			if (jQuery('#tickall')) {jQuery('#tickall').attr('checked', false);}
+			if (jQuery('#rttickall')) {jQuery('#rttickall').attr('checked', false);}
 			<?php
 			# Untick all other resource types.
 			for ($n=0;$n<count($types);$n++)
@@ -482,7 +482,7 @@ if (!$basic_simple_search)
 		<div  class="RatingStars" onMouseOut="StarSearchRatingDisplay(document.getElementById('starsearch').value,'StarCurrent');">&nbsp;<?php 
 		for ($z=1;$z<=5;$z++)
 			{
-			?><a href="#" onMouseOver="StarSearchRatingDisplay(<?php echo $z?>,'StarSelect');" onClick="document.getElementById('starsearch').value=<?php echo $z?>;"><span id="RatingStar-<?php echo $z?>" class="Star<?php echo ($z<=$starsearch?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
+			?><a href="#" onMouseOver="StarSearchRatingDisplay(<?php echo $z?>,'StarSelect');" onClick="document.getElementById('starsearch').value=<?php echo $z?>;return false;"><span id="RatingStar-<?php echo $z?>" class="Star<?php echo ($z<=$starsearch?"Current":"Empty")?>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a><?php
 			}
 		?>
 		</div>

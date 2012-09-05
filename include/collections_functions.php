@@ -814,15 +814,47 @@ function remove_saved_search($collection,$search)
 	sql_query("delete from collection_savedsearch where collection='$collection' and ref='$search'");
 	}
 
-function add_smart_collection($collection)
-	{
+function add_smart_collection()
+ 	{
 	global $userref;
-	$newcollection=create_collection($userref,getvalescaped("addsmartcollection",""),1);	
-	sql_query("insert into collection_savedsearch(collection,search,restypes,archive) values ('$newcollection','" . getvalescaped("addsmartcollection","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "')");
+	$searchstring="search=".getvalescaped("addsmartcollection","") ."&restypes=".getvalescaped("restypes","")."&archive=".getvalescaped("archive","",true)."&starsearch=".getvalescaped("starsearch","");
+	$newcollection=create_collection($userref,get_search_title($searchstring),1);	
+	
+	sql_query("insert into collection_savedsearch(collection,search,restypes,archive,starsearch) values ('$newcollection','" . getvalescaped("addsmartcollection","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "','".getvalescaped("starsearch","")."')");
 	$savedsearch=sql_insert_id();
 	sql_query("update collection set savedsearch=$savedsearch where ref=$newcollection"); 
 	set_user_collection($userref,$newcollection);
 	}
+
+function get_search_title($searchstring){
+	// for naming smart collections, takes a searchstring with 'search=restypes=archive=starsearch='
+	// and uses search_title_processing to autocreate a more informative title 
+	$order_by="";
+	$sort="";
+	$offset="";
+	$k=getvalescaped("k","");
+	
+	$search_titles=true;
+	$search_titles_searchcrumbs=true;
+	$use_refine_searchstring=true;
+	$search_titles_shortnames=false;
+	
+	global $lang,$userref,$baseurl,$collectiondata,$result,$display;
+	parse_str($searchstring);
+	$collection_dropdown_user_access_mode=false;
+	include(dirname(__FILE__)."/search_title_processing.php");
+
+    if ($starsearch!=0){for ($n=0;$n<$starsearch;$n++){$search_title .= "★";}}
+    if ($restypes!=""){ 
+		$resource_types=get_resource_types($restypes);
+		foreach($resource_types as $type){
+			$typenames[]=$type['name'];
+		}
+		$search_title.=" [".implode(',',$typenames)."]";
+	}
+	$title=str_replace(">","",strip_tags($search_title));
+	return $title;
+}
 
 function add_saved_search_items($collection)
 	{

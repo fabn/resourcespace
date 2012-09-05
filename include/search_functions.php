@@ -666,7 +666,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 				$smartsearch=sql_query("select * from collection_savedsearch where ref=$smartsearch_ref");
 				if (isset($smartsearch[0]['search'])){
 					$smartsearch=$smartsearch[0];
-					$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true);
+					$results=do_search($smartsearch['search'], $smartsearch['restypes'], "relevance", $smartsearch['archive'],-1,"desc",true,$smartsearch['starsearch']);
 					# results is a list of the current search without any restrictions
 					# we need to compare against the current collection contents to minimize inserts and deletions
 					$current=sql_query("select resource from collection_resource where collection=$collection");

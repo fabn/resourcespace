@@ -1210,6 +1210,7 @@ $lang["usageincorrect"]="You must describe the planned usage and select a medium
 
 $lang["savesearchassmartcollection"]="Save Search as Smart Collection";
 $lang["smartcollection"]="Smart Collection";
+$lang["dosavedsearch"]="Do Saved Search";
 
 
 $lang["uploadertryflash"]="If you are having problems with this uploader, try the <strong>Flash uploader</strong>.";

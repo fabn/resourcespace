@@ -262,8 +262,8 @@ $addsmartcollection=getvalescaped("addsmartcollection",-1);
 if ($addsmartcollection!=-1)
 	{
 	
-	#add saved search (the items themselves rather than just the query)
-	add_smart_collection($usercollection);
+	# add collection which autopopulates with a saved search 
+	add_smart_collection();
 		
 	# Log this
 	daily_stat("Added smart collection",0);	
