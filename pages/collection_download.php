@@ -434,6 +434,7 @@ if ($submitted != "")
 				
 				unlink($progress_file);
 				rmdir(get_temp_dir(false,$id));
+				collection_log($collection,"Z","","-".$size);
 	}
 	
 	

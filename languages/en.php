@@ -1015,6 +1015,7 @@ $lang["collectionlog-T"]="Stopped sharing collection with ";//  + notes field
 $lang["collectionlog-t"]="Stopped access to resource by ";//  + notes field
 $lang["collectionlog-X"]="Collection deleted";
 $lang["collectionlog-b"]="Batch transformed";
+$lang["collectionlog-Z"]="Collection downloaded";
 
 $lang["viewuncollectedresources"]="View Resources Not Used in Collections";
 
