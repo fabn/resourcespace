@@ -115,7 +115,7 @@ for ($n=0;$n<count($files);$n++)
 			</div>
 		<div class="clearerleft"> </div>
 		<br />
-		<p><a href="upload_java.php?alternative=<?php echo $ref ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["alternativebatchupload"] ?></a></p>
+		<p><a href="upload_plupload.php?alternative=<?php echo $ref ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["alternativebatchupload"] ?></a></p>
 	    </div>
 	</form>
 </div>

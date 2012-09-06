@@ -149,15 +149,10 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				}
 			else
 				{
-				if (getval("swf","")!="") // Test if in browser flash upload
+				if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("flash","")!="")) // In case of old links, move all of these to use plupload
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_swf.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
-					}
-				elseif (getval("java","")!="") // Test if in browser java upload
-					{
-					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_java.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
+					if (getval("save","")!="") {redirect("pages/upload_plupload.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
@@ -322,7 +317,7 @@ function EditNav() # Create a function so this can be repeated at the end of the
 
 <div class="BasicsBox"> 
 
-<form method="post" action="edit.php?ref=<?php echo $ref?>&swf=<?php echo getval("swf","") ?>&java=<?php echo getval("java","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&collection=<?php echo $collection ?>&metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
+<form method="post" action="edit.php?ref=<?php echo $ref?>&plupload=<?php echo getval("plupload","") ?>&swf=<?php echo getval("swf","") ?>&java=<?php echo getval("java","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&collection=<?php echo $collection ?>&metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>
@@ -429,8 +424,8 @@ else
 <?php } else { # Add new material(s), specify default content (writes to resource with ID [negative user ref])
 
 # Define the title h1:
-if (getval("java","")!="") {$titleh1 = $lang["addresourcebatchbrowserjava"];} # Add Resource Batch - In Browser (Java)
-elseif (getval("swf","")!="") {$titleh1 = $lang["addresourcebatchbrowser"];} # Add Resource Batch - In Browser (Flash)
+
+if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("swf","")!="")) {$titleh1 = $lang["addresourcebatchbrowser"];}
 elseif (getval("single","")!="")
 	{
 	if (getval("archive","")=="2")
@@ -523,7 +518,7 @@ for ($n=0;$n<count($types);$n++)
 <?php
 if ($ref<=0 && getval("single","")=="") { 
 
-# Batch uploads (java/swf/ftp/local) - also ask which collection to add the resource to.
+# Batch uploads (plupload/ftp/local) - also ask which collection to add the resource to.
 if ($enable_add_collection_on_upload) 
 	{
 	?>

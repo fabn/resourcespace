@@ -55,7 +55,13 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 		# Work out which file has been posted (switch is necessary for SWFUpload)
 		if (isset($_FILES['userfile'])) {$processfile=$_FILES['userfile'];}
         else if (isset($_FILES['file'])) {$processfile=$_FILES['file'];} else {$processfile=$_FILES['Filedata'];}
-		$filename=$processfile['name'];
+				
+		# Plupload needs this
+		 if (isset($_REQUEST['name'])) {
+			 $filename=$_REQUEST['name'];
+			 }
+		else {$filename=$processfile['name'];}
+
 	}
 
     # Work out extension
@@ -108,8 +114,13 @@ function upload_file($ref,$no_exif=false,$revert=false,$autorotate=false)
 	if (!$revert){
     if ($filename!="")
     	{
-    	global $jupload_alternative_upload_location;
-    	if (isset($jupload_alternative_upload_location))
+    	global $jupload_alternative_upload_location, $plupload_upload_location;
+    	if (isset($plupload_upload_location))
+    		{
+    		# PLUpload - file was sent chunked and reassembled - use the reassembled file location
+			$result=rename($plupload_upload_location, $filepath);
+    		}
+		elseif (isset($jupload_alternative_upload_location))
     		{
     		# JUpload - file was sent chunked and reassembled - use the reassembled file location
 		    $result=rename($jupload_alternative_upload_location, $filepath);

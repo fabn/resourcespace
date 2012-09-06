@@ -1931,3 +1931,10 @@ $iprestrict_friendlyerror=false;
 #Make search filter strict (prevents direct access to view/preview page)
 $search_filter_strict=true;
 
+#Plupload settings
+#Specify the supported runtimes and priority
+$plupload_runtimes = 'html5,gears,silverlight,browserplus,flash,html4';
+
+#Start uploads as soon as files are added to the queue?
+$plupload_autostart=false;
+

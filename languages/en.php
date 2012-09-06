@@ -778,8 +778,8 @@ $lang["warningexpired"]="Resource Expired";
 $lang["warningexpiredtext"]="Warning! This resource has exceeded the expiry date. You must click the link below to enable the download functionality.";
 $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
-$lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser (Flash)";
-$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser (Java - recommended)";
+$lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser";
+$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser (Java)";
 
 $lang["addresourcebatchftp"]="Add Resource Batch - Fetch from FTP server";
 $lang["replaceresourcebatch"]="Replace Resource Batch";
@@ -1078,7 +1078,7 @@ $lang["invalidextension_mustbe-extensions"]="Invalid extension, must be %EXTENSI
 $lang["allowedextensions"]="Allowed Extensions";
 $lang["allowedextensions-extensions"]="Allowed Extensions: %EXTENSIONS"; # Use %EXTENSIONS, %extensions or %Extensions as a placeholder. The placeholder will be replaced with the filename extensions, using the same case. E.g. "Allowed Extensions: %EXTENSIONS" -> "Allowed Extensions: JPG, PNG"
 
-$lang["alternativebatchupload"]="Batch upload alternative files (Java)";
+$lang["alternativebatchupload"]="Batch upload alternative files";
 
 $lang["confirmdeletefieldoption"]="Are you sure you wish to DELETE this field option?";
 
@@ -1506,7 +1506,14 @@ $lang["intro-java_upload"] = "Click <b>Browse</b> to locate one or more files an
 $lang["intro-java_upload-replace_resource"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
 $lang["intro-swf_upload"] = "Click <b>Upload</b> to locate and upload one or more files. Hold down the Shift key to select multiple files.";
 $lang["intro-single_upload"] = "Click <b>Browse</b> to locate a file and then click <b>Upload</b>.";
+$lang["intro-plupload"] = "Click <b>Add Files</b> to locate one or more files and then click <b>Start upload</b>.";
+$lang["intro-plupload_dragdrop"] = "Drag and drop or click <b>Add Files</b> to locate one or more files and then click <b>Start upload</b>.";
+$lang["intro-plupload_upload-replace_resource"] = "Click <b>Add Files</b> to locate a file and then click <b>Start upload</b>.";
 $lang["intro-batch_edit"] = "Please specify the default upload settings and the default values for the metadata of the resources you are about to upload.";
+$lang["pluploader_warning"]="Your browser may not support very large file uploads. If you are having problems please try either upgrading your browser or using the links below.";
+$lang["getsilverlight"]="To ensure that you have the latest version of Silverlight on your system, visit the Microsoft Silverlight site.";
+$lang["getbrowserplus"]="To get the latest BrowserPlus software, visit the Yahoo BrowserPlus website.";
+$lang["pluploader_usejava"]="Use the legacy Java uploader.";
 
 $lang["collections-1"] = "(<strong>1</strong> Collection)";
 $lang["collections-2"] = "(<strong>%d</strong> Collections with <strong>%d</strong> items)"; # %number will be replaced, e.g. 3 Collections
