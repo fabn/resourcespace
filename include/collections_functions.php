@@ -844,7 +844,7 @@ function get_search_title($searchstring){
 	$collection_dropdown_user_access_mode=false;
 	include(dirname(__FILE__)."/search_title_processing.php");
 
-    if ($starsearch!=0){$search_title.=$starsearch;$search_title.=($starsearch>1)?" ".$lang['stars']:" ".$lang['star'];}
+    if ($starsearch!=0){$search_title.="(".$starsearch;$search_title.=($starsearch>1)?" ".$lang['stars']:" ".$lang['star'];$search_title.=")";}
     if ($restypes!=""){ 
 		$resource_types=get_resource_types($restypes);
 		foreach($resource_types as $type){

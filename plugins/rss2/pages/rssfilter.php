@@ -2,6 +2,7 @@
 include(dirname(__FILE__)."/../../../include/db.php");
 include(dirname(__FILE__)."/../../../include/general.php");
 include(dirname(__FILE__)."/../../../include/search_functions.php");
+include(dirname(__FILE__)."/../../../include/collections_functions.php");
 include(dirname(__FILE__)."/rssfeed.php");
 
 $api=true;
@@ -21,6 +22,7 @@ if (isset($rss_limits) && $rss_limits){
 
 
 $search=getvalescaped("search","");
+$starsearch=getvalescaped("starsearch","");
 
 
 # Append extra search parameters
@@ -83,77 +85,16 @@ if (!array_key_exists("search",$_GET))
 	# Story only? Display as list
 	#if ($restypes=="2") {$display="list";}
 	
-	$result=do_search($search,$restypes,"relevance",$archive,100);
+	$result=do_search($search,$restypes,"relevance",$archive,100,"desc",false,$starsearch);
 	
 	//echo $result[0];
 
 	# Create a title for the feed
-	$feed_title=$applicationname ." - ".$search;
+	$searchstring="search=$search&restypes=$restypes&archive=$archive&starsearch=$starsearch";
+	$feed_title=$applicationname ." - ".xml_entities(get_search_title($searchstring));
 
-	# Update the title of the feed to match the search title, if there is a search title
-	if ($search_titles)
-		{
-		if (substr($search,0,5)=="!last")
-			{
-			$feed_title = $applicationname ." - ".$lang["recent"].' '.substr($search,5,strlen($search));
-			}
-		elseif (substr($search,0,8)=="!related")
-			{
-			$resource=explode(" ",$search);$resource=str_replace("!related","",$resource[0]);
-			$feed_title = $applicationname ." - ".$lang["relatedresources"].' - '.$lang['id'].$resource;
-			}
-		elseif (substr($search,0,7)=="!unused")
-			{
-			$feed_title = $applicationname ." - ".$lang["uncollectedresources"];
-			}
-		elseif (substr($search,0,11)=="!duplicates")
-			{
-			$feed_title = $applicationname ." - ".$lang["duplicateresources"];
-			}
-		elseif (substr($search,0,15)=="!archivepending")
-			{
-			$feed_title = $applicationname ." - ".$lang["resourcespendingarchive"];
-			}
-		elseif (substr($search,0,14)=="!contributions")
-			{
-			$cuser=explode(" ",$search);$cuser=str_replace("!contributions","",$cuser[0]);
-			if ($cuser==$userref)
-				{
-				switch ($archive)
-					{
-					case -2:
-						$feed_title = $applicationname ." - ".$lang["contributedps"];
-						break;
-					case -1:
-						$feed_title = $applicationname ." - ".$lang["contributedpr"];
-						break;
-					case -0:
-						$feed_title = $applicationname ." - ".$lang["contributedsubittedl"];
-						break;
-					}
-				}
-			}
-		else
-			{
-			switch ($archive)
-				{
-				case -2:
-					$feed_title = $applicationname ." - ".$lang["userpendingsubmission"];
-					break;
-				case -1:
-					$feed_title = $applicationname ." - ".$lang["userpending"];
-					break;
-				case 2:
-					$feed_title = $applicationname ." - ".$lang["archiveonlysearch"];
-					break;
-				case 3:
-					$feed_title = $applicationname ." - ".$lang["deletedresources"];
-					break;
-				}
-			}
-		}
-
-$r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", $search, $lang["filtered_resource_update_for"]));
+	
+$r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", xml_entities($searchstring), $lang["filtered_resource_update_for"]));
 
 // rss fields can include any of thumbs, smallthumbs, list, xlthumbs display fields, or data_joins.
 $all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields,$data_joins)));
