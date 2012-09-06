@@ -15,7 +15,7 @@ include "../include/header.php";
 	<div class="VerticalNav">
 	<ul>
 	
-	<li><a href="edit.php?ref=-<?php echo $userref?>&plupload=true"><?php echo $lang["addresourcebatchbrowserplupload"];?></a></li>
+	<li><a href="edit.php?ref=-<?php echo $userref?>&plupload=true"><?php echo $lang["addresourcebatchbrowser"];?></a></li>
 	
 	<?php if (checkperm("e-2")) { ?>
 	<li><a href="search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
