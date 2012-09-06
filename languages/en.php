@@ -1347,6 +1347,8 @@ $lang["config"]="config";
 
 $lang["starsminsearch"]="Stars (Minimum)";
 $lang["anynumberofstars"]="Any Number of Stars";
+$lang["star"]="Star";
+$lang["stars"]="Stars";
 
 $lang["noupload"]="No Upload";
 
