@@ -4,7 +4,7 @@
 #  - For resource indexing / keyword creation, see resource_functions.php
 
 if (!function_exists("do_search")) {
-function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false,$starsearch="",$ignore_filters=false,$return_disk_usage=false)
+function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchrows=-1,$sort="desc",$access_override=false,$starsearch=0,$ignore_filters=false,$return_disk_usage=false)
 	{	
 	debug("search=$search restypes=$restypes archive=$archive");
 	
@@ -48,7 +48,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
 		$sql_filter.="resource_type in ('" . join("','",$restypes_x) . "')";
 		}
 	
-	if ($starsearch!="")
+	if ($starsearch!="" && $starsearch!=0)
 		{
 		if ($sql_filter!="") {$sql_filter.=" and ";}
 		$sql_filter.="user_rating >= '$starsearch'";
