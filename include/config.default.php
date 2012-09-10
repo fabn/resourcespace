@@ -1938,3 +1938,6 @@ $plupload_runtimes = 'html5,gears,silverlight,browserplus,flash,html4';
 #Start uploads as soon as files are added to the queue?
 $plupload_autostart=false;
 
+#Clear the queue after uploads have completed
+$plupload_clearqueue=true;
+

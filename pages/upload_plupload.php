@@ -63,7 +63,7 @@ if ($_FILES)
 
 	// Settings
 	#$targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
-	$targetDir = get_temp_dir() . DIRECTORY_SEPARATOR . "plupload";
+	$targetDir = get_temp_dir() . DIRECTORY_SEPARATOR . "plupload" . DIRECTORY_SEPARATOR . $session_hash;
 
 	$cleanupTargetDir = true; // Remove old files
 	$maxFileAge = 5 * 3600; // Temp file age in seconds
@@ -173,99 +173,97 @@ if ($_FILES)
 		# Additional ResourceSpace upload code
 		
 		$plupload_upload_location=$plfilepath;
-		#exit($plupload_upload_location);
-		if ($alternative!="")
-			{
-			# Upload an alternative file (JUpload only)
-
-			# Add a new alternative file
-			$aref=add_alternative_file($alternative,$plfilename);
-			
-			# Work out the extension
-			$extension=explode(".",$plfilepath); $extension=trim(strtolower($extension[count($extension)-1]));
-
-			# Find the path for this resource.
-			$path=get_resource_path($alternative, true, "", true, $extension, -1, 1, false, "", $aref);
-			
-			# Move the sent file to the alternative file location
-			
-			# PLUpload - file was sent chunked and reassembled - use the reassembled file location
-			$result=rename($plfilepath, $path);
-
-			if ($result===false)
+		if(!hook("initialuploadprocessing"))
+			{			
+			if ($alternative!="")
 				{
-				exit("ERROR: File upload error. Please check the size of the file you are trying to upload.");
-				}
+				# Upload an alternative file (JUpload only)
 
-			chmod($path,0777);
-			$file_size = @filesize_unlimited($path);
-			
-			# Save alternative file data.
-			sql_query("update resource_alt_files set file_name='" . escape_check($plfilename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now() where resource='$alternative' and ref='$aref'");
-			
-			if ($alternative_file_previews_batch)
-				{
-				create_previews($alternative,false,$extension,false,false,$aref);
-				}
-			
-			echo "SUCCESS";
-			exit();
-			}
-		if ($replace=="" && $replace_resource=="")
-			{
-			# Standard upload of a new resource
-
-			$ref=copy_resource(0-$userref); # Copy from user template
-			
-			# Add to collection?
-			if ($collection_add!="")
-				{
-				add_resource_to_collection($ref,$collection_add);
-				}
+				# Add a new alternative file
+				$aref=add_alternative_file($alternative,$plfilename);
 				
-			# Log this			
-			daily_stat("Resource upload",$ref);
-			resource_log($ref,"u",0);
-			
-			debug("DEBUG: UPLOADING FILE: plfilename: " . $plfilename);
-			$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
-			debug("DEBUG: Status: " . $status);
-			echo "SUCCESS";
-			exit();
-			}
-		elseif ($replace=="" && $replace_resource!="")
-			{
-			# Replacing an existing resource file
-			$status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+				# Work out the extension
+				$extension=explode(".",$plfilepath); $extension=trim(strtolower($extension[count($extension)-1]));
 
-			echo "SUCCESS";
-			exit();
-			}
-		else
-			{
-			# Overwrite an existing resource using the number from the filename.
-			
-			# Extract the number from the filename
-			$plfilename=strtolower(str_replace(" ","_",$plfilename));
-			$s=explode(".",$plfilename);
-			if (count($s)==2) # does the filename follow the format xxxxx.xxx?
-				{
-				$ref=trim($s[0]);
-				if (is_numeric($ref)) # is the first part of the filename numeric?
+				# Find the path for this resource.
+				$path=get_resource_path($alternative, true, "", true, $extension, -1, 1, false, "", $aref);
+				
+				# Move the sent file to the alternative file location
+				
+				# PLUpload - file was sent chunked and reassembled - use the reassembled file location
+				$result=rename($plfilepath, $path);
+
+				if ($result===false)
 					{
-					$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
+					exit("ERROR: File upload error. Please check the size of the file you are trying to upload.");
 					}
+
+				chmod($path,0777);
+				$file_size = @filesize_unlimited($path);
+				
+				# Save alternative file data.
+				sql_query("update resource_alt_files set file_name='" . escape_check($plfilename) . "',file_extension='" . escape_check($extension) . "',file_size='" . $file_size . "',creation_date=now() where resource='$alternative' and ref='$aref'");
+				
+				if ($alternative_file_previews_batch)
+					{
+					create_previews($alternative,false,$extension,false,false,$aref);
+					}
+				
+				echo "SUCCESS";
+				exit();
 				}
+			if ($replace=="" && $replace_resource=="")
+				{
+				# Standard upload of a new resource
 
-			echo "SUCCESS";
-			exit();
-			}
-		
-		
+				$ref=copy_resource(0-$userref); # Copy from user template
+				
+				# Add to collection?
+				if ($collection_add!="")
+					{
+					add_resource_to_collection($ref,$collection_add);
+					}
+					
+				# Log this			
+				daily_stat("Resource upload",$ref);
+				resource_log($ref,"u",0);				
+				$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+				echo "SUCCESS";
+				exit();
+				}
+			elseif ($replace=="" && $replace_resource!="")
+				{
+				# Replacing an existing resource file
+				$status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
 
+				echo "SUCCESS";
+				exit();
+				}
+			else
+				{
+				# Overwrite an existing resource using the number from the filename.
+				
+				# Extract the number from the filename
+				$plfilename=strtolower(str_replace(" ","_",$plfilename));
+				$s=explode(".",$plfilename);
+				if (count($s)==2) # does the filename follow the format xxxxx.xxx?
+					{
+					$ref=trim($s[0]);
+					if (is_numeric($ref)) # is the first part of the filename numeric?
+						{
+						$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!='')); # Upload to the specified ref.
+						}
+					}
+
+				echo "SUCCESS";
+				exit();
+				}
+			}		
+		}
+		
 		// Return JSON-RPC response
 		die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
-		}
+		
 
     }
 $headerinsert.= "
@@ -289,7 +287,7 @@ jQuery(document).ready(function () {
 		runtimes : '<?php echo $plupload_runtimes ?>',
 		url: 'upload_plupload.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>',
 		chunk_size : '5mb',	
-        multiple_queues : true,
+		multiple_queues: true,
 
 		<?php if ($allowed_extensions!=""){
 			// Specify what files can be browsed for
@@ -329,7 +327,25 @@ jQuery(document).ready(function () {
 			
 	if ($usercollection==$collection_add) { ?>uploader.bind('FileUploaded', function(up, file) {top.collections.location.href="<?php echo $baseurl . '/pages/collections.php?nc=' . time() ?>"});
 		<?php } ?>
-			
+	
+	//add flag so that upload_plupload.php can tell if this is the last file.
+	uploader.bind('BeforeUpload', function(up, files) {
+		if( (uploader.total.uploaded) == uploader.files.length-1)
+					{
+					uploader.settings.url ='upload_plupload.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>&lastqueued=true';
+					}
+				
+	}); 
+	
+	<?php if ($plupload_clearqueue){?>
+		//remove the completed files once complete 
+		uploader.bind('UploadComplete', function(up, files) {
+					jQuery('.plupload_done').slideUp('2000', function() {
+						uploader.splice();
+					});
+		});
+	<?php } ?>
+	
 	// Client side form validation
 	jQuery('form').submit(function(e) {
 		
