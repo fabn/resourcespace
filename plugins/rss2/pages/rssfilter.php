@@ -97,7 +97,7 @@ if (!array_key_exists("search",$_GET))
 $r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", xml_entities($searchstring), $lang["filtered_resource_update_for"]));
 
 // rss fields can include any of thumbs, smallthumbs, list, xlthumbs display fields, or data_joins.
-$all_field_info=get_fields_for_search_display(array_unique(array_merge($thumbs_display_fields,$list_display_fields,$xl_thumbs_display_fields,$small_thumbs_display_fields,$data_joins)));
+$all_field_info=get_fields_for_search_display($rss_fields);
 
 $n=0;
 foreach ($rss_fields as $display_field)
@@ -109,10 +109,10 @@ foreach ($rss_fields as $display_field)
 			{
 			$field_info=$all_field_info[$m];
 			$df[$n]['ref']=$display_field;
-			$df[$n]['indexed']=$field_info['keywords_index'];
-			$df[$n]['partial_index']=$field_info['partial_index'];
 			$df[$n]['name']=$field_info['name'];
 			$df[$n]['title']=$field_info['title'];
+			$df[$n]['type']=$field_info['type'];
+			$df[$n]['value_filter']=$field_info['value_filter'];
 			$n++;
 			}
 		}
@@ -149,22 +149,36 @@ for ($n=0;$n<count($result);$n++)
 	$add_desc="";
 	foreach ($rss_fields as $rssfield)
 		{
-		if (is_array($result[$n]) && array_key_exists("field".$rssfield,$result[$n]) && $result[$n]['field'.$rssfield]!="")
-			{
-			$value=i18n_get_translated($result[$n]['field'.$rssfield]);
-			
-			// allow for value filters
-			for ($x=0;$x<count($df);$x++)
-				{
-				if ($df[$x]['ref']==$rssfield)
+		if (is_array($result[$n]))
+			{	
+			if (isset($result[$n]['field'.$rssfield])){	
+				$value=i18n_get_translated($result[$n]['field'.$rssfield]);
+			} else {
+				$value=i18n_get_translated(get_data_by_field($result[$n]['ref'],$rssfield));
+			}
+			if ($value!="" && $value!=","){
+				// allow for value filters
+				for ($x=0;$x<count($df);$x++)
 					{
-					$plugin="../../value_filter_" . $df[$x]['name'] . ".php";
-					if (file_exists($plugin)) {include $plugin;}
-					}		
+					if ($df[$x]['ref']==$rssfield)
+						{
+						$plugin="../../value_filter_" . $df[$x]['name'] . ".php";
+						if ($df[$x]['value_filter']!=""){
+							eval($df[$x]['value_filter']);
+						}
+						else if (file_exists($plugin)) {include $plugin;}
+						else if ($df[$x]["type"]==4 || $df[$x]["type"]==6 || $df[$x]["type"]==10) { 
+							$value=NiceDate($value,true,false);
+						}	
+						if ($rss_show_field_titles){$add_desc.=$df[$x]['title'].": ";}	
+					}	
+							
 				}
-			$add_desc.=xml_entities($value)."<![CDATA[<br/>]]>";
+					
+				$add_desc.=xml_entities($value)."<![CDATA[<br/>]]>";
 			}
 		}
+	}
 	
 	$description = "<![CDATA[<img src='$imgurl' align='left' height='75'  border='0' />]]>". $add_desc;
 	

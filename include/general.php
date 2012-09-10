@@ -2463,7 +2463,7 @@ function get_fields_for_search_display($field_refs)
     }
 
     # Executes query.
-    $fields = sql_query("select ref, name, title, keywords_index, partial_index, value_filter from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
+    $fields = sql_query("select ref, name, type, title, keywords_index, partial_index, value_filter from resource_type_field where ref in ('" . join("','",$field_refs) . "')");
 
     # Applies field permissions and translates field titles in the newly created array.
     $return = array();
