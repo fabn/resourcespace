@@ -474,6 +474,7 @@ $lang["log-t"]="Transformed file";
 $lang["log-s"]="Change status";
 $lang["log-a"]="Change access";
 $lang["log-r"]="Reverted metadata";
+$lang["log-missinglang"]="[type] (missing lang)";
 
 $lang["backtoresourceview"]="Back to resource view";
 
