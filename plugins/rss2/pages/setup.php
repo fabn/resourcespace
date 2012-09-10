@@ -20,7 +20,7 @@ $plugin_page_heading = $lang['rss_setup_heading'];
 $page_def[] = config_add_boolean_select('rss_limits', $lang['rss_limits']);
 $page_def[] = config_add_multi_ftype_select('rss_fields', $lang['rss_fields']);
 $page_def[] = config_add_text_input('rss_ttl', $lang['rss_ttl']);
-$page_def[] = config_add_text_input('rss_show_field_titles', $lang['rss_show_field_titles']);
+$page_def[] = config_add_boolean_select('rss_show_field_titles', $lang['rss_show_field_titles']);
 
 // Do the page generation ritual.
 $upload_status = config_gen_setup_post($page_def, $plugin_name);
