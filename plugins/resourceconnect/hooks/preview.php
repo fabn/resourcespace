@@ -45,7 +45,7 @@ function HookResourceconnectPreviewSearchextraurl()
 	echo "resourceconnect_source=" .$baseurl;
 	}
 	
-function HookResourceconnectViewNextpreviewregeneratekey()
+function HookResourceconnectPreviewNextpreviewregeneratekey()
 	{
 	if (getval("resourceconnect_source","")=="") {return false;} # Not a ResourceConnect result set. 
 	
