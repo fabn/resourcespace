@@ -149,7 +149,7 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				}
 			else
 				{
-				if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("flash","")!="")) // In case of old links, move all of these to use plupload
+				if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("flash","")!="") || (getval("swf","")!="")) // In case of old links, move all of these to use plupload
 					{
 					# Save button pressed? Move to next step.
 					if (getval("save","")!="") {redirect("pages/upload_plupload.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
