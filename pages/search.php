@@ -1066,7 +1066,7 @@ Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'ResourcePanelShellLarg
 		<?php } ?>
 		<?php } ?>
 		<?php } // end hook replaceresourcetoolssmall ?>
-		
+<? hook("smallthumbicon"); ?>	
 <div class="clearer"></div></div>	
 <div class="PanelShadow"></div></div>
 		 
