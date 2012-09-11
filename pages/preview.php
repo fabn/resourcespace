@@ -62,6 +62,10 @@ if ($go!="")
 			if (($go=="next") && ($pos<($n-1))) {$ref=$result[$pos+1]["ref"];if (($pos+1)>=($offset+72)) {$offset=$pos+1;}} # move to next page if we've advanced far enough
 			}
 		}
+
+	# Option to replace the key via a plugin (used by resourceconnect plugin)	
+	$newkey=hook("nextpreviewregeneratekey");
+	if (is_string($newkey)) {$k=$newkey;}
 	}
 
 # Next / previous page browsing (e.g. pdfs)
