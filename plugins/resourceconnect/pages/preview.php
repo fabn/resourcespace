@@ -30,6 +30,7 @@ $html=file_get_contents($url);
 
 #<!-- START GRAB -->
 #<!-- END GRAB -->
+#echo htmlspecialchars($html);
 
 $s=strpos($html, "<!-- START GRAB -->");
 $e=strpos($html, "<!-- END GRAB -->",$s);

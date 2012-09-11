@@ -9,7 +9,7 @@ function HookResourceconnectViewNextpreviewregeneratekey()
 	# Create a new key when moving next/back for a given result set.
 	
 	$access_key=md5("resourceconnect" . $scramble_key);
-	$k=md5($access_key . $ref);
+	$k=substr(md5($access_key . $ref),0,10);
 	
 	return $k;
 	}

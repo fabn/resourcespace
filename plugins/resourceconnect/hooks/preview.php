@@ -46,7 +46,7 @@ function HookResourceconnectPreviewSearchextraurl()
 	}
 	
 function HookResourceconnectPreviewNextpreviewregeneratekey()
-	{
+	{	
 	if (getval("resourceconnect_source","")=="") {return false;} # Not a ResourceConnect result set. 
 	
 	global $ref,$k,$scramble_key;
@@ -54,7 +54,7 @@ function HookResourceconnectPreviewNextpreviewregeneratekey()
 	# Create a new key when moving next/back for a given result set.
 	
 	$access_key=md5("resourceconnect" . $scramble_key);
-	$k=md5($access_key . $ref);
+	$k=substr(md5($access_key . $ref),0,10);
 	
 	return $k;
 	}	
