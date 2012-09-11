@@ -5,6 +5,19 @@ include "../../../include/general.php";
 include "../../../include/search_functions.php";
 
 $search=getvalescaped("search","");
+
+$resourceconnect_source=getval("resourceconnect_source","");
+
+$resourceconnect_this=0;
+for ($n=0;$n<count($resourceconnect_affiliates);$n++)			
+	{
+	if ($resourceconnect_affiliates[$n]["baseurl"]==$resourceconnect_source) {$resourceconnect_this=$n;break;}
+	}
+redirect("pages/search.php?search=" . urlencode($search) . "&resourceconnect_selected=" . $resourceconnect_this);
+
+exit();
+
+
 $affiliate_selected=getvalescaped("affiliate","");
 include "../../../include/header.php";
 $page_size=$resourceconnect_pagesize;
