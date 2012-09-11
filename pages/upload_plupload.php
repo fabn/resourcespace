@@ -98,9 +98,6 @@ if ($_FILES)
 	$plfilepath = $targetDir . DIRECTORY_SEPARATOR . $plfilename;
 
 	// Create target dir
-	if (!file_exists(get_temp_dir() . DIRECTORY_SEPARATOR . "plupload"))
-                {mkdir(get_temp_dir() . DIRECTORY_SEPARATOR . "plupload",0777);}
-
 	if (!file_exists($targetDir))
 		@mkdir($targetDir,0777,true);
 
