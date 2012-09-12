@@ -51,6 +51,8 @@ function save_resource_data($ref,$multi)
 		
 	global $auto_order_checkbox,$userresourcedefaults,$multilingual_text_fields,$languages,$language;
 
+	hook("befsaveresourcedata", "", array($ref));
+
 	# save resource defaults
 	# (do this here so that user can override them if the fields are visible.)
 	set_resource_defaults($ref);	 
