@@ -79,12 +79,13 @@ function addUser(event,ui)
 	return false;
 	}
 
-jQuery('#autocomplete').autocomplete(
-	{
-	source: "<?php echo $baseurl?>/pages/ajax/autocomplete_user.php",
-	select: addUser
-	} );
-
+jQuery(document).ready(function () {
+	jQuery('#autocomplete').autocomplete(
+		{
+		source: "<?php echo $baseurl?>/pages/ajax/autocomplete_user.php",
+		select: addUser
+		} );
+})
 
 <?php if ($sharing_userlists){?>
 updateUserSelect();
