@@ -27,12 +27,17 @@ include "../../include/header.php";
 			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;single=true"><?php echo $lang["addresource"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
-		<?php if($upload_methods['in_browser_upload_java']): // Test if in browser is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;java=true"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
-		<?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['in_browser_upload']): // Test if in browser is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;swf=true"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
+                        <li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=plupload"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
+                <?php endif // Test if in browser upload is allowed. ?>
+
+		<?php if($upload_methods['in_browser_upload']): // Test if in browser is allowed. ?>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=swf"><?php echo $lang["addresourcebatchbrowserflash"]?></a></li>
+		<?php endif // Test if in browser upload is allowed. ?>
+
+		<?php if($upload_methods['in_browser_upload_java']): // Test if in browser is allowed. ?>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=java"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['fetch_from_ftp']): // Test if fetching resources from FTP is allowed. ?>

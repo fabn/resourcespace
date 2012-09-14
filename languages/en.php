@@ -780,7 +780,8 @@ $lang["warningexpiredtext"]="Warning! This resource has exceeded the expiry date
 $lang["warningexpiredok"]="&gt; Enable resource download";
 $lang["userrequestcomment"]="Comment";
 $lang["addresourcebatchbrowser"]="Add Resource Batch - In Browser";
-$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser (Java)";
+$lang["addresourcebatchbrowserjava"]="Add Resource Batch - In Browser  - Java (Legacy) ";
+$lang["addresourcebatchbrowserflash"]="Add Resource Batch - In Browser - Flash (Legacy) ";
 
 $lang["addresourcebatchftp"]="Add Resource Batch - Fetch from FTP server";
 $lang["replaceresourcebatch"]="Replace Resource Batch";
@@ -1215,8 +1216,9 @@ $lang["smartcollection"]="Smart Collection";
 $lang["dosavedsearch"]="Do Saved Search";
 
 
-$lang["uploadertryflash"]="If you are having problems with this uploader, try the <strong>Flash uploader</strong>.";
-$lang["uploadertryjava"]="If you are having problems with this uploader, or if <strong>uploading large files</strong>, try the <strong>Java uploader</strong>.";
+$lang["uploadertryflash"]="Use the legacy Flash uploader.";
+$lang["uploadertryjava"]="Use the legacy Java uploader.";
+$lang["uploadertryplupload"]="<strong>NEW</strong> - Try out the new style uploader.";
 $lang["getjava"]="To ensure that you have the latest Java software on your system, visit the Java website.";
 $lang["getflash"]="To ensure that you have the latest Flash player on your system, visit the Flash website.";
 

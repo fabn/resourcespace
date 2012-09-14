@@ -287,7 +287,7 @@ if ($replace!="")
 else
 	{
 	# Add Resource Batch - In Browser (Flash)
-	$titleh1 = $lang["addresourcebatchbrowser"];
+	$titleh1 = $lang["addresourcebatchbrowserflash"];
 	$titleh2 = str_replace(array("%number","%subtitle"), array("2", $lang["upload_file"]), $lang["header-upload-subtitle"]);
 	}
 ?>
@@ -324,6 +324,7 @@ else
 	</div>
 
 <?php if (!$hide_uploadertryother) { ?>
+<p><a href="upload_plupload.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryplupload"]; ?></a></p>
 <p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
 <?php } ?>
 

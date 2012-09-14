@@ -149,10 +149,10 @@ if ((getval("autosave","")!="") || (getval("tweak","")=="" && getval("submitted"
 				}
 			else
 				{
-				if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("flash","")!="") || (getval("swf","")!="")) // In case of old links, move all of these to use plupload
+				if ((getval("uploader","")!=""))
 					{
 					# Save button pressed? Move to next step.
-					if (getval("save","")!="") {redirect("pages/upload_plupload.php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
+					if (getval("save","")!="") {redirect("pages/upload_" . getval("uploader","") . ".php?collection_add=" . getval("collection_add","")."&entercolname=".urlencode(getvalescaped("entercolname",""))."&resource_type=".$resource_type . "&no_exif=" . $no_exif . "&autorotate=" . $autorotate . "&themestring=" . urlencode(getval('themestring','')) . "&public=" . getval('public',''));}
 					}
 				elseif (getval("local","")!="") // Test if fetching resource from local upload folder.
 					{
@@ -317,7 +317,7 @@ function EditNav() # Create a function so this can be repeated at the end of the
 
 <div class="BasicsBox"> 
 
-<form method="post" action="edit.php?ref=<?php echo $ref?>&plupload=<?php echo getval("plupload","") ?>&swf=<?php echo getval("swf","") ?>&java=<?php echo getval("java","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&collection=<?php echo $collection ?>&metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
+<form method="post" action="edit.php?ref=<?php echo $ref?>&uploader=<?php echo getval("uploader","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&collection=<?php echo $collection ?>&metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>
@@ -425,7 +425,11 @@ else
 
 # Define the title h1:
 
-if ((getval("plupload","")!="") || (getval("java","")!="") || (getval("swf","")!="")) {$titleh1 = $lang["addresourcebatchbrowser"];}
+if (getval("uploader","")=="plupload") {$titleh1 = $lang["addresourcebatchbrowser"];}
+elseif (getval("uploader","")=="java") {$titleh1 = $lang["addresourcebatchbrowserjava"];}
+elseif (getval("uploader","")=="swf") {$titleh1 = $lang["addresourcebatchbrowserflash"];}
+
+
 elseif (getval("single","")!="")
 	{
 	if (getval("archive","")=="2")

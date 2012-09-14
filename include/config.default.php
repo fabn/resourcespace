@@ -1199,7 +1199,7 @@ $themes_in_my_collections=false;
 
 # Show an upload link in the top navigation? (if 't' and 'c' permissions for the current user)
 $top_nav_upload=true;
-$top_nav_upload_type="java"; # The upload type. Options are java, swf, ftp and local
+$top_nav_upload_type="plupload"; # The upload type. Options are plupload, ftp, local or java|flash (both deprecated)
 
 # Allow users to delete resources?
 # (Can also be controlled on a more granular level with the "D" restrictive permission.)

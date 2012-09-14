@@ -438,8 +438,9 @@ else
 	<p><?php echo $lang["pluploader_warning"]; ?></p>
 	<div id="silverlight" ><p><a href="http://www.microsoft.com/getsilverlight" target="new" > &gt; <?php echo $lang["getsilverlight"] ?></a></p></div>
 	<div id="browserplus" ><p><a href="http://browserplus.yahoo.com" target="new" > &gt; <?php echo $lang["getbrowserplus"] ?></a></p></div>
-	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>"> &gt; <?php echo $lang["pluploader_usejava"]; ?></a></p>
 </div>
+	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>"> &gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>"> &gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
 
 
 

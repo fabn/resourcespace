@@ -236,7 +236,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 		
 		
 		<?php if ($help_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php"><?php echo $lang["helpandadvice"]?></a></li><?php } ?>
-		<?php if ($top_nav_upload && checkperm("c")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/edit.php?ref=-<?php echo @$userref?>&amp;<?php echo $top_nav_upload_type ?>=true"><?php echo $lang["upload"]?></a></li><?php } ?>
+		<?php if ($top_nav_upload && checkperm("c")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/edit.php?ref=-<?php echo @$userref?>&amp;uploader=<?php echo $top_nav_upload_type ?>"><?php echo $lang["upload"]?></a></li><?php } ?>
 		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php"><?php echo $lang["teamcentre"]?></a>
 		<?php if ($team_centre_alert_icon && (checkperm("R")||checkperm("r")) &&  (sql_value("select sum(thecount) value from (select count(*) thecount from request where status = 0 union select count(*) thecount from research_request where status = 0) as theunion",0) > 0)){
 			echo "<img src='$baseurl/gfx/images/attention_16.png' width='16' height='16' style='position:relative;top:3px;' />";	
