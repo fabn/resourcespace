@@ -1581,7 +1581,8 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 				
 				# [embed_thumbnail] (requires url in templatevars['thumbnail'])
 				else if (substr($variable,0,15)=="embed_thumbnail"){
-					$$variable="<img style='border:1px solid #d1d1d1;' src='cid:thumbnail' />";
+					$thumbcid=uniqid('thumb');
+					$$variable="<img style='border:1px solid #d1d1d1;' src='cid:$thumbcid' />";
 				}
 				
 				# embed images (find them in relation to storagedir so that templates are portable)...  (ex [img_storagedir_/../gfx/whitegry/titles/title.gif])
@@ -1706,7 +1707,7 @@ function send_mail_phpmailer($email,$subject,$message="",$from="",$reply_to="",$
 	$mail->Body    = $body;
 	
 	if (isset($embed_thumbnail)&&isset($templatevars['thumbnail'])){
-		$mail->AddEmbeddedImage($templatevars['thumbnail'], 'thumbnail','thumbnail','base64','image/jpeg'); 
+		$mail->AddEmbeddedImage($templatevars['thumbnail'],$thumbcid,$thumbcid,'base64','image/jpeg'); 
 		}
 	if (isset($images)){
 		foreach ($images as $image){	
