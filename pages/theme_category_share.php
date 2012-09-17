@@ -187,6 +187,7 @@ else
 		<textarea cols="200" rows="100" ><?php 
 		foreach($collectionstoshare as $collection)
 			{	
+			$ref=$collection["ref"];
 			echo $lang["collectionname"] . ": " . $collection["name"] . "\r\n" . $baseurl?>/?c=<?php echo $ref?>&k=<?php echo generate_collection_access_key($ref,0,"URL",$access,$expires) . "\r\n" . $lang["expires"] . ": " . $expires. "\r\n\r\n";
 			}
 			?>
