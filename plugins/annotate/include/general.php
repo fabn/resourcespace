@@ -36,7 +36,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 	# This leaves the pdfs and jpg previews in filestore/annotate so that they can be grabbed later.
 	# $cleanup will result in a slightly different path that is not cleaned up afterwards.
 	
-	global $contact_sheet_preview_size,$annotate_pdf_output_only_annotated,$lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$annotate_font,$access,$k;
+	global $contact_sheet_preview_size,$annotate_pdf_output_only_annotated,$lang,$userfullname,$view_title_field,$baseurl,$imagemagick_path,$ghostscript_path,$previewpage,$storagedir,$storageurl,$annotate_font,$access,$k;
 	$date= date("m-d-Y h:i a");
 	
 	include_once($storagedir.'/../include/search_functions.php');
