@@ -211,7 +211,7 @@ if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_file","")!="
 
 <?php if (!$hide_uploadertryother) { ?>
 <br />
-<p>&gt; <a href="upload_java.php?replace_resource=<?php echo $ref ?>"><?php echo $lang["uploadertryjava"]?></a></p>
+<p>&gt; <a href="upload_plupload.php?replace_resource=<?php echo $ref ?>"><?php echo $lang["uploadertryplupload"]?></a></p>
 <?php } ?>
 
 </form>
