@@ -70,7 +70,7 @@ if ($search_titles)
 				$alt_text="title='search=".$smartsearch[0]['search']."&restypes=".$smartsearch[0]['restypes']."&archive=".$smartsearch[0]['archive']."&starsearch=".$smartsearch[0]['starsearch']."'";
 			}
 		} 
-		
+		hook("collectionsearchtitlemod");
         $search_title = '<div align="left"><h1><div class="searchcrumbs"><span id="coltitle'.$collection.'"><a '.$alt_text.' href=search.php?search=!collection'.$collection.$parameters_string.'>'.i18n_get_translated($collection_tag.$collectiondata["name"]).'</a></span>'.$searchcrumbs.'</div></h1> ';
 		}	
     if (substr($search,0,5)=="!last")
