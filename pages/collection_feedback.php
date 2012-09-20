@@ -34,11 +34,20 @@ if (getval("save","")!="")
 	$done=true;
 	}
 
-$headerinsert.="<script src=\"../lib/js/lightbox.js\" type=\"text/javascript\"></script>";
+$headerinsert.="<script src=\"../lib/lightbox/js/jquery.lightbox-0.5.min.js\" type=\"text/javascript\"></script>";
+$headerinsert.="<link type=\"text/css\" href=\"../lib/lightbox/css/jquery.lightbox-0.5.css?css_reload_key=" . $css_reload_key . "\" rel=\"stylesheet\">";
+
 
 
 include "../include/header.php";
 ?>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.lightbox').lightBox(); 
+	
+	});
+
+</script>
 <div class="BasicsBox">
 <h1><?php echo $lang["sendfeedback"]?></h1>
 <?php if ($done) { ?><p><?php echo $lang["feedbacksent"]?></p><?php } else { ?>
@@ -83,7 +92,7 @@ include "../include/header.php";
 				$path=get_resource_path ($ref, false,"",false,$result[$n]["preview_extension"],-1,1,$use_watermark,$result[$n]["file_modified"]);
 				}
 		
-		?><a rel="lightbox[feedback]" href="<?php echo $path?>" title="<?php echo $displaytitle?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
+		?><a class="lightbox" href="<?php echo $path?>" title="<?php echo $displaytitle?>"><img width="<?php echo $result[$n]["thumb_width"]?>" height="<?php echo $result[$n]["thumb_height"]?>" src="<?php echo get_resource_path($ref,false,"thm",false,$result[$n]["preview_extension"],-1,1,(checkperm("w") || ($k!="" && isset($watermark))) && $access==1,$result[$n]["file_modified"])?>" class="ImageBorder"></a>
 		<?php } else { ?>		<img border=0 src="../gfx/<?php echo get_nopreview_icon($result[$n]["resource_type"],$result[$n]["file_extension"],false) ?>"/><?php } ?>
 
 		
@@ -133,6 +142,7 @@ include "../include/header.php";
 </form>
 <?php } ?>
 </div>
+
 
 <?php		
 include "../include/footer.php";
