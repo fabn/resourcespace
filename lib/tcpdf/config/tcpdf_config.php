@@ -79,8 +79,12 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	 * path for PDF fonts
 	 * use K_PATH_MAIN.'fonts/old/' for old non-UTF8 fonts
 	 */
-	define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
-
+	// RS w2p compatibility
+	if (isset($templateref)){
+		define ('K_PATH_FONTS', $storagedir.'/w2p/'.$templateref.'/fonts/');}
+	else {
+		define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+	}
 	/**
 	 * cache directory for temporary files (full path)
 	 */
