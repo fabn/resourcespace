@@ -22,7 +22,7 @@ if (isset($rss_limits) && $rss_limits){
 
 
 $search=getvalescaped("search","");
-$starsearch=getvalescaped("starsearch",0);
+$starsearch=getvalescaped("starsearch","");
 
 
 # Append extra search parameters
@@ -91,10 +91,10 @@ if (!array_key_exists("search",$_GET))
 
 	# Create a title for the feed
 	$searchstring="search=$search&restypes=$restypes&archive=$archive&starsearch=$starsearch";
-	$feed_title=$applicationname ." - ".get_search_title($searchstring);
+	$feed_title=$applicationname ." - ".xml_entities(get_search_title($searchstring));
 
 	
-$r = new RSSFeed($feed_title, $baseurl,str_replace("%search%", xml_entities($searchstring), xml_entities($lang["filtered_resource_update_for"])));
+$r = new RSSFeed($feed_title, $baseurl, str_replace("%search%", xml_entities($searchstring), $lang["filtered_resource_update_for"]));
 
 // rss fields can include any of thumbs, smallthumbs, list, xlthumbs display fields, or data_joins.
 $all_field_info=get_fields_for_search_display($rss_fields);
@@ -122,6 +122,7 @@ $n=0;
 //$r->AddImage($title, $url, $link, $description = '')
 
 # loop and display the results
+if (is_array($result)){
 for ($n=0;$n<count($result);$n++)			
 	{
 	$ref=$result[$n]["ref"];
@@ -174,6 +175,7 @@ for ($n=0;$n<count($result);$n++)
 					}	
 							
 				}
+					
 				$add_desc.=xml_entities(strip_tags($value))."<![CDATA[<br/>]]>";
 			}
 		}
@@ -193,6 +195,9 @@ for ($n=0;$n<count($result);$n++)
 
 //Header("content-type: text/xml");
 
-$r->Output();			
-			
+$r->Output();		
+}
+else { 
+	$r->Output(); // empty
+}	
 ?>
