@@ -102,7 +102,7 @@ if ($height % 2) {$height++;}
 $tmp = hook("ffmpegbeforeexec", "", array($ffmpeg_fullpath, $file));
 if (is_array($tmp) and $tmp) {list($width, $height) = $tmp;}
 
-$shell_exec_cmd = $ffmpeg_fullpath . " -y -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} -t $ffmpeg_preview_seconds " . escapeshellarg($targetfile);
+$shell_exec_cmd = $ffmpeg_fullpath . " -y -t $ffmpeg_preview_seconds -i " . escapeshellarg($file) . " $ffmpeg_preview_options -s {$width}x{$height} " . escapeshellarg($targetfile);
 
 $tmp = hook("ffmpegmodpreparams", "", array($shell_exec_cmd, $ffmpeg_fullpath, $file));
 if ($tmp) {$shell_exec_cmd = $tmp;}
