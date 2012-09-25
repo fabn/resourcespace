@@ -924,7 +924,7 @@ function save_user($ref)
 			
 		$additional_sql=hook("additionaluserfieldssave");
 		
-		sql_query("update user set username='" . getvalescaped("username","") . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "',approved='" . ((getval("approved","")=="")?"0":"1") . "' $additional_sql where ref='$ref'");
+		sql_query("update user set username='" . trim(getvalescaped("username","")) . "'" . $passsql . ",fullname='" . getvalescaped("fullname","") . "',email='" . getvalescaped("email","") . "',usergroup='" . getvalescaped("usergroup","") . "',account_expires=$expires,ip_restrict='" . getvalescaped("ip_restrict","") . "',comments='" . getvalescaped("comments","") . "',approved='" . ((getval("approved","")=="")?"0":"1") . "' $additional_sql where ref='$ref'");
 		}
 		
 	if (getval("emailme","")!="")
