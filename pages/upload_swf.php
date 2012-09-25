@@ -9,6 +9,14 @@ $status="";
 $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
 $collectionname=getvalescaped("entercolname","");
+$alternative = getvalescaped("alternative","");
+$replace = getvalescaped("replace",""); 
+$replace_resource=getvalescaped("replace_resource","");
+
+
+
+
+
 
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
@@ -42,7 +50,7 @@ if ($collection_add!="")
 if (array_key_exists("Filedata",$_FILES))
     {
 	
-    if ($replace=="")
+    if ($replace=="" && $replace_resource=="")
     	{
 		# New resource
 	
@@ -71,13 +79,22 @@ if (array_key_exists("Filedata",$_FILES))
 			echo "../gfx/type1_col.gif";
 			}
 		exit();
-		}
-	else
+	}
+	elseif ($replace=="" && $replace_resource!="")
 		{
-    	# Overwrite an existing resource using the number from the filename.
+		# Replacing an existing resource file
+		$status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
+		$thumb=get_resource_path($ref,true,"col",false);
+		if (file_exists($thumb)){
+			echo get_resource_path($ref,false,"col",false);
+		}
+		exit();
+	}
+	else	{
+    		# Overwrite an existing resource using the number from the filename.
 		
 		# Extract the number from the filename
-	    $filename=strtolower(str_replace(" ","_",$_FILES['Filedata']['name']));
+	   	$filename=strtolower(str_replace(" ","_",$_FILES['Filedata']['name']));
 		$s=explode(".",$filename);
 		if (count($s)==2) # does the filename follow the format xxxxx.xxx?
 			{
@@ -93,7 +110,7 @@ if (array_key_exists("Filedata",$_FILES))
 			echo get_resource_path($ref,false,"col",false);
 			}
 		exit();
-		}
+	}
     }
     
 $headerinsert.= "
@@ -219,7 +236,7 @@ window.onload =  function()
 	{
 
 	swfu = new SWFUpload({
-		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?replace=<?php echo $replace ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>",
+		upload_url : "<?php echo $baseurl?>/pages/upload_swf.php?alternative=<?php echo $alternative ?>&replace=<?php echo $replace ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","") ?>&autorotate=<?php echo getval('autorotate','') ?>&replace_resource=<?php echo $replace_resource?>",
 		flash_url : "<?php echo $baseurl?>/lib/swfupload/swfupload.swf",
 		
 
@@ -240,8 +257,8 @@ window.onload =  function()
 				
 				button_placeholder_id : "btnBrowse",
 				button_image_url : "<?php echo $baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
-				button_width : 160,
-				button_height : 22,
+				button_width : 180,
+				button_height : 23,
 				button_text : "<span class=\"button\"><?php echo $lang["action-upload"] . "..." ?></span>",
 				button_text_style : ".button { margin: auto; text-align: center; font-weight: bold; font-family: Helvetica, Arial, sans-serif; font-size: 12px; }",
 				button_text_top_padding : 1,
@@ -284,6 +301,13 @@ if ($replace!="")
 	$titleh1 = $lang["replaceresourcebatch"];
 	$titleh2 = "";
 	}
+elseif ($replace_resource!="")
+	{
+	# Replace file
+	$titleh1 = $lang["replacefile"];
+	$titleh2 = "";
+	$intro = $lang["intro-plupload_upload-replace_resource"];
+	}
 else
 	{
 	# Add Resource Batch - In Browser (Flash)
@@ -324,8 +348,8 @@ else
 	</div>
 
 <?php if (!$hide_uploadertryother) { ?>
-<p><a href="upload_plupload.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryplupload"]; ?></a></p>
-<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+<p><a href="upload_plupload.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryplupload"]; ?></a></p>
+<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>">&gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
 <?php } ?>
 
 <p><a target="_blank" href="http://get.adobe.com/flashplayer/">&gt; <?php echo $lang["getflash"] ?></a></p>

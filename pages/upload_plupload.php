@@ -9,6 +9,14 @@ $status="";
 $resource_type=getvalescaped("resource_type","");
 $collection_add=getvalescaped("collection_add","");
 $collectionname=getvalescaped("entercolname","");
+$search=getvalescaped("search","");
+$offset=getvalescaped("offset","",true);
+$order_by=getvalescaped("order_by","");
+$archive=getvalescaped("archive","",true);
+
+$default_sort="DESC";
+if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
+$sort=getval("sort",$default_sort);
 
 $allowed_extensions="";
 if ($resource_type!="") {$allowed_extensions=get_allowed_extensions_by_type($resource_type);}
@@ -228,7 +236,7 @@ if ($_FILES)
 				daily_stat("Resource upload",$ref);
 				resource_log($ref,"u",0);				
 				$status=upload_file($ref,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
-				echo "SUCCESS";
+				echo "SUCCESS: " . $ref;
 				exit();
 				}
 			elseif ($replace=="" && $replace_resource!="")
@@ -236,7 +244,7 @@ if ($_FILES)
 				# Replacing an existing resource file
 				$status=upload_file($replace_resource,(getval("no_exif","")!=""),false,(getval('autorotate','')!=''));
 
-				echo "SUCCESS";
+				echo "SUCCESS: $replace_resource";
 				exit();
 				}
 			else
@@ -255,7 +263,7 @@ if ($_FILES)
 						}
 					}
 
-				echo "SUCCESS";
+				echo "SUCCESS: " . $ref;
 				exit();
 				}
 			}		
@@ -289,7 +297,10 @@ jQuery(document).ready(function () {
 		chunk_size : '5mb',	
 		multiple_queues: true,
 
-		<?php if ($allowed_extensions!=""){
+		<?php if ($replace_resource > 0){?>
+		multi_selection:false,
+		<?php }
+		if ($allowed_extensions!=""){
 			// Specify what files can be browsed for
 			$allowed_extensions=str_replace(", ",",",$allowed_extensions);
 			$allowedlist=explode(",",trim($allowed_extensions));
@@ -306,37 +317,58 @@ jQuery(document).ready(function () {
 
 		// Silverlight settings
 		silverlight_xap_url : '../lib/plupload/plupload.silverlight.xap'
-		
+
 	});
-	
-	
+
+
     var uploader = jQuery('#pluploader').pluploadQueue();
-	
-	//Show diff instructions if supports drag and drop
-	if(!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop)	{jQuery('#plupload_instructions').html('<?php echo $lang["intro-plupload_dragdrop"] ?>');}
-	
+
+
+
 	//Show link to java if chunking not supported 
 	if(!uploader.features.chunks){jQuery('#plupload_support').slideDown();}
 
 	<?php if ($plupload_autostart){?>
 			uploader.bind('FilesAdded', function(up, files) {
 				uploader.start();
-				}); 
-			<?php
-			}
-			
+			}); 
+	<?php	}
+
+	 if ($replace_resource > 0){?>
+                	uploader.bind('FilesAdded', function(up, files) {
+                        	if (uploader.files.length >= 1) {
+                                	jQuery('#pluploader_browse').hide("slow");
+                        	}
+                	});
+	<?php }
+	else { ?>
+	 	//Show diff instructions if supports drag and drop
+		if(!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop)	{jQuery('#plupload_instructions').html('<?php echo $lang["intro-plupload_dragdrop"] ?>');}
+	<?php }
+
 	if ($usercollection==$collection_add) { ?>uploader.bind('FileUploaded', function(up, file) {top.collections.location.href="<?php echo $baseurl . '/pages/collections.php?nc=' . time() ?>"});
 		<?php } ?>
-	
+
 	//add flag so that upload_plupload.php can tell if this is the last file.
 	uploader.bind('BeforeUpload', function(up, files) {
 		if( (uploader.total.uploaded) == uploader.files.length-1)
 					{
-					uploader.settings.url ='upload_plupload.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&no_exif=<?php echo getval("no_exif","")?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>&lastqueued=true';
+					uploader.settings.url = uploader.settings.url + '&lastqueued=true';
 					}
-				
-	}); 
-	
+
+	});
+
+	//Change URL if exif box status changes
+	jQuery('#no_exif').live('change', function(){
+    		if(jQuery(this).is(':checked')){
+			uploader.settings.url ='upload_plupload.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>&no_exif=true';
+    		}
+		else {
+			uploader.settings.url ='upload_plupload.php?replace=<?php echo $replace ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add?>&user=<?php echo urlencode($username."|".$session_hash)?>&resource_type=<?php echo $resource_type?>&autorotate=<?php echo getval("autorotate","")?>&replace_resource=<?php echo $replace_resource?>&no_exif=false';
+		}
+	});
+
+
 	<?php if ($plupload_clearqueue){?>
 		//remove the completed files once complete 
 		uploader.bind('UploadComplete', function(up, files) {
@@ -380,8 +412,24 @@ jQuery(document).ready(function () {
 		?>
 		
 <div class="BasicsBox" >
- 
-<?php
+
+<?php if ($alternative!=""){?><p> <a href="edit.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo 
+$order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $alternative?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p><?php } ?>
+
+<?php if ($replace_resource!=""){?><p> <a href="edit.php?ref=<?php echo $replace_resource?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo 
+$order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt;&nbsp;<?php echo $lang["backtoeditresource"]?></a><br / >
+<a href="view.php?ref=<?php echo $replace_resource ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresourceview"]?></a></p><?php } ?>
+
+<?php if ($alternative!=""){$resource=get_resource_data($alternative);
+	if ($alternative_file_resource_preview){ 
+		$imgpath=get_resource_path($resource['ref'],true,"col",false);
+		if (file_exists($imgpath)){ ?><img src="<?php echo get_resource_path($resource['ref'],false,"col",false);?>"/><?php }
+	}
+	if ($alternative_file_resource_title){ 
+		echo "<h2>".$resource['field'.$view_title_field]."</h2><br/>";
+	}
+}
 
 # Define the titles:
 if ($replace!="") 
@@ -389,6 +437,7 @@ if ($replace!="")
 	# Replace Resource Batch
 	$titleh1 = $lang["replaceresourcebatch"];
 	$titleh2 = "";
+	$intro = $lang["intro-plupload_upload-replace_resource"];
 	}
 elseif ($replace_resource!="")
 	{
@@ -426,7 +475,17 @@ else
     $allowed_extensions=implode(",",$list);
     ?><p><?php echo str_replace_formatted_placeholder("%extensions", str_replace(",",", ",$allowed_extensions), $lang['allowedextensions-extensions'])?></p><?php } ?>
 
-<br/>
+<?php /* Show the import embedded metadata checkbox when uploading a missing file or replacing a file.
+In the other upload workflows this checkbox is shown in a previous page. */
+if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_resource","")!=""  || getvalescaped("replace","")!="")
+	{ ?>
+		<label for="no_exif"><?php echo $lang["no_exif"]?></label><input type=checkbox <?php if (getval("no_exif","")!=""){?>checked<?php } ?> id="no_exif" name="no_exif" value="yes">
+		<div class="clearerleft"> </div>
+	<?php
+	} ?>
+
+<br>
+
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 
 <form>
@@ -439,8 +498,8 @@ else
 	<div id="silverlight" ><p><a href="http://www.microsoft.com/getsilverlight" target="new" > &gt; <?php echo $lang["getsilverlight"] ?></a></p></div>
 	<div id="browserplus" ><p><a href="http://browserplus.yahoo.com" target="new" > &gt; <?php echo $lang["getbrowserplus"] ?></a></p></div>
 </div>
-	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>"> &gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
-	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>"> &gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
+	<p><a href="upload_java.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo $collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>&replace_resource=<?php echo $replace_resource?>"> &gt; <?php echo $lang["uploadertryjava"]; ?></a></p>
+	<p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo $collectionname;?>&replace=<?php echo urlencode($replace); ?>&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped('autorotate','')); ?>&replace_resource=<?php echo $replace_resource?>"> &gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
 
 
 

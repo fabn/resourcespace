@@ -367,7 +367,7 @@ if ($resource["file_extension"]!="") { ?><strong><?php echo str_replace_formatte
 	<?php if ($resource["has_image"]!=1) { ?>
 	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&upload_a_file=true">&gt;&nbsp;<?php echo $lang["uploadafile"]?></a>
 	<?php } else { ?>
-	<a href="upload.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&replace_file=true">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
+	<a href="upload_<?php echo $top_nav_upload_type ?>.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&replace_resource=<?php echo $ref ?>&resource_type=<?php echo $resource['resource_type']?>">&gt;&nbsp;<?php echo $lang["replacefile"]?></a>
 	<?php hook("afterreplacefile"); ?>
 	<?php } ?>
 	<?php if (! $disable_upload_preview) { ?><br />

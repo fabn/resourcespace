@@ -352,10 +352,10 @@ else
 ?>
 
 <?php if ($alternative=="" && !$hide_uploadertryother) { ?>
-<br><p><a href="upload_plupload.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
-&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>">&gt; <?php echo $lang["uploadertryplupload"]; ?></a></p>
-<p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
-&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
+<br><p><a href="upload_plupload.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
+&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>&replace_resource=<?php echo $replace_resource?>">&gt; <?php echo $lang["uploadertryplupload"]; ?></a></p>
+<p><a href="upload_swf.php?resource_type=<?php echo getvalescaped("resource_type",""); ?>&alternative=<?php echo $alternative ?>&collection_add=<?php echo $collection_add;?>&entercolname=<?php echo$collectionname;?>&replace=<?php echo urlencode(getvalescaped("replace","")); ?>
+&no_exif=<?php echo urlencode(getvalescaped("no_exif","")); ?>&autorotate=<?php echo urlencode(getvalescaped("autorotate","")); ?>&replace_resource=<?php echo $replace_resource?>">&gt; <?php echo $lang["uploadertryflash"]; ?></a></p>
 <?php } ?>
 
 <p><a target="_blank" href="http://www.java.com/getjava">&gt; <?php echo $lang["getjava"] ?></a></p>
