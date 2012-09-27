@@ -817,17 +817,29 @@ function remove_saved_search($collection,$search)
 function add_smart_collection()
  	{
 	global $userref;
-	$searchstring="search=".getvalescaped("addsmartcollection","") ."&restypes=".getvalescaped("restypes","")."&archive=".getvalescaped("archive","",true)."&starsearch=".getvalescaped("starsearch","");
+
+	$search=getvalescaped("addsmartcollection","");
+	$restypes=getvalescaped("restypes","");
+	$archive=getvalescaped("archive","",true);
+	$starsearch=getvalescaped("starsearch","");
+	
+	// more compact search strings should work with get_search_title
+	if ($search!=""){$searchstring[]="search=$search";}
+	if ($restypes!=""){$searchstring[]="restypes=$restypes";}
+	if ($starsearch!=""){$searchstring[]="starsearch=$starsearch";}
+	if ($archive!=0){$searchstring[]="archive=$archive";}
+	$searchstring=implode("&",$searchstring);
+	
 	$newcollection=create_collection($userref,get_search_title($searchstring),1);	
 	
-	sql_query("insert into collection_savedsearch(collection,search,restypes,archive,starsearch) values ('$newcollection','" . getvalescaped("addsmartcollection","") . "','" . getvalescaped("restypes","") . "','" . getvalescaped("archive","",true) . "','".getvalescaped("starsearch","")."')");
+	sql_query("insert into collection_savedsearch(collection,search,restypes,archive,starsearch) values ('$newcollection','" . $search . "','" . $restypes . "','" . $archive . "','".$starsearch."')");
 	$savedsearch=sql_insert_id();
 	sql_query("update collection set savedsearch=$savedsearch where ref=$newcollection"); 
 	set_user_collection($userref,$newcollection);
 	}
 
 function get_search_title($searchstring){
-	// for naming smart collections, takes a searchstring with 'search=restypes=archive=starsearch='
+	// for naming smart collections, takes a full searchstring with the form 'search=restypes=archive=starsearch=' (all parameters optional)
 	// and uses search_title_processing to autocreate a more informative title 
 	$order_by="";
 	$sort="";
@@ -840,7 +852,14 @@ function get_search_title($searchstring){
 	$search_titles_shortnames=false;
 	
 	global $lang,$userref,$baseurl,$collectiondata,$result,$display;
+	
 	parse_str($searchstring);
+	
+	if (!isset($archive)){$archive=0;}
+	if (!isset($search)){$search="";}
+	if (!isset($starsearch)){$starsearch="";}
+	if (!isset($restypes)){$restypes="";}
+	
 	$collection_dropdown_user_access_mode=false;
 	include(dirname(__FILE__)."/search_title_processing.php");
 
