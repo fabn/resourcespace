@@ -155,7 +155,9 @@ if ($search_titles)
 		{ 
 		$search_title = '<h1 class="searchcrumbs"><a href=search.php?search='.$parameters_string.'></a>'.$searchcrumbs.'</h1> '; 
 		}   
-
+	
+	hook("addspecialsearchtitle");
+	
 	// extra collection title links
 	if (substr($search,0,11)=="!collection"){
 		if ($k=="" && !checkperm("b")){$search_title_links='<a href="collections.php?collection='.$collectiondata["ref"].'" target="collections">&gt;&nbsp;'.$lang["selectcollection"].'</a>&nbsp;&nbsp;';}
