@@ -6,10 +6,13 @@ include "include/collections_functions.php";
 # External access support (authenticate only if no key provided, or if invalid access key provided)
 $k=getvalescaped("k","");if (($k=="") || (!check_access_key_collection(getvalescaped("c",""),$k) && !check_access_key(getvalescaped("r",""),$k))) {include "include/authenticate.php";}
 
-$topurl="pages/" . $default_home_page;
-if ($use_theme_as_home) {$topurl="pages/themes.php";}
-if ($use_recent_as_home) {$topurl="pages/search.php?search=" . urlencode("!last".$recent_search_quantity);}
-
+if (!hook("replacetopurl"))
+	{ 
+	$topurl="pages/" . $default_home_page;
+	if ($use_theme_as_home) {$topurl="pages/themes.php";}
+	if ($use_recent_as_home) {$topurl="pages/search.php?search=" . urlencode("!last".$recent_search_quantity);}
+	} /* end hook replacetopurl */ 
+	
 $bottomurl="pages/collections.php?k=" . $k;
 
 if (getval("c","")!="")
