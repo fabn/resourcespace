@@ -824,6 +824,7 @@ function add_smart_collection()
 	$starsearch=getvalescaped("starsearch","");
 	
 	// more compact search strings should work with get_search_title
+	$searchstring=array();
 	if ($search!=""){$searchstring[]="search=$search";}
 	if ($restypes!=""){$searchstring[]="restypes=$restypes";}
 	if ($starsearch!=""){$searchstring[]="starsearch=$starsearch";}
