@@ -2772,7 +2772,7 @@ function filesize_unlimited($path)
     else
         {
         # Attempt to use 'du' utility.
-        $f2 = exec("du " . escapeshellarg($path));
+        $f2 = exec("du -k " . escapeshellarg($path));
         $f2s = explode("\t",$f2);
         if (count($f2s)!=2) {return @filesize($path);} # Bomb out, the output wasn't as we expected. Return the filesize() output.
         return $f2s[0] * 1024;
