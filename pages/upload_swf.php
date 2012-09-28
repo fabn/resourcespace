@@ -257,8 +257,8 @@ window.onload =  function()
 				
 				button_placeholder_id : "btnBrowse",
 				button_image_url : "<?php echo $baseurl?>/lib/swfupload/XPButtonNoText_160x22.png",
-				button_width : 180,
-				button_height : 23,
+				button_width : 160,
+				button_height : 22,
 				button_text : "<span class=\"button\"><?php echo $lang["action-upload"] . "..." ?></span>",
 				button_text_style : ".button { margin: auto; text-align: center; font-weight: bold; font-family: Helvetica, Arial, sans-serif; font-size: 12px; }",
 				button_text_top_padding : 1,
