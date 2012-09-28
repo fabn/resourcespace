@@ -406,6 +406,12 @@ $show_theme_collection_stats=false; # Show count of themes and resources in them
 # If this is set to more than one, a dropdown box will appear to allow browsing of theme sub-levels
 $theme_category_levels=1;
 
+# Theme direct jump mode
+# If set, sub category levels DO NOT appear and must be directly linked to using custom home panels or top navigation items (or similar).
+# $theme_category_levels must be greater than 1.
+$theme_direct_jump=false;
+
+
 ##  Advanced Search Options
 ##  Defaults (all false) shows advanced search in the search bar but not the home page or top navigation.
 ##  To disable advanced search altogether, set 

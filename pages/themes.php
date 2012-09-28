@@ -222,10 +222,28 @@ include "../include/header.php";
   <p><?php echo text("introtext")?></p>
 <?php } ?>
 
+<?php if ($theme_direct_jump)
+	{
+	# Display title and description when 'direct jump' mode is enabled.
+	$text=text("introtext");
+	$title=htmlspecialchars(getval("title",$lang["themes"]),ENT_QUOTES);
+
+	if (count($themes)>0)
+		{
+		$title=i18n_get_translated($themes[count($themes)-1]);
+		if ($text=="") {$text=text("introtext" . $themes[count($themes)-1]);}
+		}
+
+	?>
+  <h1><?php echo $title ?></h1>
+  <p><?php echo $text ?></p>
+<?php } ?>
+
+
   <style>.ListviewTitleBoxed {background-color:#fff;}</style>
 
 <?php
-if ($themes_category_split_pages && isset($themes[0]))
+if ($themes_category_split_pages && isset($themes[0]) && !$theme_direct_jump)
 	{
 	# Display back link
 	$link="themes.php?";
@@ -246,7 +264,7 @@ if ($themes_category_split_pages && isset($themes[0]))
 if ($smart_theme!="")
 	{
 	}
-elseif ($themes_category_split_pages)
+elseif ($themes_category_split_pages && !$theme_direct_jump)
 	{
 	# --------------- Split theme categories on to separate pages -------------------
 	#
@@ -342,7 +360,7 @@ else
 	# --------------- All theme categories on one page, OR multi level browsing via dropdowns. -------------------
 
 
-	if ($theme_category_levels>1)
+	if ($theme_category_levels>1 && !$theme_direct_jump)
 		{
 		# Display dropdown box for multiple theme selection levels.
 		?>
@@ -417,21 +435,18 @@ else
 
 # Display Themes
 
-if (isset($themes[0]))
+if (isset($themes[0]) && $theme_direct_jump==false)
 	{
 	# Display just the selected theme
 	DisplayTheme($themes);
 	}
-elseif ($theme_category_levels==1 && $smart_theme=="" && !$themes_category_split_pages)
+elseif (($theme_category_levels==1 && $smart_theme=="") || $theme_direct_jump)
 	{
 	# Display all themes
 	$headers=get_theme_headers($themes);
 	for ($n=0;$n<count($headers);$n++)
 		{
-		if ($header=="" || $header==$headers[$n])
-			{
-			DisplayTheme(array($headers[$n]));
-			}
+			DisplayTheme(array_merge($themes,array($headers[$n])));
 		}
 	}
 ?>
