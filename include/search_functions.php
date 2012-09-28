@@ -759,7 +759,7 @@ function do_search($search,$restypes="",$order_by="relevance",$archive=0,$fetchr
         {
 		$theref = escape_check($search);
 		$theref = preg_replace("/[^0-9]/","",$theref);
-		return sql_query($sql_prefix . "select distinct r.hit_count score, $select from resource r $sql_join  where ref='$theref' and $sql_filter group by r.ref" . $sql_suffix);
+		return sql_query($sql_prefix . "select distinct r.hit_count score, $select from resource r $sql_join  where r.ref='$theref' and $sql_filter group by r.ref" . $sql_suffix);
         }
 
 	# Searching for pending archive
