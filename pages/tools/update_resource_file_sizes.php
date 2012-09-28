@@ -5,7 +5,6 @@
 # This puts values gained from filesize_unlimited into resource_dimensions and resource_alt_files
 # also updates disk usage in case cron job isn't running.
 
-set_time_limit(60*60*60);
 
 
 include "../../include/db.php";
@@ -13,9 +12,10 @@ include "../../include/authenticate.php"; if (!checkperm("a")) {exit("Permission
 include "../../include/general.php";
 include "../../include/resource_functions.php";
 
+set_time_limit(0);
 
 # get all resources in the DB
-$resources=sql_query("select * from resource where ref>0 order by ref DESC");
+$resources=sql_query("select ref,field".$view_title_field.",file_extension from resource where ref>0 order by ref DESC");
 
 //loop:
 foreach($resources as $resource){
@@ -29,7 +29,7 @@ foreach($resources as $resource){
    
    }
 	
-   $alt_files=sql_query("select * from resource_alt_files where resource=".$resource['ref']);
+   $alt_files=sql_query("select file_extension,file_name,ref from resource_alt_files where resource=".$resource['ref']);
    if (count($alt_files)>0){
 	   foreach ($alt_files as $alt){
 		   $alt_path=get_resource_path($resource['ref'],true,"",false,$alt['file_extension'],-1,1,false,"",$alt['ref']);
