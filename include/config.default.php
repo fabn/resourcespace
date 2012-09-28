@@ -1941,3 +1941,6 @@ $plupload_autostart=false;
 #Clear the queue after uploads have completed
 $plupload_clearqueue=true;
 
+#Send confirmation emails to user when request sent or assigned
+$request_senduserupdates=true;
+

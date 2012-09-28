@@ -1093,6 +1093,9 @@ $lang["requesttype-managed"]=$lang["resourcerequesttype1"]="Managed Request";
 $lang["requesttype-payment_-_immediate"]=$lang["resourcerequesttype2"]="Payment - Immediate";
 $lang["requesttype-payment_-_invoice"]=$lang["resourcerequesttype3"]="Payment - Invoice";
 
+$lang["requestsent"]="Your resource request has been submitted for approval ";
+$lang["requestupdated"]="Your resource request has been updated ";
+$lang["requestassignedtouser"]="Your resource request has been assigned to % for approval.";
 $lang["requestapprovedmail"]="Your request has been approved. Click the link below to view and download the requested resources.";
 $lang["requestdeclinedmail"]="Sorry, your request for the resources in the collection below has been declined.";
 

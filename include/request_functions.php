@@ -25,7 +25,7 @@ function get_user_requests()
 function save_request($request)
 	{
 	# Use the posted form to update the request
-	global $applicationname,$baseurl,$lang;
+	global $applicationname,$baseurl,$lang,$request_senduserupdates;
 		
 	$status=getvalescaped("status","",true);
 	$expires=getvalescaped("expires","");
@@ -53,6 +53,8 @@ function save_request($request)
 			$message=$lang["requestassignedtoyoumail"] . "\n\n$baseurl/?q=" . $request . "\n";
 			$assigned_to_user=get_user($assigned_to);
 			send_mail($assigned_to_user["email"],$applicationname . ": " . $lang["requestassignedtoyou"],$message);
+			$userconfirmmessage=str_replace("%",$assigned_to_user["fullname"],$lang["requestassignedtouser"]);
+			if ($request_senduserupdates){send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestupdated"] . " - $request",$userconfirmmessage);}
 			}
 		}
 	
@@ -132,7 +134,7 @@ function email_collection_request($ref,$details)
 	{
 	# Request mode 0
 	# E-mails a collection request (posted) to the team
-	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
+	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang,$request_senduserupdates;
 	
 	$message="";
 	if (isset($username) && trim($username)!="") {$message.=$lang["username"] . ": " . $username . "\n\n";}
@@ -182,8 +184,10 @@ function email_collection_request($ref,$details)
 			}
 		}
 	
+	$userconfirmmessage=$message;
 	$message.=$lang["viewcollection"] . ":\n$baseurl/?c=$ref";
 	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
+	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from);}
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
@@ -197,7 +201,7 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 	# Managed via the administrative interface
 	
 	# An e-mail is still sent.
-	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$userref,$lang;
+	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$userref,$lang,$request_senduserupdates;
 
 	# Has a resource reference (instead of a collection reference) been passed?
 	# Manage requests only work with collections. Create a collection containing only this resource.
@@ -252,8 +256,10 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 	
 	# Send the e-mail		
 	$message=$lang["username"] . ": " . $username . "\n" . $message;
+	$userconfirmmessage=$message;
 	$message.=$lang["viewrequesturl"] . ":\n$baseurl/?q=$request";
 	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
+	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from);}	
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
