@@ -1,0 +1,5 @@
+name: view_in_finder
+author: David White
+version: 0.3
+desc: View in Finder Link - support for multiple sync directories
+config_url: /plugins/view_in_finder/pages/setup.php
