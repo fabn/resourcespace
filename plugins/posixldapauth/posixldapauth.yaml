@@ -1,0 +1,5 @@
+name: posixldapauth
+author: Brian Adams, Guenter Bartsch, David White
+version: 0.6
+desc: LDAP authentication against posixAccount objects
+config_url: /plugins/posixldapauth/pages/setup.php
