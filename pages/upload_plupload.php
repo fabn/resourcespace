@@ -379,14 +379,14 @@ jQuery(document).ready(function () {
 	<?php } ?>
 	
 	// Client side form validation
-	jQuery('form').submit(function(e) {
+	jQuery('form.pluploadform').submit(function(e) {
 		
         // Files in queue upload them first
         if (uploader.files.length > 0) {
             // When all files are uploaded submit form
             uploader.bind('StateChanged', function() {
                 if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-                    $('form')[0].submit();
+                    $('form.pluploadform')[0].submit();
                 }
             });
                 
@@ -488,7 +488,7 @@ if (getvalescaped("upload_a_file","")!="" || getvalescaped("replace_resource",""
 
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 
-<form>
+<form class="pluploadform" >
 	<div id="pluploader" style="height: 330px;">
 	</div>
 </form>
