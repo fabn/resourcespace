@@ -141,13 +141,6 @@ if ((strpos($usearch,"!")===false) && ($usearch!="")) {update_resource_keyword_h
 daily_stat("Resource view",$ref);
 if ($log_resource_views) {resource_log($ref,'v',0);}
 
-if ($metadata_report && isset($exiftool_path)){
-	# Include the metadata report function
-	$headerinsert.="
-	<script src=\"../lib/js/metadata_report.js\" type=\"text/javascript\"></script>
-	";
-	}
-
 if ($direct_download && !$save_as){	
 // check browser to see if forcing save_as 
 if (!$direct_download_allow_opera  && strpos(strtolower($_SERVER["HTTP_USER_AGENT"]),"opera")!==false) {$save_as=true;}
@@ -168,6 +161,14 @@ if ($direct_download && !$save_as){
 	
 # Show the header/sidebar
 include "../include/header.php";
+
+if ($metadata_report && isset($exiftool_path))
+	{
+	?>
+	<script src="../lib/js/metadata_report.js" type="text/javascript"></script>
+	<?php
+	}
+
 
 if ($direct_download && !$save_as){
 ?>
