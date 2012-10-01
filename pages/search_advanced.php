@@ -11,7 +11,7 @@ setcookie("starsearch",$starsearch);
 # Disable auto-save function, only applicable to edit form. Some fields pick up on this value when rendering then fail to work.
 $edit_autosave=false;
 
-if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
+if (getval("submitted","")=="yes")
 	{
 	$restypes="";
 	reset($_POST);foreach ($_POST as $key=>$value)
@@ -68,7 +68,7 @@ if ((getval("dosearch","")!="") || (getval("countonly","")!=""))
 		# Log this			
 		daily_stat("Advanced search",$userref);
 
-		redirect("pages/search.php?search=" . urlencode($search) . "&archive=" . $archive);
+		redirect("pages/search.php?search=" . urlencode($search) . "&archive=" . $archive . "&ajax=" . getval("ajax",""));
 		}
 	}
 
@@ -109,7 +109,8 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo ($archive==0)?$lang["advancedsearch"]:$lang["archiveonlysearch"]?> </h1>
 <p class="tight"><?php echo text("introtext")?></p>
-<form method="post" id="advancedform" action="<?php echo $baseurl ?>/pages/search_advanced.php">
+<form method="post" id="advancedform" action="<?php echo $baseurl ?>/pages/search_advanced.php" onSubmit="return CentralSpacePost(this,true);">
+<input type="hidden" name="submitted" id="submitted" value="yes">
 <input type="hidden" name="countonly" id="countonly" value="">
 <input type="hidden" name="archive" value="<?php echo $archive?>">
 
