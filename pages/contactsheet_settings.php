@@ -7,19 +7,20 @@ include("../include/collections_functions.php");
 $collection=getvalescaped("ref","");
 $collectiondata= get_collection($collection);
 
-
-# Include a couple functions for the Ajax contactsheet update
-$headerinsert.="
-<script src=\"../lib/js/contactsheet.js\" type=\"text/javascript\"></script>
-<script>
-contactsheet_previewimage_prefix = '".addslashes($storageurl)."';
-</script>
-";
-
-?><?php
-$bodyattribs="onload=\"jQuery().rsContactSheet('preview');\"";
 include "../include/header.php";
-?><div class="BasicsBox" >
+?>
+<script src="../lib/js/contactsheet.js" type="text/javascript"></script>
+<script>
+contactsheet_previewimage_prefix = '<?php echo addslashes($storageurl) ?>';
+jQuery(document).ready (function () 
+	{
+	jQuery().rsContactSheet('preview');	
+	}
+	);
+
+</script>
+
+<div class="BasicsBox" >
 <div class="BasicsBox" style="float:left;margin-bottom:0;" >
 <h1><?php echo $lang["contactsheetconfiguration"]?></h1>
 
