@@ -51,15 +51,15 @@ include "../../include/header.php";
 			}
 		else
 			{
-			?><li><a href="team_resource.php"><?php echo $lang["manageresources"]?></a></li><?php
+			?><li><a href="<?php echo $baseurl?>/pages/team/team_resource.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["manageresources"]?></a></li><?php
 			}
  		}
  	?>
 			
 
-	<?php if (checkperm("i")) { ?><li><a href="team_archive.php"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
+	<?php if (checkperm("i")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_archive.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managearchiveresources"]?></a></li><?php } ?>
 	
-	<?php if (checkperm("R")) { ?><li><a href="team_request.php"><?php echo $lang["managerequestsorders"]?></a>
+	<?php if (checkperm("R")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managerequestsorders"]?></a>
         &nbsp;&nbsp;<?php
         $condition = "";
         if (checkperm("Rb")) {$condition = "and assigned_to='" . $userref . "'";} # Only show pending for this user?
@@ -78,7 +78,7 @@ include "../../include/header.php";
             } ?>
     </li><?php } ?>
 
-    <?php if (checkperm("r")) { ?><li><a href="team_research.php"><?php echo $lang["manageresearchrequests"]?></a>
+    <?php if (checkperm("r")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_research.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["manageresearchrequests"]?></a>
         &nbsp;&nbsp;<?php
         $unassigned = sql_value("select count(*) value from research_request where status = 0",0);
         switch ($unassigned)
@@ -95,29 +95,29 @@ include "../../include/header.php";
             } ?> 
         </li><?php } ?>
 
-    <?php if (checkperm("u")) { ?><li><a href="team_user.php"><?php echo $lang["manageusers"]?></a></li><?php } ?>
+    <?php if (checkperm("u")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_user.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["manageusers"]?></a></li><?php } ?>
 
-    <?php if (checkperm("o")) { ?><li><a href="team_content.php"><?php echo $lang["managecontent"]?></a></li><?php } ?>
+    <?php if (checkperm("o")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_content.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managecontent"]?></a></li><?php } ?>
     
-    <li><a href="team_stats.php"><?php echo $lang["viewstatistics"]?></a></li>
+    <li><a href="<?php echo $baseurl?>/pages/team/team_stats.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewstatistics"]?></a></li>
     
-    <li><a href="team_report.php"><?php echo $lang["viewreports"]?></a></li>
+    <li><a href="<?php echo $baseurl?>/pages/team/team_report.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewreports"]?></a></li>
 
-    <?php if (checkperm("m")) { ?><li><a href="team_mail.php"><?php echo $lang["sendbulkmail"]?></a></li><?php } ?>
+    <?php if (checkperm("m")) { ?><li><a href="<?php echo $baseurl?>/pages/team/team_mail.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["sendbulkmail"]?></a></li><?php } ?>
 
 	<?php if (checkperm("a")) { ?>
-    <li><a href="team_export.php"><?php echo $lang["exportdata"]?></a></li>
-    <li><a href="../check.php"><?php echo $lang["installationcheck"]?></a></li>
+    <li><a href="<?php echo $baseurl?>/pages/team/team_export.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["exportdata"]?></a></li>
+    <li><a href="<?php echo $baseurl?>/pages/check.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["installationcheck"]?></a></li>
 	<?php } ?>
 
 	<?php hook("customteamfunction")?>
 	
 	<?php if (checkperm("a")) { ?>
 	<?php if ($use_plugins_manager == true){ ?>
-	<li><a href="team_plugins.php"><?php echo $lang["pluginssetup"]?></a></li>
+	<li><a href="<?php echo $baseurl?>/pages/team/team_plugins.php"><?php echo $lang["pluginssetup"]?></a></li>
 	<?php } ?>
-	<li><a href="../admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
-    <li><a href="team_reportbug.php"><?php echo $lang["reportbug"]?></a></li>
+	<li><a href="<?php echo $baseurl?>/pages/admin/index.php"><?php echo $lang["systemsetup"]?></a></li>
+    <li><a href="<?php echo $baseurl?>/pages/team/team_reportbug.php"><?php echo $lang["reportbug"]?></a></li>
 	<?php hook("customteamfunctionadmin")?>
 	<?php } ?>
 	

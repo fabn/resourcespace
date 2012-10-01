@@ -77,7 +77,7 @@ function nextPhoto()
 	    // image1.style.visibility='hidden';
 	    //Effect.Fade(image1);
 		jQuery('#image1').fadeOut(1000)
-	    window.setTimeout("image1.src='../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
+	    window.setTimeout("image1.src='<?php echo $baseurl . "/" . $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
      	flip=1;
      	}
 	  else
@@ -85,7 +85,7 @@ function nextPhoto()
 	    // image1.style.visibility='visible';
 	    //Effect.Appear(image1);
 		jQuery('#image1').fadeIn(1000)
-	    window.setTimeout("image2.style.background='url(../<?php echo $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>)';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
+	    window.setTimeout("image2.style.background='url(<?php echo $baseurl . "/" .  $homeanim_folder?>/" + next_photo + ".jpg?checksum=<?php echo $checksum ?>)';if(linktarget!=''){jQuery('#slideshowlink').attr('href',linktarget);}else{jQuery('#slideshowlink').removeAttr('href');}",1000);
 	    flip=0;
 		}	  	
      
@@ -130,11 +130,11 @@ window.setTimeout("nextPhoto()", 1000 * photo_delay);
 		} 
 	?>
 		
-	background-image:url('../<?php echo $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');">
+	background-image:url('<?php echo $baseurl . "/" . $homeanim_folder?>/1.jpg?checksum=<?php echo $checksum ?>');">
 	
 	
 	
-	<img src='../<?php echo $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;<?php
+	<img src='<?php echo $baseurl . "/" .  $homeanim_folder?>/2.jpg?checksum=<?php echo $checksum ?>' alt='' id='image1' style="display:none;<?php
 	if (isset($home_slideshow_width)){
 		echo"width:" .  $home_slideshow_width ."px; ";
 		}

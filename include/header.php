@@ -1,4 +1,8 @@
 <?php 
+# Do not display header / footer when dynamically loading CentralSpace contents.
+if (getval("ajax","")=="") { 
+
+
 // blank starsearch cookie in case $star_search was turned off
 setcookie("starsearch","");
 if ($collections_compact_style && $frameless_collections){echo "error. collections_compact_style and frameless_collections are currently incompatible";}
@@ -122,9 +126,9 @@ if ($use_recent_as_home){$homepage_url=$baseurl."/pages/search.php?search=".urle
 ?>
 
 <div id="Header" <?php if ($header_text_title){?>style="background:none;"<?php } ?>>
-<?php if ($header_link && !$header_text_title && getval("k","")==""){?><a class="headerlink" href="<?php echo isset($header_link_url) ? $header_link_url : $homepage_url?>"></a><?php } ?>
+<?php if ($header_link && !$header_text_title && getval("k","")==""){?><a class="headerlink" href="<?php echo isset($header_link_url) ? $header_link_url : $homepage_url?>"  onClick="return CentralSpaceLoad(this,true);"></a><?php } ?>
 <?php if ($header_text_title){?>
-    <div id="TextHeader"><?php if (getval("k","")==""){?><a href="<?php echo $homepage_url?>"><?php } ?><?php echo $applicationname;?><?php if (getval("k","")==""){?></a><?php } ?></div>
+    <div id="TextHeader"><?php if (getval("k","")==""){?><a href="<?php echo $homepage_url?>"  onClick="return CentralSpaceLoad(this,true);"><?php } ?><?php echo $applicationname;?><?php if (getval("k","")==""){?></a><?php } ?></div>
     <?php if ($applicationdesc!=""){?>
         <div id="TextDesc"><?php echo i18n_get_translated($applicationdesc);?></div>
     <?php } ?>
@@ -145,7 +149,7 @@ if (isset($anonymous_login) && ($username==$anonymous_login))
 	?>
 	<ul>
 	<li><a href="<?php echo $baseurl?>/login.php" target="_top"><?php echo $lang["login"]?></a></li>
-	<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"><?php echo $lang["contactus"]?></a></li><?php } ?>
+	<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["contactus"]?></a></li><?php } ?>
 	</ul>
 	<?php
 	}
@@ -156,11 +160,11 @@ else
 	<ul>
 	<?php if (!hook("replaceheaderfullnamelink")){?>
 	<li><?php if ($allow_password_change && !checkperm("p")) { ?>
-	<a href="<?php echo $baseurl?>/pages/change_password.php"><?php } ?><?php echo ($userfullname=="" ? $username : $userfullname) ?><?php } /* end replacefullnamelink */?><?php if ($allow_password_change && !checkperm("p")) { ?></a><?php } ?></li>
+	<a href="<?php echo $baseurl?>/pages/change_password.php"  onClick="return CentralSpaceLoad(this,true);"><?php } ?><?php echo ($userfullname=="" ? $username : $userfullname) ?><?php } /* end replacefullnamelink */?><?php if ($allow_password_change && !checkperm("p")) { ?></a><?php } ?></li>
 	<?php hook("addtoplinks");?>
 	<li><a href="<?php echo $baseurl?>/login.php?logout=true&nc=<?php echo time()?>" target="_top"><?php echo $lang["logout"]?></a></li>
 	<?php hook("addtologintoolbarmiddle");?>
-	<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"><?php echo $lang["contactus"]?></a></li><?php } ?>
+	<?php if ($contact_link) { ?><li><a href="<?php echo $baseurl?>/pages/contact.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["contactus"]?></a></li><?php } ?>
 	</ul>
 	<?php
 	} /* end replaceheadernav1 */
@@ -181,10 +185,10 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <?php } ?>
 		<?php if (!hook("replaceheadernav2")) { ?>
 		<ul>
-		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/<?php echo $default_home_page?>" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
+		<?php if (!$use_theme_as_home && !$use_recent_as_home) { ?><li><a href="<?php echo $baseurl?>/pages/<?php echo $default_home_page?>" onClick="return CentralSpaceLoad(this,true);" target="<?php echo $target?>"><?php echo $lang["home"]?></a></li><?php }  
 		hook("topnavlinksafterhome");
 		?>
-		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php" target="<?php echo $target?>"><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
+		<?php if ($advanced_search_nav) { ?><li><a href="<?php echo $baseurl?>/pages/search_advanced.php"  onClick="return CentralSpaceLoad(this,true);" target="<?php echo $target?>"><?php echo $lang["advancedsearch"]?></a></li><?php }  ?>
 		<?php if 	(
 			(checkperm("s"))  && (! $disable_searchresults )
 		&&
@@ -195,21 +199,21 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 			)
 		)
 		{?>
-		<?php if ($search_results_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
-		<?php if (checkperm("s") && $enable_themes) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/themes.php"><?php echo $lang["themes"]?></a></li><?php } ?>
-		<?php if (checkperm("s") && ($public_collections_top_nav || $public_collections_header_only)) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_public.php"><?php echo $lang["publiccollections"]?></a></li><?php } ?>
-		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php"><?php echo $lang["mycollections"]?></a></li><?php } ?>
+		<?php if ($search_results_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["searchresults"]?></a></li><?php } ?><?php } ?>
+		<?php if (checkperm("s") && $enable_themes) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && ($public_collections_top_nav || $public_collections_header_only)) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["publiccollections"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && $mycollections_link && !checkperm("b")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/collection_manage.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycollections"]?></a></li><?php } ?>
 		<?php if (!hook("replacerecentlink")) { ?>
-		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>"><?php echo $lang["recent"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && $recent_link) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/search.php?search=<?php echo urlencode("!last".$recent_search_quantity)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["recent"]?></a></li><?php } ?>
 		<?php } /* end hook replacerecentlink */?>
-		<?php if (checkperm("s") && $myrequests_link && checkperm("q")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/requests.php"><?php echo $lang["myrequests"]?></a></li><?php } ?>
+		<?php if (checkperm("s") && $myrequests_link && checkperm("q")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/requests.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["myrequests"]?></a></li><?php } ?>
 		<?php if (!hook("replacemycontributionslink")) { ?>
-		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/contribute.php"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
+		<?php if (checkperm("d")||(isset($mycontributions_link) && $mycontributions_link && checkperm("c"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/contribute.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["mycontributions"]?></a></li><?php } ?>
 		<?php } /* end hook replacemycontributionslink */?>
 		<?php if (!hook("replaceresearchrequestlink")) { ?>
-		<?php if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/research_request.php"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
+		<?php if (($research_request) && (checkperm("s")) && (checkperm("q"))) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/research_request.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["researchrequest"]?></a></li><?php } ?>
 		<?php } ?>
-		<?php if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/tag.php"><?php echo $lang["tagging"]?></a></li><?php } ?>
+		<?php if ($speedtagging && checkperm("s") && checkperm("n")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/tag.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["tagging"]?></a></li><?php } ?>
 		
 		<?php 
 		/* ------------ Customisable top navigation ------------------- */
@@ -228,16 +232,16 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 					$custom_top_nav[$n]["title"]=$lang[$custom_top_nav_title];
 				}
 				?>
-				<li><a target="<?php if ($isextlink){echo "_top"; } else {  echo $target; } ?>" href="<?php echo $custom_top_nav[$n]["link"] ?>"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
+				<li><a target="<?php if ($isextlink){echo "_top"; } else {  echo $target; } ?>" href="<?php echo $custom_top_nav[$n]["link"] ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_translated($custom_top_nav[$n]["title"]) ?></a></li>
 				<?php
 				}
 			}
 		?>
 		
 		
-		<?php if ($help_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php"><?php echo $lang["helpandadvice"]?></a></li><?php } ?>
-		<?php if ($top_nav_upload && checkperm("c")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/edit.php?ref=-<?php echo @$userref?>&amp;uploader=<?php echo $top_nav_upload_type ?>"><?php echo $lang["upload"]?></a></li><?php } ?>
-		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php"><?php echo $lang["teamcentre"]?></a>
+		<?php if ($help_link){?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/help.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["helpandadvice"]?></a></li><?php } ?>
+		<?php if ($top_nav_upload && checkperm("c")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/edit.php?ref=-<?php echo @$userref?>&amp;uploader=<?php echo $top_nav_upload_type ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["upload"]?></a></li><?php } ?>
+		<?php if (checkperm("t")) { ?><li><a target="<?php echo $target?>" href="<?php echo $baseurl?>/pages/team/team_home.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["teamcentre"]?></a>
 		<?php if ($team_centre_alert_icon && (checkperm("R")||checkperm("r")) &&  (sql_value("select sum(thecount) value from (select count(*) thecount from request where status = 0 union select count(*) thecount from research_request where status = 0) as theunion",0) > 0)){
 			echo "<img src='$baseurl/gfx/images/attention_16.png' width='16' height='16' style='position:relative;top:3px;' />";	
 		} ?>
@@ -298,5 +302,6 @@ if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes"
 	}
 	
 hook("afterheader");
-	
+
+}	
 ?>

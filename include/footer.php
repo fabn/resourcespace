@@ -1,6 +1,8 @@
+<?php 
+# Do not display header / footer when dynamically loading CentralSpace contents.
+if (getval("ajax","")=="") { 
 
 
-<?php
 
 hook("beforefooter");
 
@@ -236,3 +238,4 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
 </body>
 </html>
 
+<?php } ?>

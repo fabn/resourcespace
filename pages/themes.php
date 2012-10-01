@@ -65,11 +65,11 @@ function DisplayTheme($themes=array())
         <table><tr><td style="margin:0px;padding:0px;">
 		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
 			{
-			if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } 
+			if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"];?></a> / <?php } 
 			$themeslinks="";
 			for ($x=0;$x<count($themes);$x++){
 				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-				?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
+				?><a href="themes.php?<?php echo $themeslinks?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 				}
 			}
 		else
@@ -107,14 +107,14 @@ function DisplayTheme($themes=array())
 						?>
 						
 						</td><tr><td style="margin:0px;padding:0px;">
-						<a href="theme_category_share.php?<?php echo $linkparams?>"><?php echo "> " . $lang["share"] . "</a>";
+						<a href="theme_category_share.php?<?php echo $linkparams?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo "> " . $lang["share"] . "</a>";
 						}
 					hook("themeaction");
 					
 					if ($enable_theme_category_edit && checkperm("t"))
 						{
 						?>
-						<a href="theme_edit.php?<?php echo $linkparams . "lastlevelchange=" . $lastlevelchange?>"><?php echo "> " . $lang["action-edit"] . "</a>";
+						<a href="theme_edit.php?<?php echo $linkparams . "lastlevelchange=" . $lastlevelchange?>" onClick="return CentralSpaceLoad(this,true);"><?php echo "> " . $lang["action-edit"] . "</a>";
 						}
 					}
 				}
@@ -140,7 +140,7 @@ function DisplayTheme($themes=array())
 			{
 			?>
 			<tr <?php hook("collectionlistrowstyle");?>>
-			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>"><?php echo htmlspecialchars(i18n_get_translated($getthemes[$m]["name"]))?></a>
+			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>" onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($getthemes[$m]["name"]))?></a>
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
@@ -150,21 +150,21 @@ function DisplayTheme($themes=array())
             include("collections_compact_style.php");
             } else {
 
-                ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+                ?><a href="search.php?search=<?php echo urlencode("!collection" . $getthemes[$m]["ref"])?>" title="<?php echo $lang["collectionviewhover"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 
                 <?php if (!checkperm("b")) { ?>&nbsp;<?php echo change_collection_link($getthemes[$m]["ref"])?>&gt;&nbsp;<?php echo $lang["action-select"]?></a><?php } ?>
 
                 <?php if (isset($zipcommand) || $collection_download) { ?>
-                &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
+                &nbsp;<a href="collection_download.php?collection=<?php echo $getthemes[$m]["ref"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-download"]?></a>
                 <?php } ?>
 
                 <?php if ($contact_sheet==true) { ?>
-                &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+                &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $getthemes[$m]["ref"]?>"  title="<?php echo $lang["collectioncontacthover"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
                 <?php } ?>
 
-                <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+                <?php if ($allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $getthemes[$m]["ref"]?>"  onClick="return CentralSpaceLoad(this,true);" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 
-                <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+                <?php if (checkperm("h")) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $getthemes[$m]["ref"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 
                 <?php hook("addcustomtool","",array($getthemes[$m]["ref"])); ?>
 			<?php } ?>
@@ -254,7 +254,7 @@ if ($themes_category_split_pages && isset($themes[0]) && !$theme_direct_jump)
 		$link.="=". urlencode((!isset($themes[$x+1]))?"":$themes[$x]);
 	}
 	?>
-	<p><a href="<?php echo $link?>">&lt;&lt; <?php echo $lang["back"]?></a></p>
+	<p><a href="<?php echo $link?>" onClick="return CentralSpaceLoad(this,true);">&lt;&lt; <?php echo $lang["back"]?></a></p>
 	<?php
 
 }
@@ -287,10 +287,10 @@ elseif ($themes_category_split_pages && !$theme_direct_jump)
 		else{
 			if ($themes_category_split_pages_parents){
 				$themeslinks="";
-				echo (count($headers)>1)?$lang["subcategories"]:$lang["subcategory"];?></h1><h1 style="margin-top:5px;"><?php if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"><?php echo $lang["themes"];?></a> / <?php } ?><?php
+				echo (count($headers)>1)?$lang["subcategories"]:$lang["subcategory"];?></h1><h1 style="margin-top:5px;"><?php if ($themes_category_split_pages_parents_root_node){?><a href="themes.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"];?></a> / <?php } ?><?php
 				for ($x=0;$x<count($themes);$x++){
 					$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-					?><a href="themes.php?<?php echo $themeslinks?>"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
+					?><a href="themes.php?<?php echo $themeslinks?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 					}
 			}
 			else {
@@ -322,10 +322,10 @@ elseif ($themes_category_split_pages && !$theme_direct_jump)
 				}
 			}?>
 			<tr>
-			<td><div class="ListTitle"><a href="<?php echo $link ?>"><?php echo htmlspecialchars(i18n_get_translated(str_replace("*","",$headers[$n])))?></a></div></td>
-			<td><div class="ListTools"><a href="<?php echo $link ?>">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
-			<?php if (checkperm("h") && $enable_theme_category_sharing) {?>&nbsp;<a href="<?php echo $sharelink ?>">&gt;&nbsp;<?php echo $lang["share"]?></a><?php }
-			if ($enable_theme_category_edit && checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php }
+			<td><div class="ListTitle"><a href="<?php echo $link ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated(str_replace("*","",$headers[$n])))?></a></div></td>
+			<td><div class="ListTools"><a href="<?php echo $link ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-select"]?></a>
+			<?php if (checkperm("h") && $enable_theme_category_sharing) {?>&nbsp;<a href="<?php echo $sharelink ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["share"]?></a><?php }
+			if ($enable_theme_category_edit && checkperm("t")) {?>&nbsp;<a href="<?php echo $editlink ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php }
 			?>
 			</div></td>
 			</tr>
@@ -479,7 +479,7 @@ if ($header=="" && !isset($themes[0]))
 				{
 				# Sub node, display node name and make it a link to the previous level.
 				?>
-				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo getval("parentnode",0) ?>&nodename=<?php echo getval("parentnodename","") ?>"><?php echo getval("nodename","???") ?></a>
+				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo getval("parentnode",0) ?>&nodename=<?php echo getval("parentnodename","") ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo getval("nodename","???") ?></a>
 				<?php
 				}
 			?>
@@ -511,14 +511,14 @@ if ($header=="" && !isset($themes[0]))
 					{
 					# Has children. Default action is to navigate to a deeper level.
 					?>
-					<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">
+					<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>" onClick="return CentralSpaceLoad(this,true);">
 					<?php
 					}
 				else
 					{
 					# Has no children. Default action is to show matching resources.
 					?>
-					<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">
+					<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true" onClick="return CentralSpaceLoad(this,true);">
 					<?php
 					}
 				?>
@@ -527,9 +527,9 @@ if ($header=="" && !isset($themes[0]))
 				</div></td>
 				<?php hook("beforecollectiontoolscolumn");?>
 				<td><div class="ListTools">
-				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["viewall"]?></a>
+				<a href="search.php?search=<?php echo urlencode($s)?>&resetrestypes=true" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $themes_category_split_pages?$lang["action-viewmatchingresources"]:$lang["viewall"]?></a>
 				<?php if ($themes_category_split_pages) { ?>
-				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
+				<a href="themes.php?smart_theme=<?php echo $headers[$n]["ref"] ?>&node=<?php echo $themes[$m]["node"] ?>&parentnode=<?php echo $node ?>&parentnodename=<?php echo urlencode(getval("nodename","")) ?>&nodename=<?php echo urlencode($themes[$m]["name"]) ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-expand"]?></a>
 				<?php }
                 hook("additionalsmartthemetool");?>
 				</div></td>
@@ -560,7 +560,7 @@ if ($header=="" && !isset($themes[0]))
 	<h2>&nbsp;</h2>
     <h1><?php echo $lang["findpubliccollection"]?></h1>
     <p class="tight"><?php echo text("findpublic")?></p>
-    <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
+    <p><a href="collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
 <?php } ?>
 <?php } ?>

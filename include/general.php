@@ -1906,7 +1906,7 @@ function pager($break=true)
 	global $curpage,$url,$totalpages,$offset,$per_page,$lang,$jumpcount,$pager_dropdown;
 	$jumpcount++;global $pagename;
     if ($totalpages!=0 && $totalpages!=1){?>     
-        <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } ?><?php if ($curpage>1) { ?><a href="<?php echo $url?>&offset=<?php echo $offset-$per_page?>"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
+        <span class="HorizontalWhiteNav"><?php if ($break) { ?>&nbsp;<br /><?php } ?><?php if ($curpage>1) { ?><a href="<?php echo $url?>&offset=<?php echo $offset-$per_page?>" onClick="return CentralSpaceLoad(this);"><?php } ?>&lt;&nbsp;<?php echo $lang["previous"]?><?php if ($curpage>1) { ?></a><?php } ?>&nbsp;|
 
         <?php if ($pager_dropdown){
             $id=rand();?>
@@ -1919,7 +1919,7 @@ function pager($break=true)
             <a href="#" title="Jump to page" onClick="p=document.getElementById('jumppanel<?php echo $jumpcount?>');if (p.style.display!='block') {p.style.display='block';document.getElementById('jumpto<?php echo $jumpcount?>').focus();} else {p.style.display='none';}; return false;"><?php echo $lang["page"]?>&nbsp;<?php echo $curpage?>&nbsp;<?php echo $lang["of"]?>&nbsp;<?php echo $totalpages?></a>
         <?php } ?>
 
-        |&nbsp;<?php if ($curpage<$totalpages) { ?><a href="<?php echo $url?>&offset=<?php echo $offset+$per_page?>"><?php } ?><?php echo $lang["next"]?>&nbsp;&gt;<?php if ($curpage<$totalpages) { ?></a><?php } ?>
+        |&nbsp;<?php if ($curpage<$totalpages) { ?><a href="<?php echo $url?>&offset=<?php echo $offset+$per_page?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["next"]?>&nbsp;&gt;<?php if ($curpage<$totalpages) { ?></a><?php } ?>
         </span>
         <?php if (!$pager_dropdown){?>
             <div id="jumppanel<?php echo $jumpcount?>" style="display:none;margin-top:5px;"><?php echo $lang["jumptopage"]?>: <input type="text" size="3" id="jumpto<?php echo $jumpcount?>">&nbsp;<input type="submit" name="jump" value="<?php echo $lang["jump"]?>" onClick="var jumpto=document.getElementById('jumpto<?php echo $jumpcount?>').value;if ((jumpto>0) && (jumpto<=<?php echo $totalpages?>)) {document.location='<?php echo $url?>&offset=' + ((jumpto-1) * <?php echo $per_page?>);}"></div>
