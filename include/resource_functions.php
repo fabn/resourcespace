@@ -1805,6 +1805,13 @@ function get_resource_access($resource)
 				if ($match==1) {return 2;} # The match for this field was incorrect, always show as confidential in this event.
 				}
 			}
+			
+		# Also check resource type	
+		# Disabled until also implented in do_search() - future feature - syntax supported in edit filter only for now.
+		/*
+		$match=filter_match($usersearchfilter,"resource_type",$resource_type);
+		if ($match==1) {return 2;} # The match for this field was incorrect, always show as confidential in this event.
+		*/
 		}
 		
 	if ($access==0 && !checkperm("g"))
@@ -1927,6 +1934,18 @@ function get_edit_access($resource,$status=-999,$metadata=false)
 				if ($match==2) {$gotmatch=true;} # The match for this field was correct.
 				}
 			}
+
+		# Also check resource type, if specified.
+		if (strpos($usereditfilter,"resource_type")!==false)
+			{
+			$resourcedata=get_resource_data($resource,true);
+			$resource_type=$resourcedata['resource_type'];
+
+			$match=filter_match($usereditfilter,"resource_type",$resource_type);
+			if ($match==1) {return false;} # Resource type was specified but the value did not match. Disallow edit access.
+			if ($match==2) {$gotmatch=true;}
+			}
+			
 		}
 	
 	if ($gotmatch) {
