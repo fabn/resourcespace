@@ -93,7 +93,7 @@ else
   <h1><?php echo $lang["viewreports"]?></h1>
   <p><?php echo text("introtext")?></p>
   
-<form method="post">
+<form method="post" action="<?php echo $baseurl ?>/pages/team/team_report.php" onSubmit="if (!do_download) {return CentralSpacePost(this);}">
 <div class="Question">
 <label for="report"><?php echo $lang["viewreport"]?></label><select id="report" name="report" class="stdwidth">
 <?php
@@ -109,7 +109,6 @@ for ($n=0;$n<count($reports);$n++)
 
 
 <!-- Period select -->
-<form method="post">
 <div class="Question">
 <label for="period"><?php echo $lang["period"]?></label><select id="period" name="period" class="stdwidth" onChange="
 if (this.value==-1) {document.getElementById('DateRange').style.display='block';} else {document.getElementById('DateRange').style.display='none';}
@@ -254,13 +253,15 @@ echo str_replace("?",$textbox,$lang["emaileveryndays"]);
 
 
 
-
+<script language="text/javascript">
+var do_download=false;
+</script>
 
 
 <div class="QuestionSubmit" id="SubmitBlock">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["viewreport"] ?>&nbsp;&nbsp;" />
-<input name="download" type="submit" value="&nbsp;&nbsp;<?php echo $lang["downloadreport"] ?>&nbsp;&nbsp;" />
+<input name="save" type="submit" onClick="do_download=false;" value="&nbsp;&nbsp;<?php echo $lang["viewreport"] ?>&nbsp;&nbsp;" />
+<input name="download" type="submit" onClick="do_download=true;" value="&nbsp;&nbsp;<?php echo $lang["downloadreport"] ?>&nbsp;&nbsp;" />
 </div>
 </form>
 
