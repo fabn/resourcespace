@@ -29,7 +29,7 @@ include "../../include/header.php";
 
 <p><?php echo text("introtext")?></p>
 
-<form method=post>
+<form method=post action="team_copy.php" onSubmit="return CentralSpacePost(this,true);">
 
 <div class="Question"><label><?php echo $lang["resourceid"]?></label><input name="from" type="text" class="shrtwidth" value="">
 <?php if (isset($error)) { ?><div class="FormError">!! <?php echo $lang["resourceidnotfound"]?> !!</div><?php } ?><div class="clearerleft"> </div></div>

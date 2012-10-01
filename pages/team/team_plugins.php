@@ -313,7 +313,7 @@ ksort ($plugins_avail);
     if ($enable_plugin_upload) {
     ?>
     <h2><?php echo $lang['plugins-uploadheader']; ?></h2>
-    <form enctype="multipart/form-data" method="post">
+    <form enctype="multipart/form-data" method="post" action="team_plugins.php">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
 	<p><?php echo $lang['plugins-uploadtext']; ?><input type="file" name="pfile" /><br /></p>
 	<input type="submit" name="submit" value="<?php echo $lang['plugins-uploadbutton'] ?>" />
@@ -324,7 +324,7 @@ ksort ($plugins_avail);
   }
 	?>
     </div>
-    <form id="anc-post" method="post">
+    <form id="anc-post" method="post" action="team_plugins.php">
     <input type="hidden" id="anc-input" name="" value="" />
     </form>
         

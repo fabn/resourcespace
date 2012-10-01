@@ -199,15 +199,15 @@ if (getval("resetrestypes","")=="")
 	$restypes=getvalescaped("restypes","");
 	}
 else
-	{
+	{ 
 	$restypes="";
-	reset($_GET);foreach ($_GET as $key=>$value)
+	reset($_POST);foreach ($_POST as $key=>$value)
 		{
 		if ($key=="rttickall" && $value=="on"){$restypes="";break;}	
 		if (substr($key,0,8)=="resource") {if ($restypes!="") {$restypes.=",";} $restypes.=substr($key,8);}
 		}
 	setcookie("restypes",$restypes);
-	
+
 	# This is a new search, log this activity
 	if ($archive==2) {daily_stat("Archive search",0);} else {daily_stat("Search",0);}
 	}

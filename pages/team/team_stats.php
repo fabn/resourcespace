@@ -51,7 +51,7 @@ if (getval("print","")!="") { # Launch printable page in an iframe
   <h1><?php echo $lang["viewstatistics"]?></h1>
   <p><?php echo text("introtext")?></p>
   
-  <form method="post">
+  <form method="post" action="team_stats.php" onSubmit="return CentralSpacePost(this);">
 	<div class="Question">
 <label for="activity_type"><?php echo $lang["activity"]?></label><select id="activity_type" name="activity_type" class="shrtwidth">
 <?php $types=get_stats_activity_types(); 

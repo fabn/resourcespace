@@ -13,11 +13,11 @@ include "../../include/collections_functions.php";
 
 $ref=getvalescaped("ref","",true);
 
-if (getval("save","")!="")
+if (getval("submitted","")!="")
 	{
 	# Save research request data
 	save_request($ref);
-	redirect ("pages/team/team_request.php?reload=true&nc=" . time());
+	redirect ("pages/team/team_request.php?reload=true&nc=" . time() . "&ajax=" . getval("ajax",""));
 	}
 
 # Fetch research request data
@@ -26,7 +26,7 @@ if ($request===false) {exit("Request $ref not found.");}
 	
 include "../../include/header.php";
 ?>
-<p><a href="team_request.php">&lt; <?php echo $lang["back"] ?></a></p>
+<p><a href="team_request.php"  onClick="return CentralSpaceLoad(this,true);">&lt; <?php echo $lang["back"] ?></a></p>
 <div class="BasicsBox">
 <h1><?php echo $lang["editrequestorder"]?></h1>
 
@@ -40,8 +40,9 @@ else
 	{
 	?>
 	
-<form method=post>
-<input type=hidden name=ref value="<?php echo $ref?>">
+<form method=post action="team_request_edit.php" onSubmit="return CentralSpacePost(this,true);">
+<input type=hidden name=ref value="<?php echo $ref?>" />
+<input type=hidden name="submitted" value="yes" />
 
 <div class="Question"><label><?php echo $lang["requestedby"]?></label><div class="Fixed"><?php echo $request["fullname"]?> (<?php echo $request["username"]?> / <?php echo $request["email"]?>)</div>
 <div class="clearerleft"> </div></div>

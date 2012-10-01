@@ -108,7 +108,7 @@ if ($display_user_rating_stars && $star_search){ ?>
   <h2><?php echo $lang["simplesearch"]?></h2>
 	<p><?php echo text("searchpanel")?></p>
 	
-	<form id="form1" method="get" action="<?php echo $baseurl?>/pages/search.php" onSubmit="return CentralSpacePost(this,true);">
+	<form id="form1" method="post" action="<?php echo $baseurl?>/pages/search.php" onSubmit="return CentralSpacePost(this,true);">
 	<?php if (!hook("replacesearchbox")){ ?>
 		<div class="ui-widget">
         <input id="ssearchbox" <?php if ($hide_main_simple_search){?>type="hidden"<?php } ?> name="search" type="text" class="SearchWidth" value="<?php echo htmlspecialchars(stripslashes(@$quicksearch))?>">
