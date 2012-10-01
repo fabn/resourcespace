@@ -109,7 +109,7 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo ($archive==0)?$lang["advancedsearch"]:$lang["archiveonlysearch"]?> </h1>
 <p class="tight"><?php echo text("introtext")?></p>
-<form method="post" id="advancedform">
+<form method="post" id="advancedform" action="<?php echo $baseurl ?>/pages/search_advanced.php">
 <input type="hidden" name="countonly" id="countonly" value="">
 <input type="hidden" name="archive" value="<?php echo $archive?>">
 

@@ -49,12 +49,12 @@ $jumpcount=1;
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><a href="team_research.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["researchid"]?></a></td>
-<td><a href="team_research.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["nameofproject"]?></a></td>
-<td><a href="team_research.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["date"]?></a></td>
-<td><a href="team_research.php?offset=0&order_by=status&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["status"]?></a></td>
-<td><a href="team_research.php?offset=0&order_by=assigned_to&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["assignedto"]?></a></td>
-<td><a href="team_research.php?offset=0&order_by=collection&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionid"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["researchid"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["nameofproject"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["date"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=status&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["status"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=assigned_to&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["assignedto"]?></a></td>
+<td><a href="team_research.php?offset=0&order_by=collection&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["collectionid"]?></a></td>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 
@@ -65,12 +65,12 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 	?>
 	<tr>
 	<td><?php echo $requests[$n]["ref"]?></td>
-	<td><div class="ListTitle"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>"><?php echo $requests[$n]["name"]?></a>&nbsp;</div></td>
+	<td><div class="ListTitle"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $requests[$n]["name"]?></a>&nbsp;</div></td>
 	<td><?php echo nicedate($requests[$n]["created"],false,true)?></td>
 	<td><?php echo $statusname[$requests[$n]["status"]]?></td>
 	<td><?php echo (strlen($requests[$n]["assigned_username"])==0)?"-":$requests[$n]["assigned_username"]?></td>
 	<td><?php echo (strlen($requests[$n]["collection"])==0)?"-":$collection_prefix . $requests[$n]["collection"]?></td>
-	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?php echo $requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["editcollection"]?></a></div></td>
+	<td><div class="ListTools"><a href="team_research_edit.php?ref=<?php echo $requests[$n]["ref"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["editresearch"]?></a>&nbsp;&nbsp;<a href="../collections.php?research=<?php echo $requests[$n]["ref"]?>" target="collections">&gt;&nbsp;<?php echo $lang["editcollection"]?></a></div></td>
 	</tr>
 	<?php
 	}
@@ -78,7 +78,7 @@ for ($n=$offset;(($n<count($requests)) && ($n<($offset+$per_page)));$n++)
 
 </table>
 </div>
-<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="../research_request.php?assign=true">&gt;&nbsp;<?php echo $lang["createresearchforuser"]?></a></div><?php pager(false); ?></div>
+<div class="BottomInpageNav"><div class="InpageNavLeftBlock"><a href="../research_request.php?assign=true" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["createresearchforuser"]?></a></div><?php pager(false); ?></div>
 </div>
 
 

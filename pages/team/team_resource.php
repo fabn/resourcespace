@@ -24,49 +24,49 @@ include "../../include/header.php";
 	<?php if (checkperm("c")): // Check if user can create resources ?>
 
         <?php if($upload_methods['single_upload']): // Test if in browser is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;single=true"><?php echo $lang["addresource"]?></a></li>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;single=true" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresource"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
 
 		<?php if($upload_methods['in_browser_upload']): // Test if in browser is allowed. ?>
-                        <li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=plupload"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
+                        <li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=plupload" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchbrowser"]?></a></li>
                 <?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['in_browser_upload']): // Test if in browser is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=swf"><?php echo $lang["addresourcebatchbrowserflash"]?></a></li>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=swf" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchbrowserflash"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['in_browser_upload_java']): // Test if in browser is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=java"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;uploader=java" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchbrowserjava"]?></a></li>
 		<?php endif // Test if in browser upload is allowed. ?>
 
 		<?php if($upload_methods['fetch_from_ftp']): // Test if fetching resources from FTP is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>"><?php echo $lang["addresourcebatchftp"]?></a></li>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchftp"]?></a></li>
 		<?php endif // Test if fetching resources from FTP is allowed. ?>
 
 		<?php if($upload_methods['fetch_from_local_folder']): // Test if fetching resources from local upload folder is allowed. ?>
-			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;local=true"><?php echo $lang["addresourcebatchlocalfolder"]?></a></li>
+			<li><a href="../edit.php?ref=-<?php echo $userref?>&amp;local=true" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["addresourcebatchlocalfolder"]?></a></li>
 		<?php endif // Test if fetching resources from local upload folder is allowed. ?>
 
-		<li><a href="../upload_swf.php?replace=true"><?php echo $lang["replaceresourcebatch"]?></a></li>    
+		<li><a href="../upload_swf.php?replace=true" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["replaceresourcebatch"]?></a></li>    
 
-		<li><a href="team_copy.php"><?php echo $lang["copyresource"]?></a></li>
+		<li><a href="team_copy.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["copyresource"]?></a></li>
 		
 		<?php if (checkperm("e-2")) { ?>
-		<li><a href="../search.php?search=&archive=-2"><?php echo $lang["viewuserpendingsubmission"]?></a></li>
+		<li><a href="../search.php?search=&archive=-2" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewuserpendingsubmission"]?></a></li>
 		<?php } ?>
 
 		<?php if (checkperm("e-1")) { ?>
-		<li><a href="../search.php?search=&archive=-1"><?php echo $lang["viewuserpending"]?></a></li>
+		<li><a href="../search.php?search=&archive=-1" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewuserpending"]?></a></li>
 		<?php } ?>
 		
 		<?php if (checkperm("e-2")) { ?>
-		<li><a href="../search.php?search=!contributions<?php echo $userref?>&archive=-2"><?php echo $lang["viewcontributedps"]?></a></li>
+		<li><a href="../search.php?search=!contributions<?php echo $userref?>&archive=-2" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewcontributedps"]?></a></li>
 		<?php } ?>
 		
 		<?php
 		# If deleting resources is configured AND the deletion state is '3' (deleted) AND the user has permission to edit resources in this state, then show a link to list deleted resources.
-		if (isset($resource_deletion_state) && $resource_deletion_state==3 && checkperm("e3")) { ?><li><a href="../search.php?search=&archive=3"><?php echo $lang["viewdeletedresources"]?></a></li>
+		if (isset($resource_deletion_state) && $resource_deletion_state==3 && checkperm("e3")) { ?><li><a href="../search.php?search=&archive=3" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewdeletedresources"]?></a></li>
 		<?php } ?>
 
 		<?php
@@ -76,12 +76,12 @@ include "../../include/header.php";
 				// so if you're using offline generation of checksum hashes, make sure they have been updated
 				// before running this search.
 			?>
-			<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>"><?php echo $lang["viewduplicates"]?></a></li>
+			<li><a href="../search.php?search=<?php echo urlencode("!duplicates")?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewduplicates"]?></a></li>
 		<?php } // end if checksums and temp tables turned on ?>
 
-		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>"><?php echo $lang["viewuncollectedresources"]?></a></li>
+		<li><a href="../search.php?search=<?php echo urlencode("!unused")?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["viewuncollectedresources"]?></a></li>
 		<?php if (checkperm("k")): // Check if user can manage keywords and fields ?>
-			<li><a href="team_related_keywords.php"><?php echo $lang["managerelatedkeywords"]?></a></li>
+			<li><a href="team_related_keywords.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["managerelatedkeywords"]?></a></li>
 			<!--<li><a href="team_fields.php"><?php echo $lang["managefieldoptions"]?></a></li>-->
 		<?php endif // Check if user can manage keywords and fields ?>
 
@@ -90,7 +90,7 @@ include "../../include/header.php";
 	</ul>
 	</div>
 
-	<p><a href="team_home.php">&gt;&nbsp;<?php echo $lang["backtoteamhome"]?></a></p>
+	<p><a href="team_home.php" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["backtoteamhome"]?></a></p>
   </div>
 
 <?php
