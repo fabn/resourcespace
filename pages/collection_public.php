@@ -80,7 +80,7 @@ $atoz.="&nbsp;&nbsp;";
 for ($n=ord("A");$n<=ord("Z");$n++)
 	{
 	if ($find==chr($n)) {$atoz.="<span class='Selected'>";}
-	$atoz.="<a href=\"collection_public.php?col_order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\">&nbsp;" . chr($n) . "&nbsp;</a> ";
+	$atoz.="<a href=\"collection_public.php?col_order_by=name&find=" . chr($n) . "&override_group_restrict=" . $override_group_restrict . "\" onClick=\"return CentralSpaceLoad(this);\">&nbsp;" . chr($n) . "&nbsp;</a> ";
 	if ($find==chr($n)) {$atoz.="</span>";}
 	$atoz.=" ";
 	}
@@ -90,9 +90,9 @@ $url="collection_public.php?paging=true&col_order_by=".$col_order_by."&sort=".$s
 ?><div class="TopInpageNav"><?php echo $atoz?> <div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:
 	<?php 
 	for($n=0;$n<count($list_display_array);$n++){?>
-	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>"><?php echo $list_display_array[$n]?></a><?php } ?>&nbsp;|
+	<?php if ($per_page==$list_display_array[$n]){?><span class="Selected"><?php echo $list_display_array[$n]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=<?php echo $list_display_array[$n]?>" onClick="return CentralSpaceLoad(this);"><?php echo $list_display_array[$n]?></a><?php } ?>&nbsp;|
 	<?php } ?>
-	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999"><?php echo $lang["all"]?></a><?php } ?>
+	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999" onClick="return CentralSpaceLoad(this);"><?php echo $lang["all"]?></a><?php } ?>
 	</div> <?php pager(false); ?></div>
 
 <form method=post id="collectionform">
@@ -141,13 +141,19 @@ echo "<br />";
 <div class="Listview">
 <table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 <tr class="ListviewTitleStyle">
-<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<?php if (!$collection_public_hide_owner) { ?><td><?php if ($col_order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["owner"]?></a><?php if ($col_order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php } ?>
-<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<td><?php if ($col_order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
-<?php if (!$hide_access_column_public){ ?><td><?php if ($col_order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>"><?php echo $lang["access"]?></a><?php if ($col_order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php } ?>
+<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=name&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+
+<?php if (!$collection_public_hide_owner) { ?><td><?php if ($col_order_by=="user") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=user&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["owner"]?></a><?php if ($col_order_by=="user") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php } ?>
+
+<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=ref&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+
+<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=created&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+
+<td><?php if ($col_order_by=="count") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=count&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="count") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+
+<?php if (!$hide_access_column_public){ ?><td><?php if ($col_order_by=="public") {?><span class="Selected"><?php } ?><a href="collection_public.php?offset=0&col_order_by=public&sort=<?php echo $revsort?>&find=<?php echo urlencode($find)?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["access"]?></a><?php if ($col_order_by=="public") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td><?php } ?>
 <?php hook("beforecollectiontoolscolumnheader");?>
+
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
 <?php
@@ -157,7 +163,7 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
 	?>
     <tr <?php hook("collectionlistrowstyle");?>>
 	<td><div class="ListTitle">
-			<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>"><?php echo highlightkeywords(i18n_get_translated($collections[$n]["name"]),$find)?></a></div></td>
+			<a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>" onClick="return CentralSpaceLoad(this,true);"><?php echo highlightkeywords(i18n_get_translated($collections[$n]["name"]),$find)?></a></div></td>
 
 	<?php if (!$collection_public_hide_owner) { ?><td><?php echo highlightkeywords($collections[$n]["fullname"],$find)?></td><?php } ?>
 	<td><?php echo highlightkeywords($collections[$n]["ref"],$find)?></td>
@@ -169,9 +175,9 @@ for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
     <?php if ($collections_compact_style){
         include("collections_compact_style.php");
     } else {
-    ?><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
+    ?><a href="search.php?search=<?php echo urlencode("!collection" . $collections[$n]["ref"])?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["viewall"]?></a>
 	<?php if ($contact_sheet==true) { ?>
-    &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
+    &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>" onClick="return CentralSpaceLoad(this);">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 	<?php } ?>
 	<?php if (!checkperm("b")) { ?>
 	&nbsp;<a href="#" onclick="document.getElementById('collectionadd').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit(); return false;">&gt;&nbsp;<?php echo $lang["addtomycollections"]?></a><?php } ?>
