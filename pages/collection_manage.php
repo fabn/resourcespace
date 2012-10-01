@@ -431,7 +431,7 @@ if (!hook('collectionaccessmode')) {
 <div class="BasicsBox">
     <h1><?php echo $lang["findpubliccollection"]?></h1>
     <p class="tight"><?php echo text("findpublic")?></p>
-    <p><a href="collection_public.php"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
+    <p><a href="collection_public.php" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["findpubliccollection"]?>&nbsp;&gt;</a></p>
 </div>
 <?php } ?>
 <?php } ?>
