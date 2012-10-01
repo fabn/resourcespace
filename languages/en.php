@@ -1094,6 +1094,7 @@ $lang["requesttype-payment_-_immediate"]=$lang["resourcerequesttype2"]="Payment 
 $lang["requesttype-payment_-_invoice"]=$lang["resourcerequesttype3"]="Payment - Invoice";
 
 $lang["requestsent"]="Your resource request has been submitted for approval ";
+$lang["requestsenttext"]="Your request whas been submitted for approval and will be looked at shortly.";
 $lang["requestupdated"]="Your resource request has been updated ";
 $lang["requestassignedtouser"]="Your resource request has been assigned to % for approval.";
 $lang["requestapprovedmail"]="Your request has been approved. Click the link below to view and download the requested resources.";

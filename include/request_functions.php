@@ -53,7 +53,7 @@ function save_request($request)
 			$message=$lang["requestassignedtoyoumail"] . "\n\n$baseurl/?q=" . $request . "\n";
 			$assigned_to_user=get_user($assigned_to);
 			send_mail($assigned_to_user["email"],$applicationname . ": " . $lang["requestassignedtoyou"],$message);
-			$userconfirmmessage=str_replace("%",$assigned_to_user["fullname"],$lang["requestassignedtouser"]);
+			$userconfirmmessage=str_replace("%",$assigned_to_user["fullname"] . " (" . $assigned_to_user["email"] . ")" ,$lang["requestassignedtouser"]);
 			if ($request_senduserupdates){send_mail($currentrequest["email"],$applicationname . ": " . $lang["requestupdated"] . " - $request",$userconfirmmessage);}
 			}
 		}
@@ -184,7 +184,7 @@ function email_collection_request($ref,$details)
 			}
 		}
 	
-	$userconfirmmessage=$message;
+	$userconfirmmessage = $lang["requestsenttext"];
 	$message.=$lang["viewcollection"] . ":\n$baseurl/?c=$ref";
 	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
 	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from);}
@@ -255,8 +255,8 @@ function managed_collection_request($ref,$details,$ref_is_resource=false)
 	$request=sql_insert_id();
 	
 	# Send the e-mail		
+	$userconfirmmessage = $lang["requestsenttext"];
 	$message=$lang["username"] . ": " . $username . "\n" . $message;
-	$userconfirmmessage=$message;
 	$message.=$lang["viewrequesturl"] . ":\n$baseurl/?q=$request";
 	send_mail($email_notify,$applicationname . ": " . $lang["requestcollection"] . " - $ref",$message,$useremail);
 	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from);}	
@@ -273,7 +273,7 @@ function email_resource_request($ref,$details)
 	# E-mails a basic resource request for a single resource (posted) to the team
 	# (not a managed request)
 	
-	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang;
+	global $applicationname,$email_from,$baseurl,$email_notify,$username,$useremail,$lang,$request_senduserupdates;
 	
 	$templatevars['username']=$username . " (" . $useremail . ")";
 	$templatevars['url']=$baseurl."/?r=".$ref;
@@ -323,7 +323,9 @@ function email_resource_request($ref,$details)
 	
 	$message=$lang["username"] . ": " . $username . " (" . $useremail . ")\n".$templatevars['list']."\n".$adddetails. $c . $lang["clicktoviewresource"] . "\n\n". $templatevars['url'];
 
+	$userconfirmmessage = $lang["requestsenttext"];
 	send_mail($email_notify,$applicationname . ": " . $lang["requestresource"] . " - $ref",$message,$useremail,$useremail,"emailresourcerequest",$templatevars);
+	if ($request_senduserupdates){send_mail($useremail,$applicationname . ": " . $lang["requestsent"] . " - $ref",$userconfirmmessage,$email_from);}	
 	
 	# Increment the request counter
 	sql_query("update resource set request_count=request_count+1 where ref='$ref'");
