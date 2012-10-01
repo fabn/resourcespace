@@ -63,8 +63,12 @@ flip=1;
 var image1=0;
 var image2=0;
 
+
+
 function nextPhoto()
     {
+    if (!document.getElementById('image1')) {return false;} /* Photo slideshow no longer available (AJAX page move) */
+    
       if (cur_photo==num_photos) {next_photo=1;} else {next_photo=cur_photo+1;}
 	
 	
@@ -91,10 +95,20 @@ function nextPhoto()
      
       last_photo=cur_photo;
       cur_photo=next_photo;
-      window.setTimeout("nextPhoto()", 1000 * photo_delay);
+      timers.push(window.setTimeout("nextPhoto()", 1000 * photo_delay));
 }
 
-window.setTimeout("nextPhoto()", 1000 * photo_delay);
+jQuery(document).ready( function ()
+	{ 
+    /* Clear all old timers */
+    for (var i = 0; i < timers.length; i++)
+    	{
+	    clearTimeout(timers[i]);
+	    }
+	timers.push(window.setTimeout("nextPhoto()", 1000 * photo_delay));
+	}
+	);
+	
 </script>
 <?php } ?>
 

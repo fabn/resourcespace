@@ -240,19 +240,6 @@ if (getval("refreshcollectionframe","")!="")
 	refresh_collection_frame();
 	}
 
-# Include javascript for infobox panels.
-$headerinsert.="
-<script src=\"../lib/js/infobox" . ($infobox_image_mode?"_image":"") . ".js?css_reload_key=" . $css_reload_key . "\" type=\"text/javascript\"></script>
-";
-
-if ($display_user_rating_stars && $k==""){
-	$headerinsert.="
-	<script src=\"".$baseurl."/lib/js/user_rating_searchview.js?1\" type=\"text/javascript\"></script>";
-}
-
-if ($infobox)
-	$bodyattribs="OnMouseMove='InfoBoxMM(event);'";
-
 # Initialise the results references array (used later for search suggestions)
 $refs=array();
 
@@ -332,6 +319,26 @@ if ((($config_search_for_number && is_numeric($search)) || $searchresourceid > 0
 
 # Include the page header to and render the search results
 include "../include/header.php";
+
+# Infobox JS include
+if ($infobox)
+	{
+	?>
+	<script src="../lib/js/infobox<?php echo ($infobox_image_mode?"_image":"") ?>.js?css_reload_key=<?php echo $css_reload_key ?>" type="text/javascript"></script>
+	<script type="text/javascript">
+	jQuery('body').attr('OnMouseMove','InfoBoxMM(event);');
+	</script>
+	<?php
+	}
+	
+if ($display_user_rating_stars && $k=="")
+	{
+	?>
+	<script src="<?php echo $baseurl ?>/lib/js/user_rating_searchview.js?1" type="text/javascript"></script>
+	<?php
+	}
+
+
 
 # Hook to replace all search results (used by ResourceConnect plugin, allows search mechanism to be entirely replaced)
 if (!hook("repleacesearchresults")) {

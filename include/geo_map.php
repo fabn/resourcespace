@@ -6,6 +6,8 @@
 <script src="https://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
 <script>
 OpenLayers.Lang.setCode("<?php echo $language?>");
+OpenLayers.ImgPath="<?php echo $baseurl ?>/lib/OpenLayers/img/";
+
 map = new OpenLayers.Map("map_canvas");
 
 var osm = new OpenLayers.Layer.OSM("<?php echo $lang["openstreetmap"]?>");
