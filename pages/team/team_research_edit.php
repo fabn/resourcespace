@@ -27,9 +27,9 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editresearchrequest"]?></h1>
 
-<form method=post action="team_research_edit.php" onSubmit="return CentralSpacePost(this,true);">
+<form method="post" action="team_research_edit.php" onSubmit="return CentralSpacePost(this,true);">
 <input type=hidden name="submitted" value="true">
-<input type=hidden name=ref value="<?php echo $ref?>">
+<input type=hidden name="ref" value="<?php echo $ref?>">
 
 <div class="Question"><label><?php echo $lang["nameofproject"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["name"])?></div>
 <div class="clearerleft"> </div></div>
@@ -88,7 +88,7 @@ for ($n=0;$n<count($users);$n++)
 <?php } ?>
 </div>
 <div class="clearerleft"> </div></div>
-</div>
+
 
 <div class="Question"><label><?php echo $lang["copyexistingresources"]?></label>
 <input name="copyexisting" type="checkbox" value="yes"><b><?php echo $lang["yes"]?></b> <?php echo $lang["typecollectionid"]?><br/>
@@ -101,7 +101,7 @@ for ($n=0;$n<count($users);$n++)
 
 <div class="QuestionSubmit">
 <label for="buttons"> </label>			
-<input name="save" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
+<input name="savexxx" type="submit" value="&nbsp;&nbsp;<?php echo $lang["save"]?>&nbsp;&nbsp;" />
 </div>
 </form>
 </div>
