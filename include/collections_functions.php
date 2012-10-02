@@ -82,7 +82,7 @@ function get_user_collections($user,$find="",$order_by="name",$sort="ASC",$fetch
 function get_collection($ref)
 	{
 	# Returns all data for collection $ref
-	$return=sql_query("select c.*,c.theme2,c.theme3,c.keywords,u.fullname from collection c left outer join user u on u.ref=c.user where c.ref='$ref'");
+	$return=sql_query("select c.*,c.theme2,c.theme3,c.keywords,u.fullname,c.home_page_publish,home_page_text,home_page_image from collection c left outer join user u on u.ref=c.user where c.ref='$ref'");
 	if (count($return)==0) {return false;} else 
 		{
 		$return=$return[0];
@@ -387,7 +387,20 @@ function save_collection($ref)
 				}
 		}
 
-	$sql.="allow_changes='" . $allow_changes . "' where ref='$ref'";
+	$sql.="allow_changes='" . $allow_changes . "'";
+	
+	if (checkperm("h"))
+		{	
+		$sql.="
+			,home_page_publish='" . (getvalescaped("home_page_publish","")!=""?"1":"0") . "'
+			,home_page_text='" . getvalescaped("home_page_text","") . "'";
+		if (getval("home_page_image","")!="")
+			{
+			$sql.=",home_page_image='" . getvalescaped("home_page_image","") . "'";
+			}
+		}
+		
+	    $sql.=" where ref='$ref'";
 	
 	sql_query($sql);
 	} # end replace hook - modifysavecollection
@@ -1393,3 +1406,9 @@ function remove_all_resources_from_collection($ref){
 		collection_log($ref,"R",0);
 		}
 	}	
+
+
+function get_home_page_promoted_collections()
+	{
+	return sql_query("select collection.ref,collection.home_page_publish,collection.home_page_text,collection.home_page_image,resource.thumb_height,resource.thumb_width from collection left outer join resource on collection.home_page_image=resource.ref where collection.public=1 and collection.home_page_publish=1 order by collection.ref desc");
+	}

@@ -1608,3 +1608,7 @@ $lang["collection-order"] = "Collection Order";
 $lang["save-error"]="!! Error auto saving - please save manually !!";
 $lang["information-regexp_filter"]="Regular Expression filtering - e.g. '[A-Z]+' will ensure only upper case letters can be entered.";
 $lang["information-regexp_fail"]="The entered value was not in the required format.";
+
+$lang["theme_home_promote"]="Promote on the home page?";
+$lang["theme_home_page_text"]="Home page text";
+$lang["theme_home_page_image"]="Home page image";

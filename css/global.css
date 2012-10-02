@@ -264,13 +264,15 @@ option {font-size:11px;}
 .ThemeBox li {padding:0 0.35em 0 0em;margin:0px 0.5em 0.25em 0.25em;}
 
 /*Home styling */
-.HomePanel {margin:0px 15px 15px 0px;width: 163px;float: left;} 
+.HomePanel {margin:0px 15px 15px 0px;width: 166px;float: left;} 
 .HomePanelIN {padding: 6px;min-height: 90px;}
 .HomePanel h2 {font-size: 1.75em;padding-left: 14px;display:block;margin: 5px 0px;}
 .HomePanel p {margin: 0; padding: 5px 0 4px 0;}
 .HomePicturePanel {    margin:0px 15px 10px 0px;float: left;width: 519px;}
 .HomePicturePanelIN img {width:517px; height:350px;}
 .HomePicturePanelIN {height: 350px;}
+.HomePanelPromoted {padding: 6px;min-height: 205px;}
+.HomePanelPromotedImageWrap {text-align:center;min-height:155px;vertical-align:middle;}
 
 .TabBar {padding:10px 0 0 0;}
 .Tab a {margin:0 5px 0 0;padding:2px 5px 0 5px;}

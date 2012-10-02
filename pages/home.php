@@ -258,6 +258,29 @@ if (isset($custom_home_panels))
 	}
 ?>
 
+<?php 
+/* ------------ Collections promoted to the home page ------------------- */
+$home_collections=get_home_page_promoted_collections();
+foreach ($home_collections as $home_collection)
+	{
+	?>
+	<div class="HomePanel"><div class="HomePanelIN HomePanelPromoted">
+	<div class="HomePanelPromotedImageWrap">
+	
+	<div style="padding-top:<?php echo floor((155-$home_collection["thumb_height"])/2) ?>px;">
+	<a href="search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"><img class="ImageBorder" src="<?php echo get_resource_path($home_collection["home_page_image"],false,"thm",false) ?>" width="<?php echo $home_collection["thumb_width"] ?>" height="<?php echo $home_collection["thumb_height"] ?>" /></div>
+	</div>
+		
+	<p><a href="search.php?search=!collection<?php echo $home_collection["ref"] ?>" onClick="return CentralSpaceLoad(this,true);"><?php echo i18n_get_translated($home_collection["home_page_text"]) ?></a></p>
+	
+	</div>
+	<div class="PanelShadow"></div>
+	</div>
+	<?php
+	}
+?>
+
+
 	<div class="clearerleft"></div>
 
 <div class="BasicsBox">

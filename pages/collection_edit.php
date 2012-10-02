@@ -203,7 +203,48 @@ if ($theme_category_levels>=$i)
 		}
 	}	
 } 
-}?>
+}
+
+
+if (checkperm("h") && $collection['public']==1)
+	{
+	# Option to publish to the home page.
+	?>
+	<div class="Question">
+	<label for="allow_changes"><?php echo $lang["theme_home_promote"]?></label><input type=checkbox id="home_page_publish" name="home_page_publish" value="1" <?php if ($collection["home_page_publish"]==1) { ?>checked<?php } ?> onClick="document.getElementById('redirect').value='';document.getElementById('collectionform').submit();">
+	<div class="clearerleft"> </div>
+	</div>
+	<?php
+	if ($collection["home_page_publish"])
+		{
+		# Option ticked - collect extra data
+		?>
+		<div class="Question">
+		<label for="home_page_text"><?php echo $lang["theme_home_page_text"]?></label><textarea class="stdwidth" rows="3" name="home_page_text" id="home_page_text"><?php echo htmlspecialchars($collection["home_page_text"]==""?$collection["name"]:$collection["home_page_text"])?></textarea>
+		<div class="clearerleft"> </div>
+		</div>
+		<div class="Question">
+		<label for="home_page_image">
+		<?php echo $lang["theme_home_page_image"]?></label>
+		
+		<select class="stdwidth" name="home_page_image" id="home_page_image">
+		<?php foreach ($resources as $resource)
+			{
+			?>
+			<option value="<?php echo $resource["ref"] ?>" <?php if ($resource["ref"]==$collection["home_page_image"]) { ?>selected<?php } ?>><?php echo $resource["ref"] ?> - <?php echo $resource["field" . $view_title_field] ?></option>
+			<?php
+			}
+		?>
+		</select>
+		
+		
+		<div class="clearerleft"> </div>
+		</div>		
+		<?php
+		}
+	}
+?>
+
 
 <?php if (isset($collection['savedsearch'])&&$collection['savedsearch']==null){
 	# disallowing share breaks smart collections 
