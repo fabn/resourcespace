@@ -352,7 +352,7 @@ if (!hook('collectionaccessmode')) {
     &nbsp;<a href="contactsheet_settings.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a>
 	<?php } ?>
 
-	<?php if ($manage_collections_share_link && $allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
+	<?php if ($manage_collections_share_link && $allow_share && (checkperm("v") || checkperm ("g"))) { ?> &nbsp;<a href="collection_share.php?ref=<?php echo $collections[$n]["ref"]?>" target="main" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["share"]?></a><?php } ?>
 	
 	<?php if ($manage_collections_remove_link && $username!=$collections[$n]["username"])	{?>&nbsp;<a href="#" onclick="if (confirm('<?php echo $lang["removecollectionareyousure"]?>')) {document.getElementById('collectionremove').value='<?php echo $collections[$n]["ref"]?>';document.getElementById('collectionform').submit();} return false;">&gt;&nbsp;<?php echo $lang["action-remove"]?></a><?php } ?>
 
@@ -370,15 +370,15 @@ if (!hook('collectionaccessmode')) {
 	?>
 	<?php hook('additionalcollectiontool') ?>
 
-	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
+	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>" onClick="return CentralSpaceLoad(this,true);" >&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 
-    <?php if ((($username==$collections[$n]["username"]) || (checkperm("h"))) && $collection_sorting) {?>&nbsp;<a href="collection_sort.php?collection=<?php echo $collections[$n]['ref'] ?>">&gt;&nbsp;<?php echo $lang["sort"]?></a><?php } ?>
+    <?php if ((($username==$collections[$n]["username"]) || (checkperm("h"))) && $collection_sorting) {?>&nbsp;<a href="collection_sort.php?collection=<?php echo $collections[$n]['ref'] ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["sort"]?></a><?php } ?>
 
     <?php     
     # If this collection is (fully) editable, then display an edit all link
-    if (($collections[$n]["count"] > 0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>&nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main">&gt;&nbsp;<?php echo $lang["action-editall"]?></a>&nbsp;<?php } ?>
+    if (($collections[$n]["count"] > 0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>&nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-editall"]?></a>&nbsp;<?php } ?>
 
-	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?><a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
+	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?><a href="collection_log.php?ref=<?php echo $collections[$n]["ref"]?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["log"]?></a><?php } ?>
 
 	<?php hook("addcustomtool"); ?>
 	

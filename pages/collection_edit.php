@@ -30,22 +30,22 @@ if ($copy!="")
 	refresh_collection_frame();
 	}
 
-if (getval("name","")!="")
+if (getval("submitted","")!="")
 	{
 	# Save collection data
 	save_collection($ref);
 	if (getval("redirect","")!="")
 		{
 		if (getval("addlevel","")=="yes"){
-			redirect ("pages/collection_edit.php?ref=".$ref."&addlevel=yes");
+			redirect ("pages/collection_edit.php?ref=".$ref."&addlevel=yes&ajax=" . getval("ajax",""));
 			}		
 		else if ((getval("theme","")!="") || (getval("newtheme","")!=""))
 			{
-			redirect ("pages/themes.php?manage=true");
+			redirect ("pages/themes.php?manage=true&ajax=" . getval("ajax",""));
 			}
 		else
 			{
-			redirect ("pages/collection_manage.php?offset=".$offset."&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&reload=true");
+			redirect ("pages/collection_manage.php?offset=".$offset."&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&reload=true&ajax=" . getval("ajax",""));
 			}
 		}
 	else
@@ -62,9 +62,10 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editcollection"]?></h1>
 <p><?php echo text("introtext")?></p>
-<form method=post id="collectionform" action="collection_edit.php">
+<form method=post id="collectionform" action="collection_edit.php" onSubmit="return CentralSpacePost(this,true);">
 <input type=hidden name=redirect id=redirect value=yes>
 <input type=hidden name=ref value="<?php echo $ref?>">
+<input type=hidden name="submitted" value="true">
 
 <div class="Question">
 <label for="name"><?php echo $lang["name"]?></label><input type=text class="stdwidth" name="name" id="name" value="<?php echo $collection["name"]?>" maxlength="100" <?php if ($collection["cant_delete"]==1) { ?>readonly=true<?php } ?>>

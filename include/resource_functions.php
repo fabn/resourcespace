@@ -756,7 +756,10 @@ function email_resource($resource,$resourcename,$fromusername,$userlist,$message
 	if ($from_name==""){$from_name=$applicationname;} // from_name is for the email headers, and needs to match the email address (app name or user name)
 	
 	$message=str_replace(array("\\n","\\r","\\"),array("\n","\r",""),$message);
-	if ($message==""){$message=$lang['nomessage'];}
+
+#	Commented 'no message' line out as formatted oddly, and unnecessary.
+#	if ($message==""){$message=$lang['nomessage'];}
+
 	for ($n=0;$n<count($emails);$n++)
 		{
 		$key="";
