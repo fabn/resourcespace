@@ -1,4 +1,7 @@
 <?php 
+
+$theme=((isset($userfixedtheme) && $userfixedtheme!=""))?$userfixedtheme:getval("colourcss",$defaulttheme);
+
 # Do not display header / footer when dynamically loading CentralSpace contents.
 if (getval("ajax","")=="") { 
 
@@ -52,8 +55,10 @@ jQuery.noConflict();
 <link type="text/css" href="<?php echo $baseurl?>/css/ui-lightness/jquery-ui-1.8.20.custom.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" />
 <!-- end of jQuery / jQueryUI load -->
 
-
+<?php if(!hook("replaceglobaljs")){?>
 <script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<?php } ?>
+
 <script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
 <?php if (!$disable_geocoding) { ?>
@@ -81,7 +86,7 @@ for ($n=0;$n<count($plugins);$n++)
 		<link href="<?php echo $baseurl?>/plugins/<?php echo $plugins[$n]?>/css/style.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" type="text/css" media="screen,projection,print"  />
 		<?php
 		}
-	$theme=((isset($userfixedtheme) && $userfixedtheme!=""))?$userfixedtheme:getval("colourcss",$defaulttheme);
+
 	$csspath=dirname(__FILE__)."/../plugins/" . $plugins[$n] . "/css/Col-".$theme.".css";	
 	if (file_exists($csspath))
 		{
@@ -308,5 +313,6 @@ if ($use_theme_bar && (getval("k","")=="") && !in_array($pagename,array("themes"
 	
 hook("afterheader");
 
-}	
+} // end if !ajax
+
 ?>
