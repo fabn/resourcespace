@@ -17,7 +17,7 @@ if (getval("submitted","")!="")
 	{
 	# Save research request data
 	save_request($ref);
-	redirect ("pages/team/team_request.php?reload=true&nc=" . time() . "&ajax=" . getval("ajax",""));
+	redirect ("pages/team/team_request.php?reload=true&nc=" . time());
 	}
 
 # Fetch research request data

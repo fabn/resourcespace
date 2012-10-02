@@ -722,7 +722,22 @@ function nicedate($date,$time=false,$wordy=true)
 
 function redirect($url)
 	{
+	# Redirect to the provided URL using a HTTP header Location directive.
 	global $baseurl;
+	
+	if (getval("ajax","")!="")
+		{
+		# When redirecting from an AJAX loaded page, forward the AJAX parameter automatically so headers and footers are removed.	
+		if (strpos($url,"?")!==false)
+			{
+			$url.="&ajax=true";
+			}
+		else
+			{
+			$url.="?ajax=true";
+			}
+		}
+	
 	if (substr($url,0,1)=="/")
 		{
 		# redirect to an absolute URL

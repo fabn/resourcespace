@@ -37,15 +37,15 @@ if (getval("submitted","")!="")
 	if (getval("redirect","")!="")
 		{
 		if (getval("addlevel","")=="yes"){
-			redirect ("pages/collection_edit.php?ref=".$ref."&addlevel=yes&ajax=" . getval("ajax",""));
+			redirect ("pages/collection_edit.php?ref=".$ref."&addlevel=yes");
 			}		
 		else if ((getval("theme","")!="") || (getval("newtheme","")!=""))
 			{
-			redirect ("pages/themes.php?manage=true&ajax=" . getval("ajax",""));
+			redirect ("pages/themes.php?manage=true");
 			}
 		else
 			{
-			redirect ("pages/collection_manage.php?offset=".$offset."&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&reload=true&ajax=" . getval("ajax",""));
+			redirect ("pages/collection_manage.php?offset=".$offset."&col_order_by=".$col_order_by."&sort=".$sort."&find=".urlencode($find)."&reload=true");
 			}
 		}
 	else

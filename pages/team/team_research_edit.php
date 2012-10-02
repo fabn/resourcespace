@@ -12,7 +12,7 @@ include "../../include/research_functions.php";
 
 $ref=getvalescaped("ref","",true);
 
-if (getval("save","")!="")
+if (getval("submitted","")!="")
 	{
 	# Save research request data
 	save_research_request($ref);
@@ -27,7 +27,8 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editresearchrequest"]?></h1>
 
-<form method=post action="team_research_edit.php">
+<form method=post action="team_research_edit.php" onSubmit="return CentralSpacePost(this,true);">
+<input type=hidden name="submitted" value="true">
 <input type=hidden name=ref value="<?php echo $ref?>">
 
 <div class="Question"><label><?php echo $lang["nameofproject"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["name"])?></div>
