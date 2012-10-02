@@ -159,7 +159,8 @@ function check(filename) {
 </script>
 
 <form method="post" class="form" enctype="multipart/form-data" action="upload.php">
-
+<input type="hidden" name="ref" value="<?php echo $ref ?>" />
+<input type="hidden" name="resource_type" value="<?php echo $resource_type ?>" />
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>
 <div id="invalid" style="display:none;" class="FormIncorrect"><?php echo str_replace_formatted_placeholder("%extensions", str_replace(",",", ",$allowed_extensions), $lang['invalidextension_mustbe-extensions'])?></div>
