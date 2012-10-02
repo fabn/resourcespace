@@ -63,10 +63,10 @@ jQuery.noConflict();
 
 <?php if ($frameless_collections) { ?>
 <script src="<?php echo $baseurl?>/lib/js/frameless_collections.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<?php } ?>
 <script type="text/javascript">
 var baseurl_short="<?php echo $baseurl_short?>";
 </script>
-<?php } ?>
 
 <?php hook("additionalheaderjs");?>
 
