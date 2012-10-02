@@ -26,7 +26,7 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["researchrequest"]?></h1>
 <p class="tight"><?php echo text("introtext")?></p>
-<form method="post">
+<form method="post" action="research_request.php">
 
 <?php if (getval("assign","")!="") { ?>
 <div class="Question">

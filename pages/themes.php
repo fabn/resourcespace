@@ -214,7 +214,7 @@ include "../include/header.php";
 
 
 <div class="BasicsBox">
-<form method=get id="themeform">
+<form method=get id="themeform" action="themes.php">
 <input type="hidden" name="lastlevelchange" id="lastlevelchange" value="">
 
 <?php if (!$themes_category_split_pages) { ?>

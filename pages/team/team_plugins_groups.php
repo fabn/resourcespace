@@ -48,7 +48,7 @@ $s=explode(",",$access);
   <h2>&nbsp;</h2>
   <h1><?php echo $lang["groupaccess"] . ': ' . $plugin ?></h1>
 
-<form method="post">
+<form method="post" action="team_plugins_groups.php">
 <p>
 <input type="radio" name="access" value="all" <?php if ($access=="") { ?>checked<?php } ?>> <?php echo $lang["plugin-groupsallaccess"] ?>
 <br/>

@@ -78,7 +78,7 @@ if (!checkperm("t")) {
 <div class="BasicsBox">
 <h1><?php echo $lang["action-edit"] . " " . $lang["themecategory"]?></h1>
 <p><?php echo text("introtext")?></p>
-	<form method=post id="themeform">
+	<form method=post id="themeform" action="theme_edit.php">
 		<div class="Question">
 			<label for="rename"><?php echo $lang["name"]?></label><input type=text class="stdwidth" name="rename" id="rename" value="<?php echo $themename?>" maxlength="100" />
 			<div class="clearerleft"> </div>

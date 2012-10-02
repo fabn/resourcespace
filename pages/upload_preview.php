@@ -56,7 +56,7 @@ function check(filename) {
 	if (allowedExtensions.indexOf(ext)==-1){ return false;} else {return true;}
 }
 </script>
-<form method="post" class="form" enctype="multipart/form-data">
+<form method="post" class="form" enctype="multipart/form-data" action="upload_preview.php">
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxsize?>">
 
 <br/>

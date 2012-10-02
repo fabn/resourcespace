@@ -38,7 +38,7 @@ include "../include/header.php";
   <h1><?php echo $lang["requestcollection"]?></h1>
   <p><?php echo text("introtext")?></p>
   
-	<form method="post">  
+	<form method="post" action="collection_request.php">  
 	<input type=hidden name=ref value="<?php echo $ref?>">
 	
 	<div class="Question">

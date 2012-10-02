@@ -211,7 +211,7 @@ include "../include/header.php";
     <h1><?php echo $lang["managemycollections"]?></h1>
     <p class="tight"><?php echo text("introtext")?></p><br>
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="collection_manage.php">
 		<div class="Question">
 			<div class="tickset">
 			 <div class="Inline"><input type=text name="find" id="find" value="<?php echo htmlspecialchars(unescape($find)); ?>" maxlength="100" class="shrtwidth" /></div>
@@ -257,7 +257,7 @@ $url="collection_manage.php?paging=true&col_order_by=".$col_order_by."&sort=".$s
   	</div> <?php pager(false); ?></div><?php	
 ?>
 
-<form method=post id="collectionform">
+<form method=post id="collectionform" action="collection_manage.php">
 <input type=hidden name="delete" id="collectiondelete" value="">
 <input type=hidden name="remove" id="collectionremove" value="">
 <input type=hidden name="add" id="collectionadd" value="">
@@ -301,7 +301,7 @@ echo " " . ($mycollcount==1 ? $lang["owned_by_you-1"] : str_replace("%mynumber",
 <?php hook("beforecollectiontoolscolumnheader");?>
 <td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 </tr>
-<form method="get" name="colactions" id="colactions">
+<form method="get" name="colactions" id="colactions" action="collection_manage.php">
 <?php
 
 for ($n=$offset;(($n<count($collections)) && ($n<($offset+$per_page)));$n++)
@@ -413,7 +413,7 @@ if (!hook('collectionaccessmode')) {
 <div class="BasicsBox">
     <h1><?php echo $lang["createnewcollection"]?></h1>
     <p class="tight"><?php echo text("newcollection")?></p>
-    <form method="post">
+    <form method="post" action="collection_manage.php">
 		<div class="Question">
 			<label for="newcollection"><?php echo $lang["collectionname"]?></label>
 			<div class="tickset">

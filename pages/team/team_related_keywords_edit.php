@@ -36,7 +36,7 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["managerelatedkeywords"]?></h1>
 
-<form method=post id="mainform">
+<form method=post id="mainform" action="team_related_keywords_edit.php">
 <input type="hidden" name="keyword" value="<?php echo $keyword?>">
 
 <div class="Question"><label><?php echo $lang["keyword"]?></label><div class="Fixed"><?php echo $keyword?></div><div class="clearerleft"> </div></div>

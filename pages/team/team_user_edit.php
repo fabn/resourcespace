@@ -61,7 +61,7 @@ if (getval("loginas","")!="")
 <h1><?php echo $lang["edituser"]?></h1>
 <?php if (isset($error)) { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>
 
-<form method=post>
+<form method=post action="team_user_edit.php">
 <input type=hidden name=ref value="<?php echo $ref?>">
 <input type=hidden name=backurl value="<?php echo getval("backurl","team_user.php?nc=" . time())?>">
 

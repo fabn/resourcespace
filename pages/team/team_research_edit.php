@@ -27,7 +27,7 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editresearchrequest"]?></h1>
 
-<form method=post>
+<form method=post action="team_research_edit.php">
 <input type=hidden name=ref value="<?php echo $ref?>">
 
 <div class="Question"><label><?php echo $lang["nameofproject"]?></label><div class="Fixed"><?php echo htmlspecialchars($research["name"])?></div>

@@ -43,7 +43,7 @@ include "../include/header.php";
 
 
 <div class="BasicsBox"> 
-<form method=post id="collectionform">
+<form method=post id="collectionform" action="collection_share.php">
 <input type="hidden" name="deleteaccess" id="deleteaccess" value="">
 <input type="hidden" name="generateurl" id="generateurl" value="">
 

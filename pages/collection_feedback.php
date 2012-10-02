@@ -52,7 +52,7 @@ include "../include/header.php";
 <h1><?php echo $lang["sendfeedback"]?></h1>
 <?php if ($done) { ?><p><?php echo $lang["feedbacksent"]?></p><?php } else { ?>
 
-<form method="post">
+<form method="post" action="collection_feedback.php">
 <input type="hidden" name="k" value="<?php echo $k?>">
 <input type="hidden" name="collection" value="<?php echo $collection?>">
 

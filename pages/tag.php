@@ -50,7 +50,7 @@ include "../include/header.php";
 ?>
 <div class="BasicsBox"> 
 
-<form method="post" id="mainform">
+<form method="post" id="mainform" action="tag.php">
 <input type="hidden" name="ref" value="<?php echo $ref?>">
 
 <h1><?php echo $lang["speedtagging"]?></h1>

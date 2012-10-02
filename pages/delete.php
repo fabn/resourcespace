@@ -70,7 +70,7 @@ else
   
   <?php if ($resource["archive"]==3) { ?><p><strong><?php echo $lang["finaldeletion"] ?></strong></p><?php } ?>
   
-	<form method="post">  
+	<form method="post" action="delete.php">  
 	<input type=hidden name=ref value="<?php echo $ref?>">
 	
 	<div class="Question">

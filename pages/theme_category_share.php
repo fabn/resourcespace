@@ -34,7 +34,7 @@ include "../include/header.php";
 
 ?>
 <div class="BasicsBox"> 
-<form method=post id="themeform">
+<form method=post id="themeform" action="theme_category_share.php">
 <input type="hidden" name="generateurl" id="generateurl" value="">
 
 <div class="VerticalNav">

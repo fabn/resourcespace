@@ -77,7 +77,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 
 
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_content.php">
 		<div class="Question">
 			<label for="find"><?php echo $lang["searchcontent"]?><br/><?php echo $lang["searchcontenteg"]?></label>
 			<div class="tickset">
@@ -100,7 +100,7 @@ for ($n=$offset;(($n<count($text)) && ($n<($offset+$per_page)));$n++)
 
 <?php if ($site_text_custom_create){?>
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_content.php">
 		<div class="Question">
 			<label for="find"><?php echo $lang["addnewcontent"]?></label>
 			<div class="tickset">

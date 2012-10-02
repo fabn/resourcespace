@@ -158,7 +158,7 @@ function check(filename) {
 }
 </script>
 
-<form method="post" class="form" enctype="multipart/form-data">
+<form method="post" class="form" enctype="multipart/form-data" action="upload.php">
 
 <br/>
 <?php if ($status!="") { ?><?php echo $status?><?php } ?>

@@ -67,7 +67,7 @@ for ($n=$offset;(($n<count($keywords)) && ($n<($offset+$per_page)));$n++)
 
 
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_related_keywords.php">
 		<div class="Question">
 			<label for="find"><?php echo $lang["searchkeyword"]?></label>
 			<div class="tickset">

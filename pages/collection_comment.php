@@ -54,7 +54,7 @@ if (file_exists($imagepath)){?>
 
 <?php if (!hook("replacecollectioncommentform")) { ?>
 
-<form method="post">
+<form method="post" action="collection_comment.php">
 <input type="hidden" name="ref" value="<?php echo $ref?>">
 <input type="hidden" name="k" value="<?php echo $k?>">
 <input type="hidden" name="collection" value="<?php echo $collection?>">

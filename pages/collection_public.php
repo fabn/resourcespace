@@ -40,7 +40,7 @@ include "../include/header.php";
     <h1><?php echo $lang["findpubliccollection"]?></h1>
     <p class="tight"><?php echo text("introtext")?></p>
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="collection_public.php">
 		<div class="Question">
 			<label for="find"><?php echo $lang["searchpubliccollections"]?></label>
 			<div class="tickset">
@@ -95,7 +95,7 @@ $url="collection_public.php?paging=true&col_order_by=".$col_order_by."&sort=".$s
 	<?php if ($per_page==99999){?><span class="Selected"><?php echo $lang["all"]?></span><?php } else { ?><a href="<?php echo $url; ?>&per_page_list=99999" onClick="return CentralSpaceLoad(this);"><?php echo $lang["all"]?></a><?php } ?>
 	</div> <?php pager(false); ?></div>
 
-<form method=post id="collectionform">
+<form method=post id="collectionform" action="collection_public.php">
 <input type=hidden name="add" id="collectionadd" value="">
 
 <?php

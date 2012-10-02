@@ -53,7 +53,7 @@ include "../include/header.php";
 <h1><?php echo $lang["requestuserlogin"]?></h1>
 <p><?php echo text("introtext")?></p>
 
-<form method="post">  
+<form method="post" action="user_request.php">  
 
 <?php if (!hook("replacemain")) { /* BEGIN hook Replacemain */ ?>
 

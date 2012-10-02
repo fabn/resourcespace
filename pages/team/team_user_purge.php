@@ -34,7 +34,7 @@ include "../../include/header.php";
 <h1><?php echo $lang["purgeusers"]?></h1>
 <?php if (isset($error)) { ?><div class="FormError">!! <?php echo $error?> !!</div><?php } ?>
 
-<form method=post>
+<form method=post action="team_user_purge.php">
 
 <?php if (isset($count) && $count==0) { ?>
 

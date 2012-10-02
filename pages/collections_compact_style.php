@@ -59,7 +59,7 @@ if (count($colresult)>0 && checkperm("e" . $colresult[0]["archive"]) && allow_mu
 
 
 if ($pagename!="collection_manage" && $pagename!="collection_public" && $pagename!="themes"){?>
-<form method="get" name="colactions" id="colactions">
+<form method="get" name="colactions" id="colactions" action="collections_compact_style.php">
 <?php } 
 
 

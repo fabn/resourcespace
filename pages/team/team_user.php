@@ -143,7 +143,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 <div class="BasicsBox">
-  <form method="post">
+  <form method="post" action="team_user.php">
   <div class="Question">  
     <label for="group"><?php echo $lang["group"]; ?></label>
     <div class="tickset">
@@ -165,7 +165,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_user.php">
 		<div class="Question">
 			<label for="find"><?php echo $lang["searchusers"]?></label>
 			<div class="tickset">
@@ -178,7 +178,7 @@ for ($n=$offset;(($n<count($users)) && ($n<($offset+$per_page)));$n++)
 </div>
 
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_user.php">
 		<div class="Question">
 			<label for="newuser"><?php echo $lang["createuserwithusername"]?></label>
 			<div class="tickset">

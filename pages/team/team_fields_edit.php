@@ -52,7 +52,7 @@ $options=get_field_options_with_stats($field);
   
 </div>
 
-<form method=post>
+<form method=post action="team_fields_edit.php">
 <input type=hidden name="show_all_languages" value="<?php echo $show_all_languages?"true":""?>">
 <input type=hidden name="save" value="true">
 
@@ -130,7 +130,7 @@ for ($n=0;$n<count($options);$n++)
 </form>
 
 <div class="BasicsBox">
-    <form method="post">
+    <form method="post" action="team_fields_edit.php">
 		<div class="Question">
 			<label for="newkeyword"><?php echo $lang["addkeyword"]?></label>
 			<div class="tickset">

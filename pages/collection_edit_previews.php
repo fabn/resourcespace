@@ -68,7 +68,7 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editresourcepreviews"]?></h1>
 <p><?php echo text("introtext")?></p>
-<form method=post id="collectionform">
+<form method=post id="collectionform" action="collection_edit_previews.php">
 
 <?php if (!checkperm("F*")) { ?>
 <div class="Question">

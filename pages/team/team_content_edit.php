@@ -51,7 +51,7 @@ include "../../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editcontent"]?></h1>
 
-<form method=post id="mainform">
+<form method=post id="mainform" action="team_content_edit.php">
 <input type=hidden name=page value="<?php echo $page?>">
 <input type=hidden name=name value="<?php echo $name?>">
 <input type=hidden name=langswitch id=langswitch value="">

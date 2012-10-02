@@ -21,7 +21,7 @@ include "../include/header.php";
     <p><?php echo text("introtext")?></p>
 	
 	  
-	<form method="post">  
+	<form method="post" action="user_password.php">  
 	<div class="Question">
 	<label for="email"><?php echo $lang["youremailaddress"]?></label>
 	<input type=text name="email" id="email" class="stdwidth" value="<?php echo htmlspecialchars(getval("email",""))?>">

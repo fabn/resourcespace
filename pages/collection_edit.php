@@ -62,7 +62,7 @@ include "../include/header.php";
 <div class="BasicsBox">
 <h1><?php echo $lang["editcollection"]?></h1>
 <p><?php echo text("introtext")?></p>
-<form method=post id="collectionform">
+<form method=post id="collectionform" action="collection_edit.php">
 <input type=hidden name=redirect id=redirect value=yes>
 <input type=hidden name=ref value="<?php echo $ref?>">
 

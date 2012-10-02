@@ -76,7 +76,7 @@ include "../include/header.php";
 
 <p><?php echo text("introtext")?></p>
 
-<form name="collectionform" method=post id="collectionform">
+<form name="collectionform" method=post id="collectionform" action="collection_email.php">
 <input type=hidden name=redirect id=redirect value=yes>
 <input type=hidden name=ref value="<?php echo $ref?>">
 <?php if ($email_multi_collections) { ?>

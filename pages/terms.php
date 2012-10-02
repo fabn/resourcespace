@@ -35,7 +35,7 @@ include "../include/header.php";
 	<div class="clearerleft"> </div>
 	</div>
 	
-	<form method="post">
+	<form method="post" action="terms.php">
 	<input type=hidden name="url" value="<?php echo $url?>">
 	<div class="QuestionSubmit">
 	<label for="buttons"> </label>		

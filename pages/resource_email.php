@@ -61,7 +61,7 @@ include "../include/header.php";
 
 <p><?php echo text("introtext")?></p>
 
-<form method=post id="resourceform">
+<form method=post id="resourceform" action="resource_email.php">
 <input type=hidden name=ref value="<?php echo $ref?>">
 
 <div class="Question">
