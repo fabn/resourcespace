@@ -130,7 +130,8 @@ include "../include/header.php";
 
 <?php if (!checkperm("b")) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?php echo add_to_collection_link($ref,$search)?>&gt;&nbsp;<?php echo $lang["action-addtocollection"]?></a><?php } ?>
+<?php echo add_to_collection_link($ref,$search)?>+&nbsp;<?php echo $lang["action-addtocollection"]?></a><?php } ?>
+<?php if ($search=="!collection" . $usercollection) { ?>&nbsp;&nbsp;<?php echo remove_from_collection_link($ref,$search)?>- <?php echo $lang["action-removefromcollection"]?></a><?php } ?>
 <?php } ?>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
