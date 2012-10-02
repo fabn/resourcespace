@@ -165,7 +165,7 @@ if (!hook("makemarker")) {
 hook("rendermapfooter");
 ?>
 <p><?php echo $lang['location-details']; ?></p>
-<form id="map-form" method="post">
+<form id="map-form" method="post" action="geo_edit.php">
 <input name="ref" type="hidden" value="<?php echo $ref; ?>" />
 <input name="map-zoom" type="hidden" value="<?php echo $zoom ?>" id="map-zoom" />
 <?php echo $lang['latlong']; ?>: <input name="geo-loc" type="text" size="50" value="<?php echo $resource["geo_long"]==""?"":($resource["geo_lat"] . "," . $resource["geo_long"]) ?>" id="map-input" />

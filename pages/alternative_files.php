@@ -55,7 +55,7 @@ include "../include/header.php";
 <h1><?php echo $lang["managealternativefilestitle"]?></h1>
 </div>
 
-<form method=post id="fileform">
+<form method=post id="fileform" action="alternative_files.php">
 <input type=hidden name="filedelete" id="filedelete" value="">
 
 <div class="Listview">
@@ -106,7 +106,7 @@ for ($n=0;$n<count($files);$n++)
 <!--Create a new file-->
 <div class="BasicsBox">
     <h1><?php echo $lang["addalternativefile"]?></h1>
-    <form method="post">
+    <form method="post" action="alternative_files.php">
 		<div class="Question">
 			<label for="newcollection"><?php echo $lang["name"]?></label>
 			<div class="tickset">

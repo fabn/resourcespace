@@ -30,7 +30,7 @@ include "../include/header.php";
 
 	<?php if (getval("expired","")!="") { ?><div class="FormError">!! <?php echo $lang["password_expired"]?> !!</div><?php } ?>
 
-	<form method="post">
+	<form method="post" action="change_password.php">
 	<input type="hidden" name="expired" value="<?php echo getvalescaped("expired","")?>">
 	<div class="Question">
 	<label for="password"><?php echo $lang["newpassword"]?></label>

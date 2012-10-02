@@ -59,7 +59,7 @@ include "../include/header.php";
 <h1><?php echo $lang["editalternativefile"]?></h1>
 
 
-<form method="post" class="form" id="fileform" enctype="multipart/form-data">
+<form method="post" class="form" id="fileform" enctype="multipart/form-data" action="alternative_file.php">
 <input type="hidden" name="MAX_FILE_SIZE" value="500000000">
 <input type=hidden name=ref value="<?php echo $ref?>">
 <input type=hidden name=resource value="<?php echo $resource?>">

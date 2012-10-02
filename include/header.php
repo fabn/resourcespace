@@ -53,7 +53,7 @@ jQuery.noConflict();
 <!-- end of jQuery / jQueryUI load -->
 
 
-<?php include dirname(__FILE__)."/../lib/js/global.js";?>
+<script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 <script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
 <script src="<?php echo $baseurl ?>/lib/OpenLayers/OpenLayers.js"></script>
@@ -261,7 +261,7 @@ if (!$frameless_collections && !checkperm("b")) {$target="main";} else {$target=
 <div id="HeaderNav2" class="HorizontalNav HorizontalWhiteNav">&nbsp;</div>
 <?php } ?>
 </div>
-<?php } else { ?><div id="noheader"></div><?php } ?>
+<?php } ?>
 
 <?php hook("headerbottom"); ?>
 
