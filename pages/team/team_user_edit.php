@@ -26,7 +26,7 @@ if ((getval("save","")!="") || (getval("suggest","")!=""))
 	else
 		{
 		hook('aftersaveuser');
-		if (getval("save","")!="") {$backurl=getval("backurl","team_user.php?nc=" . time());redirect ("pages/team/" . $backurl);}
+		if (getval("save","")!="") {$backurl=getval("backurl","team_user.php?nc=" . time());redirect ($backurl);}
 		}
 	}
 
