@@ -15,9 +15,9 @@ if (file_exists($flvfile)){return false;}
 
 if ($resource["has_image"]==1)
 	{
-	?><style type="text/css" media="all">@import "../plugins/annotate/lib/jquery/css/annotation.css";</style>
+	?><style type="text/css" media="all">@import "<?php echo $baseurl?>/plugins/annotate/lib/jquery/css/annotation.css";</style>
 
-	<script type="text/javascript" src="../plugins/annotate/lib/jquery/js/jquery.annotate.js"></script>
+	<script type="text/javascript" src="<?php echo $baseurl?>/plugins/annotate/lib/jquery/js/jquery.annotate.js"></script>
 	<script type="text/javascript">
 		button_ok = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["ok"])) ?>";
 		button_cancel = "<?php echo preg_replace("/\r?\n/", "\\n", addslashes($lang["cancel"])) ?>";
@@ -49,23 +49,7 @@ if ($resource["has_image"]==1)
 	if (file_exists($imagepath))
 		{ 
 		?>	
-		<script language="javascript">
-			
-			jQuery(window).load(function() {
-					
-					jQuery("#toAnnotate").annotateImage({
-					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>",
-					useAjax: true,
-					<?php  if ($k==""){?> editable: true <?php }
-					else
-					{ ?> editable: false <?php } ?>  					
-				});  
 
-			});
-			
-		</script>
 
 		<div id="wrapper" style="display:block;clear:none;float:left;margin: 0px 10px 10px 0px;">
 <div>
@@ -84,11 +68,25 @@ if ($resource["has_image"]==1)
      ?>
      
 <?php if ($annotate_pdf_output){?>
-&nbsp;&nbsp;<a style="display:inline;float:right;" class="nowrap" href="../plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
+&nbsp;&nbsp;<a style="display:inline;float:right;" class="nowrap" href="<?php echo $baseurl?>/plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
 <?php } ?>
 </div>
 
 	</div>
+<script language="javascript">
+	jQuery("#toAnnotate").load(function(){
+	jQuery("#toAnnotate").annotateImage({
+		getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+		saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+		deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>&k=<?php echo $k ?>",
+		useAjax: true,
+		<?php  if ($k==""){?> editable: true <?php }
+			else
+		{ ?> editable: false <?php } ?>  
+	});
+	});
+</script>
+	
 <?php 
 		} 
 	?><?php
@@ -96,7 +94,7 @@ if ($resource["has_image"]==1)
 else
 	{
 	?>
-	<img src="../gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false)?>" alt="" class="Picture" style="border:none;" id="previewimage" />
+	<img src="<?php echo $baseurl?>/gfx/<?php echo get_nopreview_icon($resource["resource_type"],$resource["file_extension"],false)?>" alt="" class="Picture" style="border:none;" id="previewimage" />
 	<?php
 	}
 	

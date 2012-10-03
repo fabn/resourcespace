@@ -40,19 +40,7 @@ $h = $sizes[1];
 <script>
      jQuery.noConflict();
 </script>
-<script language="javascript">
-			jQuery(window).load(function() {
-				jQuery("#toAnnotate").annotateImage({
-					getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
-					deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>&k=<?php echo $k ?>",
-					useAjax: true,
-					<?php  if ($k==""){?> editable: true <?php }
-					else
-					{ ?> editable: false <?php } ?>  
-				});
-			});
-		</script>
+
 <div id="wrapper" style="display:block;clear:none;float:left;margin: 0px 10px 10px 0px;">
 <div>
 		<img id="toAnnotate" src="<?php echo $url?>" id="previewimage" class="Picture" GALLERYIMG="no" style="display:block;"   />
@@ -71,6 +59,21 @@ $h = $sizes[1];
      &nbsp;&nbsp;<a style="display:inline;float:right;" href="<?php echo $baseurl?>/plugins/annotate/pages/annotate_pdf_config.php?ref=<?php echo $ref?>&ext=<?php echo $resource["preview_extension"]?>&k=<?php echo $k?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&gt;&nbsp;<?php echo $lang["pdfwithnotes"]?></a>
      <?php } ?>
      	</div></div>
+<script language="javascript">
+jQuery("#toAnnotate").load(function(){
+	jQuery("#toAnnotate").annotateImage({
+		getUrl: "<?php echo $baseurl?>/plugins/annotate/pages/get.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+		saveUrl: "<?php echo $baseurl?>/plugins/annotate/pages/save.php?ref=<?php echo $ref?>&k=<?php echo $k ?>&pw=<?php echo $w?>&ph=<?php echo $h?>",
+		deleteUrl: "<?php echo $baseurl?>/plugins/annotate/pages/delete.php?ref=<?php echo $ref?>&k=<?php echo $k ?>",
+		useAjax: true,
+		<?php  if ($k==""){?> editable: true <?php }
+			else
+		{ ?> editable: false <?php } ?>  
+	});
+});
+</script>
+     
+     
      <?php
 
 return true;	
