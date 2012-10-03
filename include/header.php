@@ -55,9 +55,15 @@ jQuery.noConflict();
 <link type="text/css" href="<?php echo $baseurl?>/css/ui-lightness/jquery-ui-1.8.20.custom.css?css_reload_key=<?php echo $css_reload_key?>" rel="stylesheet" />
 <!-- end of jQuery / jQueryUI load -->
 
-<?php if(!hook("replaceglobaljs")){?>
-<script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<script type="text/javascript">rewriteUrlsDebug=false;
+<?php if ($ajax_url_rewrites){ ?>
+	rewriteUrls=true;<?php if ($ajax_url_rewrite_debug){?>rewriteUrlsDebug=true;<?php } ?>
+<?php } else { ?>
+rewriteUrls=false;rewriteUrlsDebug=false;
 <?php } ?>
+</script>
+
+<script src="<?php echo $baseurl?>/lib/js/global.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
 <script src="<?php echo $baseurl?>/lib/js/category_tree.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
 
