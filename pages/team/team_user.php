@@ -55,7 +55,7 @@ $results=count($users);
 $totalpages=ceil($results/$per_page);
 $curpage=floor($offset/$per_page)+1;
 
-$url="pages/team/team_user.php?group=" . $group . "&order_by=" . $order_by . "&find=" . urlencode($find);
+$url=$baseurl."/pages/team/team_user.php?group=" . $group . "&order_by=" . $order_by . "&find=" . urlencode($find);
 $jumpcount=1;
 
 # Create an a-z index
