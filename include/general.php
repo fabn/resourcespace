@@ -3160,6 +3160,7 @@ function format_display_field($value){
 if (!function_exists("draw_performance_footer")){
 function draw_performance_footer(){
 	global $config_show_performance_footer,$querycount,$querytime,$querylog,$pagename;
+	$performance_footer_id=uniqid("performance");
 	if ($config_show_performance_footer){	
 	$querylog=sortmulti ($querylog, "time", "desc", FALSE, FALSE);
 	# --- If configured (for debug/development only) show query statistics
@@ -3175,9 +3176,9 @@ function draw_performance_footer(){
 		}
 	?>
 	<tr><td>Dupes</td><td><?php echo $dupes?></td></tr>
-	<tr><td colspan=2><a href="#" onClick="document.getElementById('querylog').style.display='block';return false;">&gt;&nbsp;details</a></td></tr>
+	<tr><td colspan=2><a href="#" onClick="document.getElementById('querylog<?php echo $performance_footer_id?>').style.display='block';return false;">&gt;&nbsp;details</a></td></tr>
 	</table>
-	<table class="InfoTable" id="querylog" style="display: none; float: <?php if ($pagename=='collections'){?>left<?php } else {?>right<?php }?>; margin: 10px;">
+	<table class="InfoTable" id="querylog<?php echo $performance_footer_id?>" style="display: none; float: <?php if ($pagename=='collections'){?>left<?php } else {?>right<?php }?>; margin: 10px;">
 	<?php
 
 		foreach($querylog as $query=>$values){
