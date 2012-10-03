@@ -51,7 +51,7 @@ function UserRatingSet(userref,ref,rating)
 	{
 	jQuery('#RatingStarLink'+rating).blur(); // removes the white focus box around the star.
 	if (UserRatingDone) {return false;}
-	jQuery.ajax(<?php echo $baseurl?>"/pages/ajax/user_rating_save.php?userref="+userref+"&ref="+ref+"&rating=" + rating,{method: 'post'});
+	jQuery.ajax(baseurl_short+"/pages/ajax/user_rating_save.php?userref="+userref+"&ref="+ref+"&rating=" + rating,{method: 'post'});
 			
 	document.getElementById('RatingCount').style.visibility='hidden';
 	if (rating==0)
