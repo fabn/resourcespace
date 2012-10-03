@@ -94,10 +94,19 @@ function SwapCSS(css){
 
 <br />
 
-<?php draw_performance_footer();?>
-
 <?php echo $extrafooterhtml; ?>
+
+<?php } // end ajax ?>
+
+
+
+
+
+<?php /* always include the below as they are perpage */?>
+
 <?php hook("footerbottom"); ?>
+
+<?php draw_performance_footer();?>
 
 <?php
 //titlebar modifications
@@ -238,4 +247,3 @@ $resource_title_pages=array("view","delete","log","alternative_file","alternativ
 </body>
 </html>
 
-<?php } ?>
