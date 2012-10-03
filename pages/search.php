@@ -224,7 +224,7 @@ else
 }
 
 # If returning to an old search, restore the page/order by
-if (!array_key_exists("search",$_GET))
+if (!array_key_exists("search",$_GET) && !array_key_exists("search",$_POST))
 	{
 	$offset=getvalescaped("saved_offset",0);setcookie("saved_offset",$offset);
 	$order_by=getvalescaped("saved_order_by","relevance");setcookie("saved_order_by",$order_by);
