@@ -314,10 +314,8 @@ function EditNav() # Create a function so this can be repeated at the end of the
 ?>
 </script>
 
-
-<div class="BasicsBox"> 
-
 <form method="post" action="edit.php?ref=<?php echo $ref?>&uploader=<?php echo getval("uploader","") ?>&single=<?php echo getval("single","") ?>&local=<?php echo getval("local","") ?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&collection=<?php echo $collection ?>&metadatatemplate=<?php echo getval("metadatatemplate","") ?>" id="mainform">
+<div class="BasicsBox"> 
 <input type="hidden" name="submitted" value="true">
 <?php 
 if ($multiple) { ?>

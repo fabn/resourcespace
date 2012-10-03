@@ -3317,6 +3317,7 @@ function get_executable_path($path, $executable, &$checked_path, $check_exe = fa
 
 if (!function_exists("resolve_user_emails")){
 function resolve_user_emails($ulist){
+	global $lang;
 	// return an array of emails from a list of usernames and email addresses. 
 	// with 'key_required' sibling array preserving the intent of internal/external sharing.
 	$emails_key_required=array();

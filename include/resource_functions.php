@@ -212,7 +212,7 @@ function save_resource_data($ref,$multi)
 			if ($fields[$n]["required"]==1 && ($val=="" || $val==","))
 				{
 				global $lang;
-				$errors[$fields[$n]["ref"]]=$lang["requiredfield"];
+				$errors[$fields[$n]["ref"]]=i18n_get_translated($fields[$n]["title"]).": ".$lang["requiredfield"];
 				}
 			}
 		}
