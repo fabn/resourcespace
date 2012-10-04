@@ -14,7 +14,7 @@ hook("themeheader");
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $themes_ref_column,$themes_date_column,$baseurl_short,$baseurl,$default_perpage_list,$collection_prefix,$col_order_by,$revsort,$sort,$find,$getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange;
+	global $theme_direct_jump,$themes_column_sorting,$themes_ref_column,$themes_date_column,$baseurl_short,$baseurl,$default_perpage_list,$collection_prefix,$col_order_by,$revsort,$sort,$find,$getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange;
 
 	$col_order_by=getvalescaped("order_by",getvalescaped("saved_themes_order_by","created"));
 	$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));
@@ -25,7 +25,7 @@ function DisplayTheme($themes=array())
 	$collection_valid_order_bys=array("name","c");
 
 	// sorting doesn't work for nonsplit
-	if (!$themes_category_split_pages){$sort="ASC";$col_order_by="name";}
+	if (!$themes_column_sorting || !$themes_category_split_pages || $theme_direct_jump){$sort="ASC";$col_order_by="name";$themes_column_sorting=false;}
 
 	if ($themes_ref_column){$collection_valid_order_bys[]="ref";}
 	if ($themes_date_column){$collection_valid_order_bys[]="created";}
@@ -156,14 +156,14 @@ function DisplayTheme($themes=array())
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } if($themes_category_split_pages) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["collectionname"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["collectionname"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php if ($themes_ref_column){?>
-		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } if($themes_category_split_pages) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["id"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["id"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
 		<?php if ($themes_date_column){?>
-		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } if($themes_category_split_pages) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["created"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["created"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
-		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } if($themes_category_split_pages) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["itemstitle"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } if($themes_column_sorting) { ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["itemstitle"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php hook("beforecollectiontoolscolumnheader","themes",array($themeslinks));?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>

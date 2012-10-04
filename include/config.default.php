@@ -1346,6 +1346,7 @@ $themes_category_split_pages_parents_root_node=true;
 $themes_category_navigate_levels=false;
 
 # optional columns in themes collection lists
+$themes_column_sorting=false; // only works with themes_category_split_pages
 $themes_date_column=false;
 $themes_ref_column=false;
 
