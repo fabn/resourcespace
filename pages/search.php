@@ -277,7 +277,7 @@ if (substr($search,0,11)=="!collection")
 # Include function for reordering
 if ($allow_reorder && $display!="list")
 	{
-	$url="search.php?search=" . urlencode($search) ;
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) ;
 	# Also check for the parameter and reorder as necessary.
 	$reorder=getvalescaped("reorder","");
 	if ($reorder!="")
@@ -345,7 +345,7 @@ if (!hook("repleacesearchresults")) {
 
 if ($allow_reorder && $display!="list")
 	{
-	$url="search.php?search=" . urlencode($search) ;
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) ;
 	?>
 	<script type="text/javascript">
 	function ReorderResources(id1,id2)
@@ -391,7 +391,7 @@ if ($infobox_image_mode)
 #if (is_array($result)||(isset($collections)&&(count($collections)>0)))
 if (true) # Always show search header now.
 	{
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&order_by=" . $order_by . "&sort=".$sort."&offset=" . $offset . "&archive=" . $archive."&sort=".$sort;
 	?>
 	<div class="TopInpageNav">
 	<div class="InpageNavLeftBlock"><?php echo $lang["youfound"]?>:<br /><span class="Selected"><?php echo number_format(is_array($result)?count($result):0)?><?php echo (count($result)==$max_results)?"+":""?></span> <?php if (count($result)==1){echo $lang["youfoundresource"];} else {echo $lang["youfoundresources"];}?></div>
@@ -399,7 +399,7 @@ if (true) # Always show search header now.
 
 
 	<?php if ($display_selector_dropdowns){?>
-	<select class="medcomplementwidth ListDropdown" style="width:auto" id="displaysize" name="displaysize" onchange="location = this.options[this.selectedIndex].value;">
+	<select class="medcomplementwidth ListDropdown" style="width:auto" id="displaysize" name="displaysize" onchange="CentralSpaceLoad(this.value,true);">
 	<?php if ($xlthumbs==true) { ?><option <?php if ($display=="xlthumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=xlthumbs&k=<?php echo $k?>"><?php echo $lang["xlthumbs"]?></option><?php } ?>
 	<option <?php if ($display=="thumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=thumbs&k=<?php echo $k?>"><?php echo $lang["largethumbs"]?></option>
 	<?php if ($smallthumbs==true) { ?><option <?php if ($display=="smallthumbs"){?>selected="selected"<?php } ?> value="<?php echo $url?>&display=smallthumbs&k=<?php echo $k?>"><?php echo $lang["smallthumbs"]?></option><?php } ?>
@@ -418,10 +418,10 @@ if (true) # Always show search header now.
 	
 	<?php if ($display_selector_dropdowns){?>
 	<div class="InpageNavLeftBlock"><?php echo $lang["resultsdisplay"]?>:<br />
-		<select class="medcomplementwidth ListDropdown" style="width:auto" id="resultsdisplay" name="resultsdisplay" onchange="location = this.options[this.selectedIndex].value;">
+		<select class="medcomplementwidth ListDropdown" style="width:auto" id="resultsdisplay" name="resultsdisplay" onchange="CentralSpaceLoad(this.value,true);">
 		<?php for($n=0;$n<count($results_display_array);$n++){
 			if ($display_selector_dropdowns){?>
-				<option <?php if ($per_page==$results_display_array[$n]){?>selected="selected"<?php } ?> value="search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>&sort=<?php echo $sort?>"><?php echo $results_display_array[$n]?></option>
+				<option <?php if ($per_page==$results_display_array[$n]){?>selected="selected"<?php } ?> value="<?php echo $baseurl_short?>pages/search.php?search=<?php echo urlencode($search)?>&order_by=<?php echo $order_by?>&archive=<?php echo $archive?>&k=<?php echo $k?>&per_page=<?php echo $results_display_array[$n]?>&sort=<?php echo $sort?>"><?php echo $results_display_array[$n]?></option>
 			<?php } ?>
 		<?php } ?>	
 		</select>
@@ -498,7 +498,7 @@ if (true) # Always show search header now.
 	$totalpages=ceil($results/$per_page);
 	if ($offset>$results) {$offset=0;}
 	$curpage=floor($offset/$per_page)+1;
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k."&sort=".$sort;	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k."&sort=".$sort;	
 	
 	pager();
 	$draw_pager=true;
@@ -648,7 +648,7 @@ if (true) # Always show search header now.
 		{
 		$ref=$result[$n]["ref"];
 		$GLOBALS['get_resource_data_cache'][$ref] = $result[$n];
-		$url="view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k;
+		$url=$baseurl_short."pages/view.php?ref=" . $ref . "&search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&offset=" . urlencode($offset) . "&archive=" . $archive . "&k=" . $k;
 		
 		if (isset($result[$n]["url"])) {$url=$result[$n]["url"];} # Option to override URL in results, e.g. by plugin using process_Search_results hook above
 		?>
@@ -740,7 +740,7 @@ if (true) # Always show search header now.
 	<?php hook("resultsbottomtoolbar"); ?>
 	
 	<?php 
-	$url="search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k;	
+	$url=$baseurl_short."pages/search.php?search=" . urlencode($search) . "&order_by=" . urlencode($order_by) . "&sort=".$sort."&archive=" . $archive . "&k=" . $k;	
 
 	if (isset($draw_pager)) {pager(false);} ?>
 </div>	
