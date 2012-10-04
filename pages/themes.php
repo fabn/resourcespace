@@ -21,7 +21,10 @@ function DisplayTheme($themes=array())
 	$revsort = ($sort=="ASC") ? "DESC" : "ASC";
 	# pager
 	$per_page=getvalescaped("per_page_list",$default_perpage_list,true);
-
+	
+	// sorting doesn't work for nonsplit
+	if (!$themes_category_split_pages){$sort="ASC";$col_order_by="name";}
+	
 	$collection_valid_order_bys=array("name","c");
 
 	if ($themes_ref_column){$collection_valid_order_bys[]="ref";}
@@ -153,14 +156,14 @@ function DisplayTheme($themes=array())
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="name" && $themes_category_split_pages) {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["collectionname"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php if ($themes_ref_column){?>
-		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="ref" && $themes_category_split_pages) {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["id"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
 		<?php if ($themes_date_column){?>
-		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="created" && $themes_category_split_pages) {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["created"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
-		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="c" && $themes_category_split_pages) {?><span class="Selected"><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php } ?><?php echo $lang["itemstitle"]?><?php  if($themes_category_split_pages) { ?></a><?php } ?><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php hook("beforecollectiontoolscolumnheader","themes",array($themeslinks));?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
