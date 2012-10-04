@@ -1345,6 +1345,10 @@ $themes_category_split_pages_parents_root_node=true;
 # Navigate to deeper levels in theme category trees? Set to false to link to matching resources directly.
 $themes_category_navigate_levels=false;
 
+# optional columns in themes collection lists
+$themes_date_column=false;
+$themes_ref_column=false;
+
 # Ask the user the intended usage when downloading
 $download_usage=false;
 $download_usage_options=array("Press","Print","Web","TV","Other");

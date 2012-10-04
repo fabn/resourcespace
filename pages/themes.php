@@ -4,12 +4,32 @@ include "../include/authenticate.php";
 include "../include/general.php";
 include "../include/collections_functions.php";
 
+global $default_perpage_list;
+$col_order_by=getvalescaped("order_by",getvalescaped("saved_themes_order_by","created"));setcookie("saved_themes_order_by",$col_order_by);
+$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));setcookie("saved_themes_sort",$sort);
+$per_page=getvalescaped("per_page_list",$default_perpage_list,true);setcookie("per_page_list",$per_page);
+
 hook("themeheader");
 
 if (!function_exists("DisplayTheme")){
 function DisplayTheme($themes=array())
 	{
-	global $getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange;
+	global $themes_ref_column,$themes_date_column,$baseurl_short,$baseurl,$default_perpage_list,$collection_prefix,$col_order_by,$revsort,$sort,$find,$getthemes,$m,$lang,$flag_new_themes,$contact_sheet,$theme_images,$allow_share,$zipcommand,$collection_download,$theme_images_align_right,$themes_category_split_pages,$themes_category_split_pages_parents,$collections_compact_style,$pagename,$show_edit_all_link,$preview_all,$userref,$collection_purge,$themes_category_split_pages,$themes_category_split_pages_parents_root_node,$enable_theme_category_sharing,$enable_theme_category_edit,$show_theme_collection_stats,$lastlevelchange;
+
+	$col_order_by=getvalescaped("order_by",getvalescaped("saved_themes_order_by","created"));
+	$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));
+	$revsort = ($sort=="ASC") ? "DESC" : "ASC";
+	# pager
+	$per_page=getvalescaped("per_page_list",$default_perpage_list,true);
+
+	$collection_valid_order_bys=array("name","c");
+
+	if ($themes_ref_column){$collection_valid_order_bys[]="ref";}
+	if ($themes_date_column){$collection_valid_order_bys[]="created";}
+	
+	$modified_collection_valid_order_bys=hook("modifycollectionvalidorderbys");
+	if ($modified_collection_valid_order_bys){$collection_valid_order_bys=$modified_collection_valid_order_bys;}
+	if (!in_array($col_order_by,$collection_valid_order_bys)) {$col_order_by="created";} # Check the value is one of the valid values (SQL injection filter)
 
 	# Work out theme name
 	$themecount=count($themes);
@@ -17,10 +37,10 @@ function DisplayTheme($themes=array())
 		{
 		if (isset($themes[$x])&&!isset($themes[$x+1]))
 			$themename=i18n_get_translated($themes[$x]);
-}
+		}
 
 	$getthemes=get_themes($themes);
-
+	
 	if (count($getthemes)>0)
 		{
 		?>
@@ -87,7 +107,7 @@ function DisplayTheme($themes=array())
 				if($show_theme_collection_stats)
 					{
 					?>
-					<p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); 
+					<p style="clear:none;"><?php $collcount = count($getthemes); echo $collcount==1 ? $lang["collections-1"] : sprintf(str_replace("%number","%d",$lang["collections-2"]),$collcount,$totalcount); hook("themeactioninline");
 					?>
 					</p>
 					</td><td style="margin:0px;padding:0px;">
@@ -129,9 +149,15 @@ function DisplayTheme($themes=array())
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?php echo $lang["name"]?></td>
-		<td width="5%"><?php echo $lang["itemstitle"]?></td>
-		<?php hook("beforecollectiontoolscolumnheader");?>
+		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<?php if ($themes_ref_column){?>
+		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<?php } ?>
+		<?php if ($themes_date_column){?>
+		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<?php } ?>
+		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<?php hook("beforecollectiontoolscolumnheader","themes",array($themeslinks));?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
 
@@ -143,6 +169,12 @@ function DisplayTheme($themes=array())
 			<td width="50%"><div class="ListTitle"><a href="search.php?search=!collection<?php echo $getthemes[$m]["ref"]?>&bc_from=themes"  title="<?php echo $lang["collectionviewhover"]?>" onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($getthemes[$m]["name"]))?></a>
 			<?php if ($flag_new_themes && (time()-strtotime($getthemes[$m]["created"]))<(60*60*24*14)) { ?><div class="NewFlag"><?php echo $lang["newflag"]?></div><?php } ?>
 			</div></td>
+			<?php if ($themes_ref_column){?>
+			<td><?php echo $getthemes[$m]["ref"];?></td>
+			<?php } ?>
+			<?php if ($themes_date_column){?>
+			<td><?php echo nicedate($getthemes[$m]["created"],true)?></td>
+			<?php } ?>
 			<td width="5%"><?php echo $getthemes[$m]["c"]?></td>
 			<?php hook("beforecollectiontoolscolumn");?>
 			<td nowrap><div class="ListTools">

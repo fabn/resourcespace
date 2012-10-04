@@ -535,6 +535,9 @@ function collections_comparator_desc($a, $b)
 if (!function_exists("get_themes")){
 function get_themes($themes=array(""))
 	{	
+	$themes_order_by=getvalescaped("order_by",getvalescaped("saved_themes_order_by","name"));
+	$sort=getvalescaped("sort",getvalescaped("saved_themes_sort","ASC"));	
+		
 	# Return a list of themes under a given header (theme category).
 	$sql="select *,(select count(*) from collection_resource cr where cr.collection=c.ref) c from collection c  where c.theme='" . escape_check($themes[0]) . "' ";
 	
@@ -549,10 +552,17 @@ function get_themes($themes=array(""))
 			}
 		}
 	}
-	$sql.=" and c.public=1;";
 
+	$order_sort="";
+	if ($themes_order_by!="name"){$order_sort=" order by $themes_order_by $sort";}
+	$sql.=" and c.public=1    $order_sort;";
+	
 	$collections=sql_query($sql);
-	usort($collections, 'collections_comparator');
+	if ($themes_order_by=="name"){
+		if ($sort=="ASC"){usort($collections, 'collections_comparator');}
+		else if ($sort=="DESC"){usort($collections,'collections_comparator_desc');}
+	}
+	
 	return $collections;
 	}
 }
