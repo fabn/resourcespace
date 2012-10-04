@@ -26,7 +26,7 @@ if ((getval("save","")!="") || (getval("suggest","")!=""))
 	else
 		{
 		hook('aftersaveuser');
-		if (getval("save","")!="") {$backurl=getval("backurl","team_user.php?nc=" . time());redirect ($backurl);}
+		if (getval("save","")!="") {$backurl=getval("backurl",$baseurl_short ."pages/team/team_user.php?nc=" . time());redirect ($backurl);}
 		}
 	}
 
@@ -63,7 +63,7 @@ if (getval("loginas","")!="")
 
 <form method=post action="team_user_edit.php">
 <input type=hidden name=ref value="<?php echo $ref?>">
-<input type=hidden name=backurl value="<?php echo getval("backurl","team_user.php?nc=" . time())?>">
+<input type=hidden name=backurl value="<?php echo getval("backurl", $baseurl_short . "pages/team/team_user.php?nc=" . time())?>">
 
 <div class="Question"><label><?php echo $lang["username"]?></label><input name="username" type="text" class="stdwidth" value="<?php echo $user["username"]?>"><div class="clearerleft"> </div></div>
 
