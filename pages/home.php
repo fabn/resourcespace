@@ -37,7 +37,6 @@ foreach ($d as $f) {
  } 
 
 $homeimages=$filecount;
-
 if ($filecount>1) { # Only add Javascript if more than one image.
 ?>
 <script type="text/javascript">
