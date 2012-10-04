@@ -18,6 +18,7 @@ $dir = dirname(__FILE__) . "/../" . $homeanim_folder;
 $filecount = 0; 
 $checksum=0; # Work out a checksum which is the total of all the image files in bytes - used in image URLs to force a refresh if any of the images change.
 $d = scandir($dir); 
+sort($d, SORT_NUMERIC);
 $reslinks=array();
 foreach ($d as $f) { 
  if(preg_match("/[0-9]+\.(jpg)/",$f))
