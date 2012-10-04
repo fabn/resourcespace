@@ -53,10 +53,7 @@ $default_sort="DESC";
 if (substr($order_by,0,5)=="field"){$default_sort="ASC";}
 $sort=getval("sort",$default_sort);
 
-# Include a couple functions for the Ajax contactsheet update
-if ($annotate){
-$bodyattribs="onload=\"jQuery().annotate('preview');\"";
-}
+
 
 include "../../../include/header.php";
 
@@ -76,7 +73,7 @@ var annotate_previewimage_prefix = "";
 	 var methods = {
 		
 		preview : function() { 
-			var url = 'annotate_pdf_gen.php';
+			var url = '<?php echo $baseurl_short?>plugins/annotate/pages/annotate_pdf_gen.php';
 
 			var formdata = $('#annotateform').serialize() + '&preview=true'; 
 
@@ -119,7 +116,7 @@ var annotate_previewimage_prefix = "";
 			else {
 				$('#previewPageOptions').hide();
 			}
-			$.ajax("annotate_pdf_gen.php?cleartmp=true&ref=<?php echo $ref?>&uniqid=<?php echo $uniqid?>",{complete: function(response){ $('#error2').html(response.responseText);}});
+			$.ajax("<?php echo $baseurl_short?>plugins/annotate/pages/annotate_pdf_gen.php?cleartmp=true&ref=<?php echo $ref?>&uniqid=<?php echo $uniqid?>",{complete: function(response){ $('#error2').html(response.responseText);}});
 		},
 		
 		
@@ -143,20 +140,20 @@ var annotate_previewimage_prefix = "";
   };
 	
 
-})(jQuery)
+})(jQuery) 
 </script>
 <script>
 function loadIt() {
-   document.previewimage.src = '../../../gfx/images/ajax-loader-on-sheet.gif';}
+   document.previewimage.src = '<?php echo $baseurl_short?>gfx/images/ajax-loader-on-sheet.gif';}
 </script>
 <?php } ?>
 
 <div class="BasicsBox" >
 
 <?php if (!$is_collection){?>
-<p><a href="../../../pages/view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&annotate=true">&lt; <?php echo $lang["backtoresourceview"]?></a></p>
+<p><a href="<?php echo $baseurl_short?>pages/view.php?ref=<?php echo $ref?>&search=<?php echo urlencode($search)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>&annotate=true" onClick="return CentralSpaceLoad(this);">&lt; <?php echo $lang["backtoresourceview"]?></a></p>
 <?php } else {?>
-<p><a href="../../../pages/search.php?search=!collection<?php echo substr($ref,1)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>">&lt; <?php echo $lang["backtoresults"]?></a></p>
+<p><a href="<?php echo $baseurl_short?>pages/search.php?search=!collection<?php echo substr($ref,1)?>&offset=<?php echo $offset?>&order_by=<?php echo $order_by?>&sort=<?php echo $sort?>&archive=<?php echo $archive?>" onClick="return CentralSpaceLoad(this);">&lt; <?php echo $lang["backtoresults"]?></a></p>
 <?php } ?>
 
 <h1><?php echo $lang["annotatepdfconfig"]?></h1>
@@ -170,7 +167,7 @@ function loadIt() {
 
 <div id="configform" class="BasicsBox" style="width:450px;float:left;margin-top:0;" >
 
-<form method=post name="annotateform" id="annotateform" action="annotate_pdf_gen.php" >
+<form method=post name="annotateform" id="annotateform" action="<?php echo $baseurl_short?>plugins/annotate/pages/annotate_pdf_gen.php" >
 <input type=hidden name="ref" value="<?php echo $ref?>">
 <input type=hidden name="uniqid" value="<?php echo $uniqid?>">
 
@@ -211,14 +208,17 @@ function loadIt() {
 </div>
 
 <div id="previewdiv" style="float:left;padding:0px -50px 15px 0;height:425px;margin-right:-50px">
-	<img id="previewimage" name="previewimage"/>
+	<img id="previewimage" name="previewimage" src=''/>
 </div>
 
 <?php }
  ?>
 <div <?php if ($annotate){?>style="display:none;"<?php } ?> id="noannotations"><?php if (!$annotate){?>There are no annotations.<?php } ?></div></div>
-
-
+<?php if ($annotate){?>
+<script>
+	jQuery().annotate('preview');
+</script>
+<?php } ?>
 <?php		
 include "../../../include/footer.php";
 ?>
