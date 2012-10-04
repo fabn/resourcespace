@@ -81,15 +81,19 @@ function DisplayTheme($themes=array())
 			</div>
 			<?php
 			}
+		$themeslinks="";
+		for ($x=0;$x<count($themes);$x++){
+			$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
+		}
 		?>
         <table><tr><td style="margin:0px;padding:0px;">
 		<h1 ><?php if ($themes_category_split_pages && $themes_category_split_pages_parents)
 			{
 			if ($themes_category_split_pages_parents_root_node){?><a href="themes.php"  onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["themes"];?></a> / <?php } 
-			$themeslinks="";
+			$themescrumbs="";
 			for ($x=0;$x<count($themes);$x++){
-				$themeslinks.="theme".($x+1)."=".urlencode($themes[$x])."&";
-				?><a href="themes.php?<?php echo $themeslinks?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
+				$themescrumbs.="theme".($x+1)."=".urlencode($themes[$x])."&";
+				?><a href="themes.php?<?php echo $themescrumbs?>"  onClick="return CentralSpaceLoad(this,true);"><?php echo htmlspecialchars(i18n_get_translated($themes[$x]))?></a> / <?php
 				}
 			}
 		else
@@ -149,14 +153,14 @@ function DisplayTheme($themes=array())
 		<div class="Listview" style="margin-top:10px;margin-bottom:5px;clear:left;">
 		<table border="0" cellspacing="0" cellpadding="0" class="ListviewStyle">
 		<tr class="ListviewBoxedTitleStyle">
-		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="name") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=name&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["collectionname"]?></a><?php if ($col_order_by=="name") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php if ($themes_ref_column){?>
-		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="ref") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=ref&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["id"]?></a><?php if ($col_order_by=="ref") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
 		<?php if ($themes_date_column){?>
-		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="created") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=created&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["created"]?></a><?php if ($col_order_by=="created") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php } ?>
-		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this,true);"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
+		<td><?php if ($col_order_by=="c") {?><span class="Selected"><?php } ?><a href="<?php echo $baseurl_short?>pages/themes.php?<?php echo $themeslinks?>order_by=c&sort=<?php echo $revsort?>" onClick="return CentralSpaceLoad(this);"><?php echo $lang["itemstitle"]?></a><?php if ($col_order_by=="c") {?><div class="<?php echo $sort?>">&nbsp;</div><?php } ?></td>
 		<?php hook("beforecollectiontoolscolumnheader","themes",array($themeslinks));?>
 		<td><div class="ListTools"><?php echo $lang["tools"]?></div></td>
 		</tr>
