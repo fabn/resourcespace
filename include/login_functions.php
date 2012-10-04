@@ -33,7 +33,7 @@ function perform_login()
 	$session_hash=md5($password_hash . $username . $password . date("Y-m-d"));
 	if ($enable_remote_apis){$session_hash=md5($password_hash.$username.date("Y-m-d"));} // no longer necessary to omit password in this hash for api support
 
-	$valid=sql_query("select ref,usergroup from user where username='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
+	$valid=sql_query("select ref,usergroup from user where lower(username)='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
 
 	# Prepare result array
 	$result=array();
@@ -54,7 +54,7 @@ function perform_login()
 		$result['password_hash']=$password_hash;
 
 		# Update the user record. Set the password hash again in case a plain text password was provided.
-		sql_query("update user set password='".escape_check($password_hash)."',session='".escape_check($session_hash)."',last_active=now(),login_tries=0,lang='".getvalescaped("language","")."' where username='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
+		sql_query("update user set password='".escape_check($password_hash)."',session='".escape_check($session_hash)."',last_active=now(),login_tries=0,lang='".getvalescaped("language","")."' where lower(username)='".escape_check($username)."' and (password='".escape_check($password)."' or password='".escape_check($password_hash)."')");
 
 		# Log this
 		$userref=$valid[0]["ref"];
