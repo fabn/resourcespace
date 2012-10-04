@@ -77,6 +77,7 @@ rewriteUrls=false;rewriteUrlsDebug=false;
 <?php } ?>
 <script type="text/javascript">
 var baseurl_short="<?php echo $baseurl_short?>";
+var baseurl="<?php echo $baseurl?>";
 </script>
 
 <?php hook("additionalheaderjs");?>
