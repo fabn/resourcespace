@@ -48,18 +48,17 @@ $s=explode(",",$access);
   <h2>&nbsp;</h2>
   <h1><?php echo $lang["groupaccess"] . ': ' . $plugin ?></h1>
 
-<form method="post" action="<?php echo $baseurl_short?>pages/team/team_plugins_groups.php">
+<form onSubmit="return CentralSpacePost(this,true);" method="post" action="<?php echo $baseurl_short?>pages/team/team_plugins_groups.php?save=true">
 <p>
 <input type="radio" name="access" value="all" <?php if ($access=="") { ?>checked<?php } ?>> <?php echo $lang["plugin-groupsallaccess"] ?>
 <br/>
 <input type="radio" name="access" value="some" id="some" <?php if ($access!="") { ?>checked<?php } ?>> <?php echo $lang["plugin-groupsspecific"] ?>
-
 <?php foreach ($groups as $group) { ?>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=checkbox name="group_<?php echo $group["ref"] ?>" value="yes" <?php if (in_array($group["ref"],$s)) { ?>checked<?php } ?> onClick="document.getElementById('some').checked=true;"><?php echo $group["name"]?>
 <?php } ?>
 </p>
 
-
+<input type=hidden name="plugin" value="<?php echo getvalescaped('plugin','')?>"/>
   
   
 <input name="save" type="submit" value="<?php echo $lang["save"] ?>">
