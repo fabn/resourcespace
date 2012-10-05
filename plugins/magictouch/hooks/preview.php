@@ -69,7 +69,7 @@ if (in_array("annotate",$plugins)){?><a style="display:inline;" href="<?php echo
 ?>
 
 </div>
-<script type="text/javascript">Magictouch.refresh();</script>
+<script type="text/javascript">if(typeof MagicTouch=="object") {MagicTouch.refresh();} else {console.log("MagicTouch not loaded");}</script>
 <?php
     return true;
 }
