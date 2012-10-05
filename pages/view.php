@@ -1150,7 +1150,7 @@ for ($n=0;$n<count($keywords);$n++)
 </div>
 </div>
 <div class="PanelShadow"></div>
-</div></div>
+</div>
 <?php } ?>
 
 
