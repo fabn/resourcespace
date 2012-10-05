@@ -2,7 +2,7 @@
 
 function HookRefineresultsSearchBeforesearchresults()
 	{
-	global $result,$lang,$search,$k,$archive,$parameters_string;
+	global $baseurl_short,$result,$lang,$search,$k,$archive,$parameters_string;
 	if ($k!="" || !is_array($result) || count($result)==0) {return false;}
 	
 	#if (substr($search,0,1)=="!") {return false;} # Only work for normal (non 'special') searches
@@ -19,21 +19,21 @@ function HookRefineresultsSearchBeforesearchresults()
 		jQuery('#RefineResults').slideToggle();
 		jQuery('#RefinePlus').html('+');
 		}
-	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a><?php if ($search!=""){?>&nbsp;&nbsp;<a href='search.php?search=<?php echo $parameters_string?>'>&gt;&nbsp;<?php echo $lang["clearsearch"]?></a><?php } ?></div>
+	"><span id='RefinePlus'>+</span> <?php echo $lang["refineresults"]?></a><?php if ($search!=""){?>&nbsp;&nbsp;<a href='<?php echo $baseurl_short?>pages/search.php?search=<?php echo $parameters_string?>'>&gt;&nbsp;<?php echo $lang["clearsearch"]?></a><?php } ?></div>
 	<?php
 	return true;
 	}
 	
 function HookRefineresultsSearchBeforesearchresultsexpandspace()
 	{
-	global $lang,$search,$k,$archive;
+	global $baseurl_short,$lang,$search,$k,$archive;
 	if ($k!="") {return false;}
 	?>
 	<div class="clearerleft"></div>
 	<div class="RecordBox" id="RefineResults" style="display:none;">
 	<div class="RecordPanel">  
 	
-	<form method="post">
+	<form method="post" action="<?php echo $baseurl_short?>pages/search.php">
 	<div class="Question" id="question_related" style="border-top:none;">
 	<label for="related"><?php echo $lang["additionalkeywords"]?></label>
 	<input class="stdwidth" type=text id="refine_keywords" name="refine_keywords" value="">
