@@ -24,7 +24,7 @@ if (isset($_REQUEST['activate'])){ # Activate a plugin
     if ($inst_name!=''){
         activate_plugin($inst_name);   
     }
-    redirect('pages/team/team_plugins.php');    # Redirect back to the plugin page so plugin is actually activated. 
+    redirect($baseurl_short.'pages/team/team_plugins.php');    # Redirect back to the plugin page so plugin is actually activated. 
     
 }
 elseif (isset($_REQUEST['deactivate'])){ # Deactivate a plugin
@@ -33,7 +33,7 @@ elseif (isset($_REQUEST['deactivate'])){ # Deactivate a plugin
     if ($remove_name!=''){
         deactivate_plugin($remove_name); 
     }
-    redirect('pages/team/team_plugins.php');    # Redirect back to the plugin page so plugin is actually deactivated.
+    redirect($baseurl_short.'pages/team/team_plugins.php');    # Redirect back to the plugin page so plugin is actually deactivated.
 }
 elseif (isset($_REQUEST['purge'])){ # Purge a plugin's configuration (if stored in DB)
     # Strip the leading hash mark added by javascript.
@@ -187,9 +187,9 @@ ksort ($plugins_avail);
                 $('input#anc-input').attr({
                     name: action,
                     value: value});
-                $('form#anc-post').submit();
+                jQuery('form#anc-post').submit();
             }
-    	$(document).ready(function() {
+    	$('#BasicsBox').ready(function() {
     		$('a.p-deactivate').click(function() {
     		    actionPost('deactivate', $(this).attr('href'));
     		    return false;
@@ -260,12 +260,12 @@ ksort ($plugins_avail);
         	{
             echo '<a class="nowrap" href="'.$p['info_url'].'" target="_blank">&gt;&nbsp;'.$lang['plugins-moreinfo'].'</a> ';
  			}
-        echo '<a class="nowrap" href="team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt;&nbsp;'.$lang['groupaccess'].'</a> ';
+        echo '<a onClick="return CentralSpaceLoad(this,true);" class="nowrap" href="'.$baseurl_short.'pages/team/team_plugins_groups.php?plugin=' . urlencode($p['name']) . '">&gt;&nbsp;'.$lang['groupaccess'].'</a> ';
         if ($p['config_url']!='')        
 			{
-        	echo '<a class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt;&nbsp;'.$lang['options'].'</a> ';        
+        	echo '<a onClick="return CentralSpaceLoad(this,true);" class="nowrap" href="'.$baseurl.$p['config_url'].'">&gt;&nbsp;'.$lang['options'].'</a> ';        
 			if (sql_value("SELECT config_json as value from plugins where name='".$p['name']."'",'')!='' && function_exists('json_decode'))
-	        	echo '<a class="nowrap" href="team_download_plugin_config.php?pin='.$p['name'].'">&gt;&nbsp;'.$lang['plugins-download'].'</a> ';
+	        	echo '<a class="nowrap" href="'.$baseurl_short.'pages/team/team_download_plugin_config.php?pin='.$p['name'].'">&gt;&nbsp;'.$lang['plugins-download'].'</a> ';
 			}
         echo '</div></td></tr>';
     } ?>
@@ -313,7 +313,7 @@ ksort ($plugins_avail);
     if ($enable_plugin_upload) {
     ?>
     <h2><?php echo $lang['plugins-uploadheader']; ?></h2>
-    <form enctype="multipart/form-data" method="post" action="team_plugins.php">
+    <form enctype="multipart/form-data" method="post" action="<?php echo $baseurl_short?>pages/team/team_plugins.php">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
 	<p><?php echo $lang['plugins-uploadtext']; ?><input type="file" name="pfile" /><br /></p>
 	<input type="submit" name="submit" value="<?php echo $lang['plugins-uploadbutton'] ?>" />
@@ -324,7 +324,7 @@ ksort ($plugins_avail);
   }
 	?>
     </div>
-    <form id="anc-post" method="post" action="team_plugins.php">
+    <form id="anc-post" method="post" action="<?php echo $baseurl_short?>pages/team/team_plugins.php" onSubmit="return CentralSpacePost(this);">
     <input type="hidden" id="anc-input" name="" value="" />
     </form>
         

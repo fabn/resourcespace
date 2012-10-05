@@ -6,7 +6,7 @@ if (!in_array("api_core",$plugins)){die("no access");}
 include "../../include/header.php";
 ?>
 <div class="BasicsBox">
-<p><a href="<?php echo $baseurl?>/pages/change_password.php">&lt; <?php echo $lang["back"]?></a></p><h1><?php echo $lang["apiaccess"]?></h1>
+<p><a  onClick="return CentralSpaceLoad(this,true);" href="<?php if (getvalescaped("back","")!=""){echo $baseurl_short.getvalescaped("back","");}else{ echo $baseurl_short."pages/change_password.php";}?>">&lt; <?php echo $lang["back"]?></a></p><h1><?php echo $lang["apiaccess"]?></h1>
 </div>
 
 <?php if (!$enable_remote_apis || $api_scramble_key=="abcdef123"){echo $lang["remoteapisnotavailable"]; exit();}?>
@@ -47,13 +47,13 @@ foreach($plugins as $plugin){
     if (substr($plugin,0,4)=="api_" && $plugin!=="api_core") {?>
        <tr class="ListviewTitleStyle">
        <td width="10%"><?php echo $plugin?></td>
-       <td width="10%"><a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/readme.txt">readme.txt</a></td>
+       <td width="10%"><a href="#" onClick="jQuery.ajax('<?php echo $baseurl?>/plugins/<?php echo $plugin?>/readme.txt',{complete:function(data) {jQuery('#CentralSpace').html('<a onClick=\'return CentralSpaceLoad(this,true);\' href=\'<?php echo $baseurl_short?>plugins/api_core/index.php\'>&lt; <?php echo $lang['back']?></a><pre>'+ jQuery('<span>').text(data.responseText).html() +'</pre>');}});">readme.txt</a></td>
        <td width="10%"><?php if (${$plugin}['signed']){
            echo "Signed Request: ";
-           ?><a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?></a>
+           ?><a target="_blank" href="<?php echo $baseurl_short?>plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?>" target="_blank"><?php echo $baseurl_short?>plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>&skey=<?php echo md5($hashkey.'key='.$apikey)?></a>
            <?php }
            else { ?>
-            <a href="<?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?></a>
+            <a target="_blank" href="<?php echo $baseurl_short?>plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?>" target="_blank"><?php echo $baseurl?>/plugins/<?php echo $plugin?>/?key=<?php echo $apikey;?></a>
            <?php } ?> 
            </td>
        </tr>

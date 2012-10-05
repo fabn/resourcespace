@@ -44,11 +44,11 @@ include "../../include/header.php";
 $s=explode(",",$access);
 ?>
 <div class="BasicsBox"> 
-<p><a href="team_plugins.php">&lt; <?php echo $lang["pluginssetup"] ?></a></p>
+<p><a onClick="return CentralSpaceLoad(this,true);" href="<?php echo $baseurl_short?>pages/team/team_plugins.php">&lt; <?php echo $lang["pluginssetup"] ?></a></p>
   <h2>&nbsp;</h2>
   <h1><?php echo $lang["groupaccess"] . ': ' . $plugin ?></h1>
 
-<form method="post" action="team_plugins_groups.php">
+<form method="post" action="<?php echo $baseurl_short?>pages/team/team_plugins_groups.php">
 <p>
 <input type="radio" name="access" value="all" <?php if ($access=="") { ?>checked<?php } ?>> <?php echo $lang["plugin-groupsallaccess"] ?>
 <br/>
