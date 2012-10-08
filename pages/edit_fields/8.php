@@ -9,7 +9,9 @@
 
 // Replace the <textarea id="editor1"> with an CKEditor instance.
 <?php if(!hook("ckeditorinit")): ?>
-var editor = CKEDITOR.replace( '<?php echo $name?>',
+var editor = CKEDITOR.instances['<?php echo $name?>'];
+if (editor) { editor.destroy(true); }
+CKEDITOR.replace('<?php echo $name ?>',
 	{
 		// Defines a simpler toolbar to be used in this sample.
 		// Note that we have added out "MyButton" button here.
