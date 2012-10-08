@@ -889,7 +889,7 @@ function create_previews_using_im($ref,$thumbonly=false,$extension="jpg",$previe
 				} else {
 					// use existing strategy for color profiles
 					# Preserve colour profiles? (omit for smaller sizes)   
-					$profile="+profile \"*\" -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+					$profile="+profile \"*\" -colorspace sRGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
 					if ($imagemagick_preserve_profiles && $id!="thm" && $id!="col" && $id!="pre" && $id!="scr") {$profile="";}
 				}
 

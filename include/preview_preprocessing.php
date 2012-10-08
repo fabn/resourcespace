@@ -571,7 +571,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
     $prefix="";
 
 	# Preserve colour profiles?    
-	$profile="+profile icc -colorspace RGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
+	$profile="+profile icc -colorspace sRGB"; # By default, strip the colour profiles ('+' is remove the profile, confusingly)
     if ($imagemagick_preserve_profiles) {$profile="";}
     
     # CR2 files need a cr2: prefix
@@ -609,7 +609,7 @@ if ((!isset($newfile)) && (!in_array($extension, $ffmpeg_audio_extensions)))
 			$eps_density_x = $eps_data_x / $eps_bbox_x * 72;
 			$eps_density_y = $eps_data_y / $eps_bbox_y * 72;
 			$eps_target=get_resource_path($ref,true,"",false,"miff");
-			$nfcommand = $convert_fullpath . ' -compress zip -colorspace RGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
+			$nfcommand = $convert_fullpath . ' -compress zip -colorspace sRGB -quality 100 -density ' . sprintf("%.1f", $eps_density_x ). 'x' . sprintf("%.1f", $eps_density_y) . ' ' . escapeshellarg($file) . '[0] ' . escapeshellarg($eps_target);
 			run_command($nfcommand);
 			if (file_exists($eps_target))
 			{

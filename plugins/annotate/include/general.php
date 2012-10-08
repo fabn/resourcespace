@@ -224,7 +224,7 @@ function create_annotated_pdf($ref,$is_collection=false,$size="letter",$cleanup=
 		if (!file_exists($command)) {$command=$imagemagick_path . "/convert";}
 		if (!file_exists($command)) {exit("Could not find ImageMagick 'convert' utility at location '$command'");}	
 		
-		$command.= " -resize $contact_sheet_preview_size -quality 90 -colorspace RGB " . escapeshellarg($jpgstoragepath) ." " . escapeshellarg($jpgstoragepath);
+		$command.= " -resize $contact_sheet_preview_size -quality 90 -colorspace sRGB " . escapeshellarg($jpgstoragepath) ." " . escapeshellarg($jpgstoragepath);
 		run_command($command);
 		return true;
 		}

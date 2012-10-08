@@ -317,7 +317,7 @@ for ($n=0;$n<count($result);$n++){
         $convert_fullpath = get_utility_path("im-convert");
         if ($convert_fullpath==false) {exit("Could not find ImageMagick 'convert' utility at location '$imagemagick_path'");}
 
-        $command = $convert_fullpath . " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace RGB \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"";
+        $command = $convert_fullpath . " -resize ".$contact_sheet_preview_size." -quality 90 -colorspace sRGB \"".get_temp_dir() . "/contactsheetrip.jpg\" \"".get_temp_dir() . "/contactsheet.jpg\"";
 		run_command($command);
 		exit();
 		}

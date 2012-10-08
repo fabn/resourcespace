@@ -159,6 +159,7 @@ if ($direct_download && !$save_as){
 	</script>";
 	}
 	
+	
 # Show the header/sidebar
 include "../include/header.php";
 
@@ -1099,7 +1100,8 @@ if (count($result)>0)
 
 
 
-<?php if ($enable_find_similar) { ?>
+<?php 
+if ($enable_find_similar) { ?>
 <!--Panel for search for similar resources-->
 <div class="RecordBox">
 <div class="RecordPanel"> 
@@ -1144,7 +1146,7 @@ for ($n=0;$n<count($keywords);$n++)
 <div class="clearerleft"> </div>
 <br />
 <input name="search" type="submit" value="&nbsp;&nbsp;<?php echo $lang["searchbutton"]?>&nbsp;&nbsp;" id="dosearch"/>
-<iframe src="blank.html" frameborder=0 scrolling=no width=1 height=1 style="visibility:hidden;" name="resultcount" id="resultcount"></iframe>
+
 </form>
 <div class="clearerleft"> </div>
 </div>
@@ -1156,7 +1158,6 @@ for ($n=0;$n<count($keywords);$n++)
 
 
 <?php } # end of block that requires search permissions
-
 
 include "../include/footer.php";
 ?>
