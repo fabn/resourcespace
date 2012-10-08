@@ -55,7 +55,7 @@ include "../include/header.php";
 <h1><?php echo $lang["managealternativefilestitle"]?></h1>
 </div>
 
-<form method=post id="fileform" action="alternative_files.php">
+<form method=post id="fileform" action="alternative_files.php?ref=<?php echo $ref ?>">
 <input type=hidden name="filedelete" id="filedelete" value="">
 
 <div class="Listview">
