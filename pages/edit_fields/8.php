@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 // Replace the <textarea id="editor1"> with an CKEditor instance.
-<? if(!hook("ckeditorinit")): ?>
+<?php if(!hook("ckeditorinit")): ?>
 var editor = CKEDITOR.replace( '<?php echo $name?>',
 	{
 		// Defines a simpler toolbar to be used in this sample.
@@ -17,9 +17,9 @@ var editor = CKEDITOR.replace( '<?php echo $name?>',
 		height: "350"
 
 	});
-<? endif; ?>
+<?php endif; ?>
 
-<? hook("ckeditoroptions"); ?>
+<?php hook("ckeditoroptions"); ?>
 
 <?php 
 # Add an event handler to auto save this field if changed.
