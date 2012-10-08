@@ -1121,11 +1121,17 @@ if ($enable_find_similar) { ?>
 function UpdateResultCount()
 	{
 	// set the target of the form to be the result count iframe and submit
-	document.getElementById("findsimilar").target="resultcount";
-	document.getElementById("countonly").value="yes";
-	document.getElementById("findsimilar").submit();
-	document.getElementById("findsimilar").target="";
-	document.getElementById("countonly").value="";
+
+	// some pages are erroneously calling this function because it exists in unexpected
+	// places due to dynamic page loading. So only do it if it seems likely to work.
+	if(jQuery('#findsimilar').length > 0)
+		{
+		document.getElementById("findsimilar").target="resultcount";
+		document.getElementById("countonly").value="yes";
+		document.getElementById("findsimilar").submit();
+		document.getElementById("findsimilar").target="";
+		document.getElementById("countonly").value="";
+		}
 	}
 </script>
 
