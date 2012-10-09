@@ -19,6 +19,7 @@ CKEDITOR.replace('<?php echo $name ?>',
 		height: "350"
 
 	});
+var editor = CKEDITOR.instances['<?php echo $name?>'];
 <?php endif; ?>
 
 <?php hook("ckeditoroptions"); ?>
