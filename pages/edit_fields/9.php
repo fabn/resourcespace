@@ -14,10 +14,6 @@ $readonly=($pagename=="search_advanced");
 
 <script type="text/javascript">
 
-jQuery(document).ready(function () {
-	jQuery('#<?php echo $name?>_selector').autocomplete( { source: "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>&readonly=<?php echo $readonly ?>", 
-		select : selectKeyword_<?php echo $name ?>
-		});
 
 	var Keywords_<?php echo $name ?>= new Array();
 	var KeywordCounter_<?php echo $name ?>=0;
@@ -122,9 +118,13 @@ jQuery(document).ready(function () {
 			}
 		}
 	?>
+
+	jQuery('#<?php echo $name?>_selector').autocomplete( { source: "<?php echo $baseurl?>/pages/edit_fields/9_ajax/suggest_keywords.php?field=<?php echo $field["ref"] ?>&readonly=<?php echo $readonly ?>", 
+		select : selectKeyword_<?php echo $name ?>
+		});
+
 	updateSelectedKeywords_<?php echo $name ?>(false);
 
-})
 </script>
 <?php
 /* include dirname(__FILE__) . "/../../include/user_select.php"; 
