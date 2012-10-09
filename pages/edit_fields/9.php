@@ -123,6 +123,18 @@ $readonly=($pagename=="search_advanced");
 		select : selectKeyword_<?php echo $name ?>
 		});
 
+	// prevent return in autocomplete field from submitting entire form
+	// we want the user to explicitly choose what they want to do
+	jQuery('#<?php echo $name?>_selector').keydown(function(event){ 
+			var keyCode = event.keyCode ? event.keyCode : event.which;
+			if (keyCode == 13) {
+				event.stopPropagation();
+				event.preventDefault();
+				return false;
+			}
+		 });
+
+
 	updateSelectedKeywords_<?php echo $name ?>(false);
 
 </script>
