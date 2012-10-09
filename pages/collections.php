@@ -648,7 +648,7 @@ if ($count_result>0)
 		<?php if (($feedback) || (($collection_reorder_caption || $collection_commenting) && $allow_reorder)) { ?>
 		<span class="IconComment <?php if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<?php } ?>"><a target="main" href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo $usercollection?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
 		<?php } ?>
-		
+
 		<?php if ($collection_reorder_caption  && $allow_reorder) { ?>
 		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
 		<?php if (!hook("replaceremovelink")){?>
@@ -662,24 +662,32 @@ if ($count_result>0)
 		<?php } //end hook replaceremovelink ?>
 			<?php } ?>
 		<?php } ?>
-		</div><?php } ?>			
+		</div><?php } ?>
 		</div>
 		<?php if ($collection_reorder_caption && $allow_reorder) { 
 		# Javascript drag/drop enabling.
 		?>
 		<script type="text/javascript">
-		new Draggable('ResourceShell<?php echo $ref?>',{handle: 'IconReorder', revert: true});
-		Droppables.add('ResourceShell<?php echo $ref?>',{accept: 'CollectionPanelShell', onDrop: function(element) {ReorderResources(element.id,<?php echo $ref?>);}, hoverclass: 'ReorderHover'});
+		jQuery(document).ready(function() {
+			jQuery('#ResourceShell<?php echo $ref?>').draggable({ handle: ".IconReorder", revert: true });
+			jQuery('#ResourceShell<?php echo $ref?>').droppable({
+				accept: ".CollectionPanelShell",
+				hoverclass: 'ReorderHover',
+				drop: function(event, ui) {
+					ReorderResources(ui.draggable.attr("id"),<?php echo $ref?>);
+				}
+			});
+		});
 		</script>
 		<?php } ?>
-<?php } ?>		
-		<?php		
+<?php } ?>
+		<?php
 		}
 	}
 
 	# Plugin for additional collection listings	(deprecated)
 	if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
-	
+
 	hook("thumblistextra");
 	?>
 	</div>

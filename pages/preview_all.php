@@ -234,8 +234,16 @@ if (maxheight><?php echo $imageheight?>){
 		# Javascript drag/drop enabling.
 		?>
 		<script type="text/javascript">
-		new Draggable('ResourceShel_<?php echo $ref?>',{scroll:window,scrollSpeed:200,scrollSensitivity:60,handle: "ResourceShel_", revert: true});
-		Droppables.add('ResourceShel_<?php echo $ref?>',{accept: 'ResourceShel_', onDrop: function(element) { ReorderResources(element.id.substring(13),<?php echo $ref?>,1);}, hoverclass: 'ReorderHover'});
+			jQuery(document).ready(function() {
+				jQuery('#ResourceShel_<?php echo $ref?>').draggable({ handle: ".ResourceShel_", revert: true });
+				jQuery('#ResourceShel_<?php echo $ref?>').droppable({
+					accept: ".ResourceShel_",
+					hoverclass: 'ReorderHover',
+					drop: function(event, ui) {
+						ReorderResources(ui.draggable.attr("id").substring(13),<?php echo $ref?>,1);
+					}
+				});
+			});
 		</script>
 		<?php } ?>
 <?php if ($vertical=="v"){?><tr><?php } else  { ?></td> <?php } ?>
