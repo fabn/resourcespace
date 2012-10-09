@@ -101,10 +101,7 @@ function nextPhoto()
 jQuery(document).ready( function ()
 	{ 
     /* Clear all old timers */
-    for (var i = 0; i < timers.length; i++)
-    	{
-	    clearTimeout(timers[i]);
-	    }
+    ClearTimers();
 	timers.push(window.setTimeout("nextPhoto()", 1000 * photo_delay));
 	}
 	);
