@@ -303,7 +303,7 @@ else {$div="CentralSpace";}
 <?php if (($pagename!="login") && ($pagename!="user_password") && ($pagename!="user_request")) { ?><div id="CentralSpaceContainer"><?php } ?>
 
 <!-- Loading graphic -->
-<div id="LoadingBox"><?php echo $lang["pleasewait"] ?><img src="<?php echo $baseurl_short ?>/gfx/interface/loading.gif"></div>
+<div id="LoadingBox"><?php echo $lang["pleasewait"] ?><img src="<?php echo $baseurl_short ?>gfx/interface/loading.gif"></div>
 
 <div id="<?php echo $div?>">
 
