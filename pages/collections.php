@@ -53,8 +53,8 @@ if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (
 	$allow_reorder=true;
 	}	
 	
-# Include function for reordering / infobox
-if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
+# Reordering capability
+if ($allow_reorder)
 	{
 	# Also check for the parameter and reorder as necessary.
 	$reorder=getvalescaped("reorder",false);
@@ -133,19 +133,25 @@ if ($collection!="")
 	hook("postchangecollection");
 	}
 
+?>
+<script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+<!--[if lte IE 7]><script src="<?php echo $baseurl?>/lib/js/json2.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script><![endif]-->
+<script type="text/javascript">
+jQuery.noConflict();
+</script>
+
+<?php if ($infobox)
+	{
+	?>		
+	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
+	<?php
+	}
 
 # Include function for reordering / infobox
-if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
+if ($allow_reorder)
 	{
 	?>
-	 <script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-     <script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-	 <!--[if lte IE 7]><script src="<?php echo $baseurl?>/lib/js/json2.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script><![endif]-->
-     <script type="text/javascript">
-        jQuery.noConflict();
-     </script>
-
-	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	function ReorderResources(idsInOrder)
 		{
@@ -164,8 +170,16 @@ if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkbox
 		jQuery(document).ready(function() {
 			jQuery('#CollectionSpace').sortable({
 				items: ".CollectionPanelShell",
-				handle: ".IconReorder",
-				stop: function(event, ui) {
+
+				start: function (event, ui)
+					{
+					InfoBoxEnabled=false;
+					if (jQuery('#InfoBoxCollection')) {jQuery('#InfoBoxCollection').hide();}
+					},
+
+				stop: function(event, ui)
+					{
+					InfoBoxEnabled=true;
 					var idsInOrder = jQuery('#CollectionSpace').sortable("toArray");
 					ReorderResources(idsInOrder);
 					}
@@ -673,37 +687,33 @@ if ($count_result>0)
 		<?php } ?>
 	
 		<?php if ($k=="") { ?><div class="CollectionPanelInfo">
-		<?php if (($feedback) || (($collection_reorder_caption || $collection_commenting) && $allow_reorder)) { ?>
+		<?php if (($feedback) || (($collection_reorder_caption || $collection_commenting))) { ?>
 		<span class="IconComment <?php if ($result[$n]["commentset"]>0) { ?>IconCommentAnim<?php } ?>"><a target="main" href="collection_comment.php?ref=<?php echo $ref?>&collection=<?php echo $usercollection?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>		
 		<?php } ?>
 
-		<?php if ($collection_reorder_caption  && $allow_reorder) { ?>
-		<div class="IconReorder" onMouseDown="InfoBoxWaiting=false;"> </div>
-		<?php if (!hook("replaceremovelink")){?>
-		<span class="IconRemove"><a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>"><img src="../gfx/interface/sp.gif" alt="" width="14" height="12" /></a></span>
-		<?php } //end hook replaceremovelink ?>
-		<?php } else { 
-			if (!isset($cinfo['savedsearch'])||(isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)){ // add 'remove' link only if this is not a smart collection 
+		<?php if (!isset($cinfo['savedsearch'])||(isset($cinfo['savedsearch'])&&$cinfo['savedsearch']==null)){ // add 'remove' link only if this is not a smart collection 
 			?>
 		<?php if (!hook("replaceremovelink")){?>
 		<a href="collections.php?remove=<?php echo $ref?>&nc=<?php echo time()?>">x <?php echo $lang["action-remove"]?></a>
-		<?php } //end hook replaceremovelink ?>
-			<?php } ?>
-		<?php } ?>
-		</div><?php } ?>
-		</div>
-<?php } ?>
 		<?php
-		}
-	}
+				} //end hook replaceremovelink 
+			} # End of remove link condition 
+		 } # End of k="" condition 
+		 ?>
+		</div>
+		</div>
+		<?php
+		} # End of ResourceView hook
+	  } # End of loop through resources
+	} # End of results condition
 
-	# Plugin for additional collection listings	(deprecated)
-	if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
+# Plugin for additional collection listings	(deprecated)
+if (file_exists("plugins/collection_listing.php")) {include "plugins/collection_listing.php";}
 
-	hook("thumblistextra");
-	?>
-	</div>
-	<?php
+hook("thumblistextra");
+?>
+</div>
+<?php
 
 # Add the infobox.
 ?>

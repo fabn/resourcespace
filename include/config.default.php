@@ -579,8 +579,7 @@ $infobox_display_resource_type=false;
 # An alternative mode for the InfoBox, that displays the preview image instead of any metadata.
 $infobox_image_mode=false;
 
-
-# Reordering, captioning and ranking of collections (deprecated)
+# Enable captioning and ranking of collections (deprecated - use $collection_commenting instead)
 $collection_reorder_caption=false; 
 
 # Enable new-style collection sorting
