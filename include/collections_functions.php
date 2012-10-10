@@ -1020,6 +1020,7 @@ function swap_collection_order($resource1,$resource2,$collection)
 	if (!is_numeric($resource1) || !is_numeric($resource2) || !is_numeric($collection)){
 		exit ("Error: invalid input to swap collection function.");
 	}
+	//exit ("Swapping " . $resource1 . " for " . $resource2);
 	
 	$query = "select resource,date_added,sortorder  from collection_resource where collection='$collection' and resource in ('$resource1','$resource2')  order by sortorder asc, date_added desc";
 	$existingorder = sql_query($query);
@@ -1051,6 +1052,22 @@ function swap_collection_order($resource1,$resource2,$collection)
 
 	}
 
+function update_collection_order($neworder,$collection)
+	{
+	if (!is_array($neworder)) {
+		exit ("Error: invalid input to update collection function.");
+	}
+
+	$updatesql= "update collection_resource set sortorder=(case resource ";
+	$counter = 1;
+	foreach ($neworder as $colresource){
+		$updatesql.= "when '$colresource' then '$counter' ";
+		$counter++;
+	}
+	$updatesql.= "else NULL END) WHERE collection='$collection'";
+	sql_query($updatesql);
+	}
+	
 function get_collection_resource_comment($resource,$collection)
 	{
 	$data=sql_query("select *,use_as_theme_thumbnail from collection_resource where collection='$collection' and resource='$resource'","");

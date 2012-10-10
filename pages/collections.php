@@ -43,6 +43,30 @@ else
 	$basket=false;
 	}
 
+# Load collection info.
+$cinfo=get_collection($usercollection);
+	
+# Check to see if the user can edit this collection.
+$allow_reorder=false;
+if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h"))))
+	{
+	$allow_reorder=true;
+	}	
+	
+# Include function for reordering / infobox
+if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
+	{
+	# Also check for the parameter and reorder as necessary.
+	$reorder=getvalescaped("reorder",false);
+	if ($reorder)
+		{
+		$neworder=json_decode(getvalescaped("order",false));
+		update_collection_order($neworder,$usercollection);
+		exit("SUCCESS");
+		}
+	}
+
+	
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html class="CollectBack">
@@ -110,46 +134,50 @@ if ($collection!="")
 	}
 
 
-# Load collection info.
-$cinfo=get_collection($usercollection);
-
-
-# Check to see if the user can edit this collection.
-$allow_reorder=false;
-if (($k=="") && (($userref==$cinfo["user"]) || ($cinfo["allow_changes"]==1) || (checkperm("h"))))
-	{
-	$allow_reorder=true;
-	}
-
-
 # Include function for reordering / infobox
 if (($allow_reorder && $collection_reorder_caption) || $infobox || $use_checkboxes_for_selection || $collections_compact_style)
 	{
 	?>
-	<script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-	<script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
-	<script type="text/javascript">
-	jQuery.noConflict();
-	</script>
+	 <script src="<?php echo $baseurl?>/lib/js/jquery-1.7.2.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+     <script src="<?php echo $baseurl?>/lib/js/jquery-ui-1.8.20.custom.min.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script>
+	 <!--[if lte IE 7]><script src="<?php echo $baseurl?>/lib/js/json2.js?css_reload_key=<?php echo $css_reload_key?>" type="text/javascript"></script><![endif]-->
+     <script type="text/javascript">
+        jQuery.noConflict();
+     </script>
+
 	<script src="../lib/js/infobox_collection.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	function ReorderResources(id1,id2)
+	function ReorderResources(idsInOrder)
 		{
-		document.location='collections.php?reorder=' + id1 + '-' + id2;
+		var newOrder = [];
+		jQuery.each(idsInOrder, function() {
+			newOrder.push(this.substring(13));
+			}); 
+		jQuery.ajax({
+		  type: 'GET',
+		  url: 'collections.php?collection=<?php echo $usercollection ?>&reorder=true',
+		  data: {order:JSON.stringify(newOrder)},
+		  dataType: 'json'
+		});		
 		}
+		
+		jQuery(document).ready(function() {
+			jQuery('#CollectionSpace').sortable({
+				items: ".CollectionPanelShell",
+				handle: ".IconReorder",
+				stop: function(event, ui) {
+					var idsInOrder = jQuery('#CollectionSpace').sortable("toArray");
+					ReorderResources(idsInOrder);
+					}
+			});
+			jQuery('.CollectionPanelShell').disableSelection();
+			
+		});	
+		
+		
 	</script>
-	<?php
-	
-	# Also check for the parameter and reorder as necessary.
-	$reorder=getvalescaped("reorder","");
-	if ($reorder!="")
-		{
-		$r=explode("-",$reorder);
-		swap_collection_order(substr($r[0],13),$r[1],$usercollection);
-		}
-	}
+<?php } ?>
 
-?>
 <script type="text/javascript">
 function ToggleThumbs()
 	{
@@ -664,22 +692,6 @@ if ($count_result>0)
 		<?php } ?>
 		</div><?php } ?>
 		</div>
-		<?php if ($collection_reorder_caption && $allow_reorder) { 
-		# Javascript drag/drop enabling.
-		?>
-		<script type="text/javascript">
-		jQuery(document).ready(function() {
-			jQuery('#ResourceShell<?php echo $ref?>').draggable({ handle: ".IconReorder", revert: true });
-			jQuery('#ResourceShell<?php echo $ref?>').droppable({
-				accept: ".CollectionPanelShell",
-				hoverclass: 'ReorderHover',
-				drop: function(event, ui) {
-					ReorderResources(ui.draggable.attr("id"),<?php echo $ref?>);
-				}
-			});
-		});
-		</script>
-		<?php } ?>
 <?php } ?>
 		<?php
 		}
