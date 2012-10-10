@@ -372,8 +372,6 @@ if (!hook('collectionaccessmode')) {
 
 	<?php if (($username==$collections[$n]["username"]) || (checkperm("h"))) {?>&nbsp;<a href="collection_edit.php?ref=<?php echo $collections[$n]["ref"]?>" onClick="return CentralSpaceLoad(this,true);" >&gt;&nbsp;<?php echo $lang["action-edit"]?></a><?php } ?>
 
-    <?php if ((($username==$collections[$n]["username"]) || (checkperm("h"))) && $collection_sorting) {?>&nbsp;<a href="collection_sort.php?collection=<?php echo $collections[$n]['ref'] ?>" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["sort"]?></a><?php } ?>
-
     <?php     
     # If this collection is (fully) editable, then display an edit all link
     if (($collections[$n]["count"] > 0) && allow_multi_edit($collections[$n]["ref"]) && $show_edit_all_link ) { ?>&nbsp;<a href="edit.php?collection=<?php echo $collections[$n]["ref"]?>" target="main" onClick="return CentralSpaceLoad(this,true);">&gt;&nbsp;<?php echo $lang["action-editall"]?></a>&nbsp;<?php } ?>

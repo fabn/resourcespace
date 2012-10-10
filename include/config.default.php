@@ -582,9 +582,6 @@ $infobox_image_mode=false;
 # Enable captioning and ranking of collections (deprecated - use $collection_commenting instead)
 $collection_reorder_caption=false; 
 
-# Enable new-style collection sorting
-$collection_sorting = false;
-
 # Enable collection commenting and ranking
 $collection_commenting = false;
 

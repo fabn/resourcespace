@@ -134,7 +134,6 @@ if (allow_multi_edit($usercollection)) { ?><li class="clearerleft"><a href="<?ph
 <?php if (checkperm("s")) { ?>
 <?php if ($allow_share && (checkperm("v") || checkperm("g"))) { ?><li><a href="<?php echo $baseurl_short?>pages/collection_share.php?ref=<?php echo $usercollection?>">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
 <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a href="<?php echo $baseurl_short?>pages/collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
-<?php if ((($userref==$cinfo["user"]) || (checkperm("h"))) && $collection_sorting) {?><li><a href="<?php echo $baseurl_short?>pages/collection_sort.php?collection=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $lang["sort"]?></a></li><?php } ?>
 <?php } ?>
 <?php if ($feedback) {?><li><a  href="<?php echo $baseurl_short?>pages/collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
 <?php } else {

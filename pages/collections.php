@@ -542,7 +542,6 @@ elseif ($k!="")
 	<?php if ($contact_sheet==true && $collections_compact_style) { ?><li><a href="contactsheet_settings.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["contactsheet"]?></a></li><?php } ?>
     <?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main">&gt; <?php echo $lang["share"]?></a></li><?php } ?>
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
-    <?php if ((($userref==$cinfo["user"]) || (checkperm("h"))) && $collection_sorting) {?><li><a target="main" href="collection_sort.php?collection=<?php echo $usercollection?>">&gt;&nbsp;<?php echo $lang["sort"]?></a></li><?php } ?>
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main">&gt;&nbsp;<?php echo $lang["preview_all"]?></a></li><?php } ?>
 	<?php hook("collectiontool2");?>
     <?php if ($feedback) {?><li><a target="main" href="collection_feedback.php?collection=<?php echo $usercollection?>&k=<?php echo $k?>">&gt;&nbsp;<?php echo $lang["sendfeedback"]?></a></li><?php } ?>
@@ -803,7 +802,6 @@ elseif ($k!="")
 	<?php if ($allow_share) { ?><li><a href="collection_share.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["share"]?></a></li><?php } ?>
     
     <?php if (($userref==$cinfo["user"]) || (checkperm("h"))) {?><li><a target="main" href="collection_edit.php?ref=<?php echo $usercollection?>">&nbsp;<?php echo $allow_share?$lang["action-edit"]:$lang["editcollection"]?></a></li><?php } ?>
-    <?php if ((($userref==$cinfo["user"]) || (checkperm("h"))) && $collection_sorting) {?><li><a target="main" href="collection_sort.php?collection=<?php echo $usercollection?>">&nbsp;<?php echo $lang["sort"]?></a></li><?php } ?>
 
 	<?php if ($preview_all){?><li><a href="preview_all.php?ref=<?php echo $usercollection?>" target="main"><?php echo $lang["preview_all"]?></a></li><?php } ?>
     <?php hook('collectiontool2min');?>
